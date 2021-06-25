@@ -3,12 +3,12 @@
     "name": "rwp",
     "version": "0.1.0",
     "license": "UNLICENSED",
-    "homepage": "https://bitbucket.org/sam-riester/riester-plugin",
-    "repository": "bitbucket:sam-riester/riester-plugin.git",
+    "homepage": "https://bitbucket.org/riester/riester-plugin",
+    "repository": "bitbucket:riester/riester-plugin.git",
     "author": {
         "name": "RIESTER",
         "email": "wordpress@riester.com",
-        "url": "https://riester.com"
+        "url": "https://www.riester.com"
     },
     "scripts": {
         "build": "yarn build:main && yarn build:vendor && yarn build:fonts && yarn build:blocks",
