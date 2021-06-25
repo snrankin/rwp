@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class RelationshipField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class RelationshipField extends Field
 {
     /**
      *	@inheritdoc

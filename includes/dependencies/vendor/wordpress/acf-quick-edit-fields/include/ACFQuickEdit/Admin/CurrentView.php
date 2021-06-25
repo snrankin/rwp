@@ -14,7 +14,7 @@ use RWP\Vendor\ACFQuickEdit\Ajax;
 use RWP\Vendor\ACFQuickEdit\Asset;
 use RWP\Vendor\ACFQuickEdit\Core;
 use RWP\Vendor\ACFQuickEdit\Fields;
-class CurrentView extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
+class CurrentView extends Core\Singleton
 {
     private $_available_field_groups = null;
     private $object_kind = null;
@@ -142,7 +142,7 @@ class CurrentView extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     /**
      *	Calculate field group filter for current screen
      *
-     *	@return array filter for acf_getfield_groups
+     *	@return array filter for \acf_getfield_groups
      */
     private function get_fieldgroup_filter()
     {
@@ -214,7 +214,7 @@ class CurrentView extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
         $groups = $this->get_available_field_groups();
         $fields = [];
         foreach ($groups as $field_group) {
-            $group_fields = acf_get_fields($field_group);
+            $group_fields = \acf_get_fields($field_group);
             $group_fields = $this->filter_fields($query, $group_fields);
             foreach ($group_fields as $field) {
                 // map to group
@@ -257,14 +257,14 @@ class CurrentView extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     /**
      *	Return field groups relevant for the current view
      *
-     *	@return array acf field gruops
+     *	@return array \acf field gruops
      */
     private function get_available_field_groups()
     {
         global $typenow, $pagenow;
         if (\is_null($this->_available_field_groups)) {
             $filters = $this->get_fieldgroup_filter();
-            $this->_available_field_groups = acf_get_field_groups($filters);
+            $this->_available_field_groups = \acf_get_field_groups($filters);
         }
         return $this->_available_field_groups;
     }

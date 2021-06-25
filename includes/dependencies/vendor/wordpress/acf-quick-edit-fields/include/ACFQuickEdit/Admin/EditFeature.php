@@ -7,7 +7,7 @@ use RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-abstract class EditFeature extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
+abstract class EditFeature extends Feature
 {
     protected $fieldsets = [];
     /**
@@ -19,7 +19,7 @@ abstract class EditFeature extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
         if (!$is_active) {
             return;
         }
-        $current_view = \RWP\Vendor\ACFQuickEdit\Admin\CurrentView::instance();
+        $current_view = CurrentView::instance();
         $object_kind = $current_view->get_object_kind();
         if ($object_kind === 'user') {
             // no QE on user screen
@@ -104,7 +104,7 @@ abstract class EditFeature extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
         $object_id = \sprintf('%s_%s', $taxonomy, $term_id);
         // avoid infinite loop
         remove_action('edit_term', [$this, 'save_acf_term_meta'], 10);
-        $ret = acf_save_post($object_id, $this->get_save_data());
+        $ret = \acf_save_post($object_id, $this->get_save_data());
         add_action('edit_term', [$this, 'save_acf_term_meta'], 10, 3);
         return $ret;
     }
@@ -119,13 +119,13 @@ abstract class EditFeature extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
         }
         // avoid infinite loop
         remove_action('save_post', [$this, 'save_acf_post_meta'], 10);
-        $ret = acf_save_post($post_id, $this->get_save_data());
+        $ret = \acf_save_post($post_id, $this->get_save_data());
         add_action('save_post', [$this, 'save_acf_post_meta'], 10, 1);
         return $ret;
     }
     /**
      *	Request data to be saved.
-     *	Will be passed to acf_save_post() which falls back to $_POST['acf']
+     *	Will be passed to \acf_save_post() which falls back to $_POST['acf']
      *
      *	@return null|array
      */

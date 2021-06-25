@@ -5,15 +5,15 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class TextareaField extends \RWP\Vendor\ACFQuickEdit\Fields\TextField
+class TextareaField extends TextField
 {
     /**
      *	@inheritdoc
      */
     public function render_input($input_atts, $is_quickedit = \true)
     {
-        $input_atts += ['class' => 'acf-quick-edit acf-quick-edit-' . $this->acf_field['type']];
-        return '<textarea ' . acf_esc_attr($input_atts) . '></textarea>';
+        $input_atts += ['class' => 'acf-quick-edit \acf-quick-edit-' . $this->acf_field['type']];
+        return '<textarea ' . \acf_esc_attr($input_atts) . '></textarea>';
     }
     /**
      *	@inheritdoc

@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class LinkField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class LinkField extends Field
 {
     /**
      *	@inheritdoc
@@ -31,14 +31,14 @@ class LinkField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
     protected function render_input($input_atts, $is_quickedit = \true)
     {
         // hidden
-        $input_atts += ['class' => 'acf-quick-edit acf-quick-edit-' . $this->acf_field['type'], 'type' => 'hidden', 'data-acf-field-key' => $this->acf_field['key'], 'name' => $this->get_input_name()];
+        $input_atts += ['class' => 'acf-quick-edit \acf-quick-edit-' . $this->acf_field['type'], 'type' => 'hidden', 'data-acf-field-key' => $this->acf_field['key'], 'name' => $this->get_input_name()];
         $output = '';
         foreach (['title', 'url', 'target'] as $prop) {
             $atts = [] + $input_atts;
             $atts['name'] .= "[{$prop}]";
             $atts['data-link-prop'] = $prop;
             $atts['value'] = '';
-            $output .= '<input ' . acf_esc_attr($atts) . ' />';
+            $output .= '<input ' . \acf_esc_attr($atts) . ' />';
         }
         $output .= '<span class="link-content"></span>';
         $output .= \sprintf('<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quickedit-fields'));
@@ -56,7 +56,7 @@ class LinkField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
         if (!\class_exists('RWP\\Vendor\\_WP_Editors', \false)) {
             require ABSPATH . WPINC . '/class-wp-editor.php';
         }
-        \RWP\Vendor\_WP_Editors::wp_link_dialog();
+        _WP_Editors::wp_link_dialog();
         \printf('<input type="hidden" value="%s" id="_ajax_linking_nonce" />', esc_attr(wp_create_nonce('internal-linking')));
     }
     /**

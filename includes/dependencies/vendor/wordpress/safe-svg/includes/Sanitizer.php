@@ -456,7 +456,7 @@ class Sanitizer {
 	 * @return bool
 	 */
 	protected function isUseTagDirty(\DOMElement $element) {
-		$href = \RWP\Vendor\SafeSVG\Helper::getElementHref($element);
+		$href = Helper::getElementHref($element);
 		return $href && \strpos($href, '#') !== 0;
 	}
 	/**

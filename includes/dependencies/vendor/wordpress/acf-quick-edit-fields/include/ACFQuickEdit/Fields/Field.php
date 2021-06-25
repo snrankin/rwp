@@ -34,7 +34,7 @@ abstract class Field
      */
     protected $wrapper_class = 'acf-input-wrap';
     /**
-     *	@return array supported acf fields
+     *	@return array supported \acf fields
      */
     public static function get_types()
     {
@@ -107,7 +107,7 @@ abstract class Field
             try {
                 self::$fields[$acf_field['key']] = new $field_class($acf_field);
             } catch (\Exception $exc) {
-                self::$fields[$acf_field['key']] = new \RWP\Vendor\ACFQuickEdit\Fields\Generic($acf_field);
+                self::$fields[$acf_field['key']] = new Generic($acf_field);
             }
         }
         return self::$fields[$acf_field['key']];
@@ -117,7 +117,7 @@ abstract class Field
      */
     protected function __construct($acf_field)
     {
-        $this->core = \RWP\Vendor\ACFQuickEdit\Core\Core::instance();
+        $this->core = Core::instance();
         $this->acf_field = $acf_field;
         $parent_key = '';
         if (\is_numeric($this->acf_field['parent'])) {
@@ -135,14 +135,14 @@ abstract class Field
         }
     }
     /**
-     *	@return array acf field
+     *	@return array \acf field
      */
     public function get_acf_field()
     {
         return $this->acf_field;
     }
     /**
-     *	@return array acf field
+     *	@return array \acf field
      */
     public function get_parent()
     {
@@ -193,32 +193,32 @@ abstract class Field
         $wrapper_class = \explode(' ', $this->wrapper_class);
         $wrapper_class = \array_map('sanitize_html_class', $wrapper_class);
         ?>
-			<div <?php 
-        echo acf_esc_attr($wrapper_attr);
+			<div <?php
+        echo \acf_esc_attr($wrapper_attr);
         ?>>
 				<div class="inline-edit-group">
-					<label for="<?php 
+					<label for="<?php
         echo esc_attr($this->get_input_id($mode === 'quick'));
-        ?>" class="title"><?php 
+        ?>" class="title"><?php
         esc_html_e($this->acf_field['label']);
         ?></label>
-					<span class="<?php 
+					<span class="<?php
         echo \implode(' ', $wrapper_class);
         ?>">
-						<?php 
+						<?php
         do_action('acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type);
         // sanitiation happens in render_input()
         echo $this->render_input($input_atts, $mode === 'quick');
         ?>
 					</span>
-					<?php 
+					<?php
         if ($mode === 'bulk') {
             $this->render_bulk_do_not_change($input_atts);
         }
         ?>
 				</div>
 			</div>
-		<?php 
+		<?php
     }
     /**
      *	Render the Do-Not-Chwnage Chackbox
@@ -227,17 +227,17 @@ abstract class Field
      */
     protected function render_bulk_do_not_change($input_atts)
     {
-        $bulk = \RWP\Vendor\ACFQuickEdit\Admin\Bulkedit::instance();
+        $bulk = Bulkedit::instance();
         ?>
 		<label class="bulk-do-not-change">
-			<input <?php 
-        echo acf_esc_attr(['name' => $input_atts['name'], 'value' => $bulk->get_dont_change_value(), 'type' => 'checkbox', 'checked' => 'checked', 'data-is-do-not-change' => 'true']);
+			<input <?php
+        echo \acf_esc_attr(['name' => $input_atts['name'], 'value' => $bulk->get_dont_change_value(), 'type' => 'checkbox', 'checked' => 'checked', 'data-is-do-not-change' => 'true']);
         ?> />
-			<?php 
+			<?php
         esc_html_e('Do not change', 'acf-quickedit-fields');
         ?>
 		</label>
-		<?php 
+		<?php
     }
     /**
      *	Render Input element
@@ -250,8 +250,8 @@ abstract class Field
      */
     protected function render_input($input_atts, $is_quickedit = \true)
     {
-        $input_atts += ['class' => 'acf-quick-edit acf-quick-edit-' . $this->acf_field['type'], 'type' => 'text', 'data-acf-field-key' => $this->acf_field['key'], 'name' => $this->get_input_name(), 'id' => $this->get_input_id($is_quickedit)];
-        return '<input ' . acf_esc_attr($input_atts) . ' />';
+        $input_atts += ['class' => 'acf-quick-edit \acf-quick-edit-' . $this->acf_field['type'], 'type' => 'text', 'data-acf-field-key' => $this->acf_field['key'], 'name' => $this->get_input_name(), 'id' => $this->get_input_id($is_quickedit)];
+        return '<input ' . \acf_esc_attr($input_atts) . ' />';
     }
     /**
      *	@return	string
@@ -285,15 +285,15 @@ abstract class Field
         return $name;
     }
     /**
-     *	@return mixed value of acf field
+     *	@return mixed value of \acf field
      */
     public function get_value($object_id, $format_value = \true)
     {
         $dummy_field = ['name' => $this->get_meta_key()] + $this->acf_field;
-        $value = acf_get_value($object_id, $dummy_field);
+        $value = \acf_get_value($object_id, $dummy_field);
         if ($format_value) {
-            // sanitation don in acf_format_value
-            $value = acf_format_value($value, $object_id, $dummy_field);
+            // sanitation don in \acf_format_value
+            $value = \acf_format_value($value, $object_id, $dummy_field);
         } else {
             $value = $this->sanitize_value($value);
         }

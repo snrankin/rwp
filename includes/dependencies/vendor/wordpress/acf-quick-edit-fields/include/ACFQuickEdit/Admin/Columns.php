@@ -7,7 +7,7 @@ use RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class Columns extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
+class Columns extends Feature
 {
     private $_prev_request_uri = \false;
     /**
@@ -30,7 +30,7 @@ class Columns extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
     public function init_fields()
     {
         $is_active = parent::init_fields();
-        $current_view = \RWP\Vendor\ACFQuickEdit\Admin\CurrentView::instance();
+        $current_view = CurrentView::instance();
         $is_sortable = \count($current_view->get_fields(['show_column_sortable' => 1]));
         $cols_filters = [];
         $displays_filters = [];
@@ -175,7 +175,7 @@ class Columns extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
     /**
      *	Whether a field supports sorting
      *
-     *	@param ACFQuickEditFields\Fields\Field	$field_object
+     *	@param Fields\Field	$field_object
      *	@return bool|string
      */
     private function get_field_sortable($field_object)
@@ -194,7 +194,7 @@ class Columns extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
     /**
      *	Whether a field is configured to be sorted
      *
-     *	@param ACFQuickEditFields\Fields\Field	$field_object
+     *	@param Fields\Field	$field_object
      *	@return bool|string
      */
     private function get_field_sorted($field_object)
@@ -302,7 +302,7 @@ class Columns extends \RWP\Vendor\ACFQuickEdit\Admin\Feature
         if (isset($this->_wp_column_weights[$column_slug])) {
             return \intval($this->_wp_column_weights[$column_slug]);
         }
-        // acf column
+        // \acf column
         if (isset($this->fields[$column_slug])) {
             $field_object = $this->fields[$column_slug];
             $field = $field_object->get_acf_field();

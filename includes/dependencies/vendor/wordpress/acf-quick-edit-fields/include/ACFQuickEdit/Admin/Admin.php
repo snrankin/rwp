@@ -14,7 +14,7 @@ use RWP\Vendor\ACFQuickEdit\Ajax;
 use RWP\Vendor\ACFQuickEdit\Asset;
 use RWP\Vendor\ACFQuickEdit\Core;
 use RWP\Vendor\ACFQuickEdit\Fields;
-class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
+class Admin extends Core\Singleton
 {
     /**
      *	@var Core\Core
@@ -37,10 +37,10 @@ class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
      */
     protected function __construct()
     {
-        $this->core = \RWP\Vendor\ACFQuickEdit\Core\Core::instance();
-        $this->js = \RWP\Vendor\ACFQuickEdit\Asset\Asset::get('js/acf-quickedit.js');
-        $this->js_columns = \RWP\Vendor\ACFQuickEdit\Asset\Asset::get('js/acf-columns.js');
-        $this->css = \RWP\Vendor\ACFQuickEdit\Asset\Asset::get('css/acf-quickedit.css');
+        $this->core = Core\Core::instance();
+        $this->js = Asset\Asset::get('js/acf-quickedit.js');
+        $this->js_columns = Asset\Asset::get('js/acf-columns.js');
+        $this->css = Asset\Asset::get('css/acf-quickedit.css');
         add_action('after_setup_theme', [$this, 'setup']);
         // init field group admin
         add_action('acf/field_group/admin_head', ['ACFQuickEdit\\Admin\\FieldGroup', 'instance']);
@@ -61,21 +61,21 @@ class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     public function setup()
     {
         // early return if conditions not met
-        if (!\function_exists('RWP\\Vendor\\acf') || !\class_exists('RWP\\Vendor\\acf') || \version_compare(acf()->version, '5.7', '<')) {
-            if (current_user_can('activate_plugins')) {
-                add_action('admin_notices', [$this, 'print_no_acf_notice']);
+        if (!\function_exists('acf') || !\class_exists('ACF') || \version_compare(\acf()->version, '5.7', '<')) {
+            if (\current_user_can('activate_plugins')) {
+                \add_action('admin_notices', [$this, 'print_no_acf_notice']);
             }
             return;
         }
-        $this->columns = \RWP\Vendor\ACFQuickEdit\Admin\Columns::instance();
-        $this->quickedit = \RWP\Vendor\ACFQuickEdit\Admin\Quickedit::instance();
-        $this->bulkedit = \RWP\Vendor\ACFQuickEdit\Admin\Bulkedit::instance();
-        $this->ajax_handler = new \RWP\Vendor\ACFQuickEdit\Ajax\AjaxHandler('get_acf_post_meta', ['public' => \false, 'use_nonce' => \true, 'capability' => 'edit_posts', 'callback' => [$this, 'ajax_get_acf_post_meta'], 'sanitize_callback' => [$this, 'sanitize_ajax_get_acf_post_meta']]);
+        $this->columns = Columns::instance();
+        $this->quickedit = Quickedit::instance();
+        $this->bulkedit = Bulkedit::instance();
+        $this->ajax_handler = new Ajax\AjaxHandler('get_acf_post_meta', ['public' => \false, 'use_nonce' => \true, 'capability' => 'edit_posts', 'callback' => [$this, 'ajax_get_acf_post_meta'], 'sanitize_callback' => [$this, 'sanitize_ajax_get_acf_post_meta']]);
         //
-        add_action('load-edit.php', [$this, 'enqueue_edit_assets']);
-        add_action('load-edit-tags.php', [$this, 'enqueue_edit_assets']);
-        add_action('load-users.php', [$this, 'enqueue_columns_assets']);
-        add_action('acf/field_group/admin_enqueue_scripts', [$this, 'enqueue_fieldgroup_assets']);
+        \add_action('load-edit.php', [$this, 'enqueue_edit_assets']);
+        \add_action('load-edit-tags.php', [$this, 'enqueue_edit_assets']);
+        \add_action('load-users.php', [$this, 'enqueue_columns_assets']);
+        \add_action('acf/field_group/admin_enqueue_scripts', [$this, 'enqueue_fieldgroup_assets']);
     }
     /**
      * @action 'wp_ajax_get_acf_post_meta'
@@ -95,10 +95,10 @@ class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
             foreach ($object_ids as $object_id) {
                 foreach ($field_keys as $key) {
                     // ACF-Field must exists
-                    if (!($field = get_field_object($key, $object_id))) {
+                    if (!($field = \get_field_object($key, $object_id))) {
                         continue;
                     }
-                    if ($field_object = \RWP\Vendor\ACFQuickEdit\Fields\Field::getFieldObject($field)) {
+                    if ($field_object = Fields\Field::getFieldObject($field)) {
                         $value = $field_object->get_value($object_id, \false);
                         if (!isset($data[$key])) {
                             // first iteration - always set value
@@ -145,15 +145,15 @@ class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     {
         ?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php 
-        \printf(wp_kses(
+			<p><?php
+        \printf(\wp_kses(
             /* Translators: 1: ACF Pro URL, 2: plugins page url */
             __('The <strong>ACF QuickEdit Fields</strong> plugin requires <a href="%1$s" target="_blank" rel="noopener noreferrer">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 'acf-quickedit-fields'),
             ['strong' => [], 'a' => ['href' => [], 'target' => [], 'rel' => '']]
-        ), esc_url('https://www.advancedcustomfields.com/'), esc_url(admin_url('plugins.php')));
+        ), \esc_url('https://www.advancedcustomfields.com/'), \esc_url(\admin_url('plugins.php')));
         ?></p>
 		</div>
-		<?php 
+		<?php
     }
     /**
      *	Enqueue options Assets
@@ -170,30 +170,30 @@ class Admin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
      */
     public function enqueue_edit_assets()
     {
-        $bulk = \RWP\Vendor\ACFQuickEdit\Admin\Bulkedit::instance();
-        $acf_version = acf()->version;
-        wp_enqueue_media();
-        acf_enqueue_scripts();
+        $bulk = Bulkedit::instance();
+        $acf_version = \acf()->version;
+        \wp_enqueue_media();
+        \acf_enqueue_scripts();
         // register assets
-        wp_register_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css'), [], $acf_version);
+        \wp_register_style('acf-datepicker', \acf_get_url('assets/inc/datepicker/jquery-ui.min.css'), [], $acf_version);
         // timepicker. Contains some usefull parsing mathods even for dates.
-        wp_register_script('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), ['jquery-ui-datepicker'], $acf_version);
-        wp_register_style('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css'), [], $acf_version);
+        \wp_register_script('acf-timepicker', \acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), ['jquery-ui-datepicker'], $acf_version);
+        \wp_register_style('acf-timepicker', \acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css'), [], $acf_version);
         $this->css->enqueue();
         $this->js->footer()->add_dep('acf-input')->add_dep('wp-backbone')->localize([
             /* Script Localization */
             'options' => ['request' => $this->ajax_handler->request, 'do_not_change_value' => $bulk->get_dont_change_value()],
         ], 'acf_qef')->enqueue();
         // 3rd party integration backwards compatibility
-        wp_add_inline_script($this->js->handle, 'window.acf_quickedit = window.acf_qef;', 'after');
+        \wp_add_inline_script($this->js->handle, 'window.acf_quickedit = window.acf_qef;', 'after');
     }
     /**
      * @action 'load-post.php'
      */
     public function enqueue_fieldgroup_assets()
     {
-        \RWP\Vendor\ACFQuickEdit\Asset\Asset::get('js/acf-qef-field-group.js')->deps('acf-field-group')->enqueue();
-        \RWP\Vendor\ACFQuickEdit\Asset\Asset::get('css/acf-qef-field-group.css')->deps('acf-field-group')->enqueue();
+        Asset\Asset::get('js/acf-qef-field-group.js')->deps('acf-field-group')->enqueue();
+        Asset\Asset::get('css/acf-qef-field-group.css')->deps('acf-field-group')->enqueue();
     }
     /**
      *	@param array $values

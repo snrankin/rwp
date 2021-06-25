@@ -62,7 +62,7 @@ class Asset
     }
     public function __construct($asset)
     {
-        $this->core = \RWP\Vendor\ACFQuickEdit\Core\Core::instance();
+        $this->core = Core\Core::instance();
         $this->asset = \preg_replace('/^(\\/+)/', '', $asset);
         // unleadingslashit
         $this->type = \strtolower(\pathinfo($this->asset, \PATHINFO_EXTENSION));
@@ -124,7 +124,7 @@ class Asset
         }
         if (\is_array($dep)) {
             foreach ($dep as $d) {
-                $this - add_dep($d);
+                $this->add_dep($d);
             }
         } else {
             if (!\in_array($dep, $this->deps)) {

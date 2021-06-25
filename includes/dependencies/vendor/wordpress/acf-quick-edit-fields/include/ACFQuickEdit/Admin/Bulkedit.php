@@ -7,7 +7,7 @@ use RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class Bulkedit extends \RWP\Vendor\ACFQuickEdit\Admin\EditFeature
+class Bulkedit extends EditFeature
 {
     /**
      *	@var bool
@@ -60,11 +60,11 @@ class Bulkedit extends \RWP\Vendor\ACFQuickEdit\Admin\EditFeature
         }
         $column = \str_replace(' qef-thumbnail', '', $wp_column_slug);
         foreach ($this->fieldsets as $field_group_key => $fields) {
-            $field_group = acf_get_field_group($field_group_key);
+            $field_group = \acf_get_field_group($field_group_key);
             // we need a div here because WP is prepending tags input to the fieldset:last in the editor
             \printf("<!-- BEGIN ACF Quick Edit Fields - Bulk <%s> -->\n", sanitize_key($field_group_key));
             echo '<div>' . "\n";
-            \printf('<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', sanitize_key($post_type));
+            \printf('<fieldset class="inline-edit-col-qed inline-edit-%s \acf-quick-edit">', sanitize_key($post_type));
             \printf('<legend>%s</legend>', esc_html($field_group['title']));
             echo '<div class="qed-fields">';
             foreach ($fields as $sub_field_object) {

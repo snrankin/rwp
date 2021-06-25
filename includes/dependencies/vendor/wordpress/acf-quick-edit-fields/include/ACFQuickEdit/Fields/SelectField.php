@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class SelectField extends \RWP\Vendor\ACFQuickEdit\Fields\ChoiceField
+class SelectField extends ChoiceField
 {
     /**
      *	@inheritdoc
@@ -21,12 +21,12 @@ class SelectField extends \RWP\Vendor\ACFQuickEdit\Fields\ChoiceField
                 $input_atts['class'] .= ' ui';
             }
         }
-        $output .= \sprintf('<select %s>', acf_esc_attr($input_atts));
+        $output .= \sprintf('<select %s>', \acf_esc_attr($input_atts));
         if (!$this->acf_field['multiple'] && $this->acf_field['allow_null']) {
             $output .= \sprintf('<option value="">%s</option>', __('— Select —', 'acf-quickedit-fields'));
         }
         foreach ($this->acf_field['choices'] as $name => $label) {
-            $output .= \sprintf('<option value="%s">%s</option>', esc_attr($name), acf_esc_html($label));
+            $output .= \sprintf('<option value="%s">%s</option>', esc_attr($name), \acf_esc_html($label));
         }
         $output .= '</select>';
         return $output;

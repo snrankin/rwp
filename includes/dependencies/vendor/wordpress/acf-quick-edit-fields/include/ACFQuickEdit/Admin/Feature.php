@@ -10,18 +10,18 @@ if (!\defined('ABSPATH')) {
 /**
  *	Class
  */
-abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
+abstract class Feature extends Core\Singleton
 {
     /**
-     * @var ACFQuickEdit\Core\Core
+     * @var Core\Core $core
      */
     protected $core;
     /**
-     * @var ACFQuickEdit\Admin\Admin
+     * @var Admin\Admin $admin
      */
     protected $admin;
     /**
-     * @var ACFQuickEdit\Core\Core
+     * @var Fields[] $fields
      */
     protected $fields = [];
     /**
@@ -33,8 +33,8 @@ abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
      */
     protected function __construct()
     {
-        //	$this->core = Core\Core::instance();
-        $this->admin = \RWP\Vendor\ACFQuickEdit\Admin\Admin::instance();
+        $this->core = Core\Core::instance();
+        $this->admin = Admin::instance();
         if (wp_doing_ajax()) {
             add_action('admin_init', [$this, 'init_fields']);
         } else {
@@ -71,7 +71,7 @@ abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
      */
     public function supports($type)
     {
-        $types = \RWP\Vendor\ACFQuickEdit\Fields\Field::get_types();
+        $types = Fields\Field::get_types();
         return isset($types[$type]) && $types[$type][$this->get_type()];
     }
     /**
@@ -81,7 +81,7 @@ abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     protected function acf_get_fields($field_group)
     {
         $return_fields = [];
-        if ($acf_fields = acf_get_fields($field_group)) {
+        if ($acf_fields = \acf_get_fields($field_group)) {
             foreach ($acf_fields as $field) {
                 if ($field['type'] === 'group') {
                     $return_fields = \array_merge($return_fields, $field['sub_fields']);
@@ -99,7 +99,7 @@ abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     public function init_fields()
     {
         // action admin_init
-        $current_view = \RWP\Vendor\ACFQuickEdit\Admin\CurrentView::instance();
+        $current_view = CurrentView::instance();
         if (!\in_array($current_view->get_object_kind(), ['post', 'term', 'user'])) {
             return \false;
         }
@@ -110,7 +110,7 @@ abstract class Feature extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
             if (!$this->supports($field['type'])) {
                 continue;
             }
-            $field_object = \RWP\Vendor\ACFQuickEdit\Fields\Field::getFieldObject($field);
+            $field_object = Fields\Field::getFieldObject($field);
             $this->add_field($field_object->get_meta_key(), $field_object, \false);
         }
         return $this->is_active();

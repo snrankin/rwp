@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class PageLinkField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class PageLinkField extends Field
 {
     /**
      *	@inheritdoc

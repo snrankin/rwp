@@ -23,4 +23,4 @@ function __autoload($class)
         throw new \Exception(\sprintf('Class `%s` could not be loaded. File `%s` not found.', $class, $file));
     }
 }
-\spl_autoload_register('RWP\\Vendor\\ACFQuickEdit\\__autoload');
+\spl_autoload_register(__NAMESPACE__ . '\\__autoload');

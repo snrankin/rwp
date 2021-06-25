@@ -11,7 +11,7 @@ if (!\defined('ABSPATH')) {
     die('FU!');
 }
 use RWP\Vendor\ACFQuickEdit\Core;
-class Polylang extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
+class Polylang extends Core\Singleton
 {
     /**
      *	@inheritdoc
@@ -19,12 +19,12 @@ class Polylang extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
     protected function __construct()
     {
         // current action: plugins_loaded
-        add_filter('acf_quick_edit_post_ajax_actions', [$this, 'post_ajax_action']);
-        add_filter('acf_quick_edit_term_ajax_actions', [$this, 'term_ajax_action']);
-        add_filter('acf_quick_edit_post_id_request_param', [$this, 'post_id_request_params']);
+        \add_filter('acf_quick_edit_post_ajax_actions', [$this, 'post_ajax_action']);
+        \add_filter('acf_quick_edit_term_ajax_actions', [$this, 'term_ajax_action']);
+        \add_filter('acf_quick_edit_post_id_request_param', [$this, 'post_id_request_params']);
         if (\defined('WPSEO_VERSION')) {
-            add_action('wp_ajax_pll_update_post_rows', [$this, 'handle_wp_seo_columns']);
-            add_action('wp_ajax_pll_update_term_rows', [$this, 'handle_wp_seo_columns']);
+            \add_action('wp_ajax_pll_update_post_rows', [$this, 'handle_wp_seo_columns']);
+            \add_action('wp_ajax_pll_update_term_rows', [$this, 'handle_wp_seo_columns']);
         }
     }
     /**
@@ -36,30 +36,30 @@ class Polylang extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
         // tested with WPSEO_VERSION = 11.9
         try {
             // link column(s)
-            if (\RWP\Vendor\WPSEO_Options::get('enable_text_link_counter')) {
-                $link_cols = new \RWP\Vendor\WPSEO_Link_Columns(new \RWP\Vendor\WPSEO_Meta_Storage());
+            if (\WPSEO_Options::get('enable_text_link_counter')) {
+                $link_cols = new \WPSEO_Link_Columns(new \WPSEO_Meta_Storage());
                 $link_cols->set_count_objects();
                 $link_cols->register_init_hooks();
             }
-        } catch (\RWP\Vendor\Excetion $err) {
+        } catch (\Exception $err) {
             // Rare use case. error log should sustain
-            \error_log(\sprintf('ACF QuickEdit Fields is having trouble with Yoast SEO v%s', WPSEO_VERSION));
+            \error_log(\sprintf('ACF QuickEdit Fields is having trouble with Yoast SEO v%s', \WPSEO_VERSION));
             \error_log($err->getMessage());
             \error_log($err->getTraceAsString());
         }
         try {
             // score + readability
-            $meta_cols = new \RWP\Vendor\WPSEO_Meta_Columns();
+            $meta_cols = new \WPSEO_Meta_Columns();
             $meta_cols->setup_hooks();
-        } catch (\RWP\Vendor\Excetion $err) {
+        } catch (\Exception $err) {
             // Rare use case. error log should sustain
-            \error_log(\sprintf('ACF QuickEdit Fields is having trouble with Yoast SEO v%s', WPSEO_VERSION));
+            \error_log(\sprintf('ACF QuickEdit Fields is having trouble with Yoast SEO v%s', \WPSEO_VERSION));
             \error_log($err->getMessage());
             \error_log($err->getTraceAsString());
         }
     }
     /**
-     *	@filter acf_quick_edit_post_ajax_actions
+     *	@filter \acf_quick_edit_post_ajax_actions
      */
     public function post_ajax_action($actions)
     {
@@ -67,7 +67,7 @@ class Polylang extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
         return $actions;
     }
     /**
-     *	@filter acf_quick_edit_term_ajax_actions
+     *	@filter \acf_quick_edit_term_ajax_actions
      */
     public function term_ajax_action($actions)
     {
@@ -75,7 +75,7 @@ class Polylang extends \RWP\Vendor\ACFQuickEdit\Core\Singleton
         return $actions;
     }
     /**
-     *	@filter acf_quick_edit_post_id_request_param
+     *	@filter \acf_quick_edit_post_id_request_param
      */
     public function post_id_request_params($params)
     {

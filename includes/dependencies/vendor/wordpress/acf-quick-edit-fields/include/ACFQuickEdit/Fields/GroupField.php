@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class GroupField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class GroupField extends Field
 {
     private $sub_fields = [];
     /**
@@ -30,7 +30,7 @@ class GroupField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
             if (!($field = get_field_object($field_key))) {
                 continue;
             }
-            if ($field_object = \RWP\Vendor\ACFQuickEdit\Fields\Field::getFieldObject($field)) {
+            if ($field_object = Field::getFieldObject($field)) {
                 $sanitized_value[$field_key] = $field_object->sanitize_value($value);
             }
         }

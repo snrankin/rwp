@@ -10,7 +10,7 @@ namespace RWP\Vendor\ACFQuickEdit\Core;
 if (!\defined('ABSPATH')) {
     die('FU!');
 }
-class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Vendor\ACFQuickEdit\Core\ComponentInterface
+class Plugin extends Singleton implements ComponentInterface
 {
     /** @var string plugin main file */
     private $plugin_file;
@@ -18,7 +18,7 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
     private $plugin_meta;
     /** @var string version */
     private $_version = null;
-    /** @var string plugin components which might need upgrade */
+    /** @var array plugin components which might need upgrade */
     private static $components = [];
     /**
      *	@inheritdoc
@@ -26,11 +26,11 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
     protected function __construct($file)
     {
         $this->plugin_file = $file;
-        register_activation_hook($this->get_plugin_file(), [$this, 'activate']);
-        register_deactivation_hook($this->get_plugin_file(), [$this, 'deactivate']);
-        register_uninstall_hook($this->get_plugin_file(), [__CLASS__, 'uninstall']);
-        add_action('admin_init', [$this, 'maybe_upgrade']);
-        add_action('plugins_loaded', [$this, 'load_textdomain']);
+        \register_activation_hook($this->get_plugin_file(), [$this, 'activate']);
+        \register_deactivation_hook($this->get_plugin_file(), [$this, 'deactivate']);
+        \register_uninstall_hook($this->get_plugin_file(), [__CLASS__, 'uninstall']);
+        \add_action('admin_init', [$this, 'maybe_upgrade']);
+        \add_action('plugins_loaded', [$this, 'load_textdomain']);
         parent::__construct();
     }
     /**
@@ -45,14 +45,14 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
      */
     public function get_plugin_dir()
     {
-        return plugin_dir_path($this->get_plugin_file());
+        return \plugin_dir_path($this->get_plugin_file());
     }
     /**
      *	@return string full plugin url path
      */
     public function get_plugin_url()
     {
-        return plugin_dir_url($this->get_plugin_file());
+        return \plugin_dir_url($this->get_plugin_file());
     }
     /**
      *	@inheritdoc
@@ -73,7 +73,7 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
      */
     public function get_wp_plugin()
     {
-        return plugin_basename($this->get_plugin_file());
+        return \plugin_basename($this->get_plugin_file());
     }
     /**
      *	@return string current plugin version
@@ -92,7 +92,7 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
     public function get_plugin_meta($which = null)
     {
         if (!isset($this->plugin_meta)) {
-            $this->plugin_meta = get_plugin_data($this->get_plugin_file());
+            $this->plugin_meta = \get_plugin_data($this->get_plugin_file());
         }
         if (isset($this->plugin_meta[$which])) {
             return $this->plugin_meta[$which];
@@ -106,11 +106,11 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
     {
         // trigger upgrade
         $new_version = $this->version();
-        $old_version = get_site_option('acf_duplicate_repeater_version');
+        $old_version = \get_site_option('acf_duplicate_repeater_version');
         // call upgrade
         if (\version_compare($new_version, $old_version, '>')) {
             $upgrade_result = $this->upgrade($new_version, $old_version);
-            update_site_option('acf_duplicate_repeater_version', $new_version);
+            \update_site_option('acf_duplicate_repeater_version', $new_version);
         }
     }
     /**
@@ -121,7 +121,7 @@ class Plugin extends \RWP\Vendor\ACFQuickEdit\Core\Singleton implements \RWP\Ven
     public function load_textdomain()
     {
         $path = \pathinfo($this->get_wp_plugin(), \PATHINFO_DIRNAME);
-        load_plugin_textdomain('acf-quickedit-fields', \false, $path . '/languages');
+        \load_plugin_textdomain('acf-quickedit-fields', \false, $path . '/languages');
     }
     /**
      *	Fired on plugin activation

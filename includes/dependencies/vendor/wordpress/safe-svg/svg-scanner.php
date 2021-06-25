@@ -47,7 +47,7 @@ $files_to_scan = \array_values($files_to_scan);
 //  * Make sure to allow custom attributes,
 //  * and to remove remote references.
 //  */
-// $sanitizer = new \RWP\Vendor\SafeSVG\Sanitizer();
+// $sanitizer = new Sanitizer();
 // $sanitizer->removeRemoteReferences(\true);
 // /*
 //  * Scan each file specified to be scanned.

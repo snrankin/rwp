@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class ColorPickerField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class ColorPickerField extends Field
 {
     /**
      *	@inheritdoc
@@ -29,9 +29,9 @@ class ColorPickerField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
      */
     public function render_input($input_atts, $is_quickedit = \true)
     {
-        $input_atts += ['class' => 'wp-color-picker acf-quick-edit acf-quick-edit-' . $this->acf_field['type'], 'type' => 'text'];
+        $input_atts += ['class' => 'wp-color-picker \acf-quick-edit \acf-quick-edit-' . $this->acf_field['type'], 'type' => 'text'];
         return parent::render_input($input_atts);
-        // '<input '. acf_esc_attr( $input_atts ) .' />';
+        // '<input '. \acf_esc_attr( $input_atts ) .' />';
     }
     /**
      *	@inheritdoc

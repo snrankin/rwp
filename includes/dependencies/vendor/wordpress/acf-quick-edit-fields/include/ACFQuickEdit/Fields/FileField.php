@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class FileField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class FileField extends Field
 {
     /**
      *	@inheritdoc

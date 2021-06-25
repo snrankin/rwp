@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-abstract class ChoiceField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+abstract class ChoiceField extends Field
 {
     /**
      *	@inheritdoc
@@ -50,7 +50,7 @@ abstract class ChoiceField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
         } else {
             $output .= \sprintf('<ol class="acf-qef-value-list" data-count-values="%d">', \count($values));
             foreach ($values as $val) {
-                $output .= \sprintf('<li>%s</li>', acf_esc_html($val));
+                $output .= \sprintf('<li>%s</li>', \acf_esc_html($val));
                 //implode( __(', ', 'acf-quickedit-fields' ) , $values );
             }
             $output .= '</ol>';

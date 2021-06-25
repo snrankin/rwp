@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class ButtonGroupField extends \RWP\Vendor\ACFQuickEdit\Fields\RadioField
+class ButtonGroupField extends RadioField
 {
     /**
      *	@inheritdoc
@@ -14,7 +14,7 @@ class ButtonGroupField extends \RWP\Vendor\ACFQuickEdit\Fields\RadioField
     {
         $output = '';
         if ($this->acf_field['allow_null']) {
-            $output .= \sprintf('<input %s />', acf_esc_attr(['type' => 'hidden', 'name' => $input_atts['name']]));
+            $output .= \sprintf('<input %s />', \acf_esc_attr(['type' => 'hidden', 'name' => $input_atts['name']]));
         }
         $output .= parent::render_input($input_atts, $is_quickedit);
         return $output;

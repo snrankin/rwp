@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class UrlField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class UrlField extends Field
 {
     /**
      *	@inheritdoc
@@ -31,7 +31,7 @@ class UrlField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
      */
     public function sanitize_value($value, $context = 'db')
     {
-        if (\true === acf_validate_value($value, $this->get_acf_field(), null)) {
+        if (\true === \acf_validate_value($value, $this->get_acf_field(), null)) {
             return esc_url_raw($value);
         }
         return '';

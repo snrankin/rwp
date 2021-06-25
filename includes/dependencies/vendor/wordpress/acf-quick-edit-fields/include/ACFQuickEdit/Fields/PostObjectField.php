@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class PostObjectField extends \RWP\Vendor\ACFQuickEdit\Fields\RelationshipField
+class PostObjectField extends RelationshipField
 {
     /**
      *	@inheritdoc
@@ -15,12 +15,12 @@ class PostObjectField extends \RWP\Vendor\ACFQuickEdit\Fields\RelationshipField
         $input_atts += ['data-ui' => '1', 'data-ajax' => '1', 'data-type' => 'post_object', 'data-multiple' => $this->acf_field['multiple'], 'data-allow_null' => $this->acf_field['allow_null']];
         $output = '';
         // handle empty values
-        $output .= acf_get_hidden_input(['name' => $input_atts['name']]);
+        $output .= \acf_get_hidden_input(['name' => $input_atts['name']]);
         // handle multiple values
         if ($this->acf_field['multiple']) {
             $input_atts['name'] .= '[]';
         }
-        $output .= acf_get_select_input($input_atts);
+        $output .= \acf_get_select_input($input_atts);
         return $output;
     }
     /**

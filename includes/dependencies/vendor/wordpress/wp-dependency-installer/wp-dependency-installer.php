@@ -584,7 +584,7 @@ class WP_Dependency_Installer {
 				$dependency = \dirname($notice['slug']);
 				$dismissible = empty($timeout) ? '' : \sprintf('dependency-installer-%1$s-%2$s', \esc_attr($dependency), \esc_attr($timeout));
 			}
-			if (\class_exists('RWP\\Vendor\\PAnD') && \RWP\Vendor\PAnD::is_admin_notice_active($dismissible)) {
+			if (\class_exists('RWP\\Vendor\\PAnD') && PAnD::is_admin_notice_active($dismissible)) {
 				\printf('<div class="%1$s" data-dismissible="%2$s"><p><strong>[%3$s]</strong> %4$s%5$s</p></div>', \esc_attr($class), \esc_attr($dismissible), \esc_html($label), \esc_html($message), $action);
 			}
 		}

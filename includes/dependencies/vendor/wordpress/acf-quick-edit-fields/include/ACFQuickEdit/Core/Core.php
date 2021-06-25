@@ -11,7 +11,7 @@ if (!\defined('ABSPATH')) {
     die('FU!');
 }
 use RWP\Vendor\ACFQuickEdit\Compat;
-class Core extends \RWP\Vendor\ACFQuickEdit\Core\Plugin implements \RWP\Vendor\ACFQuickEdit\Core\CoreInterface
+class Core extends Plugin implements CoreInterface
 {
     private $post_field_prefix = 'acf_qed_';
     /**
@@ -40,8 +40,8 @@ class Core extends \RWP\Vendor\ACFQuickEdit\Core\Plugin implements \RWP\Vendor\A
      */
     public function init_compat()
     {
-        if (\defined('POLYLANG_VERSION') && \version_compare(POLYLANG_VERSION, '1.0.0', '>=')) {
-            \RWP\Vendor\ACFQuickEdit\Compat\Polylang::instance();
+        if (\defined('POLYLANG_VERSION') && \version_compare(\POLYLANG_VERSION, '1.0.0', '>=')) {
+            Compat\Polylang::instance();
         }
     }
 }

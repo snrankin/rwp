@@ -5,7 +5,7 @@ namespace RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class UserField extends \RWP\Vendor\ACFQuickEdit\Fields\Field
+class UserField extends Field
 {
     /**
      *	@inheritdoc
