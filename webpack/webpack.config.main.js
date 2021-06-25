@@ -1,29 +1,19 @@
 /** ============================================================================
  * webpack.config.main
  *
- * @package   RWP
  * @since     0.1.0
  * @version   0.1.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
  * ========================================================================== */
 
-const path = require('path');
-const {
-	mergeWithCustomize,
-	customizeArray,
-	customizeObject,
-	unique,
-	merge,
-	mergeWithRules,
-} = require('webpack-merge');
+const { mergeWithCustomize, customizeArray, merge } = require('webpack-merge');
 const webpack = require('webpack');
+const _ = require('lodash');
+const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
+const { startingPlugins, baseConfig } = require('./webpack.config');
 
-const {
-	startingPlugins,
-	baseConfig,
-	endingPlugins,
-} = require('./webpack.config');
+const { rwpDebug } = require('./utils');
 
 let webpackConfig = {
 	module: {
@@ -62,6 +52,7 @@ let webpackConfig = {
 			jQuery: 'jquery',
 			'window.jQuery': 'jquery',
 		}),
+		new FriendlyErrorsWebpackPlugin(),
 	],
 };
 
@@ -72,9 +63,11 @@ webpackConfig = mergeWithCustomize({
 		plugins: 'prepend',
 	}),
 })(webpackConfig, { plugins: startingPlugins });
-webpackConfig = mergeWithCustomize({
-	customizeArray: customizeArray({
-		plugins: 'append',
-	}),
-})(webpackConfig, { plugins: endingPlugins });
+
+if (_.has(webpackConfig, 'name')) {
+	webpackConfig = [webpackConfig];
+}
+
+rwpDebug(webpackConfig);
+
 module.exports = webpackConfig;

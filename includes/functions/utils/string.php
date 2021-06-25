@@ -7,22 +7,10 @@
  * @since   0.1.0
  * ========================================================================== */
 
-use \RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
+use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
 
-if (!defined('RWP_TITLE_CASE')) {
-	define('RWP_TITLE_CASE', array());
-}
-
-/**
- * Check if a variable had value
- *
- * @param mixed $input
- *
- * @return bool
- */
-
-function rwp_has_value($input) {
-	return filled($input);
+if ( ! defined( 'RWP_TITLE_CASE' ) ) {
+	define( 'RWP_TITLE_CASE', array() );
 }
 /**
  * Change Case
@@ -40,30 +28,32 @@ function rwp_has_value($input) {
  *
  * @return string
  */
-function rwp_change_case($string = '', $case = 'kebab') {
-	switch ($case) {
+function rwp_change_case( $string = '', $case = 'slug' ) {
+	switch ( $case ) {
 		case 'title':
-			$string = Str::title($string);
+			$string = preg_replace( '/((?<=\w)-(?=\w)|\_)/m', ' ', $string );
+			$string = Str::title( $string );
 			break;
 		case 'lower':
-			$string = Str::lower($string);
+			$string = Str::lower( $string );
 			break;
 		case 'snake':
-			$string = Str::snake($string);
+			$string = Str::snake( $string );
 			break;
 		case 'kebab':
-			$string = Str::kebab($string);
+			$string = Str::kebab( $string );
 			break;
 		case 'slug':
-			$string = Str::slug($string);
+			$string = Str::slug( $string );
 			break;
 		case 'camel':
-			$string = Str::camel($string);
+			$string = Str::camel( $string );
 			break;
 	}
 
 	return $string;
 }
+
 /**
  * Determine if a given string contains a given substring.
  *
@@ -71,9 +61,9 @@ function rwp_change_case($string = '', $case = 'kebab') {
  * @param  string|string[]  $needles
  * @return bool
  */
-function rwp_string_has($haystack, $needles) {
+function rwp_string_has( $haystack, $needles ) {
 
-	return Str::contains($haystack, $needles);
+	return Str::contains( $haystack, $needles );
 }
 
 /**
@@ -85,8 +75,8 @@ function rwp_string_has($haystack, $needles) {
  * @return string
  */
 
-function rwp_pluralizer($string = '') {
-	return Pluralizer::plural($string);
+function rwp_pluralizer( $string = '' ) {
+	return Pluralizer::plural( $string );
 }
 
 /**
@@ -98,45 +88,31 @@ function rwp_pluralizer($string = '') {
  * @return string
  */
 
-function rwp_singulizer($string = '') {
-	return Pluralizer::singular($string);
+function rwp_singulizer( $string = '' ) {
+	return Pluralizer::singular( $string );
 }
 
 /**
  * Determine if a given string starts with a given substring.
  *
- * @param  string           $haystack
+ * @param  string  $haystack
  * @param  string|string[]  $needles
  * @return bool
  */
-function rwp_str_starts_with($haystack, $needles) {
-	return Str::startsWith($haystack, $needles);
+function rwp_str_starts_with( $haystack, $needles ) {
+	return Str::startsWith( $haystack, $needles );
 }
 
 /**
  * Determine if a given string ends with a given substring.
  *
- * @param  string           $haystack
+ * @param  string  $haystack
  * @param  string|string[]  $needles
  * @return bool
  */
 
-function rwp_str_ends_with($haystack, $needles) {
-	return Str::endsWith($haystack, $needles);
-}
-
-/**
- * Remove any occurrence of the given string in the subject.
- *
- * @param  string|array<string>  $search
- * @param  string                $subject
- * @param  bool                  $case_sensitive
- *
- * @return string
- */
-
-function rwp_str_remove($search, $subject, $case_sensitive = true) {
-	return Str::remove($search, $subject, $case_sensitive);
+function rwp_str_ends_with( $haystack, $needles ) {
+	return Str::endsWith( $haystack, $needles );
 }
 
 /**
@@ -147,13 +123,13 @@ function rwp_str_remove($search, $subject, $case_sensitive = true) {
  *
  * @return string
  */
-function rwp_add_prefix($string = '', $prefix = '') {
-	if (empty($prefix) || empty($string)) {
+function rwp_add_prefix( $string = '', $prefix = '' ) {
+	if ( empty( $prefix ) || empty( $string ) ) {
 		return $string;
-	}
+    }
 
-	if (!rwp_str_starts_with($string, $prefix)) {
-		$string = Str::start($string, $prefix);
+	if ( ! rwp_str_starts_with( $string, $prefix ) ) {
+		$string = Str::start( $string, $prefix );
 	}
 	return $string;
 }
@@ -166,12 +142,12 @@ function rwp_add_prefix($string = '', $prefix = '') {
  *
  * @return string
  */
-function rwp_remove_prefix($string = '', $prefix = '') {
-	if (empty($prefix) || empty($string)) {
+function rwp_remove_prefix( $string = '', $prefix = '' ) {
+	if ( empty( $prefix ) || empty( $string ) ) {
 		return $string;
-	}
-	if (rwp_str_starts_with($string, $prefix)) {
-		$string = Str::after($string, $prefix);
+    }
+	if ( rwp_str_starts_with( $string, $prefix ) ) {
+		$string = Str::after( $string, $prefix );
 	}
 	return $string;
 }
@@ -179,18 +155,18 @@ function rwp_remove_prefix($string = '', $prefix = '') {
 /**
  * Add suffix to string
  *
- * @param  string  $string  The string to add a suffix.
+ * @param  string  $string  The string to prefix.
  * @param  string  $suffix  The suffix to use
  *
  * @return string
  */
-function rwp_add_suffix($string = '', $suffix = '') {
-	if (empty($suffix) || empty($string)) {
+function rwp_add_suffix( $string = '', $suffix = '' ) {
+	if ( empty( $suffix ) || empty( $string ) ) {
 		return $string;
-	}
+    }
 
-	if (!rwp_str_ends_with($string, $suffix)) {
-		$string = Str::finish($string, $suffix);
+	if ( ! rwp_str_ends_with( $string, $suffix ) ) {
+		$string = Str::finish( $string, $suffix );
 	}
 	return $string;
 }
@@ -203,12 +179,12 @@ function rwp_add_suffix($string = '', $suffix = '') {
  *
  * @return string
  */
-function rwp_remove_suffix($string = '', $suffix = '') {
-	if (empty($suffix) || empty($string)) {
+function rwp_remove_suffix( $string = '', $suffix = '' ) {
+	if ( empty( $suffix ) || empty( $string ) ) {
 		return $string;
-	}
-	if (rwp_str_starts_with($string, $suffix)) {
-		$string = Str::before($string, $suffix);
+    }
+	if ( rwp_str_starts_with( $string, $suffix ) ) {
+		$string = Str::before( $string, $suffix );
 	}
 	return $string;
 }
@@ -220,15 +196,15 @@ function rwp_remove_suffix($string = '', $suffix = '') {
  *
  * @return bool
  */
-function rwp_is_phone_number($str = '') {
-	if (!is_string($str)) {
+function rwp_is_phone_number( $str = '' ) {
+	if ( ! is_string( $str ) ) {
 		return $str;
-	}
-	$str         = rwp_remove_prefix($str, 'tel:');
+    }
+	$str         = rwp_remove_prefix( $str, 'tel:' );
 	$phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
-	preg_match($phone_regex, $str, $matches);
+	preg_match( $phone_regex, $str, $matches );
 
-	if (!empty($matches)) {
+	if ( ! empty( $matches ) ) {
 		return true;
 	} else {
 		return false;
@@ -247,45 +223,58 @@ function rwp_is_phone_number($str = '') {
  *                                    be a hard cut off.
  * @param string       $excerpt_end   Text to append to the end of the trimmed
  *                                    text
- * @param array|false  $allowed_tags  Allowable html tags. Set to false for plain
+ * @param string[]     $allowed_tags  Allowable html tags. Set to null for plain
  *                                    text
  *
  * @return string
  */
 
-function rwp_trim_text($text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array()) {
+function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) {
+
+	/**
+	 * @var string[] $allowedtags
+	 */
 
 	global $allowedtags;
 
+	if ( is_array( $allowed_tags ) ) {
+		$allowed_tags = array_merge( $allowed_tags, $allowedtags );
 
-	if (is_array($allowed_tags) && empty($allowed_tags)) {
-		$allowed_tags = $allowedtags;
 	}
 
-	if (!empty($text)) {
-		$text   = preg_replace("/\r|\n|\h{2,}|\t/", "", $text);
-		$text   = strip_tags($text, $allowed_tags);
+	if ( ! empty( $text ) ) {
+		$text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
+		if ( is_array( $allowed_tags ) ) {
+			foreach ( $allowed_tags as $i => $tag ) {
+				$tag = rwp_add_prefix( $tag, '<' );
+				$tag = rwp_add_suffix( $tag, '>' );
+				$allowed_tags[ $i ] = $tag;
+			}
+
+			$allowed_tags = implode( '', $allowed_tags );
+		}
+		$text   = strip_tags( $text, $allowed_tags );
 		$tokens = array();
 		$out    = '';
 		$word   = 0;
 
-		if (!empty($length)) {
+		if ( ! empty( $length ) ) {
 			//Divide the string into tokens; HTML tags, or words, followed by any whitespace.
 			$regex = '/(<[^>]+>|[^<>\s]+)\s*/u';
-			preg_match_all($regex, $text, $tokens);
-			foreach ($tokens[0] as $t) {
+			preg_match_all( $regex, $text, $tokens );
+			foreach ( $tokens[0] as $t ) {
 				//Parse each token
-				if ($word >= $length && !$variable) {
+				if ( $word >= $length && ! $variable ) {
 					//Limit reached
 					break;
 				}
-				if ('<' !== $t[0]) {
+				if ( '<' !== $t[0] ) {
 					//Token is not a tag.
 					//Regular expression that checks for the end of the sentence: '.', '?' or '!'
 					$regex1 = '/[\?\.\!]\s*$/uS';
-					if ($word >= $length && $variable && preg_match($regex1, $t) === 1) {
+					if ( $word >= $length && $variable && preg_match( $regex1, $t ) === 1 ) {
 						//Limit reached, continue until ? . or ! occur to reach the end of the sentence.
-						$out .= trim($t);
+						$out .= trim( $t );
 						break;
 					}
 					$word++;
@@ -298,53 +287,8 @@ function rwp_trim_text($text = '', $length = 0, $variable = true, $excerpt_end =
 
 		$out .= $excerpt_end;
 
-		return trim(force_balance_tags($out));
+		return trim( force_balance_tags( $out ) );
 	} else {
 		return '';
 	}
-}
-
-
-function rwp_render_time($args = []) {
-
-	$start = '';
-	$end = '';
-	$separator = ' &ndash; ';
-	$format = 'F j, Y';
-
-	extract($args);
-
-	$rendered = '';
-	$start_time = '';
-	$end_time = '';
-	if (!empty($start)) {
-		if (!is_numeric($start)) {
-			$start_time = strtotime($start);
-		} else {
-			$start_time = $start;
-		}
-
-		$start = date_i18n($format, $start_time);
-	}
-	if (!empty($end)) {
-		if (!is_numeric($end)) {
-			$end_time = strtotime($end);
-		} else {
-			$end_time = $end;
-		}
-		$end = date_i18n($format, $end_time);
-	}
-
-	if (!empty($start)) {
-		$rendered .= $start;
-		if (!empty($end) && $end_time !== $start_time) {
-			$rendered .= $separator;
-		}
-	}
-
-	if (!empty($end) && $end_time !== $start_time) {
-		$rendered .= $end;
-	}
-
-	return $rendered;
 }

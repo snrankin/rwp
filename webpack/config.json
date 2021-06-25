@@ -9,13 +9,13 @@
 		"main": {
 			"files": {
 				"public": {
-					"public": ["./css/public.scss"]
+					"public": ["./js/public.js", "./css/public.scss"]
 				},
 				"admin": {
-					"admin": ["./css/admin.scss"]
+					"admin": ["./js/admin.js", "./css/admin.scss"]
 				},
-				"acf": {
-					"acf": ["./css/vendor/acf.scss"]
+				"settings": {
+					"settings": ["./js/settings.js", "./css/settings.scss"]
 				}
 			}
 		},
@@ -31,16 +31,12 @@
 		},
 		"vendor": {
 			"files": {
-				"bootstrap": {
-					"bootstrap": ["./js/vendor/bootstrap.js"]
-				},
 				"fancybox": {
 					"fancybox": [
 						"./js/vendor/fancybox.js",
 						"./css/vendor/fancybox.scss"
 					]
 				},
-
 				"gravity-forms": {
 					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
 				},
@@ -81,9 +77,6 @@
 				"global": {
 					"global": ["./blocks/global/index.js"]
 				},
-				"icon": {
-					"icon": ["./blocks/icon/index.js"]
-				},
 				"row": {
 					"row": ["./blocks/row/index.js"]
 				},
@@ -109,8 +102,7 @@
 	},
 	"paths": {
 		"dist": "./assets",
-		"src": "./src",
-		"cache": ".cache",
+		"src": "./assets/src",
 		"public": "/wp-content/plugins/rwp/assets/"
 	},
 	"folders": {
@@ -119,20 +111,21 @@
 		"fonts": "fonts",
 		"images": "imgs",
 		"blocks": "blocks",
-		"favicons": "imgs/favicons"
+		"dist": "assets",
+		"src": "assets/src"
 	},
 	"enabled": {
 		"optimize": true,
 		"sourcemaps": false,
 		"debug": false,
 		"manifest": true,
-		"cachebusting": true,
+		"cachebusting": false,
 		"cache": false,
 		"favicons": false,
 		"production": true,
 		"googleFonts": false
 	},
 	"copy": [],
-	"cachebusting": "[name]_[hash:8]",
+	"cachebusting": "[name]-[hash:8]",
 	"fileprefix": "rwp-"
 }
