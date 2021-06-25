@@ -1,0 +1,14 @@
+/// ======================================================================== ///
+/// @name   style
+///
+/// @group  RIESTERWP Plugin
+/// @since  0.1.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+
+@import '../../css/global/index';
+
+.rwp-toggle-bar {
+    @extend %block;
+}
