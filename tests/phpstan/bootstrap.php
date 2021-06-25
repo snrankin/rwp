@@ -11,6 +11,5 @@ define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
 define( 'RWP_PLUGIN_PHP_VERSION', '7.0.0' );
 
 
-require_once RWP_PLUGIN_VENDOR_PATH . 'externals/acf/acf.php';
-require_once RWP_PLUGIN_VENDOR_PATH . 'externals/acf/addons/extended/acf-extended.php';
-require_once RWP_PLUGIN_VENDOR_PATH . 'externals/acf/addons/rest-api/class-acf-to-rest-api.php';
+require_once dirname( __DIR__, 3 ) . '/advanced-custom-fields-pro/acf.php';
+require_once dirname( __DIR__, 3 ) . '/acf-extended/acf-extended.php';

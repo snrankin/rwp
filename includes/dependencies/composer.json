@@ -52,7 +52,8 @@
             "RWP\\Vendor\\Micropackage\\Internationalization\\": "vendor/wordpress/micropackage/internationalization/src/",
             "RWP\\Vendor\\Micropackage\\Requirements\\": "vendor/wordpress/micropackage/requirements/src/",
             "RWP\\Vendor\\WPDesk\\PluginBuilder\\": "vendor/wordpress/wpdesk/wp-builder/src/",
-            "RWP\\Vendor\\WPDesk\\Notice\\": "vendor/wordpress/wpdesk/wp-notice/src/WPDesk/Notice/"
+            "RWP\\Vendor\\WPDesk\\Notice\\": "vendor/wordpress/wpdesk/wp-notice/src/WPDesk/Notice/",
+            "RWP\\Vendor\\ACFQuickEdit\\": "vendor/wordpress/acf-quick-edit-fields/include/ACFQuickEdit/"
         },
         "files": [
             "vendor/wordpress/extended-cpts/extended-cpts.php",
@@ -62,7 +63,9 @@
             "vendor/wordpress/page-for-post-type/page-for-post-type.php",
             "vendor/wordpress/webfont-loader/wptt-webfont-loader.php",
             "vendor/wordpress/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php",
-            "vendor/wordpress/safe-svg/safe-svg.php"
+            "vendor/wordpress/safe-svg/safe-svg.php",
+            "vendor/wordpress/acf-quick-edit-fields/index.php",
+            "externals/class-tgm-plugin-activation.php"
         ]
     },
     "extra": {

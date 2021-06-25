@@ -23,4 +23,6 @@ return array(
     '4ec25fda00780949a5ee075f309c3960' => $vendorDir . '/wordpress/webfont-loader/wptt-webfont-loader.php',
     'e86486e9bb7d8c3ef8b8604b7dab7bd3' => $vendorDir . '/wordpress/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php',
     'e45153b440c9054a28f0abeffe49ea82' => $vendorDir . '/wordpress/safe-svg/safe-svg.php',
+    'c0c74991f9df9ef96b8ceaa3db4cf96b' => $vendorDir . '/wordpress/acf-quick-edit-fields/index.php',
+    '40b057067b28036dc43a9d21bcc1a3b8' => $baseDir . '/externals/class-tgm-plugin-activation.php',
 );

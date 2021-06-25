@@ -45,4 +45,5 @@ return array(
     'RWP\\Vendor\\Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'RWP\\Vendor\\Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'RWP\\Vendor\\Brain\\Hierarchy\\' => array($vendorDir . '/wordpress/hierarchy/src'),
+    'RWP\\Vendor\\ACFQuickEdit\\' => array($vendorDir . '/wordpress/acf-quick-edit-fields/include/ACFQuickEdit'),
 );
