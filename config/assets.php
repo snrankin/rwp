@@ -10,7 +10,10 @@
  * ========================================================================== */
 
 
-return [
+$rwp_plugin_assets = [
+	'dir'  => RWP_PLUGIN_ROOT . 'assets/',
+	'uri'  => RWP_PLUGIN_URI . 'assets/',
+	'manifest_path' => RWP_PLUGIN_ROOT . 'assets/manifest.json',
     'scripts' => [
         'public' => [
             'handle'   => 'public',
@@ -74,3 +77,13 @@ return [
         ],
     ],
 ];
+
+
+$rwp_webpack_config = rwp_get_json_data( RWP_PLUGIN_ROOT . 'config.json', true );
+
+if ( $rwp_webpack_config ) {
+	$rwp_webpack_config = rwp_object_to_array( $rwp_webpack_config );
+	$rwp_plugin_assets  = array_merge( $rwp_plugin_assets, $rwp_webpack_config );
+}
+
+return $rwp_plugin_assets;

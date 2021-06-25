@@ -62,8 +62,6 @@ class Base {
 			'url'         => RWP_PLUGIN_URI,
 			'capability'  => 'manage_options',
 			'textdomain'  => RWP_PLUGIN_TEXTDOMAIN,
-			'assets_dir'  => RWP_PLUGIN_ROOT . 'assets/',
-			'assets_uri'  => RWP_PLUGIN_URI . 'assets/',
 			'icon'        => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjFlbSIgaGVpZ2h0PSIxZW0iIGZpbGw9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTAgMHYxNmgxNlYwem05LjMzIDE0LjRMNy43NyA5LjFhOS40NyA5LjQ3IDAgMDEtMS4xMy4wNXY1LjI1aC0yLjJWMS42aDMuMDhjMi40NyAwIDMuNzIgMSAzLjcyIDMuNzggMCAyLjA1LS43OSAyLjg5LTEuNTQgMy4yMmwxLjg2IDUuOHoiLz48cGF0aCBkPSJNNy40MiAzLjQxaC0uNzh2My45M2guNzhjMS4xOCAwIDEuNjMtLjQ0IDEuNjMtMlM4LjYgMy40MSA3LjQyIDMuNDF6Ii8+PC9zdmc+',
 		);
 

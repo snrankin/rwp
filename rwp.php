@@ -24,8 +24,8 @@ define( 'RWP_PLUGIN_TEXTDOMAIN', 'rwp' );
 define( 'RWP_PLUGIN_NAME', 'RIESTERWP Core' );
 define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
 define( 'RWP_PLUGIN_PHP_VERSION', '7.0.0' );
-define( 'RWP_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
-define( 'RWP_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
+define( 'RWP_PLUGIN_ROOT',  trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_ABSOLUTE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'includes/dependencies/' );
 

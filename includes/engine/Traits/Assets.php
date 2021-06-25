@@ -25,20 +25,17 @@ trait Assets {
 	 */
 	public function initialize_assets() {
 
-		$manifest_path = $this->get_setting( 'assets_dir' ) . 'manifest.json';
+		$manifest_path = $this->get_setting( 'assets.manifest_path' );
 
 		if ( rwp_file_exists( $manifest_path ) ) {
 			$manifest = rwp_get_json_data( $manifest_path, true );
 			if ( $manifest ) {
 				$manifest = new Collection( $manifest );
-				$this->set_setting( 'manifest', $manifest );
+				$this->set_setting( 'assets.manifest', $manifest );
 			}
 		} else {
-			$this->set_setting( 'manifest', false );
+			$this->set_setting( 'assets.manifest', false );
 		}
-
-		$this->set_setting( 'styles', rwp_collection() );
-		$this->set_setting( 'scripts', rwp_collection() );
 
 	}
 
@@ -62,7 +59,7 @@ trait Assets {
 			$asset = $this->prefix( $asset, '-' );
 		}
 
-		$manifest = $this->get_setting( 'manifest' );
+		$manifest = $this->get_setting( 'assets.manifest' );
 		if ( ! empty( $folder ) ) {
 			$asset = rwp_add_prefix( $asset, $folder . DIRECTORY_SEPARATOR );
 		}
@@ -100,7 +97,7 @@ trait Assets {
 
 		$asset = $this->asset_filename( $asset, $folder, $prefix );
 
-		$path = $this->get_setting( 'assets_dir' ) . $asset;
+		$path = $this->get_setting( 'assets.dir' ) . $asset;
 
 		if ( rwp_file_exists( $path ) ) {
 
@@ -134,7 +131,7 @@ trait Assets {
 
 		if ( $this->asset_path( $asset, $folder, $prefix ) ) {
 
-			return $this->get_setting( 'assets_uri' ) . $file;
+			return $this->get_setting( 'assets.uri' ) . $file;
 
 		} else {
 
@@ -149,30 +146,35 @@ trait Assets {
 	 * @see  wp_register_script();
 	 * @link https://developer.wordpress.org/reference/functions/wp_register_script/
 	 *
-	 * @param string           $handle    Name of the script. Should be unique.
-	 * @param string|bool      $src       Full URL of the script, or path of the
-	 *                                    script relative to the WordPress root
-	 *                                    directory. If source is set to false,
-	 *                                    script is an alias of other scripts it
-	 *                                    depends on.
-	 * @param string[]         $deps      Optional. An array of registered script
-	 *                                    handles this script depends on. Default
-	 *                                    empty array.
-	 * @param string|bool|null $ver       Optional. String specifying script
-	 *                                    version number, if it has one, which
-	 *                                    is added to the URL as a query string
-	 *                                    for cache busting purposes. If version
-	 *                                    is set to false, a version number is
-	 *                                    automatically added equal to current
-	 *                                    installed WordPress version. If set to
-	 *                                    null, no version is added.
-	 * @param bool             $footer    Optional. Whether to enqueue the script
-	 *                                    before `</body>` instead of in the
-	 *                                    `<head>`. Default 'false'.
-	 * @param bool|array       $localize  Optional. Is this an ajax script?
-	 *                                    @see wp_localize_script(). Defaults to `
-	 *                                    false`
-	 * @param string           $folder    Optional. Defaults to `js/`
+	 * @param array $args {
+	 *     Optional. An array of arguments.
+	 *     @type string           $handle    Name of the script. Should be unique.
+	 *     @type string|bool      $src       Full URL of the script, or path of
+	 *                                       the script relative to the WordPress
+	 *                                       root directory. If source is set to
+	 *                                       false, script is an alias of other
+	 *                                       scripts it depends on.
+	 *     @type string[]         $deps      Optional. An array of registered
+	 *                                       script handles this script depends
+	 *                                       on. Default empty array.
+	 *     @type string|bool|null $ver       Optional. String specifying script
+	 *                                       version number, if it has one, which
+	 *                                       is added to the URL as a query
+	 *                                       string for cache busting purposes.
+	 *                                       If version is set to false, a
+	 *                                       version number is automatically
+	 *                                       added equal to current installed
+	 *                                       WordPress version. If set to null,
+	 *                                       no version is added.
+	 *     @type bool             $footer    Optional. Whether to enqueue the
+	 *                                       script before `</body>` instead of
+	 *                                       in the `<head>`. Default `false`.
+	 *     @type bool|array       $localize  Optional. Is this an ajax script?
+	 *                                       @see wp_localize_script(). Defaults
+	 *                                       to `false`
+	 *     @type string           $folder    Optional. Defaults to `js/`
+	 * }
+	 *
 	 *
 	 * @return void
 	 *
@@ -181,7 +183,36 @@ trait Assets {
 	 * @throws IOException       Thrown if the file does not exist
 	 */
 
-	public function register_script( $handle, $src = '', $deps = array(), $ver = false, $footer = true, $localize = false, $folder = 'js' ) {
+	public function register_script( $args = array() ) {
+
+		/**
+		 * @var string $handle
+		 */
+		$handle = data_get($args, 'handle');
+		/**
+		 * @var string|bool $src
+		 */
+		$src =  data_get($args, 'src', '');
+		/**
+		 * @var string[] $deps
+		 */
+		$deps = data_get($args, 'deps', array());
+		/**
+		 * @var string|bool|null $ver
+		 */
+		$ver = data_get($args, 'ver');
+		/**
+		 * @var bool $footer
+		 */
+		$footer = data_get($args, 'footer', false);
+		/**
+		 * @var bool|array $localize
+		 */
+		$localize = data_get($args, 'localize', false);
+		/**
+		 * @var string $folder
+		 */
+		$folder = data_get($args, 'folder', 'js');
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
@@ -260,12 +291,8 @@ trait Assets {
 		 */
 		$scripts = $this->get_plugin_scripts( $location );
 
-		$this->set_setting( 'scripts', $scripts );
-
 		if ( $scripts ) {
-			$scripts->map( function ( $item ) {
-				call_user_func_array( array( $this, 'register_script' ), $item );
-			});
+			$scripts->map(array($this, 'register_script'));
 		}
 	}
 
@@ -300,35 +327,65 @@ trait Assets {
 	 * @see  wp_register_style();
 	 * @link https://developer.wordpress.org/reference/functions/wp_register_style/
 	 *
-	 * @param string           $handle  Name of the stylesheet. Should be unique.
-	 * @param string|bool      $src     Full URL of the stylesheet, or path of
-	 *                                  the stylesheet relative to the WordPress
-	 *                                  root directory. If source is set to
-	 *                                  false, stylesheet is an alias of other
-	 *                                  stylesheets it depends on.
-	 * @param string[]         $deps    Optional. An array of registered
-	 *                                  stylesheet handles this stylesheet
-	 *                                  depends on. Default empty array.
-	 * @param string|bool|null $ver     Optional. String specifying stylesheet
-	 *                                  version number, if it has one, which is
-	 *                                  added to the URL as a query string for
-	 *                                  ache busting purposes. If version is set
-	 *                                  to false, a version number is
-	 *                                  automatically added equal to current
-	 *                                  installed WordPress version. If set to
-	 *                                  null, no version is added.
-	 * @param string           $media   Optional. The media for which this
-	 *                                  stylesheet has been defined. Default
-	 *                                  'all'. Accepts media types like 'all',
-	 *                                  print' and 'screen', or media queries
-	 *                                  like '(orientation: portrait)' and
-	 *                                  (max-width: 640px)'.
-	 * @param string           $folder  Optional. The subfolder where the asset
-	 *                                  resides. Defaults to `css/`
+	 * @param array $args {
+	 *     @type string           $handle  Required. Name of the stylesheet.
+	 *                                     Should be unique.
+	 *     @type string|bool      $src     Full URL of the stylesheet, or path
+	 *                                     of the stylesheet relative to the
+	 *                                     WordPress root directory. If source
+	 *                                     is set to false, stylesheet is an
+	 *                                     alias of other stylesheets it depends
+	 *                                     on.
+	 *     @type string[]         $deps    Optional. An array of registered
+	 *                                     stylesheet handles this stylesheet
+	 *                                     depends on. Default empty array.
+	 *     @type string|bool|null $ver     Optional. String specifying stylesheet
+	 *                                     version number, if it has one, which
+	 *                                     is added to the URL as a query string
+	 *                                     for cache busting purposes. If version
+	 *                                     is set to false, a version number is
+	 *                                     automatically added equal to current
+	 *                                     installed WordPress version. If set to
+	 *                                     null, no version is added.
+	 *     @type string           $media   Optional. The media for which this
+	 *                                     stylesheet has been defined. Default
+	 *                                     `all`. Accepts media types like `all`,
+	 *                                     `print` and `screen`, or media queries
+	 *                                      like `(orientation: portrait)` and
+	 *                                     `(max-width: 640px)`.
+	 *     @type string           $folder  Optional. The subfolder where the asset
+	 *                                     resides. Defaults to `css/`
+	 *
+	 * }
 	 * @return void
 	 */
 
-	public function register_style( $handle, $src = '', $deps = array(), $ver = false, $media = 'all', $folder = 'css' ) {
+	public function register_style( $args = array()) {
+
+		/**
+		 * @var string $handle
+		 */
+		$handle = data_get($args, 'handle');
+		/**
+		 * @var string|bool $src
+		 */
+		$src =  data_get($args, 'src', '');
+		/**
+		 * @var string[] $deps
+		 */
+		$deps = data_get($args, 'deps', array());
+		/**
+		 * @var string|bool|null $ver
+		 */
+		$ver = data_get($args, 'ver');
+		/**
+		 * @var bool $footer
+		 */
+		$media = data_get($args, 'media', 'all');
+		/**
+		 * @var string $folder
+		 */
+		$folder = data_get($args, 'folder', 'css');
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
@@ -400,9 +457,7 @@ trait Assets {
 		$styles = $this->get_plugin_styles( $location );
 
 		if ( $styles ) {
-			$styles->map(function ( $item ) {
-				call_user_func_array( array( $this, 'register_style' ), $item );
-			});
+			$styles->map(array($this, 'register_style'));
 		}
 	}
 
