@@ -1,69 +1,101 @@
 {
     "name": "rwp/plugin",
-    "description": "Theme agnostic helpers for RWP Theme",
     "type": "wordpress-plugin",
-    "license": "proprietary",
-    "archive": {
-        "name": "rwp",
-        "exclude": [
-            "src",
-            "vendor",
-            "tests",
-            "webpack",
-            "bin"
-        ]
-    },
+    "description": "Wordpress Plugin Boilerplate with steroids!",
+    "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "RIESTER",
+            "name": "RIESTER Advertising Agency",
             "email": "wordpress@riester.com",
             "homepage": "https://www.riester.com"
-        },
-        {
-            "name": "Sam Rankin",
-            "email": "srankin@riester.com",
-            "role": "Developer"
         }
     ],
-    "scripts": {
-        "dump-root": [
-            "composer dump-autoload --working-dir . -o --classmap-authoritative"
-        ],
-        "dump-vendor": [
-            "composer dump-autoload --working-dir dependencies -o"
-        ]
+    "require-dev": {
+        "codeception/codeception-progress-reporter": "^4.0",
+        "codeception/module-asserts": "^1.3",
+        "codeception/module-cli": "^1.1",
+        "codeception/module-db": "^1.1",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-phpbrowser": "^1.0",
+        "codeception/module-webdriver": "^1.2",
+        "codeception/util-universalframework": "^1.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+        "ergebnis/composer-normalize": "^2.6",
+        "lipemat/wp-phpcs": "^2.3",
+        "lucatume/function-mocker": "^1.3",
+        "lucatume/wp-browser": "^3.0",
+        "php-stubs/acf-pro-stubs": "^5.9",
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "phpro/grumphp": "^1.3",
+        "szepeviktor/phpstan-wordpress": "^0.7.5"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "config": {
-        "bin-dir": "./bin",
         "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "RWP\\": "./includes/core/"
+            "RWP\\Ajax\\": "includes/ajax/",
+            "RWP\\Assets\\": "includes/assets/",
+            "RWP\\Backend\\": "includes/backend/",
+            "RWP\\Engine\\": "includes/engine/",
+            "RWP\\Frontend\\": "includes/frontend/",
+            "RWP\\Integrations\\": "includes/integrations/",
+            "RWP\\Internals\\": "includes/internals/",
+            "RWP\\Rest\\": "includes/rest/"
         },
         "files": [
-            "./dependencies/vendor/scoper-autoload.php",
-            "./includes/functions/rwp-functions.php",
-            "./includes/functions/rwp-utils.php",
-            "./includes/functions/rwp-components.php",
-            "./includes/functions/rwp-filters.php",
-            "./includes/class-rwp.php"
+            "includes/dependencies/vendor/scoper-autoload.php"
         ]
     },
-    "extra": {
-        "merge-plugin": {
-            "include": [
-                "composer.json"
-            ],
-            "recurse": true,
-            "replace": false,
-            "ignore-duplicates": true,
-            "merge-dev": true,
-            "merge-extra": false,
-            "merge-extra-deep": false,
-            "merge-scripts": false
-        }
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-install-cmd": [
+            "@composer normalize",
+            "@dump-root"
+        ],
+        "codecept": [
+            "vendor/bin/codecept"
+        ],
+        "codecept:acceptance": [
+            "@codecept run acceptance"
+        ],
+        "codecept:all": [
+            "@codecept:acceptance",
+            "@codecept:functional",
+            "@codecept:unit",
+            "@codecept:wpunit"
+        ],
+        "codecept:functional": [
+            "@codecept run functional"
+        ],
+        "codecept:unit": [
+            "@codecept run unit"
+        ],
+        "codecept:wpunit": [
+            "@codecept run wpunit"
+        ],
+        "dump-root": [
+            "@composer dump-autoload -o -a"
+        ],
+        "dump-vendor": [
+            "@composer dump-autoload --working-dir includes/dependencies -o"
+        ],
+        "grum": [
+            "vendor/bin/grumphp run"
+        ],
+        "install-codestandards": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ],
+        "phpcs": [
+            "vendor/bin/phpcs"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse --debug --memory-limit=-1"
+        ],
+        "test": [
+            "@grum"
+        ]
     }
 }

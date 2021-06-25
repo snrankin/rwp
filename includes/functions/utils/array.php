@@ -129,9 +129,7 @@ function rwp_xml_to_array( \SimpleXMLElement $xml ): array {
 
 		$collection['atts']['tag'] = $xml->getName();
 
-		// @phpstan-ignore-next-line
 		if ( 0 !== count( $attributes ) ) {
-			// @phpstan-ignore-next-line
 			foreach ( $attributes as $attr_name => $attr_value ) {
 				$collection['atts'][ $attr_name ] = strval( $attr_value );
 			}

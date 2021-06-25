@@ -1,0 +1,47 @@
+{
+    "name": "crazycodr\/standard-exceptions",
+    "description": "This project is aimed at providing additional standard exceptions to php. Many exceptions that are missing from the SPL are constantly being reproduced in different projects. By providing a package of high-quality, well organised exceptions, it will, in the long run, increase interoperability between projects.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mathieu Dumoulin",
+            "email": "thecrazycodr@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RWP\\Vendor\\Exceptions\\": "Exceptions\/",
+            "RWP\\Vendor\\Exceptions\\Helpers\\": "Helpers\/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RWP\\Vendor\\Exceptions\\Tests\\": "Tests\/"
+        }
+    },
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "friendsofphp\/php-cs-fixer": "^2.15",
+        "phpunit\/phpunit": "^7.1"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "vendor\/bin\/phpunit",
+        "lint": [
+            "vendor\/bin\/php-cs-fixer --diff --dry-run -v fix Exceptions",
+            "vendor\/bin\/php-cs-fixer --diff --dry-run -v fix Helpers",
+            "vendor\/bin\/php-cs-fixer --diff --dry-run -v fix Tests"
+        ],
+        "fix": [
+            "vendor\/bin\/php-cs-fixer --diff -v fix Exceptions",
+            "vendor\/bin\/php-cs-fixer --diff -v fix Helpers",
+            "vendor\/bin\/php-cs-fixer --diff -v fix Tests"
+        ]
+    }
+}

@@ -167,7 +167,7 @@ function rwp_find_file($filename, $dir = '', $base = __DIR__) {
  */
 
 function rwp_find_plugin_file($filename, $dir = '') {
-	return rwp_find_file($filename, $dir, RWP_PLUGIN_PATH);
+	return rwp_find_file($filename, $dir, RWP_PLUGIN_ROOT);
 }
 
 /**

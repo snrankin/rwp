@@ -1,0 +1,34 @@
+grumphp:
+  ignore_unstaged_changes: false
+  fixer:
+    enabled: true
+    fix_by_default: true
+  tasks:
+    phpcs:
+      report: full
+      report_width: ~
+      whitelist_patterns:
+        - /^tests\/(.*)/
+        - /^vendor\/(.*)/
+        - /^dependencies\/(.*)/
+      ignore_patterns:
+        - tests/
+        - vendor/
+        - dependencies/
+      encoding: ~
+      standard: ~
+      sniffs: []
+      triggered_by: ['php']
+      exclude: []
+    phpstan:
+      autoload_file: ~
+      configuration: './phpstan.neon'
+      level: null
+      use_grumphp_paths: false
+      force_patterns: []
+      ignore_patterns:
+        - /^tests\/(.*)/
+        - /^vendor\/(.*)/
+        - /^dependencies\/(.*)/
+      triggered_by: ['php']
+      memory_limit: '-1'

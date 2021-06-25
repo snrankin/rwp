@@ -18,6 +18,8 @@
 				".prettierrc",
 				".jsbeautifyrc",
 				".stylelintrc",
+				"composer.json",
+				"composer.lock",
 				"package.json",
 				"package.lock"
 			],

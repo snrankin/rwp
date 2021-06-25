@@ -1,7 +1,6 @@
 /** ============================================================================
  * config
  *
- * @package   RWP
  * @since     0.1.0
  * @version   0.1.0
  * @author    RIESTER <wordpress@riester.com>
@@ -19,18 +18,18 @@ const isProduction = config.enabled.production;
 const rootPath =
 	config.paths && config.paths.root ? config.paths.root : process.cwd();
 
-const fileNames = (configName = 'main', name = '') => {
+const fileNames = (groupName = 'main', configName = '') => {
 	let entry = config.entry;
 
-	if (
-		_.isString(configName) &&
-		configName !== '' &&
-		_.has(entry, configName)
-	) {
-		entry = entry[configName].files;
+	if (_.isString(groupName) && groupName !== '' && _.has(entry, groupName)) {
+		entry = entry[groupName].files;
 
-		if (_.isString(name) && name !== '' && _.has(entry, name)) {
-			entry = entry[name];
+		if (
+			_.isString(configName) &&
+			configName !== '' &&
+			_.has(entry, configName)
+		) {
+			entry = entry[configName];
 		} else {
 			entry = _.reduce(
 				entry,
@@ -48,20 +47,16 @@ const fileNames = (configName = 'main', name = '') => {
 
 exports.fileNames = fileNames;
 
-const createConfig = (configName = '', name = '') => {
-	const subName = name || argv.name;
-	let files = fileNames(configName, name);
-	const entryFiles = files;
+const createConfig = (groupName = '', configName = '') => {
+	const subName = configName || argv.name;
+	const entryFiles = fileNames(groupName, configName);
 	let customConfig = {};
-	if (_.isString(name) && name !== '' && _.has(config.entry, name)) {
-		customConfig = config.entry[name];
-		customConfig = _.omit(customConfig, 'files');
-	} else if (
-		_.isString(configName) &&
-		configName !== '' &&
-		_.has(config.entry, configName)
+	if (
+		_.isString(groupName) &&
+		groupName !== '' &&
+		_.has(config.entry, groupName)
 	) {
-		customConfig = config.entry[configName];
+		customConfig = config.entry[groupName];
 		customConfig = _.omit(customConfig, 'files');
 	}
 
@@ -84,7 +79,7 @@ const createConfig = (configName = '', name = '') => {
 		let publicPath = _.split(process.cwd(), path.sep);
 		publicPath.push(customConfig.folders.dist);
 
-		let wpContentDirIndex = _.indexOf(publicPath, 'wp-content');
+		const wpContentDirIndex = _.indexOf(publicPath, 'wp-content');
 
 		if (wpContentDirIndex > -1) {
 			publicPath = _.slice(publicPath, wpContentDirIndex);
@@ -95,40 +90,22 @@ const createConfig = (configName = '', name = '') => {
 		customConfig.paths.public += '/';
 	}
 
-	let notifyTitle = `${pkg.displayName} Build:`;
-
-	if ('' !== configName) {
-		notifyTitle += ` ${_.capitalize(configName)}`;
-	}
-
-	if ('' !== name) {
-		notifyTitle += ` - ${_.capitalize(name)}`;
-	}
-
-	let notifyConfig = {
-		appName: pkg.displayName,
-		title: notifyTitle,
-		buildSuccessful: true,
-	};
-
-	if (!_.isNil(customConfig.paths.favicon)) {
-		notifyConfig.logo = customConfig.paths.favicon;
-	}
-
-	let filename = customConfig.enabled.cachebusting
+	const filenameTemplate = customConfig.enabled.cachebusting
 		? `${fileprefix}${customConfig.cachebusting}`
 		: `${fileprefix}[name]`;
+
 	let newConfig = {
 		webpack: {
-			name: name,
 			mode: isProduction ? 'production' : 'development',
-			entry: files,
+			entry: entryFiles,
 			context: customConfig.paths.src || rootPath,
-			devtool: customConfig.enabled.sourcemaps ? 'source-map' : 'none',
 			output: {
 				path: customConfig.paths.dist,
 				publicPath: customConfig.paths.public,
-				filename: path.join(customConfig.folders.js, `${filename}.js`),
+				filename: path.join(
+					customConfig.folders.js,
+					`${filenameTemplate}.js`
+				),
 			},
 			stats: config.enabled.debug
 				? 'verbose'
@@ -158,7 +135,7 @@ const createConfig = (configName = '', name = '') => {
 				],
 			},
 		},
-		filename: filename,
+		filename: filenameTemplate,
 		prefix: fileprefix,
 		env: Object.assign(
 			{ production: isProduction, development: !isProduction },
@@ -238,20 +215,13 @@ const createConfig = (configName = '', name = '') => {
 				],
 			},
 		},
-		notify: notifyConfig,
-		cacheloader: customConfig.enabled.cache
-			? [
-					{
-						loader: 'cache-loader',
-						options: {
-							cacheDirectory: customConfig.paths.cache,
-						},
-					},
-			  ]
-			: [],
 	};
 
 	newConfig = _.defaultsDeep(newConfig, customConfig);
+
+	if (!_.isNil(configName) && _.isString(configName) && configName !== '') {
+		newConfig = _.merge({ webpack: { name: configName } }, newConfig);
+	}
 
 	return newConfig;
 };
