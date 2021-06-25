@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./blocks/column/edit.scss"],"names":[],"mappings":"AAAA,8DAA8D,gBAAgB,4FAA4F,S","file":"css/rwp-column-38989121.css","sourcesContent":[".wp-block.block-editor-block-list__block.col .content-wrapper{min-height:42px}.wp-block.block-editor-block-list__block.col .content-wrapper>.block-list-appender.wp-block{margin:0}"],"sourceRoot":""}

@@ -1,0 +1,5 @@
+**/*.min.*
+**/*.map
+
+**/_variables.scss
+composer.json

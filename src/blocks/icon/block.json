@@ -1,0 +1,27 @@
+{
+    "apiVersion": 2,
+    "name": "rwp/icon",
+    "title": "Icon",
+    "category": "text",
+    "attributes": {
+        "iconClass": {
+            "type": "string",
+            "default": "glaza-favicon"
+        },
+        "textColor": {
+            "type": "string",
+            "default": ""
+        },
+        "alignment": {
+            "type": "string",
+            "default": "none"
+        }
+    },
+    "supports": {
+        "fontSize": true,
+        "color": {
+            "text": true,
+            "background": false
+        }
+    }
+}

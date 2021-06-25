@@ -1,0 +1,138 @@
+{
+	"app": {
+		"name": "RWP",
+		"theme_color": "#e01c13",
+		"url": "https://www.riester.com",
+		"description": "RIESTER Core Plugin"
+	},
+	"entry": {
+		"main": {
+			"files": {
+				"public": {
+					"public": ["./css/public.scss"]
+				},
+				"admin": {
+					"admin": ["./css/admin.scss"]
+				},
+				"acf": {
+					"acf": ["./css/vendor/acf.scss"]
+				}
+			}
+		},
+		"fonts": {
+			"files": {
+				"bootstrap-icons": {
+					"bootstrap-icons": ["./css/vendor/bootstrap-icons.scss"]
+				},
+				"font-awesome": {
+					"font-awesome": ["./css/vendor/font-awesome.scss"]
+				}
+			}
+		},
+		"vendor": {
+			"files": {
+				"bootstrap": {
+					"bootstrap": ["./js/vendor/bootstrap.js"]
+				},
+				"fancybox": {
+					"fancybox": [
+						"./js/vendor/fancybox.js",
+						"./css/vendor/fancybox.scss"
+					]
+				},
+
+				"gravity-forms": {
+					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
+				},
+				"lazysizes": {
+					"lazysizes": [
+						"./js/vendor/lazysizes.js",
+						"./css/vendor/lazysizes.scss"
+					]
+				},
+				"modernizr": {
+					"modernizr": ["./js/vendor/modernizr.js"]
+				},
+				"select2": {
+					"select2": [
+						"./js/vendor/select2.js",
+						"./css/vendor/select2.scss"
+					]
+				},
+				"tiny-slider": {
+					"tiny-slider": [
+						"./js/vendor/tiny-slider.js",
+						"./css/vendor/tiny-slider.scss"
+					]
+				}
+			}
+		},
+		"blocks": {
+			"files": {
+				"card": {
+					"card": ["./blocks/card/index.js"]
+				},
+				"column": {
+					"column": ["./blocks/column/index.js"]
+				},
+				"container": {
+					"container": ["./blocks/container/index.js"]
+				},
+				"global": {
+					"global": ["./blocks/global/index.js"]
+				},
+				"icon": {
+					"icon": ["./blocks/icon/index.js"]
+				},
+				"row": {
+					"row": ["./blocks/row/index.js"]
+				},
+				"section": {
+					"section": ["./blocks/section/index.js"]
+				},
+				"toggle": {
+					"toggle": ["./blocks/toggle/index.js"]
+				}
+			},
+			"enabled": {
+				"optimize": true,
+				"sourcemaps": false,
+				"debug": false,
+				"manifest": true,
+				"cachebusting": true,
+				"cache": false,
+				"favicons": false,
+				"production": true,
+				"googleFonts": false
+			}
+		}
+	},
+	"paths": {
+		"dist": "./assets",
+		"src": "./src",
+		"cache": ".cache",
+		"public": "/wp-content/plugins/rwp/assets/"
+	},
+	"folders": {
+		"js": "js",
+		"css": "css",
+		"fonts": "fonts",
+		"images": "imgs",
+		"blocks": "blocks",
+		"favicons": "imgs/favicons"
+	},
+	"enabled": {
+		"optimize": true,
+		"sourcemaps": false,
+		"debug": false,
+		"manifest": true,
+		"cachebusting": true,
+		"cache": false,
+		"favicons": false,
+		"production": true,
+		"googleFonts": false
+	},
+	"copy": [],
+	"cachebusting": "[name]_[hash:8]",
+	"fileprefix": "rwp-"
+}
