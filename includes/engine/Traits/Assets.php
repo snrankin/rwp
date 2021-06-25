@@ -188,31 +188,31 @@ trait Assets {
 		/**
 		 * @var string $handle
 		 */
-		$handle = data_get($args, 'handle');
+		$handle = data_get( $args, 'handle' );
 		/**
 		 * @var string|bool $src
 		 */
-		$src =  data_get($args, 'src', '');
+		$src = data_get( $args, 'src', '' );
 		/**
 		 * @var string[] $deps
 		 */
-		$deps = data_get($args, 'deps', array());
+		$deps = data_get( $args, 'deps', array() );
 		/**
 		 * @var string|bool|null $ver
 		 */
-		$ver = data_get($args, 'ver');
+		$ver = data_get( $args, 'ver' );
 		/**
 		 * @var bool $footer
 		 */
-		$footer = data_get($args, 'footer', false);
+		$footer = data_get( $args, 'footer', false );
 		/**
 		 * @var bool|array $localize
 		 */
-		$localize = data_get($args, 'localize', false);
+		$localize = data_get( $args, 'localize', false );
 		/**
 		 * @var string $folder
 		 */
-		$folder = data_get($args, 'folder', 'js');
+		$folder = data_get( $args, 'folder', 'js' );
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
@@ -292,7 +292,7 @@ trait Assets {
 		$scripts = $this->get_plugin_scripts( $location );
 
 		if ( $scripts ) {
-			$scripts->map(array($this, 'register_script'));
+			$scripts->map( array( $this, 'register_script' ) );
 		}
 	}
 
@@ -360,32 +360,32 @@ trait Assets {
 	 * @return void
 	 */
 
-	public function register_style( $args = array()) {
+	public function register_style( $args = array() ) {
 
 		/**
 		 * @var string $handle
 		 */
-		$handle = data_get($args, 'handle');
+		$handle = data_get( $args, 'handle' );
 		/**
 		 * @var string|bool $src
 		 */
-		$src =  data_get($args, 'src', '');
+		$src = data_get( $args, 'src', '' );
 		/**
 		 * @var string[] $deps
 		 */
-		$deps = data_get($args, 'deps', array());
+		$deps = data_get( $args, 'deps', array() );
 		/**
 		 * @var string|bool|null $ver
 		 */
-		$ver = data_get($args, 'ver');
+		$ver = data_get( $args, 'ver' );
 		/**
-		 * @var bool $footer
+		 * @var string $media
 		 */
-		$media = data_get($args, 'media', 'all');
+		$media = data_get( $args, 'media', 'all' );
 		/**
 		 * @var string $folder
 		 */
-		$folder = data_get($args, 'folder', 'css');
+		$folder = data_get( $args, 'folder', 'css' );
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
@@ -457,7 +457,7 @@ trait Assets {
 		$styles = $this->get_plugin_styles( $location );
 
 		if ( $styles ) {
-			$styles->map(array($this, 'register_style'));
+			$styles->map( array( $this, 'register_style' ) );
 		}
 	}
 
