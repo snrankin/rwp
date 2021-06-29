@@ -43,7 +43,7 @@ class Admin extends Core\Singleton
         $this->css = Asset\Asset::get('css/acf-quickedit.css');
         add_action('after_setup_theme', [$this, 'setup']);
         // init field group admin
-        add_action('acf/field_group/admin_head', ['ACFQuickEdit\\Admin\\FieldGroup', 'instance']);
+        add_action('acf/field_group/admin_head', [__NAMESPACE__ . '\\FieldGroup', 'instance']);
     }
     public function __get($what)
     {

@@ -11,36 +11,20 @@ parameters:
     - %currentWorkingDirectory%/includes/integrations
     - %currentWorkingDirectory%/includes/internals
     - %currentWorkingDirectory%/includes/rest
-    - %currentWorkingDirectory%/templates
-  bootstrapFiles:
-    - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
-    - %currentWorkingDirectory%/includes/dependencies/vendor/autoload.php
-    - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
-  scanDirectories:
-    - %currentWorkingDirectory%/includes/dependencies
-  scanFiles:
-    - ../query-monitor/query-monitor.php
     - rwp.php
     - uninstall.php
-    - %currentWorkingDirectory%/includes/dependencies/externals/acf/acf.php
-    - %currentWorkingDirectory%/includes/dependencies/externals/acf/addons/extended/acf-extended.php
-    - %currentWorkingDirectory%/includes/dependencies/externals/acf/addons/rest-api/class-acf-to-rest-api.php
+  bootstrapFiles:
+    - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
+  scanDirectories:
+    - %currentWorkingDirectory%/includes/dependencies
+    - ../advanced-custom-fields-pro
+    - ../acf-extended
+  scanFiles:
+    - ../advanced-custom-fields-pro/acf.php
+    - ../acf-extended/acf-extended.php
   ignoreErrors:
-    # TODO Add file names!!
-    # Void as typehints are available only on PHP 7.1+
-    # - '#has no return typehint specified\.$#'
-    # In wp_count_posts(): $counts = (object) $counts;
-    # - '#^Access to an undefined property object::\$pending\.$#'
-    # PHPStan is better safe than sorry!
-    # https://github.com/phpstan/phpstan/issues/1060#issuecomment-667675767
-    - '#^Function wpdesk_wp_notice invoked with 2 parameters, 0 required\.$#'
-    # https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered/issues/162
-    # - '#^Parameter \#2 \$object_id of function cmb2_metabox_form expects int, string given\.$#'
-    - '#^Function new_cmb2_box invoked with 1 parameter, 0 required\.$#'
     - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
-    # - '#^Function cmb2_get_metabox_form invoked with 1 parameter, 0 required\.$#'
-    # - '#^Parameter \#1 \$str of function sanitize_text_field expects string, array(<string>)?\|string given\.$#'
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
     - '#^Call to function is_null\(\) with static\(RWP\\Engine\\Base\) will always evaluate to false\.$#'
     - '#^Unsafe usage of new static\(\)\.$#'
-    # - '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+    - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
