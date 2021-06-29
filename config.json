@@ -13,9 +13,6 @@
 				},
 				"admin": {
 					"admin": ["./js/admin.js", "./css/admin.scss"]
-				},
-				"settings": {
-					"settings": ["./js/settings.js", "./css/settings.scss"]
 				}
 			}
 		},

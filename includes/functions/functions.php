@@ -9,14 +9,6 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
-use RWP\Vendor\Exceptions\IO\Filesystem\FileNotReadableException;
-use RWP\Vendor\Exceptions\IO\Filesystem\NotAFileException;
-use RWP\Vendor\Exceptions\IO\Filesystem\DirectoryNotFoundException;
-use RWP\Vendor\Exceptions\IO\Filesystem\DirectoryNotReadableException;
-use RWP\Vendor\Exceptions\Http\HttpException;
-
-
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
