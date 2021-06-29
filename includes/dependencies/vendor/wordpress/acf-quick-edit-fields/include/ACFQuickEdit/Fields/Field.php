@@ -103,7 +103,7 @@ abstract class Field
         if (!isset(self::$fields[$acf_field['key']])) {
             $field_class = \preg_split('/[-_]/', $acf_field['type']);
             $field_class = \array_map('ucfirst', $field_class);
-            $field_class = 'ACFQuickEdit\\Fields\\' . \implode('', $field_class) . 'Field';
+            $field_class = __NAMESPACE__ . '\\' . \implode('', $field_class) . 'Field';
             try {
                 self::$fields[$acf_field['key']] = new $field_class($acf_field);
             } catch (\Exception $exc) {
@@ -117,7 +117,7 @@ abstract class Field
      */
     protected function __construct($acf_field)
     {
-        $this->core = Core::instance();
+        $this->core = Core\Core::instance();
         $this->acf_field = $acf_field;
         $parent_key = '';
         if (\is_numeric($this->acf_field['parent'])) {
@@ -227,7 +227,7 @@ abstract class Field
      */
     protected function render_bulk_do_not_change($input_atts)
     {
-        $bulk = Bulkedit::instance();
+        $bulk = Admin\Bulkedit::instance();
         ?>
 		<label class="bulk-do-not-change">
 			<input <?php

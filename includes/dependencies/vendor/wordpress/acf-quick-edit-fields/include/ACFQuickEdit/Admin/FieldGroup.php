@@ -7,7 +7,7 @@ use RWP\Vendor\ACFQuickEdit\Fields;
 if (!\defined('ABSPATH')) {
     die('Nope.');
 }
-class FieldGroup extends Singleton
+class FieldGroup extends Core\Singleton
 {
     /**
      *	@inheritdoc
@@ -24,7 +24,7 @@ class FieldGroup extends Singleton
      */
     public function init_acf_settings()
     {
-        $types = Field::get_types();
+        $types = Fields\Field::get_types();
         foreach ($types as $type => $supports) {
             if ($supports['column']) {
                 add_action("acf/render_field_settings/type={$type}", [$this, 'render_column_settings']);
@@ -48,7 +48,7 @@ class FieldGroup extends Singleton
      */
     public function render_column_setting($field)
     {
-        $field_object = Field::getFieldObject($field['field']);
+        $field_object = Fields\Field::getFieldObject($field['field']);
         // parse default values
         $field['field'] = wp_parse_args($field['field'], ['show_column' => \false, 'show_column_sortable' => \false]);
         echo '<div style="width:50%;float:left;">';
@@ -78,8 +78,8 @@ class FieldGroup extends Singleton
      */
     public function render_edit_setting($field)
     {
-        $field_object = Field::getFieldObject($field['field']);
-        $types = Field::get_types();
+        $field_object = Fields\Field::getFieldObject($field['field']);
+        $types = Fields\Field::get_types();
         // parse default values
         $field['field'] = wp_parse_args($field['field'], ['allow_quickedit' => \false, 'allow_bulkedit' => \false]);
         if ($types[$field['field']['type']]['quickedit']) {

@@ -26,43 +26,20 @@ class Enqueue extends Base {
 		}
 
 		// Load admin style sheet and JavaScript.
-		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 	}
 
 
 	/**
-	 * Register and enqueue admin-specific style sheet.
+	 * Register and enqueue admin-specific styles and scripts.
 	 *
 	 * @since 1.0.0
-	 */
-	public function enqueue_admin_styles() {
-		$admin_page = \get_current_screen();
-
-		if ( ! \is_null( $admin_page ) && 'toplevel_page_rwp_options' === $admin_page->id ) {
-			$this->register_styles( 'settings' );
-			$this->enqueue_styles( 'settings' );
-		}
-
-		$this->register_styles( 'admin' );
-		$this->enqueue_styles( 'admin' );
-
-	}
-
-	/**
-	 * Register and enqueue admin-specific JavaScript.
 	 *
-	 * @since 1.0.0
+	 * @return void
 	 */
-	public function enqueue_admin_scripts() {
-		$admin_page = \get_current_screen();
-
-		if ( ! \is_null( $admin_page ) && 'toplevel_page_rwp_options' === $admin_page->id ) {
-			$this->register_scripts( 'settings' );
-			$this->enqueue_scripts( 'settings' );
-		}
-		$this->register_scripts( 'admin' );
-		$this->enqueue_scripts( 'admin' );
+	public function enqueue_admin_assets() {
+		$this->register_assets( 'admin' );
+		$this->enqueue_assets( 'admin' );
 
 	}
 }

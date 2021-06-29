@@ -2,7 +2,7 @@
 /** ============================================================================
  * ACF
  *
- * @package   RWP\/includes/integrations/ACF.php
+ * @package   RWP\Integrations
  * @since     1.0.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
@@ -24,10 +24,12 @@ class ACF extends Base {
 		parent::initialize();
 
 		\add_action( 'acf/init', array( $this, 'add_plugin_admin_menu' ) );
+		\add_action( 'acf/init', array( $this, 'setup_acf' ) );
 		\add_action( 'acfe/init', array( $this, 'init_acfe' ) );
 		\add_action( 'acfe/save_option/slug=' . $this->prefix( 'options', '-' ), array( $this, 'save_acf_options' ), 10, 2 );
 		\add_action( 'acfe/save_term', array( $this, 'save_acf_term_fields' ), 10, 2 );
 		\add_action( 'acfe/save_post', array( $this, 'save_acf_post_fields' ), 10, 2 );
+		\add_action( 'acf/admin_enqueue_scripts', array( $this, 'enqueue_acf_assets' ), 999 );
 
 	}
 
@@ -50,15 +52,42 @@ class ACF extends Base {
 				'capability' => $this->get_setting( 'capability' ),
 				'icon_url'   => $this->get_setting( 'icon' ),
 				'autoload'   => true,
-
 			));
 		}
+	}
 
+	/**
+	 * Register and enqueue admin-specific styles and scripts.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+
+	public function setup_acf() {
+
+		$path = RWP_PLUGIN_ROOT . 'config/acf/';
+
+		foreach ( glob( $path . '/*.*' ) as $file ) {
+			require_once $file;
+		}
+	}
+
+	/**
+	 * Register and enqueue acf-specific styles and scripts.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+
+	public function enqueue_acf_assets() {
+		$this->register_assets( 'acf' );
+		$this->enqueue_assets( 'acf' );
 	}
 
 	/**
 	 * Update settings for ACF Extended
-	 *
 	 *
 	 * @return void
 	 */
