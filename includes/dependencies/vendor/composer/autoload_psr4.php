@@ -32,8 +32,6 @@ return array(
     'RWP\\Vendor\\Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'RWP\\Vendor\\Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'RWP\\Vendor\\Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'RWP\\Vendor\\Micropackage\\Requirements\\' => array($vendorDir . '/wordpress/micropackage/requirements/src'),
-    'RWP\\Vendor\\Micropackage\\Internationalization\\' => array($vendorDir . '/wordpress/micropackage/internationalization/src'),
     'RWP\\Vendor\\JSMin\\' => array($vendorDir . '/mrclay/jsmin-php/src/JSMin'),
     'RWP\\Vendor\\Illuminate\\Support\\' => array($vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/macroable', $vendorDir . '/illuminate/support'),
     'RWP\\Vendor\\Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),

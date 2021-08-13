@@ -57,8 +57,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
             'RWP\\Vendor\\Psr\\SimpleCache\\' => 27,
             'RWP\\Vendor\\Psr\\Log\\' => 19,
             'RWP\\Vendor\\Psr\\Container\\' => 25,
-            'RWP\\Vendor\\Micropackage\\Requirements\\' => 37,
-            'RWP\\Vendor\\Micropackage\\Internationalization\\' => 45,
             'RWP\\Vendor\\JSMin\\' => 17,
             'RWP\\Vendor\\Illuminate\\Support\\' => 30,
             'RWP\\Vendor\\Illuminate\\Contracts\\' => 32,
@@ -178,14 +176,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
         'RWP\\Vendor\\Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'RWP\\Vendor\\Micropackage\\Requirements\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src',
-        ),
-        'RWP\\Vendor\\Micropackage\\Internationalization\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/wordpress/micropackage/internationalization/src',
         ),
         'RWP\\Vendor\\JSMin\\' => 
         array (
@@ -745,16 +735,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
         'RWP\\Vendor\\JSMin\\UnterminatedRegExpException' => __DIR__ . '/..' . '/mrclay/jsmin-php/src/JSMin/UnterminatedRegExpException.php',
         'RWP\\Vendor\\JSMin\\UnterminatedStringException' => __DIR__ . '/..' . '/mrclay/jsmin-php/src/JSMin/UnterminatedStringException.php',
         'RWP\\Vendor\\JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-        'RWP\\Vendor\\Micropackage\\Internationalization\\Internationalization' => __DIR__ . '/..' . '/wordpress/micropackage/internationalization/src/Internationalization.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Abstracts\\Checker' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Abstracts/Checker.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\DocHooks' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/DocHooks.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\PHP' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/PHP.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\PHPExtensions' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/PHPExtensions.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\Plugins' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/Plugins.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\Theme' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/Theme.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Checker\\WP' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Checker/WP.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Interfaces\\Checkable' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Interfaces/Checkable.php',
-        'RWP\\Vendor\\Micropackage\\Requirements\\Requirements' => __DIR__ . '/..' . '/wordpress/micropackage/requirements/src/Requirements.php',
         'RWP\\Vendor\\Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
         'RWP\\Vendor\\Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
         'RWP\\Vendor\\Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',

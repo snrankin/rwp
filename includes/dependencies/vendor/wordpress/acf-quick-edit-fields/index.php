@@ -36,17 +36,16 @@ https://github.com/mcguffin/wp-skeleton
 if (!\defined('ABSPATH')) {
 	die('FU!');
 }
-if(!class_exists('ACF')){
+if (!class_exists('ACF')) {
 	return;
 }
-if (is_admin() || wp_doing_ajax()) {
+if (\is_admin() || \wp_doing_ajax()) {
 	require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
-	if(class_exists('\\RWP\\Vendor\\ACFQuickEdit\\Core\\Core')){
+	if (class_exists('\\RWP\\Vendor\\ACFQuickEdit\\Core\\Core')) {
 		\RWP\Vendor\ACFQuickEdit\Core\Core::instance(__FILE__);
 
-		if(class_exists('\\RWP\\Vendor\\ACFQuickEdit\\Admin\\Admin')){
+		if (class_exists('\\RWP\\Vendor\\ACFQuickEdit\\Admin\\Admin')) {
 			\RWP\Vendor\ACFQuickEdit\Admin\Admin::instance(__FILE__);
 		}
 	}
-
 }

@@ -116,7 +116,7 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements to the end of the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
     public function appendTo($element) {
@@ -324,7 +324,7 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements after the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
     public function insertAfter($element) {
@@ -350,7 +350,7 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements before the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
     public function insertBefore($element) {
@@ -403,7 +403,7 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements to the beginning of the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements prepended to the target elements
+     * @return HtmlPageCrawler A new Crawler object containing all elements prepended to the target elements
      * @api
      */
     public function prependTo($element) {
@@ -502,7 +502,7 @@ class HtmlPageCrawler extends Crawler {
      * Replace each target element with the set of matched elements.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
     public function replaceAll($element) {
@@ -529,7 +529,7 @@ class HtmlPageCrawler extends Crawler {
      * Replace each element in the set of matched elements with the provided new content and return the set of elements that was removed.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function replaceWith($content) {
@@ -589,7 +589,7 @@ class HtmlPageCrawler extends Crawler {
      * Add or remove one or more classes from each element in the set of matched elements, depending the class’s presence.
      *
      * @param string $classname One or more classnames separated by spaces
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function toggleClass($classname) {
@@ -610,7 +610,7 @@ class HtmlPageCrawler extends Crawler {
     /**
      * Remove the parents of the set of matched elements from the DOM, leaving the matched elements in their place.
      *
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function unwrap() {
@@ -624,7 +624,7 @@ class HtmlPageCrawler extends Crawler {
     /**
      * Remove the matched elements, but promote the children to take their place.
      *
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function unwrapInner() {
@@ -692,7 +692,7 @@ class HtmlPageCrawler extends Crawler {
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
      * @throws \LogicException
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function wrapAll($content) {
@@ -733,7 +733,7 @@ class HtmlPageCrawler extends Crawler {
      * Wrap an HTML structure around the content of each element in the set of matched elements.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
-     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @return HtmlPageCrawler $this for chaining
      * @api
      */
     public function wrapInner($content) {
