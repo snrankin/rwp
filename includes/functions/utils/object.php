@@ -8,7 +8,9 @@
  * ========================================================================== */
 
 use RWP\Vendor\Illuminate\Support\Collection;
-
+use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
+use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
+use RWP\Vendor\Illuminate\Support\Enumerable;
 /**
  * Function wrapper for Collection class
  *
@@ -27,31 +29,30 @@ function rwp_collection( $args = array() ) {
  *
  * Converts a multilevel object into an array
  *
- * @link https://stackoverflow.com/questions/4790453/php-recursive-array-to-object#answer-9185337
- *
  * @param object $obj
  *
- * @return array|false The converted object
+ * @return array The converted object
  */
 function rwp_object_to_array( $obj ) {
-	if ( empty( $obj ) || ! is_object( $obj ) ) {
-		return false;
-    }
 
-	if ( $obj instanceof Collection ) {
-		$obj = json_decode( $obj->toJson(), true );
+	if ( $obj instanceof Enumerable ) {
+		return $obj->all();
+	} elseif ( $obj instanceof Arrayable ) {
+		return $obj->toArray();
+	} elseif ( $obj instanceof Jsonable ) {
+		return \json_decode( $obj->toJson(), \true );
+	} elseif ( $obj instanceof \JsonSerializable ) {
+		return (array) $obj->jsonSerialize();
+	} elseif ( $obj instanceof \Traversable ) {
+		return \iterator_to_array( $obj );
 	} else {
 		$obj = wp_json_encode( $obj );
 		if ( $obj ) {
 			$obj = json_decode( $obj, true );
 		}
 	}
+    return (array) $obj;
 
-	if ( $obj ) {
-		return $obj;
-	} else {
-		return false;
-	}
 }
 
 /**
@@ -84,14 +85,10 @@ function rwp_object_has( $key, $obj ) {
  *
  * @param mixed $var the variable to check
  *
- * @return bool|Collection
+ * @return bool
  */
 function rwp_is_collection( $var ) {
-	if ( $var instanceof Collection ) {
-		return $var;
-	} else {
-		return false;
-	}
+	return ( $var instanceof Collection );
 }
 
 /**
@@ -137,7 +134,7 @@ function rwp_collection_remove_empty_items( $collection ) {
 }
 
 /**
- * Remove empty items from a collection
+ * Sorts items from a collection
  *
  * @param Collection $collection The collection to filter
  * @param array $order The array of keys in the desired order

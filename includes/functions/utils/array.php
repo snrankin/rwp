@@ -127,7 +127,7 @@ function rwp_xml_to_array( \SimpleXMLElement $xml ): array {
 		$nodes      = $xml->children();
 		$attributes = $xml->attributes();
 
-		$collection['atts']['tag'] = $xml->getName();
+		$collection['tag'] = $xml->getName();
 
 		if ( 0 !== count( $attributes ) ) {
 			foreach ( $attributes as $attr_name => $attr_value ) {

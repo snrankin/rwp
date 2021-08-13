@@ -89,12 +89,6 @@ function rwp_register_required_plugins() {
 			'required'  => true,
 		),
 		array(
-			'name'        => 'Gravity Forms',
-			'slug'        => 'gravityforms',
-			'source'             => dirname( __FILE__ ) . '/includes/dependencies/externals/plugins/gravityforms.zip', // The plugin source.
-			'required'           => false,
-		),
-		array(
 			'name'        => 'WordPress SEO by Yoast',
 			'slug'        => 'wordpress-seo',
 			'is_callable' => 'wpseo_init',
@@ -126,26 +120,12 @@ function rwp_register_required_plugins() {
 	tgmpa( $plugins, $config );
 }
 add_action( 'tgmpa_register', 'rwp_register_required_plugins' );
-// $rwp_requirements = new RWP\Vendor\Micropackage\Requirements\Requirements(
-// 	RWP_PLUGIN_NAME,
-// 	array(
-// 		'php'            => RWP_PLUGIN_PHP_VERSION,
-// 		'php_extensions' => array( 'mbstring' ),
-// 		'wp'             => RWP_PLUGIN_WP_VERSION,
-//     )
-// );
-
-// if ( ! $rwp_requirements->satisfied() ) {
-// 	$rwp_requirements->print_notice();
-
-// 	return;
-// }
 
 
 require_once RWP_PLUGIN_ROOT . 'includes/functions/functions.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
-
+require_once RWP_PLUGIN_ROOT . 'includes/functions/components.php';
 
 // Documentation to integrate GitHub, GitLab or BitBucket https://github.com/YahnisElsts/plugin-update-checker/blob/master/README.md
 // Puc_v4_Factory::buildUpdateChecker(

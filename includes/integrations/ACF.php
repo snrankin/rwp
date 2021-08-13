@@ -45,7 +45,13 @@ class ACF extends Base {
 		$path = RWP_PLUGIN_ROOT . 'config/acf/';
 
 		foreach ( glob( $path . '/*.*' ) as $file ) {
-			require_once $file;
+			if ( rwp_str_ends_with( $file, 'nav_options.php' ) ) {
+				if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
+					require_once $file;
+				}
+			} else {
+				require_once $file;
+			}
 		}
 
 		if ( function_exists( 'acf_add_options_page' ) ) {

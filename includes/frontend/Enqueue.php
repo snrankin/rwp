@@ -23,9 +23,15 @@ class Enqueue extends Base {
 	public function initialize() {
 		parent::initialize();
 
+		\add_action( 'wp_head', array( $this, 'replace_no_script' ) );
+
 		// Load public-facing style sheet and JavaScript.
 		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_styles' ) );
 		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_scripts' ) );
+	}
+
+	public function replace_no_script() {
+		echo "<script id=\"rwp-replace-no-script\">document.documentElement.className = document.documentElement.className.replace(/(\s*)(\bno-js\b)(\s*)/gm, `$1js$3`);</script>";
 	}
 
 

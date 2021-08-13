@@ -68,6 +68,10 @@ class Group extends Element {
         $item_default_atts = $this->item_atts;
 		$item_type = __NAMESPACE__ . '\\' . $this->item_type;
 
+		if ( is_array( $item ) ) {
+			$item = rwp_merge_args( $item_default_atts, $item );
+		}
+
 		if ( ! ( $item instanceof $item_type ) ) {
 			$item = new $item_type( $item );
 		}

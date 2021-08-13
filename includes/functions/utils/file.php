@@ -40,16 +40,22 @@ function rwp_trailingslashit( $string ) {
 	return wp_normalize_path( $string );
 }
 
+/**
+ * Get the name of a file without the extension
+ *
+ * @param mixed $string
+ * @return string
+ */
+
 function rwp_basename( $string ) {
 	$ext = pathinfo( $string, PATHINFO_EXTENSION );
-	$string =
-		wp_basename( $string, ".$ext" );
+	$string = wp_basename( $string, ".$ext" );
 
 	return $string;
 }
 
 /**
- * Simplified wrapper for getting json data
+ * Simplified wrapper for getting file data
  *
  * @param string $url
  * @param bool   $local Whether the url is a local path
@@ -60,9 +66,10 @@ function rwp_basename( $string ) {
  * @return mixed|false
  */
 
-function rwp_get_json_data( $url, $local = false ) {
+function rwp_get_file_data( $url, $local = false ) {
 	$url  = esc_url_raw( $url );
 	$data = null;
+	$type = pathinfo( $url, PATHINFO_EXTENSION );
 
 	if ( $local ) {
 		if ( rwp_file_exists( $url ) ) {
@@ -83,17 +90,22 @@ function rwp_get_json_data( $url, $local = false ) {
 		}
 	}
 
-	try {
-		if ( ! empty( $data ) ) {
-			$data = json_decode( $data, false, 512, JSON_THROW_ON_ERROR );
+	if ( 'json' === $type ) {
+		try {
+			if ( ! empty( $data ) ) {
+				$data = json_decode( $data, false, 512, JSON_THROW_ON_ERROR );
 
-			if ( is_object( $data ) && filled( $data ) ) {
-				return $data;
+				if ( is_object( $data ) && filled( $data ) ) {
+					return $data;
+				}
 			}
+		} catch ( JsonException $e ) {
+			rwp_error( $e->getMessage(), 'error' );
 		}
-	} catch ( JsonException $e ) {
-		rwp_error( $e->getMessage(), 'error' );
+	} else {
+		return $data;
 	}
+
 }
 
 
@@ -230,18 +242,14 @@ function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, 
 							$file = include $filename;
 						}
 					}
-				} elseif ( 'json' === $type ) {
-					$file = rwp_get_json_data( $filename, true );
+				} elseif ( 'css' === $type || 'js' === $type ) {
+					$file = rwp_get_file_data( $filename, true );
 				} else {
 					$file = $filename;
 				}
 			}
 		} else {
-			if ( 'json' === $type ) {
-				$file = rwp_get_json_data( $filename );
-			} else {
-				$file = wp_safe_remote_get( $filename );
-			}
+			$file = rwp_get_file_data( $filename );
 		}
 
 		return $file;
@@ -289,18 +297,14 @@ function rwp_get_plugin_file( $filename, $dir = '', $require = false, $once = fa
 							$file = include $filename;
 						}
 					}
-				} elseif ( 'json' === $type ) {
-					$file = rwp_get_json_data( $filename, true );
+				} elseif ( 'css' === $type || 'js' === $type ) {
+					$file = rwp_get_file_data( $filename, true );
 				} else {
 					$file = $filename;
 				}
 			}
 		} else {
-			if ( 'json' === $type ) {
-				$file = rwp_get_json_data( $filename );
-			} else {
-				$file = wp_safe_remote_get( $filename );
-			}
+			$file = rwp_get_file_data( $filename );
 		}
 
 		return $file;

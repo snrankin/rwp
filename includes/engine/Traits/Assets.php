@@ -28,7 +28,7 @@ trait Assets {
 		$manifest_path = $this->get_setting( 'assets.manifest_path' );
 
 		if ( rwp_file_exists( $manifest_path ) ) {
-			$manifest = rwp_get_json_data( $manifest_path, true );
+			$manifest = rwp_get_file_data( $manifest_path, true );
 			if ( $manifest ) {
 				$manifest = new Collection( $manifest );
 				$this->set_setting( 'assets.manifest', $manifest );
@@ -91,7 +91,6 @@ trait Assets {
 	 *
 	 * @throws NotFoundException Thrown if manifest file exists but the asset
 	 *                           does not exist in the file
-	 * @throws IOException       Thrown if the file does not exist
 	 */
 	public function asset_path( $asset, $folder = '', $prefix = true ) {
 

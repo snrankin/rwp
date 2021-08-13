@@ -52,10 +52,11 @@ function rwp_get_options() {
  * @param mixed $default
  * @return mixed
  */
-function rwp_get_option( $option, $default ) {
+function rwp_get_option( $option, $default = null ) {
 	$options = rwp_get_options();
-	$option = data_get( $options, $option, $default );
-	return apply_filters( "rwp_get_option_{$option}", $option );
+
+	$value = data_get( $options, $option, $default );
+	return apply_filters( "rwp_get_option_{$option}", $value );
 }
 
 
@@ -80,6 +81,19 @@ function rwp_add_filters( $tags, $function, $priority = 10, $accepted_args = 1 )
 }
 
 /**
+ * Applies multiple filter to the same set of arguments
+ *
+ * @param array $tags            An array of filter tags to add the function to
+ * @param mixed $accepted_args
+ * @return void
+ */
+function rwp_apply_filters( $tags, ...$accepted_args ) {
+	foreach ( (array) $tags as $tag ) {
+		apply_filters( $tag, ...$accepted_args );
+	}
+}
+
+/**
  * Check if a variable had value
  *
  * @param mixed $input
@@ -89,4 +103,36 @@ function rwp_add_filters( $tags, $function, $priority = 10, $accepted_args = 1 )
 
 function rwp_has_value( $input ) {
 	return filled( $input );
+}
+
+/**
+ * Get the absolute path of an asset
+ *
+ * @param string $asset   The asset file name base (including extension but
+ *                        not the plugin prefix)
+ * @param string $folder  The sub folder the asset is in
+ *
+ * @param bool   $prefix  Whether to add the plugin prefix to the asset name
+ *
+ * @return string|false
+ */
+
+function rwp_plugin_asset_path( $asset, $folder = '', $prefix = true ) {
+	return rwp()->asset_path( $asset, $folder, $prefix );
+}
+
+/**
+ * Get the relative path of an asset
+ *
+ * @param string $asset   The asset file name base (including extension but
+ *                        not the plugin prefix)
+ * @param string $folder  The sub folder the asset is in
+ *
+ * @param bool   $prefix  Whether to add the plugin prefix to the asset name
+ *
+ * @return string|false
+ */
+
+function rwp_plugin_asset_uri( $asset, $folder = '', $prefix = true ) {
+	return rwp()->asset_uri( $asset, $folder, $prefix );
 }

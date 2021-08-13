@@ -33,10 +33,10 @@ package-lock.json
 .CVS
 intermediate
 .idea
-cache
-vendor
-tests/_output
-vendor
+.cache
+/vendor/
 !vendor/composer
-tests/_support/_generated
+test/
+tests/
+test*.*
 !includes/dependencies/vendor

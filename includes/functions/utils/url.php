@@ -79,7 +79,7 @@ function rwp_relative_url( $input ) {
 		return $input;
 	}
 
-	if ( ! rwp_is_relative_url( $input ) && ! rwp_is_outbound_link( $input ) ) {
+	if ( ! rwp_is_relative_url( $input ) && ! rwp_is_outbound_link( $input ) && \rwp_get_option( 'modules.relative_urls', false ) ) {
 		$url           = wp_parse_url( $input );
 		$hosts_match   = true;
 		$schemes_match = true;

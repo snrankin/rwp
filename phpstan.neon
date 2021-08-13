@@ -5,6 +5,7 @@ parameters:
   paths:
     - %currentWorkingDirectory%/includes/ajax
     - %currentWorkingDirectory%/includes/backend
+    - %currentWorkingDirectory%/includes/components
     - %currentWorkingDirectory%/includes/engine
     - %currentWorkingDirectory%/includes/frontend
     - %currentWorkingDirectory%/includes/functions
@@ -15,16 +16,21 @@ parameters:
     - uninstall.php
   bootstrapFiles:
     - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
+    - %currentWorkingDirectory%/includes/dependencies/vendor/autoload.php
+    - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
   scanDirectories:
     - %currentWorkingDirectory%/includes/dependencies
     - ../advanced-custom-fields-pro
     - ../acf-extended
+    - ../gravityforms
   scanFiles:
     - ../advanced-custom-fields-pro/acf.php
     - ../acf-extended/acf-extended.php
+    - ../gravityforms/gravityforms.php
   ignoreErrors:
     - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
     - '#^Call to function is_null\(\) with static\(RWP\\Engine\\Base\) will always evaluate to false\.$#'
     - '#^Unsafe usage of new static\(\)\.$#'
     - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
+    - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'

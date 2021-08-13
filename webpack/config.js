@@ -1,18 +1,20 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * config
  *
  * @since     0.1.0
  * @version   0.1.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 const _ = require('lodash');
 const path = require('path');
 const pkg = require('../package.json');
 const { argv } = require('yargs');
 
-const config = require('./config.json');
+const config = require('../config.json');
 
 const isProduction = config.enabled.production;
 const rootPath =
@@ -107,6 +109,7 @@ const createConfig = (groupName = '', configName = '') => {
 					`${filenameTemplate}.js`
 				),
 			},
+			devtool: config.enabled.sourcemaps ? 'source-map' : 'none',
 			stats: config.enabled.debug
 				? 'verbose'
 				: {

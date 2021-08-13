@@ -11,16 +11,12 @@
  * ==========================================================================
  */
 
-// import local dependencies
-import Router from './util/Router';
-import common from './routes/common';
+const rwp = window.rwp || {}; // eslint-disable-line
 
-/** Populate Router instance with DOM routes */
-const routes = new Router({
-	common,
-});
+import utils from './util/utils';
 
-const rwp = window.rwp || {}; //eslint-ignore-line
+Object.assign(rwp, utils);
 
-// Load Events
-jQuery(document).ready(() => routes.loadEvents());
+window.rwp = {};
+
+Object.assign(window.rwp, rwp);

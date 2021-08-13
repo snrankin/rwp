@@ -1,0 +1,57 @@
+/// ======================================================================== ///
+/// @name   tiny-slider
+///
+/// @group  RWP
+/// @since  0.1.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+@import '../global/index';
+
+@import '~tiny-slider/src/tiny-slider';
+
+.tns-outer {
+	position: relative;
+}
+
+.tns-controls {
+	position: absolute;
+	z-index: initial;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.btn {
+		position: relative;
+		z-index: 10;
+		color: currentColor;
+	}
+}
+
+.tns-horizontal {
+	display: flex;
+	&.tns-subpixel {
+		> .tns-item {
+			display: flex;
+		}
+	}
+	> .tns-item {
+		display: flex;
+	}
+}
+
+.tns-item {
+	&.media-wrapper {
+		margin-bottom: 0;
+	}
+}
+
+.tns-nav {
+	display: grid;
+	place-items: center;
+	place-content: center;
+	grid-auto-flow: column;
+	grid-auto-columns: auto;
+	.btn {
+		color: currentColor;
+	}
+}

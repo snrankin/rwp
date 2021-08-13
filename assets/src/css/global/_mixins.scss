@@ -1,222 +1,45 @@
+// Toggles
+//
+// Used in conjunction with global variables to enable certain theme features.
+
 // Vendor
-@import '~bootstrap/scss/mixins';
+@import 'mixins/rfs';
 
-@import 'mixins/acf';
+// Deprecate
+@import '~bootstrap/scss/mixins/deprecate';
 
-@mixin make-columns(
-    $columns: $grid-columns,
-    $gutter: $grid-gutter-width,
-    $breakpoints: $grid-breakpoints
-) {
-    // Common properties for all breakpoints
-    %grid-column {
-        position: relative;
-        width: 100%;
-        padding-right: $gutter / 2;
-        padding-left: $gutter / 2;
-    }
+// Helpers
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~bootstrap/scss/mixins/color-scheme';
+@import 'mixins/image';
+@import '~bootstrap/scss/mixins/resize';
+@import '~bootstrap/scss/mixins/visually-hidden';
+@import '~bootstrap/scss/mixins/reset-text';
+@import '~bootstrap/scss/mixins/text-truncate';
 
-    @each $breakpoint in map-keys($breakpoints) {
-        $infix: breakpoint-infix($breakpoint, $breakpoints);
+// Utilities
+@import '~bootstrap/scss/mixins/utilities';
 
-        @if $columns > 0 {
-            // Allow columns to stretch full width below their breakpoints
-            @for $i from 1 through $columns {
-                &.col#{$infix}-#{$i} {
-                    @extend %grid-column;
-                }
-            }
-        }
+// Components
+@import '~bootstrap/scss/mixins/alert';
+@import '~bootstrap/scss/mixins/buttons';
+@import '~bootstrap/scss/mixins/caret';
+@import '~bootstrap/scss/mixins/pagination';
+@import '~bootstrap/scss/mixins/lists';
+@import '~bootstrap/scss/mixins/list-group';
+@import '~bootstrap/scss/mixins/forms';
+@import '~bootstrap/scss/mixins/table-variants';
 
-        &.col#{$infix},
-        &.col#{$infix}-auto {
-            @extend %grid-column;
-        }
+// Skins
+@import '~bootstrap/scss/mixins/border-radius';
+@import '~bootstrap/scss/mixins/box-shadow';
+@import '~bootstrap/scss/mixins/gradients';
+@import '~bootstrap/scss/mixins/transition';
 
-        @include media-breakpoint-up($breakpoint, $breakpoints) {
-            // Provide basic `.col-{bp}` classes for equal-width flexbox columns
-            &.col#{$infix} {
-                flex-basis: 0;
-                flex-grow: 1;
-                max-width: 100%;
-            }
+// Layout
+@import '~bootstrap/scss/mixins/clearfix';
+@import 'mixins/grid';
 
-            @if $grid-row-columns > 0 {
-                @for $i from 1 through $grid-row-columns {
-                    .row-cols#{$infix}-#{$i} {
-                        @include row-cols($i);
-                    }
-                }
-            }
-
-            &.col#{$infix}-auto {
-                @include make-col-auto();
-
-                width: auto !important;
-            }
-
-            @if $columns > 0 {
-                @for $i from 1 through $columns {
-                    &.col#{$infix}-#{$i} {
-                        @include make-col($i, $columns);
-                    }
-                }
-            }
-
-            &.order#{$infix}-first {
-                order: -1;
-            }
-
-            &.order#{$infix}-last {
-                order: $columns + 1;
-            }
-
-            @for $i from 0 through $columns {
-                &.order#{$infix}-#{$i} {
-                    order: $i;
-                }
-            }
-
-            @if $columns > 0 {
-                // `$columns - 1` because offsetting by the width of an entire row isn't possible
-                @for $i from 0 through ($columns - 1) {
-                    @if not($infix == '' and $i == 0) {
-                        // Avoid emitting useless .offset-0
-                        &.offset#{$infix}-#{$i} {
-                            @include make-col-offset($i, $columns);
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@mixin cover-absolute() {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
-}
-
-@mixin img-cover() {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-    object-fit: cover;
-    font-family: 'object-fit: cover';
-}
-
-@mixin center-absolute() {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-@mixin center-relative() {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-@mixin cover-relative() {
-    display: flex;
-    flex-direction: column;
-    > * {
-        flex: 1 1 auto;
-    }
-}
-
-@mixin mediaBreakpoints($breakpoints: $media-breakpoints) {
-    $description: '--media-thumbnail: (max-width: 119.8px) | --media-small: (min-width: 120px) and (max-width: 319.8px)';
-    @each $name, $breakpoint in $breakpoints {
-        $min: breakpoint-min($breakpoint, $grid-breakpoints);
-        $max: breakpoint-max($breakpoint, $grid-breakpoints);
-        $property: --media-#{$name};
-        $value: '';
-
-        @if $min !=null and $max !=null {
-            @if $name != 'full' {
-                $value: '(min-width: #{$min}) and (max-width: #{$max})';
-            } @else {
-                $value: '(min-width: #{$min})';
-            }
-        } @else if $max==null {
-            $value: '(min-width: #{$min})';
-        } @else if $min==null {
-            $value: '(max-width: #{$max})';
-        }
-
-        @if $value != '' {
-            @if $description != '' {
-                $description: $description + ' | ';
-            }
-            $description: $description + $property + ': ' + inspect($value);
-        }
-    }
-
-    display: none;
-    content: $description;
-}
-
-%block {
-    margin: 0;
-    padding: 1rem;
-    display: block;
-
-    &.is-hovered,
-    &.is-selected {
-        outline: solid 1px $admin-blue;
-        background-color: rgba($admin-gray-200, 0.25);
-    }
-    &.has-child-selected {
-        outline: solid 1px rgba($admin-blue, 0.5);
-    }
-    .block-editor-inner-blocks {
-        width: 100%;
-    }
-    p {
-        margin-top: 0;
-    }
-}
-
-@mixin icon($icon-font-family) {
-    font-family: quote($icon-font-family);
-    speak: none;
-    text-rendering: optimizeLegibility;
-    line-height: 2ex;
-    font-size: 1em;
-    display: block;
-    font-weight: normal !important;
-    font-style: normal !important;
-
-    /* Enable Ligatures ================ */
-    -webkit-font-feature-settings: 'liga';
-    -moz-font-feature-settings: 'liga=1';
-    -moz-font-feature-settings: 'liga';
-    -ms-font-feature-settings: 'liga' 1;
-    font-feature-settings: 'liga';
-    -webkit-font-variant-ligatures: discretionary-ligatures;
-    font-variant-ligatures: discretionary-ligatures;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-smoothing: antialiased;
-}
-
-@mixin icon-content($icon, $font-family: 'Font Awesome 5') {
-    @include icon($font-family);
-
-    content: quote($icon);
-}
+@import 'mixins/hover';
+@import 'mixins/type-styles';
+@import 'mixins/theme';

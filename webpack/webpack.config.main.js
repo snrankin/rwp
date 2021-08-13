@@ -1,20 +1,20 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * webpack.config.main
  *
  * @since     0.1.0
  * @version   0.1.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 const { mergeWithCustomize, customizeArray, merge } = require('webpack-merge');
 const webpack = require('webpack');
 const _ = require('lodash');
 const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
 const { startingPlugins, baseConfig } = require('./webpack.config');
-
 const { rwpDebug } = require('./utils');
-
 let webpackConfig = {
 	module: {
 		rules: [
@@ -67,7 +67,5 @@ webpackConfig = mergeWithCustomize({
 if (_.has(webpackConfig, 'name')) {
 	webpackConfig = [webpackConfig];
 }
-
-rwpDebug(webpackConfig);
-
+// rwpDebug(webpackConfig);
 module.exports = webpackConfig;

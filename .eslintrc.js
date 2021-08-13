@@ -1,5 +1,6 @@
 module.exports = {
 	root: true,
+	ignorePatterns: ['modernizr.js'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@wordpress/eslint-plugin/recommended',
@@ -8,8 +9,9 @@ module.exports = {
 	parser: '@babel/eslint-parser',
 	globals: {
 		rwp: true,
+		bs: true,
 		document: true,
-		fancybox: true,
+		Fancybox: true,
 		tns: true,
 		select2: true,
 		wp: true,
@@ -59,8 +61,9 @@ module.exports = {
 		'no-misleading-character-class': 0,
 		'no-setter-return': 0,
 		'no-useless-catch': 0,
+		'no-console': 0,
 		'valid-jsdoc': 'off',
-		// 'no-unused-vars': 0,
+		'no-unused-vars': 0,
 		yoda: 0,
 		'comma-dangle': [
 			'error',

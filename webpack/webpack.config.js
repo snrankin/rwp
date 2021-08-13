@@ -1,28 +1,27 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * webpack.config
  *
  * @since     0.1.0
  * @version   1.0.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 const path = require('path');
 const _ = require('lodash');
 const { merge, mergeWithCustomize, customizeArray } = require('webpack-merge');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-
 const magicImporter = require('node-sass-magic-importer');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const WebpackBar = require('webpackbar');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const ExtractCssChunks = require('mini-css-extract-plugin');
 const RemovePlugin = require('remove-files-webpack-plugin');
-// const stylelintFormatter = require('stylelint-formatter-pretty');
 const { createConfig } = require('./config');
-const pkg = require('../package.json');
 const { argv } = require('yargs');
 const groupName = !_.isNil(argv.name) ? argv.name : '';
+const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
 const config = createConfig(groupName, configName);
 const fs = require('fs');
@@ -84,21 +83,13 @@ const cssLoaders = [
 			},
 		},
 	},
-	{
-		loader: 'resolve-url-loader',
-	},
 ];
 
 exports.cssLoaders = cssLoaders;
 
-const startingPlugins = [
-	new WebpackBar({
-		name: groupName !== '' ? groupName : pkg.displayName,
-		fancy: config.env.development,
-		reporters: ['fancy'],
-	}),
-	new RemovePlugin(config.clean),
-];
+const startingPlugins = config.enabled.cachebusting
+	? [new RemovePlugin(config.clean)]
+	: [];
 
 exports.startingPlugins = startingPlugins;
 
@@ -109,6 +100,11 @@ const assetname = config.enabled.cachebusting
 let webpackConfig = {
 	module: {
 		rules: [
+			{
+				test: /\.(sc|sa|j|cs)s$/,
+				enforce: 'pre',
+				use: ['source-map-loader'],
+			},
 			{
 				test: /\.css$/,
 				use: cssLoaders,
@@ -200,7 +196,7 @@ let webpackConfig = {
 	externals: {
 		jquery: 'jQuery',
 		'tiny-slider': 'tns',
-		fancybox: 'fancybox',
+		Fancybox: 'Fancybox',
 		select2: 'select2',
 	},
 	plugins: [
@@ -215,7 +211,6 @@ let webpackConfig = {
 			emitError: config.env.development,
 			emitWarning: config.env.development,
 			fix: true,
-			// formatter: stylelintFormatter,
 		}),
 		new RemoveEmptyScriptsPlugin(),
 		new ExtractCssChunks({
@@ -225,7 +220,7 @@ let webpackConfig = {
 };
 webpackConfig = merge(config.webpack, webpackConfig);
 
-if (config.enabled.manifest) {
+if (config.enabled.manifest && !buildWatch) {
 	const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 	const manifestPath = path.join(config.paths.dist, 'manifest.json');
 	let manifestSeed = {};

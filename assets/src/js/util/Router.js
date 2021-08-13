@@ -1,5 +1,4 @@
-import { camelCase } from './utils';
-
+const rwp = rwp || {}; // eslint-disable-line
 /**
  * DOM-based Routing
  *
@@ -16,9 +15,9 @@ class Router {
 	/**
 	 * Fire Router events
 	 *
-	 * @param {string} route DOM-based route derived from body classes (`<body class="...">`)
+	 * @param {string} route   DOM-based route derived from body classes (`<body class="...">`)
 	 * @param {string} [event] Events on the route. By default, `init` and `finalize` events are called.
-	 * @param {string} [arg] Any custom argument to be passed to the event.
+	 * @param {string} [arg]   Any custom argument to be passed to the event.
 	 */
 	fire(route, event = 'init', arg) {
 		document.dispatchEvent(
@@ -44,10 +43,10 @@ class Router {
 	 * Automatically load and fire Router events
 	 *
 	 * Events are fired in the following order:
-	 *  * common init
-	 *  * page-specific init
-	 *  * page-specific finalize
-	 *  * common finalize
+	 *  common init
+	 *  page-specific init
+	 *  page-specific finalize
+	 *  common finalize
 	 */
 	loadEvents() {
 		// Fire common init JS
@@ -58,7 +57,7 @@ class Router {
 			.toLowerCase()
 			.replace(/-/g, '_')
 			.split(/\s+/)
-			.map(camelCase)
+			.map(rwp.utils.camelCase)
 			.forEach((className) => {
 				this.fire(className);
 				this.fire(className, 'finalize');
