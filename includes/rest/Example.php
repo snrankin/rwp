@@ -11,9 +11,9 @@
 
 namespace RWP\Rest;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Example extends Base {
+class Example extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -21,8 +21,6 @@ class Example extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
-
 		\add_action( 'rest_api_init', array( $this, 'add_custom_stuff' ) );
 	}
 
@@ -130,7 +128,7 @@ class Example extends Base {
 	 * @return array
 	 */
 	public function sum( array $data ) {
-		return array( 'result' => $data[ 'first' ] + $data[ 'second' ] );
+		return array( 'result' => $data['first'] + $data['second'] );
 	}
 
 }

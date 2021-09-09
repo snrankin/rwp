@@ -8,6 +8,8 @@
  * @author  RIESTER <wordpress@riester.com>
  * ========================================================================== */
 
+ use function RWP\Modules\Bootstrap\bs_atts;
+
 /**
  * Remove certain classes from plugin initialization process
  */
@@ -23,24 +25,6 @@ add_filter('rwp_classes_to_execute', function( $classes ) {
 	}
 
 	return $classes;
-});
-
-/**
- * Add existing sidebars to any ACF field named sidebar_id
- */
-
-add_filter('acf/load_field/name=sidebar_id', function ( $field ) {
-	global $wp_registered_sidebars;
-
-	// reset choices
-	$field['choices'] = [];
-
-	foreach ( $wp_registered_sidebars as $name => $args ) {
-		$field['choices'][ $name ] = $args['name'];
-	}
-
-	// return the field
-	return $field;
 });
 
 /**
@@ -97,3 +81,68 @@ add_action('init', function() {
 		}
 	}
 });
+
+/**
+ * Removes empty attributes (unless they're boolean attributes)
+ *
+ * @link https://meiert.com/en/blog/boolean-attributes-of-html/
+ *
+ * @param array $args
+ *
+ * @return array
+ */
+function rwp_empty_html_attributes_filter( $args = array(), $remove_empty = true ) {
+	$boolean_atts = array(
+		'allowfullscreen',
+		'allowpaymentrequest',
+		'async',
+		'autofocus',
+		'autoplay',
+		'checked',
+		'controls',
+		'default',
+		'defer',
+		'disabled',
+		'formnovalidate',
+		'hidden',
+		'ismap',
+		'itemscope',
+		'loop',
+		'multiple',
+		'muted',
+		'nomodule',
+		'novalidate',
+		'open',
+		'playsinline',
+		'readonly',
+		'required',
+		'reversed',
+		'selected',
+		'truespeed',
+	);
+
+	/**
+	 * Filter to allow custom empty attributes
+	 *
+	 * @var array $boolean_atts
+	 */
+
+	$boolean_atts = (array) apply_filters( 'rwp_allowed_empty_attributes', $boolean_atts );
+
+	if ( $remove_empty ) {
+
+		foreach ( $args as $key => $value ) {
+			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) ) {
+				unset( $args[ $key ] );
+			}
+		}
+    }
+
+	return $args;
+}
+add_filter( 'rwp_html_attributes_filter', 'rwp_empty_html_attributes_filter' );
+
+
+// add_filter( 'acfe/load_field', function( $field ) {
+// 	echo 'test';
+// });

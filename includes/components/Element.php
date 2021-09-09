@@ -146,6 +146,8 @@ class Element {
 			}
 		}
 
+		$this->content = new Collection( $this->content );
+
 		try {
 			if ( empty( $this->tag ) ) {
 				throw new EmptyException( __( 'There is no html tag set and there were no arguments passed, cannot initialize ', 'rwp' ) . $class );
@@ -413,7 +415,6 @@ class Element {
 	public function remove_style( $key ) {
 		$this->remove( "attr.style.$key" );
 	}
-
 
 	/**
 	 * Check if content exists in content array

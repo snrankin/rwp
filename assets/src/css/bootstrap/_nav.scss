@@ -1,0 +1,88 @@
+/// ======================================================================== ///
+/// @name   _nav
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.nav-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	position: relative;
+}
+
+.sub-nav {
+	min-width: 100%;
+}
+
+.nav-link {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.navbar {
+	@each $color, $value in $theme-colors {
+		&.bg-#{$color} {
+			.sub-nav {
+				--sub-nav-bg: #{$value};
+
+				background-color: var(--sub-nav-bg);
+			}
+		}
+	}
+}
+
+// Generate series of `.navbar-expand-*` responsive classes for configuring
+// where your navbar collapses.
+.navbar-expand {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$next: breakpoint-next($breakpoint, $grid-breakpoints);
+		$infix: breakpoint-infix($next, $grid-breakpoints);
+
+		&#{$infix} {
+			@include media-breakpoint-up($next) {
+				.sub-nav.level-1-menu {
+					position: absolute;
+					top: 100%;
+					left: 0;
+					z-index: $zindex-dropdown;
+					padding: $dropdown-padding-y $dropdown-padding-x;
+					text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+					background-clip: padding-box;
+					border: $dropdown-border-width solid $dropdown-border-color;
+					@include border-radius($dropdown-border-radius);
+					@include box-shadow($dropdown-box-shadow);
+					ul {
+						@include font-size($dropdown-font-size);
+					}
+				}
+			}
+		}
+	}
+	.nav-item {
+		&:not(.level-0-item) {
+			padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+
+			// Prevent dropdown overflow if there's no padding
+			// See https://github.com/twbs/bootstrap/pull/27703
+			@if $dropdown-padding-y == 0 {
+				&:first-child {
+					@include border-top-radius($dropdown-inner-border-radius);
+				}
+
+				&:last-child {
+					@include border-bottom-radius(
+						$dropdown-inner-border-radius
+					);
+				}
+			}
+			.nav-link {
+				padding: 0;
+			}
+		}
+	}
+}

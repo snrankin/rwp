@@ -94,6 +94,7 @@ class Nav extends Element {
 				} elseif ( $this->nested_type_depth < $this->depth ) {
 					if ( 'collapse' === $this->nested_type ) {
 						$this->add_class( 'collapse' );
+						$this->set_attr( 'data-bs-parent', $parent_id );
 					}
 				}
 				break;
@@ -108,9 +109,9 @@ class Nav extends Element {
 				}
 				break;
 			case 'collapse':
-				if ( $this->nested_type_depth === $this->depth ) {
+				if ( $this->depth > 0 ) {
 					$this->add_class( 'collapse' );
-					$this->set_attr( 'data-parent', $parent_id );
+					$this->set_attr( 'data-bs-parent', $parent_id );
 				}
 				break;
 		}

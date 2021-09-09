@@ -546,7 +546,7 @@ if (!function_exists('data_has')) {
 
 if (!\function_exists('data_remove')) {
     /**
-     * Set an item on an array or object using dot notation.
+     * Remove an item on an array or object using dot notation.
      *
      * @param  mixed  $target
      * @param  string|array  $key

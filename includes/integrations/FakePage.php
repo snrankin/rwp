@@ -11,14 +11,13 @@
 
 namespace RWP\Integrations;
 
-use RWP\Engine\Base;
-
+use RWP\Engine\Abstracts\Singleton;
 use RWP\Vendor\WPBP\FakePage\FakePage as FakePageBase;
 
 /**
  * Fake Pages inside WordPress
  */
-class FakePage extends Base {
+class FakePage extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -26,8 +25,6 @@ class FakePage extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
-
 		new FakePageBase(
 			array(
 				'slug'         => 'test-page',
@@ -36,5 +33,4 @@ class FakePage extends Base {
 			)
 		);
 	}
-
 }

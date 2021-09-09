@@ -75,6 +75,23 @@ function rwp_object_has( $key, $obj ) {
 	}
 }
 
+/**
+ * Get item from object
+ *
+ * @param mixed $obj
+ * @param string $key
+ * @param mixed $default
+ *
+ * @return bool
+ */
+function rwp_object_get( $obj, $key, $default = null ) {
+	if ( rwp_object_has( $key, $obj ) ) {
+		return $obj->$key;
+	} else {
+		return $default;
+	}
+}
+
 
 // ========================================================================== //
 // ====================== SECTION: Collection Functions ===================== //

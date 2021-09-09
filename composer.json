@@ -8,7 +8,6 @@
     ],
     "autoload": {
         "psr-4": {
-            "RWP\\Ajax\\": "includes/ajax/",
             "RWP\\Assets\\": "includes/assets/",
             "RWP\\Backend\\": "includes/backend/",
             "RWP\\Components\\": "includes/components/",
@@ -71,6 +70,9 @@
         ],
         "dump-root": [
             "@composer dump-autoload -o -a"
+        ],
+        "dump-root-prod": [
+            "@composer dump-autoload -o -a --no-dev"
         ],
         "dump-vendor": [
             "@composer dump-autoload --working-dir includes/dependencies -o"

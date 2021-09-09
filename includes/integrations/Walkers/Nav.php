@@ -87,32 +87,6 @@ class Nav extends Bootstrap_Navwalker {
 	 */
 	public $ancestors;
 
-	public function __construct() {
-		$cpt           = get_post_type();
-		$this->cpt     = in_array( $cpt, get_post_types( array( '_builtin' => false ) ) );
-		$this->archive = get_post_type_archive_link( $cpt );
-		$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
-		$this->ancestors = rwp_collection();
-		if ( ! empty( $_request_uri ) ) {
-			if ( '/' === $_request_uri ) {
-				$_current_page = rwp_home_page();
-			} else {
-				$_current_page = url_to_postid( $_request_uri );
-			}
-
-			if ( empty( $this->current_page ) ) {
-				$this->current_page = rwp_object_type( $_current_page );
-			}
-
-			if ( ! empty( $_current_page ) ) {
-				$this->ancestors = rwp_ancestors( $_current_page );
-			}
-
-			rwp_log( $this );
-		}
-
-	}
-
 	/**
 	 * Check if current is active based on the classes
 	 *
@@ -161,17 +135,19 @@ class Nav extends Bootstrap_Navwalker {
 			$indent = '';
 		}
 
-		$classes = apply_filters( 'nav_menu_submenu_css_class', array( 'sub-menu' ), $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$classes = apply_filters( 'nav_menu_submenu_css_class', array(), $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$id = $this->sub_menu_id;
 
 		if ( empty( $id ) ) {
-			$id = 'menu-item-' . $this->item->ID;
+			$id = 'item-' . $this->item->ID;
 			$id .= '-sub-menu';
 		}
 
+		$menu_depth = $depth + 1;
+
 		$output .= $n . $indent;
 		$sub_menu_args = array(
-			'depth'      => $depth + 1,
+			'depth'      => $menu_depth,
 			'atts' => array(
 				'id'    => $id,
 				'class' => $classes,
@@ -208,14 +184,16 @@ class Nav extends Bootstrap_Navwalker {
 			$t = "\t";
 			$n = "\n";
 		}
+		$menu = $this->menu;
 
-		if ( empty( $this->menu ) && wp_get_nav_menu_object( $args->menu ) ) {
-			$this->menu = wp_get_nav_menu_object( $args->menu );
+		if ( empty( $menu ) && wp_get_nav_menu_object( $args->menu ) ) {
+			$menu = wp_get_nav_menu_object( $args->menu );
+			$this->menu = $menu;
 		}
 
-		$this->item = $item;
+		$menu_id = \data_get( $args, 'menu_id', '' );
 
-		$menu = $this->menu;
+		$this->item = $item;
 
 		$indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
 
@@ -225,7 +203,6 @@ class Nav extends Bootstrap_Navwalker {
 		 * @var string[] $classes
 		 */
 		$classes   = empty( $item->classes ) ? array() : (array) $item->classes;
-		$classes[] = 'menu-item-' . $item->ID;
 
 		/**
 		 * Initialize some holder variables to store specially handled item
@@ -340,9 +317,7 @@ class Nav extends Bootstrap_Navwalker {
 		 * @param stdClass  $args    An object of wp_nav_menu() arguments.
 		 * @param int       $depth   Depth of menu item. Used for padding.
 		 */
-		$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-
-		$id = ! empty( $id ) ? $id : 'menu-item-' . $item->ID;
+		$id = apply_filters( 'nav_menu_item_id', 'item-' . $item->ID, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$link_attr_title = data_get( $item, 'attr_title', strip_tags( $title ) );
 		$link_target     = data_get( $item, 'target', '' );
@@ -350,13 +325,18 @@ class Nav extends Bootstrap_Navwalker {
 		$link_url        = data_get( $item, 'url', '' );
 		$link_current    = data_get( $item, 'current', false );
 
-		$link_atts = [
+		$link_atts = array(
 			'title'        => $link_attr_title,
 			'target'       => $link_target,
 			'rel'          => $link_xfn,
 			'href'         => rwp_relative_url( $link_url ),
 			'aria-current' => $link_current ? 'page' : '',
-		];
+		);
+
+		if ( rwp_get_field( 'link_atts', $item ) ) {
+			$link_atts_custom = rwp_get_field( 'link_atts', $item );
+			$link_atts = rwp_merge_args( $link_atts, $link_atts_custom );
+		}
 
 		/**
 		 * Filters the HTML attributes applied to a menu item's anchor element.
@@ -380,16 +360,6 @@ class Nav extends Bootstrap_Navwalker {
 
 		$link_atts = apply_filters( 'nav_menu_link_attributes', $link_atts, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
-		foreach ( $link_atts as $key => $value ) {
-			if ( empty( $value ) ) {
-				unset( $link_atts[ $key ] );
-			}
-		}
-		if ( rwp_get_field( 'link_atts', $item ) ) {
-			$link_atts_custom = rwp_get_field( 'link_atts', $item );
-			$link_atts = rwp_merge_args( $link_atts, $link_atts_custom );
-		}
-
 		// If the .sr-only class was set apply to the nav items text only.
 
 		$nav_item_args = array(
@@ -406,6 +376,8 @@ class Nav extends Bootstrap_Navwalker {
 
 		if ( 0 !== $parent ) {
 			$nav_item_args['parent'] = $parent;
+		} else {
+			$nav_item_args['parent'] = '#' . $menu_id;
 		}
 
 		$nav_item_order = array( 'link' );
@@ -486,26 +458,5 @@ class Nav extends Bootstrap_Navwalker {
 		$indent = str_repeat( $t, $depth );
 		$output .= $n . $indent;
 		$output .= '</ul></nav>';
-	}
-
-
-	public function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
-		$element->is_subitem = ( ( ! empty( $children_elements[ $element->ID ] ) && ( ( $depth + 1 ) < $max_depth || ( 0 === $max_depth ) ) ) );
-
-		if ( $element->is_subitem ) {
-			foreach ( $children_elements[ $element->ID ] as $child ) {
-				if ( $child->current_item_parent || rwp_url_compare( $this->archive, $child->url ) ) {
-					$element->classes[] = 'active';
-				}
-			}
-		}
-
-		$element->is_active = ( ! empty( $element->url ) && strpos( $this->archive, $element->url ) );
-
-		if ( $element->is_active ) {
-			$element->classes[] = 'active';
-		}
-
-		parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
 	}
 }

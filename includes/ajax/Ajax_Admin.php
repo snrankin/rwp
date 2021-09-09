@@ -12,12 +12,12 @@
 
 namespace RWP\Ajax;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
 /**
  * AJAX as logged user
  */
-class Ajax_Admin extends Base {
+class Ajax_Admin extends Singleton {
 
 	/**
 	 * Initialize the class.

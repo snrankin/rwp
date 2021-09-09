@@ -23,14 +23,14 @@ parameters:
     - ../advanced-custom-fields-pro
     - ../acf-extended
     - ../gravityforms
+    - ../query-monitor
   scanFiles:
     - ../advanced-custom-fields-pro/acf.php
     - ../acf-extended/acf-extended.php
     - ../gravityforms/gravityforms.php
+    - ../query-monitor/query-monitor.php
   ignoreErrors:
     - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
-    - '#^Call to function is_null\(\) with static\(RWP\\Engine\\Base\) will always evaluate to false\.$#'
-    - '#^Unsafe usage of new static\(\)\.$#'
     - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
     - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'

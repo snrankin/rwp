@@ -11,12 +11,5 @@
  * ==========================================================================
  */
 
-const rwp = window.rwp || {}; // eslint-disable-line
-
-import utils from './util/utils';
-
-Object.assign(rwp, utils);
-
-window.rwp = {};
-
-Object.assign(window.rwp, rwp);
+var rwp = window.rwp || {}; // eslint-disable-line
+console.log({ rwp });

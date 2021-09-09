@@ -68,7 +68,10 @@
 		"main": {
 			"files": {
 				"admin": {
-					"admin": ["./css/admin.scss"]
+					"admin": ["./js/admin.js", "./css/admin.scss"]
+				},
+				"app": {
+					"app": ["./js/app.js"]
 				},
 				"bootstrap": {
 					"bootstrap": ["./css/bootstrap.scss"]
@@ -96,11 +99,17 @@
 		},
 		"vendor": {
 			"files": {
+				"acf": {
+					"acf": ["./js/vendor/acf.js", "./css/vendor/acf.scss"]
+				},
 				"gravity-forms": {
 					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
 				},
 				"modernizr": {
 					"modernizr": ["./js/vendor/modernizr.js"]
+				},
+				"qm": {
+					"qm": ["./css/vendor/qm.scss"]
 				},
 				"select2": {
 					"select2": [

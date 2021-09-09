@@ -1,16 +1,17 @@
 <?php
 /** ============================================================================
- * Plugin Name:     RIESTERWP Core
- * Plugin URI:      @TODO
- * Description:     @TODO
- * Version:         1.0.0
- * Author:          RIESTER Advertising Agency
- * Author URI:      https://www.riester.com
- * Text Domain:     rwp
- * License:         GPL 2.0+
- * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path:     /languages
- * Requires PHP:    7.0
+ * Plugin Name: RIESTERWP Core
+ * Plugin URI: @TODO
+ * Description: @TODO
+ * Version: 1.0.0
+ * Author: RIESTER Advertising Agency
+ * Author URI: https://www.riester.com
+ * Text Domain: rwp
+ * Domain Path: /languages
+ * License: GPL 2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Requires PHP: 7.0
+ * Requires at least: 5.6
  * WordPress-Plugin-Boilerplate-Powered: v3.2.0
  * ========================================================================== */
 
@@ -29,31 +30,55 @@ define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_ABSOLUTE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'includes/dependencies/' );
 
-add_action(
-	'init',
-	static function () {
-		load_plugin_textdomain( RWP_PLUGIN_TEXTDOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	}
-);
+function rwp_meets_requirements() {
+	$meta = get_plugin_data(__FILE__);
 
-if ( version_compare( PHP_VERSION, '7.0.0', '<=' ) ) {
-	add_action(
-		'admin_init',
-		static function() {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-		}
-	);
-	add_action(
-		'admin_notices',
-		static function() {
-			echo wp_kses_post(
-                sprintf(
-                    '<div class="notice notice-error"><p>%s</p></div>',
-                    __( '"RWP" requires PHP 7.0.0 or newer.', 'rwp' )
-                )
-			);
-		}
-	);
+	$name = ($meta['Name'] && !empty($meta['Name'])) ? $meta['Name'] : 'RWP';
+
+	$meets_requirements = true;
+
+	/**
+	 * Ensure compatible version of PHP is used
+	 */
+
+	if(isset($meta['RequiresPHP']) && !empty($meta['RequiresPHP'])){
+
+		$php_min = $meta['RequiresPHP'];
+		$php_ver = phpversion();
+
+		if (version_compare($php_min, $php_ver, '>')) {
+            add_action('admin_notices', static function() use ($php_min, $php_ver, $name){
+				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires php to be a minimum of version %s.</strong><br/>The current installed version is %s. Please contact your hosting provider if you need to upgrade your version of php.</p></div>', $name, $php_min, $php_ver );
+			});
+			$meets_requirements = false;
+        }
+
+	}
+
+	/**
+	 * Ensure compatible version of WordPress is used
+	 */
+
+	if(isset($meta['RequiresWP']) && !empty($meta['RequiresWP'])){
+
+		$wp_min = $meta['RequiresWP'];
+		$wp_ver = get_bloginfo('version');
+
+		if (version_compare($wp_min, $wp_ver, '>')) {
+            add_action('admin_notices', static function() use ($wp_min, $wp_ver, $name){
+				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires WordPress to be a minimum of version %s.</strong><br/>The current installed version is %s. Please upgrade WordPress and try activating %s again.</p></div>', $name, $wp_min, $wp_ver );
+			});
+			$meets_requirements = false;
+        }
+
+	}
+
+
+	return $meets_requirements;
+}
+
+
+if ( !rwp_meets_requirements() ) {
 
 	// Return early to prevent loading the plugin.
 	return;
@@ -138,6 +163,9 @@ if ( ! wp_installing() ) {
 	add_action(
 		'plugins_loaded',
 		static function () use ( $rwp_libraries ) {
+			if(class_exists('\\RWP\\Engine\\Base')){
+				\RWP\Engine\Base::instance(__FILE__);
+			}
 			new \RWP\Engine\Initialize( $rwp_libraries );
 		}
 	);

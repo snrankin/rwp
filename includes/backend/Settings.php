@@ -12,12 +12,11 @@
 
 namespace RWP\Backend;
 
-
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 /**
  * Create the settings page in the backend
  */
-class Settings extends Base {
+class Settings extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -29,7 +28,7 @@ class Settings extends Base {
 			return;
 		}
 
-		\add_filter( 'plugin_action_links_' . \plugin_basename( RWP_PLUGIN_ABSOLUTE ), array( $this, 'add_action_links' ), );
+		\add_filter( 'plugin_action_links_' . rwp()->get_slug(), array( $this, 'add_action_links' ), );
 
 	}
 
@@ -41,7 +40,7 @@ class Settings extends Base {
 	 * @return array
 	 */
 	public function add_action_links( array $links ) {
-		$url = $this->get_setting( 'url' );
+		$url = rwp()->get_setting( 'uri' );
 		return array_merge(
 			array(
 				'settings' => '<a href="' . $url . '">' . \__( 'Settings', 'rwp' ) . '</a>',

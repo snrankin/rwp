@@ -14,9 +14,9 @@
 
 namespace RWP\Internals;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Modules extends Base {
+class Modules extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -24,7 +24,6 @@ class Modules extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
 		$modules = glob( RWP_PLUGIN_ROOT . 'includes/internals/Modules/*.php' );
 
@@ -32,5 +31,4 @@ class Modules extends Base {
             require_once $file;
         }
 	}
-
 }

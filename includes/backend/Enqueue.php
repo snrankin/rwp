@@ -11,9 +11,9 @@
 
 namespace RWP\Backend;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Enqueue extends Base {
+class Enqueue extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -38,8 +38,8 @@ class Enqueue extends Base {
 	 * @return void
 	 */
 	public function enqueue_admin_assets() {
-		$this->register_assets( 'admin' );
-		$this->enqueue_assets( 'admin' );
+		rwp()->register_assets( 'admin' );
+		rwp()->enqueue_assets( 'admin' );
 
 	}
 }

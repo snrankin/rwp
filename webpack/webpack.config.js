@@ -198,6 +198,12 @@ let webpackConfig = {
 		'tiny-slider': 'tns',
 		Fancybox: 'Fancybox',
 		select2: 'select2',
+		lodash: {
+			commonjs: 'lodash',
+			commonjs2: 'lodash',
+			amd: 'lodash',
+			root: '_',
+		},
 	},
 	plugins: [
 		new ESLintPlugin({
@@ -219,6 +225,13 @@ let webpackConfig = {
 	],
 };
 webpackConfig = merge(config.webpack, webpackConfig);
+
+if ('app' === configName) {
+	webpackConfig.output.library = {
+		name: 'rwp',
+		type: 'umd',
+	};
+}
 
 if (config.enabled.manifest && !buildWatch) {
 	const { WebpackManifestPlugin } = require('webpack-manifest-plugin');

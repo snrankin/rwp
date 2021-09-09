@@ -337,13 +337,14 @@ function rwp_merge_args( $defaults = array(), $args = array() ) {
  * Sanitizes data attributes from an array and outputs them as a string (except
  * for the tag).
  *
- * @param array $atts An array of HTML attributes
- * @param string $output How to output the result
+ * @param array   $atts          An array of HTML attributes
+ * @param string  $output        How to output the result
+ * @param bool    $remove_empty  Remove empty (non-boolean) atrributes
  *
  * @return string|array
  */
 
-function rwp_format_html_atts( $atts = array(), $output = 'string' ) {
+function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empty = false ) {
 	$atts = rwp_prepare_args( $atts );
 	if ( ! empty( $atts ) ) {
 
@@ -393,6 +394,14 @@ function rwp_format_html_atts( $atts = array(), $output = 'string' ) {
 		if ( rwp_array_has( 'tag', $atts ) ) {
 			unset( $atts['tag'] );
 		}
+
+		/**
+		 * Run attributes array through a filter before output
+		 *
+		 * @var array $atts
+		 */
+		$atts = apply_filters( 'rwp_html_attributes_filter', $atts, $remove_empty );
+
 		if ( 'string' === $output ) {
 			$html = implode( ' ', $atts );
 		} else {

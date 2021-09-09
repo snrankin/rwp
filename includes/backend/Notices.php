@@ -10,9 +10,9 @@
  * ========================================================================== */
 namespace RWP\Backend;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Notices extends Base {
+class Notices extends Singleton {
 
 	/**
 	 * Initialize the class
@@ -20,8 +20,5 @@ class Notices extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		if ( ! parent::initialize() ) {
-			return;
-		}
 	}
 }

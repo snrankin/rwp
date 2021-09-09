@@ -80,6 +80,11 @@ class NavItem extends Element {
     public $active = false;
 
 	/**
+	 * @var string $parent The subnav parent id or the menu id if `$depth == 0`
+	 */
+	public $parent;
+
+	/**
      * @var bool $is_parent Is item active?
      */
     public $is_parent = false;
@@ -106,10 +111,28 @@ class NavItem extends Element {
 
 		if ( $this->is_parent && false !== $this->has_toggle ) {
 			$this->set( 'toggle.toggle', $this->has_toggle );
+
 			$this->toggle = new Button( $this->toggle );
+			$this->toggle->set_attr( 'data-bs-parent', $this->parent );
 			if ( ! array_search( 'toggle', $this->order ) ) {
 				$this->order[] = 'toggle';
 			}
 		}
+	}
+
+	/**
+	 * Function to run before building the Html class
+	 *
+	 * @return void
+	 */
+
+	public function setup_html() {
+		if ( $this->disabled ) {
+            $this->link->add_class( 'disabled' );
+        }
+
+        if ( $this->active ) {
+            $this->link->add_class( 'active' );
+        }
 	}
 }

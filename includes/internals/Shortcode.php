@@ -11,12 +11,12 @@
 
 namespace RWP\Internals;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
 /**
  * Shortcodes of this plugin
  */
-class Shortcode extends Base {
+class Shortcode extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -24,7 +24,6 @@ class Shortcode extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
 		\add_shortcode( 'foobar', array( $this, 'foobar_func' ) );
 	}
@@ -45,8 +44,8 @@ class Shortcode extends Base {
 			$atts
 		);
 
-		return '<span class="foo">foo = ' . $atts[ 'foo' ] . '</span>' .
-			'<span class="bar">foo = ' . $atts[ 'bar' ] . '</span>';
+		return '<span class="foo">foo = ' . $atts['foo'] . '</span>' .
+			'<span class="bar">foo = ' . $atts['bar'] . '</span>';
 	}
 
 }

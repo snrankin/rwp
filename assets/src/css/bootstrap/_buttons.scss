@@ -20,6 +20,19 @@
 		font-size: inherit;
 		text-decoration: underline;
 	}
+	&[aria-expanded='true'],
+	&[aria-selected='true'],
+	&.active {
+		> .btn-icon {
+			.icon-opened {
+				opacity: 1;
+			}
+
+			.icon-closed {
+				opacity: 0;
+			}
+		}
+	}
 }
 
 .btn-text {
@@ -59,17 +72,6 @@
 	&.has-spinner {
 		.rwp-spinner {
 			@include cover-absolute();
-		}
-	}
-	[aria-expanded='true'] &,
-	[aria-selected='true'] &,
-	.active > & {
-		.btn-icon-opened {
-			opacity: 1;
-		}
-
-		.btn-icon-closed {
-			opacity: 0;
 		}
 	}
 	&::before {

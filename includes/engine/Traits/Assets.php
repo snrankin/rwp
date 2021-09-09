@@ -314,7 +314,7 @@ trait Assets {
 
 		if ( $scripts ) {
 			$scripts->keys()->map(function ( $item ) {
-				$item = rwp_add_prefix( $item, RWP_PLUGIN_TEXTDOMAIN . '-' );
+				$item = rwp()->prefix( $item, '-' );
 				wp_enqueue_script( $item );
 			});
 		}
@@ -392,7 +392,7 @@ trait Assets {
 
 		$handle = $this->prefix( $handle, '-' );
 
-		$src = rwp_add_suffix( $src, '.css' ); // Only adds js if it isn't already there
+		$src = rwp_add_suffix( $src, '.css' ); // Only adds css if it isn't already there
 
 		if ( is_string( $src ) && ! rwp_is_url( $src ) ) { // if the source is not an external url
 			$file = $this->asset_path( $src, $folder );
@@ -479,7 +479,7 @@ trait Assets {
 
 		if ( $styles ) {
 			$styles->keys()->map(function ( $item ) {
-				$item = rwp_add_prefix( $item, RWP_PLUGIN_TEXTDOMAIN . '-' );
+				$item = rwp()->prefix( $item, '-' );
 				wp_enqueue_style( $item );
 			});
 		}

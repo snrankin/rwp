@@ -16,6 +16,7 @@ module.exports = {
 		select2: true,
 		wp: true,
 		wpApiSettings: true,
+		acf: true,
 	},
 	env: {
 		es2017: true,

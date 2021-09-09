@@ -11,9 +11,9 @@
 
 namespace RWP\Frontend\Extras;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Body_Class extends Base {
+class Body_Class extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -21,9 +21,9 @@ class Body_Class extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
-		\add_filter( 'body_class', array( self::class, 'add_rwp_class' ), 10, 3 );
+		\add_filter( 'body_class', array( $this, 'add_plugin_class' ), 10, 3 );
+		\add_filter( 'qm/output/menu_class', array( $this, 'add_plugin_class' ) );
 	}
 
 	/**
@@ -33,10 +33,8 @@ class Body_Class extends Base {
 	 * @since 1.0.0
 	 * @return array
 	 */
-	public static function add_rwp_class( array $classes ) {
-		$classes[] = RWP_PLUGIN_TEXTDOMAIN;
+	public static function add_plugin_class( array $classes ) {
 
-		return $classes;
+		return rwp_parse_classes( $classes, rwp()->get_slug() );
 	}
-
 }

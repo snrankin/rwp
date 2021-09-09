@@ -78,3 +78,19 @@ function rwp_list( $args = array() ) {
 function rwp_nav( $args = array() ) {
 	return new RWP\Components\Nav( $args );
 }
+
+function rwp_column( $args = array() ) {
+	return new RWP\Components\Column( $args );
+}
+
+function rwp_row( $args = array() ) {
+	return new RWP\Components\Row( $args );
+}
+
+function rwp_container( $args = array() ) {
+	return new RWP\Components\Container( $args );
+}
+
+function rwp_section( $args = array() ) {
+	return new RWP\Components\Section( $args );
+}

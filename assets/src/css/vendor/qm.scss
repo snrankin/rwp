@@ -1,0 +1,30 @@
+/// ======================================================================== ///
+/// @name   qm
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+#query-monitor-main.qm-theme-rwp {
+	pre {
+		font-family: $font-family-code !important;
+		@include font-size($code-font-size !important);
+		color: $pre-color !important;
+		code {
+			@include font-size(inherit !important);
+			color: inherit !important;
+			word-break: normal !important;
+		}
+	}
+	code {
+		@include font-size($code-font-size !important);
+		color: $code-color !important;
+		word-wrap: break-word !important;
+
+		// Streamline the style when inside anchors to avoid broken underline and more
+		a > & {
+			color: inherit !important;
+		}
+	}
+}

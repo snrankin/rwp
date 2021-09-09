@@ -11,9 +11,9 @@
 
 namespace RWP\Integrations;
 
-use RWP\Engine\Base;
-
-class ACF extends Base {
+use RWP\Engine\Abstracts\Singleton;
+use function RWP\Modules\Bootstrap\bs_atts;
+class ACF extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -23,6 +23,14 @@ class ACF extends Base {
 	public function initialize() {
 		parent::initialize();
 
+		if ( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+			return;
+		}
+
+		define( 'DHZ_SHOW_DONATION_LINK', false ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+
+		rwp_get_plugin_file( 'acf-rgba-color-picker.php', 'includes/dependencies/externals/plugins/acf/rgba-color-picker', true, true );
+
 		\add_action( 'acf/init', array( $this, 'setup_acf' ) );
 		\add_action( 'acfe/init', array( $this, 'init_acfe' ) );
 		\add_action( 'acfe/save_option', array( $this, 'save_acf_options_page' ), 10, 2 );
@@ -30,6 +38,11 @@ class ACF extends Base {
 		\add_action( 'acfe/save_post', array( $this, 'save_acf_post_fields' ), 10, 2 );
 		\add_action( 'acf/admin_enqueue_scripts', array( $this, 'enqueue_acf_assets' ), 999 );
 
+		// Field Filters
+
+		\add_filter( 'acf/load_field/name=sidebar_id', array( $this, 'add_widget_area_choices' ) );
+		\add_filter( 'acf/load_field/name=bs_colors', array( $this, 'add_color_choices' ) );
+		\add_action( 'acf/render_field/name=bs_colors', array( $this, 'add_color_values' ) );
 	}
 
 	/**
@@ -45,7 +58,8 @@ class ACF extends Base {
 		$path = RWP_PLUGIN_ROOT . 'config/acf/';
 
 		foreach ( glob( $path . '/*.*' ) as $file ) {
-			if ( rwp_str_ends_with( $file, 'nav_options.php' ) ) {
+			$filename = basename( $file );
+			if ( 'group_nav_item_options.php' === $filename || 'group_nav_options.php' === $filename ) {
 				if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
 					require_once $file;
 				}
@@ -60,9 +74,9 @@ class ACF extends Base {
 			acf_add_options_page(array(
 				'page_title' => __( 'RIESTERWP Core General Settings', 'rwp' ),
 				'menu_title' => __( 'RIESTERWP Core', 'rwp' ),
-				'menu_slug'  => $this->prefix( 'options', '-' ),
-				'capability' => $this->get_setting( 'capability' ),
-				'icon_url'   => $this->get_setting( 'icon' ),
+				'menu_slug'  => rwp()->prefix( 'options', '-' ),
+				'capability' => rwp()->get_setting( 'capability' ),
+				'icon_url'   => rwp()->get_setting( 'icon' ),
 				'autoload'   => true,
 			));
 		}
@@ -77,8 +91,8 @@ class ACF extends Base {
 	 */
 
 	public function enqueue_acf_assets() {
-		$this->register_assets( 'acf' );
-		$this->enqueue_assets( 'acf' );
+		rwp()->register_assets( 'acf' );
+		rwp()->enqueue_assets( 'acf' );
 	}
 
 	/**
@@ -154,8 +168,8 @@ class ACF extends Base {
 
 		$fields = self::sanitize_acf_array( $fields, $post_id ); // phpcs:ignore
 
-		if ( $this->prefix( 'options', '-' ) === $option ) {
-			$this->update_option( 'options', $fields );
+		if ( rwp()->prefix( 'options', '-' ) === $option ) {
+			rwp()->update_option( 'options', $fields );
         } else {
 			$option = rwp_change_case( $option, 'snake' );
 			update_option( $option, $fields );
@@ -200,5 +214,44 @@ class ACF extends Base {
 
         return $fields;
     }
+
+	/**
+	 * Adding registered widget areas to fields with the name `sidebar_id`
+	 *
+	 * @param array $field
+	 * @return array
+	 */
+
+	public function add_widget_area_choices( $field ) {
+		global $wp_registered_sidebars;
+
+		foreach ( $wp_registered_sidebars as $name => $args ) {
+			$field['choices'][ $name ] = $args['name'];
+		}
+
+		// return the field
+		return $field;
+	}
+
+	/**
+	 * Adding colors to fields with the name `bs_colors`
+	 *
+	 * @param array $field
+	 * @return array
+	 */
+
+	public function add_color_choices( $field ) {
+		$colors = bs_atts( 'colors' );
+
+		if ( isset( $field['choices'] ) ) {
+
+			foreach ( $colors as $color ) {
+				$name = rwp_change_case( $color, 'title' );
+				$field['choices'][ $color ] = $name;
+			}
+		}
+
+		return $field;
+	}
 
 }

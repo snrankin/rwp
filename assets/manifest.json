@@ -24,5 +24,12 @@
   "js/rwp-select2.js": "js/rwp-select2.js",
   "css/rwp-select2.css": "css/rwp-select2.css",
   "rwp-select2.css.map": "css/rwp-select2.css.map",
-  "rwp-select2.js.map": "js/rwp-select2.js.map"
+  "rwp-select2.js.map": "js/rwp-select2.js.map",
+  "rwp-admin.js.map": "js/rwp-admin.js.map",
+  "css/rwp-acf.css": "css/rwp-acf.css",
+  "js/rwp-acf.js": "js/rwp-acf.js",
+  "rwp-acf.js.map": "js/rwp-acf.js.map",
+  "js/rwp-app.js": "js/rwp-app.js",
+  "rwp-app.js.map": "js/rwp-app.js.map",
+  "rwp-acf.css.map": "css/rwp-acf.css.map"
 }

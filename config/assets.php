@@ -15,9 +15,14 @@ $rwp_plugin_assets = [
 	'uri'  => RWP_PLUGIN_URI . 'assets/',
 	'manifest_path' => RWP_PLUGIN_ROOT . 'assets/manifest.json',
     'scripts' => [
+		'app' => [
+            'handle'   => 'app',
+			'deps'     => ['jquery', 'lodash'],
+            'location' => 'global',
+        ],
         'public' => [
             'handle'   => 'public',
-			'deps'     => ['jquery'],
+			'deps'     => ['jquery', 'rwp-app'],
             'location' => 'public',
         ],
 		'modernizr' => [
@@ -26,10 +31,14 @@ $rwp_plugin_assets = [
         ],
 		'admin' => [
             'handle'   => 'admin',
-			'deps'     => ['jquery'],
+			'deps'     => ['jquery', 'rwp-app'],
             'location' => 'admin',
         ],
-
+		'acf' => [
+            'handle'   => 'acf',
+			'deps'     => ['jquery', 'rwp-admin'],
+            'location' => 'acf',
+        ],
 		'modal' => [
             'handle'   => 'modal',
             'deps'     => ['rwp-public'],
@@ -59,12 +68,11 @@ $rwp_plugin_assets = [
         ],
         'admin' => [
             'handle'   => 'admin',
-			'src'      => '',
-			'deps'     => [],
-			'ver'      => false,
-            'media'    => 'all',
-			'folder'   => 'css',
             'location' => 'admin',
+        ],
+		'acf' => [
+            'handle'   => 'acf',
+            'location' => 'acf',
         ],
 		'modal' => [
             'handle'   => 'modal',

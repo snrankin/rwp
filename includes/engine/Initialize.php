@@ -12,6 +12,7 @@
 namespace RWP\Engine;
 
 use RWP\Engine\Is_Methods;
+use Composer\Autoload\ClassLoader;
 
 class Initialize {
 
@@ -32,17 +33,17 @@ class Initialize {
 	/**
 	 * Composer autoload file list.
 	 *
-	 * @var \Composer\Autoload\ClassLoader
+	 * @var ClassLoader
 	 */
 	private $composer;
 
 	/**
 	 * The Constructor that load the entry classes
 	 *
-	 * @param \Composer\Autoload\ClassLoader $composer Composer autoload output.
+	 * @param ClassLoader $composer Composer autoload output.
 	 * @since 1.0.0
 	 */
-	public function __construct( \Composer\Autoload\ClassLoader $composer ) {
+	public function __construct( ClassLoader $composer ) {
 		$this->is       = new Is_Methods();
 		$this->composer = $composer;
 

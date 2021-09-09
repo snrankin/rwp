@@ -508,6 +508,21 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+		array(
+			'key' => 'field_6116f6fdb3891',
+			'label' => 'Colors',
+			'name' => 'bs_colors',
+			'type' => 'color_picker',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'default_value' => '',
+		),
 	),
 	'location' => array(
 		array(
@@ -533,7 +548,10 @@ acf_add_local_field_group(array(
 	'acfe_form' => 0,
 	'acfe_meta' => '',
 	'acfe_note' => '',
-	'modified' => 1628808072,
+	'acfe_categories' => array(
+		'plugin' => 'Plugin',
+	),
+	'modified' => 1629141773,
 ));
 
 endif;

@@ -11,22 +11,13 @@
 
 namespace RWP\Internals;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 use stdClass;
 
 /**
  * Transient used by the plugin
  */
-class Transient extends Base {
-
-	/**
-	 * Initialize the class.
-	 *
-	 * @return void
-	 */
-	public function initialize() {
-		parent::initialize();
-	}
+class Transient extends Singleton {
 
 	/**
 	 * This method contain an example of caching a transient with an external request.

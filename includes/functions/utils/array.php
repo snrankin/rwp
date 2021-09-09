@@ -112,6 +112,18 @@ function rwp_array_to_object( $array ) {
 }
 
 /**
+ * Easily remove elements from an array
+ *
+ * @param array $array
+ * @param string[]|string $element
+ *
+ * @return array
+ */
+function rwp_array_remove( $array, $element ) {
+	return ( is_array( $element ) ) ? array_values( array_diff( $array, $element ) ) : array_values( array_diff( $array, array( $element ) ) );
+}
+
+/**
  * XML to Array
  *
  * Takes a SimpleXMLElement element and converts it into an array

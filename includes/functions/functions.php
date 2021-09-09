@@ -14,11 +14,15 @@
  * Wrapper for RWP::get_instance().
  *
  * @since  1.0.0
- * @return RWP\Engine\Base  Singleton instance of plugin class.
+ * @return mixed
  */
-function rwp() {
+function rwp( $method = '', ...$args ) {
 	$plugin = RWP\Engine\Base::instance();
-	return $plugin;
+	if ( ! empty( $method ) ) {
+		return $plugin->__call( $method, ...$args );
+	} else {
+		return $plugin;
+	}
 }
 
 /**

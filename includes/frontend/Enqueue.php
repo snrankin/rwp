@@ -11,9 +11,9 @@
 
 namespace RWP\Frontend;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
-class Enqueue extends Base {
+class Enqueue extends Singleton {
 
 	/**
 	 * Initialize the class.
@@ -21,7 +21,6 @@ class Enqueue extends Base {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
 		\add_action( 'wp_head', array( $this, 'replace_no_script' ) );
 
@@ -42,8 +41,8 @@ class Enqueue extends Base {
 	 * @return void
 	 */
 	public function enqueue_public_styles() {
-		$this->register_styles( 'public' );
-		$this->enqueue_styles( 'public' );
+		rwp( 'register_styles', 'public' );
+		rwp()->enqueue_styles( 'public' );
 	}
 
 
@@ -54,8 +53,8 @@ class Enqueue extends Base {
 	 * @return void
 	 */
 	public function enqueue_public_scripts() {
-		$this->register_scripts( 'public' );
-		$this->enqueue_scripts( 'public' );
+		rwp()->register_scripts( 'public' );
+		rwp()->enqueue_scripts( 'public' );
 	}
 
 }

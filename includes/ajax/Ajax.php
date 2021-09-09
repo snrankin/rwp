@@ -11,12 +11,12 @@
 
 namespace RWP\Ajax;
 
-use RWP\Engine\Base;
+use RWP\Engine\Abstracts\Singleton;
 
 /**
  * AJAX in the public
  */
-class Ajax extends Base {
+class Ajax extends Singleton {
 
 	/**
 	 * Initialize the class.
