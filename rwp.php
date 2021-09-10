@@ -163,8 +163,8 @@ if ( ! wp_installing() ) {
 	add_action(
 		'plugins_loaded',
 		static function () use ( $rwp_libraries ) {
-			if(class_exists('\\RWP\\Engine\\Base')){
-				\RWP\Engine\Base::instance(__FILE__);
+			if(!class_exists('\\RWP\\Engine\\Base')){
+				\RWP\Engine\Base::instance();
 			}
 			new \RWP\Engine\Initialize( $rwp_libraries );
 		}

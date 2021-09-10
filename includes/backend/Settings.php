@@ -24,11 +24,8 @@ class Settings extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		if ( ! parent::initialize() ) {
-			return;
-		}
 
-		\add_filter( 'plugin_action_links_' . rwp()->get_slug(), array( $this, 'add_action_links' ), );
+		\add_filter( 'plugin_action_links_' . plugin_basename( RWP_PLUGIN_ABSOLUTE ), array( $this, 'add_action_links' ), );
 
 	}
 
@@ -40,7 +37,7 @@ class Settings extends Singleton {
 	 * @return array
 	 */
 	public function add_action_links( array $links ) {
-		$url = rwp()->get_setting( 'uri' );
+		$url = rwp()->get_setting( 'settings-uri' );
 		return array_merge(
 			array(
 				'settings' => '<a href="' . $url . '">' . \__( 'Settings', 'rwp' ) . '</a>',

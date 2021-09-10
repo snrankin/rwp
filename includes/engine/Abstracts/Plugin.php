@@ -71,9 +71,9 @@ abstract class Plugin extends Singleton implements Component {
         \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
         parent::__construct();
-
-		$this->initialize_settings();
 		$this->initialize_paths();
+		$this->initialize_settings();
+
     }
 
 	/**

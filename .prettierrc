@@ -1,16 +1,11 @@
 {
-	"tabWidth": 4,
-	"tabs": true,
-	"semi": true,
-	"singleQuote": true,
-	"trailingComma": "es5",
 	"overrides": [
 		{
 			"files": ["*.yml", "*.neon"],
 			"options": {
+				"parser": "yaml",
 				"tabWidth": 2,
-				"tabs": false,
-				"parser": "yaml"
+				"tabs": false
 			}
 		},
 		{
@@ -18,16 +13,19 @@
 				".prettierrc",
 				".jsbeautifyrc",
 				".stylelintrc",
-				"composer.json",
-				"composer.lock",
 				"package.json",
 				"package.lock"
 			],
 			"options": {
+				"parser": "json",
 				"tabWidth": 4,
-				"tabs": true,
-				"parser": "json"
+				"tabs": true
 			}
 		}
-	]
+	],
+	"semi": true,
+	"singleQuote": true,
+	"tabWidth": 4,
+	"tabs": true,
+	"trailingComma": "es5"
 }

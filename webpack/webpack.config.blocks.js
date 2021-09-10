@@ -1,12 +1,14 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * webpack.config.blocks
  *
- * @package   RWP
+ * @package
  * @since     0.1.0
  * @version   0.1.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 const assert = require('assert');
 const {
@@ -19,7 +21,7 @@ const {
 } = require('webpack-merge');
 
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const wordPressConfig = require('@wordpress/scripts/config/webpack.config');
 
@@ -44,11 +46,11 @@ webpackConfig = merge(baseConfig, webpackConfig);
 
 webpackConfig.output = merge(webpackConfig.output, baseConfig.output);
 
-let modules1 = {
+const modules1 = {
 	module: baseConfig.module,
 };
 
-let wordPressConfigRules = wordPressConfig.module.rules.filter((rule) => {
+const wordPressConfigRules = wordPressConfig.module.rules.filter((rule) => {
 	if (
 		rule.test.constructor == RegExp &&
 		rule.test.source !== '\\.css$' &&
@@ -56,9 +58,10 @@ let wordPressConfigRules = wordPressConfig.module.rules.filter((rule) => {
 	) {
 		return rule;
 	}
+	return false;
 });
 
-let modules2 = {
+const modules2 = {
 	module: {
 		rules: wordPressConfigRules,
 	},
@@ -89,6 +92,7 @@ webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
 	) {
 		return plugin;
 	}
+	return false;
 });
 
 webpackConfig.module = modules;

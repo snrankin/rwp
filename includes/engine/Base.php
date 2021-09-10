@@ -14,7 +14,6 @@ namespace RWP\Engine;
 use RWP\Engine\Interfaces\Core;
 use RWP\Engine\Abstracts\Plugin;
 use RWP\Vendor\Illuminate\Support\Str;
-use RWP\Vendor\Exceptions\Collection\KeyNotFoundException;
 
 class Base extends Plugin implements Core {
 
@@ -23,7 +22,8 @@ class Base extends Plugin implements Core {
 	/**
      *  @inheritdoc
      */
-    protected function __construct( $file, $args = array() ) {
+    protected function __construct( $args = array() ) {
+		$file = RWP_PLUGIN_ABSOLUTE;
 		parent::__construct( $file, $args );
 
 		$root    = $this->get_plugin_dir();
@@ -40,23 +40,24 @@ class Base extends Plugin implements Core {
 				$this->set_setting( $configname, $config );
 			}
 		}
+		$this->initialize();
+		$this->options = \rwp_get_options();
+
+		$this->initialize_assets();
     }
 
 	/** Initialize the class and get the plugin settings */
 	public function initialize() {
-		// Define constants.
 
-		$configs       = glob( RWP_PLUGIN_ROOT . '/config/*.php' );
-		if ( $configs ) {
-			foreach ( $configs as $config ) {
-				$name                    = basename( $config, '.php' );
-				$this->settings[ $name ] = require $config;
-			}
+		$settings = array(
+			'name'        => __( 'RWP', 'rwp' ),
+			'title'       => __( 'RIESTER Core Plugin', 'rwp' ),
+			'capability'  => 'manage_options',
+			'settings-uri' => add_query_arg( 'page', $this->prefix( 'options', '-' ), 'admin.php' ),
+			'icon'        => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjFlbSIgaGVpZ2h0PSIxZW0iIGZpbGw9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTAgMHYxNmgxNlYwem05LjMzIDE0LjRMNy43NyA5LjFhOS40NyA5LjQ3IDAgMDEtMS4xMy4wNXY1LjI1aC0yLjJWMS42aDMuMDhjMi40NyAwIDMuNzIgMSAzLjcyIDMuNzggMCAyLjA1LS43OSAyLjg5LTEuNTQgMy4yMmwxLjg2IDUuOHoiLz48cGF0aCBkPSJNNy40MiAzLjQxaC0uNzh2My45M2guNzhjMS4xOCAwIDEuNjMtLjQ0IDEuNjMtMlM4LjYgMy40MSA3LjQyIDMuNDF6Ii8+PC9zdmc+',
+		);
+		foreach ( $settings as $key => $value ) {
+			$this->set_setting( $key, $value );
 		}
-		$this->options = \rwp_get_options();
-
-		$this->initialize_assets();
-		return true;
 	}
-
 }

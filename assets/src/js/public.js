@@ -10,6 +10,3 @@
  * @copyright 2020 RIESTER
  * ==========================================================================
  */
-
-var rwp = window.rwp || {}; // eslint-disable-line
-console.log({ rwp });

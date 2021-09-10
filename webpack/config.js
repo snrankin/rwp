@@ -16,9 +16,32 @@ const { argv } = require('yargs');
 
 const config = require('../config.json');
 
-const isProduction = config.enabled.production;
+const isProduction = !_.isNil(argv.p) ? true : false;
 const rootPath =
 	config.paths && config.paths.root ? config.paths.root : process.cwd();
+
+const buildWatch = !_.isNil(argv.watch) ? true : false;
+
+let buildStats = {
+	chunks: false,
+	colors: true,
+	entrypoints: true,
+	errorDetails: false,
+	errors: false,
+	excludeAssets: ['**.map'],
+	hash: false,
+	modules: false,
+	publicPath: false,
+	reasons: false,
+	source: false,
+	timings: false,
+	version: false,
+	warnings: false,
+};
+
+if (!buildWatch && config.enabled.debug) {
+	buildStats = 'verbose';
+}
 
 const fileNames = (groupName = 'main', configName = '') => {
 	let entry = config.entry;
@@ -110,31 +133,16 @@ const createConfig = (groupName = '', configName = '') => {
 				),
 			},
 			devtool: config.enabled.sourcemaps ? 'source-map' : 'none',
-			stats: config.enabled.debug
-				? 'verbose'
-				: {
-						children: false,
-						chunks: false,
-						colors: true,
-						entrypoints: true,
-						errorDetails: false,
-						errors: false,
-						excludeAssets: ['**.map'],
-						hash: false,
-						modules: false,
-						publicPath: false,
-						reasons: false,
-						source: false,
-						timings: false,
-						version: false,
-						warnings: false,
-				  },
+			stats: buildStats,
 			watchOptions: {
 				ignored: [
 					'**/*.php',
 					'node_modules/**',
 					'**/*.json',
+					'node_modules/**',
+					config.paths.dist,
 					path.join(distRel, '**'),
+					path.join(rootPath, 'node_modules'),
 				],
 			},
 		},

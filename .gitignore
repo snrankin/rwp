@@ -28,15 +28,18 @@ node_modules
 package-lock.json
 
 # Folders to ignore
+.vscode
 .hg
 .svn
 .CVS
 intermediate
 .idea
 .cache
-/vendor/
+vendor/*
 !vendor/composer
 test/
 tests/
+tests/*
 test*.*
+*test*
 !includes/dependencies/vendor

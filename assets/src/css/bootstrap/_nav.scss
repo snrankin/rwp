@@ -6,6 +6,8 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
 .nav-item {
 	display: flex;
 	flex-wrap: wrap;

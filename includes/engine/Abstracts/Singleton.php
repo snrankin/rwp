@@ -60,7 +60,7 @@ abstract class Singleton {
     /**
      *  Protected constructor
      */
-    protected function __construct(){}
+    public function __construct(){}
 
     /**
      *  Array filter: Append instance to array.

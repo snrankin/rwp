@@ -20,6 +20,7 @@ const ExtractCssChunks = require('mini-css-extract-plugin');
 const RemovePlugin = require('remove-files-webpack-plugin');
 const { createConfig } = require('./config');
 const { argv } = require('yargs');
+const isProduction = !_.isNil(argv.p) ? true : false;
 const groupName = !_.isNil(argv.name) ? argv.name : '';
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
@@ -37,13 +38,13 @@ const cssLoaders = [
 	{
 		loader: 'css-loader',
 		options: {
-			sourceMap: config.enabled.sourcemaps,
+			sourceMap: !isProduction,
 		},
 	},
 	{
 		loader: 'postcss-loader',
 		options: {
-			sourceMap: config.enabled.sourcemaps,
+			sourceMap: !isProduction,
 			postcssOptions: {
 				plugins: [
 					'postcss-fixes',
@@ -64,7 +65,7 @@ const cssLoaders = [
 					],
 					'postcss-sort-media-queries',
 					'autoprefixer',
-					config.enabled.optimize
+					isProduction
 						? [
 								'cssnano',
 								{
@@ -207,15 +208,15 @@ let webpackConfig = {
 	},
 	plugins: [
 		new ESLintPlugin({
-			failOnWarning: !config.enabled.watcher,
-			emitError: config.env.development,
-			emitWarning: config.env.development,
+			failOnWarning: !buildWatch,
+			emitError: !isProduction,
+			emitWarning: !isProduction,
 			fix: true,
 		}),
 		new StyleLintPlugin({
-			failOnError: !config.enabled.watcher,
-			emitError: config.env.development,
-			emitWarning: config.env.development,
+			failOnError: !buildWatch,
+			emitError: !isProduction,
+			emitWarning: !isProduction,
 			fix: true,
 		}),
 		new RemoveEmptyScriptsPlugin(),
@@ -286,7 +287,7 @@ if (config.enabled.manifest && !buildWatch) {
 	});
 }
 
-if (config.enabled.optimize) {
+if (isProduction) {
 	const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 	webpackConfig = mergeWithCustomize({
 		customizeArray: customizeArray({

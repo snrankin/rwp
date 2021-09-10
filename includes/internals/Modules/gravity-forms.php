@@ -108,7 +108,7 @@ function input_to_button( $button, $form ) {
 
 		$button->order[] = 'spinner';
 
-		$button->set_content( '<span class="btn-icon icon-right has-spinner"><span class="rwp-spinner"><span></span><span></span><span></span><span></span></span></span>', 'spinner' );
+		$button->set_content( '<span class="btn-icon icon-right has-spinner"><span class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></span></span>', 'spinner' );
 
 		/**
 		 * Allow filtering of Gravity Form Buttons

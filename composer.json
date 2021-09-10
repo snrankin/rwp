@@ -14,8 +14,7 @@
             "RWP\\Engine\\": "includes/engine/",
             "RWP\\Frontend\\": "includes/frontend/",
             "RWP\\Integrations\\": "includes/integrations/",
-            "RWP\\Internals\\": "includes/internals/",
-            "RWP\\Rest\\": "includes/rest/"
+            "RWP\\Internals\\": "includes/internals/"
         }
     },
     "config": {

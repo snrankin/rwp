@@ -1,14 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jQuery"), require("lodash"));
-	else if(typeof define === 'function' && define.amd)
-		define(["jQuery", "lodash"], factory);
-	else if(typeof exports === 'object')
-		exports["rwp"] = factory(require("jQuery"), require("lodash"));
-	else
-		root["rwp"] = factory(root["jQuery"], root["_"]);
-})(self, function(__WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_lodash__) {
-return /******/ (function() { // webpackBootstrap
+/******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../node_modules/actual/actual.js":
@@ -251,7 +241,7 @@ return /******/ (function() { // webpackBootstrap
 /***/ (function(module) {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
+module.exports = jQuery;
 
 /***/ }),
 
@@ -262,7 +252,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
 /***/ (function(module) {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_MODULE_lodash__;
+module.exports = undefined;
 
 /***/ }),
 
@@ -920,8 +910,6 @@ function logCustomProperties() {
   return cssCustomPropIndex;
 }
 }();
-/******/ 	return __webpack_exports__;
 /******/ })()
 ;
-});
 //# sourceMappingURL=rwp-app.js.map

@@ -5,10 +5,10 @@
 /// @since  1.0.0
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
-
+@import '../global/index';
 #query-monitor-main.qm-theme-rwp {
 	pre {
-		font-family: $font-family-code !important;
+		font-family: $font-family-monospace !important;
 		@include font-size($code-font-size !important);
 		color: $pre-color !important;
 		code {
