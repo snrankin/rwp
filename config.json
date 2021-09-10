@@ -11,12 +11,8 @@
 		"cache": false,
 		"cachebusting": false,
 		"debug": false,
-		"favicons": false,
-		"googleFonts": false,
 		"manifest": true,
-		"optimize": false,
-		"production": false,
-		"sourcemaps": true
+		"production": true
 	},
 	"entry": {
 		"blocks": {
@@ -74,7 +70,10 @@
 					"app": ["./js/app.js"]
 				},
 				"bootstrap": {
-					"bootstrap": ["./css/bootstrap.scss"]
+					"bootstrap": [
+						"./css/bootstrap.scss",
+						"./js/vendor/bootstrap.js"
+					]
 				},
 				"public": {
 					"public": ["./js/public.js", "./css/public.scss"]

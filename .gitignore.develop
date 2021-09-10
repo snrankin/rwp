@@ -1,11 +1,3 @@
-/** ============================================================================
- * .gitignore
- *
- * Project: RWP
- * Version: 1.0.1
- * Author:  RIESTER <wordpress@riester.com>
- * ========================================================================== */
-
 # Numerous always-ignore extensions
 *.diff
 *.err

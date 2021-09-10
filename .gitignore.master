@@ -36,7 +36,7 @@ node_modules
 package-lock.json
 
 # Folders to ignore
-.vscode
+.vscode/
 .hg
 .svn
 .CVS
@@ -51,3 +51,21 @@ tests/*
 test*.*
 *test*
 !includes/dependencies/vendor
+assets/src
+webpack
+.eslintrc.js
+.gitignore.develop
+.prettierignore
+.prettierrc
+.stylelintignore
+.stylelintrc.js
+.yarnclean
+codeception.dist.yml
+composer.json
+composer.lock
+grumphp.yml
+package.json
+phpcs.xml
+phpstan.neon
+wp-config-test.php
+yarn.lock

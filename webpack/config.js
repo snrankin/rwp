@@ -16,7 +16,7 @@ const { argv } = require('yargs');
 
 const config = require('../config.json');
 
-const isProduction = !_.isNil(argv.p) ? true : false;
+const isProduction = config.enabled.production;
 const rootPath =
 	config.paths && config.paths.root ? config.paths.root : process.cwd();
 
@@ -132,7 +132,6 @@ const createConfig = (groupName = '', configName = '') => {
 					`${filenameTemplate}.js`
 				),
 			},
-			devtool: config.enabled.sourcemaps ? 'source-map' : 'none',
 			stats: buildStats,
 			watchOptions: {
 				ignored: [
@@ -227,6 +226,10 @@ const createConfig = (groupName = '', configName = '') => {
 			},
 		},
 	};
+
+	if (config.enabled.sourcemaps) {
+		newConfig.webpack.devtool = 'source-map';
+	}
 
 	newConfig = _.defaultsDeep(newConfig, customConfig);
 

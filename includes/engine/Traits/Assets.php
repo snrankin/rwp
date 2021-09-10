@@ -44,35 +44,15 @@ trait Assets {
 	 *
 	 * @param string $asset   The asset file name base (including extension but
 	 *                        not the plugin prefix)
-	 * @param string $folder  The sub folder the asset is in
-	 * @param bool   $prefix  Whether to add the plugin prefix to the asset name
-	 *
 	 * @return string
-	 *
-	 * @throws NotFoundException Thrown if manifest file exists but the asset
-	 *                           does not exist in the file
 	 */
 
-	public function asset_filename( $asset, $folder = '', $prefix = true ) {
-
-		if ( $prefix ) {
-			$asset = $this->prefix( $asset, '-' );
-		}
+	public function asset_filename( $asset ) {
 
 		$manifest = $this->get_setting( 'assets.manifest' );
-		if ( ! empty( $folder ) ) {
-			$asset = rwp_add_prefix( $asset, $folder . DIRECTORY_SEPARATOR );
-		}
+
 		if ( $manifest ) {
-			try {
-				if ( $manifest->has( $asset ) ) {
-					$asset = $manifest->get( $asset );
-				} else {
-					throw new NotFoundException( wp_sprintf( '%s not found in manifest file', $asset ) );
-				}
-			} catch ( NotFoundException $e ) {
-				rwp_error( $e->getMessage(), 'error' );
-			}
+			$asset = rwp_object_get( $manifest, $asset, $asset );
 		}
 
 		return $asset;
@@ -83,18 +63,12 @@ trait Assets {
 	 *
 	 * @param string $asset   The asset file name base (including extension but
 	 *                        not the plugin prefix)
-	 * @param string $folder  The sub folder the asset is in
-	 *
-	 * @param bool   $prefix  Whether to add the plugin prefix to the asset name
 	 *
 	 * @return string|false
-	 *
-	 * @throws NotFoundException Thrown if manifest file exists but the asset
-	 *                           does not exist in the file
 	 */
-	public function asset_path( $asset, $folder = '', $prefix = true ) {
+	public function asset_path( $asset ) {
 
-		$asset = $this->asset_filename( $asset, $folder, $prefix );
+		$asset = $this->asset_filename( $asset );
 
 		$path = $this->get_setting( 'assets.dir' ) . $asset;
 
@@ -114,21 +88,14 @@ trait Assets {
 	 *
 	 * @param string $asset   The asset file name base (including extension but
 	 *                        not the plugin prefix)
-	 * @param string $folder  The sub folder the asset is in
-	 *
-	 * @param bool   $prefix  Whether to add the plugin prefix to the asset name
 	 *
 	 * @return string|false
-	 *
-	 * @throws NotFoundException Thrown if manifest file exists but the asset
-	 *                           does not exist in the file
-	 * @throws IOException       Thrown if the file does not exist
 	 */
-	public function asset_uri( $asset, $folder = '', $prefix = true ) {
+	public function asset_uri( $asset ) {
 
-		$file = $this->asset_filename( $asset, $folder, $prefix );
+		$file = $this->asset_filename( $asset );
 
-		if ( $this->asset_path( $asset, $folder, $prefix ) ) {
+		if ( $this->asset_path( $asset ) ) {
 
 			return $this->get_setting( 'assets.uri' ) . $file;
 
@@ -222,8 +189,8 @@ trait Assets {
 		$src = rwp_add_suffix( $src, '.js' ); // Only adds js if it isn't already there
 
 		if ( is_string( $src ) && ! rwp_is_url( $src ) ) { // if the source is not an external url
-			$file = $this->asset_path( $src, $folder );
-			$src  = $this->asset_uri( $src, $folder );
+			$file = $this->asset_path( $src );
+			$src  = $this->asset_uri( $src );
 			if ( $src && empty( $ver ) ) {
 				if ( $file ) {
 					$ver = strval( filemtime( $file ) );
@@ -395,8 +362,8 @@ trait Assets {
 		$src = rwp_add_suffix( $src, '.css' ); // Only adds css if it isn't already there
 
 		if ( is_string( $src ) && ! rwp_is_url( $src ) ) { // if the source is not an external url
-			$file = $this->asset_path( $src, $folder );
-			$src  = $this->asset_uri( $src, $folder );
+			$file = $this->asset_path( $src );
+			$src  = $this->asset_uri( $src );
 
 			if ( $src && empty( $ver ) ) {
 				if ( $file ) {

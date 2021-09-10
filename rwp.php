@@ -84,11 +84,6 @@ if ( !rwp_meets_requirements() ) {
 	return;
 }
 
-
-$rwp_libraries = require __DIR__ . '/vendor/autoload.php';
-
-require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
-
 /**
  * Register the required plugins for this plugin
  */
@@ -146,7 +141,9 @@ function rwp_register_required_plugins() {
 }
 add_action( 'tgmpa_register', 'rwp_register_required_plugins' );
 
+$rwp_libraries = require __DIR__ . '/vendor/autoload.php';
 
+require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/functions.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';

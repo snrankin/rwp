@@ -20,14 +20,17 @@ const ExtractCssChunks = require('mini-css-extract-plugin');
 const RemovePlugin = require('remove-files-webpack-plugin');
 const { createConfig } = require('./config');
 const { argv } = require('yargs');
-const isProduction = !_.isNil(argv.p) ? true : false;
 const groupName = !_.isNil(argv.name) ? argv.name : '';
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
 const config = createConfig(groupName, configName);
+const isProduction = config.enabled.production;
 const fs = require('fs');
 const { extendDefaultPlugins } = require('svgo');
-
+const styleTypes = new RegExp(/\.css$/);
+const scriptTypes = new RegExp(/\.js$/);
+const imageTypes = new RegExp(/\.(png|jpe?g|gif|svg|ico)$/);
+const fontTypes = new RegExp(/\.(ttf|otf|eot|woff2?)$/);
 const cssLoaders = [
 	{
 		loader: ExtractCssChunks.loader,
@@ -136,7 +139,7 @@ let webpackConfig = {
 								const distPath = config.paths.dist;
 								const fileType = path.extname(url);
 								const isFont = new RegExp(
-									/\.(ttf|otf|eot|woff2?)$/
+									/\.(ttf|otf|eot|woff(2?))$/
 								).test(fileType);
 								let newPath;
 								if (isFont) {
@@ -234,9 +237,28 @@ if ('app' === configName) {
 	};
 }
 
+if (isProduction) {
+	const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+	webpackConfig = mergeWithCustomize({
+		customizeArray: customizeArray({
+			plugins: 'append',
+		}),
+	})(webpackConfig, {
+		plugins: [
+			new ImageMinimizerPlugin({
+				minimizerOptions: {
+					plugins: ['gifsicle', 'jpegtran', 'optipng', 'svgo'],
+				},
+				loader: false,
+			}),
+		],
+	});
+}
+
 if (config.enabled.manifest && !buildWatch) {
 	const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 	const manifestPath = path.join(config.paths.dist, 'manifest.json');
+
 	let manifestSeed = {};
 	if (fs.existsSync(manifestPath)) {
 		const rawdata = fs.readFileSync(manifestPath);
@@ -250,85 +272,24 @@ if (config.enabled.manifest && !buildWatch) {
 		plugins: [
 			new WebpackManifestPlugin({
 				basePath: '',
-				map: (file) => {
-					let distDirs = config.paths.dist;
-					distDirs = distDirs.split(path.sep);
-					let srcDirs = config.paths.src;
-					srcDirs = srcDirs.split(path.sep);
-					let publicDirs = config.paths.public;
-					publicDirs = publicDirs.split(path.sep);
-
-					const notAllowedDirs = _.compact(
-						_.uniq(_.union(distDirs, srcDirs, publicDirs))
-					);
-					const filename = path.basename(file.path);
-					let fileDir = path.dirname(file.path).split(path.sep);
-					fileDir = fileDir.filter((item) => {
-						return item !== '' && !notAllowedDirs.includes(item);
-					}, fileDir);
-					if (file.isChunk) {
-						let chunkPath = fileDir.join('/');
-						chunkPath = path.join(
-							chunkPath,
-							config.prefix + file.name
-						);
-						file.name = chunkPath;
+				publicPath: '',
+				filter: (file) => {
+					let fileName = !_.isNil(file.name) ? file.name : file.path;
+					fileName = path.basename(fileName.replace(/\?.*/gm, ''));
+					if (fontTypes.test(fileName)) {
+						return false;
 					}
-					fileDir.push(filename);
-					fileDir = fileDir.join('/');
-					file.path = fileDir;
+					return true;
+				},
+				map: (file) => {
+					let fileName = !_.isNil(file.name) ? file.name : file.path;
+					fileName = path.basename(fileName.replace(/\?.*/gm, ''));
+					file.name = fileName;
 					return file;
 				},
 				seed: manifestSeed,
 				removeKeyHash: true,
 				writeToFileEmit: true,
-			}),
-		],
-	});
-}
-
-if (isProduction) {
-	const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-	webpackConfig = mergeWithCustomize({
-		customizeArray: customizeArray({
-			plugins: 'prepend',
-		}),
-	})(webpackConfig, {
-		plugins: [
-			new ImageMinimizerPlugin({
-				minimizerOptions: {
-					// Lossless optimization with custom option
-					// Feel free to experiment with options for better result for you
-					plugins: [
-						['gifsicle', { interlaced: true }],
-						['jpegtran', { progressive: true }],
-						['optipng', { optimizationLevel: 5 }],
-						// Svgo configuration here https://github.com/svg/svgo#configuration
-						[
-							'svgo',
-							{
-								plugins: extendDefaultPlugins([
-									{
-										name: 'removeViewBox',
-										active: false,
-									},
-									{
-										name: 'addAttributesToSVGElement',
-										params: {
-											attributes: [
-												{
-													//eslint-disable-next-line
-													xmlns:
-														'http://www.w3.org/2000/svg',
-												},
-											],
-										},
-									},
-								]),
-							},
-						],
-					],
-				},
 			}),
 		],
 	});
