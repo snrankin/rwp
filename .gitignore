@@ -43,8 +43,8 @@ package-lock.json
 intermediate
 .idea
 .cache
-vendor/*
 !vendor/composer
+!vendor/autoload.php
 test/
 tests/
 tests/*
