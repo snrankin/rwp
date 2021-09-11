@@ -52,7 +52,9 @@ trait Assets {
 		$manifest = $this->get_setting( 'assets.manifest' );
 
 		if ( $manifest ) {
-			$asset = rwp_object_get( $manifest, $asset, $asset );
+			if ( $manifest->has( $asset ) ) {
+				$asset = $manifest->get( $asset );
+			}
 		}
 
 		return $asset;

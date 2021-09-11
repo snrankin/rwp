@@ -19,9 +19,9 @@ if ( ! rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
 }
 
 function enqueue_lazysizes() {
-	if ( ! wp_style_is( 'rwp-lazysizes', 'registered' ) ) {
-		rwp()->register_styles( 'lazysizes' );
-	}
+	// if ( ! wp_style_is( 'rwp-lazysizes', 'registered' ) ) {
+	// 	rwp()->register_styles( 'lazysizes' );
+	// }
 
 	if ( ! wp_script_is( 'rwp-lazysizes', 'registered' ) ) {
 		rwp()->register_scripts( 'lazysizes' );

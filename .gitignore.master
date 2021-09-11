@@ -1,0 +1,71 @@
+/** ============================================================================
+ * .gitignore
+ *
+ * Project: RWP
+ * Version: 1.0.1
+ * Author:  RIESTER <wordpress@riester.com>
+ * ========================================================================== */
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+*.lock
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.padawan
+.settings
+.tmproj
+*.esproj
+.netbeans.xml
+nbproject
+*.sublime-project
+*.sublime-workspace
+node_modules
+package-lock.json
+
+# Folders to ignore
+.vscode/
+.hg
+.svn
+.CVS
+intermediate
+.idea
+.cache
+vendor/*
+!vendor/composer
+!vendor/autoload.php
+test/
+tests/
+tests/*
+test*.*
+*test*
+!includes/dependencies/vendor
+assets/src
+webpack
+.eslintrc.js
+.gitignore.develop
+.prettierignore
+.prettierrc
+.stylelintignore
+.stylelintrc.js
+.yarnclean
+codeception.dist.yml
+composer.lock
+grumphp.yml
+package.json
+phpcs.xml
+phpstan.neon
+wp-config-test.php
+yarn.lock
