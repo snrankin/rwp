@@ -112,6 +112,18 @@ function rwp_array_to_object( $array ) {
 }
 
 /**
+ * Easily remove elements from an array
+ *
+ * @param array $array
+ * @param string[]|string $element
+ *
+ * @return array
+ */
+function rwp_array_remove( $array, $element ) {
+	return ( is_array( $element ) ) ? array_values( array_diff( $array, $element ) ) : array_values( array_diff( $array, array( $element ) ) );
+}
+
+/**
  * XML to Array
  *
  * Takes a SimpleXMLElement element and converts it into an array
@@ -127,11 +139,9 @@ function rwp_xml_to_array( \SimpleXMLElement $xml ): array {
 		$nodes      = $xml->children();
 		$attributes = $xml->attributes();
 
-		$collection['atts']['tag'] = $xml->getName();
+		$collection['tag'] = $xml->getName();
 
-		// @phpstan-ignore-next-line
 		if ( 0 !== count( $attributes ) ) {
-			// @phpstan-ignore-next-line
 			foreach ( $attributes as $attr_name => $attr_value ) {
 				$collection['atts'][ $attr_name ] = strval( $attr_value );
 			}

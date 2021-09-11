@@ -1,3 +1,11 @@
+/** ============================================================================
+ * .gitignore
+ *
+ * Project: RWP
+ * Version: 1.0.1
+ * Author:  RIESTER <wordpress@riester.com>
+ * ========================================================================== */
+
 # Numerous always-ignore extensions
 *.diff
 *.err
@@ -28,16 +36,48 @@ node_modules
 package-lock.json
 
 # Folders to ignore
-.vscode
+.vscode/
 .hg
 .svn
 .CVS
 intermediate
 .idea
 .cache
-vendor
-tests/_output
-vendor
+vendor/*
 !vendor/composer
-tests/_support/_generated
+test/
+tests/
+tests/*
+test*.*
+*test*
 !includes/dependencies/vendor
+assets/src
+webpack
+webpack/
+.editorconfig
+.env.testing
+.eslintrc.js
+.gitignore.develop
+.gitignore.master
+.prettierignore
+.prettierrc
+.stylelintignore
+.stylelintrc.js
+yarnclean
+codeception.dist.yml
+.eslintrc.js
+.gitignore.develop
+.prettierignore
+.prettierrc
+.stylelintignore
+.stylelintrc.js
+.yarnclean
+codeception.dist.yml
+composer.json
+composer.lock
+grumphp.yml
+package.json
+phpcs.xml
+phpstan.neon
+wp-config-test.php
+yarn.lock

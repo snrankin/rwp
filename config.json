@@ -1,0 +1,137 @@
+{
+	"app": {
+		"description": "RIESTER Core Plugin",
+		"name": "RWP",
+		"theme_color": "#e01c13",
+		"url": "https://www.riester.com"
+	},
+	"cachebusting": "[name]-[hash:8]",
+	"copy": [],
+	"enabled": {
+		"cache": false,
+		"cachebusting": false,
+		"debug": false,
+		"manifest": true,
+		"production": true
+	},
+	"entry": {
+		"blocks": {
+			"enabled": {
+				"cache": false,
+				"cachebusting": true,
+				"debug": false,
+				"favicons": false,
+				"googleFonts": false,
+				"manifest": true,
+				"optimize": true,
+				"production": true,
+				"sourcemaps": false
+			},
+			"files": {
+				"card": {
+					"card": ["./blocks/card/index.js"]
+				},
+				"column": {
+					"column": ["./blocks/column/index.js"]
+				},
+				"container": {
+					"container": ["./blocks/container/index.js"]
+				},
+				"global": {
+					"global": ["./blocks/global/index.js"]
+				},
+				"row": {
+					"row": ["./blocks/row/index.js"]
+				},
+				"section": {
+					"section": ["./blocks/section/index.js"]
+				},
+				"toggle": {
+					"toggle": ["./blocks/toggle/index.js"]
+				}
+			}
+		},
+		"fonts": {
+			"files": {
+				"bootstrap-icons": {
+					"bootstrap-icons": ["./css/vendor/bootstrap-icons.scss"]
+				},
+				"font-awesome": {
+					"font-awesome": ["./css/vendor/font-awesome.scss"]
+				}
+			}
+		},
+		"main": {
+			"files": {
+				"admin": {
+					"admin": ["./js/admin.js", "./css/admin.scss"]
+				},
+				"app": {
+					"app": ["./js/app.js"]
+				},
+				"bootstrap": {
+					"bootstrap": [
+						"./css/bootstrap.scss",
+						"./js/vendor/bootstrap.js"
+					]
+				},
+				"public": {
+					"public": ["./js/public.js", "./css/public.scss"]
+				}
+			}
+		},
+		"plugins": {
+			"files": {
+				"modal": {
+					"modal": [
+						"./js/plugins/modal.js",
+						"./css/plugins/modal.scss"
+					]
+				},
+				"slider": {
+					"slider": [
+						"./js/plugins/slider.js",
+						"./css/plugins/slider.scss"
+					]
+				}
+			}
+		},
+		"vendor": {
+			"files": {
+				"acf": {
+					"acf": ["./js/vendor/acf.js", "./css/vendor/acf.scss"]
+				},
+				"gravity-forms": {
+					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
+				},
+				"modernizr": {
+					"modernizr": ["./js/vendor/modernizr.js"]
+				},
+				"qm": {
+					"qm": ["./css/vendor/qm.scss"]
+				},
+				"select2": {
+					"select2": [
+						"./js/vendor/select2.js",
+						"./css/vendor/select2.scss"
+					]
+				}
+			}
+		}
+	},
+	"fileprefix": "rwp-",
+	"folders": {
+		"blocks": "blocks",
+		"css": "css",
+		"dist": "assets",
+		"fonts": "fonts",
+		"images": "imgs",
+		"js": "js",
+		"src": "assets/src"
+	},
+	"paths": {
+		"dist": "./assets",
+		"public": "/wp-content/plugins/rwp/assets/",
+		"src": "./assets/src"
+	}
+}

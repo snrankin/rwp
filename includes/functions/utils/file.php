@@ -29,27 +29,33 @@ use \RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
  * @return string
  */
 
-function rwp_trailingslashit($string) {
-	if (empty($string)) {
+function rwp_trailingslashit( $string ) {
+	if ( empty( $string ) ) {
 		return $string;
 	}
-	if (!Str::endsWith($string, '/')) {
-		$string = Str::finish($string, '/');
+	if ( ! Str::endsWith( $string, '/' ) ) {
+		$string = Str::finish( $string, '/' );
 	}
 
-	return wp_normalize_path($string);
+	return wp_normalize_path( $string );
 }
 
-function rwp_basename($string) {
-	$ext = pathinfo($string, PATHINFO_EXTENSION);
-	$string =
-		wp_basename($string, ".$ext");
+/**
+ * Get the name of a file without the extension
+ *
+ * @param mixed $string
+ * @return string
+ */
+
+function rwp_basename( $string ) {
+	$ext = pathinfo( $string, PATHINFO_EXTENSION );
+	$string = wp_basename( $string, ".$ext" );
 
 	return $string;
 }
 
 /**
- * Simplified wrapper for getting json data
+ * Simplified wrapper for getting file data
  *
  * @param string $url
  * @param bool   $local Whether the url is a local path
@@ -60,40 +66,46 @@ function rwp_basename($string) {
  * @return mixed|false
  */
 
-function rwp_get_json_data($url, $local = false) {
-	$url  = esc_url_raw($url);
+function rwp_get_file_data( $url, $local = false ) {
+	$url  = esc_url_raw( $url );
 	$data = null;
+	$type = pathinfo( $url, PATHINFO_EXTENSION );
 
-	if ($local) {
-		if (rwp_file_exists($url)) {
-			$data = rwp_filesystem()->get_contents($url);
+	if ( $local ) {
+		if ( rwp_file_exists( $url ) ) {
+			$data = rwp_filesystem()->get_contents( $url );
 		}
 	} else {
-		$response = wp_safe_remote_get($url);
+		$response = wp_safe_remote_get( $url );
 		try {
-			if (!is_wp_error($response)) {
-				$data = wp_remote_retrieve_body($response);
+			if ( ! is_wp_error( $response ) ) {
+				$data = wp_remote_retrieve_body( $response );
 			} else {
 				$code = $response->get_error_code();
-				$message = $response->get_error_message($code);
-				throw new Exception($message, $code);
+				$message = $response->get_error_message( $code );
+				throw new Exception( $message, $code );
 			}
-		} catch (Exception $e) {
-			rwp_error($e->getMessage(), 'error');
+		} catch ( Exception $e ) {
+			rwp_error( $e->getMessage(), 'error' );
 		}
 	}
 
-	try {
-		if (!empty($data)) {
-			$data = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
+	if ( 'json' === $type ) {
+		try {
+			if ( ! empty( $data ) ) {
+				$data = json_decode( $data, false, 512, JSON_THROW_ON_ERROR );
 
-			if (is_object($data) && filled($data)) {
-				return $data;
+				if ( is_object( $data ) && filled( $data ) ) {
+					return $data;
+				}
 			}
+		} catch ( JsonException $e ) {
+			rwp_error( $e->getMessage(), 'error' );
 		}
-	} catch (JsonException $e) {
-		rwp_error($e->getMessage(), 'error');
+	} else {
+		return $data;
 	}
+
 }
 
 
@@ -131,19 +143,18 @@ function rwp_filesystem() {
  * @return string|false
  */
 
-function rwp_find_file($filename, $dir = '', $base = __DIR__) {
+function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
 
-	$base = rwp_trailingslashit($base); // only adds slash if it isn't already there
+	$base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
 
 	$finder = new Finder();
-	// @phpstan-ignore-next-line
-	$finder->ignoreUnreadableDirs()->in($base . $dir)->files()->name($filename);
+	$finder->ignoreUnreadableDirs()->in( $base . $dir )->files()->name( $filename );
 
 	$filepath = false;
 
 	// check if there are any search results
-	if ($finder->hasResults()) {
-		foreach ($finder as $file) {
+	if ( $finder->hasResults() ) {
+		foreach ( $finder as $file ) {
 			$filepath = $file->getRealPath();
 		}
 	}
@@ -163,11 +174,11 @@ function rwp_find_file($filename, $dir = '', $base = __DIR__) {
  * @throws DirectoryNotReadableException Throws error if the directory is not readable
  * @throws DirectoryNotFoundException Throws error if the directory is not found
  *
- * @return string
+ * @return string|false
  */
 
-function rwp_find_plugin_file($filename, $dir = '') {
-	return rwp_find_file($filename, $dir, RWP_PLUGIN_PATH);
+function rwp_find_plugin_file( $filename, $dir = '' ) {
+	return rwp_find_file( $filename, $dir, RWP_PLUGIN_ROOT );
 }
 
 /**
@@ -180,16 +191,16 @@ function rwp_find_plugin_file($filename, $dir = '') {
  * @return bool
  */
 
-function rwp_file_exists($filepath) {
+function rwp_file_exists( $filepath ) {
 
 	try {
-		if (rwp_filesystem()->exists($filepath)) {
+		if ( rwp_filesystem()->exists( $filepath ) ) {
 			return true;
 		} else {
-			throw new FileNotFoundException(wp_sprintf('File named %s not found in %s', basename($filepath), dirname($filepath)));
+			throw new FileNotFoundException( wp_sprintf( 'File named %s not found in %s', basename( $filepath ), dirname( $filepath ) ) );
 		}
-	} catch (FileNotFoundException $e) {
-		rwp_error($e->getMessage(), 'error');
+	} catch ( FileNotFoundException $e ) {
+		rwp_error( $e->getMessage(), 'error' );
 	}
 	return false;
 }
@@ -209,48 +220,44 @@ function rwp_file_exists($filepath) {
  * @return mixed
  */
 
-function rwp_get_file($filename, $dir = '', $base = __DIR__,  $require = false, $once = false) {
-	if (is_string($filename)) {
+function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, $once = false ) {
+	if ( is_string( $filename ) ) {
 		$file = '';
-		$type = pathinfo($filename, PATHINFO_EXTENSION);
-		if (filter_var($filename, FILTER_VALIDATE_URL) == false) {
-			$filename = rwp_find_file($filename, $dir, $base);
-			if ($filename) {
+		$type = pathinfo( $filename, PATHINFO_EXTENSION );
+		if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
+			$filename = rwp_find_file( $filename, $dir, $base );
+			if ( $filename ) {
 
-				if ('php' === $type) {
-					if ($require) {
-						if ($once) {
+				if ( 'php' === $type ) {
+					if ( $require ) {
+						if ( $once ) {
 							$file = require_once $filename;
 						} else {
 							$file = require $filename;
 						}
 					} else {
-						if ($once) {
+						if ( $once ) {
 							$file = include_once $filename;
 						} else {
 							$file = include $filename;
 						}
 					}
-				} elseif ('json' === $type) {
-					$file = rwp_get_json_data($filename, true);
+				} elseif ( 'css' === $type || 'js' === $type ) {
+					$file = rwp_get_file_data( $filename, true );
 				} else {
 					$file = $filename;
 				}
 			}
 		} else {
-			if ('json' === $type) {
-				$file = rwp_get_json_data($filename);
-			} else {
-				$file = wp_safe_remote_get($filename);
-			}
+			$file = rwp_get_file_data( $filename );
 		}
 
 		return $file;
-	} elseif (is_array($filename)) {
+	} elseif ( is_array( $filename ) ) {
 		$files = $filename;
 
-		foreach ($files as $file) {
-			rwp_get_file($file, $dir, $base, $require, $once);
+		foreach ( $files as $file ) {
+			rwp_get_file( $file, $dir, $base, $require, $once );
 		}
 	}
 }
@@ -265,51 +272,47 @@ function rwp_get_file($filename, $dir = '', $base = __DIR__,  $require = false, 
  *
  * @throws FileNotFoundException
  *
- * @return void
+ * @return mixed
  */
 
-function rwp_get_plugin_file($filename, $dir = '', $require = false, $once = false) {
-	if (is_string($filename)) {
+function rwp_get_plugin_file( $filename, $dir = '', $require = false, $once = false ) {
+	if ( is_string( $filename ) ) {
 		$file = '';
-		$type = pathinfo($filename, PATHINFO_EXTENSION);
-		if (filter_var($filename, FILTER_VALIDATE_URL) == false) {
-			$filename = rwp_find_plugin_file($filename, $dir);
-			if ($filename) {
+		$type = pathinfo( $filename, PATHINFO_EXTENSION );
+		if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
+			$filename = rwp_find_plugin_file( $filename, $dir );
+			if ( $filename ) {
 
-				if ('php' === $type) {
-					if ($require) {
-						if ($once) {
+				if ( 'php' === $type ) {
+					if ( $require ) {
+						if ( $once ) {
 							$file = require_once $filename;
 						} else {
 							$file = require $filename;
 						}
 					} else {
-						if ($once) {
+						if ( $once ) {
 							$file = include_once $filename;
 						} else {
 							$file = include $filename;
 						}
 					}
-				} elseif ('json' === $type) {
-					$file = rwp_get_json_data($filename, true);
+				} elseif ( 'css' === $type || 'js' === $type ) {
+					$file = rwp_get_file_data( $filename, true );
 				} else {
 					$file = $filename;
 				}
 			}
 		} else {
-			if ('json' === $type) {
-				$file = rwp_get_json_data($filename);
-			} else {
-				$file = wp_safe_remote_get($filename);
-			}
+			$file = rwp_get_file_data( $filename );
 		}
 
 		return $file;
-	} elseif (is_array($filename)) {
+	} elseif ( is_array( $filename ) ) {
 		$files = $filename;
 
-		foreach ($files as $file) {
-			rwp_get_plugin_file($file, $dir, $require, $once);
+		foreach ( $files as $file ) {
+			rwp_get_plugin_file( $file, $dir, $require, $once );
 		}
 	}
 }
