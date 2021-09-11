@@ -45,6 +45,7 @@ intermediate
 .cache
 vendor/*
 !vendor/composer
+!vendor/autoload.php
 test/
 tests/
 tests/*
@@ -61,7 +62,6 @@ webpack
 .stylelintrc.js
 .yarnclean
 codeception.dist.yml
-composer.json
 composer.lock
 grumphp.yml
 package.json

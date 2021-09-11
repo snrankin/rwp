@@ -45,6 +45,7 @@ intermediate
 .cache
 vendor/*
 !vendor/composer
+!vendor/autoload.php
 test/
 tests/
 tests/*

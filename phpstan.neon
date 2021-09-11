@@ -1,5 +1,5 @@
 includes:
-  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+  - /Users/samrankin/.composer/vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 5
   paths:
@@ -34,3 +34,7 @@ parameters:
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
     - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
     - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'
+    - '#^Function data_set invoked with \d* parameters, \d* required\.$#'
+    - '#^Function data_get invoked with \d* parameters, \d* required\.$#'
+    - '#^Function filled invoked with 1 parameter, 0 required\.$#'
+    - '#^Function blank invoked with 1 parameter, 0 required\.$#'
