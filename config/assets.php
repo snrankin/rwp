@@ -36,7 +36,7 @@ $rwp_plugin_assets = [
         ],
 		'acf' => [
             'handle'   => 'acf',
-			'deps'     => ['jquery', 'rwp-admin'],
+			'deps'     => ['jquery', 'rwp-app'],
             'location' => 'acf',
         ],
 		'modal' => [
