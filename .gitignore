@@ -1084,7 +1084,12 @@ intermediate
 .idea
 .cache
 ./vendor/*
+
+# Folder to include
+!./assets/src/
+!./assets/src/**
+!./includes/dependencies/**
 !./vendor/composer
 !./vendor/autoload.php
 !./tests
-!./tests/**/*
+!./tests/**
