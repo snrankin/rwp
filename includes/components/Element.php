@@ -416,6 +416,61 @@ class Element {
 		$this->remove( "attr.style.$key" );
 	}
 
+
+	public static function add_background( $bg, $parent_elem, $inner_elem = '' ) {
+
+		$lazysizes = rwp_get_option( 'modules.lazysizes.lazyload', false );
+
+		$srcset = false;
+
+		if ( ! blank( $bg ) ) {
+			if ( is_numeric( $bg ) && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg, 'full', false );
+			}
+			if ( $bg instanceof \WP_Post && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg->ID, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg->ID, 'full', false );
+			}
+			if ( is_string( $bg ) ) {
+				if ( preg_match( '/\#(?<=#)[a-zA-Z0-9]{3,8}|rgba?\((?:(?:\d{1,3}|\.)\,?\s*)+\)|hsla?\((?:(?:\d{1,3}|\%|\.)\,?\s*)+\)|var\(--[^\)|\s]+\)/', $bg ) ) {
+					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
+						$parent_elem->$inner_elem->set_style( 'background-color', $bg );
+					} else {
+						$parent_elem->set_style( 'background-color', $bg );
+					}
+
+				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
+					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
+						$parent_elem->$inner_elem->add_class( $bg );
+					} else {
+						$parent_elem->add_class( $bg );
+					}
+				} else if ( rwp_is_url( $bg ) || rwp_is_relative_url( $bg ) ) {
+					if ( $lazysizes ) {
+						if ( $srcset ) {
+							$parent_elem->set_attr( 'data-bgset', $srcset );
+
+						} else {
+							$parent_elem->set_attr( 'data-bgset', $bg );
+						}
+						$parent_elem->set_attr( 'data-sizes', 'auto' );
+						$parent_elem->add_class( 'lazyload' );
+					} else {
+						$parent_elem->set_style( 'background-image', $bg );
+					}
+				}
+            } else if ( $bg instanceof Element || rwp_string_is_html( $bg ) ) {
+				array_unshift( $parent_elem->order, 'background' );
+			}
+			$parent_elem->add_class( 'has-bg' );
+		}
+	}
+
 	/**
 	 * Check if content exists in content array
 	 *
