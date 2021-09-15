@@ -2037,6 +2037,7 @@ composer.json
 # Folder to include
 !./includes/dependencies/**
 !./vendor/composer
+!./vendor/composer/**
 !./vendor/autoload.php
 !readme.txt
 !rwp.php
