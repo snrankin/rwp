@@ -1062,7 +1062,7 @@ nbproject
 node_modules
 package-lock.json
 
-# Folders to ignore
+# Stuff to Ignore
 .vscode/
 .hg
 .svn
@@ -1071,14 +1071,11 @@ intermediate
 .idea
 .cache
 vendor/*
-!vendor/composer
-!vendor/autoload.php
 test/
 tests/
 tests/*
 test*.*
 *test*
-!includes/dependencies/vendor
 assets/src
 webpack
 .eslintrc.js
@@ -1096,3 +1093,12 @@ phpcs.xml
 phpstan.neon
 wp-config-test.php
 yarn.lock
+
+# Stuff to Include
+!./includes/dependencies/**
+!./vendor/composer
+!./vendor/autoload.php
+!config.json
+!readme.txt
+!rwp.php
+!uninstall.php

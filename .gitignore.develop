@@ -1061,8 +1061,6 @@ nbproject
 *.sublime-workspace
 node_modules
 package-lock.json
-
-# Folders to ignore
 .vscode
 .hg
 .svn
@@ -1071,8 +1069,13 @@ intermediate
 .idea
 .cache
 ./vendor/*
+test/
+tests/
+tests/*
+test*.*
+*test*
 
-# Folder to include
+# Stuff to Include
 !./assets/src/
 !./assets/src/**
 !./includes/dependencies/**
@@ -1080,3 +1083,22 @@ intermediate
 !./vendor/autoload.php
 !./tests
 !./tests/**
+!.editorconfig
+!.eslintrc.js
+!.gitignore
+!.gitignore.develop
+!.prettierignore
+!.prettierrc
+!.stylelintignore
+!.stylelintrc.js
+!.yarnclean
+!codeception.dist.yml
+!composer.json
+!config.json
+!grumphp.yml
+!package.json
+!phpcs.xml
+!phpstan.neon
+!readme.txt
+!rwp.php
+!uninstall.php
