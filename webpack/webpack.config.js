@@ -129,67 +129,18 @@ let webpackConfig = {
 				],
 			},
 			{
-				test: /\.(ttf|otf|eot|woff2?|png|jpe?g|gif|svg|ico)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: `${assetname}.[ext]`,
-							outputPath: (url) => {
-								const distPath = config.paths.dist;
-								const fileType = path.extname(url);
-								const isFont = new RegExp(
-									/\.(ttf|otf|eot|woff(2?))$/
-								).test(fileType);
-								let newPath;
-								if (isFont) {
-									newPath = path.join(
-										distPath,
-										config.folders.fonts,
-										url
-									);
-								} else {
-									newPath = path.join(
-										distPath,
-										config.folders.images,
-										url
-									);
-								}
-
-								const relPath = path.relative(
-									distPath,
-									newPath
-								);
-
-								return relPath;
-							},
-
-							publicPath: (url) => {
-								const distPath = config.paths.public;
-								const fileType = path.extname(url);
-								const isFont = new RegExp(
-									/\.(ttf|otf|eot|woff2?)$/
-								).test(fileType);
-								let newPath;
-								if (isFont) {
-									newPath = path.join(
-										distPath,
-										config.folders.fonts,
-										url
-									);
-								} else {
-									newPath = path.join(
-										distPath,
-										config.folders.images,
-										url
-									);
-								}
-
-								return newPath;
-							},
-						},
-					},
-				],
+				test: /\.(ttf|otf|eot|woff2?)$/,
+				type: 'asset/resource',
+				generator: {
+					filename: `${config.folders.fonts}/${config.assetname}`,
+				},
+			},
+			{
+				test: /\.(png|jpe?g|gif|svg|ico)$/,
+				type: 'asset/resource',
+				generator: {
+					filename: `${config.folders.images}/${config.assetname}`,
+				},
 			},
 		],
 	},

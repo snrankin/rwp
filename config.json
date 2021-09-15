@@ -5,7 +5,7 @@
 		"theme_color": "#e01c13",
 		"url": "https://www.riester.com"
 	},
-	"cachebusting": "[name]-[hash:8]",
+	"cachebusting": "[name]-[contenthash]",
 	"copy": [],
 	"enabled": {
 		"cache": false,

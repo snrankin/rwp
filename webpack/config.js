@@ -119,6 +119,10 @@ const createConfig = (groupName = '', configName = '') => {
 		? `${fileprefix}${customConfig.cachebusting}`
 		: `${fileprefix}[name]`;
 
+	const assetnameTemplate = customConfig.enabled.cachebusting
+		? `${customConfig.cachebusting}[ext][query]`
+		: '[hash][ext][query]';
+
 	let newConfig = {
 		webpack: {
 			mode: isProduction ? 'production' : 'development',
@@ -146,6 +150,7 @@ const createConfig = (groupName = '', configName = '') => {
 			},
 		},
 		filename: filenameTemplate,
+		assetname: assetnameTemplate,
 		prefix: fileprefix,
 		env: Object.assign(
 			{ production: isProduction, development: !isProduction },
