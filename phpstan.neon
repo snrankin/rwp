@@ -25,6 +25,7 @@ parameters:
     - ../gravityforms
     - ../query-monitor
   scanFiles:
+    - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
     - ../advanced-custom-fields-pro/acf.php
     - ../acf-extended/acf-extended.php
     - ../gravityforms/gravityforms.php
@@ -34,7 +35,3 @@ parameters:
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
     - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
     - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'
-    - '#^Function data_set invoked with \d* parameters, \d* required\.$#'
-    - '#^Function data_get invoked with \d* parameters, \d* required\.$#'
-    - '#^Function filled invoked with 1 parameter, 0 required\.$#'
-    - '#^Function blank invoked with 1 parameter, 0 required\.$#'
