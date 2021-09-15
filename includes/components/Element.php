@@ -438,15 +438,15 @@ class Element {
 			}
 			if ( is_string( $bg ) ) {
 				if ( preg_match( '/\#(?<=#)[a-zA-Z0-9]{3,8}|rgba?\((?:(?:\d{1,3}|\.)\,?\s*)+\)|hsla?\((?:(?:\d{1,3}|\%|\.)\,?\s*)+\)|var\(--[^\)|\s]+\)/', $bg ) ) {
-					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $inner_elem instanceof Element ) {
-						$inner_elem->set_style( 'background-color', $bg );
+					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
+						$parent_elem->$inner_elem->set_style( 'background-color', $bg );
 					} else {
 						$parent_elem->set_style( 'background-color', $bg );
 					}
 
 				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
-					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $inner_elem instanceof Element ) {
-						$inner_elem->add_class( $bg );
+					if( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
+						$parent_elem->$inner_elem->add_class( $bg );
 					} else {
 						$parent_elem->add_class( $bg );
 					}

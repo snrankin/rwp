@@ -72,6 +72,6 @@ class Section extends Element {
     }
 
 	public function setup_html() {
-		$this::add_background( $this->background, $this, 'inner' );
+		self::add_background( $this->background, $this, 'inner' );
 	}
 }
