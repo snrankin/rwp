@@ -31,10 +31,10 @@ class SVG extends Element {
 	);
 
 	/**
-	 * @var string $path The path to the file
+	 * @var string $src The path to the file
 	 */
 
-	public $path;
+	public $src;
 
 	/**
 	 * Initialize the class
@@ -46,19 +46,19 @@ class SVG extends Element {
 
 	public function __construct( $args = array() ) {
 
-		$file = $this->path;
+		$file = $this->src;
 
 		if ( is_numeric( $args ) && rwp_is_wp_image( $args ) ) {
 			$file = get_attached_file( $args ); // Convert image id
 			$args = array();
-		} elseif ( is_string( $args ) && ! rwp_string_is_html( $args ) ) {
+		} elseif (is_string($args) && is_file( $args ) && rwp_file_exists( $args ) &&  rwp_str_ends_with( $args, 'svg' ) ) {
 			/**
 			 * Assuming the $args variable is a file path
 			 */
 			$file = $args;
 			$args = array();
-        } elseif ( rwp_array_has( 'path', $args ) ) {
-			$file = $args['path'];
+        } elseif ( rwp_array_has( 'src', $args ) ) {
+			$file = $args['src'];
 		}
 
 		if ( ! empty( $file ) ) {
@@ -84,17 +84,17 @@ class SVG extends Element {
 				}
 			}
 
-			if ( ! data_has( $args, 'atts.width' ) && ! empty( $width ) ) {
-				data_set( $args, 'atts.width', $width );
+			if ( ! data_has( $svg_file, 'atts.width' ) && ! empty( $width ) ) {
+				data_set( $svg_file, 'atts.width', $width );
 			}
 
-			if ( ! data_has( $args, 'atts.height' ) && ! empty( $height ) ) {
-				data_set( $args, 'atts.height', $height );
+			if ( ! data_has( $svg_file, 'atts.height' ) && ! empty( $height ) ) {
+				data_set( $svg_file, 'atts.height', $height );
 			}
 
 			foreach ( $svg_file['children'] as $path ) {
 				$path = new Element( $path );
-				$args['content'][] = $path->html();
+				$svg_file['content'][] = $path->html();
 			}
 
 			$args = rwp_merge_args( $args, $svg_file );
