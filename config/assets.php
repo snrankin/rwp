@@ -21,25 +21,30 @@ $rwp_plugin_assets = [
             'handle'   => 'app',
             'deps'     => ['jquery', 'lodash'],
             'location' => 'global',
+			'footer'   => true,
         ],
         'public' => [
             'handle'   => 'public',
             'deps'     => ['jquery', 'rwp-app'],
             'location' => 'public',
+			'footer'   => true,
         ],
         'modernizr' => [
             'handle'   => 'modernizr',
             'location' => 'modernizr',
+			'footer'   => true,
         ],
         'admin' => [
             'handle'   => 'admin',
             'deps'     => ['jquery', 'rwp-app'],
             'location' => 'admin',
+			'footer'   => true,
         ],
         'acf' => [
             'handle'   => 'acf',
         'deps'     => ['jquery', 'rwp-app'],
             'location' => 'acf',
+			'footer'   => true,
         ],
         'modal' => [
             'handle'   => 'modal',
