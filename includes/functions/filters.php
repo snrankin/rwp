@@ -14,7 +14,7 @@
 
 add_filter('rwp_classes_to_execute', function( $classes ) {
 
-	$classes_to_filter = preg_grep( '/Walkers/mi', $classes );
+	$classes_to_filter = preg_grep( '/Walkers|Elementr\\\\/i', $classes );
 
 	if ( ! empty( $classes_to_filter ) ) {
 		foreach ( array_keys( $classes_to_filter ) as $index ) {

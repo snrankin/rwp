@@ -1906,6 +1906,7 @@ return array(
     'RWP\\Frontend\\Extras\\JS_Footer' => $baseDir . '/includes/frontend/Extras/JS_Footer.php',
     'RWP\\Frontend\\Extras\\Nice_Search' => $baseDir . '/includes/frontend/Extras/Nice_Search.php',
     'RWP\\Integrations\\ACF' => $baseDir . '/includes/integrations/ACF.php',
+    'RWP\\Integrations\\Elementor' => $baseDir . '/includes/integrations/Elementor.php',
     'RWP\\Integrations\\FakePage' => $baseDir . '/includes/integrations/FakePage.php',
     'RWP\\Integrations\\GravityForms' => $baseDir . '/includes/integrations/GravityForms.php',
     'RWP\\Integrations\\JS_Plugins' => $baseDir . '/includes/integrations/JS_Plugins.php',

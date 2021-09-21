@@ -21,7 +21,6 @@ class ACF extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
 		if ( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			return;

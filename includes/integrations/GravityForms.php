@@ -34,8 +34,6 @@ class GravityForms extends Singleton {
 			return;
 		}
 
-		parent::initialize();
-
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
 
