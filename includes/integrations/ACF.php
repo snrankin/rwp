@@ -12,7 +12,7 @@
 namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
-use function RWP\Modules\Bootstrap\bs_atts;
+use RWP\Internals\Bootstrap;
 class ACF extends Singleton {
 
 	/**
@@ -21,7 +21,6 @@ class ACF extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		parent::initialize();
 
 		if ( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			return;
@@ -241,7 +240,7 @@ class ACF extends Singleton {
 	 */
 
 	public function add_color_choices( $field ) {
-		$colors = bs_atts( 'colors' );
+		$colors = Bootstrap::bs_atts( 'colors' );
 
 		if ( isset( $field['choices'] ) ) {
 
