@@ -8,8 +8,6 @@
  * @author  RIESTER <wordpress@riester.com>
  * ========================================================================== */
 
- use function RWP\Modules\Bootstrap\bs_atts;
-
 /**
  * Remove certain classes from plugin initialization process
  */
@@ -141,8 +139,3 @@ function rwp_empty_html_attributes_filter( $args = array(), $remove_empty = true
 	return $args;
 }
 add_filter( 'rwp_html_attributes_filter', 'rwp_empty_html_attributes_filter' );
-
-
-// add_filter( 'acfe/load_field', function( $field ) {
-// 	echo 'test';
-// });
