@@ -150,9 +150,6 @@ let webpackConfig = {
 	},
 	externals: {
 		jquery: 'jQuery',
-		'tiny-slider': 'tns',
-		Fancybox: 'Fancybox',
-		select2: 'select2',
 		lodash: {
 			commonjs: 'lodash',
 			commonjs2: 'lodash',
