@@ -1,6 +1,6 @@
 module.exports = {
 	root: true,
-	ignorePatterns: ['modernizr.js'],
+	ignorePatterns: ['modernizr.js', 'assets/js/*'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@wordpress/eslint-plugin/recommended',
