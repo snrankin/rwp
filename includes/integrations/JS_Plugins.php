@@ -26,27 +26,27 @@ class JS_Plugins extends Singleton {
 		$rwp_js_plugins = rwp_get_option( 'modules.js_plugins', array() );
 		$rwp_icon_fonts = rwp_get_option( 'modules.icon_fonts', array() );
 
-		if ( in_array( 'Fancybox', $rwp_js_plugins ) ) {
+		if ( preg_grep( '/fancybox/i', $rwp_js_plugins ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_fancybox' ) );
 		}
 
-		if ( in_array( 'Select2', $rwp_js_plugins ) ) {
+		if ( preg_grep( '/select2/i', $rwp_js_plugins ) ) {
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_select2' ) );
 		}
 
-		if ( in_array( 'Tiny Slider', $rwp_js_plugins ) ) {
+		if ( preg_grep( '/tiny(?:\s|\-)slider/i', $rwp_js_plugins ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_tiny_slider' ) );
 		}
 
-		if ( in_array( 'font-awesome', $rwp_icon_fonts ) ) {
+		if ( preg_grep( '/font(?:\s|\-)awesome/i', $rwp_icon_fonts ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_font_awesome' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_font_awesome' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_font_awesome' ) );
 		}
 
 
-		if ( in_array( 'Bootstrap Icons', $rwp_icon_fonts ) ) {
+		if ( preg_grep( '/bootstrap(?:\s|\-)icons/i', $rwp_icon_fonts ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_bootstrap_icons' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );
@@ -66,14 +66,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_fancybox() {
-		if ( ! wp_style_is( 'rwp-modal', 'registered' ) ) {
-			rwp()->register_styles( 'modal' );
-		}
-
-		if ( ! wp_script_is( 'rwp-modal', 'registered' ) ) {
-			rwp()->register_scripts( 'modal' );
-		}
-
+		rwp()->register_assets( 'modal' );
 		rwp()->enqueue_assets( 'modal' );
 	}
 
@@ -85,14 +78,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_select2() {
-		if ( ! wp_style_is( 'rwp-select2', 'registered' ) ) {
-			rwp()->register_styles( 'select2' );
-		}
-
-		if ( ! wp_script_is( 'rwp-select2', 'registered' ) ) {
-			rwp()->register_scripts( 'select2' );
-		}
-
+		rwp()->register_assets( 'select2' );
 		rwp()->enqueue_assets( 'select2' );
 	}
 
@@ -104,14 +90,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_tiny_slider() {
-		if ( ! wp_style_is( 'rwp-slider', 'registered' ) ) {
-			rwp()->register_styles( 'slider' );
-		}
-
-		if ( ! wp_script_is( 'rwp-slider', 'registered' ) ) {
-			rwp()->register_scripts( 'slider' );
-		}
-
+		rwp()->register_assets( 'slider' );
 		rwp()->enqueue_assets( 'slider' );
 	}
 
@@ -145,7 +124,9 @@ class JS_Plugins extends Singleton {
 			rwp()->register_styles( 'bootstrap-icons' );
 		}
 
-		rwp()->enqueue_styles( 'bootstrap-icons' );
+		if ( ! wp_style_is( 'rwp-bootstrap-icons', 'enqueued' ) ) {
+			rwp()->enqueue_styles( 'bootstrap-icons' );
+		}
 	}
 
 	/**
@@ -155,14 +136,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_lazysizes() {
-		if ( ! wp_style_is( 'rwp-lazysizes', 'registered' ) ) {
-			rwp()->register_styles( 'lazysizes' );
-		}
-
-		if ( ! wp_script_is( 'rwp-lazysizes', 'registered' ) ) {
-			rwp()->register_scripts( 'lazysizes' );
-		}
-
+		rwp()->register_assets( 'lazysizes' );
 		rwp()->enqueue_assets( 'lazysizes' );
 	}
 
