@@ -323,10 +323,24 @@ class Elementor extends Singleton {
 
 			// Adding Bootstrap button types to elementor buttons
 
-			$btn_options_solid = (array) Bootstrap::bs_atts( 'colors' );
-			$btn_options_outline = (array) Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' );
+			$btn_options_solid = (array) Bootstrap::bs_atts('colors');
+			$btn_options_outline = (array) Bootstrap::bs_atts('colors', 'outline-', '',  '', ' Outline');
 
-			$btn_options = array_merge( $btn_options_solid, $btn_options_outline );
+			$btn_options = array(
+				'' => 'Default'
+			);
+
+			foreach ($btn_options_solid as $key => $value) {
+				$label = data_get($value, 'label');
+				$class = data_get($value, 'value');
+				$btn_options[$class] = $label;
+			}
+
+			foreach ($btn_options_outline as $key => $value) {
+				$label = data_get($value, 'label');
+				$class = data_get($value, 'value');
+				$btn_options[$class] = $label;
+			}
 
 			$section->add_control(
 				'button_type',
