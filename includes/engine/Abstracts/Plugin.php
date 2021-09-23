@@ -477,15 +477,6 @@ abstract class Plugin extends Singleton implements Component {
 			$prefix = $this->get_slug();
 		}
 
-		// Add the separator if it isn't already there
-		if ( ! Str::endsWith( $prefix, $separator ) ) {
-			$prefix = Str::finish( $prefix, $separator );
-		}
-
-		if ( ! Str::startsWith( $string, $prefix ) ) {
-			$string = Str::start( $string, $prefix );
-		}
-
 		if ( ! empty( $case ) ) {
 			switch ( $case ) {
 				case 'title':
@@ -508,6 +499,15 @@ abstract class Plugin extends Singleton implements Component {
 					$string = Str::camel( $string );
 			        break;
 			}
+		}
+
+		// Add the separator if it isn't already there
+		if ( ! Str::endsWith( $prefix, $separator ) ) {
+			$prefix = Str::finish( $prefix, $separator );
+		}
+
+		if ( ! Str::startsWith( $string, $prefix ) ) {
+			$string = Str::start( $string, $prefix );
 		}
 
         return $string;
