@@ -51,7 +51,7 @@ class JS_Plugins extends Singleton {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );
 		}
 
-		if ( ! rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
+		if ( rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_lazysizes' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_lazysizes' ) );
 		}

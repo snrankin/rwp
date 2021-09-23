@@ -25,8 +25,8 @@ class Lazysizes extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( ! rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
-			add_filter( 'wp_get_attachment_image', array( $this, 'rwp_update_image_tag' ), 30, 5 );
+		if ( rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
+			add_filter( 'wp_get_attachment_image', array( $this, 'update_image_tag' ), 30, 5 );
 		}
 	}
 
@@ -48,7 +48,8 @@ class Lazysizes extends Singleton {
 	public function update_image_tag( $html, $attachment_id, $size, $icon, $attr ) {
 
 		if ( ! empty( $html ) ) {
-			$html = rwp_image( $html )->html();
+			$html = rwp_image( $html );
+			$html = $html->image->html();
 		}
 
 		return $html;
