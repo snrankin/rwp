@@ -25,27 +25,69 @@ class Shortcode extends Singleton {
 	 */
 	public function initialize() {
 
-		\add_shortcode( 'foobar', array( $this, 'foobar_func' ) );
+		\add_shortcode( 'copyright', array( $this, 'copyright' ) );
 	}
 
 	/**
-	 * Shortcode example
+	 * Easily add copyright info with an auto-updating year
 	 *
-	 * @param array $atts Parameters.
-	 * @since 1.0.0
+	 * @param array $atts
 	 * @return string
 	 */
-	public static function foobar_func( array $atts ) {
-		\shortcode_atts(
-			array(
-				'foo' => 'something',
-				'bar' => 'something else',
-			),
-			$atts
+
+	public static function copyright( $atts ) {
+        $defaults = array(
+            'before' => '&copy; Copyright ',
+			'after' => ', All Rights Reserved.'
 		);
 
-		return '<span class="foo">foo = ' . $atts['foo'] . '</span>' .
-			'<span class="bar">foo = ' . $atts['bar'] . '</span>';
-	}
+        $atts = self::process_shortcode($atts, $defaults);
+
+		return wp_sprintf( '%s%d%s', $atts['before'], date('Y'), $atts['after'] );
+    }
+
+	/**
+	 * Process a shortcode
+	 *
+	 * @param mixed $atts The shortcode atts
+	 * @param array $defaults
+	 * @return array
+	 */
+
+	public static function process_shortcode($atts, $defaults = array()) {
+        $atts = shortcode_atts(
+            $defaults,
+            $atts
+        );
+        $args = array(
+            'atts' => array()
+		);
+        foreach ($atts as $key => $value) {
+            switch ($key) {
+                case 'class':
+                    if (!empty($value)) {
+                        $value = rwp_parse_classes($value);
+                        $args['atts']['class'] = $value;
+                    }
+                    break;
+                case 'id':
+                    if (!empty($value)) {
+                        $args['atts']['id'] = $value;
+                    }
+                    break;
+
+                default:
+                    if (is_string($value) && ($value === 'true' || $value === 'false')) {
+                        $args[$key] = boolval($value);
+                    } else if (!empty($value)) {
+                        $args[$key] = $value;
+                    }
+
+                    break;
+            }
+        }
+        $args['atts'] = rwp_prepare_args($args['atts']);
+        return $args;
+    }
 
 }
