@@ -42,7 +42,6 @@ class Clean_Up extends Singleton {
 		add_filter( 'the_generator', '__return_false' );
 		add_filter( 'script_loader_tag', array( $this, 'clean_script_tag' ) );
 		add_filter( 'body_class', array( $this, 'body_class' ) );
-		//add_filter( 'embed_oembed_html', array( $this, 'embed_wrap' ) );
 		rwp_add_filters( array( 'get_avatar', 'comment_id_fields', 'post_thumbnail_html' ), array( $this, 'remove_self_closing_tags' ) );
 		add_filter( 'get_bloginfo_rss', array( $this, 'remove_default_description' ) );
 	}
@@ -175,18 +174,6 @@ class Clean_Up extends Singleton {
 		$classes        = array_diff( $classes, $remove_classes );
 
 		return $classes;
-	}
-
-	/**
-	 * Wrap embedded media as suggested by Readability
-	 *
-	 * @link https://gist.github.com/965956
-	 * @link http://www.readability.com/publishers/guidelines#publisher
-	 * @param string $cache
-	 * @return string
-	 */
-	public function embed_wrap( $cache ) {
-		return '<div class="media-wrapper embed">' . $cache . '</div>';
 	}
 
 	/**
