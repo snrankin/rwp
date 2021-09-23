@@ -25,17 +25,7 @@ class Relative_Urls extends Singleton {
 			return;
 		}
 
-		/**
-		 * Compatibility with The SEO Framework
-		 */
-		add_action('the_seo_framework_do_before_output', function () {
-			remove_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
-		});
-		add_action('the_seo_framework_do_after_output', function () {
-			add_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
-		});
-
-		add_filter('wp_calculate_image_srcset', function ( $sources ) {
+		\add_filter('wp_calculate_image_srcset', function ( $sources ) {
 			foreach ( (array) $sources as $source => $src ) {
 				$sources[ $source ]['url'] = $this->root_relative_url( $src['url'] );
 			}
@@ -63,6 +53,16 @@ class Relative_Urls extends Singleton {
 			'parent_theme_file_uri',
 		]);
 		\rwp_add_filters( $rwp_root_rel_filters, array( $this, 'root_relative_url' ) );
+
+		/**
+		 * Compatibility with The SEO Framework
+		 */
+		\add_action('the_seo_framework_do_before_output', function () {
+			\remove_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
+		});
+		\add_action('the_seo_framework_do_after_output', function () {
+			\add_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
+		});
 
 	}
 
