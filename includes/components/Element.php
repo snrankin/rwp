@@ -169,36 +169,19 @@ class Element {
 	 */
 
 	public function create_from_string( $string ) {
-		$tag = 'div';
-		$atts = array();
-		$content = null;
-		$string = \force_balance_tags( $string );
-		if ( is_string( $string ) && ! rwp_string_is_html( $string ) ) {
-			$content = $string;
-		} else {
-			$html = new Html( $string );
-			// if ( ! empty( $this->tag ) ) {
-			// 	$html = $html->filter( $this->tag )->__toString();
-			// 	$html = new Html( $html );
-			// }
-
-			$atts = $html->extractAll( true, true );
-			$tag = data_get( $atts, '_name' );
-			unset( $atts['_name'] );
-
-			$content = data_get( $atts, '_text' );
-			unset( $atts['_text'] );
-
-		}
 		$args = array(
-			'tag' => $tag,
-			'atts' => $atts,
+			'tag' => 'div',
+			'atts' => array(),
+			'content' => array()
 		);
 
-		if ( ! empty( $content ) ) {
-			$args['content'] = array(
-				$content,
-			);
+		$string = \force_balance_tags( $string );
+		if ( ! rwp_string_is_html( $string ) ) {
+			$args['content'][] = $string;
+		} else {
+			$html = new Html( $string );
+			$atts = $html->extractAll( true, true );
+			$args = rwp_merge_args( $args, $atts );
 		}
 
 		return $args;
@@ -442,7 +425,7 @@ class Element {
 						$parent_elem->$inner_elem->set_style( 'background-color', $bg );
 					} else {
 						$parent_elem->set_style( 'background-color', $bg );
-					}               
+					}
 				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
 					if ( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
 						$parent_elem->$inner_elem->add_class( $bg );

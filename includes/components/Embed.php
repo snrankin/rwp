@@ -189,7 +189,7 @@ class Embed extends Element {
 			$args = array();
 		}
 
-		if ( rwp_is_element( $html, 'div' ) ) {
+		if ( rwp_is_element( $html, 'div|figure' ) ) {
 			$args['html'] = $html;
 		} else if ( rwp_is_element( $html, '[iframe|video]' ) ) {
 			$args['embed']['html'] = $html;
