@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -527,6 +527,93 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+		array(
+			'key' => 'field_614cf2b1392d1',
+			'label' => 'CPTs',
+			'name' => '',
+			'type' => 'tab',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'placement' => 'left',
+			'endpoint' => 0,
+		),
+		array(
+			'key' => 'field_614cf1d7be4c9',
+			'label' => 'Custom Post Type Options',
+			'name' => 'cpt_options',
+			'type' => 'group',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'acfe_save_meta' => 0,
+			'layout' => 'table',
+			'acfe_seamless_style' => 0,
+			'acfe_group_modal' => 0,
+			'sub_fields' => array(
+				array(
+					'key' => 'field_614cf1f1be4ca',
+					'label' => 'Enable custom pages for post types?',
+					'name' => 'page_for_cpt',
+					'type' => 'true_false',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'message' => '',
+					'default_value' => 0,
+					'ui' => 1,
+					'ui_on_text' => '',
+					'ui_off_text' => '',
+				),
+				array(
+					'key' => 'field_614cf34c2b4e2',
+					'label' => 'Enable Custom Post Types',
+					'name' => 'cpts',
+					'type' => 'checkbox',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'acfe_save_meta' => 0,
+					'choices' => array(
+						'landing_page' => 'Landing Pages',
+						'team_member' => 'Team Members',
+						'page_header' => 'Custom Page Headers',
+						'global_block' => 'Global Blocks',
+					),
+					'allow_custom' => 0,
+					'default_value' => array(
+					),
+					'layout' => 'vertical',
+					'toggle' => 0,
+					'return_format' => 'array',
+					'show_column' => 0,
+					'show_column_weight' => 1000,
+					'allow_quickedit' => 0,
+					'allow_bulkedit' => 0,
+					'save_custom' => 0,
+				),
+			),
+		),
 	),
 	'location' => array(
 		array(
@@ -555,6 +642,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
+	'modified' => 1632435836,
 ));
 
 endif;
