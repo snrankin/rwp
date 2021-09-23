@@ -16,6 +16,9 @@ use RWP\Components\Html;
  * @return bool
  */
 function rwp_string_is_html( $string ) {
+	if( ! is_string( $string ) ){
+		return false;
+	}
 	return strip_tags( $string ) !== $string ? true : false;
 }
 
