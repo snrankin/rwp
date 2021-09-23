@@ -51,7 +51,7 @@ class SVG extends Element {
 		if ( is_numeric( $args ) && rwp_is_wp_image( $args ) ) {
 			$file = get_attached_file( $args ); // Convert image id
 			$args = array();
-		} elseif (is_string($args) && is_file( $args ) && rwp_file_exists( $args ) &&  rwp_str_ends_with( $args, 'svg' ) ) {
+		} elseif ( is_string( $args ) && is_file( $args ) && rwp_file_exists( $args ) && rwp_str_ends_with( $args, 'svg' ) ) {
 			/**
 			 * Assuming the $args variable is a file path
 			 */

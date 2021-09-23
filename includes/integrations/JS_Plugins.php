@@ -45,7 +45,6 @@ class JS_Plugins extends Singleton {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_font_awesome' ) );
 		}
 
-
 		if ( preg_grep( '/bootstrap(?:\s|\-)icons/i', $rwp_icon_fonts ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_bootstrap_icons' ) );

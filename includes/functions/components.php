@@ -94,3 +94,7 @@ function rwp_container( $args = array() ) {
 function rwp_section( $args = array() ) {
 	return new RWP\Components\Section( $args );
 }
+
+function rwp_embed( $args = array() ) {
+	return new RWP\Components\Embed( $args );
+}

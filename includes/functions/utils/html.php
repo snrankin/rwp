@@ -444,3 +444,35 @@ function rwp_input_to_button( $input = '', $args = array() ) {
 
 	return $button;
 }
+
+/**
+ * Extract all html attributes optionally by a specific tag
+ *
+ * @param mixed $html
+ * @param string $tag
+ * @param bool $include_tag
+ * @param bool $include_content
+ *
+ * @return array
+ * @throws RuntimeException
+ * @throws Exception
+ */
+function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $include_content = false ) {
+	if ( ! rwp_string_is_html( $html ) ) {
+		return array();
+	}
+
+	$html_atts = array();
+
+	$html = rwp_html( $html );
+
+	if ( ! empty( $tag ) ) {
+		$html = $html->filter( $tag );
+		$html_atts = Html::extractAllAtts( $html, $include_tag, $include_content );
+	} else {
+		$html_atts = $html->extractAll( $include_tag, $include_content );
+	}
+
+	return $html_atts;
+
+}

@@ -15,6 +15,7 @@ namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Html;
+use RWP\Components\Embed;
 use RWP\Vendor\Exceptions\Collection\KeyNotFoundException;
 
 class Bootstrap extends Singleton {
@@ -26,8 +27,12 @@ class Bootstrap extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( ! rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
+		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
+		}
+
+		if ( rwp_get_option( 'modules.bootstrap.gutenberg', false ) ) {
+			add_filter( 'render_block', array( $this, 'embed_block' ), 10, 2 );
 		}
 	}
 
@@ -63,41 +68,41 @@ class Bootstrap extends Singleton {
 	public static function bs_atts( $group = '', $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
 		$atts = array(
 			'colors' => array(
-				'primary'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Primary', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('primary', $class_suffix), $class_prefix),
+				'primary' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Primary', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'primary', $class_suffix ), $class_prefix ),
 				),
-				'secondary'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Secondary', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('secondary', $class_suffix), $class_prefix),
+				'secondary' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Secondary', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'secondary', $class_suffix ), $class_prefix ),
 				),
-				'tertiary'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Tertiary', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('tertiary', $class_suffix), $class_prefix),
+				'tertiary' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Tertiary', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'tertiary', $class_suffix ), $class_prefix ),
 				),
-				'info'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Info', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('info', $class_suffix), $class_prefix),
+				'info' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Info', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'info', $class_suffix ), $class_prefix ),
 				),
-				'success'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Success', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('success', $class_suffix), $class_prefix),
+				'success' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Success', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'success', $class_suffix ), $class_prefix ),
 				),
-				'warning'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Warning', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('warning', $class_suffix), $class_prefix),
+				'warning' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Warning', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'warning', $class_suffix ), $class_prefix ),
 				),
-				'danger'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Danger', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('danger', $class_suffix), $class_prefix),
+				'danger' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Danger', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'danger', $class_suffix ), $class_prefix ),
 				),
-				'light'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Light', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('light', $class_suffix), $class_prefix),
+				'light' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Light', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'light', $class_suffix ), $class_prefix ),
 				),
-				'dark'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Dark', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('dark', $class_suffix), $class_prefix),
+				'dark' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Dark', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'dark', $class_suffix ), $class_prefix ),
 				),
 				// 'blue'=> array(
 				// 	'label' => rwp_add_prefix(rwp_add_suffix('Blue', $label_suffix), $label_prefix),
@@ -139,13 +144,13 @@ class Bootstrap extends Singleton {
 				// 	'label' => rwp_add_prefix(rwp_add_suffix('Cyan', $label_suffix), $label_prefix),
 				// 	'value' => rwp_add_prefix(rwp_add_suffix('cyan', $class_suffix), $class_prefix),
 				// ),
-				'white'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('White', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('white', $class_suffix), $class_prefix),
+				'white' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'White', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'white', $class_suffix ), $class_prefix ),
 				),
-				'black'=> array(
-					'label' => rwp_add_prefix(rwp_add_suffix('Black', $label_suffix), $label_prefix),
-					'value' => rwp_add_prefix(rwp_add_suffix('black', $class_suffix), $class_prefix),
+				'black' => array(
+					'label' => rwp_add_prefix( rwp_add_suffix( 'Black', $label_suffix ), $label_prefix ),
+					'value' => rwp_add_prefix( rwp_add_suffix( 'black', $class_suffix ), $class_prefix ),
 				),
 				// 'gray-100'=> array(
 				// 	'label' => rwp_add_prefix(rwp_add_suffix('Gray 100', $label_suffix), $label_prefix),
@@ -188,27 +193,27 @@ class Bootstrap extends Singleton {
 				'sm' => array(
 					'label' => 'Devices from 576px to 768px',
 					'value' => 576,
-					'class' => rwp_add_prefix(rwp_add_suffix('sm', $class_suffix), $class_prefix),
+					'class' => rwp_add_prefix( rwp_add_suffix( 'sm', $class_suffix ), $class_prefix ),
 				),
 				'md' => array(
 					'label' => 'Devices from 768px to 992px',
 					'value' => 768,
-					'class' => rwp_add_prefix(rwp_add_suffix('md', $class_suffix), $class_prefix),
+					'class' => rwp_add_prefix( rwp_add_suffix( 'md', $class_suffix ), $class_prefix ),
 				),
 				'lg' => array(
 					'label' => 'Devices from 992px to 1200px',
 					'value' => 992,
-					'class' => rwp_add_prefix(rwp_add_suffix('lg', $class_suffix), $class_prefix),
+					'class' => rwp_add_prefix( rwp_add_suffix( 'lg', $class_suffix ), $class_prefix ),
 				),
 				'xl' => array(
 					'label' => 'Devices from 1200px to 1400px',
 					'value' => 1200,
-					'class' => rwp_add_prefix(rwp_add_suffix('xl', $class_suffix), $class_prefix),
+					'class' => rwp_add_prefix( rwp_add_suffix( 'xl', $class_suffix ), $class_prefix ),
 				),
 				'xxl' => array(
 					'label' => 'Devices from 1400px',
 					'value' => 1400,
-					'class' => rwp_add_prefix(rwp_add_suffix('xxl', $class_suffix), $class_prefix),
+					'class' => rwp_add_prefix( rwp_add_suffix( 'xxl', $class_suffix ), $class_prefix ),
 				),
 			),
 		);
@@ -219,4 +224,46 @@ class Bootstrap extends Singleton {
 			return $atts;
 		}
 	}
+
+	/**
+	 *
+	 * @param string $block_content
+	 * @param array $block
+	 * @return string
+	 */
+
+	public function embed_block( $block_content, $block ) {
+		if ( 'core/embed' !== $block['blockName'] ) {
+			return $block_content;
+		}
+		if ( ! empty( $block_content ) ) {
+
+			$url = data_get( $block, 'attrs.url', '' );
+
+			$wrapper = rwp_extract_html_attributes( $block_content, 'figure' );
+			$video = rwp_extract_html_attributes( $block_content, 'iframe' );
+			$link = rwp_extract_html_attributes( $block_content, 'a', true );
+			$caption = rwp_extract_html_attributes( $block_content, 'figcaption', true, true );
+
+			$args = array(
+				'src'   => $url,
+				'embed' => $video,
+				'inner' => $link,
+				'atts'  => $wrapper,
+			);
+
+			$video = rwp_embed( $args );
+
+			if ( ! empty( $caption ) ) {
+				$video->set_caption( $caption );
+			}
+
+			$video = $video->html();
+
+			$block_content = $video;
+		}
+		return $block_content;
+	}
+
+
 }
