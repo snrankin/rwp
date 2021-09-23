@@ -23,7 +23,7 @@ class Nice_Search extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( rwp_get_option( 'modules.enable_nice_search', false ) ) {
+		if ( rwp_get_option( 'modules.nice_search', false ) ) {
 			add_action( 'template_redirect', array( $this, 'redirect' ) );
 			add_filter( 'wpseo_json_ld_search_url', array( $this, 'rewrite' ) );
 		}
