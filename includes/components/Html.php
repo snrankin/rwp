@@ -37,15 +37,49 @@ class Html extends HtmlPageCrawler {
 
 		if ( $node instanceof \DOMElement ) {
 			foreach ( $node->attributes as $attribute ) {
-				$atts[ $attribute->name ] = $attribute->value;
+				$atts['atts'][ $attribute->name ] = $attribute->value;
 			}
 
 			if ( $include_content ) {
-				$atts['_text'] = $node->nodeValue; //phpcs:ignore
+				$atts['content'] = $node->nodeValue; //phpcs:ignore
 			}
 
 			if ( $include_tag ) {
-				$atts['_name'] = $node->nodeName; //phpcs:ignore
+				$atts['tag'] = $node->nodeName; //phpcs:ignore
+			}
+		}
+
+		return $atts;
+	}
+
+	/**
+	 * Extracts all attributes including tag name and content
+	 *
+	 * @example $crawler->filter('h1 a')->extract(['_text', 'href']);
+	 *
+	 * @param HtmlPageCrawler $crawler
+	 * @param bool $include_tag
+	 * @param bool $include_content
+	 *
+	 * @return array An array of extracted values
+	 */
+	public static function extractAllAtts( $crawler, $include_tag = false, $include_content = false ) {
+
+		$node = $crawler->getNode( 0 );
+
+		$atts = array();
+
+		if ( $node instanceof \DOMElement ) {
+			foreach ( $node->attributes as $attribute ) {
+				$atts['atts'][ $attribute->name ] = $attribute->value;
+			}
+
+			if ( $include_content ) {
+				$atts['content'] = $node->nodeValue; //phpcs:ignore
+			}
+
+			if ( $include_tag ) {
+				$atts['tag'] = $node->nodeName; //phpcs:ignore
 			}
 		}
 

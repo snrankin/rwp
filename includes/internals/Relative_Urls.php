@@ -25,7 +25,6 @@ class Relative_Urls extends Singleton {
 			return;
 		}
 
-
 		/**
 		 * Compatibility with The SEO Framework
 		 */

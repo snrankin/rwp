@@ -93,11 +93,11 @@ class Elementor extends Singleton {
 		$kit_settings = $raw_kit_settings;
 
 		$kit_settings['active_breakpoints'] = array(
-			'viewport_mobile'       => Bootstrap::bs_atts('breakpoints.sm.value'),
-			'viewport_tablet'       => Bootstrap::bs_atts('breakpoints.md.value'),
-			'viewport_tablet_extra' => Bootstrap::bs_atts('breakpoints.lg.value'),
-			'viewport_laptop'       => Bootstrap::bs_atts('breakpoints.xl.value'),
-			'viewport_desktop'      => Bootstrap::bs_atts('breakpoints.xxl.value'),
+			'viewport_mobile'       => Bootstrap::bs_atts( 'breakpoints.sm.value' ),
+			'viewport_tablet'       => Bootstrap::bs_atts( 'breakpoints.md.value' ),
+			'viewport_tablet_extra' => Bootstrap::bs_atts( 'breakpoints.lg.value' ),
+			'viewport_laptop'       => Bootstrap::bs_atts( 'breakpoints.xl.value' ),
+			'viewport_desktop'      => Bootstrap::bs_atts( 'breakpoints.xxl.value' ),
 		);
 
 		update_post_meta( $kit_active_id, '_elementor_page_settings', $kit_settings, $raw_kit_settings );
@@ -320,8 +320,6 @@ class Elementor extends Singleton {
 			$section->remove_responsive_control( 'align' );
 			$section->remove_responsive_control( 'content_position' );
 		} elseif ( 'button' === $section->get_name() && 'section_button' === $section_id ) {
-
-			// Adding Bootstrap button types to elementor buttons
 
 
 			// Adding Bootstrap button types to elementor buttons

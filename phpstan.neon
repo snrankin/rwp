@@ -39,4 +39,4 @@ parameters:
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
     - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
     - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'
-    - '#^Parameter \#1 \$post_id of function acfe_get_fields expects false, int|string given\.$#'
+    - '#^Parameter \#1 \$post_id of function acfe_get_fields expects false, int\|string given\.$#'

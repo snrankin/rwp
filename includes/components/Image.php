@@ -127,7 +127,6 @@ class Image extends Element {
 
 		parent::__construct( $args );
 
-
 	}
 
 	public function add_lazysizes() {
@@ -169,7 +168,7 @@ class Image extends Element {
 
 	}
 
-	public function setup_html(){
+	public function setup_html() {
 		$this->add_lazysizes();
 	}
 
