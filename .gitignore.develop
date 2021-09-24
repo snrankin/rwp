@@ -1022,21 +1022,21 @@ node_modules
 
 # Stuff to Ignore
 .*
-!./vendor/
-./vendor/*
-!./vendor/composer
-!./vendor/autoload.php
+!vendor/
+vendor/*
+!vendor/composer
+!vendor/autoload.php
 .yarnclean
 composer.lock
 wp-config-test.php
 yarn.lock
 
 # Stuff to Include
-!./includes/dependencies/**/*
+!includes/dependencies/**/*
 
-!./tests
-!./tests/**
-!./tests/**/*
+!tests
+!tests/**
+!tests/**/*
 !.editorconfig
 !.eslintrc.js
 !.gitignore

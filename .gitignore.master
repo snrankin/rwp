@@ -1022,20 +1022,25 @@ node_modules
 
 # Stuff to Ignore
 .*
-!.gitignore
-!.gitignore.master
-!./vendor/
+!vendor/
 vendor/*
 !vendor/composer
+!vendor/composer/**/*
 !vendor/autoload.php
 .yarnclean
-*.lock
+composer.lock
 wp-config-test.php
 phpstan.neon
-tests/
+tests/**/*
 assets/src/
 webpack/
 
 # Stuff to Include
 !includes/dependencies/**/*
 !includes/dependencies/externals/plugins/advanced-custom-fields-pro.zip
+*.yml
+.gitignore.develop
+!.gitignore.master
+package.json
+phpcs.xml
+phpstan.neon
