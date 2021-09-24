@@ -111,7 +111,7 @@ class Image extends Element {
 	 * @var string|array|Element $image The image content
 	 */
 	public $image = array(
-		'tag' => 'image',
+		'tag' => 'img',
         'atts' => array(
             'class' => array(
 				'media-src',
