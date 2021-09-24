@@ -1,4 +1,3 @@
-/* eslint-disable @wordpress/no-global-event-listener */
 /**
  * ============================================================================
  * helpers
@@ -14,7 +13,7 @@
 const _ = require('lodash');
 
 import { actual } from 'actual';
-import { verge } from 'verge';
+import { verge } from 'verge'; // eslint-disable-line
 
 export function camelCase(str) {
 	return `${str.charAt(0).toLowerCase()}${str

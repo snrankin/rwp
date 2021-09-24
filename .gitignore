@@ -1033,7 +1033,7 @@ yarn.lock
 
 # Stuff to Include
 !includes/dependencies/**/*
-
+!assets/src/**/*
 !tests
 !tests/**
 !tests/**/*

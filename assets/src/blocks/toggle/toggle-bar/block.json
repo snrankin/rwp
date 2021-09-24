@@ -1,0 +1,38 @@
+{
+	"apiVersion": 2,
+	"name": "rwp/toggle-bar",
+	"title": "Toggle Bar",
+	"category": "design",
+	"parent": "rwp/toggle",
+	"icon": "feedback",
+	"supports": {
+		"inserter": false
+	},
+	"attributes": {
+		"toggleBarIsOpen": {
+			"type": "boolean",
+			"default": false
+		},
+		"toggleBarId": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "btn-outline-primary"
+		},
+		"openedIcon": {
+			"type": "string",
+			"default": "glaza glaza-minus"
+		},
+		"closedIcon": {
+			"type": "string",
+			"default": "glaza glaza-plus"
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"usesContext": ["rwp-toggle/isOpen", "rwp-toggle/toggleId"]
+}
