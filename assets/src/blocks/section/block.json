@@ -1,0 +1,50 @@
+{
+	"apiVersion": 2,
+	"name": "rwp/section",
+	"title": "Page Section",
+	"category": "design",
+	"attributes": {
+		"innerClasses": {
+			"type": "string",
+			"default": ""
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"bgImageId": {
+			"type": "number",
+			"default": 0
+		},
+		"bgImageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"bgImageSrcset": {
+			"type": "string",
+			"default": ""
+		},
+		"bgImageWidth": {
+			"type": "number",
+			"default": 0
+		},
+		"bgImageHeight": {
+			"type": "number",
+			"default": 0
+		},
+		"mediaId": {
+			"type": "number",
+			"default": 0
+		},
+		"mediaUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"color": {
+			"background": true,
+			"gradient": true
+		}
+	}
+}

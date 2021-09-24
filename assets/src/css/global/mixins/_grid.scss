@@ -1,0 +1,130 @@
+@import '~bootstrap/scss/mixins/container';
+@import '~bootstrap/scss/mixins/grid';
+// For each breakpoint, define the maximum width of the container in a media query
+@mixin make-container-max-widths(
+	$important: false,
+	$max-widths: $container-widths,
+	$breakpoints: $grid-breakpoints
+) {
+	@each $breakpoint, $container-max-width in $max-widths {
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			@if $important {
+				max-width: $container-max-width !important;
+			} @else {
+				max-width: $container-max-width;
+			}
+		}
+	}
+}
+
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
+
+@mixin row-gutters($x-spacing: null, $y-spacing: null, $important: false) {
+	@if $x-spacing == null {
+		$x-spacing: var(--#{$variable-prefix}gutter-x);
+	}
+	@if $y-spacing == null {
+		$y-spacing: var(--#{$variable-prefix}gutter-y);
+	}
+	@if $important {
+		margin-top: calc(
+			#{$y-spacing} * -1
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		margin-right: calc(
+			#{$x-spacing} * -0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		margin-left: calc(
+			#{$x-spacing} * -0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+	} @else {
+		margin-top: calc(
+			#{$y-spacing} * -1
+		); // stylelint-disable-line function-disallowed-list
+
+		margin-right: calc(
+			#{$x-spacing} * -0.5
+		); // stylelint-disable-line function-disallowed-list
+
+		margin-left: calc(
+			#{$x-spacing} * -0.5
+		); // stylelint-disable-line function-disallowed-list
+	}
+}
+
+@mixin col-gutters($x-spacing: null, $y-spacing: null, $important: false) {
+	@if $x-spacing == null {
+		$x-spacing: var(--#{$variable-prefix}gutter-x);
+	}
+	@if $y-spacing == null {
+		$y-spacing: var(--#{$variable-prefix}gutter-y);
+	}
+	@if $important {
+		padding-right: calc(
+			#{$x-spacing} * 0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		padding-left: calc(
+			#{$x-spacing} * 0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		margin-top: $y-spacing !important;
+	} @else {
+		padding-right: calc(
+			#{$x-spacing} * 0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		padding-left: calc(
+			#{$x-spacing} * 0.5
+		) !important; // stylelint-disable-line function-disallowed-list
+
+		margin-top: $y-spacing !important;
+	}
+}
+
+@mixin make-grid-columns-2(
+	$columns: $grid-columns,
+	$gutter: $grid-gutter-width,
+	$breakpoints: $grid-breakpoints
+) {
+	@each $breakpoint in map-keys($breakpoints) {
+		$infix: breakpoint-infix($breakpoint, $breakpoints);
+
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			// Provide basic `.col-{bp}` classes for equal-width flexbox columns
+			&.col#{$infix} {
+				flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+			}
+
+			.row-cols#{$infix}-auto > & {
+				@include make-col-auto();
+			}
+
+			&.col#{$infix}-auto {
+				@include make-col-auto();
+			}
+
+			@if $columns > 0 {
+				@for $i from 1 through $columns {
+					&.col#{$infix}-#{$i} {
+						@include make-col($i, $columns);
+					}
+				}
+
+				// `$columns - 1` because offsetting by the width of an entire row isn't possible
+				@for $i from 0 through ($columns - 1) {
+					@if not($infix == '' and $i == 0) {
+						// Avoid emitting useless .offset-0
+						&.offset#{$infix}-#{$i} {
+							@include make-col-offset($i, $columns);
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,78 @@
+//// ======================================================================== //
+/// @name   _type-styles
+/// @group  mixins
+/// @since  <<projectversion>>
+/// ======================================================================= ////
+
+// -------------------------------- Headings -------------------------------- //
+
+// ------------------------------- Icon Fonts ------------------------------- //
+
+@mixin icon($icon-font-family) {
+	@include reset-text;
+
+	font-family: quote($icon-font-family), $emoji !important;
+	speak: none;
+	text-rendering: optimizeLegibility;
+	line-height: 2ex;
+	display: inline-block;
+	transition: $transition-base;
+	font-feature-settings: 'liga';
+	font-variant-ligatures: discretionary-ligatures;
+	font-smoothing: antialiased;
+}
+
+@mixin icon-content($icon, $font-family: 'Font Awesome 5 Free') {
+	@include icon($font-family);
+
+	content: quote($icon);
+}
+
+/// @link http://text-crop.eightshapes.com/?typeface-selection=google-font&typeface=Poppins&custom-typeface-name=Helvetica&custom-typeface-url=&custom-typeface-weight=400&custom-typeface-style=normal&weight-and-style=700&size=90&line-height=1&top-crop=13&bottom-crop=14
+
+@mixin poppins-text-crop(
+	$line-height: $headings-line-height,
+	$top-adjustment: 0,
+	$bottom-adjustment: 0
+) {
+	// Configured in Step 1
+	$top-crop: 13;
+	$bottom-crop: 14;
+	$crop-font-size: 90;
+	$crop-line-height: 1;
+
+	// Apply values to calculate em-based margins that work with any font size
+	$dynamic-top-crop: max(
+			(
+				$top-crop + ($line-height - $crop-line-height) *
+					($crop-font-size / 2)
+			),
+			0
+		) / $crop-font-size;
+	$dynamic-bottom-crop: max(
+			(
+				$bottom-crop + ($line-height - $crop-line-height) *
+					($crop-font-size / 2)
+			),
+			0
+		) / $crop-font-size;
+
+	// Mixin output
+	line-height: $line-height;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		height: 0;
+		width: 0;
+	}
+
+	&::before {
+		margin-bottom: calc(-#{$dynamic-top-crop}em + #{$top-adjustment});
+	}
+
+	&::after {
+		margin-top: calc(-#{$dynamic-bottom-crop}em + #{$bottom-adjustment});
+	}
+}

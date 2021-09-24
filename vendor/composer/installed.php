@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '43bc2ddc3595c8851152aabec32a1dba874d6195',
+        'reference' => '83f3acfc7bbfa623162bc6cea8a4b8e98f9120aa',
         'name' => 'rwp/plugin',
         'dev' => true,
     ),
@@ -700,7 +700,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '43bc2ddc3595c8851152aabec32a1dba874d6195',
+            'reference' => '83f3acfc7bbfa623162bc6cea8a4b8e98f9120aa',
             'dev_requirement' => false,
         ),
         'sebastian/cli-parser' => array(

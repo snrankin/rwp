@@ -1,0 +1,35 @@
+/// ======================================================================== ///
+/// @name   admin
+///
+/// @group  rwp
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+// ========================================================================== //
+// =========================== Import Admin Styles ========================== //
+// ========================================================================== //
+
+@import 'global/index';
+
+@import '~bootstrap/scss/root';
+
+@import 'admin/*.scss';
+.editor-styles-wrapper {
+	.rwp {
+		&.is-hovered,
+		&.is-selected {
+			outline: solid 1px $admin-blue;
+		}
+		&.has-child-selected {
+			outline: solid 1px rgba($admin-blue, 0.5);
+		}
+
+		.wp-block {
+			margin-top: 0 !important;
+			&:last-child {
+				margin-bottom: 0 !important;
+			}
+		}
+	}
+}
