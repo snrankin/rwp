@@ -66,9 +66,7 @@
 				"admin": {
 					"admin": ["./js/admin.js", "./css/admin.scss"]
 				},
-				"app": {
-					"app": ["./js/app.js"]
-				},
+
 				"bootstrap": {
 					"bootstrap": [
 						"./css/bootstrap.scss",
@@ -77,6 +75,13 @@
 				},
 				"public": {
 					"public": ["./js/public.js", "./css/public.scss"]
+				}
+			}
+		},
+		"app": {
+			"files": {
+				"app": {
+					"app": ["./js/app.js"]
 				}
 			}
 		},

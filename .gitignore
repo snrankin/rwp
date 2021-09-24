@@ -1032,8 +1032,9 @@ composer.lock
 wp-config-test.php
 phpstan.neon
 tests/**/*
-assets/src/
+assets/src/**/*
 webpack/
+*.lock
 
 # Stuff to Include
 !includes/dependencies/**/*
