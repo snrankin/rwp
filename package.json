@@ -16,7 +16,7 @@
         "build:public": "webpack --color --progress --name main --config-name public --config ./webpack/webpack.config.main.js",
         "build:admin": "webpack --color --progress --name main --config-name admin --config ./webpack/webpack.config.main.js",
         "build:bootstrap": "webpack --color --progress --name main --config-name bootstrap --config ./webpack/webpack.config.main.js",
-        "build:app": "webpack --color --progress --name main --config-name app --config ./webpack/webpack.config.main.js",
+        "build:app": "webpack --color --progress --name app --config-name app --config ./webpack/webpack.config.main.js",
         "build:vendor": "webpack --color --progress --name vendor --config ./webpack/webpack.config.main.js",
         "build:gravity-forms": "webpack --color --progress --name vendor --config-name gravity-forms --config ./webpack/webpack.config.main.js",
         "build:modernizr": "webpack --color --progress --name vendor --config-name modernizr --config ./webpack/webpack.config.main.js",

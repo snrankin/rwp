@@ -138,6 +138,18 @@ export function skipLink() {
 		);
 	}
 }
+export function isEmpty(el) {
+	if (typeof el === 'undefined') {
+		return true;
+	} else if (el === '') {
+		return true;
+	} else if (el === null) {
+		return true;
+	} else if (el === false) {
+		return true;
+	}
+	return false;
+}
 export function toggleNav(buttonId) {
 	const button = document.querySelector(buttonId);
 

@@ -12,8 +12,6 @@
 
 import { Fancybox } from '@fancyapps/ui';
 
-import { assign, has, isUndefined, defaultsDeep, isNil } from 'lodash';
-
 Fancybox.bind('[data-fancybox]', {
 	template: {
 		// Loading indicator icon
@@ -21,17 +19,17 @@ Fancybox.bind('[data-fancybox]', {
 			'<span class="btn-icon has-spinner"><span class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></span></span>',
 	},
 	on: {
-		reveal: (instance, slide) => {
+		reveal: (instance) => {
 			const trigger = instance.options.$trigger;
 			const theme = trigger.getAttribute('data-theme');
 			const group = trigger.getAttribute('data-fancybox');
 			const container = instance.$container;
 
-			if (!isNil(group)) {
+			if (!rwp.isEmpty(group)) {
 				container.classList.add(`modal-group-${group}`);
 			}
 
-			if (!isNil(theme)) {
+			if (!rwp.isEmpty(theme)) {
 				container.classList.add(`modal-theme-${theme}`);
 			}
 		},
