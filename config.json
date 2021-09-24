@@ -12,7 +12,7 @@
 		"cachebusting": false,
 		"debug": false,
 		"manifest": true,
-		"production": true
+		"production": false
 	},
 	"entry": {
 		"blocks": {
