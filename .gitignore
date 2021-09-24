@@ -91,9 +91,6 @@
 
 /wpcs/*
 
-### Composer ###
-composer.phar
-/vendor/
 
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
@@ -529,8 +526,6 @@ dist
 ### PHPCodeSniffer ###
 # CodeSniffer
 
-/vendor/*
-
 ### PHPUnit ###
 # Covers PHPUnit
 # Reference: https://phpunit.de/
@@ -855,28 +850,6 @@ DerivedData/
 *noot
 *mies
 
-# Other names that would make sense
-*tests
-*testsdir
-*testsfile
-*testsfiles
-*test
-*testdir
-*testfile
-*testfiles
-*testing
-*testingdir
-*testingfile
-*testingfiles
-*temp
-*tempdir
-*tempfile
-*tempfiles
-*tmp
-*tmpdir
-*tmpfile
-*tmpfiles
-*lol
 
 ### TestComplete ###
 # Test Complete ignore files: https://support.smartbear.com/viewarticle/68002/
@@ -1045,60 +1018,24 @@ zsdoc/data
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,archive,archives,backup,certificates,codesniffer,composer,compressed,compressedarchive,compression,database,dotenv,dotfilessh,dotsettings,dreamweaver,eclipse,git,node,osx,phpcodesniffer,phpunit,react,reactnative,sass,test,testcomplete,tower,windows,wordpress,xcode,yarn,zsh
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
-
-# OS or Editor folders
-.DS_Store
-Thumbs.db
-.cache
-.project
-.padawan
-.settings
-.tmproj
-*.esproj
-.netbeans.xml
-nbproject
-*.sublime-project
-*.sublime-workspace
 node_modules
-package-lock.json
 
 # Stuff to Ignore
-.vscode/
-.hg
-.svn
-.CVS
-intermediate
-.idea
-.cache
+.*
+!.gitignore
+!.gitignore.master
+!./vendor/
 vendor/*
-test/
-tests/
-tests/*
-test*.*
-*test*
-assets/src
-webpack
-.eslintrc.js
-.gitignore.develop
-.prettierignore
-.prettierrc
-.stylelintignore
-.stylelintrc.js
+!vendor/composer
+!vendor/autoload.php
 .yarnclean
-codeception.dist.yml
-composer.lock
-grumphp.yml
-package.json
-phpcs.xml
-phpstan.neon
+*.lock
 wp-config-test.php
-yarn.lock
+phpstan.neon
+tests/
+assets/src/
+webpack/
 
 # Stuff to Include
-!./includes/dependencies/**
-!./vendor/composer
-!./vendor/autoload.php
-!config.json
-!readme.txt
-!rwp.php
-!uninstall.php
+!includes/dependencies/**/*
+!includes/dependencies/externals/plugins/advanced-custom-fields-pro.zip
