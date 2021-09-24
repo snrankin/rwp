@@ -91,7 +91,8 @@ class Nav_Menus extends Singleton {
 		$classes = rwp_parse_classes( $classes );
 		if ( 'nav_menu_item' === $item->post_type ) {
 			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
-			$item_url = data_get( $item, 'url', '' );
+			$item_url = data_get($item, 'url', '');
+			$item_url = wp_parse_url($item_url, PHP_URL_PATH);
 			$title = data_get( $item, 'title', $item->post_title );
 			$slug = sanitize_title( $title );
 			$is_current = data_get( $item, 'current', false );
@@ -145,7 +146,8 @@ class Nav_Menus extends Singleton {
 		if ( 'nav_menu_item' === $item->post_type ) {
 
 			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
-			$item_url = data_get( $item, 'url', '' );
+			$item_url = data_get($item, 'url', '');
+			$item_url = wp_parse_url($item_url, PHP_URL_PATH);
 
 			$title = data_get( $item, 'title', $item->post_title );
 			$slug = sanitize_title( $title );
