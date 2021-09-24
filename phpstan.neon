@@ -1,0 +1,44 @@
+includes:
+  - /Users/samrankin/.composer/vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+  level: 5
+  paths:
+    - %currentWorkingDirectory%/includes/ajax
+    - %currentWorkingDirectory%/includes/backend
+    - %currentWorkingDirectory%/includes/components
+    - %currentWorkingDirectory%/includes/engine
+    - %currentWorkingDirectory%/includes/frontend
+    - %currentWorkingDirectory%/includes/functions
+    - %currentWorkingDirectory%/includes/integrations
+    - %currentWorkingDirectory%/includes/internals
+    - %currentWorkingDirectory%/includes/rest
+    - rwp.php
+    - uninstall.php
+  bootstrapFiles:
+    - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
+    - %currentWorkingDirectory%/includes/dependencies/vendor/autoload.php
+    - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
+  scanDirectories:
+    - %currentWorkingDirectory%/includes/dependencies
+    - ../advanced-custom-fields-pro
+    - ../acf-extended
+    - ../elementor
+    - ../elementor-pro
+    - ../gravityforms
+    - ../query-monitor
+  scanFiles:
+    - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
+    - ../advanced-custom-fields-pro/acf.php
+    - ../acf-extended/acf-extended.php
+    - ../elementor/elementor.php
+    - ../elementor-pro/elementor-pro.php
+    - ../gravityforms/gravityforms.php
+    - ../query-monitor/query-monitor.php
+  ignoreErrors:
+    - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
+    - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
+    - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
+    - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'
+    - '#^Parameter \#1 \$post_id of function acfe_get_fields expects false, int\|string given\.$#'
+    - '#^Function get_page_for_post_type invoked with 1 parameter, 0 required\.$#'
+    - '#^Function register_extended_post_type invoked with 3 parameters, 0 required\.$#'

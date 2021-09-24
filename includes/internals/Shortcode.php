@@ -38,12 +38,12 @@ class Shortcode extends Singleton {
 	public static function copyright( $atts ) {
         $defaults = array(
             'before' => '&copy; Copyright ',
-			'after' => ', All Rights Reserved.'
+			'after' => ', All Rights Reserved.',
 		);
 
-        $atts = self::process_shortcode($atts, $defaults);
+        $atts = self::process_shortcode( $atts, $defaults );
 
-		return wp_sprintf( '%s%d%s', $atts['before'], date('Y'), $atts['after'] );
+		return wp_sprintf( '%s%d%s', $atts['before'], date( 'Y' ), $atts['after'] );
     }
 
 	/**
@@ -54,39 +54,39 @@ class Shortcode extends Singleton {
 	 * @return array
 	 */
 
-	public static function process_shortcode($atts, $defaults = array()) {
+	public static function process_shortcode( $atts, $defaults = array() ) {
         $atts = shortcode_atts(
             $defaults,
             $atts
         );
         $args = array(
-            'atts' => array()
+            'atts' => array(),
 		);
-        foreach ($atts as $key => $value) {
-            switch ($key) {
+        foreach ( $atts as $key => $value ) {
+            switch ( $key ) {
                 case 'class':
-                    if (!empty($value)) {
-                        $value = rwp_parse_classes($value);
+                    if ( ! empty( $value ) ) {
+                        $value = rwp_parse_classes( $value );
                         $args['atts']['class'] = $value;
                     }
                     break;
                 case 'id':
-                    if (!empty($value)) {
+                    if ( ! empty( $value ) ) {
                         $args['atts']['id'] = $value;
                     }
                     break;
 
                 default:
-                    if (is_string($value) && ($value === 'true' || $value === 'false')) {
-                        $args[$key] = boolval($value);
-                    } else if (!empty($value)) {
-                        $args[$key] = $value;
+                    if ( is_string( $value ) && ( $value === 'true' || $value === 'false' ) ) {
+                        $args[ $key ] = boolval( $value );
+                    } else if ( ! empty( $value ) ) {
+                        $args[ $key ] = $value;
                     }
 
                     break;
             }
         }
-        $args['atts'] = rwp_prepare_args($args['atts']);
+        $args['atts'] = rwp_prepare_args( $args['atts'] );
         return $args;
     }
 

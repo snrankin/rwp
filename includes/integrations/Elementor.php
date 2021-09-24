@@ -321,26 +321,25 @@ class Elementor extends Singleton {
 			$section->remove_responsive_control( 'content_position' );
 		} elseif ( 'button' === $section->get_name() && 'section_button' === $section_id ) {
 
-
 			// Adding Bootstrap button types to elementor buttons
 
-			$btn_options_solid = (array) Bootstrap::bs_atts('colors');
-			$btn_options_outline = (array) Bootstrap::bs_atts('colors', 'outline-', '',  '', ' Outline');
+			$btn_options_solid = (array) Bootstrap::bs_atts( 'colors' );
+			$btn_options_outline = (array) Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' );
 
 			$btn_options = array(
-				'' => 'Default'
+				'' => 'Default',
 			);
 
-			foreach ($btn_options_solid as $key => $value) {
-				$label = data_get($value, 'label');
-				$class = data_get($value, 'value');
-				$btn_options[$class] = $label;
+			foreach ( $btn_options_solid as $key => $value ) {
+				$label = data_get( $value, 'label' );
+				$class = data_get( $value, 'value' );
+				$btn_options[ $class ] = $label;
 			}
 
-			foreach ($btn_options_outline as $key => $value) {
-				$label = data_get($value, 'label');
-				$class = data_get($value, 'value');
-				$btn_options[$class] = $label;
+			foreach ( $btn_options_outline as $key => $value ) {
+				$label = data_get( $value, 'label' );
+				$class = data_get( $value, 'value' );
+				$btn_options[ $class ] = $label;
 			}
 
 			$section->add_control(

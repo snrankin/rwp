@@ -1023,23 +1023,26 @@ node_modules
 # Stuff to Ignore
 .*
 !./vendor/
-vendor/*
-!vendor/composer
-!vendor/autoload.php
+./vendor/*
+!./vendor/composer
+!./vendor/autoload.php
 .yarnclean
 composer.lock
 wp-config-test.php
-phpstan.neon
-tests/
-assets/src/
-webpack/
+yarn.lock
 
 # Stuff to Include
-!includes/dependencies/**/*
-!includes/dependencies/externals/plugins/advanced-custom-fields-pro.zip
-tests/
-*.yml
-.gitignore.develop
-package.json
-phpcs.xml
-phpstan.neon
+!./includes/dependencies/**/*
+
+!./tests
+!./tests/**
+!./tests/**/*
+!.editorconfig
+!.eslintrc.js
+!.gitignore
+!.gitignore.develop
+!.prettierignore
+!.prettierrc
+!.stylelintignore
+!.stylelintrc.js
+!.yarnclean
