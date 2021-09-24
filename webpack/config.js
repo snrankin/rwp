@@ -115,9 +115,13 @@ const createConfig = (groupName = '', configName = '') => {
 		customConfig.paths.public += '/';
 	}
 
-	const filenameTemplate = customConfig.enabled.cachebusting
+	let filenameTemplate = customConfig.enabled.cachebusting
 		? `${fileprefix}${customConfig.cachebusting}`
 		: `${fileprefix}[name]`;
+
+	if (isProduction) {
+		filenameTemplate = filenameTemplate + '.min';
+	}
 
 	const assetnameTemplate = customConfig.enabled.cachebusting
 		? `${customConfig.cachebusting}[ext][query]`

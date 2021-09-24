@@ -1,1 +1,60 @@
-!function(){var t={311:function(t){"use strict";t.exports=jQuery}},o={};function r(e){var n=o[e];if(void 0!==n)return n.exports;var c=o[e]={exports:{}};return t[e](c,c.exports,r),c.exports}!function(){var t=r(311);const o=window.rwp||{};function e(t,o,r){return r.indexOf(t)===o}acf.addAction("load_field/name=bs_colors",(function(r){const e=o.bsAtts().colors,n=r.$el.find(".acf-color-picker")[0],c=Object.values(e).join(", ");t(n).attr("data-palette",c),window.$color_palette=Object.values(e)})),acf.add_filter("color_picker_args",(function(t,r){const n=o.bsAtts().colors;return t.palettes=Object.values(n).filter(e),t}))}()}();
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./css/vendor/acf.scss":
+/*!*****************************!*\
+  !*** ./css/vendor/acf.scss ***!
+  \*****************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./css/vendor/acf.scss?");
+
+/***/ }),
+
+/***/ "./js/vendor/acf.js":
+/*!**************************!*\
+  !*** ./js/vendor/acf.js ***!
+  \**************************/
+/***/ (function() {
+
+eval("/**\n * ============================================================================\n * acf\n *\n * @package\n * @since     1.0.0\n * @version   1.0.0\n * @author    RIESTER <wordpress@riester.com>\n * @copyright 2021 RIESTER\n * ==========================================================================\n */\n\n\n//# sourceURL=webpack:///./js/vendor/acf.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	__webpack_modules__["./js/vendor/acf.js"](0, {}, __webpack_require__);
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./css/vendor/acf.scss"](0, __webpack_exports__, __webpack_require__);
+/******/ 	
+/******/ })()
+;

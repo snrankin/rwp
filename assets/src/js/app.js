@@ -15,7 +15,13 @@ const _ = require('lodash');
 import { actual } from 'actual';
 import { verge } from 'verge'; // eslint-disable-line
 
-export function camelCase(str) {
+/**
+ * Function for making strings camelCase
+ *
+ * @param {string} str The string to convert
+ * @return {string} The converted string
+ */
+function camelCase(str) {
 	return `${str.charAt(0).toLowerCase()}${str
 		.replace(/[\W_]/g, '|')
 		.split('|')
@@ -23,7 +29,16 @@ export function camelCase(str) {
 		.join('')
 		.slice(1)}`;
 }
-export function changeTag(original, tag) {
+
+/**
+ *	Change the tag of a node element
+ *
+ * @param  {Element}  original  The element to change
+ * @param  {string}   tag        The new tag
+ *
+ * @return {Element} The updated element
+ */
+function changeTag(original, tag) {
 	const replacement = document.createElement(tag);
 
 	// Grab all of the original's attributes, and pass them to the replacement
@@ -42,7 +57,12 @@ export function changeTag(original, tag) {
 
 	return original;
 }
-export function toggleFocus() {
+
+/**
+ * Adds focus class for better accessibility
+ *
+ */
+function toggleFocus() {
 	if (event.type === 'focus' || event.type === 'blur') {
 		let self = this;
 
@@ -74,7 +94,13 @@ export function toggleFocus() {
 	}
 }
 
-export function screenSize(prop) {
+/**
+ * Get the screen size
+ *
+ * @param {string} prop
+ * @return {Object|Number} The object containing the size infor or the requested property
+ */
+function screenSize(prop) {
 	const size = {
 		width: actual.actual('width', 'px'),
 		height: actual.actual('height', 'px'),
@@ -104,7 +130,12 @@ export function screenSize(prop) {
 
 	return size;
 }
-export function skipLink() {
+
+/**
+ * Better Skip link
+ *
+ */
+function skipLink() {
 	const isIe = /(trident|msie)/i.test(navigator.userAgent);
 	if (isIe && document.getElementById && window.addEventListener) {
 		window.addEventListener(
@@ -138,7 +169,13 @@ export function skipLink() {
 		);
 	}
 }
-export function isEmpty(el) {
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
+function isEmpty(el) {
 	if (typeof el === 'undefined') {
 		return true;
 	} else if (el === '') {
@@ -150,7 +187,7 @@ export function isEmpty(el) {
 	}
 	return false;
 }
-export function toggleNav(buttonId) {
+function toggleNav(buttonId) {
 	const button = document.querySelector(buttonId);
 
 	// Return early if the button don't exist.
@@ -191,16 +228,16 @@ export function toggleNav(buttonId) {
 
 	// Toggle focus each time a menu link is focused or blurred.
 	for (const link of links) {
-		link.addEventListener('focus', this.toggleFocus, true);
-		link.addEventListener('blur', this.toggleFocus, true);
+		link.addEventListener('focus', toggleFocus, true);
+		link.addEventListener('blur', toggleFocus, true);
 	}
 
 	// Toggle focus each time a menu link with children receive a touch event.
 	for (const link of linksWithChildren) {
-		link.addEventListener('touchstart', this.toggleFocus, false);
+		link.addEventListener('touchstart', toggleFocus, false);
 	}
 }
-export function getTallest(el) {
+function getTallest(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
 		const heights = _.map(matches, function (elem) {
@@ -211,7 +248,7 @@ export function getTallest(el) {
 	}
 	return false;
 }
-export function matchHeights(el) {
+function matchHeights(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
 		const minHeight = this.getTallest(el);
@@ -227,7 +264,7 @@ export function matchHeights(el) {
 		};
 	}
 }
-export function bsAtts() {
+function bsAtts() {
 	const bsColors = {
 		primary: '',
 		secondary: '',
@@ -280,7 +317,7 @@ export function bsAtts() {
 		colors: computedColors,
 	};
 }
-export function logCustomProperties() {
+function logCustomProperties() {
 	const isSameDomain = (styleSheet) => {
 		// Internal style blocks won't have an href value
 		if (!styleSheet.href) {
@@ -324,3 +361,19 @@ export function logCustomProperties() {
 
 	return cssCustomPropIndex;
 }
+
+export {
+	camelCase,
+	changeTag,
+	toggleFocus,
+	screenSize,
+	skipLink,
+	isEmpty,
+	toggleNav,
+	getTallest,
+	matchHeights,
+	bsAtts,
+	logCustomProperties,
+	actual,
+	verge,
+};

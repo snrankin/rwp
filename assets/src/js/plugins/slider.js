@@ -11,7 +11,7 @@
  */
 import { tns } from 'tiny-slider/src/tiny-slider';
 
-import { assign, has, isUndefined, defaultsDeep, isNil } from 'lodash';
+import { has, isUndefined, defaultsDeep, isNil } from 'lodash';
 
 class RWPSlider {
 	constructor(args = {}) {
@@ -80,7 +80,7 @@ class RWPSlider {
 			const options = this.sliderOpts;
 			options.container = containerClass;
 			const tnsSlider = tns(options);
-			tnsSlider.events.on('indexChanged', function (info, eventName) {
+			tnsSlider.events.on('indexChanged', function (info) {
 				const indexPrev = info.indexCached,
 					indexCurrent = info.index;
 
@@ -88,15 +88,15 @@ class RWPSlider {
 
 				info.navItems[indexCurrent].classList.add('active');
 			});
-			// window.addEventListener('resize', function (event) {
-			// 	$('.tns-outer').each(function (el) {
-			// 		const sliderheight = $(el)
-			// 			.find('.tns-inner')
-			// 			.outerHeight(true);
+			window.addEventListener('resize', function () {
+				$('.tns-outer').each(function (el) {
+					const sliderheight = $(el)
+						.find('.tns-inner')
+						.outerHeight(true);
 
-			// 		$(el).find('.tns-controls').css({ height: sliderheight });
-			// 	});
-			// });
+					$(el).find('.tns-controls').css({ height: sliderheight });
+				});
+			});
 
 			return tnsSlider;
 		}

@@ -1,9 +1,10 @@
 module.exports = {
 	root: true,
-	extends: [
-		'eslint:recommended',
-		'plugin:@wordpress/eslint-plugin/recommended',
-		'prettier',
+	extends: ['eslint:recommended', 'prettier'],
+	ignorePatterns: [
+		'assets/js/*.js',
+		'assets/src/js/vendor/modernizr.js',
+		'node_modules/**/*.js',
 	],
 	parser: '@babel/eslint-parser',
 	globals: {
@@ -23,7 +24,6 @@ module.exports = {
 		jquery: true,
 		mocha: true,
 		commonjs: true,
-		'jest/globals': true,
 	},
 	parserOptions: {
 		ecmaFeatures: {
@@ -59,7 +59,6 @@ module.exports = {
 		'no-misleading-character-class': 0,
 		'no-setter-return': 0,
 		'no-useless-catch': 0,
-		'valid-jsdoc': 'off',
 		// 'no-unused-vars': 0,
 		yoda: 0,
 		'comma-dangle': [
