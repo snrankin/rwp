@@ -1022,7 +1022,7 @@ node_modules
 
 # Stuff to Ignore
 .*
-!./vendor/
+!vendor/
 vendor/*
 !vendor/composer
 !vendor/autoload.php
@@ -1033,7 +1033,9 @@ yarn.lock
 
 # Stuff to Include
 !includes/dependencies/**/*
-!includes/dependencies/externals/plugins/advanced-custom-fields-pro.zip
+
+!tests
+!tests/**
 !tests/**/*
 !.editorconfig
 !.eslintrc.js
