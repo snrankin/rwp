@@ -48,7 +48,7 @@ $rwp_plugin_assets = [
         ],
         'modal' => [
             'handle'   => 'modal',
-            'deps'     => ['rwp-public'],
+            'deps'     => ['rwp-app'],
             'location' => 'modal',
             'footer'   => true,
         ],
@@ -59,7 +59,7 @@ $rwp_plugin_assets = [
         ],
         'slider' => [
             'handle'   => 'slider',
-            'deps'     => ['rwp-public'],
+            'deps'     => ['rwp-app'],
             'location' => 'slider',
             'footer'   => true,
         ],
