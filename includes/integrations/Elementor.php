@@ -283,17 +283,17 @@ class Elementor extends Singleton {
 				$section,
 				'content_horizontal_alignment',
 				array(
-					'label'        => esc_html__( 'Content Horizontal Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Content Horizontal Alignment', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''              => esc_html__( 'Default', 'gtb' ),
-						'start'         => esc_html__( 'Left', 'gtb' ),
-						'center'        => esc_html__( 'Center', 'gtb' ),
-						'end'           => esc_html__( 'Right', 'gtb' ),
-						'space-between' => esc_html__( 'Space Between', 'gtb' ),
-						'space-around'  => esc_html__( 'Space Around', 'gtb' ),
-						'space-evenly'  => esc_html__( 'Space Evenly', 'gtb' ),
+						''              => esc_html__( 'Default', 'rwp' ),
+						'start'         => esc_html__( 'Left', 'rwp' ),
+						'center'        => esc_html__( 'Center', 'rwp' ),
+						'end'           => esc_html__( 'Right', 'rwp' ),
+						'space-between' => esc_html__( 'Space Between', 'rwp' ),
+						'space-around'  => esc_html__( 'Space Around', 'rwp' ),
+						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-h-align%s-',
 				)
@@ -302,15 +302,15 @@ class Elementor extends Singleton {
 				$section,
 				'content_vertical_alignment',
 				array(
-					'label'        => esc_html__( 'Content Vertical Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Content Vertical Alignment', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''        => esc_html__( 'Default', 'gtb' ),
-						'start'   => esc_html__( 'Top', 'gtb' ),
-						'center'  => esc_html__( 'Center', 'gtb' ),
-						'end'     => esc_html__( 'Bottom', 'gtb' ),
-						'stretch' => esc_html__( 'Full Width', 'gtb' ),
+						''        => esc_html__( 'Default', 'rwp' ),
+						'start'   => esc_html__( 'Top', 'rwp' ),
+						'center'  => esc_html__( 'Center', 'rwp' ),
+						'end'     => esc_html__( 'Bottom', 'rwp' ),
+						'stretch' => esc_html__( 'Full Width', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-v-align%s-',
 				)
@@ -327,7 +327,7 @@ class Elementor extends Singleton {
 			$btn_options_outline = (array) Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' );
 
 			$btn_options = array(
-				'' => 'Default',
+				'default' => 'Default',
 			);
 
 			foreach ( $btn_options_solid as $key => $value ) {
@@ -360,17 +360,17 @@ class Elementor extends Singleton {
 				$section,
 				'column_horizontal_alignment',
 				array(
-					'label'        => esc_html__( 'Column Horizontal Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Column Horizontal Alignment', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''              => esc_html__( 'Default', 'gtb' ),
-						'start'         => esc_html__( 'Start', 'gtb' ),
-						'center'        => esc_html__( 'Center', 'gtb' ),
-						'end'           => esc_html__( 'End', 'gtb' ),
-						'space-between' => esc_html__( 'Space Between', 'gtb' ),
-						'space-around'  => esc_html__( 'Space Around', 'gtb' ),
-						'space-evenly'  => esc_html__( 'Space Evenly', 'gtb' ),
+						''              => esc_html__( 'Default', 'rwp' ),
+						'start'         => esc_html__( 'Start', 'rwp' ),
+						'center'        => esc_html__( 'Center', 'rwp' ),
+						'end'           => esc_html__( 'End', 'rwp' ),
+						'space-between' => esc_html__( 'Space Between', 'rwp' ),
+						'space-around'  => esc_html__( 'Space Around', 'rwp' ),
+						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-columns-h-align%s-',
 				)
@@ -379,16 +379,16 @@ class Elementor extends Singleton {
 				$section,
 				'column_vertical_alignment',
 				array(
-					'label'        => esc_html__( 'Column Vertical Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Column Vertical Alignment', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''         => esc_html__( 'Default', 'gtb' ),
-						'start'    => esc_html__( 'Top', 'gtb' ),
-						'center'   => esc_html__( 'Center', 'gtb' ),
-						'end'      => esc_html__( 'Bottom', 'gtb' ),
-						'baseline' => esc_html__( 'Baseline', 'gtb' ),
-						'stretch'  => esc_html__( 'Stretch', 'gtb' ),
+						''         => esc_html__( 'Default', 'rwp' ),
+						'start'    => esc_html__( 'Top', 'rwp' ),
+						'center'   => esc_html__( 'Center', 'rwp' ),
+						'end'      => esc_html__( 'Bottom', 'rwp' ),
+						'baseline' => esc_html__( 'Baseline', 'rwp' ),
+						'stretch'  => esc_html__( 'Stretch', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-columns-v-align%s-',
 				)
