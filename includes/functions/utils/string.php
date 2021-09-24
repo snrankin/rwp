@@ -1,16 +1,18 @@
 <?php
 
-/** ============================================================================
+/**
+ * ============================================================================
  * RWP String Utilities
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== */
+ * ========================================================================== 
+ */
 
 use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
 
 if ( ! defined( 'RWP_TITLE_CASE' ) ) {
-	define( 'RWP_TITLE_CASE', array() );
+    define( 'RWP_TITLE_CASE', array() );
 }
 /**
  * Change Case
@@ -23,8 +25,8 @@ if ( ! defined( 'RWP_TITLE_CASE' ) ) {
  * * `snake` - (snake_case)
  * * `camel` - (camelCase)
  *
- * @param  string  $string  The string to convert
- * @param  string  $case    The case to covert the string to.
+ * @param string $string The string to convert
+ * @param string $case   The case to covert the string to.
  *
  * @return string
  */
@@ -33,37 +35,36 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 		case 'title':
 			$string = preg_replace( '/((?<=\w)-(?=\w)|\_)/m', ' ', $string );
 			$string = Str::title( $string );
-			break;
+            break;
 		case 'lower':
 			$string = Str::lower( $string );
-			break;
+            break;
 		case 'snake':
 			$string = Str::snake( $string );
-			break;
+            break;
 		case 'kebab':
 			$string = Str::kebab( $string );
-			break;
+            break;
 		case 'slug':
 			$string = Str::slug( $string );
-			break;
+            break;
 		case 'camel':
 			$string = Str::camel( $string );
-			break;
+            break;
 	}
 
-	return $string;
+    return $string;
 }
 
 /**
  * Determine if a given string contains a given substring.
  *
- * @param  string           $haystack
- * @param  string|string[]  $needles
+ * @param  string          $haystack
+ * @param  string|string[] $needles
  * @return bool
  */
-function rwp_string_has( $haystack, $needles ) {
-
-	return Str::contains( $haystack, $needles );
+function rwp_string_has( $haystack, $needles ) { 
+    return Str::contains( $haystack, $needles );
 }
 
 /**
@@ -76,7 +77,7 @@ function rwp_string_has( $haystack, $needles ) {
  */
 
 function rwp_pluralizer( $string = '' ) {
-	return Pluralizer::plural( $string );
+     return Pluralizer::plural( $string );
 }
 
 /**
@@ -89,104 +90,104 @@ function rwp_pluralizer( $string = '' ) {
  */
 
 function rwp_singulizer( $string = '' ) {
-	return Pluralizer::singular( $string );
+     return Pluralizer::singular( $string );
 }
 
 /**
  * Determine if a given string starts with a given substring.
  *
- * @param  string  $haystack
- * @param  string|string[]  $needles
+ * @param  string          $haystack
+ * @param  string|string[] $needles
  * @return bool
  */
 function rwp_str_starts_with( $haystack, $needles ) {
-	return Str::startsWith( $haystack, $needles );
+     return Str::startsWith( $haystack, $needles );
 }
 
 /**
  * Determine if a given string ends with a given substring.
  *
- * @param  string  $haystack
- * @param  string|string[]  $needles
+ * @param  string          $haystack
+ * @param  string|string[] $needles
  * @return bool
  */
 
 function rwp_str_ends_with( $haystack, $needles ) {
-	return Str::endsWith( $haystack, $needles );
+     return Str::endsWith( $haystack, $needles );
 }
 
 /**
  * Add prefix to string
  *
- * @param  string  $string  The string to prefix.
- * @param  string  $prefix  The prefix to add
+ * @param string $string The string to prefix.
+ * @param string $prefix The prefix to add
  *
  * @return string
  */
 function rwp_add_prefix( $string = '', $prefix = '' ) {
 	if ( empty( $prefix ) || empty( $string ) ) {
-		return $string;
-    }
+        return $string;
+	}
 
 	if ( ! rwp_str_starts_with( $string, $prefix ) ) {
 		$string = Str::start( $string, $prefix );
 	}
-	return $string;
+    return $string;
 }
 
 /**
  * Remove prefix from string.
  *
- * @param  string  $string  The string to prefix.
- * @param  string  $prefix  The prefix to remove
+ * @param string $string The string to prefix.
+ * @param string $prefix The prefix to remove
  *
  * @return string
  */
 function rwp_remove_prefix( $string = '', $prefix = '' ) {
 	if ( empty( $prefix ) || empty( $string ) ) {
-		return $string;
-    }
+        return $string;
+	}
 	if ( rwp_str_starts_with( $string, $prefix ) ) {
 		$string = Str::after( $string, $prefix );
 	}
-	return $string;
+    return $string;
 }
 
 /**
  * Add suffix to string
  *
- * @param  string  $string  The string to prefix.
- * @param  string  $suffix  The suffix to use
+ * @param string $string The string to prefix.
+ * @param string $suffix The suffix to use
  *
  * @return string
  */
 function rwp_add_suffix( $string = '', $suffix = '' ) {
 	if ( empty( $suffix ) || empty( $string ) ) {
-		return $string;
-    }
+        return $string;
+	}
 
 	if ( ! rwp_str_ends_with( $string, $suffix ) ) {
 		$string = Str::finish( $string, $suffix );
 	}
-	return $string;
+    return $string;
 }
 
 /**
  * Remove suffix from string
  *
- * @param  string  $string  The string to prefix.
- * @param  string  $suffix  The suffix to remove
+ * @param string $string The string to prefix.
+ * @param string $suffix The suffix to remove
  *
  * @return string
  */
 function rwp_remove_suffix( $string = '', $suffix = '' ) {
 	if ( empty( $suffix ) || empty( $string ) ) {
-		return $string;
-    }
+        return $string;
+	}
 	if ( rwp_str_starts_with( $string, $suffix ) ) {
 		$string = Str::before( $string, $suffix );
 	}
-	return $string;
+    return $string;
 }
 
 /**
@@ -198,11 +199,11 @@ function rwp_remove_suffix( $string = '', $suffix = '' ) {
  */
 function rwp_is_phone_number( $str = '' ) {
 	if ( ! is_string( $str ) ) {
-		return $str;
-    }
-	$str         = rwp_remove_prefix( $str, 'tel:' );
-	$phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
-	preg_match( $phone_regex, $str, $matches );
+        return $str;
+	}
+    $str         = rwp_remove_prefix( $str, 'tel:' );
+    $phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
+    preg_match( $phone_regex, $str, $matches );
 
 	if ( ! empty( $matches ) ) {
 		return true;
@@ -216,79 +217,78 @@ function rwp_is_phone_number( $str = '' ) {
  *
  * @global array       $allowedtags
  *
- * @param string       $text          The text to trim
- * @param int          $length        Max length of excerpt (will vary if
- *                                    $variable = true). So 0 to disable
- * @param bool         $variable      Should the sentence finish or should there
- *                                    be a hard cut off.
- * @param string       $excerpt_end   Text to append to the end of the trimmed
- *                                    text
- * @param string[]     $allowed_tags  Allowable html tags. Set to null for plain
- *                                    text
+ * @param string   $text         The text to trim
+ * @param int      $length       Max length of excerpt (will vary if
+ *                               $variable = true). So 0 to disable
+ * @param bool     $variable     Should the sentence finish or should there
+ *                               be a hard cut off.
+ * @param string   $excerpt_end  Text to append to the end of the trimmed
+ *                               text
+ * @param string[] $allowed_tags Allowable html tags. Set to null for plain
+ *                               text
  *
  * @return string
  */
 
-function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) {
+function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) { 
+    /**
+     * @var string[] $allowedtags
+     */
 
-	/**
-	 * @var string[] $allowedtags
-	 */
+    global $allowedtags;
 
-	global $allowedtags;
+    if ( is_array( $allowed_tags ) ) {
+        $allowed_tags = array_merge( $allowed_tags, $allowedtags );
 
-	if ( is_array( $allowed_tags ) ) {
-		$allowed_tags = array_merge( $allowed_tags, $allowedtags );
+    }
 
-	}
+    if ( ! empty( $text ) ) {
+        $text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
+        if ( is_array( $allowed_tags ) ) {
+            foreach ( $allowed_tags as $i => $tag ) {
+                $tag = rwp_add_prefix( $tag, '<' );
+                $tag = rwp_add_suffix( $tag, '>' );
+                $allowed_tags[ $i ] = $tag;
+            }
 
-	if ( ! empty( $text ) ) {
-		$text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
-		if ( is_array( $allowed_tags ) ) {
-			foreach ( $allowed_tags as $i => $tag ) {
-				$tag = rwp_add_prefix( $tag, '<' );
-				$tag = rwp_add_suffix( $tag, '>' );
-				$allowed_tags[ $i ] = $tag;
-			}
+            $allowed_tags = implode( '', $allowed_tags );
+        }
+        $text   = strip_tags( $text, $allowed_tags );
+        $tokens = array();
+        $out    = '';
+        $word   = 0;
 
-			$allowed_tags = implode( '', $allowed_tags );
-		}
-		$text   = strip_tags( $text, $allowed_tags );
-		$tokens = array();
-		$out    = '';
-		$word   = 0;
+        if ( ! empty( $length ) ) {
+            //Divide the string into tokens; HTML tags, or words, followed by any whitespace.
+            $regex = '/(<[^>]+>|[^<>\s]+)\s*/u';
+            preg_match_all( $regex, $text, $tokens );
+            foreach ( $tokens[0] as $t ) {
+                //Parse each token
+                if ( $word >= $length && ! $variable ) {
+                    //Limit reached
+                    break;
+                }
+                if ( '<' !== $t[0] ) {
+                    //Token is not a tag.
+                    //Regular expression that checks for the end of the sentence: '.', '?' or '!'
+                    $regex1 = '/[\?\.\!]\s*$/uS';
+                    if ( $word >= $length && $variable && preg_match( $regex1, $t ) === 1 ) {
+                        //Limit reached, continue until ? . or ! occur to reach the end of the sentence.
+                        $out .= trim( $t );
+                        break;
+                    }
+                    $word++;
+                }
+                $out .= $t;
+            }
+        } else {
+            $out = $text;
+        }
 
-		if ( ! empty( $length ) ) {
-			//Divide the string into tokens; HTML tags, or words, followed by any whitespace.
-			$regex = '/(<[^>]+>|[^<>\s]+)\s*/u';
-			preg_match_all( $regex, $text, $tokens );
-			foreach ( $tokens[0] as $t ) {
-				//Parse each token
-				if ( $word >= $length && ! $variable ) {
-					//Limit reached
-					break;
-				}
-				if ( '<' !== $t[0] ) {
-					//Token is not a tag.
-					//Regular expression that checks for the end of the sentence: '.', '?' or '!'
-					$regex1 = '/[\?\.\!]\s*$/uS';
-					if ( $word >= $length && $variable && preg_match( $regex1, $t ) === 1 ) {
-						//Limit reached, continue until ? . or ! occur to reach the end of the sentence.
-						$out .= trim( $t );
-						break;
-					}
-					$word++;
-				}
-				$out .= $t;
-			}
-		} else {
-			$out = $text;
-		}
+        $out .= $excerpt_end;
 
-		$out .= $excerpt_end;
-
-		return trim( force_balance_tags( $out ) );
-	} else {
-		return '';
-	}
+        return trim( force_balance_tags( $out ) );
+    } else {
+        return '';
+    }
 }

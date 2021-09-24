@@ -172,7 +172,7 @@ class Element {
 		$args = array(
 			'tag' => 'div',
 			'atts' => array(),
-			'content' => array()
+			'content' => array(),
 		);
 
 		$string = \force_balance_tags( $string );
