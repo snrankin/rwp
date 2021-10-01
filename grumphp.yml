@@ -1,5 +1,5 @@
 grumphp:
-  ignore_unstaged_changes: false
+  ignore_unstaged_changes: true
   fixer:
     enabled: true
     fix_by_default: true

@@ -18,6 +18,12 @@ use RWP\Engine\Abstracts\Singleton;
 class Nav_Menus extends Singleton {
 
 	/**
+	 * @var string The current page
+	 */
+
+	public $current = '';
+
+	/**
 	 * Initialize the class.
 	 *
 	 * @return void
@@ -30,6 +36,8 @@ class Nav_Menus extends Singleton {
 			\add_filter( 'nav_menu_submenu_css_class', array( $this, 'nav_menu_submenu_css_class' ), 10, 3 );
 			\add_filter( 'wp_nav_menu_args', array( $this, 'wp_nav_menu_args' ), 5 );
 		}
+
+		$this->current = data_get( $_SERVER, 'REQUEST_URI' );
 	}
 
 	/**
@@ -90,15 +98,13 @@ class Nav_Menus extends Singleton {
 		$classes = data_get( $atts, 'class', '' );
 		$classes = rwp_parse_classes( $classes );
 		if ( 'nav_menu_item' === $item->post_type ) {
-			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
 			$item_url = data_get( $item, 'url', '' );
-			$title = data_get( $item, 'title', $item->post_title );
-			$slug = sanitize_title( $title );
+			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
 			$is_current = data_get( $item, 'current', false );
 			$is_current_parent = data_get( $item, 'current_item_parent', false );
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 
-			$is_active = rwp_string_has( $_request_uri, $item_url );
+			$is_active = rwp_string_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
@@ -144,9 +150,8 @@ class Nav_Menus extends Singleton {
 	public function nav_menu_item_class( $classes, $item, $args, $depth ) {
 		if ( 'nav_menu_item' === $item->post_type ) {
 
-			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
 			$item_url = data_get( $item, 'url', '' );
-
+			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
 			$title = data_get( $item, 'title', $item->post_title );
 			$slug = sanitize_title( $title );
 			$is_current = data_get( $item, 'current', false );
@@ -154,7 +159,7 @@ class Nav_Menus extends Singleton {
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 			$is_parent = data_get( $args, 'has_children', false );
 
-			$is_active = rwp_string_has( $_request_uri, $item_url );
+			$is_active = rwp_string_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
