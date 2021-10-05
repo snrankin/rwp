@@ -125,6 +125,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'GrumPHP\\' => 8,
         ),
         'F' => 
         array (
@@ -358,6 +359,10 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'GrumPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpro/grumphp-shim/src',
         ),
         'Facebook\\WebDriver\\' => 
         array (
@@ -1173,6 +1178,8 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'Facebook\\WebDriver\\WebDriverUpAction' => __DIR__ . '/..' . '/php-webdriver/webdriver/lib/WebDriverUpAction.php',
         'Facebook\\WebDriver\\WebDriverWait' => __DIR__ . '/..' . '/php-webdriver/webdriver/lib/WebDriverWait.php',
         'Facebook\\WebDriver\\WebDriverWindow' => __DIR__ . '/..' . '/php-webdriver/webdriver/lib/WebDriverWindow.php',
+        'GrumPHP\\Composer\\FixBrokenStaticAutoloader' => __DIR__ . '/..' . '/phpro/grumphp-shim/src/Composer/FixBrokenStaticAutoloader.php',
+        'GrumPHP\\Composer\\GrumPHPPlugin' => __DIR__ . '/..' . '/phpro/grumphp-shim/src/Composer/GrumPHPPlugin.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
         'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
@@ -2357,6 +2364,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Backend\\Notices' => __DIR__ . '/../..' . '/includes/backend/Notices.php',
         'RWP\\Backend\\Settings' => __DIR__ . '/../..' . '/includes/backend/Settings.php',
         'RWP\\Components\\Button' => __DIR__ . '/../..' . '/includes/components/Button.php',
+        'RWP\\Components\\Card' => __DIR__ . '/../..' . '/includes/components/Card.php',
         'RWP\\Components\\Column' => __DIR__ . '/../..' . '/includes/components/Column.php',
         'RWP\\Components\\Container' => __DIR__ . '/../..' . '/includes/components/Container.php',
         'RWP\\Components\\Element' => __DIR__ . '/../..' . '/includes/components/Element.php',
@@ -2370,6 +2378,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Components\\Nav' => __DIR__ . '/../..' . '/includes/components/Nav.php',
         'RWP\\Components\\NavItem' => __DIR__ . '/../..' . '/includes/components/NavItem.php',
         'RWP\\Components\\NavList' => __DIR__ . '/../..' . '/includes/components/NavList.php',
+        'RWP\\Components\\PostCard' => __DIR__ . '/../..' . '/includes/components/PostCard.php',
         'RWP\\Components\\Row' => __DIR__ . '/../..' . '/includes/components/Row.php',
         'RWP\\Components\\SVG' => __DIR__ . '/../..' . '/includes/components/SVG.php',
         'RWP\\Components\\Section' => __DIR__ . '/../..' . '/includes/components/Section.php',

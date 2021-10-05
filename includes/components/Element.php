@@ -187,6 +187,43 @@ class Element {
 		return $args;
 	}
 
+	/**
+	 * Add a content item key to the elements order
+	 *
+	 * @param mixed $key
+	 * @param mixed|null $position
+	 *
+	 * @return void
+	 */
+	public function set_order( $key, $position = null ) {
+		$order = $this->order;
+
+		if ( empty( $postition ) ) {
+			$order[] = $key;
+		} else {
+			rwp_array_insert( $order, $position, $key );
+		}
+
+		$this->set( 'order', $order );
+	}
+
+	/**
+	 * Add a content item key to the elements order
+	 *
+	 * @param string|int $key
+	 *
+	 * @return void
+	 */
+	public function remove_order_item( $key ) {
+		$order = $this->order;
+
+		if ( rwp_array_has( $key, $order ) ) {
+			$order = rwp_array_remove( $order, $key );
+		}
+
+		$this->set( 'order', $order );
+	}
+
 
 	/**
 	 * Check if attribute exists in atts array
@@ -239,6 +276,11 @@ class Element {
 	public function set_attr( $key, $value, $overwrite = false ) {
 		if ( 'class' === $key ) {
 			$this->add_class( $value );
+		} else if ( 'style' === $key && is_array( $value ) ) {
+			$styles = $value;
+			foreach ( $styles as $prop => $style ) {
+				$this->set_style( $prop, $style, $overwrite );
+			}
 		} else {
 			$this->set( "atts.$key", $value, $overwrite );
 		}
@@ -569,7 +611,7 @@ class Element {
 					})->transform( function( $node ) {
 						if ( ( $node instanceof Html ) || ( $node instanceof \DOMNode ) || ( $node instanceof \DOMNodeList ) || ( $node instanceof Element ) ) {
 							return $node->__toString();
-						} else {
+						} else if ( is_string( $node ) ) {
 							return $node;
 						}
 					} )->filter(function( $node, $i ) {
@@ -601,16 +643,18 @@ class Element {
 	 * @return void
 	 */
 
-	public function add_sub_elements( $elements = '' ) {
+	public function add_sub_elements( $elements = '', $target = '' ) {
 		if ( empty( $elements ) ) {
 			$elements = $this->order;
 		}
 		if ( ! empty( $elements ) ) {
-			if ( is_string( $elements ) && $this->has( $elements ) ) {
+			if ( is_string( $elements ) && ! is_numeric( $elements ) && $this->has( $elements ) ) {
 				$this->set_content( $this->$elements, $elements );
 			} else if ( is_array( $elements ) ) {
 				foreach ( $elements as $element ) {
-					$this->add_sub_elements( $element );
+					if( is_string( $element ) ){
+						$this->add_sub_elements( $element );
+					}
 				}
 			}
 		}
@@ -666,7 +710,7 @@ class Element {
 	}
 
 	/**
-	 * Generates the html string
+	 * Generates the html string and gets the inner content
 	 *
 	 * @return string
 	 */
@@ -810,7 +854,8 @@ class Element {
 	 */
 
 	public function toArray() {
-		return rwp_object_to_array( $this );
+
+		return  rwp_object_to_array( $this );
 	}
 
 	/**

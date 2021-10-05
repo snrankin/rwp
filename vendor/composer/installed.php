@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd05cc5c1ff87d63710d92fe7bd9148c102711207',
+        'reference' => '46bb01685f7f52539f8d048353ae89cc7c9e45b6',
         'name' => 'rwp/plugin',
         'dev' => true,
     ),
@@ -520,6 +520,21 @@
             'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
             'dev_requirement' => true,
         ),
+        'phpro/grumphp' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => 'v1.5.0',
+            ),
+        ),
+        'phpro/grumphp-shim' => array(
+            'pretty_version' => 'v1.5.0',
+            'version' => '1.5.0.0',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../phpro/grumphp-shim',
+            'aliases' => array(),
+            'reference' => '14d62e7ba488671f9ea3e0723eec2bb498c21c46',
+            'dev_requirement' => true,
+        ),
         'phpspec/prophecy' => array(
             'pretty_version' => '1.14.0',
             'version' => '1.14.0.0',
@@ -700,7 +715,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd05cc5c1ff87d63710d92fe7bd9148c102711207',
+            'reference' => '46bb01685f7f52539f8d048353ae89cc7c9e45b6',
             'dev_requirement' => false,
         ),
         'sebastian/cli-parser' => array(

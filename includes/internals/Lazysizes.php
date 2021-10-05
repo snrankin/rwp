@@ -14,7 +14,7 @@
 namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
-
+use RWP\Components\Image;
 
 class Lazysizes extends Singleton {
 
@@ -48,8 +48,8 @@ class Lazysizes extends Singleton {
 	public function update_image_tag( $html, $attachment_id, $size, $icon, $attr ) {
 
 		if ( ! empty( $html ) ) {
-			$html = rwp_image( $html );
-			$html = $html->image->html();
+			$html = Image::add_lazysizes( $html );
+			$html = $html->html();
 		}
 
 		return $html;

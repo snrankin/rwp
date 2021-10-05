@@ -9,7 +9,7 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
- namespace RWP\Components;
+namespace RWP\Components;
 
 use RWP\Vendor\Illuminate\Support\Collection;
 

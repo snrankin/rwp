@@ -591,10 +591,13 @@ function rwp_post_link( $post = null ) {
  *
  * @param  mixed|null $post
  * @param  bool       $use_alt
+ * @param  string     $before
+ * @param  string     $after
+ *
  * @return string
  */
 
-function rwp_title( $post = null, $use_alt = false ) {
+function rwp_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
 
     $obj = rwp_object_type( $post );
 
@@ -609,6 +612,10 @@ function rwp_title( $post = null, $use_alt = false ) {
             $title = $alt_title;
         }
     }
+
+	$title = rwp_add_prefix( $title, $before );
+
+	$title = rwp_add_suffix( $title, $after );
 
     $title = apply_filters( 'rwp_title', $title, $use_alt, $obj );
     return $title;

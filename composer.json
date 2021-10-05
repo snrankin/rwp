@@ -27,6 +27,7 @@
         "lucatume/wp-browser": "^3.0",
         "php-stubs/acf-pro-stubs": "^5.9",
         "phpcompatibility/phpcompatibility-wp": "*",
+        "phpro/grumphp-shim": "^1.5",
         "szepeviktor/phpstan-wordpress": "^0.7.5"
     },
     "config": {
