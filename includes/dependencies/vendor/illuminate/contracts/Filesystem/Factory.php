@@ -8,7 +8,7 @@ interface Factory
      * Get a filesystem implementation.
      *
      * @param  string|null  $name
-     * @return Filesystem
+     * @returnFilesystem
      */
     public function disk($name = null);
 }

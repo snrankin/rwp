@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\ErrorHandler\ErrorEnhancer;
 
-use Composer\Autoload\ClassLoader;
+use RWP\Vendor\Composer\Autoload\ClassLoader;
 use RWP\Vendor\Symfony\Component\ErrorHandler\DebugClassLoader;
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\ClassNotFoundError;
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\FatalError;
-
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
+class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface
+{
     /**
      * {@inheritdoc}
      */
-    public function enhance(\Throwable $error): ?\Throwable {
+    public function enhance(\Throwable $error) : ?\Throwable
+    {
         // Some specific versions of PHP produce a fatal error when extending a not found class.
         $message = !$error instanceof FatalError ? $error->getMessage() : $error->getError()['message'];
         if (!\preg_match('/^(Class|Interface|Trait) [\'"]([^\'"]+)[\'"] not found$/', $message, $matches)) {
@@ -62,7 +62,8 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
      *
      * Returns an array of possible fully qualified class names
      */
-    private function getClassCandidates(string $class): array {
+    private function getClassCandidates(string $class) : array
+    {
         if (!\is_array($functions = \spl_autoload_functions())) {
             return [];
         }
@@ -94,7 +95,8 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
         }
         return \array_unique($classes);
     }
-    private function findClassInPath(string $path, string $class, string $prefix): array {
+    private function findClassInPath(string $path, string $class, string $prefix) : array
+    {
         if (!($path = (\realpath($path . '/' . \strtr($prefix, '\\_', '//')) ?: \realpath($path . '/' . \dirname(\strtr($prefix, '\\_', '//')))) ?: \realpath($path))) {
             return [];
         }
@@ -107,7 +109,8 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
         }
         return $classes;
     }
-    private function convertFileToClass(string $path, string $file, string $prefix): ?string {
+    private function convertFileToClass(string $path, string $file, string $prefix) : ?string
+    {
         $candidates = [
             // namespaced class
             $namespacedClass = \str_replace([$path . \DIRECTORY_SEPARATOR, '.php', '/'], ['', '', '\\'], $file),
@@ -123,7 +126,7 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
             \str_replace('\\', '_', $prefix . '\\' . $namespacedClass),
         ];
         if ($prefix) {
-            $candidates = \array_filter($candidates, function ($candidate) use ($prefix) {
+            $candidates = \array_filter($candidates, function ($candidate) use($prefix) {
                 return 0 === \strpos($candidate, $prefix);
             });
         }
@@ -147,7 +150,8 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
         }
         return null;
     }
-    private function classExists(string $class): bool {
+    private function classExists(string $class) : bool
+    {
         return \class_exists($class, \false) || \interface_exists($class, \false) || \trait_exists($class, \false);
     }
 }

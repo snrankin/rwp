@@ -1,5 +1,5 @@
 <table class="logs" data-filter-level="Emergency,Alert,Critical,Error,Warning,Notice,Info,Debug" data-filters>
-<?php 
+<?php
 namespace RWP\Vendor;
 
 $channelIsDefined = isset($logs[0]['channel']);
@@ -7,9 +7,9 @@ $channelIsDefined = isset($logs[0]['channel']);
     <thead>
         <tr>
             <th data-filter="level">Level</th>
-            <?php 
+            <?php
 if ($channelIsDefined) {
-    ?><th data-filter="channel">Channel</th><?php 
+    ?><th data-filter="channel">Channel</th><?php
 }
 ?>
             <th class="full-width">Message</th>
@@ -17,7 +17,7 @@ if ($channelIsDefined) {
     </thead>
 
     <tbody>
-    <?php 
+    <?php
 foreach ($logs as $log) {
     if ($log['priority'] >= 400) {
         $status = 'error';
@@ -25,60 +25,60 @@ foreach ($logs as $log) {
         $status = 'warning';
     } else {
         $severity = 0;
-        if (($exception = $log['context']['exception'] ?? null) instanceof \ErrorException) {
+        if (($exception = $log['context']['exception'] ?? null) instanceof \ErrorException || $exception instanceof SilencedErrorContext) {
             $severity = $exception->getSeverity();
         }
         $status = \E_DEPRECATED === $severity || \E_USER_DEPRECATED === $severity ? 'warning' : 'normal';
     }
     ?>
-        <tr class="status-<?php 
+        <tr class="status-<?php
     echo $status;
-    ?>" data-filter-level="<?php 
+    ?>" data-filter-level="<?php
     echo \strtolower($this->escape($log['priorityName']));
-    ?>"<?php 
+    ?>"<?php
     if ($channelIsDefined) {
-        ?> data-filter-channel="<?php 
+        ?> data-filter-channel="<?php
         echo $this->escape($log['channel']);
-        ?>"<?php 
+        ?>"<?php
     }
     ?>>
             <td class="text-small nowrap">
-                <span class="colored text-bold"><?php 
+                <span class="colored text-bold"><?php
     echo $this->escape($log['priorityName']);
     ?></span>
-                <span class="text-muted newline"><?php 
+                <span class="text-muted newline"><?php
     echo \date('H:i:s', $log['timestamp']);
     ?></span>
             </td>
-            <?php 
+            <?php
     if ($channelIsDefined) {
         ?>
             <td class="text-small text-bold nowrap">
-                <?php 
+                <?php
         echo $this->escape($log['channel']);
         ?>
             </td>
-            <?php 
+            <?php
     }
     ?>
             <td>
-                <?php 
+                <?php
     echo $this->formatLogMessage($log['message'], $log['context']);
     ?>
-                <?php 
+                <?php
     if ($log['context']) {
         ?>
-                <pre class="text-muted prewrap m-t-5"><?php 
+                <pre class="text-muted prewrap m-t-5"><?php
         echo $this->escape(\json_encode($log['context'], \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES));
         ?></pre>
-                <?php 
+                <?php
     }
     ?>
             </td>
         </tr>
-    <?php 
+    <?php
 }
 ?>
     </tbody>
 </table>
-<?php 
+<?php

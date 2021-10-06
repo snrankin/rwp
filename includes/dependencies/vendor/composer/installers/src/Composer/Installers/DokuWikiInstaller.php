@@ -1,19 +1,21 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class DokuWikiInstaller extends \Composer\Installers\BaseInstaller {
+class DokuWikiInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'lib/plugins/{$name}/', 'template' => 'lib/tpl/{$name}/');
     /**
      * Format package name.
      *
-     * For package type dokuwiki-plugin, cut off a trailing '-plugin',
+     * For package type dokuwiki-plugin, cut off a trailing '-plugin', 
      * or leading dokuwiki_ if present.
-     *
+     * 
      * For package type dokuwiki-template, cut off a trailing '-template' if present.
      *
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'dokuwiki-plugin') {
             return $this->inflectPluginVars($vars);
         }
@@ -22,12 +24,14 @@ class DokuWikiInstaller extends \Composer\Installers\BaseInstaller {
         }
         return $vars;
     }
-    protected function inflectPluginVars($vars) {
+    protected function inflectPluginVars($vars)
+    {
         $vars['name'] = \preg_replace('/-plugin$/', '', $vars['name']);
         $vars['name'] = \preg_replace('/^dokuwiki_?-?/', '', $vars['name']);
         return $vars;
     }
-    protected function inflectTemplateVars($vars) {
+    protected function inflectTemplateVars($vars)
+    {
         $vars['name'] = \preg_replace('/-template$/', '', $vars['name']);
         $vars['name'] = \preg_replace('/^dokuwiki_?-?/', '', $vars['name']);
         return $vars;

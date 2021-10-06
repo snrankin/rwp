@@ -10,14 +10,18 @@
  */
 namespace RWP\Vendor\Symfony\Component\ErrorHandler;
 
+use RWP\Vendor\Symfony\Component\ErrorHandler\Exception\SilencedErrorContext;
 /**
  * @internal
  */
 class ThrowableUtils
 {
-    public static function getSeverity(\Throwable $throwable) : int
+    /**
+     * @param SilencedErrorContext|\Throwable
+     */
+    public static function getSeverity($throwable) : int
     {
-        if ($throwable instanceof \ErrorException) {
+        if ($throwable instanceof \ErrorException || $throwable instanceof SilencedErrorContext) {
             return $throwable->getSeverity();
         }
         if ($throwable instanceof \ParseError) {

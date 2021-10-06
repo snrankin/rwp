@@ -26,9 +26,9 @@ class ACF extends Singleton {
 			return;
 		}
 
-		define( 'DHZ_SHOW_DONATION_LINK', false ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
 
-		rwp_get_plugin_file( 'acf-rgba-color-picker.php', 'includes/dependencies/externals/plugins/acf/rgba-color-picker', true, true );
+		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 
 		\add_action( 'acf/init', array( $this, 'setup_acf' ) );
 		\add_action( 'acfe/init', array( $this, 'init_acfe' ) );

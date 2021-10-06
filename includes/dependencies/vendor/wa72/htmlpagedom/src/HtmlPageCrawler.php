@@ -3,9 +3,8 @@
 namespace RWP\Vendor\Wa72\HtmlPageDom;
 
 use RWP\Vendor\Symfony\Component\DomCrawler\Crawler;
-
 /**
- * Extends  Crawler by adding tree manipulation functions
+ * Extends \Symfony\Component\DomCrawler\Crawler by adding tree manipulation functions
  * for HTML documents inspired by jQuery such as setInnerHtml(), css(), append(), prepend(), before(),
  * addClass(), removeClass()
  *
@@ -13,7 +12,8 @@ use RWP\Vendor\Symfony\Component\DomCrawler\Crawler;
  * @license MIT
  *
  */
-class HtmlPageCrawler extends Crawler {
+class HtmlPageCrawler extends Crawler
+{
     /**
      * the (internal) root element name used when importing html fragments
      * */
@@ -27,7 +27,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler
      * @api
      */
-    public static function create($content) {
+    public static function create($content)
+    {
         if ($content instanceof HtmlPageCrawler) {
             return $content;
         } else {
@@ -41,7 +42,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function addClass($name) {
+    public function addClass($name)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement) {
                 /** @var \DOMElement $node */
@@ -68,7 +70,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function after($content) {
+    public function after($content)
+    {
         $content = self::create($content);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -96,7 +99,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function append($content) {
+    public function append($content)
+    {
         $content = self::create($content);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -116,10 +120,11 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements to the end of the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
-    public function appendTo($element) {
+    public function appendTo($element)
+    {
         $e = self::create($element);
         $newnodes = array();
         foreach ($e as $i => $node) {
@@ -143,7 +148,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement) {
                 /** @var \DOMElement $node */
@@ -160,7 +166,8 @@ class HtmlPageCrawler extends Crawler {
      * @return string|null The attribute value or null if the attribute does not exist
      * @throws \InvalidArgumentException When current node is empty
      */
-    public function getAttribute($name) {
+    public function getAttribute($name)
+    {
         return parent::attr($name);
     }
     /**
@@ -170,7 +177,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function before($content) {
+    public function before($content)
+    {
         $content = self::create($content);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -196,10 +204,12 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler
      * @api
      */
-    public function makeClone() {
+    public function makeClone()
+    {
         return clone $this;
     }
-    public function __clone() {
+    public function __clone()
+    {
         $newnodes = array();
         foreach ($this as $node) {
             /** @var \DOMNode $node */
@@ -221,7 +231,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler|string If no param is provided, returns the CSS styles of the first element
      * @api
      */
-    public function css($key, $value = null) {
+    public function css($key, $value = null)
+    {
         if (null === $value) {
             return $this->getStyle($key);
         } else {
@@ -234,7 +245,8 @@ class HtmlPageCrawler extends Crawler {
      * @param string $key name of the property
      * @return string|null value of the property
      */
-    public function getStyle($key) {
+    public function getStyle($key)
+    {
         $styles = Helpers::cssStringToArray($this->getAttribute('style'));
         return isset($styles[$key]) ? $styles[$key] : null;
     }
@@ -245,7 +257,8 @@ class HtmlPageCrawler extends Crawler {
      * @param string $value value of the property
      * @return HtmlPageCrawler $this for chaining
      */
-    public function setStyle($key, $value) {
+    public function setStyle($key, $value)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement) {
                 /** @var \DOMElement $node */
@@ -267,7 +280,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this
      * @api
      */
-    public function makeEmpty() {
+    public function makeEmpty()
+    {
         foreach ($this as $node) {
             $node->nodeValue = '';
         }
@@ -280,7 +294,8 @@ class HtmlPageCrawler extends Crawler {
      * @return bool
      * @api
      */
-    public function hasClass($name) {
+    public function hasClass($name)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement && ($class = $node->getAttribute('class'))) {
                 $classes = \preg_split('/\\s+/s', $class);
@@ -298,7 +313,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function setInnerHtml($content) {
+    public function setInnerHtml($content)
+    {
         $content = self::create($content);
         foreach ($this as $node) {
             $node->nodeValue = '';
@@ -317,17 +333,19 @@ class HtmlPageCrawler extends Crawler {
      * @return string
      * @api
      */
-    public function getInnerHtml() {
+    public function getInnerHtml()
+    {
         return parent::html();
     }
     /**
      * Insert every element in the set of matched elements after the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
-    public function insertAfter($element) {
+    public function insertAfter($element)
+    {
         $e = self::create($element);
         $newnodes = array();
         foreach ($e as $i => $node) {
@@ -350,10 +368,11 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements before the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
-    public function insertBefore($element) {
+    public function insertBefore($element)
+    {
         $e = self::create($element);
         $newnodes = array();
         foreach ($e as $i => $node) {
@@ -376,7 +395,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function prepend($content) {
+    public function prepend($content)
+    {
         $content = self::create($content);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -403,10 +423,11 @@ class HtmlPageCrawler extends Crawler {
      * Insert every element in the set of matched elements to the beginning of the target.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return HtmlPageCrawler A new Crawler object containing all elements prepended to the target elements
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements prepended to the target elements
      * @api
      */
-    public function prependTo($element) {
+    public function prependTo($element)
+    {
         $e = self::create($element);
         $newnodes = array();
         foreach ($e as $i => $node) {
@@ -435,7 +456,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @api
      */
-    public function remove() {
+    public function remove()
+    {
         foreach ($this as $node) {
             /**
              * @var \DOMNode $node
@@ -455,7 +477,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler
      * @api
      */
-    public function removeAttr($name) {
+    public function removeAttr($name)
+    {
         return $this->removeAttribute($name);
     }
     /**
@@ -464,7 +487,8 @@ class HtmlPageCrawler extends Crawler {
      * @param string $name
      * @return HtmlPageCrawler
      */
-    public function removeAttribute($name) {
+    public function removeAttribute($name)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement) {
                 /** @var \DOMElement $node */
@@ -482,7 +506,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function removeClass($name) {
+    public function removeClass($name)
+    {
         foreach ($this as $node) {
             if ($node instanceof \DOMElement) {
                 /** @var \DOMElement $node */
@@ -502,10 +527,11 @@ class HtmlPageCrawler extends Crawler {
      * Replace each target element with the set of matched elements.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $element
-     * @return HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler A new Crawler object containing all elements appended to the target elements
      * @api
      */
-    public function replaceAll($element) {
+    public function replaceAll($element)
+    {
         $e = self::create($element);
         $newnodes = array();
         foreach ($e as $i => $node) {
@@ -529,10 +555,11 @@ class HtmlPageCrawler extends Crawler {
      * Replace each element in the set of matched elements with the provided new content and return the set of elements that was removed.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function replaceWith($content) {
+    public function replaceWith($content)
+    {
         $content = self::create($content);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -562,7 +589,8 @@ class HtmlPageCrawler extends Crawler {
      * @return string
      * @api
      */
-    public function getCombinedText() {
+    public function getCombinedText()
+    {
         $text = '';
         foreach ($this as $node) {
             /** @var \DOMNode $node */
@@ -577,7 +605,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler
      * @api
      */
-    public function setText($text) {
+    public function setText($text)
+    {
         $text = \htmlspecialchars($text);
         foreach ($this as $node) {
             /** @var \DOMNode $node */
@@ -589,10 +618,11 @@ class HtmlPageCrawler extends Crawler {
      * Add or remove one or more classes from each element in the set of matched elements, depending the class’s presence.
      *
      * @param string $classname One or more classnames separated by spaces
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function toggleClass($classname) {
+    public function toggleClass($classname)
+    {
         $classes = \explode(' ', $classname);
         foreach ($this as $i => $node) {
             $c = self::create($node);
@@ -610,10 +640,11 @@ class HtmlPageCrawler extends Crawler {
     /**
      * Remove the parents of the set of matched elements from the DOM, leaving the matched elements in their place.
      *
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function unwrap() {
+    public function unwrap()
+    {
         $parents = array();
         foreach ($this as $i => $node) {
             $parents[] = $node->parentNode;
@@ -624,10 +655,11 @@ class HtmlPageCrawler extends Crawler {
     /**
      * Remove the matched elements, but promote the children to take their place.
      *
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function unwrapInner() {
+    public function unwrapInner()
+    {
         foreach ($this as $i => $node) {
             if (!$node->parentNode instanceof \DOMElement) {
                 throw new \InvalidArgumentException('DOMElement does not have a parent DOMElement node.');
@@ -651,7 +683,8 @@ class HtmlPageCrawler extends Crawler {
      * @return HtmlPageCrawler $this for chaining
      * @api
      */
-    public function wrap($wrappingElement) {
+    public function wrap($wrappingElement)
+    {
         $content = self::create($wrappingElement);
         $newnodes = array();
         foreach ($this as $i => $node) {
@@ -692,10 +725,11 @@ class HtmlPageCrawler extends Crawler {
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
      * @throws \LogicException
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function wrapAll($content) {
+    public function wrapAll($content)
+    {
         $content = self::create($content);
         $parent = $this->getNode(0)->parentNode;
         foreach ($this as $i => $node) {
@@ -733,10 +767,11 @@ class HtmlPageCrawler extends Crawler {
      * Wrap an HTML structure around the content of each element in the set of matched elements.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
-     * @return HtmlPageCrawler $this for chaining
+     * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
      * @api
      */
-    public function wrapInner($content) {
+    public function wrapInner($content)
+    {
         foreach ($this as $i => $node) {
             /** @var \DOMNode $node */
             self::create($node->childNodes)->wrapAll($content);
@@ -752,7 +787,8 @@ class HtmlPageCrawler extends Crawler {
      * @return string HTML code (fragment)
      * @api
      */
-    public function saveHTML() {
+    public function saveHTML()
+    {
         if ($this->isHtmlDocument()) {
             return $this->getDOMDocument()->saveHTML();
         } else {
@@ -765,7 +801,8 @@ class HtmlPageCrawler extends Crawler {
             return \preg_replace('@^<' . self::FRAGMENT_ROOT_TAGNAME . '[^>]*>|</' . self::FRAGMENT_ROOT_TAGNAME . '>$@', '', $html);
         }
     }
-    public function __toString() {
+    public function __toString()
+    {
         return $this->saveHTML();
     }
     /**
@@ -774,7 +811,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @return boolean
      */
-    public function isHtmlDocument() {
+    public function isHtmlDocument()
+    {
         $node = $this->getNode(0);
         if ($node instanceof \DOMElement && $node->ownerDocument instanceof \DOMDocument && $node->ownerDocument->documentElement === $node && $node->nodeName == 'html') {
             return \true;
@@ -787,7 +825,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @return \DOMDocument|null
      */
-    public function getDOMDocument() {
+    public function getDOMDocument()
+    {
         $node = $this->getNode(0);
         $r = null;
         if ($node instanceof \DOMElement && $node->ownerDocument instanceof \DOMDocument) {
@@ -801,7 +840,8 @@ class HtmlPageCrawler extends Crawler {
      * @param string $selector
      * @return HtmlPageCrawler
      */
-    public function filter($selector) {
+    public function filter($selector)
+    {
         return parent::filter($selector);
     }
     /**
@@ -813,7 +853,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @api
      */
-    public function filterXPath($xpath) {
+    public function filterXPath($xpath)
+    {
         return parent::filterXPath($xpath);
     }
     /**
@@ -827,7 +868,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @return null|void
      */
-    public function addContent($content, $type = null) {
+    public function addContent($content, $type = null)
+    {
         if (empty($type)) {
             $type = 'text/html;charset=UTF-8';
         }
@@ -838,7 +880,8 @@ class HtmlPageCrawler extends Crawler {
             parent::addContent($content, $type);
         }
     }
-    public function addHtmlFragment($content, $charset = 'UTF-8') {
+    public function addHtmlFragment($content, $charset = 'UTF-8')
+    {
         $d = new \DOMDocument('1.0', $charset);
         $d->preserveWhiteSpace = \false;
         $root = $d->appendChild($d->createElement(self::FRAGMENT_ROOT_TAGNAME));
@@ -862,7 +905,8 @@ class HtmlPageCrawler extends Crawler {
      *
      * @api
      */
-    public function add($node) {
+    public function add($node)
+    {
         if ($node instanceof Crawler) {
             foreach ($node as $childnode) {
                 $this->addNode($childnode);
@@ -877,7 +921,8 @@ class HtmlPageCrawler extends Crawler {
      * @param int $clone
      * @return \DOMNode
      */
-    protected static function importNewnode(\DOMNode $newnode, \DOMNode $referencenode, $clone = 0) {
+    protected static function importNewnode(\DOMNode $newnode, \DOMNode $referencenode, $clone = 0)
+    {
         if ($newnode->ownerDocument !== $referencenode->ownerDocument) {
             $referencenode->ownerDocument->preserveWhiteSpace = \false;
             $newnode = $referencenode->ownerDocument->importNode($newnode, \true);
@@ -898,7 +943,8 @@ class HtmlPageCrawler extends Crawler {
     //        $parent = $this->getNode(0)->parentNode;
     //        return ($parent == null || $parent->tagName == self::FRAGMENT_ROOT_TAGNAME);
     //    }
-    public function __get($name) {
+    public function __get($name)
+    {
         switch ($name) {
             case 'count':
             case 'length':

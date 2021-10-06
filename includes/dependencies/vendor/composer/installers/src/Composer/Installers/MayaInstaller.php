@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class MayaInstaller extends \Composer\Installers\BaseInstaller {
+class MayaInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'modules/{$name}/');
     /**
      * Format package name.
@@ -10,13 +11,15 @@ class MayaInstaller extends \Composer\Installers\BaseInstaller {
      * For package type maya-module, cut off a trailing '-module' if present.
      *
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'maya-module') {
             return $this->inflectModuleVars($vars);
         }
         return $vars;
     }
-    protected function inflectModuleVars($vars) {
+    protected function inflectModuleVars($vars)
+    {
         $vars['name'] = \preg_replace('/-module$/', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));

@@ -4,7 +4,6 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use RWP\Vendor\Carbon\Factory;
 use InvalidArgumentException;
-
 /**
  * @see https://carbon.nesbot.com/docs/
  * @see https://github.com/briannesbitt/Carbon/blob/master/src/Carbon/Factory.php
@@ -31,7 +30,7 @@ use InvalidArgumentException;
  * @method static string getLocale()
  * @method static int getMidDayAt()
  * @method static Carbon getTestNow()
- * @method static  TranslatorInterface getTranslator()
+ * @method static \Symfony\Component\Translation\TranslatorInterface getTranslator()
  * @method static int getWeekEndsAt()
  * @method static int getWeekStartsAt()
  * @method static array getWeekendDays()
@@ -81,7 +80,8 @@ use InvalidArgumentException;
  * @method static void useYearsOverflow($yearsOverflow = true)
  * @method static Carbon yesterday($tz = null)
  */
-class DateFactory {
+class DateFactory
+{
     /**
      * The default class that will be used for all created dates.
      *
@@ -114,7 +114,8 @@ class DateFactory {
      *
      * @throws \InvalidArgumentException
      */
-    public static function use($handler) {
+    public static function use($handler)
+    {
         if (\is_callable($handler) && \is_object($handler)) {
             return static::useCallable($handler);
         } elseif (\is_string($handler)) {
@@ -129,7 +130,8 @@ class DateFactory {
      *
      * @return void
      */
-    public static function useDefault() {
+    public static function useDefault()
+    {
         static::$dateClass = null;
         static::$callable = null;
         static::$factory = null;
@@ -140,7 +142,8 @@ class DateFactory {
      * @param  callable  $callable
      * @return void
      */
-    public static function useCallable(callable $callable) {
+    public static function useCallable(callable $callable)
+    {
         static::$callable = $callable;
         static::$dateClass = null;
         static::$factory = null;
@@ -151,7 +154,8 @@ class DateFactory {
      * @param  string  $dateClass
      * @return void
      */
-    public static function useClass($dateClass) {
+    public static function useClass($dateClass)
+    {
         static::$dateClass = $dateClass;
         static::$factory = null;
         static::$callable = null;
@@ -162,7 +166,8 @@ class DateFactory {
      * @param  object  $factory
      * @return void
      */
-    public static function useFactory($factory) {
+    public static function useFactory($factory)
+    {
         static::$factory = $factory;
         static::$dateClass = null;
         static::$callable = null;
@@ -176,7 +181,8 @@ class DateFactory {
      *
      * @throws \RuntimeException
      */
-    public function __call($method, $parameters) {
+    public function __call($method, $parameters)
+    {
         $defaultClassName = static::DEFAULT_CLASS_NAME;
         // Using callable to generate dates...
         if (static::$callable) {

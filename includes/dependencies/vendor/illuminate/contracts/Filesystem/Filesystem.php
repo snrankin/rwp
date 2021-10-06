@@ -29,7 +29,7 @@ interface Filesystem
      * @param  string  $path
      * @return string
      *
-     * @throws FileNotFoundException
+     * @throwsFileNotFoundException
      */
     public function get($path);
     /**
@@ -38,7 +38,7 @@ interface Filesystem
      * @param  string  $path
      * @return resource|null The path resource or null on failure.
      *
-     * @throws FileNotFoundException
+     * @throwsFileNotFoundException
      */
     public function readStream($path);
     /**
@@ -59,7 +59,7 @@ interface Filesystem
      * @return bool
      *
      * @throws \InvalidArgumentException If $resource is not a file handle.
-     * @throws FileExistsException
+     * @throwsFileExistsException
      */
     public function writeStream($path, $resource, array $options = []);
     /**

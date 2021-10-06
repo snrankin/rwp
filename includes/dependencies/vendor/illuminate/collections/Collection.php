@@ -659,13 +659,25 @@ class Collection implements \ArrayAccess, Enumerable
         return new static(Arr::only($this->items, $keys));
     }
     /**
-     * Get and remove the last item from the collection.
+     * Get and remove the last N items from the collection.
      *
+     * @param  int  $count
      * @return mixed
      */
-    public function pop()
+    public function pop($count = 1)
     {
+        if ($count === 1) {
         return \array_pop($this->items);
+    }
+        if ($this->isEmpty()) {
+            return new static();
+        }
+        $results = [];
+        $collectionCount = $this->count();
+        foreach (\range(1, \min($count, $collectionCount)) as $item) {
+            \array_push($results, \array_pop($this->items));
+        }
+        return new static($results);
     }
     /**
      * Push an item onto the beginning of the collection.
@@ -682,7 +694,7 @@ class Collection implements \ArrayAccess, Enumerable
     /**
      * Push one or more items onto the end of the collection.
      *
-     * @param  mixed  $values [optional]
+     * @param  mixed  $values
      * @return $this
      */
     public function push(...$values)
@@ -793,13 +805,25 @@ class Collection implements \ArrayAccess, Enumerable
         return \false;
     }
     /**
-     * Get and remove the first item from the collection.
+     * Get and remove the first N items from the collection.
      *
+     * @param  int  $count
      * @return mixed
      */
-    public function shift()
+    public function shift($count = 1)
     {
+        if ($count === 1) {
         return \array_shift($this->items);
+        }
+        if ($this->isEmpty()) {
+            return new static();
+        }
+        $results = [];
+        $collectionCount = $this->count();
+        foreach (\range(1, \min($count, $collectionCount)) as $item) {
+            \array_push($results, \array_shift($this->items));
+        }
+        return new static($results);
     }
     /**
      * Shuffle the items in the collection.
@@ -810,6 +834,20 @@ class Collection implements \ArrayAccess, Enumerable
     public function shuffle($seed = null)
     {
         return new static(Arr::shuffle($this->items, $seed));
+    }
+    /**
+     * Create chunks representing a "sliding window" view of the items in the collection.
+     *
+     * @param  int  $size
+     * @param  int  $step
+     * @return static
+     */
+    public function sliding($size = 2, $step = 1)
+    {
+        $chunks = \floor(($this->count() - $size) / $step) + 1;
+        return static::times($chunks, function ($number) use($size, $step) {
+            return $this->slice(($number - 1) * $step, $size);
+        });
     }
     /**
      * Skip the first {$count} items.
@@ -911,6 +949,26 @@ class Collection implements \ArrayAccess, Enumerable
             throw new MultipleItemsFoundException();
         }
         return $items->first();
+    }
+    /**
+     * Get the first item in the collection but throw an exception if no matching items exist.
+     *
+     * @param  mixed  $key
+     * @param  mixed  $operator
+     * @param  mixed  $value
+     * @return mixed
+     *
+     * @throwsItemNotFoundException
+     */
+    public function firstOrFail($key = null, $operator = null, $value = null)
+    {
+        $filter = \func_num_args() > 1 ? $this->operatorForWhere(...\func_get_args()) : $key;
+        $placeholder = new \stdClass();
+        $item = $this->first($filter, $placeholder);
+        if ($item === $placeholder) {
+            throw new ItemNotFoundException();
+        }
+        return $item;
     }
     /**
      * Chunk the collection into chunks of the given size.
@@ -1119,6 +1177,24 @@ class Collection implements \ArrayAccess, Enumerable
         return $this;
     }
     /**
+     * Return only unique items from the collection array.
+     *
+     * @param  string|callable|null  $key
+     * @param  bool  $strict
+     * @return static
+     */
+    public function unique($key = null, $strict = \false)
+    {
+        $callback = $this->valueRetriever($key);
+        $exists = [];
+        return $this->reject(function ($item, $key) use($callback, $strict, &$exists) {
+            if (\in_array($id = $callback($item, $key), $exists, $strict)) {
+                return \true;
+            }
+            $exists[] = $id;
+        });
+    }
+    /**
      * Reset the keys on the underlying array.
      *
      * @return static
@@ -1162,6 +1238,7 @@ class Collection implements \ArrayAccess, Enumerable
      *
      * @return \ArrayIterator
      */
+
     public function getIterator()
     {
         return new \ArrayIterator($this->items);
@@ -1171,6 +1248,7 @@ class Collection implements \ArrayAccess, Enumerable
      *
      * @return int
      */
+
     public function count()
     {
         return \count($this->items);
@@ -1211,6 +1289,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $key
      * @return bool
      */
+
     public function offsetExists($key)
     {
         return isset($this->items[$key]);
@@ -1221,6 +1300,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $key
      * @return mixed
      */
+
     public function offsetGet($key)
     {
         return $this->items[$key];
@@ -1232,6 +1312,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $value
      * @return void
      */
+
     public function offsetSet($key, $value)
     {
         if (\is_null($key)) {
@@ -1246,6 +1327,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  string  $key
      * @return void
      */
+
     public function offsetUnset($key)
     {
         unset($this->items[$key]);

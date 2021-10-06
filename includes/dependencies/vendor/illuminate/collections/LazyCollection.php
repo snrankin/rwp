@@ -803,6 +803,38 @@ class LazyCollection implements Enumerable
         return $this->passthru('shuffle', \func_get_args());
     }
     /**
+     * Create chunks representing a "sliding window" view of the items in the collection.
+     *
+     * @param  int  $size
+     * @param  int  $step
+     * @return static
+     */
+    public function sliding($size = 2, $step = 1)
+    {
+        return new static(function () use($size, $step) {
+            $iterator = $this->getIterator();
+            $chunk = [];
+            while ($iterator->valid()) {
+                $chunk[$iterator->key()] = $iterator->current();
+                if (\count($chunk) == $size) {
+                    (yield tap(new static($chunk), function () use(&$chunk, $step) {
+                        $chunk = \array_slice($chunk, $step, null, \true);
+                    }));
+                    // If the $step between chunks is bigger than each chunk's $size
+                    // we will skip the extra items (which should never be in any
+                    // chunk) before we continue to the next chunk in the loop.
+                    if ($step > $size) {
+                        $skip = $step - $size;
+                        for ($i = 0; $i < $skip && $iterator->valid(); $i++) {
+                            $iterator->next();
+                        }
+                    }
+                }
+                $iterator->next();
+            }
+        });
+    }
+    /**
      * Skip the first {$count} items.
      *
      * @param  int  $count
@@ -892,6 +924,21 @@ class LazyCollection implements Enumerable
     {
         $filter = \func_num_args() > 1 ? $this->operatorForWhere(...\func_get_args()) : $key;
         return $this->when($filter)->filter($filter)->take(2)->collect()->sole();
+    }
+    /**
+     * Get the first item in the collection but throw an exception if no matching items exist.
+     *
+     * @param  mixed  $key
+     * @param  mixed  $operator
+     * @param  mixed  $value
+     * @return mixed
+     *
+     * @throwsItemNotFoundException
+     */
+    public function firstOrFail($key = null, $operator = null, $value = null)
+    {
+        $filter = \func_num_args() > 1 ? $this->operatorForWhere(...\func_get_args()) : $key;
+        return $this->when($filter)->filter($filter)->take(1)->collect()->firstOrFail();
     }
     /**
      * Chunk the collection into chunks of the given size.
@@ -1110,6 +1157,26 @@ class LazyCollection implements Enumerable
         });
     }
     /**
+     * Return only unique items from the collection array.
+     *
+     * @param  string|callable|null  $key
+     * @param  bool  $strict
+     * @return static
+     */
+    public function unique($key = null, $strict = \false)
+    {
+        $callback = $this->valueRetriever($key);
+        return new static(function () use($callback, $strict) {
+            $exists = [];
+            foreach ($this as $key => $item) {
+                if (!\in_array($id = $callback($item, $key), $exists, $strict)) {
+                    (yield $key => $item);
+                    $exists[] = $id;
+                }
+            }
+        });
+    }
+    /**
      * Reset the keys on the underlying array.
      *
      * @return static
@@ -1172,6 +1239,7 @@ class LazyCollection implements Enumerable
      *
      * @return \Traversable
      */
+
     public function getIterator()
     {
         return $this->makeIterator($this->source);
@@ -1181,6 +1249,7 @@ class LazyCollection implements Enumerable
      *
      * @return int
      */
+
     public function count()
     {
         if (\is_array($this->source)) {

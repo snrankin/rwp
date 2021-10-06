@@ -33,11 +33,25 @@ class PostCard extends Card {
 		$post_type  = data_get($this->post, 'subtype', 'post');
 		$post_id    = data_get($this->post, 'id', 0);
 
+		$url = rwp_post_link( $post );
 
-		$image = rwp_get_featured_image($post, 'medium');
+		$title = rwp_title( $post );
+
+		$image = rwp_get_featured_image($post, 'medium', array(
+			'inner' => array(
+				'tag' => 'a',
+				'atts' => array(
+					'href' => $url
+				)
+			),
+			'atts' => array(
+				'class' => array(
+					'post-image'
+				)
+			)
+		));
 
 		if( $image ){
-			$image->build();
 			$image = $image->toArray();
 		}
 
@@ -47,11 +61,13 @@ class PostCard extends Card {
 				'class' => rwp_parse_classes( get_post_class( 'card', $post_id ) ),
 			),
 			'image' => $image,
-			'title' => rwp_title( $post ),
+			'title' => array(
+				'content' => wp_sprintf( '<a href="%s" itemprop="url" class="post-title-link">%s</a>', $url, $title ),
+			),
 			'text'  => rwp_post_excerpt( $post ),
 			'links' => array(
 				'text' => 'Read More',
-				'link' => rwp_post_link( $post ),
+				'link' => $url,
 			)
 		);
 

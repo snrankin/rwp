@@ -117,7 +117,7 @@ class CliDumper extends AbstractDumper
                         break;
                     default:
                         $value = (string) $value;
-                        if (\false === \strpos($value, $this->decimalPoint)) {
+                        if (!\str_contains($value, $this->decimalPoint)) {
                             $value .= $this->decimalPoint . '0';
                         }
                         break;
@@ -267,7 +267,7 @@ class CliDumper extends AbstractDumper
      * @param bool $hasChild When the dump of the hash has child item
      * @param int  $cut      The number of items the hash has been cut by
      */
-    protected function dumpEllipsis(Cursor $cursor, $hasChild, $cut)
+    protected function dumpEllipsis(Cursor $cursor, bool $hasChild, int $cut)
     {
         if ($cut) {
             $this->line .= ' …';
@@ -365,7 +365,7 @@ class CliDumper extends AbstractDumper
      *
      * @return string The value with style decoration
      */
-    protected function style($style, $value, $attr = [])
+    protected function style(string $style, string $value, array $attr = [])
     {
         if (null === $this->colors) {
             $this->colors = $this->supportsColors();
@@ -375,7 +375,7 @@ class CliDumper extends AbstractDumper
         }
         if (isset($attr['ellipsis'], $attr['ellipsis-type'])) {
             $prefix = \substr($value, 0, -$attr['ellipsis']);
-            if ('cli' === \PHP_SAPI && 'path' === $attr['ellipsis-type'] && isset($_SERVER[$pwd = '\\' === \DIRECTORY_SEPARATOR ? 'CD' : 'PWD']) && 0 === \strpos($prefix, $_SERVER[$pwd])) {
+            if ('cli' === \PHP_SAPI && 'path' === $attr['ellipsis-type'] && isset($_SERVER[$pwd = '\\' === \DIRECTORY_SEPARATOR ? 'CD' : 'PWD']) && \str_starts_with($prefix, $_SERVER[$pwd])) {
                 $prefix = '.' . \substr($prefix, \strlen($_SERVER[$pwd]));
             }
             if (!empty($attr['ellipsis-tail'])) {
@@ -404,7 +404,7 @@ class CliDumper extends AbstractDumper
             } else {
                 $value = "\33[{$this->styles[$style]}m" . $value;
             }
-            if ($cchrCount && $endCchr === \substr($value, -\strlen($endCchr))) {
+            if ($cchrCount && \str_ends_with($value, $endCchr)) {
                 $value = \substr($value, 0, -\strlen($endCchr));
             } else {
                 $value .= "\33[{$this->styles['default']}m";

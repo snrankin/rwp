@@ -10,7 +10,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void push($key, $value)
  * @method static void set($key, $value = null)
  *
- * @see Repository
+ * @seeRepository
  */
 class Config extends Facade
 {

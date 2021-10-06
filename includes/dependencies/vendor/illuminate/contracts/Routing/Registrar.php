@@ -9,7 +9,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function get($uri, $action);
     /**
@@ -17,7 +17,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function post($uri, $action);
     /**
@@ -25,7 +25,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function put($uri, $action);
     /**
@@ -33,7 +33,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function delete($uri, $action);
     /**
@@ -41,7 +41,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function patch($uri, $action);
     /**
@@ -49,7 +49,7 @@ interface Registrar
      *
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function options($uri, $action);
     /**
@@ -58,7 +58,7 @@ interface Registrar
      * @param  array|string  $methods
      * @param  string  $uri
      * @param  array|string|callable  $action
-     * @return Route
+     * @returnRoute
      */
     public function match($methods, $uri, $action);
     /**
@@ -67,7 +67,7 @@ interface Registrar
      * @param  string  $name
      * @param  string  $controller
      * @param  array  $options
-     * @return PendingResourceRegistration
+     * @returnPendingResourceRegistration
      */
     public function resource($name, $controller, array $options = []);
     /**
@@ -81,14 +81,14 @@ interface Registrar
     /**
      * Substitute the route bindings onto the route.
      *
-     * @param  Route  $route
-     * @return Route
+     * @param Route  $route
+     * @return \Illuminate\Routing\Route
      */
     public function substituteBindings($route);
     /**
      * Substitute the implicit Eloquent model bindings for the route.
      *
-     * @param  Route  $route
+     * @param Route  $route
      * @return void
      */
     public function substituteImplicitBindings($route);

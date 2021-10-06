@@ -19,6 +19,9 @@ use RWP\Vendor\Symfony\Component\CssSelector\CssSelectorConverter;
  */
 class Crawler implements \Countable, \IteratorAggregate
 {
+    /**
+     * @var string|null
+     */
     protected $uri;
     /**
      * @var string The default namespace prefix to be used with XPath and CSS expressions
@@ -33,7 +36,9 @@ class Crawler implements \Countable, \IteratorAggregate
      */
     private $cachedNamespaces;
     /**
-     * @var string The base href value
+     * The base href value.
+     *
+     * @var string|null
      */
     private $baseHref;
     /**
@@ -113,7 +118,6 @@ class Crawler implements \Countable, \IteratorAggregate
         } elseif (\is_string($node)) {
             $this->addContent($node);
         } elseif (null !== $node) {
-			$test = $node;
             throw new \InvalidArgumentException(\sprintf('Expecting a DOMNodeList or DOMNode instance, an array, a string, or null, but got "%s".', \get_debug_type($node)));
         }
     }
@@ -958,11 +962,9 @@ class Crawler implements \Countable, \IteratorAggregate
         return new \ArrayIterator($this->nodes);
     }
     /**
-     * @param \DOMElement $node
-     *
      * @return array
      */
-    protected function sibling($node, string $siblingDir = 'nextSibling')
+    protected function sibling(\DOMNode $node, string $siblingDir = 'nextSibling')
     {
         $nodes = [];
         $currentNode = $this->getNode(0);

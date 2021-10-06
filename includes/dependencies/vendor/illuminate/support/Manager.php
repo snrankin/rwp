@@ -10,13 +10,13 @@ abstract class Manager
     /**
      * The container instance.
      *
-     * @var Container
+     * @varContainer
      */
     protected $container;
     /**
      * The configuration repository instance.
      *
-     * @var Repository
+     * @varRepository
      */
     protected $config;
     /**
@@ -34,7 +34,7 @@ abstract class Manager
     /**
      * Create a new manager instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
     public function __construct(Container $container)
@@ -127,7 +127,7 @@ abstract class Manager
     /**
      * Get the container instance used by the manager.
      *
-     * @return Container
+     * @returnContainer
      */
     public function getContainer()
     {
@@ -136,7 +136,7 @@ abstract class Manager
     /**
      * Set the container instance used by the manager.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return $this
      */
     public function setContainer(Container $container)

@@ -28,8 +28,8 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void setPreviousUrl(string $url)
  * @method static void setRequestOnHandler(\Illuminate\Http\Request $request)
  *
- * @see SessionManager
- * @see Store
+ * @seeSessionManager
+ * @see \Illuminate\Session\Store
  */
 class Session extends Facade
 {

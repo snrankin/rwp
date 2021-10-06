@@ -19,7 +19,7 @@ interface Guard
     /**
      * Get the currently authenticated user.
      *
-     * @return Authenticatable|null
+     * @returnAuthenticatable|null
      */
     public function user();
     /**
@@ -38,7 +38,7 @@ interface Guard
     /**
      * Set the current user.
      *
-     * @param  Authenticatable  $user
+     * @param Authenticatable  $user
      * @return void
      */
     public function setUser(Authenticatable $user);

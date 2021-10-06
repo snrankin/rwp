@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class VgmcpInstaller extends \Composer\Installers\BaseInstaller {
+class VgmcpInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('bundle' => 'src/{$vendor}/{$name}/', 'theme' => 'themes/{$name}/');
     /**
      * Format package name.
@@ -12,7 +13,8 @@ class VgmcpInstaller extends \Composer\Installers\BaseInstaller {
      * For package type vgmcp-theme, cut off a trailing '-theme' if present.
      *
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'vgmcp-bundle') {
             return $this->inflectPluginVars($vars);
         }
@@ -21,13 +23,15 @@ class VgmcpInstaller extends \Composer\Installers\BaseInstaller {
         }
         return $vars;
     }
-    protected function inflectPluginVars($vars) {
+    protected function inflectPluginVars($vars)
+    {
         $vars['name'] = \preg_replace('/-bundle$/', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));
         return $vars;
     }
-    protected function inflectThemeVars($vars) {
+    protected function inflectThemeVars($vars)
+    {
         $vars['name'] = \preg_replace('/-theme$/', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));

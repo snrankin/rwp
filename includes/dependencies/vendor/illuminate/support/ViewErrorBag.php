@@ -5,7 +5,7 @@ namespace RWP\Vendor\Illuminate\Support;
 use Countable;
 use RWP\Vendor\Illuminate\Contracts\Support\MessageBag as MessageBagContract;
 /**
- * @mixin MessageBag
+ * @mixinMessageBag
  */
 class ViewErrorBag implements \Countable
 {
@@ -29,7 +29,7 @@ class ViewErrorBag implements \Countable
      * Get a MessageBag instance from the bags.
      *
      * @param  string  $key
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function getBag($key)
     {
@@ -48,7 +48,7 @@ class ViewErrorBag implements \Countable
      * Add a new MessageBag instance to the bags.
      *
      * @param  string  $key
-     * @param  MessageBag  $bag
+     * @param MessageBag  $bag
      * @return $this
      */
     public function put($key, MessageBag $bag)
@@ -70,6 +70,7 @@ class ViewErrorBag implements \Countable
      *
      * @return int
      */
+
     public function count()
     {
         return $this->getBag('default')->count();
@@ -89,7 +90,7 @@ class ViewErrorBag implements \Countable
      * Dynamically access a view error bag.
      *
      * @param  string  $key
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function __get($key)
     {
@@ -99,7 +100,7 @@ class ViewErrorBag implements \Countable
      * Dynamically set a view error bag.
      *
      * @param  string  $key
-     * @param  MessageBag  $value
+     * @param MessageBag  $value
      * @return void
      */
     public function __set($key, $value)

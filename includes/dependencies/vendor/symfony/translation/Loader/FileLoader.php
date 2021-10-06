@@ -45,11 +45,9 @@ abstract class FileLoader extends ArrayLoader
         return $catalogue;
     }
     /**
-     * @param string $resource
-     *
      * @return array
      *
      * @throws InvalidResourceException if stream content has an invalid format
      */
-    protected abstract function loadResource($resource);
+    protected abstract function loadResource(string $resource);
 }

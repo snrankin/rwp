@@ -35,6 +35,7 @@ class RewindableGenerator implements \Countable, \IteratorAggregate
      *
      * @return mixed
      */
+
     public function getIterator()
     {
         return ($this->generator)();
@@ -44,6 +45,7 @@ class RewindableGenerator implements \Countable, \IteratorAggregate
      *
      * @return int
      */
+
     public function count()
     {
         if (\is_callable($count = $this->count)) {

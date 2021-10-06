@@ -4,14 +4,14 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use Closure;
 use RWP\Vendor\Mockery;
-use RWP\Vendor\Mockery\MockInterface;
+use RWP\Vendor\Mockery\LegacyMockInterface;
 use RuntimeException;
 abstract class Facade
 {
     /**
      * The application instance being facaded.
      *
-     * @var Application
+     * @varApplication
      */
     protected static $app;
     /**
@@ -102,7 +102,7 @@ abstract class Facade
     protected static function isMock()
     {
         $name = static::getFacadeAccessor();
-        return isset(static::$resolvedInstance[$name]) && static::$resolvedInstance[$name] instanceof MockInterface;
+        return isset(static::$resolvedInstance[$name]) && static::$resolvedInstance[$name] instanceof LegacyMockInterface;
     }
     /**
      * Get the mockable class for the bound instance.
@@ -188,7 +188,7 @@ abstract class Facade
     /**
      * Get the application instance behind the facade.
      *
-     * @return Application
+     * @returnApplication
      */
     public static function getFacadeApplication()
     {
@@ -197,7 +197,7 @@ abstract class Facade
     /**
      * Set the application instance.
      *
-     * @param  Application  $app
+     * @param Application  $app
      * @return void
      */
     public static function setFacadeApplication($app)

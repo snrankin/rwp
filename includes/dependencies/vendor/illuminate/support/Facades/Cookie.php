@@ -7,7 +7,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static unqueue($name)
  * @method static void queue(...$parameters)
  *
- * @see CookieJar
+ * @seeCookieJar
  */
 class Cookie extends Facade
 {

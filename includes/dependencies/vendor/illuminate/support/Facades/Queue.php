@@ -5,8 +5,8 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 use RWP\Vendor\Illuminate\Queue\Worker;
 use RWP\Vendor\Illuminate\Support\Testing\Fakes\QueueFake;
 /**
- * @method static Job|null pop(string $queue = null)
- * @method static Queue setConnectionName(string $name)
+ * @method staticJob|null pop(string $queue = null)
+ * @method static \Illuminate\Contracts\Queue\Queue setConnectionName(string $name)
  * @method static int size(string $queue = null)
  * @method static mixed bulk(array $jobs, mixed $data = '', string $queue = null)
  * @method static mixed later(\DateTimeInterface|\DateInterval|int $delay, string|object $job, mixed $data = '', string $queue = null)
@@ -18,12 +18,11 @@ use RWP\Vendor\Illuminate\Support\Testing\Fakes\QueueFake;
  * @method static void assertNotPushed(string|\Closure $job, callable $callback = null)
  * @method static void assertNothingPushed()
  * @method static void assertPushed(string|\Closure $job, callable|int $callback = null)
- * @method static void assertPushedOn(string $queue, string|\Closure $job, callable|int $callback = null)
+ * @method static void assertPushedOn(string $queue, string|\Closure $job, callable $callback = null)
  * @method static void assertPushedWithChain(string $job, array $expectedChain = [], callable $callback = null)
- * @method static void popUsing(string $workerName, callable $callback)
  *
- * @see QueueManager
- * @see Queue
+ * @seeQueueManager
+ * @see \Illuminate\Queue\Queue
  */
 class Queue extends Facade
 {
@@ -41,7 +40,7 @@ class Queue extends Facade
     /**
      * Replace the bound instance with a fake.
      *
-     * @return QueueFake
+     * @returnQueueFake
      */
     public static function fake()
     {

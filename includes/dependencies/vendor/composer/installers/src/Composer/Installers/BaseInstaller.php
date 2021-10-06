@@ -1,12 +1,12 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\IO\IOInterface;
-use Composer\Composer;
-use Composer\Package\PackageInterface;
-
-abstract class BaseInstaller {
+use RWP\Vendor\Composer\IO\IOInterface;
+use RWP\Vendor\Composer\Composer;
+use RWP\Vendor\Composer\Package\PackageInterface;
+abstract class BaseInstaller
+{
     protected $locations = array();
     protected $composer;
     protected $package;
@@ -18,7 +18,8 @@ abstract class BaseInstaller {
      * @param Composer         $composer
      * @param IOInterface      $io
      */
-    public function __construct(\Composer\Package\PackageInterface $package = null, \Composer\Composer $composer = null, \Composer\IO\IOInterface $io = null) {
+    public function __construct(\RWP\Vendor\Composer\Package\PackageInterface $package = null, \RWP\Vendor\Composer\Composer $composer = null, \RWP\Vendor\Composer\IO\IOInterface $io = null)
+    {
         $this->composer = $composer;
         $this->package = $package;
         $this->io = $io;
@@ -30,7 +31,8 @@ abstract class BaseInstaller {
      * @param  string           $frameworkType
      * @return string
      */
-    public function getInstallPath(\Composer\Package\PackageInterface $package, $frameworkType = '') {
+    public function getInstallPath(\RWP\Vendor\Composer\Package\PackageInterface $package, $frameworkType = '')
+    {
         $type = $this->package->getType();
         $prettyName = $this->package->getPrettyName();
         if (\strpos($prettyName, '/') !== \false) {
@@ -66,7 +68,8 @@ abstract class BaseInstaller {
      * @param  array<string, string> $vars This will normally receive array{name: string, vendor: string, type: string}
      * @return array<string, string>
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         return $vars;
     }
     /**
@@ -74,7 +77,8 @@ abstract class BaseInstaller {
      *
      * @return array<string, string> map of package types => install path
      */
-    public function getLocations() {
+    public function getLocations()
+    {
         return $this->locations;
     }
     /**
@@ -84,7 +88,8 @@ abstract class BaseInstaller {
      * @param  array<string, string> $vars
      * @return string
      */
-    protected function templatePath($path, array $vars = array()) {
+    protected function templatePath($path, array $vars = array())
+    {
         if (\strpos($path, '{') !== \false) {
             \extract($vars);
             \preg_match_all('@\\{\\$([A-Za-z0-9_]*)\\}@i', $path, $matches);
@@ -105,7 +110,8 @@ abstract class BaseInstaller {
      * @param  string $vendor = NULL
      * @return string|false
      */
-    protected function mapCustomInstallPaths(array $paths, $name, $type, $vendor = NULL) {
+    protected function mapCustomInstallPaths(array $paths, $name, $type, $vendor = NULL)
+    {
         foreach ($paths as $path => $names) {
             $names = (array) $names;
             if (\in_array($name, $names) || \in_array('type:' . $type, $names) || \in_array('vendor:' . $vendor, $names)) {

@@ -1,16 +1,13 @@
 <?php
-
-/**
- * ============================================================================
+/** ============================================================================
  * post
  *
  * @package   RWP\/includes/functions/utils/post.php
- * @since     1.0.0
+ * @since     1.0.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
- * ==========================================================================
- */
+ * ========================================================================== */
 
 
 use \RWP\Vendor\Illuminate\Support\Collection;
@@ -556,7 +553,7 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
         $args         = apply_filters( 'rwp_pre_excerpt_trim', $args, $post );
         $length       = data_get( $args, 'length', 15 );
         $variable     = data_get( $args, 'variable', true );
-        $excerpt_end  = data_get( $args, 'excerpt_end', '[&hellip;]' );
+        $excerpt_end  = data_get( $args, 'excerpt_end', '' );
         $allowed_tags = data_get( $args, 'allowed_tags', array( 'em', 'i', 'b', 'strong' ) );
         $excerpt      = get_the_excerpt( $post );
         if ( empty( $excerpt ) ) {

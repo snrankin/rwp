@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class ChefInstaller extends \Composer\Installers\BaseInstaller {
+class ChefInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('cookbook' => 'Chef/{$vendor}/{$name}/', 'role' => 'Chef/roles/{$name}/');
 }

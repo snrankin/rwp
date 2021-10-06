@@ -10,7 +10,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static string getLocale()
  * @method static void setLocale(string $locale)
  *
- * @see Translator
+ * @seeTranslator
  */
 class Lang extends Facade
 {

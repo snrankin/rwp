@@ -87,7 +87,7 @@ if (!\function_exists('RWP\\Vendor\\e')) {
     /**
      * Encode HTML special characters in a string.
      *
-     * @param  DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string|null  $value
+     * @param DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string|null  $value
      * @param  bool  $doubleEncode
      * @return string
      */
@@ -191,7 +191,7 @@ if (!\function_exists('RWP\\Vendor\\retry')) {
      *
      * @param  int  $times
      * @param  callable  $callback
-     * @param  int  $sleepMilliseconds
+     * @param  int|\Closure  $sleepMilliseconds
      * @param  callable|null  $when
      * @return mixed
      *
@@ -210,7 +210,7 @@ if (!\function_exists('RWP\\Vendor\\retry')) {
                 throw $e;
             }
             if ($sleepMilliseconds) {
-                \usleep($sleepMilliseconds * 1000);
+                \usleep(value($sleepMilliseconds, $attempts) * 1000);
             }
             goto beginning;
         }

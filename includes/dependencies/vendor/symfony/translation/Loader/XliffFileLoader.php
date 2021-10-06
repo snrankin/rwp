@@ -64,7 +64,7 @@ class XliffFileLoader implements LoaderInterface
         }
         return $catalogue;
     }
-    private function extract($dom, MessageCatalogue $catalogue, string $domain)
+    private function extract(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
     {
         $xliffVersion = XliffUtils::getVersionNumber($dom);
         if ('1.2' === $xliffVersion) {
@@ -80,7 +80,7 @@ class XliffFileLoader implements LoaderInterface
     private function extractXliff1(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
     {
         $xml = \simplexml_import_dom($dom);
-        $encoding = \strtoupper($dom->encoding);
+        $encoding = $dom->encoding ? \strtoupper($dom->encoding) : null;
         $namespace = 'urn:oasis:names:tc:xliff:document:1.2';
         $xml->registerXPathNamespace('xliff', $namespace);
         foreach ($xml->xpath('//xliff:file') as $file) {

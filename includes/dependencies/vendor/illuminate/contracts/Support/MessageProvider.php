@@ -7,7 +7,7 @@ interface MessageProvider
     /**
      * Get the messages for the instance.
      *
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function getMessageBag();
 }

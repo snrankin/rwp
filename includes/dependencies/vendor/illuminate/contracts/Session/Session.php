@@ -172,7 +172,7 @@ interface Session
     /**
      * Set the request on the handler instance.
      *
-     * @param  Request  $request
+     * @param Request  $request
      * @return void
      */
     public function setRequestOnHandler($request);

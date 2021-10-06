@@ -12,7 +12,6 @@
 namespace RWP\Integrations\Walkers;
 
 use RWP\Vendor\Illuminate\Support\Str;
-use RWP\Vendor\Bootstrap_Navwalker;
 use RWP\Components\NavItem;
 use RWP\Components\Nav as HtmlNav;
 use RWP\Vendor\Illuminate\Support\Collection;
@@ -24,7 +23,7 @@ use stdClass;
  * @inheritdoc
  */
 
-class Nav extends Bootstrap_Navwalker {
+class Nav extends \Walker_Nav_Menu {
 
 	/**
 	 * @var bool $cpt is current post a custom post type

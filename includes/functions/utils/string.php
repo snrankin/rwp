@@ -6,7 +6,7 @@
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== 
+ * ==========================================================================
  */
 
 use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
@@ -63,7 +63,7 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
  * @param  string|string[] $needles
  * @return bool
  */
-function rwp_string_has( $haystack, $needles ) { 
+function rwp_string_has( $haystack, $needles ) {
     return Str::contains( $haystack, $needles );
 }
 
@@ -230,16 +230,17 @@ function rwp_is_phone_number( $str = '' ) {
  * @return string
  */
 
-function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) { 
+function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) {
     /**
      * @var string[] $allowedtags
      */
 
     global $allowedtags;
 
+	$allowedtags = array_keys( $allowedtags );
+
     if ( is_array( $allowed_tags ) ) {
         $allowed_tags = array_merge( $allowed_tags, $allowedtags );
-
     }
 
     if ( ! empty( $text ) ) {

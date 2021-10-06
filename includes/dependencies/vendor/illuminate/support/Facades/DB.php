@@ -4,9 +4,9 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
  * @method static \Doctrine\DBAL\Driver\PDOConnection getPdo()
- * @method static ConnectionInterface connection(string $name = null)
- * @method static Builder table(string $table, string $as = null)
- * @method static Expression raw($value)
+ * @method staticConnectionInterface connection(string $name = null)
+ * @method static \Illuminate\Database\Query\Builder table(string $table, string $as = null)
+ * @method static \Illuminate\Database\Query\Expression raw($value)
  * @method static array getQueryLog()
  * @method static array prepareBindings(array $bindings)
  * @method static array pretend(\Closure $callback)
@@ -28,12 +28,13 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void enableQueryLog()
  * @method static void disableQueryLog()
  * @method static void flushQueryLog()
+ * @method staticConnection beforeExecuting(\Closure $callback)
  * @method static void listen(\Closure $callback)
  * @method static void rollBack(int $toLevel = null)
  * @method static void setDefaultConnection(string $name)
  *
- * @see DatabaseManager
- * @see Connection
+ * @seeDatabaseManager
+ * @see \Illuminate\Database\Connection
  */
 class DB extends Facade
 {

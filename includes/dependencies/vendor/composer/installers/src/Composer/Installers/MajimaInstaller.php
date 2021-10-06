@@ -1,19 +1,21 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  * Plugin/theme installer for majima
  * @author David Neustadt
  */
-class MajimaInstaller extends \Composer\Installers\BaseInstaller {
+class MajimaInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'plugins/{$name}/');
     /**
      * Transforms the names
      * @param  array $vars
      * @return array
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         return $this->correctPluginName($vars);
     }
     /**
@@ -21,7 +23,8 @@ class MajimaInstaller extends \Composer\Installers\BaseInstaller {
      * @param  array $vars
      * @return array
      */
-    private function correctPluginName($vars) {
+    private function correctPluginName($vars)
+    {
         $camelCasedName = \preg_replace_callback('/(-[a-z])/', function ($matches) {
             return \strtoupper($matches[0][1]);
         }, $vars['name']);

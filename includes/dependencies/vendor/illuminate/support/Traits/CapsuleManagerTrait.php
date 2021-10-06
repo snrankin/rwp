@@ -15,13 +15,13 @@ trait CapsuleManagerTrait
     /**
      * The container instance.
      *
-     * @var Container
+     * @varContainer
      */
     protected $container;
     /**
      * Setup the IoC container instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
     protected function setupContainer(Container $container)
@@ -43,7 +43,7 @@ trait CapsuleManagerTrait
     /**
      * Get the IoC container instance.
      *
-     * @return Container
+     * @returnContainer
      */
     public function getContainer()
     {
@@ -52,7 +52,7 @@ trait CapsuleManagerTrait
     /**
      * Set the IoC container instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
     public function setContainer(Container $container)

@@ -3,14 +3,16 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
- * @method static Application loadEnvironmentFrom(string $file)
- * @method static ServiceProvider register(\Illuminate\Support\ServiceProvider|string $provider, bool $force = false)
- * @method static ServiceProvider resolveProvider(string $provider)
+ * @method staticApplication loadEnvironmentFrom(string $file)
+ * @method static \Illuminate\Support\ServiceProvider register(\Illuminate\Support\ServiceProvider|string $provider, bool $force = false)
+ * @method static \Illuminate\Support\ServiceProvider resolveProvider(string $provider)
  * @method static array getProviders(\Illuminate\Support\ServiceProvider|string $provider)
  * @method static mixed make($abstract, array $parameters = [])
  * @method static bool configurationIsCached()
  * @method static bool hasBeenBootstrapped()
  * @method static bool isDownForMaintenance()
+ * @method static bool isLocal()
+ * @method static bool isProduction()
  * @method static bool routesAreCached()
  * @method static bool runningInConsole()
  * @method static bool runningUnitTests()
@@ -45,7 +47,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void setLocale(string $locale)
  * @method static void terminate()
  *
- * @see Application
+ * @seeApplication
  */
 class App extends Facade
 {

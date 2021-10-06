@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Support;
 
-use Countable;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Contracts\Support\MessageBag as MessageBagContract;
 use RWP\Vendor\Illuminate\Contracts\Support\MessageProvider;
 use JsonSerializable;
-class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, MessageBag, MessageProvider
+class MessageBag implements Jsonable, \JsonSerializable, MessageBag, MessageProvider
 {
     /**
      * All of the registered messages.
@@ -85,7 +84,7 @@ class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, 
     /**
      * Merge a new array of messages into the message bag.
      *
-     * @param  MessageProvider|array  $messages
+     * @param MessageProvider|array  $messages
      * @return $this
      */
     public function merge($messages)
@@ -258,7 +257,7 @@ class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, 
     /**
      * Get the messages for the instance.
      *
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function getMessageBag()
     {
@@ -277,7 +276,7 @@ class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, 
      * Set the default message format.
      *
      * @param  string  $format
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function setFormat($format = ':message')
     {
@@ -316,6 +315,7 @@ class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, 
      *
      * @return int
      */
+
     public function count()
     {
         return \count($this->messages, \COUNT_RECURSIVE) - \count($this->messages);
@@ -334,6 +334,7 @@ class MessageBag implements Arrayable, \Countable, Jsonable, \JsonSerializable, 
      *
      * @return array
      */
+
     public function jsonSerialize()
     {
         return $this->toArray();

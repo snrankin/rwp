@@ -181,7 +181,7 @@ class Stringable implements \JsonSerializable
      *
      * @param  string  $delimiter
      * @param  int  $limit
-     * @return Collection
+     * @returnCollection
      */
     public function explode($delimiter, $limit = \PHP_INT_MAX)
     {
@@ -193,7 +193,7 @@ class Stringable implements \JsonSerializable
      * @param  string|int  $pattern
      * @param  int  $limit
      * @param  int  $flags
-     * @return Collection
+     * @returnCollection
      */
     public function split($pattern, $limit = -1, $flags = 0)
     {
@@ -231,6 +231,15 @@ class Stringable implements \JsonSerializable
     public function isAscii()
     {
         return Str::isAscii($this->value);
+    }
+    /**
+     * Determine if a given string is a valid UUID.
+     *
+     * @return bool
+     */
+    public function isUuid()
+    {
+        return Str::isUuid($this->value);
     }
     /**
      * Determine if the given string is empty.
@@ -307,25 +316,17 @@ class Stringable implements \JsonSerializable
      */
     public function match($pattern)
     {
-        \preg_match($pattern, $this->value, $matches);
-        if (!$matches) {
-            return new static();
-        }
-        return new static($matches[1] ?? $matches[0]);
+        return new static(Str::match($pattern, $this->value));
     }
     /**
      * Get the string matching the given pattern.
      *
      * @param  string  $pattern
-     * @return Collection
+     * @returnCollection
      */
     public function matchAll($pattern)
     {
-        \preg_match_all($pattern, $this->value, $matches);
-        if (empty($matches[0])) {
-            return collect();
-        }
-        return collect($matches[1] ?? $matches[0]);
+        return Str::matchAll($pattern, $this->value);
     }
     /**
      * Determine if the string matches the given pattern.
@@ -712,6 +713,7 @@ class Stringable implements \JsonSerializable
      *
      * @return string
      */
+
     public function jsonSerialize()
     {
         return $this->__toString();

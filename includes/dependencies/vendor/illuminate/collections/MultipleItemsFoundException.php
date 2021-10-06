@@ -1,6 +1,6 @@
 <?php
 
-namespace RWP\Vendor\Illuminate\Collections;
+namespace RWP\Vendor\Illuminate\Support;
 
 use RuntimeException;
 class MultipleItemsFoundException extends \RuntimeException

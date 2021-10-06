@@ -6,7 +6,7 @@
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== 
+ * ==========================================================================
  */
 
 /**
@@ -20,6 +20,11 @@
  * @return bool Whether or not the string is a url
  */
 function rwp_is_url( $url = '' ) {
+	$input = wp_parse_url($url );
+
+    if ( empty( $input ) ) {
+        return false;
+    }
 	if ( filter_var( $url, FILTER_VALIDATE_URL ) == true ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
         return true;
 	} else {
@@ -36,7 +41,7 @@ function rwp_is_url( $url = '' ) {
  */
 
 function rwp_is_relative_url( $input ) {
-     $input = wp_parse_url( $input );
+    $input = wp_parse_url( $input );
 
     if ( empty( $input ) ) {
         return false;

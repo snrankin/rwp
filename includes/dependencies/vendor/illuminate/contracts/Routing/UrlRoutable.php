@@ -21,7 +21,7 @@ interface UrlRoutable
      *
      * @param  mixed  $value
      * @param  string|null  $field
-     * @return Model|null
+     * @returnModel|null
      */
     public function resolveRouteBinding($value, $field = null);
     /**
@@ -30,7 +30,7 @@ interface UrlRoutable
      * @param  string  $childType
      * @param  mixed  $value
      * @param  string|null  $field
-     * @return Model|null
+     * @returnModel|null
      */
     public function resolveChildRouteBinding($childType, $value, $field);
 }

@@ -4,14 +4,14 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Contracts\Auth\Access\Gate as GateContract;
 /**
- * @method static Gate guessPolicyNamesUsing(callable $callback)
- * @method static Response authorize(string $ability, array|mixed $arguments = [])
- * @method static Response inspect(string $ability, array|mixed $arguments = [])
- * @method static Gate after(callable $callback)
- * @method static Gate before(callable $callback)
- * @method static Gate define(string $ability, callable|string $callback)
- * @method static Gate forUser(\Illuminate\Contracts\Auth\Authenticatable|mixed $user)
- * @method static Gate policy(string $class, string $policy)
+ * @method staticGate guessPolicyNamesUsing(callable $callback)
+ * @method static \Illuminate\Auth\Access\Response authorize(string $ability, array|mixed $arguments = [])
+ * @method static \Illuminate\Auth\Access\Response inspect(string $ability, array|mixed $arguments = [])
+ * @method static \Illuminate\Contracts\Auth\Access\Gate after(callable $callback)
+ * @method static \Illuminate\Contracts\Auth\Access\Gate before(callable $callback)
+ * @method static \Illuminate\Contracts\Auth\Access\Gate define(string $ability, callable|string $callback)
+ * @method static \Illuminate\Contracts\Auth\Access\Gate forUser(\Illuminate\Contracts\Auth\Authenticatable|mixed $user)
+ * @method static \Illuminate\Contracts\Auth\Access\Gate policy(string $class, string $policy)
  * @method static array abilities()
  * @method static bool allows(string $ability, array|mixed $arguments = [])
  * @method static bool any(iterable|string $abilities, array|mixed $arguments = [])
@@ -21,7 +21,7 @@ use RWP\Vendor\Illuminate\Contracts\Auth\Access\Gate as GateContract;
  * @method static mixed getPolicyFor(object|string $class)
  * @method static mixed raw(string $ability, array|mixed $arguments = [])
  *
- * @see Gate
+ * @seeGate
  */
 class Gate extends Facade
 {

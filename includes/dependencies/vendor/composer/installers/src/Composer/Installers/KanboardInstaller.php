@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  *
@@ -11,6 +11,7 @@ namespace Composer\Installers;
  * Class KanboardInstaller
  * @package Composer\Installers
  */
-class KanboardInstaller extends \Composer\Installers\BaseInstaller {
+class KanboardInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'plugins/{$name}/');
 }

@@ -4,13 +4,13 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Contracts\Broadcasting\Factory as BroadcastingFactoryContract;
 /**
- * @method static Broadcaster channel(string $channel, callable|string  $callback, array $options = [])
+ * @method staticBroadcaster channel(string $channel, callable|string  $callback, array $options = [])
  * @method static mixed auth(\Illuminate\Http\Request $request)
- * @method static Broadcaster connection($name = null);
+ * @method staticBroadcaster connection($name = null);
  * @method static void routes(array $attributes = null)
- * @method static BroadcastManager socket($request = null)
+ * @method staticBroadcastManager socket($request = null)
  *
- * @see Factory
+ * @seeFactory
  */
 class Broadcast extends Facade
 {

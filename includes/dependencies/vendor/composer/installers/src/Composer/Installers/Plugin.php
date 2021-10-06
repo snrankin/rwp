@@ -1,20 +1,23 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\Composer;
-use Composer\IO\IOInterface;
-use Composer\Plugin\PluginInterface;
-
-class Plugin implements \Composer\Plugin\PluginInterface {
+use RWP\Vendor\Composer\Composer;
+use RWP\Vendor\Composer\IO\IOInterface;
+use RWP\Vendor\Composer\Plugin\PluginInterface;
+class Plugin implements \RWP\Vendor\Composer\Plugin\PluginInterface
+{
     private $installer;
-    public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io) {
-        $this->installer = new \Composer\Installers\Installer($io, $composer);
+    public function activate(\RWP\Vendor\Composer\Composer $composer, \RWP\Vendor\Composer\IO\IOInterface $io)
+    {
+        $this->installer = new \RWP\Vendor\Composer\Installers\Installer($io, $composer);
         $composer->getInstallationManager()->addInstaller($this->installer);
     }
-    public function deactivate(\Composer\Composer $composer, \Composer\IO\IOInterface $io) {
+    public function deactivate(\RWP\Vendor\Composer\Composer $composer, \RWP\Vendor\Composer\IO\IOInterface $io)
+    {
         $composer->getInstallationManager()->removeInstaller($this->installer);
     }
-    public function uninstall(\Composer\Composer $composer, \Composer\IO\IOInterface $io) {
+    public function uninstall(\RWP\Vendor\Composer\Composer $composer, \RWP\Vendor\Composer\IO\IOInterface $io)
+    {
     }
 }

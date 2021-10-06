@@ -36,7 +36,7 @@ class MoFileLoader extends FileLoader
      *
      * {@inheritdoc}
      */
-    protected function loadResource($resource)
+    protected function loadResource(string $resource)
     {
         $stream = \fopen($resource, 'r');
         $stat = \fstat($stream);
@@ -73,7 +73,7 @@ class MoFileLoader extends FileLoader
             }
             \fseek($stream, $offset);
             $singularId = \fread($stream, $length);
-            if (\false !== \strpos($singularId, "\0")) {
+            if (\str_contains($singularId, "\0")) {
                 [$singularId, $pluralId] = \explode("\0", $singularId);
             }
             \fseek($stream, $offsetTranslated + $i * 8);
@@ -84,7 +84,7 @@ class MoFileLoader extends FileLoader
             }
             \fseek($stream, $offset);
             $translated = \fread($stream, $length);
-            if (\false !== \strpos($translated, "\0")) {
+            if (\str_contains($translated, "\0")) {
                 $translated = \explode("\0", $translated);
             }
             $ids = ['singular' => $singularId, 'plural' => $pluralId];

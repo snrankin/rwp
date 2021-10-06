@@ -113,6 +113,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
             $domain = 'messages';
         }
         $this->assertValidLocale($locale);
+        $locale ?: ($locale = \class_exists(\Locale::class) ? \Locale::getDefault() : 'en');
         $this->resources[$locale][] = [$format, $resource, $domain];
         if (\in_array($locale, $this->fallbackLocales)) {
             $this->catalogues = [];
@@ -126,19 +127,17 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     public function setLocale(string $locale)
     {
         $this->assertValidLocale($locale);
-        $this->locale = $locale ?? (\class_exists(\Locale::class) ? \Locale::getDefault() : 'en');
+        $this->locale = $locale;
     }
     /**
      * {@inheritdoc}
      */
     public function getLocale()
     {
-        return $this->locale;
+        return $this->locale ?: (\class_exists(\Locale::class) ? \Locale::getDefault() : 'en');
     }
     /**
      * Sets the fallback locales.
-     *
-     * @param array $locales The fallback locales
      *
      * @throws InvalidArgumentException If a locale contains invalid characters
      */
@@ -192,7 +191,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      */
     public function getCatalogue(string $locale = null)
     {
-        if (null === $locale) {
+        if (!$locale) {
             $locale = $this->getLocale();
         } else {
             $this->assertValidLocale($locale);
@@ -336,13 +335,8 @@ EOF
         if (null === $this->parentLocales) {
             $this->parentLocales = \json_decode(\file_get_contents(__DIR__ . '/Resources/data/parents.json'), \true);
         }
+        $originLocale = $locale;
         $locales = [];
-        foreach ($this->fallbackLocales as $fallback) {
-            if ($fallback === $locale) {
-                continue;
-            }
-            $locales[] = $fallback;
-        }
         while ($locale) {
             $parent = $this->parentLocales[$locale] ?? null;
             if ($parent) {
@@ -360,8 +354,14 @@ EOF
                 $locale = null;
             }
             if (null !== $locale) {
-                \array_unshift($locales, $locale);
+                $locales[] = $locale;
             }
+        }
+        foreach ($this->fallbackLocales as $fallback) {
+            if ($fallback === $originLocale) {
+                continue;
+            }
+            $locales[] = $fallback;
         }
         return \array_unique($locales);
     }
@@ -372,7 +372,7 @@ EOF
      */
     protected function assertValidLocale(string $locale)
     {
-        if (null !== $locale && 1 !== \preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
+        if (!\preg_match('/^[a-z0-9@_\\.\\-]*$/i', (string) $locale)) {
             throw new InvalidArgumentException(\sprintf('Invalid "%s" locale.', $locale));
         }
     }

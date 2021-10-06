@@ -8,7 +8,7 @@ interface UserProvider
      * Retrieve a user by their unique identifier.
      *
      * @param  mixed  $identifier
-     * @return Authenticatable|null
+     * @returnAuthenticatable|null
      */
     public function retrieveById($identifier);
     /**
@@ -16,13 +16,13 @@ interface UserProvider
      *
      * @param  mixed  $identifier
      * @param  string  $token
-     * @return Authenticatable|null
+     * @returnAuthenticatable|null
      */
     public function retrieveByToken($identifier, $token);
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param  Authenticatable  $user
+     * @param Authenticatable  $user
      * @param  string  $token
      * @return void
      */
@@ -31,13 +31,13 @@ interface UserProvider
      * Retrieve a user by the given credentials.
      *
      * @param  array  $credentials
-     * @return Authenticatable|null
+     * @returnAuthenticatable|null
      */
     public function retrieveByCredentials(array $credentials);
     /**
      * Validate a user against the given credentials.
      *
-     * @param  Authenticatable  $user
+     * @param Authenticatable  $user
      * @param  array  $credentials
      * @return bool
      */

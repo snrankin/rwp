@@ -146,7 +146,7 @@ function rwp_filesystem() {
  * @return string|false
  */
 
-function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) { 
+function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
     $base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
 
     $finder = new Finder();
@@ -193,7 +193,7 @@ function rwp_find_plugin_file( $filename, $dir = '' ) {
  * @return bool
  */
 
-function rwp_file_exists( $filepath ) { 
+function rwp_file_exists( $filepath ) {
     try {
         if ( rwp_filesystem()->exists( $filepath ) ) {
             return true;
@@ -279,6 +279,69 @@ function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, 
 function rwp_get_plugin_file( $filename, $dir = '', $require = false, $once = false ) {
 	if ( is_string( $filename ) ) {
         $file = '';
+        $type = pathinfo( $filename, PATHINFO_EXTENSION );
+        if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
+            $filename = rwp_find_plugin_file( $filename, $dir );
+            if ( $filename ) {
+
+                if ( 'php' === $type ) {
+                    if ( $require ) {
+                        if ( $once ) {
+                            $file = include_once $filename;
+                        } else {
+                            $file = include $filename;
+                        }
+                    } else {
+                        if ( $once ) {
+                               $file = include_once $filename;
+                        } else {
+                               $file = include $filename;
+                        }
+                    }
+                } elseif ( 'css' === $type || 'js' === $type ) {
+                    $file = rwp_get_file_data( $filename, true );
+                } else {
+                    $file = $filename;
+                }
+            }
+        } else {
+            $file = rwp_get_file_data( $filename );
+        }
+
+        return $file;
+	} elseif ( is_array( $filename ) ) {
+		$files = $filename;
+
+		foreach ( $files as $file ) {
+			rwp_get_plugin_file( $file, $dir, $require, $once );
+		}
+	}
+}
+
+/**
+ * Get file
+ *
+ * @param mixed  $filename The file name or array of file names to include (does not need .php at the end)
+ * @param string $dir      The sub-directory to look in (starting in root of plugin)
+ * @param bool   $require  True to require the file/false to include the file
+ * @param bool   $once     Require/include the file only once
+ *
+ * @throws FileNotFoundException
+ *
+ * @return mixed
+ */
+
+function rwp_get_dependency_file( $filename, $dir = '', $require = false, $once = false ) {
+	if ( is_string( $filename ) ) {
+        $file = '';
+		$base_dir = 'includes/dependencies/';
+		if(!empty($dir)){
+			$dir = rwp_add_suffix($base_dir, $dir);
+			$dir = wp_normalize_path( $dir );
+		} else {
+			$dir = $base_dir;
+		}
+		$dir = rwp_trailingslashit($dir);
         $type = pathinfo( $filename, PATHINFO_EXTENSION );
         if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
             $filename = rwp_find_plugin_file( $filename, $dir );

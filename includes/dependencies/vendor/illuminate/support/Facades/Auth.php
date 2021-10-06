@@ -4,15 +4,14 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Laravel\Ui\UiServiceProvider;
 use RuntimeException;
-
 /**
- * @method static AuthManager extend(string $driver, \Closure $callback)
- * @method static AuthManager provider(string $name, \Closure $callback)
- * @method static Authenticatable loginUsingId(mixed $id, bool $remember = false)
- * @method static Authenticatable|null user()
- * @method static Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
- * @method static UserProvider|null createUserProvider(string $provider = null)
- * @method static  Response|null onceBasic(string $field = 'email',array $extraConditions = [])
+ * @method staticAuthManager extend(string $driver, \Closure $callback)
+ * @method static \Illuminate\Auth\AuthManager provider(string $name, \Closure $callback)
+ * @method static \Illuminate\Contracts\Auth\Authenticatable loginUsingId(mixed $id, bool $remember = false)
+ * @method static \Illuminate\Contracts\Auth\Authenticatable|null user()
+ * @method static \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
+ * @method static \Illuminate\Contracts\Auth\UserProvider|null createUserProvider(string $provider = null)
+ * @method static \Symfony\Component\HttpFoundation\Response|null onceBasic(string $field = 'email',array $extraConditions = [])
  * @method static bool attempt(array $credentials = [], bool $remember = false)
  * @method static bool check()
  * @method static bool guest()
@@ -28,18 +27,20 @@ use RuntimeException;
  * @method static void setUser(\Illuminate\Contracts\Auth\Authenticatable $user)
  * @method static void shouldUse(string $name);
  *
- * @see AuthManager
- * @see Factory
- * @see Guard
- * @see StatefulGuard
+ * @seeAuthManager
+ * @see \Illuminate\Contracts\Auth\Factory
+ * @see \Illuminate\Contracts\Auth\Guard
+ * @see \Illuminate\Contracts\Auth\StatefulGuard
  */
-class Auth extends Facade {
+class Auth extends Facade
+{
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'auth';
     }
     /**
@@ -50,7 +51,8 @@ class Auth extends Facade {
      *
      * @throws \RuntimeException
      */
-    public static function routes(array $options = []) {
+    public static function routes(array $options = [])
+    {
         if (!static::$app->providerIsLoaded(UiServiceProvider::class)) {
             throw new \RuntimeException('In order to use the Auth::routes() method, please install the laravel/ui package.');
         }

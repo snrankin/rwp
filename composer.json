@@ -79,7 +79,7 @@
             "@composer dump-autoload -o -a --no-dev"
         ],
         "dump-vendor": [
-            "@composer dump-autoload --working-dir includes/dependencies -o"
+            "@composer dump-autoload --working-dir includes/dependencies -o --no-dev"
         ],
         "grum": [
             "vendor/bin/grumphp run"

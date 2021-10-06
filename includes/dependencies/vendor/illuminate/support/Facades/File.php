@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
- * @method static  SplFileInfo[] allFiles(string $directory, bool $hidden = false)
- * @method static  SplFileInfo[] files(string $directory, bool $hidden = false)
+ * @method static \Symfony\Component\Finder\SplFileInfo[] allFiles(string $directory, bool $hidden = false)
+ * @method static \Symfony\Component\Finder\SplFileInfo[] files(string $directory, bool $hidden = false)
  * @method static array directories(string $directory)
  * @method static array glob(string $pattern, int $flags = 0)
  * @method static bool cleanDirectory(string $directory)
@@ -42,19 +42,21 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static string|null guessExtension(string $path)
  * @method static void ensureDirectoryExists(string $path, int $mode = 0755, bool $recursive = true)
  * @method static void link(string $target, string $link)
- * @method static LazyCollection lines(string $path)
+ * @method staticLazyCollection lines(string $path)
  * @method static void relativeLink(string $target, string $link)
  * @method static void replace(string $path, string $content)
  *
- * @see Filesystem
+ * @seeFilesystem
  */
-class File extends Facade {
+class File extends Facade
+{
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'files';
     }
 }

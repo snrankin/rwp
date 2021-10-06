@@ -6,45 +6,21 @@ $loader = require_once __DIR__ . '/autoload.php';
 
 // Aliases for the whitelisted classes. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/README.md#class-whitelisting
-if (!class_exists('WPTT_WebFont_Loader', false) && !interface_exists('WPTT_WebFont_Loader', false) && !trait_exists('WPTT_WebFont_Loader', false)) {
-	spl_autoload_call('RWP\Vendor\WPTT_WebFont_Loader');
-}
-if (!class_exists('Bootstrap_Navwalker', false) && !interface_exists('Bootstrap_Navwalker', false) && !trait_exists('Bootstrap_Navwalker', false)) {
-	spl_autoload_call('RWP\Vendor\Bootstrap_Navwalker');
-}
 if (!class_exists('Page_For_Post_Type', false) && !interface_exists('Page_For_Post_Type', false) && !trait_exists('Page_For_Post_Type', false)) {
 	spl_autoload_call('RWP\Vendor\Page_For_Post_Type');
 }
 if (!class_exists('PAnD', false) && !interface_exists('PAnD', false) && !trait_exists('PAnD', false)) {
 	spl_autoload_call('RWP\Vendor\PAnD');
 }
-if (!class_exists('WPDesk_Translable', false) && !interface_exists('WPDesk_Translable', false) && !trait_exists('WPDesk_Translable', false)) {
-	spl_autoload_call('RWP\Vendor\WPDesk_Translable');
-}
-if (!class_exists('WPDesk_Translatable', false) && !interface_exists('WPDesk_Translatable', false) && !trait_exists('WPDesk_Translatable', false)) {
-	spl_autoload_call('RWP\Vendor\WPDesk_Translatable');
-}
-if (!class_exists('WPDesk_Has_Plugin_Info', false) && !interface_exists('WPDesk_Has_Plugin_Info', false) && !trait_exists('WPDesk_Has_Plugin_Info', false)) {
-	spl_autoload_call('RWP\Vendor\WPDesk_Has_Plugin_Info');
-}
-if (!class_exists('WPDesk_Buildable', false) && !interface_exists('WPDesk_Buildable', false) && !trait_exists('WPDesk_Buildable', false)) {
-	spl_autoload_call('RWP\Vendor\WPDesk_Buildable');
-}
-if (!class_exists('WPDesk_Plugin_Info', false) && !interface_exists('WPDesk_Plugin_Info', false) && !trait_exists('WPDesk_Plugin_Info', false)) {
-	spl_autoload_call('RWP\Vendor\WPDesk_Plugin_Info');
-}
-if (!class_exists('Yoast_I18n_v3', false) && !interface_exists('Yoast_I18n_v3', false) && !trait_exists('Yoast_I18n_v3', false)) {
-	spl_autoload_call('RWP\Vendor\Yoast_I18n_v3');
-}
-if (!class_exists('Yoast_I18n_WordPressOrg_v3', false) && !interface_exists('Yoast_I18n_WordPressOrg_v3', false) && !trait_exists('Yoast_I18n_WordPressOrg_v3', false)) {
-	spl_autoload_call('RWP\Vendor\Yoast_I18n_WordPressOrg_v3');
-}
 
-if (!class_exists('WP_Dependency_Installer', false) && !interface_exists('WP_Dependency_Installer', false) && !trait_exists('WP_Dependency_Installer', false)) {
-	spl_autoload_call('RWP\Vendor\WP_Dependency_Installer');
+if (!class_exists('safe_svg_attributes', false) && !interface_exists('safe_svg_attributes', false) && !trait_exists('safe_svg_attributes', false)) {
+    spl_autoload_call('RWP\Vendor\safe_svg_attributes');
 }
-if (!class_exists('WPDI_Plugin_Installer_Skin', false) && !interface_exists('WPDI_Plugin_Installer_Skin', false) && !trait_exists('WPDI_Plugin_Installer_Skin', false)) {
-	spl_autoload_call('RWP\Vendor\WPDI_Plugin_Installer_Skin');
+if (!class_exists('safe_svg_tags', false) && !interface_exists('safe_svg_tags', false) && !trait_exists('safe_svg_tags', false)) {
+    spl_autoload_call('RWP\Vendor\safe_svg_tags');
+}
+if (!class_exists('safe_svg', false) && !interface_exists('safe_svg', false) && !trait_exists('safe_svg', false)) {
+    spl_autoload_call('RWP\Vendor\safe_svg');
 }
 if (!class_exists('Extended_Taxonomy_Admin', false) && !interface_exists('Extended_Taxonomy_Admin', false) && !trait_exists('Extended_Taxonomy_Admin', false)) {
 	spl_autoload_call('RWP\Vendor\Extended_Taxonomy_Admin');
@@ -76,9 +52,7 @@ if (!class_exists('Extended_Taxonomy', false) && !interface_exists('Extended_Tax
 if (!class_exists('Extended_Rewrite_Testing', false) && !interface_exists('Extended_Rewrite_Testing', false) && !trait_exists('Extended_Rewrite_Testing', false)) {
 	spl_autoload_call('RWP\Vendor\Extended_Rewrite_Testing');
 }
-if (!class_exists('ComposerAutoloaderInit76ae95f83fff8a8afb6decf0cdd8f8af', false) && !interface_exists('ComposerAutoloaderInit76ae95f83fff8a8afb6decf0cdd8f8af', false) && !trait_exists('ComposerAutoloaderInit76ae95f83fff8a8afb6decf0cdd8f8af', false)) {
-	spl_autoload_call('RWP\Vendor\ComposerAutoloaderInit76ae95f83fff8a8afb6decf0cdd8f8af');
-}
+
 if (!class_exists('JsonException', false) && !interface_exists('JsonException', false) && !trait_exists('JsonException', false)) {
 	spl_autoload_call('RWP\Vendor\JsonException');
 }
@@ -102,92 +76,9 @@ if (!function_exists('stripslashes_deep')) {
 		return \RWP\Vendor\stripslashes_deep(...func_get_args());
 	}
 }
-
-if (!function_exists('wptt_get_webfont_styles')) {
-	function wptt_get_webfont_styles() {
-		return \RWP\Vendor\wptt_get_webfont_styles(...func_get_args());
-	}
-}
-if (!function_exists('wptt_get_webfont_url')) {
-	function wptt_get_webfont_url() {
-		return \RWP\Vendor\wptt_get_webfont_url(...func_get_args());
-	}
-}
-
 if (!function_exists('get_page_for_post_type')) {
 	function get_page_for_post_type() {
 		return \RWP\Vendor\get_page_for_post_type(...func_get_args());
-	}
-}
-
-if (!function_exists('WPDeskInitWpNoticeAjaxHandler')) {
-	function WPDeskInitWpNoticeAjaxHandler() {
-		return \RWP\Vendor\WPDeskInitWpNoticeAjaxHandler(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_init_wp_notice_ajax_handler')) {
-	function wpdesk_init_wp_notice_ajax_handler() {
-		return \RWP\Vendor\wpdesk_init_wp_notice_ajax_handler(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskWpNotice')) {
-	function WPDeskWpNotice() {
-		return \RWP\Vendor\WPDeskWpNotice(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_wp_notice')) {
-	function wpdesk_wp_notice() {
-		return \RWP\Vendor\wpdesk_wp_notice(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskWpNoticeInfo')) {
-	function WPDeskWpNoticeInfo() {
-		return \RWP\Vendor\WPDeskWpNoticeInfo(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_wp_notice_info')) {
-	function wpdesk_wp_notice_info() {
-		return \RWP\Vendor\wpdesk_wp_notice_info(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskWpNoticeError')) {
-	function WPDeskWpNoticeError() {
-		return \RWP\Vendor\WPDeskWpNoticeError(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_wp_notice_error')) {
-	function wpdesk_wp_notice_error() {
-		return \RWP\Vendor\wpdesk_wp_notice_error(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskWpNoticeWarning')) {
-	function WPDeskWpNoticeWarning() {
-		return \RWP\Vendor\WPDeskWpNoticeWarning(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_wp_notice_warning')) {
-	function wpdesk_wp_notice_warning() {
-		return \RWP\Vendor\wpdesk_wp_notice_warning(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskWpNoticeSuccess')) {
-	function WPDeskWpNoticeSuccess() {
-		return \RWP\Vendor\WPDeskWpNoticeSuccess(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_wp_notice_success')) {
-	function wpdesk_wp_notice_success() {
-		return \RWP\Vendor\wpdesk_wp_notice_success(...func_get_args());
-	}
-}
-if (!function_exists('WPDeskPermanentDismissibleWpNotice')) {
-	function WPDeskPermanentDismissibleWpNotice() {
-		return \RWP\Vendor\WPDeskPermanentDismissibleWpNotice(...func_get_args());
-	}
-}
-if (!function_exists('wpdesk_permanent_dismissible_wp_notice')) {
-	function wpdesk_permanent_dismissible_wp_notice() {
-		return \RWP\Vendor\wpdesk_permanent_dismissible_wp_notice(...func_get_args());
 	}
 }
 if (!function_exists('wp_cache_remember')) {
@@ -267,6 +158,11 @@ if (!function_exists('extractLocaleFromFilePath')) {
 if (!function_exists('extractTranslationKeys')) {
 	function extractTranslationKeys() {
 		return \RWP\Vendor\extractTranslationKeys(...func_get_args());
+    }
+}
+if (!function_exists('findTransUnitMismatches')) {
+    function findTransUnitMismatches() {
+        return \RWP\Vendor\findTransUnitMismatches(...func_get_args());
 	}
 }
 if (!function_exists('printTitle')) {
@@ -431,9 +327,25 @@ if (!function_exists('head')) {
 }
 if (!function_exists('last')) {
 	function last() {
-		return \RWP\Vendor\last(...func_get_args());
+        return \RWP\Vendor\last(...func_get_args());
+    }
+}
+if (!function_exists('h')) {
+    function h() {
+        return \RWP\Vendor\h(...func_get_args());
+    }
+}
+if (!function_exists('getExceptionMsg')) {
+    function getExceptionMsg() {
+        return \RWP\Vendor\getExceptionMsg(...func_get_args());
+    }
+}
+if (!function_exists('sendPage')) {
+    function sendPage() {
+        return \RWP\Vendor\sendPage(...func_get_args());
 	}
 }
+
 
 /**
  * Additional data helper functions
@@ -546,7 +458,7 @@ if (!function_exists('data_has')) {
 
 if (!\function_exists('data_remove')) {
     /**
-     * Remove an item on an array or object using dot notation.
+     * Set an item on an array or object using dot notation.
      *
      * @param  mixed  $target
      * @param  string|array  $key
