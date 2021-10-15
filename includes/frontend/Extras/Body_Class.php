@@ -35,6 +35,12 @@ class Body_Class extends Singleton {
 	 */
 	public static function add_plugin_class( array $classes ) {
 
-		return rwp_parse_classes( $classes, rwp()->get_slug() );
+		$classes = rwp_parse_classes( $classes, rwp()->get_slug() );
+
+		if ( is_plugin_active( 'elementor/elementor.php' ) && rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
+			$classes[] = 'rwp-elementor';
+		}
+
+		return $classes;
 	}
 }

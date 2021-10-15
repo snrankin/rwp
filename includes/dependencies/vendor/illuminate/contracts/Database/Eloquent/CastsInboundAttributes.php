@@ -2,12 +2,11 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface CastsInboundAttributes
-{
+interface CastsInboundAttributes {
     /**
      * Transform the attribute to its underlying model values.
      *
-     * @param  Model  $model
+     * @param Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes

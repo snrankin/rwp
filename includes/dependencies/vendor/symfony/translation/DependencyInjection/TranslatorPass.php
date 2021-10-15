@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\DependencyInjection;
 
 use RWP\Vendor\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use RWP\Vendor\Symfony\Component\DependencyInjection\ContainerBuilder;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Reference;
-class TranslatorPass implements CompilerPassInterface
-{
+
+class TranslatorPass implements CompilerPassInterface {
     private $translatorServiceId;
     private $readerServiceId;
     private $loaderTag;
     private $debugCommandServiceId;
     private $updateCommandServiceId;
-    public function __construct(string $translatorServiceId = 'translator.default', string $readerServiceId = 'translation.reader', string $loaderTag = 'translation.loader', string $debugCommandServiceId = 'console.command.translation_debug', string $updateCommandServiceId = 'console.command.translation_update')
-    {
+    public function __construct(string $translatorServiceId = 'translator.default', string $readerServiceId = 'translation.reader', string $loaderTag = 'translation.loader', string $debugCommandServiceId = 'console.command.translation_debug', string $updateCommandServiceId = 'console.command.translation_update') {
         if (0 < \func_num_args()) {
             trigger_deprecation('symfony/translation', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
         }
@@ -32,8 +32,7 @@ class TranslatorPass implements CompilerPassInterface
         $this->debugCommandServiceId = $debugCommandServiceId;
         $this->updateCommandServiceId = $updateCommandServiceId;
     }
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if (!$container->hasDefinition($this->translatorServiceId)) {
             return;
         }

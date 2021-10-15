@@ -98,3 +98,11 @@ function rwp_section( $args = array() ) {
 function rwp_embed( $args = array() ) {
 	return new RWP\Components\Embed( $args );
 }
+
+function rwp_card( $args = array() ) {
+	return new RWP\Components\Card( $args );
+}
+
+function rwp_post_card( $args = array() ) {
+	return new RWP\Components\PostCard( $args );
+}

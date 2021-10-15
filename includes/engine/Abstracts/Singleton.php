@@ -37,7 +37,7 @@ abstract class Singleton {
      *
      * @return self single instance of Core
      */
-    public static function instance() {
+    final public static function instance() {
 
         $class = \get_called_class();
         if ( ! isset( self::$instances[ $class ] ) ) {
@@ -51,25 +51,6 @@ abstract class Singleton {
      *  Needed for initializing the component
      */
     public function initialize() {}
-
-    /**
-     *  Prevent Instantinating
-     */
-    private function __clone(){}
-
-    /**
-     *  Protected constructor
-     */
-    public function __construct(){}
-
-    /**
-     *  Array filter: Append instance to array.
-     *  Use it for filters
-     */
-    public function append( $arr ) {
-        $arr[] = $this;
-        return $arr;
-    }
 
 	/**
 	 * Get an attribute from the plugin instance.
@@ -133,6 +114,16 @@ abstract class Singleton {
 		}
 
 	}
+
+	/**
+     *  Prevent Instantinating
+     */
+    final private function __clone(){}
+
+    /**
+     *  Protected constructor
+     */
+    protected function __construct(){}
 
 	/**
 	 * Handle dynamic calls to the plugin instance to set attributes.

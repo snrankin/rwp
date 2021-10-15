@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidResourceException;
+
 /**
  * JsonFileLoader loads translations from an json file.
  *
  * @author singles
  */
-class JsonFileLoader extends FileLoader
-{
+class JsonFileLoader extends FileLoader {
     /**
      * {@inheritdoc}
      */
-    protected function loadResource($resource)
-    {
+    protected function loadResource(string $resource) {
         $messages = [];
         if ($data = \file_get_contents($resource)) {
             $messages = \json_decode($data, \true);
@@ -35,8 +35,7 @@ class JsonFileLoader extends FileLoader
     /**
      * Translates JSON_ERROR_* constant into meaningful message.
      */
-    private function getJSONErrorMessage(int $errorCode) : string
-    {
+    private function getJSONErrorMessage(int $errorCode): string {
         switch ($errorCode) {
             case \JSON_ERROR_DEPTH:
                 return 'Maximum stack depth exceeded';

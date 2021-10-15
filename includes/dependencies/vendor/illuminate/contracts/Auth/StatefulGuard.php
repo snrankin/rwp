@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth;
 
-interface StatefulGuard extends Guard
-{
+interface StatefulGuard extends Guard {
     /**
      * Attempt to authenticate a user using the given credentials.
      *
@@ -22,7 +21,7 @@ interface StatefulGuard extends Guard
     /**
      * Log a user into the application.
      *
-     * @param  Authenticatable  $user
+     * @param Authenticatable  $user
      * @param  bool  $remember
      * @return void
      */
@@ -32,14 +31,14 @@ interface StatefulGuard extends Guard
      *
      * @param  mixed  $id
      * @param  bool  $remember
-     * @return Authenticatable|bool
+     * @returnAuthenticatable|bool
      */
     public function loginUsingId($id, $remember = \false);
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
      * @param  mixed  $id
-     * @return Authenticatable|bool
+     * @returnAuthenticatable|bool
      */
     public function onceUsingId($id);
     /**

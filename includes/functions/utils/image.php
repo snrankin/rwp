@@ -8,11 +8,12 @@
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
- * ========================================================================== 
+ * ==========================================================================
  */
 
 use RWP\Components\Element;
 use RWP\Components\Html;
+use RWP\Components\Image;
 /**
  * Get all the registered image sizes along with their dimensions
  *
@@ -99,7 +100,7 @@ function rwp_is_image( $image ) {
     );
 
     if ( is_string( $image ) ) {
-        if ( rwp_is_url( $image ) ) {
+        if ( ! rwp_string_is_html( $image ) ) {
             $ext = pathinfo( $image, PATHINFO_EXTENSION );
             return in_array( $ext, $image_types );
         } else {
@@ -130,11 +131,51 @@ function rwp_is_image( $image ) {
 function rwp_extract_img_src( $image, $size = 'full' ) {
      $src = false;
 
+	 $image_types = array(
+		// Jpeg
+		'jpg',
+		'jpeg',
+		'jpe',
+		'jif',
+		'jfif',
+		'jfi',
+		// PNG
+		'png',
+		// GIF
+		'gif',
+		// Google Webp
+		'webp',
+		// SVGS
+		'svg',
+		'svgz',
+		// iOS High Efficiency Image File
+		'heif',
+		'heic',
+		// Jpeg 2000
+		'jp2',
+		'j2k',
+		'jpf',
+		'jpx',
+		'jpm',
+		'mj2',
+		// TIFF
+		'tiff',
+		'tif',
+		// Icons
+		'ico',
+		// Windows
+		'bmp',
+		'dib',
+    );
+
     if ( is_string( $image ) ) {
-        if ( rwp_is_url( $image ) ) {
-            $src = $image;
+        if ( ! rwp_string_is_html( $image ) ) {
+            $ext = pathinfo( $image, PATHINFO_EXTENSION );
+            if( in_array( $ext, $image_types ) ) {
+				$src = $image;
+			}
         } elseif ( is_numeric( $image ) ) {
-            $image = attachment_url_to_postid( $image );
+            $image = intval( $image );
             $src = wp_get_attachment_image_url( $image, $size, false );
         } elseif ( rwp_string_is_html( $image ) ) {
             $image = rwp_html( $image );
@@ -205,7 +246,7 @@ function rwp_image_id( $image ) {
  *
  * @return string
  */
-function rwp_get_logo( $args = array() ) { 
+function rwp_get_logo( $args = array() ) {
     $content = get_bloginfo( 'name', 'display' );
 
     $unlink_homepage_logo = (bool) get_theme_support( 'custom-logo', 'unlink-homepage-logo' );
@@ -238,4 +279,79 @@ function rwp_get_logo( $args = array() ) {
     }
 
     return $html->saveHTML();
+}
+
+
+/**
+ * Get the featured image id of a post with filters
+ *
+ * @param mixed|null $post
+ * @return false|int|string
+ */
+
+function rwp_featured_image_id($post = null) {
+
+	$id      = false;
+	$post    = rwp_post_object($post);
+	$post_id = rwp_id( $post );
+
+	if ( has_post_thumbnail( $post_id ) ) {
+		$id = get_post_thumbnail_id( $post_id );
+	}
+
+	$id = apply_filters('rwp_featured_image_id', $id, $post);
+
+	return $id;
+}
+
+
+/**
+ * Get the featured image object for a post
+ *
+ * @param mixed|null $post
+ * @param array $args
+ * @return Image|false
+ */
+function rwp_get_featured_image($post = null, $size = 'full',  $args = [], $html = '') {
+
+	$post    = rwp_post_object($post);
+	$post_id = rwp_id( $post );
+
+	$image = data_get($args, 'image', array());
+
+	$id = rwp_featured_image_id( $post );
+
+
+	if ($id) {
+
+		$args['src'] = $id;
+		$args['size'] = $size;
+		$args['html'] = $html;
+
+		if ( ! rwp_array_has( 'atts', $image ) ) {
+			$image['atts'] = array();
+		}
+
+		if ( ! rwp_array_has( 'alt', $image['atts'] ) && ! empty( $post_id ) ) {
+			$image['atts']['alt'] = rwp_title( $post, false, '', ' Post Image' );
+		}
+		if ( ! rwp_array_has( 'title', $image['atts'] ) && ! empty( $post_id ) ) {
+			$image['atts']['title'] = rwp_title( $post );
+		}
+		if ( ! rwp_array_has( 'itemprop', $image['atts'] ) ) {
+			$image['atts']['itemprop'] = 'image';
+		}
+
+		if ( ! rwp_array_has( 'tag', $image ) ) {
+			$image['tag'] = 'img';
+		}
+
+		$args['image'] = $image;
+
+		$args = apply_filters('rwp_get_featured_image', $args, $post);
+
+		return rwp_image($args);
+	} else {
+		return false;
+	}
 }

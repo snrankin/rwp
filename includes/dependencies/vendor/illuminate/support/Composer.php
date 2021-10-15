@@ -5,8 +5,8 @@ namespace RWP\Vendor\Illuminate\Support;
 use RWP\Vendor\Illuminate\Filesystem\Filesystem;
 use RWP\Vendor\Symfony\Component\Process\PhpExecutableFinder;
 use RWP\Vendor\Symfony\Component\Process\Process;
-
-class Composer {
+class Composer
+{
     /**
      * The filesystem instance.
      *
@@ -26,7 +26,8 @@ class Composer {
      * @param  string|null  $workingPath
      * @return void
      */
-    public function __construct(Filesystem $files, $workingPath = null) {
+    public function __construct(Filesystem $files, $workingPath = null)
+    {
         $this->files = $files;
         $this->workingPath = $workingPath;
     }
@@ -36,7 +37,8 @@ class Composer {
      * @param  string|array  $extra
      * @return int
      */
-    public function dumpAutoloads($extra = '') {
+    public function dumpAutoloads($extra = '')
+    {
         $extra = $extra ? (array) $extra : [];
         $command = \array_merge($this->findComposer(), ['dump-autoload'], $extra);
         return $this->getProcess($command)->run();
@@ -46,7 +48,8 @@ class Composer {
      *
      * @return int
      */
-    public function dumpOptimized() {
+    public function dumpOptimized()
+    {
         return $this->dumpAutoloads('--optimize');
     }
     /**
@@ -54,7 +57,8 @@ class Composer {
      *
      * @return array
      */
-    protected function findComposer() {
+    protected function findComposer()
+    {
         if ($this->files->exists($this->workingPath . '/composer.phar')) {
             return [$this->phpBinary(), 'composer.phar'];
         }
@@ -65,16 +69,18 @@ class Composer {
      *
      * @return string
      */
-    protected function phpBinary() {
+    protected function phpBinary()
+    {
         return ProcessUtils::escapeArgument((new PhpExecutableFinder())->find(\false));
     }
     /**
      * Get a new Symfony process instance.
      *
      * @param  array  $command
-     * @return  Process
+     * @return \RWP\Vendor\Symfony\Process\Process
      */
-    protected function getProcess(array $command) {
+    protected function getProcess(array $command)
+    {
         return (new Process($command, $this->workingPath))->setTimeout(null);
     }
     /**
@@ -83,7 +89,8 @@ class Composer {
      * @param  string  $path
      * @return $this
      */
-    public function setWorkingPath($path) {
+    public function setWorkingPath($path)
+    {
         $this->workingPath = \realpath($path);
         return $this;
     }

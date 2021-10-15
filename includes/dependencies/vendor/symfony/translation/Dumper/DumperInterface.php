@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * DumperInterface is the interface implemented by all translation dumpers.
  * There is no common option.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-interface DumperInterface
-{
+interface DumperInterface {
     /**
      * Dumps the message catalogue.
      *

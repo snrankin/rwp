@@ -4,8 +4,8 @@ namespace RWP\Vendor\Illuminate\Contracts\Container;
 
 use Closure;
 use RWP\Vendor\Psr\Container\ContainerInterface;
-interface Container extends ContainerInterface
-{
+
+interface Container extends ContainerInterface {
     /**
      * Determine if the given abstract type has been bound.
      *
@@ -103,7 +103,7 @@ interface Container extends ContainerInterface
      * Define a contextual binding.
      *
      * @param  string|array  $concrete
-     * @return ContextualBindingBuilder
+     * @returnContextualBindingBuilder
      */
     public function when($concrete);
     /**
@@ -126,7 +126,7 @@ interface Container extends ContainerInterface
      * @param  array  $parameters
      * @return mixed
      *
-     * @throws BindingResolutionException
+     * @throwsBindingResolutionException
      */
     public function make($abstract, array $parameters = []);
     /**

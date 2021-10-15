@@ -79,12 +79,12 @@ class Initialize {
 
 		foreach ( $this->classes as $class ) {
 			try {
-				$temp = new $class();
+				$temp = $class::instance();
 				$temp->initialize();
 			} catch ( \Throwable $err ) {
 				\do_action( 'rwp_initialize_failed', $err );
 
-				if ( WP_DEBUG ) {
+				if ( \WP_DEBUG ) {
 					throw new \Exception( $err->getMessage() );
 				}
 			}

@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\View;
 
-interface Factory
-{
+interface Factory {
     /**
      * Determine if a given view exists.
      *
@@ -15,18 +14,18 @@ interface Factory
      * Get the evaluated view contents for the given path.
      *
      * @param  string  $path
-     * @param  Arrayable|array  $data
+     * @param Arrayable|array  $data
      * @param  array  $mergeData
-     * @return View
+     * @returnView
      */
     public function file($path, $data = [], $mergeData = []);
     /**
      * Get the evaluated view contents for the given view.
      *
      * @param  string  $view
-     * @param  Arrayable|array  $data
+     * @param Arrayable|array  $data
      * @param  array  $mergeData
-     * @return View
+     * @returnView
      */
     public function make($view, $data = [], $mergeData = []);
     /**

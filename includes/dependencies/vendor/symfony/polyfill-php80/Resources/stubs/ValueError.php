@@ -2,6 +2,7 @@
 
 namespace RWP\Vendor;
 
-class ValueError extends \Error {
+class ValueError extends \Error
+{
 }
-\class_alias(__NAMESPACE__ . '\\ValueError', 'ValueError', \false);
+\class_alias('RWP\\Vendor\\ValueError', 'ValueError', \false);

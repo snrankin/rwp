@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Mail;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a mailer instance by name.
      *
      * @param  string|null  $name
-     * @return Mailer
+     * @returnMailer
      */
     public function mailer($name = null);
 }

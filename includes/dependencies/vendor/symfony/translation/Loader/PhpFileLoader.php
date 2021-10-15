@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 /**
@@ -15,14 +16,12 @@ namespace RWP\Vendor\Symfony\Component\Translation\Loader;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class PhpFileLoader extends FileLoader
-{
+class PhpFileLoader extends FileLoader {
     private static $cache = [];
     /**
      * {@inheritdoc}
      */
-    protected function loadResource($resource)
-    {
+    protected function loadResource(string $resource) {
         if ([] === self::$cache && \function_exists('opcache_invalidate') && \filter_var(\ini_get('opcache.enable'), \FILTER_VALIDATE_BOOLEAN) && (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'], \true) || \filter_var(\ini_get('opcache.enable_cli'), \FILTER_VALIDATE_BOOLEAN))) {
             self::$cache = null;
         }

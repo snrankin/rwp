@@ -15,6 +15,7 @@ use RWP\Vendor\Illuminate\Support\HigherOrderWhenProxy;
 use JsonSerializable;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use Traversable;
+use UnexpectedValueException;
 /**
  * @property-read HigherOrderCollectionProxy $average
  * @property-read HigherOrderCollectionProxy $avg
@@ -632,6 +633,26 @@ trait EnumeratesValues
         return $result;
     }
     /**
+     * Reduce the collection to multiple aggregate values.
+     *
+     * @param  callable  $callback
+     * @param  mixed  ...$initial
+     * @return array
+     *
+     * @throws \UnexpectedValueException
+     */
+    public function reduceMany(callable $callback, ...$initial)
+    {
+        $result = $initial;
+        foreach ($this as $key => $value) {
+            $result = \call_user_func_array($callback, \array_merge($result, [$value, $key]));
+            if (!\is_array($result)) {
+                throw new \UnexpectedValueException(\sprintf("%s::reduceMany expects reducer to return an array, but got a '%s' instead.", class_basename(static::class), \gettype($result)));
+            }
+        }
+        return $result;
+    }
+    /**
      * Reduce an associative collection to a single value.
      *
      * @param  callable  $callback
@@ -653,24 +674,6 @@ trait EnumeratesValues
         $useAsCallable = $this->useAsCallable($callback);
         return $this->filter(function ($value, $key) use($callback, $useAsCallable) {
             return $useAsCallable ? !$callback($value, $key) : $value != $callback;
-        });
-    }
-    /**
-     * Return only unique items from the collection array.
-     *
-     * @param  string|callable|null  $key
-     * @param  bool  $strict
-     * @return static
-     */
-    public function unique($key = null, $strict = \false)
-    {
-        $callback = $this->valueRetriever($key);
-        $exists = [];
-        return $this->reject(function ($item, $key) use($callback, $strict, &$exists) {
-            if (\in_array($id = $callback($item, $key), $exists, $strict)) {
-                return \true;
-            }
-            $exists[] = $id;
         });
     }
     /**
@@ -708,6 +711,7 @@ trait EnumeratesValues
      *
      * @return array
      */
+
     public function jsonSerialize()
     {
         return \array_map(function ($value) {

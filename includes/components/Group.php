@@ -83,6 +83,11 @@ class Group extends Element {
 			foreach ( $item_default_atts as $key => $value ) {
 				if ( 'tag' === $key ) {
 					$item->set_tag( $value );
+				} elseif ( 'atts' === $key && is_array( $value ) ) {
+					$atts = $value;
+					foreach ( $atts as $prop => $prop_val ) {
+						$item->set_attr( $prop, $prop_val );
+					}
 				} else {
 					$item->set( $key, $value, false );
 				}

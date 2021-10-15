@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\XPath\Extension;
 
 /**
@@ -20,41 +21,35 @@ namespace RWP\Vendor\Symfony\Component\CssSelector\XPath\Extension;
  *
  * @internal
  */
-abstract class AbstractExtension implements ExtensionInterface
-{
+abstract class AbstractExtension implements ExtensionInterface {
     /**
      * {@inheritdoc}
      */
-    public function getNodeTranslators() : array
-    {
+    public function getNodeTranslators(): array {
         return [];
     }
     /**
      * {@inheritdoc}
      */
-    public function getCombinationTranslators() : array
-    {
+    public function getCombinationTranslators(): array {
         return [];
     }
     /**
      * {@inheritdoc}
      */
-    public function getFunctionTranslators() : array
-    {
+    public function getFunctionTranslators(): array {
         return [];
     }
     /**
      * {@inheritdoc}
      */
-    public function getPseudoClassTranslators() : array
-    {
+    public function getPseudoClassTranslators(): array {
         return [];
     }
     /**
      * {@inheritdoc}
      */
-    public function getAttributeMatchingTranslators() : array
-    {
+    public function getAttributeMatchingTranslators(): array {
         return [];
     }
 }

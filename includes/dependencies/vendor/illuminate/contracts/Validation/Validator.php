@@ -3,14 +3,14 @@
 namespace RWP\Vendor\Illuminate\Contracts\Validation;
 
 use RWP\Vendor\Illuminate\Contracts\Support\MessageProvider;
-interface Validator extends MessageProvider
-{
+
+interface Validator extends MessageProvider {
     /**
      * Run the validator's rules against its data.
      *
      * @return array
      *
-     * @throws ValidationException
+     * @throwsValidationException
      */
     public function validate();
     /**
@@ -18,7 +18,7 @@ interface Validator extends MessageProvider
      *
      * @return array
      *
-     * @throws ValidationException
+     * @throwsValidationException
      */
     public function validated();
     /**
@@ -52,7 +52,7 @@ interface Validator extends MessageProvider
     /**
      * Get all of the validation error messages.
      *
-     * @return MessageBag
+     * @returnMessageBag
      */
     public function errors();
 }

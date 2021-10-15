@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation;
 
 use RWP\Vendor\Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Contracts\Translation\LocaleAwareInterface;
 use RWP\Vendor\Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
-class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface, WarmableInterface
-{
+class DataCollectorTranslator implements Contracts\Translation\TranslatorInterface, TranslatorBagInterface, Contracts\Translation\LocaleAwareInterface, WarmableInterface {
     public const MESSAGE_DEFINED = 0;
     public const MESSAGE_MISSING = 1;
     public const MESSAGE_EQUALS_FALLBACK = 2;
@@ -30,9 +31,8 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     /**
      * @param TranslatorInterface $translator The translator must implement TranslatorBagInterface
      */
-    public function __construct(TranslatorInterface $translator)
-    {
-        if (!$translator instanceof TranslatorBagInterface || !$translator instanceof LocaleAwareInterface) {
+    public function __construct(Contracts\Translation\TranslatorInterface $translator) {
+        if (!$translator instanceof TranslatorBagInterface || !$translator instanceof Contracts\Translation\LocaleAwareInterface) {
             throw new InvalidArgumentException(\sprintf('The Translator "%s" must implement TranslatorInterface, TranslatorBagInterface and LocaleAwareInterface.', \get_debug_type($translator)));
         }
         $this->translator = $translator;
@@ -40,8 +40,7 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     /**
      * {@inheritdoc}
      */
-    public function trans(?string $id, array $parameters = [], string $domain = null, string $locale = null)
-    {
+    public function trans(?string $id, array $parameters = [], string $domain = null, string $locale = null) {
         $trans = $this->translator->trans($id = (string) $id, $parameters, $domain, $locale);
         $this->collectMessage($locale, $domain, $id, $trans, $parameters);
         return $trans;
@@ -49,29 +48,25 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     /**
      * {@inheritdoc}
      */
-    public function setLocale(string $locale)
-    {
+    public function setLocale(string $locale) {
         $this->translator->setLocale($locale);
     }
     /**
      * {@inheritdoc}
      */
-    public function getLocale()
-    {
+    public function getLocale() {
         return $this->translator->getLocale();
     }
     /**
      * {@inheritdoc}
      */
-    public function getCatalogue(string $locale = null)
-    {
+    public function getCatalogue(string $locale = null) {
         return $this->translator->getCatalogue($locale);
     }
     /**
      * {@inheritdoc}
      */
-    public function getCatalogues() : array
-    {
+    public function getCatalogues(): array {
         return $this->translator->getCatalogues();
     }
     /**
@@ -79,8 +74,7 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
      *
      * @return string[]
      */
-    public function warmUp(string $cacheDir)
-    {
+    public function warmUp(string $cacheDir) {
         if ($this->translator instanceof WarmableInterface) {
             return (array) $this->translator->warmUp($cacheDir);
         }
@@ -91,8 +85,7 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
      *
      * @return array The fallback locales
      */
-    public function getFallbackLocales()
-    {
+    public function getFallbackLocales() {
         if ($this->translator instanceof Translator || \method_exists($this->translator, 'getFallbackLocales')) {
             return $this->translator->getFallbackLocales();
         }
@@ -101,19 +94,16 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     /**
      * Passes through all unknown calls onto the translator object.
      */
-    public function __call(string $method, array $args)
-    {
+    public function __call(string $method, array $args) {
         return $this->translator->{$method}(...$args);
     }
     /**
      * @return array
      */
-    public function getCollectedMessages()
-    {
+    public function getCollectedMessages() {
         return $this->messages;
     }
-    private function collectMessage(?string $locale, ?string $domain, string $id, string $translation, ?array $parameters = [])
-    {
+    private function collectMessage(?string $locale, ?string $domain, string $id, string $translation, ?array $parameters = []) {
         if (null === $domain) {
             $domain = 'messages';
         }

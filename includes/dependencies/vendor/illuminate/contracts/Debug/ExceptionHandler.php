@@ -24,9 +24,9 @@ interface ExceptionHandler {
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
+     * @param Request  $request
      * @param  \Throwable  $e
-     * @return  Response
+     * @return \RWP\Vendor\Symfony\HttpFoundation\Response
      *
      * @throws \Throwable
      */
@@ -34,7 +34,7 @@ interface ExceptionHandler {
     /**
      * Render an exception to the console.
      *
-     * @param   OutputInterface  $output
+     * @param  \RWP\Vendor\Symfony\Output\OutputInterface  $output
      * @param  \Throwable  $e
      * @return void
      */

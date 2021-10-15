@@ -233,6 +233,15 @@ class Stringable implements \JsonSerializable
         return Str::isAscii($this->value);
     }
     /**
+     * Determine if a given string is a valid UUID.
+     *
+     * @return bool
+     */
+    public function isUuid()
+    {
+        return Str::isUuid($this->value);
+    }
+    /**
      * Determine if the given string is empty.
      *
      * @return bool
@@ -307,11 +316,7 @@ class Stringable implements \JsonSerializable
      */
     public function match($pattern)
     {
-        \preg_match($pattern, $this->value, $matches);
-        if (!$matches) {
-            return new static();
-        }
-        return new static($matches[1] ?? $matches[0]);
+        return new static(Str::match($pattern, $this->value));
     }
     /**
      * Get the string matching the given pattern.
@@ -321,11 +326,7 @@ class Stringable implements \JsonSerializable
      */
     public function matchAll($pattern)
     {
-        \preg_match_all($pattern, $this->value, $matches);
-        if (empty($matches[0])) {
-            return collect();
-        }
-        return collect($matches[1] ?? $matches[0]);
+        return Str::matchAll($pattern, $this->value);
     }
     /**
      * Determine if the string matches the given pattern.
@@ -509,6 +510,16 @@ class Stringable implements \JsonSerializable
     public function start($prefix)
     {
         return new static(Str::start($this->value, $prefix));
+    }
+    /**
+     * Strip HTML and PHP tags from the given string.
+     *
+     * @param  string  $allowedTags
+     * @return static
+     */
+    public function stripTags($allowedTags = null)
+    {
+        return new static(\strip_tags($this->value, $allowedTags));
     }
     /**
      * Convert the given string to upper-case.
@@ -700,7 +711,7 @@ class Stringable implements \JsonSerializable
     /**
      * Dump the string and end the script.
      *
-     * @return void
+     * @return never
      */
     public function dd()
     {
@@ -712,6 +723,7 @@ class Stringable implements \JsonSerializable
      *
      * @return string
      */
+
     public function jsonSerialize()
     {
         return $this->__toString();

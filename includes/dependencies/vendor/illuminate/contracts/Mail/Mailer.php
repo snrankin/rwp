@@ -2,20 +2,19 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Mail;
 
-interface Mailer
-{
+interface Mailer {
     /**
      * Begin the process of mailing a mailable class instance.
      *
      * @param  mixed  $users
-     * @return PendingMail
+     * @returnPendingMail
      */
     public function to($users);
     /**
      * Begin the process of mailing a mailable class instance.
      *
      * @param  mixed  $users
-     * @return PendingMail
+     * @returnPendingMail
      */
     public function bcc($users);
     /**
@@ -29,7 +28,7 @@ interface Mailer
     /**
      * Send a new message using a view.
      *
-     * @param  Mailable|string|array  $view
+     * @param Mailable|string|array  $view
      * @param  array  $data
      * @param  \Closure|string|null  $callback
      * @return void

@@ -8,29 +8,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\LogicException;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
 use RWP\Vendor\Symfony\Component\Translation\Util\ArrayConverter;
 use RWP\Vendor\Symfony\Component\Yaml\Yaml;
+
 /**
  * YamlFileDumper generates yaml files from a message catalogue.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-class YamlFileDumper extends FileDumper
-{
+class YamlFileDumper extends FileDumper {
     private $extension;
-    public function __construct(string $extension = 'yml')
-    {
+    public function __construct(string $extension = 'yml') {
         $this->extension = $extension;
     }
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         if (!\class_exists(Yaml::class)) {
             throw new LogicException('Dumping translations in the YAML format requires the Symfony Yaml component.');
         }
@@ -46,8 +45,7 @@ class YamlFileDumper extends FileDumper
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return $this->extension;
     }
 }

@@ -10,17 +10,15 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void push($key, $value)
  * @method static void set($key, $value = null)
  *
- * @see Repository
+ * @seeRepository
  */
-class Config extends Facade
-{
+class Config extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'config';
     }
 }

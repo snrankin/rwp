@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Formatter;
 
 use RWP\Vendor\Symfony\Component\Translation\IdentityTranslator;
@@ -17,24 +18,21 @@ use RWP\Vendor\Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
-class MessageFormatter implements MessageFormatterInterface, IntlFormatterInterface
-{
+class MessageFormatter implements MessageFormatterInterface, IntlFormatterInterface {
     private $translator;
     private $intlFormatter;
     /**
      * @param TranslatorInterface|null $translator An identity translator to use as selector for pluralization
      */
-    public function __construct(TranslatorInterface $translator = null, IntlFormatterInterface $intlFormatter = null)
-    {
+    public function __construct(Contracts\Translation\TranslatorInterface $translator = null, IntlFormatterInterface $intlFormatter = null) {
         $this->translator = $translator ?? new IdentityTranslator();
         $this->intlFormatter = $intlFormatter ?? new IntlFormatter();
     }
     /**
      * {@inheritdoc}
      */
-    public function format(string $message, string $locale, array $parameters = [])
-    {
-        if ($this->translator instanceof TranslatorInterface) {
+    public function format(string $message, string $locale, array $parameters = []) {
+        if ($this->translator instanceof Contracts\Translation\TranslatorInterface) {
             return $this->translator->trans($message, $parameters, null, $locale);
         }
         return \strtr($message, $parameters);
@@ -42,8 +40,7 @@ class MessageFormatter implements MessageFormatterInterface, IntlFormatterInterf
     /**
      * {@inheritdoc}
      */
-    public function formatIntl(string $message, string $locale, array $parameters = []) : string
-    {
+    public function formatIntl(string $message, string $locale, array $parameters = []): string {
         return $this->intlFormatter->formatIntl($message, $locale, $parameters);
     }
 }

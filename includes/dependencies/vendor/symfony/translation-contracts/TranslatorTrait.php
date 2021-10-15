@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Contracts\Translation;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
+
 /**
  * A trait to help implement TranslatorInterface and LocaleAwareInterface.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-trait TranslatorTrait
-{
+trait TranslatorTrait {
     private $locale;
     /**
      * {@inheritdoc}
      */
-    public function setLocale(string $locale)
-    {
+    public function setLocale(string $locale) {
         $this->locale = $locale;
     }
     /**
@@ -31,15 +31,13 @@ trait TranslatorTrait
      *
      * @return string
      */
-    public function getLocale()
-    {
+    public function getLocale() {
         return $this->locale ?: (\class_exists(\Locale::class) ? \Locale::getDefault() : 'en');
     }
     /**
      * {@inheritdoc}
      */
-    public function trans(?string $id, array $parameters = [], string $domain = null, string $locale = null) : string
-    {
+    public function trans(?string $id, array $parameters = [], string $domain = null, string $locale = null): string {
         if (null === $id || '' === $id) {
             return '';
         }
@@ -117,8 +115,7 @@ EOF;
      * which is subject to the new BSD license (http://framework.zend.com/license/new-bsd).
      * Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
      */
-    private function getPluralizationRule(float $number, string $locale) : int
-    {
+    private function getPluralizationRule(float $number, string $locale): int {
         $number = \abs($number);
         switch ('pt_BR' !== $locale && \strlen($locale) > 3 ? \substr($locale, 0, \strrpos($locale, '_')) : $locale) {
             case 'af':

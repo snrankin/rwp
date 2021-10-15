@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class AsgardInstaller extends \Composer\Installers\BaseInstaller {
+class AsgardInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'Modules/{$name}/', 'theme' => 'Themes/{$name}/');
     /**
      * Format package name.
@@ -12,7 +13,8 @@ class AsgardInstaller extends \Composer\Installers\BaseInstaller {
      * For package type asgard-theme, cut off a trailing '-theme' if present.
      *
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'asgard-module') {
             return $this->inflectPluginVars($vars);
         }
@@ -21,13 +23,15 @@ class AsgardInstaller extends \Composer\Installers\BaseInstaller {
         }
         return $vars;
     }
-    protected function inflectPluginVars($vars) {
+    protected function inflectPluginVars($vars)
+    {
         $vars['name'] = \preg_replace('/-module$/', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));
         return $vars;
     }
-    protected function inflectThemeVars($vars) {
+    protected function inflectThemeVars($vars)
+    {
         $vars['name'] = \preg_replace('/-theme$/', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));

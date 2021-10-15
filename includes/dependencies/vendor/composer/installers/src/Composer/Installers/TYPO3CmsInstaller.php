@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  * Extension installer for TYPO3 CMS
@@ -9,6 +9,7 @@ namespace Composer\Installers;
  *
  * @author Sascha Egerer <sascha.egerer@dkd.de>
  */
-class TYPO3CmsInstaller extends \Composer\Installers\BaseInstaller {
+class TYPO3CmsInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('extension' => 'typo3conf/ext/{$name}/');
 }

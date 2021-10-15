@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Foundation;
 
 use RWP\Vendor\Illuminate\Contracts\Container\Container;
-interface Application extends Container
-{
+
+interface Application extends Container {
     /**
      * Get the version number of the application.
      *
@@ -21,21 +21,21 @@ interface Application extends Container
     /**
      * Get the path to the bootstrap directory.
      *
-     * @param  string  $path Optionally, a path to append to the bootstrap path
+     * @param  string  $path
      * @return string
      */
     public function bootstrapPath($path = '');
     /**
      * Get the path to the application configuration files.
      *
-     * @param  string  $path Optionally, a path to append to the config path
+     * @param  string  $path
      * @return string
      */
     public function configPath($path = '');
     /**
      * Get the path to the database directory.
      *
-     * @param  string  $path Optionally, a path to append to the database path
+     * @param  string  $path
      * @return string
      */
     public function databasePath($path = '');
@@ -86,9 +86,9 @@ interface Application extends Container
     /**
      * Register a service provider with the application.
      *
-     * @param  ServiceProvider|string  $provider
+     * @param ServiceProvider|string  $provider
      * @param  bool  $force
-     * @return ServiceProvider
+     * @returnServiceProvider
      */
     public function register($provider, $force = \false);
     /**
@@ -103,7 +103,7 @@ interface Application extends Container
      * Resolve a service provider instance from the class name.
      *
      * @param  string  $provider
-     * @return ServiceProvider
+     * @returnServiceProvider
      */
     public function resolveProvider($provider);
     /**
@@ -150,7 +150,7 @@ interface Application extends Container
     /**
      * Get the registered service provider instances if any exist.
      *
-     * @param  ServiceProvider|string  $provider
+     * @param ServiceProvider|string  $provider
      * @return array
      */
     public function getProviders($provider);

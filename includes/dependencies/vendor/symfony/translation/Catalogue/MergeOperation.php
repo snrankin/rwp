@@ -8,9 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Catalogue;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
+
 /**
  * Merge operation between two catalogues as follows:
  * all = source ∪ target = {x: x ∈ source ∨ x ∈ target}
@@ -20,13 +22,11 @@ use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
-class MergeOperation extends AbstractOperation
-{
+class MergeOperation extends AbstractOperation {
     /**
      * {@inheritdoc}
      */
-    protected function processDomain(string $domain)
-    {
+    protected function processDomain(string $domain) {
         $this->messages[$domain] = ['all' => [], 'new' => [], 'obsolete' => []];
         $intlDomain = $domain . MessageCatalogueInterface::INTL_DOMAIN_SUFFIX;
         foreach ($this->source->all($domain) as $id => $message) {

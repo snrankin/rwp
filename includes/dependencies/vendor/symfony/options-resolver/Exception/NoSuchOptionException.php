@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\OptionsResolver\Exception;
 
 /**
@@ -20,6 +21,5 @@ namespace RWP\Vendor\Symfony\Component\OptionsResolver\Exception;
  *
  * @author Tobias Schultze <http://tobion.de>
  */
-class NoSuchOptionException extends \OutOfBoundsException implements ExceptionInterface
-{
+class NoSuchOptionException extends \OutOfBoundsException implements ExceptionInterface {
 }

@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * QtFileDumper generates ts files from a message catalogue.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
-class QtFileDumper extends FileDumper
-{
+class QtFileDumper extends FileDumper {
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->formatOutput = \true;
         $ts = $dom->appendChild($dom->createElement('TS'));
@@ -49,8 +49,7 @@ class QtFileDumper extends FileDumper
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return 'ts';
     }
 }

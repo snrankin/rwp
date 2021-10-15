@@ -15,8 +15,36 @@ html {
 .gform_wrapper.gravity-theme form .gform_footer {
   margin-top: var(--rwp-form-gutter-y);
 }
+.gform_wrapper.gravity-theme form.form-inline {
+  --bs-gutter-x: 24px;
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -0.5);
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
+}
 .gform_wrapper.gravity-theme form.form-inline .gform_body {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y);
+  flex: 0 0 auto;
+  width: auto;
   flex-grow: 1;
+}
+.gform_wrapper.gravity-theme form.form-inline .gform_footer {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y);
+  flex: 0 0 auto;
+  width: auto;
 }
 .gform_wrapper.gravity-theme .btn.submitting .btn-icon.has-spinner {
   display: inline-block;
@@ -25,7 +53,7 @@ html {
   display: none;
 }
 
-form .row, form .gform_wrapper.gravity-theme form.form-inline, .gform_wrapper.gravity-theme form form.form-inline {
+form .row {
   --bs-gutter-x: var(--rwp-form-gutter-x);
   --bs-gutter-y: var(--rwp-form-gutter-y);
 }

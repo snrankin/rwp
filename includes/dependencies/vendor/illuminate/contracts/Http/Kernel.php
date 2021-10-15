@@ -12,22 +12,22 @@ interface Kernel {
     /**
      * Handle an incoming HTTP request.
      *
-     * @param   Request  $request
-     * @return  Response
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Request  $request
+     * @return \RWP\Vendor\Symfony\HttpFoundation\Response
      */
     public function handle($request);
     /**
      * Perform any final actions for the request lifecycle.
      *
-     * @param   Request  $request
-     * @param   Response  $response
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Request  $request
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Response  $response
      * @return void
      */
     public function terminate($request, $response);
     /**
      * Get the Laravel application instance.
      *
-     * @return Application
+     * @returnApplication
      */
     public function getApplication();
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class TastyIgniterInstaller extends \Composer\Installers\BaseInstaller {
+class TastyIgniterInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('extension' => 'extensions/{$vendor}/{$name}/', 'theme' => 'themes/{$name}/');
     /**
      * Format package name.
@@ -11,7 +12,8 @@ class TastyIgniterInstaller extends \Composer\Installers\BaseInstaller {
      * Strip vendor name of characters that is not alphanumeric or an underscore
      *
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'tastyigniter-extension') {
             $vars['vendor'] = \preg_replace('/[^a-z0-9_]/i', '', $vars['vendor']);
             $vars['name'] = \preg_replace('/^ti-ext-/', '', $vars['name']);

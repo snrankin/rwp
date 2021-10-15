@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Queue;
 
-interface Factory
-{
+interface Factory {
     /**
      * Resolve a queue connection instance.
      *
      * @param  string|null  $name
-     * @return Queue
+     * @returnQueue
      */
     public function connection($name = null);
 }

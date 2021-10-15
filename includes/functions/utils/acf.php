@@ -1,13 +1,11 @@
 <?php
 
-/**
- * ============================================================================
+/** ============================================================================
  * RWP acf
  *
  * @package RWP\/includes/functions/utils/acf.php
  * @since   0.1.0
- * ==========================================================================
- */
+ * ========================================================================== */
 
 
 /**
@@ -75,5 +73,16 @@ function rwp_get_fields( $post = null ) {
 function rwp_get_field( $field, $post = null, $default = null ) {
      $fields = rwp_get_fields( $post );
 
-    return data_get( $fields, $field, $default );
+	return data_get( $fields, $field, $default );
+}
+
+/**
+ * Get star rating html
+ *
+ * @return string
+ */
+function rwp_get_star_rating( $post = null ) {
+	$post_id = rwp_id( $post, 'acf' );
+	$field = get_field_object( 'rating', $post_id );
+	return \StarRatingField::output_stars( $field );
 }

@@ -5,6 +5,7 @@ namespace RWP\Vendor\Illuminate\Support;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
+use ReflectionUnionType;
 class Reflector
 {
     /**
@@ -53,6 +54,38 @@ class Reflector
         if (!$type instanceof \ReflectionNamedType || $type->isBuiltin()) {
             return;
         }
+        return static::getTypeName($parameter, $type);
+    }
+    /**
+     * Get the class names of the given parameter's type, including union types.
+     *
+     * @param  \ReflectionParameter  $parameter
+     * @return array
+     */
+    public static function getParameterClassNames($parameter)
+    {
+        $type = $parameter->getType();
+        if (!$type instanceof \ReflectionUnionType) {
+            return \array_filter([static::getParameterClassName($parameter)]);
+        }
+        $unionTypes = [];
+        foreach ($type->getTypes() as $listedType) {
+            if (!$listedType instanceof \ReflectionNamedType || $listedType->isBuiltin()) {
+                continue;
+            }
+            $unionTypes[] = static::getTypeName($parameter, $listedType);
+        }
+        return \array_filter($unionTypes);
+    }
+    /**
+     * Get the given type's class name.
+     *
+     * @param  \ReflectionParameter  $parameter
+     * @param  \ReflectionNamedType  $type
+     * @return string
+     */
+    protected static function getTypeName($parameter, $type)
+    {
         $name = $type->getName();
         if (!\is_null($class = $parameter->getDeclaringClass())) {
             if ($name === 'self') {

@@ -4,8 +4,8 @@ namespace RWP\Vendor\Illuminate\Support\Traits;
 
 use RWP\Vendor\Illuminate\Contracts\Container\Container;
 use RWP\Vendor\Illuminate\Support\Fluent;
-trait CapsuleManagerTrait
-{
+
+trait CapsuleManagerTrait {
     /**
      * The current globally used instance.
      *
@@ -15,17 +15,16 @@ trait CapsuleManagerTrait
     /**
      * The container instance.
      *
-     * @var Container
+     * @varContainer
      */
     protected $container;
     /**
      * Setup the IoC container instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
-    protected function setupContainer(Container $container)
-    {
+    protected function setupContainer(Container $container) {
         $this->container = $container;
         if (!$this->container->bound('config')) {
             $this->container->instance('config', new Fluent());
@@ -36,27 +35,24 @@ trait CapsuleManagerTrait
      *
      * @return void
      */
-    public function setAsGlobal()
-    {
+    public function setAsGlobal() {
         static::$instance = $this;
     }
     /**
      * Get the IoC container instance.
      *
-     * @return Container
+     * @returnContainer
      */
-    public function getContainer()
-    {
+    public function getContainer() {
         return $this->container;
     }
     /**
      * Set the IoC container instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
-    public function setContainer(Container $container)
-    {
+    public function setContainer(Container $container) {
         $this->container = $container;
     }
 }

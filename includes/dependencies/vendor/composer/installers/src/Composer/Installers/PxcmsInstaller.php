@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class PxcmsInstaller extends \Composer\Installers\BaseInstaller {
+class PxcmsInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'app/Modules/{$name}/', 'theme' => 'themes/{$name}/');
     /**
      * Format package name.
@@ -11,7 +12,8 @@ class PxcmsInstaller extends \Composer\Installers\BaseInstaller {
      *
      * @return array
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] === 'pxcms-module') {
             return $this->inflectModuleVars($vars);
         }
@@ -25,7 +27,8 @@ class PxcmsInstaller extends \Composer\Installers\BaseInstaller {
      *
      * return string
      */
-    protected function inflectModuleVars($vars) {
+    protected function inflectModuleVars($vars)
+    {
         $vars['name'] = \str_replace('pxcms-', '', $vars['name']);
         // strip out pxcms- just incase (legacy)
         $vars['name'] = \str_replace('module-', '', $vars['name']);
@@ -43,7 +46,8 @@ class PxcmsInstaller extends \Composer\Installers\BaseInstaller {
      *
      * return string
      */
-    protected function inflectThemeVars($vars) {
+    protected function inflectThemeVars($vars)
+    {
         $vars['name'] = \str_replace('pxcms-', '', $vars['name']);
         // strip out pxcms- just incase (legacy)
         $vars['name'] = \str_replace('theme-', '', $vars['name']);

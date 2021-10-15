@@ -4,7 +4,6 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Laravel\Ui\UiServiceProvider;
 use RuntimeException;
-
 /**
  * @method static AuthManager extend(string $driver, \Closure $callback)
  * @method static AuthManager provider(string $name, \Closure $callback)
@@ -12,7 +11,7 @@ use RuntimeException;
  * @method static Authenticatable|null user()
  * @method static Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
  * @method static UserProvider|null createUserProvider(string $provider = null)
- * @method static  Response|null onceBasic(string $field = 'email',array $extraConditions = [])
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\Response|null onceBasic(string $field = 'email',array $extraConditions = [])
  * @method static bool attempt(array $credentials = [], bool $remember = false)
  * @method static bool check()
  * @method static bool guest()
@@ -33,13 +32,15 @@ use RuntimeException;
  * @see Guard
  * @see StatefulGuard
  */
-class Auth extends Facade {
+class Auth extends Facade
+{
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'auth';
     }
     /**
@@ -50,7 +51,8 @@ class Auth extends Facade {
      *
      * @throws \RuntimeException
      */
-    public static function routes(array $options = []) {
+    public static function routes(array $options = [])
+    {
         if (!static::$app->providerIsLoaded(UiServiceProvider::class)) {
             throw new \RuntimeException('In order to use the Auth::routes() method, please install the laravel/ui package.');
         }

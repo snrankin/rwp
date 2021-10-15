@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Extractor;
 
 use RWP\Vendor\Symfony\Component\Finder\Finder;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * PhpExtractor extracts translation messages from a PHP template.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
-{
+class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface {
     public const MESSAGE_TOKEN = 300;
     public const METHOD_ARGUMENTS_TOKEN = 1000;
     public const DOMAIN_TOKEN = 1001;
@@ -37,8 +38,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function extract($resource, MessageCatalogue $catalog)
-    {
+    public function extract($resource, MessageCatalogue $catalog) {
         $files = $this->extractFiles($resource);
         foreach ($files as $file) {
             $this->parseTokens(\token_get_all(\file_get_contents($file)), $catalog, $file);
@@ -48,8 +48,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function setPrefix(string $prefix)
-    {
+    public function setPrefix(string $prefix) {
         $this->prefix = $prefix;
     }
     /**
@@ -59,8 +58,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
      *
      * @return string|null
      */
-    protected function normalizeToken($token)
-    {
+    protected function normalizeToken($token) {
         if (isset($token[1]) && 'b"' !== $token) {
             return $token[1];
         }
@@ -69,8 +67,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     /**
      * Seeks to a non-whitespace token.
      */
-    private function seekToNextRelevantToken(\Iterator $tokenIterator)
-    {
+    private function seekToNextRelevantToken(\Iterator $tokenIterator) {
         for (; $tokenIterator->valid(); $tokenIterator->next()) {
             $t = $tokenIterator->current();
             if (\T_WHITESPACE !== $t[0]) {
@@ -78,8 +75,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
             }
         }
     }
-    private function skipMethodArgument(\Iterator $tokenIterator)
-    {
+    private function skipMethodArgument(\Iterator $tokenIterator) {
         $openBraces = 0;
         for (; $tokenIterator->valid(); $tokenIterator->next()) {
             $t = $tokenIterator->current();
@@ -98,8 +94,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
      * Extracts the message from the iterator while the tokens
      * match allowed message tokens.
      */
-    private function getValue(\Iterator $tokenIterator)
-    {
+    private function getValue(\Iterator $tokenIterator) {
         $message = '';
         $docToken = '';
         $docPart = '';
@@ -151,8 +146,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     /**
      * Extracts trans message from PHP tokens.
      */
-    protected function parseTokens(array $tokens, MessageCatalogue $catalog, string $filename)
-    {
+    protected function parseTokens(array $tokens, MessageCatalogue $catalog, string $filename) {
         $tokenIterator = new \ArrayIterator($tokens);
         for ($key = 0; $key < $tokenIterator->count(); ++$key) {
             foreach ($this->sequences as $sequence) {
@@ -197,15 +191,13 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
      *
      * @throws \InvalidArgumentException
      */
-    protected function canBeExtracted(string $file)
-    {
+    protected function canBeExtracted(string $file) {
         return $this->isFile($file) && 'php' === \pathinfo($file, \PATHINFO_EXTENSION);
     }
     /**
      * {@inheritdoc}
      */
-    protected function extractFromDirectory($directory)
-    {
+    protected function extractFromDirectory($directory) {
         $finder = new Finder();
         return $finder->files()->name('*.php')->in($directory);
     }
