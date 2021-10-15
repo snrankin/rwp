@@ -11,7 +11,8 @@
 
 
 use \RWP\Vendor\Illuminate\Support\Collection;
-
+use RWP\Internals\PostTypes;
+use RWP\Internals\Taxonomies;
 /**
  * Is item a blog post
  *
@@ -94,50 +95,7 @@ function rwp_is_cpt( $post = null ) {
  */
 function rwp_cpt_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 
-    $singular = rwp_singulizer( $singular );
-
-    if ( empty( $plural ) ) {
-        $plural = rwp_pluralizer( $singular );
-    }
-
-    $lower_singular = rwp_change_case( $singular, 'lower' );
-    $lower_plural   = rwp_change_case( $plural, 'lower' );
-
-    $title_singular = rwp_change_case( $singular, 'title' );
-    $title_plural   = rwp_change_case( $plural, 'title' );
-
-    $menu = ! empty( $menu ) ? $menu : $title_plural;
-    $slug = ! empty( $slug ) ? $slug : rwp_change_case( $lower_plural, 'slug' );
-
-    return array(
-		'names'     => array(
-			'singular' => $title_singular,
-			'plural'   => $title_plural,
-			'slug'     => $slug,
-		),
-		'labels' => array(
-			'name'                  => $title_plural,
-			'singular_name'         => $title_singular,
-			'menu_name'             => $menu,
-			'name_admin_bar'        => $title_singular,
-			'archives'              => "$title_singular Archives",
-			'attributes'            => "$title_singular  Attributes",
-			'parent_item_colon'     => "Parent $title_singular:",
-			'all_items'             => "All $title_plural",
-			'add_new_item'          => "Add New $title_singular",
-			'new_item'              => "New $title_singular",
-			'edit_item'             => "Edit $title_singular",
-			'update_item'           => "Update $title_singular",
-			'view_item'             => "View $title_singular",
-			'view_items'            => "View $title_plural",
-			'search_items'          => "Search $title_plural",
-			'insert_into_item'      => "Insert into $lower_singular",
-			'uploaded_to_this_item' => "Uploaded to this $lower_singular",
-			'items_list'            => "$title_plural list",
-			'items_list_navigation' => "$title_plural list navigation",
-			'filter_items_list'     => "Filter $lower_singular list",
-		),
-    );
+    return PostTypes::labels( $singular, $plural, $menu, $slug );
 }
 
 /**
@@ -154,45 +112,7 @@ function rwp_cpt_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
  */
 function rwp_tax_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 
-    $singular = rwp_singulizer( $singular );
-
-    if ( empty( $plural ) ) {
-        $plural = rwp_pluralizer( $singular );
-    }
-
-    $lower_plural   = rwp_change_case( $plural, 'lower' );
-
-    $title_singular = rwp_change_case( $singular, 'title' );
-    $title_plural   = rwp_change_case( $plural, 'title' );
-
-    $menu = ! empty( $menu ) ? $menu : $title_plural;
-    $slug = ! empty( $slug ) ? $slug : rwp_change_case( $lower_plural, 'slug' );
-
-    return array(
-		'singular' => $title_singular,
-		'plural'   => $title_plural,
-		'slug'     => $slug,
-		'labels' => array(
-			'name'                       => $title_plural,
-			'singular_name'              => $title_singular,
-			'menu_name'                  => $menu,
-			'all_items'                  => 'All ' . $title_plural,
-			'parent_item'                => 'Parent ' . $title_plural,
-			'parent_item_colon'          => 'Parent ' . $title_singular . ':',
-			'new_item_name'              => 'New ' . $title_singular . ' Name',
-			'add_new_item'               => 'Add New ' . $title_plural,
-			'edit_item'                  => 'Edit ' . $title_plural,
-			'update_item'                => 'Update ' . $title_plural,
-			'view_item'                  => 'View ' . $title_plural,
-			'separate_items_with_commas' => 'Separate ' . $lower_plural . ' with commas',
-			'add_or_remove_items'        => 'Add or remove ' . $lower_plural,
-			'popular_items'              => 'Popular ' . $title_plural,
-			'search_items'               => 'Search ' . $title_plural,
-			'no_terms'                   => 'No ' . $title_plural,
-			'items_list'                 => $title_plural . ' list',
-			'items_list_navigation'      => $title_plural . ' list navigation',
-		),
-    );
+    return Taxonomies::labels( $singular, $plural, $menu, $slug );
 }
 
 /**
