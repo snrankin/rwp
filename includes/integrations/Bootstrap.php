@@ -30,6 +30,7 @@ class Bootstrap extends Singleton {
 
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
+			$this->bootstrap_in_tinymce();
 		}
 
 		if ( rwp_get_option( 'modules.bootstrap.gutenberg', false ) ) {
@@ -56,16 +57,60 @@ class Bootstrap extends Singleton {
 		}
 	}
 
+	public function bootstrap_in_tinymce() {
+		/**
+		 * Enabling styleselect
+		 *
+		 * Before any registered formats/styles will show, we need to activate the
+		 * styleselect pulldown menu in the Visual editor. We do this by filtering the
+		 * array of buttons loaded by TinyMCE. We use the mce_buttons_2 filter because
+		 * that is the second row and it looks good there.
+		 *
+		 * @return array $buttons
+		 */
 
-	 /**
-	  * Get colors/breakpoints from Bootstrap
-	  * @param string $group
-	  * @param string $class_prefix
-	  * @param string $class_suffix
-	  * @param string $label_prefix
-	  * @param string $label_suffix
-	  * @return mixed
-	  */
+		add_filter( 'mce_buttons_2', function ( $buttons ) {
+			array_unshift( $buttons, 'styleselect' );
+			return $buttons;
+		});
+
+		/**
+		 *  Registering Custom Styles
+		 *
+		 * Once styleselect is in place we can register our actual styles in two
+		 * different ways. Both involve using the tiny_mce_before_init filter, which
+		 * receives the full configuration parameters of TinyMCE and into which we'll
+		 * inject our custom styles.
+		 *
+		 * @param array $styles
+		 *
+		 * @return array $init_array
+		 */
+
+		// Callback function to insert 'styleselect' into the $buttons array
+
+		$tinymce_styles = rwp()->get_setting( 'tinymce.editor' );
+
+		add_filter( 'tiny_mce_before_init', function ( $init_array ) use ( $tinymce_styles ) {
+
+			$styles = wp_json_encode( $tinymce_styles );
+
+			$init_array['style_formats'] = $styles;
+
+			return $init_array;
+		});
+	}
+
+
+	/**
+	 * Get colors/breakpoints from Bootstrap
+	 * @param string $group
+	 * @param string $class_prefix
+	 * @param string $class_suffix
+	 * @param string $label_prefix
+	 * @param string $label_suffix
+	 * @return mixed
+	 */
 	public static function bs_atts( $group = '', $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
 
 		$colors = rwp_collection(array(
@@ -194,6 +239,4 @@ class Bootstrap extends Singleton {
 		}
 		return $block_content;
 	}
-
-
 }

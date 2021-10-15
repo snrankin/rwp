@@ -162,3 +162,5 @@ if ( ! wp_installing() ) {
 		}
 	);
 }
+
+rwp_log(rwp_registered_image_sizes());

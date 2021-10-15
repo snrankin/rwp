@@ -12,7 +12,8 @@
 namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Internals\Bootstrap;
+use RWP\Integrations\Bootstrap;
+
 class ACF extends Singleton {
 
 	/**
@@ -27,6 +28,8 @@ class ACF extends Singleton {
 		}
 
 		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
+		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
+		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
 
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 

@@ -36,6 +36,7 @@ class GravityForms extends Singleton {
 
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
 
 		rwp_add_filters(array(
 			'gform_preview_styles',
@@ -355,7 +356,7 @@ class GravityForms extends Singleton {
 
 		$is_error = $field->failed_validation;
 
-		$css_class = $field->cssClass; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$css_class = rwp_parse_classes( data_get( $field, 'cssClass', '' ) );
 
 		$size = $field->size;
 		$select2_size = "select2--$size";
@@ -364,7 +365,9 @@ class GravityForms extends Singleton {
 
 		$form = GFAPI::get_form( $form_id );
 
-		if ( rwp_string_has( $css_class, 'use-select2' ) ) {
+		$form_class = rwp_parse_classes( data_get( $form, 'cssClass', '' ) );
+
+		if ( in_array( 'use-select2', $css_class ) ) {
 
 			$input_id = $field_input->filter( 'select' )->getAttribute( 'id' );
 			$field_input->filter( '#' . $input_id )->addClass( 'select2' )->setAttribute( 'data-dropdown-parent', '#' . $input_id . '_container' )->setAttribute( 'data-theme', 'bootstrap-5' )->setAttribute( 'data-selection-css-class', $select2_size )->setAttribute( 'data-dropdown-css-class', $select2_size );
@@ -396,7 +399,7 @@ class GravityForms extends Singleton {
 
 		$field_input->filter( '.gfield_label' )->addClass( 'form-label' );
 
-		if ( rwp_string_has( $css_class, 'medium' ) ) {
+		if ( in_array( 'medium', $css_class ) ) {
 			$field->size = 'medium';
 		}
 
@@ -413,10 +416,14 @@ class GravityForms extends Singleton {
 
 			default:
 				$field_input->filter( '.medium' )->removeClass( 'medium' );
+				$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control' );
+				$field_input->filter( '.form-control-sm' )->removeClass( 'form-control-sm' )->addClass( 'form-control' );
+				$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control' );
+				$field_input->filter( '.form-control-lg' )->removeClass( 'form-control-lg' )->addClass( 'form-control' );
 				break;
 		}
 
-		if ( rwp_string_has( $css_class, 'medium' ) ) {
+		if ( in_array( 'medium', $css_class ) ) {
 			$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control' );
 			$field_input->filter( '.form-control-sm' )->removeClass( 'form-control-sm' )->addClass( 'form-control' );
 			$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control' );
@@ -497,37 +504,14 @@ class GravityForms extends Singleton {
 			case 'date':
 				$field_input->filter( '.datepicker' )->addClass( 'form-control' );
 				break;
-			case 'html':
-				if ( rwp_string_has( $css_class, 'inline-submit' ) && 'text' === $form['buttonType'] ) {
-					$js = 'document.getElementById( "gform_submit_button_' . $form_id . '" ).click();';
-					if ( ! empty( $field_content ) ) {
-						$button = rwp_button( $field_content );
-						$button->text->set_content( $form['buttonText'], 0 );
-						$button->set_attr( 'onclick', $js );
-					} else {
-						$button = rwp_button(array(
-							'text' => array(
-								'content' => $form['buttonText'],
-							),
-							'atts' => array(
-								'onclick' => $js,
-							),
-						));
-					}
-
-					$button = apply_filters( 'rwp_gravity_form_button', $button, $form );
-
-					$field_input = rwp_html( '<div class="ginput_container ginput_submit">' . $button . '</div><style type="text/css">#gform_wrapper_' . $form_id . ' .gform_footer { visibility: hidden; position: absolute; left: -100vw; }</style>' );
-				}
-
-				break;
 			case 'list':
 				$field_input->filter( '.gfield_list_group' )->addClass( 'input-group' );
 
 				$button_classes = 'btn btn-primary';
 				$button_classes = apply_filters( 'rwp_gravity_forms_list_button_classes', $button_classes, $form );
 
-				$field_input->filter( 'button' )->addClass( $button_classes )->wrapInner( '<span class="btn-text screen-reader-text">' )->append( '<span class="btn-icon"><i aria-hidden="true" role="presentation"></i></span>' );
+				$field_input->filter( 'button' )->addClass( $button_classes )->wrapInner( '<span class="btn-text screen-reader-text">' );
+				$field_input->filter( 'button' )->append( '<span class="btn-icon"><i aria-hidden="true" role="presentation"></i></span>' );
 				$field_input->filter( '.gfield_list_cell' )->addClass( 'form-control flex-fill' );
 
 				$add_item_icon_classes = '';
@@ -555,6 +539,14 @@ class GravityForms extends Singleton {
 			$field_input->filter( 'input' )->addClass( 'is-invalid' );
 		}
 
+		if ( in_array( 'form-floating', $form_class, true ) || in_array( 'form-floating', $css_class, true ) ) {
+			$label = $field_input->filter( 'label' )->makeClone();
+			$label = $label->getNode( 0 );
+			$field_input = $field_input->removeElementByTag( 'label' );
+
+			$field_input->filter( '.ginput_container' )->addClass( 'form-floating' )->append( $label );
+		}
+
 		$field_input = $field_input->saveHTML();
 
 		$field_input = self::gravity_forms_string_filter( $field_input );
@@ -563,5 +555,4 @@ class GravityForms extends Singleton {
 
 		return $field_content;
 	}
-
 }

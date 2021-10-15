@@ -37,14 +37,16 @@ textarea {
 			margin-top: var(--rwp-form-gutter-y);
 		}
 		&.form-inline {
-			@extend .row !optional;
+			@include make-row;
 			.gform_body {
-				@extend .col-auto !optional;
+				@include make-col-ready();
+				@include make-col-auto();
 
 				flex-grow: 1;
 			}
 			.gform_footer {
-				@extend .col-auto !optional;
+				@include make-col-ready();
+				@include make-col-auto();
 			}
 		}
 	}

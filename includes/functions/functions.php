@@ -25,19 +25,6 @@ function rwp( $method = '', ...$args ) {
 	}
 }
 
-/**
- * Creates Notice.
- *
- * @param string $notice_content Notice content.
- * @param string $notice_type Notice type.
- * @param bool $dismissible Dismissible notice.
- * @param int $priority Notice priority,
- *
- * @return RWP\Vendor\WPDesk\Notice\Notice
- */
-function rwp_admin_notice( $notice_content, $notice_type = 'info', $dismissible = false, $priority = 10 ) {
-	return WPDeskWpNotice( $notice_content, $notice_type, $dismissible, $priority );
-}
 
 /**
  * Get the settings of the plugin in a filterable way
