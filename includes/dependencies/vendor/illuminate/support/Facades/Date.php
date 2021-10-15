@@ -3,40 +3,41 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Support\DateFactory;
+
 /**
  * @see https://carbon.nesbot.com/docs/
  * @see https://github.com/briannesbitt/Carbon/blob/master/src/Carbon/Factory.php
  *
  * @method staticCarbon create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromDate($year = null, $month = null, $day = null, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromTime($hour = 0, $minute = 0, $second = 0, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromTimeString($time, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromTimestamp($timestamp, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromTimestampMs($timestamp, $tz = null)
- * @method static \Illuminate\Support\Carbon createFromTimestampUTC($timestamp)
- * @method static \Illuminate\Support\Carbon createMidnightDate($year = null, $month = null, $day = null, $tz = null)
- * @method static \Illuminate\Support\Carbon disableHumanDiffOption($humanDiffOption)
- * @method static \Illuminate\Support\Carbon enableHumanDiffOption($humanDiffOption)
- * @method static \Illuminate\Support\Carbon fromSerialized($value)
- * @method static \Illuminate\Support\Carbon getLastErrors()
- * @method static \Illuminate\Support\Carbon getTestNow()
- * @method static \Illuminate\Support\Carbon instance($date)
- * @method static \Illuminate\Support\Carbon isMutable()
- * @method static \Illuminate\Support\Carbon maxValue()
- * @method static \Illuminate\Support\Carbon minValue()
- * @method static \Illuminate\Support\Carbon now($tz = null)
- * @method static \Illuminate\Support\Carbon parse($time = null, $tz = null)
- * @method static \Illuminate\Support\Carbon setHumanDiffOptions($humanDiffOptions)
- * @method static \Illuminate\Support\Carbon setTestNow($testNow = null)
- * @method static \Illuminate\Support\Carbon setUtf8($utf8)
- * @method static \Illuminate\Support\Carbon today($tz = null)
- * @method static \Illuminate\Support\Carbon tomorrow($tz = null)
- * @method static \Illuminate\Support\Carbon useStrictMode($strictModeEnabled = true)
- * @method static \Illuminate\Support\Carbon yesterday($tz = null)
- * @method static \Illuminate\Support\Carbon|false createFromFormat($format, $time, $tz = null)
- * @method static \Illuminate\Support\Carbon|false createSafe($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $tz = null)
- * @method static \Illuminate\Support\Carbon|null make($var)
- * @method static \Symfony\Component\Translation\TranslatorInterface getTranslator()
+ * @method staticCarbon createFromDate($year = null, $month = null, $day = null, $tz = null)
+ * @method staticCarbon createFromTime($hour = 0, $minute = 0, $second = 0, $tz = null)
+ * @method staticCarbon createFromTimeString($time, $tz = null)
+ * @method staticCarbon createFromTimestamp($timestamp, $tz = null)
+ * @method staticCarbon createFromTimestampMs($timestamp, $tz = null)
+ * @method staticCarbon createFromTimestampUTC($timestamp)
+ * @method staticCarbon createMidnightDate($year = null, $month = null, $day = null, $tz = null)
+ * @method staticCarbon disableHumanDiffOption($humanDiffOption)
+ * @method staticCarbon enableHumanDiffOption($humanDiffOption)
+ * @method staticCarbon fromSerialized($value)
+ * @method staticCarbon getLastErrors()
+ * @method staticCarbon getTestNow()
+ * @method staticCarbon instance($date)
+ * @method staticCarbon isMutable()
+ * @method staticCarbon maxValue()
+ * @method staticCarbon minValue()
+ * @method staticCarbon now($tz = null)
+ * @method staticCarbon parse($time = null, $tz = null)
+ * @method staticCarbon setHumanDiffOptions($humanDiffOptions)
+ * @method staticCarbon setTestNow($testNow = null)
+ * @method staticCarbon setUtf8($utf8)
+ * @method staticCarbon today($tz = null)
+ * @method staticCarbon tomorrow($tz = null)
+ * @method staticCarbon useStrictMode($strictModeEnabled = true)
+ * @method staticCarbon yesterday($tz = null)
+ * @method staticCarbon|false createFromFormat($format, $time, $tz = null)
+ * @method staticCarbon|false createSafe($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $tz = null)
+ * @method staticCarbon|null make($var)
+ * @method static \RWP\Vendor\Symfony\Translation\TranslatorInterface getTranslator()
  * @method static array getAvailableLocales()
  * @method static array getDays()
  * @method static array getIsoUnits()
@@ -84,8 +85,7 @@ use RWP\Vendor\Illuminate\Support\DateFactory;
  * @method static void useMonthsOverflow($monthsOverflow = true)
  * @method static void useYearsOverflow($yearsOverflow = true)
  */
-class Date extends Facade
-{
+class Date extends Facade {
     const DEFAULT_FACADE = DateFactory::class;
     /**
      * Get the registered name of the component.
@@ -94,8 +94,7 @@ class Date extends Facade
      *
      * @throws \RuntimeException
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'date';
     }
     /**
@@ -104,8 +103,7 @@ class Date extends Facade
      * @param  string  $name
      * @return mixed
      */
-    protected static function resolveFacadeInstance($name)
-    {
+    protected static function resolveFacadeInstance($name) {
         if (!isset(static::$resolvedInstance[$name]) && !isset(static::$app, static::$app[$name])) {
             $class = static::DEFAULT_FACADE;
             static::swap(new $class());

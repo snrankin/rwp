@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 use RWP\Vendor\Symfony\Component\Config\Resource\FileResource;
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidResourceException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\NotFoundResourceException;
+
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
-abstract class FileLoader extends ArrayLoader
-{
+abstract class FileLoader extends ArrayLoader {
     /**
      * {@inheritdoc}
      */
-    public function load($resource, string $locale, string $domain = 'messages')
-    {
+    public function load($resource, string $locale, string $domain = 'messages') {
         if (!\stream_is_local($resource)) {
             throw new InvalidResourceException(\sprintf('This is not a local file "%s".', $resource));
         }

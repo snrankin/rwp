@@ -84,7 +84,7 @@ class MessageBag implements Jsonable, \JsonSerializable, MessageBag, MessageProv
     /**
      * Merge a new array of messages into the message bag.
      *
-     * @param MessageProvider|array  $messages
+     * @param  MessageProvider|array  $messages
      * @return $this
      */
     public function merge($messages)
@@ -257,7 +257,7 @@ class MessageBag implements Jsonable, \JsonSerializable, MessageBag, MessageProv
     /**
      * Get the messages for the instance.
      *
-     * @returnMessageBag
+     * @return MessageBag
      */
     public function getMessageBag()
     {
@@ -276,7 +276,7 @@ class MessageBag implements Jsonable, \JsonSerializable, MessageBag, MessageProv
      * Set the default message format.
      *
      * @param  string  $format
-     * @returnMessageBag
+     * @return MessageBag
      */
     public function setFormat($format = ':message')
     {

@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Validation;
 
-interface Factory
-{
+interface Factory {
     /**
      * Create a new Validator instance.
      *

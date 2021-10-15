@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Cache;
 
-interface LockProvider
-{
+interface LockProvider {
     /**
      * Get a lock instance.
      *

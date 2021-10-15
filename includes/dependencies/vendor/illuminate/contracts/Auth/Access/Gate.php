@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth\Access;
 
-interface Gate
-{
+interface Gate {
     /**
      * Determine if a given ability has been defined.
      *

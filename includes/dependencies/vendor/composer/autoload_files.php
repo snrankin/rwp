@@ -15,6 +15,7 @@ return array(
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     '72579e7bd17821bb1321b87411366eae' => $vendorDir . '/illuminate/support/helpers.php',
     'a1105708a18b76903365ca1c4aa61b02' => $vendorDir . '/symfony/translation/Resources/functions.php',
+    '677c2998f792fb38ae4a447bdb2064f0' => $baseDir . '/externals/data.php',
     'd3530954feb8a2649963c62af496a5c6' => $vendorDir . '/wordpress/extended-cpts/extended-cpts.php',
     'e293c0a4e40dd0641a1102f9761efa73' => $vendorDir . '/wordpress/wp-cache-remember/wp-cache-remember.php',
     'fb2f3051bc3c8116e8491eac5c5a06e2' => $vendorDir . '/wordpress/wp-custom-bulk-actions/custom-bulk-actions.php',

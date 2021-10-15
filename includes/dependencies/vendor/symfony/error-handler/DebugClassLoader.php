@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler;
 
 use RWP\Vendor\Composer\InstalledVersions;
@@ -19,6 +20,7 @@ use RWP\Vendor\PHPUnit\Framework\MockObject\Matcher\StatelessInvocation;
 use RWP\Vendor\PHPUnit\Framework\MockObject\MockObject;
 use RWP\Vendor\Prophecy\Prophecy\ProphecySubjectInterface;
 use RWP\Vendor\ProxyManager\Proxy\ProxyInterface;
+
 /**
  * Autoloader checking if the class is really defined in the file found.
  *
@@ -47,8 +49,7 @@ use RWP\Vendor\ProxyManager\Proxy\ProxyInterface;
  * @author Nicolas Grekas <p@tchwork.com>
  * @author Guilhem Niot <guilhem.niot@gmail.com>
  */
-class DebugClassLoader
-{
+class DebugClassLoader {
     private const SPECIAL_RETURN_TYPES = ['void' => 'void', 'null' => 'null', 'resource' => 'resource', 'boolean' => 'bool', 'true' => 'bool', 'false' => 'bool', 'integer' => 'int', 'array' => 'array', 'bool' => 'bool', 'callable' => 'callable', 'float' => 'float', 'int' => 'int', 'iterable' => 'iterable', 'object' => 'object', 'string' => 'string', 'self' => 'self', 'parent' => 'parent', 'mixed' => 'mixed'] + (\PHP_VERSION_ID >= 80000 ? ['static' => 'static', '$this' => 'static'] : ['static' => 'object', '$this' => 'object']);
     private const BUILTIN_RETURN_TYPES = ['void' => \true, 'array' => \true, 'bool' => \true, 'callable' => \true, 'float' => \true, 'int' => \true, 'iterable' => \true, 'object' => \true, 'string' => \true, 'self' => \true, 'parent' => \true] + (\PHP_VERSION_ID >= 80000 ? ['mixed' => \true, 'static' => \true] : []);
     private const MAGIC_METHODS = ['__set' => 'void', '__isset' => 'bool', '__unset' => 'void', '__sleep' => 'array', '__wakeup' => 'void', '__toString' => 'string', '__clone' => 'void', '__debugInfo' => 'array', '__serialize' => 'array', '__unserialize' => 'void'];
@@ -70,8 +71,7 @@ class DebugClassLoader
     private static $returnTypes = [];
     private static $methodTraits = [];
     private static $fileOffsets = [];
-    public function __construct(callable $classLoader)
-    {
+    public function __construct(callable $classLoader) {
         $this->classLoader = $classLoader;
         $this->isFinder = \is_array($classLoader) && \method_exists($classLoader[0], 'findFile');
         \parse_str(\getenv('SYMFONY_PATCH_TYPE_DECLARATIONS') ?: '', $this->patchTypes);
@@ -103,18 +103,16 @@ class DebugClassLoader
      *
      * @return callable The wrapped class loader
      */
-    public function getClassLoader() : callable
-    {
+    public function getClassLoader(): callable {
         return $this->classLoader;
     }
     /**
      * Wraps all autoloaders.
      */
-    public static function enable() : void
-    {
+    public static function enable(): void {
         // Ensures we don't hit https://bugs.php.net/42098
         \class_exists(ErrorHandler::class);
-        \class_exists(LogLevel::class);
+        \class_exists(Log\LogLevel::class);
         if (!\is_array($functions = \spl_autoload_functions())) {
             return;
         }
@@ -131,8 +129,7 @@ class DebugClassLoader
     /**
      * Disables the wrapping.
      */
-    public static function disable() : void
-    {
+    public static function disable(): void {
         if (!\is_array($functions = \spl_autoload_functions())) {
             return;
         }
@@ -146,8 +143,7 @@ class DebugClassLoader
             \spl_autoload_register($function);
         }
     }
-    public static function checkClasses() : bool
-    {
+    public static function checkClasses(): bool {
         if (!\is_array($functions = \spl_autoload_functions())) {
             return \false;
         }
@@ -165,7 +161,7 @@ class DebugClassLoader
         foreach ($offsets as $getSymbols => $i) {
             $symbols = $getSymbols();
             for (; $i < \count($symbols); ++$i) {
-                if (!\is_subclass_of($symbols[$i], MockObject::class) && !\is_subclass_of($symbols[$i], ProphecySubjectInterface::class) && !\is_subclass_of($symbols[$i], Proxy::class) && !\is_subclass_of($symbols[$i], ProxyInterface::class) && !\is_subclass_of($symbols[$i], Proxy::class) && !\is_subclass_of($symbols[$i], MockInterface::class) && !\is_subclass_of($symbols[$i], IMock::class)) {
+                if (!\is_subclass_of($symbols[$i], Framework\MockObject\MockObject::class) && !\is_subclass_of($symbols[$i], Prophecy\ProphecySubjectInterface::class) && !\is_subclass_of($symbols[$i], Persistence\Proxy::class) && !\is_subclass_of($symbols[$i], Proxy\ProxyInterface::class) && !\is_subclass_of($symbols[$i], Common\Persistence\Proxy::class) && !\is_subclass_of($symbols[$i], MockInterface::class) && !\is_subclass_of($symbols[$i], IMock::class)) {
                     $loader->checkClass($symbols[$i]);
                 }
             }
@@ -173,8 +169,7 @@ class DebugClassLoader
         }
         return \true;
     }
-    public function findFile(string $class) : ?string
-    {
+    public function findFile(string $class): ?string {
         return $this->isFinder ? $this->classLoader[0]->findFile($class) ?: null : null;
     }
     /**
@@ -182,8 +177,7 @@ class DebugClassLoader
      *
      * @throws \RuntimeException
      */
-    public function loadClass(string $class) : void
-    {
+    public function loadClass(string $class): void {
         $e = \error_reporting(\error_reporting() | \E_PARSE | \E_ERROR | \E_CORE_ERROR | \E_COMPILE_ERROR);
         try {
             if ($this->isFinder && !isset($this->loaded[$class])) {
@@ -205,8 +199,7 @@ class DebugClassLoader
         }
         $this->checkClass($class, $file);
     }
-    private function checkClass(string $class, string $file = null) : void
-    {
+    private function checkClass(string $class, string $file = null): void {
         $exists = null === $file || \class_exists($class, \false) || \interface_exists($class, \false) || \trait_exists($class, \false);
         if (null !== $file && $class && '\\' === $class[0]) {
             $class = \substr($class, 1);
@@ -242,8 +235,7 @@ class DebugClassLoader
             throw new \RuntimeException(\sprintf('Case mismatch between class and real file names: "%s" vs "%s" in "%s".', $message[0], $message[1], $message[2]));
         }
     }
-    public function checkAnnotations(\ReflectionClass $refl, string $class) : array
-    {
+    public function checkAnnotations(\ReflectionClass $refl, string $class): array {
         if ('Symfony\\Bridge\\PhpUnit\\Legacy\\SymfonyTestsListenerForV7' === $class || 'Symfony\\Bridge\\PhpUnit\\Legacy\\SymfonyTestsListenerForV6' === $class) {
             return [];
         }
@@ -449,7 +441,7 @@ class DebugClassLoader
                     $finalOrInternal = \true;
                 }
             }
-            if ($finalOrInternal || $method->isConstructor() || \false === \strpos($doc, '@param') || StatelessInvocation::class === $class) {
+            if ($finalOrInternal || $method->isConstructor() || \false === \strpos($doc, '@param') || Framework\MockObject\Matcher\StatelessInvocation::class === $class) {
                 continue;
             }
             if (!\preg_match_all('#\\n\\s+\\* @param +((?(?!callable *\\().*?|callable *\\(.*\\).*?))(?<= )\\$([a-zA-Z0-9_\\x7f-\\xff]++)#', $doc, $matches, \PREG_SET_ORDER)) {
@@ -470,8 +462,7 @@ class DebugClassLoader
         }
         return $deprecations;
     }
-    public function checkCase(\ReflectionClass $refl, string $file, string $class) : ?array
-    {
+    public function checkCase(\ReflectionClass $refl, string $file, string $class): ?array {
         $real = \explode('\\', $class . \strrchr($file, '.'));
         $tail = \explode(\DIRECTORY_SEPARATOR, \str_replace('/', \DIRECTORY_SEPARATOR, $file));
         $i = \count($tail) - 1;
@@ -498,8 +489,7 @@ class DebugClassLoader
     /**
      * `realpath` on MacOSX doesn't normalize the case of characters.
      */
-    private function darwinRealpath(string $real) : string
-    {
+    private function darwinRealpath(string $real): string {
         $i = 1 + \strrpos($real, '/');
         $file = \substr($real, $i);
         $real = \substr($real, 0, $i);
@@ -521,7 +511,7 @@ class DebugClassLoader
                 $i = \strlen($dir) - 1;
                 while (!isset(self::$darwinCache[$k])) {
                     self::$darwinCache[$k] = [$dir, []];
-                    self::$darwinCache[$dir] =& self::$darwinCache[$k];
+                    self::$darwinCache[$dir] = &self::$darwinCache[$k];
                     while ('/' !== $dir[--$i]) {
                     }
                     $k = \substr($k, 0, ++$i);
@@ -558,8 +548,7 @@ class DebugClassLoader
      *
      * @return string[]
      */
-    private function getOwnInterfaces(string $class, ?string $parent) : array
-    {
+    private function getOwnInterfaces(string $class, ?string $parent): array {
         $ownInterfaces = \class_implements($class, \false);
         if ($parent) {
             foreach (\class_implements($parent, \false) as $interface) {
@@ -573,8 +562,7 @@ class DebugClassLoader
         }
         return $ownInterfaces;
     }
-    private function setReturnType(string $types, \ReflectionMethod $method, ?string $parent) : void
-    {
+    private function setReturnType(string $types, \ReflectionMethod $method, ?string $parent): void {
         $nullable = \false;
         $typesMap = [];
         foreach (\explode('|', $types) as $t) {
@@ -632,8 +620,7 @@ class DebugClassLoader
         }
         self::$returnTypes[$method->class][$method->name] = [$normalizedType, $returnType, $method->class, $method->getFileName()];
     }
-    private function normalizeType(string $type, string $class, ?string $parent) : string
-    {
+    private function normalizeType(string $type, string $class, ?string $parent): string {
         if (isset(self::SPECIAL_RETURN_TYPES[$lcType = \strtolower($type)])) {
             if ('parent' === ($lcType = self::SPECIAL_RETURN_TYPES[$lcType])) {
                 $lcType = null !== $parent ? '\\' . $parent : 'parent';
@@ -655,8 +642,7 @@ class DebugClassLoader
     /**
      * Utility method to add @return annotations to the Symfony code-base where it triggers a self-deprecations.
      */
-    private function patchMethod(\ReflectionMethod $method, string $returnType, string $declaringFile, string $normalizedType)
-    {
+    private function patchMethod(\ReflectionMethod $method, string $returnType, string $declaringFile, string $normalizedType) {
         static $patchedMethods = [];
         static $useStatements = [];
         if (!\is_file($file = $method->getFileName()) || isset($patchedMethods[$file][$startLine = $method->getStartLine()])) {
@@ -684,7 +670,7 @@ class DebugClassLoader
             }
             [$namespace, $useOffset, $useMap] = $useStatements[$file] ?? ($useStatements[$file] = self::getUseStatements($file));
             if ('\\' !== $type[0]) {
-                [$declaringNamespace, , $declaringUseMap] = $useStatements[$declaringFile] ?? ($useStatements[$declaringFile] = self::getUseStatements($declaringFile));
+                [$declaringNamespace,, $declaringUseMap] = $useStatements[$declaringFile] ?? ($useStatements[$declaringFile] = self::getUseStatements($declaringFile));
                 $p = \strpos($type, '\\', 1);
                 $alias = $p ? \substr($type, 0, $p) : $type;
                 if (isset($declaringUseMap[$alias])) {
@@ -732,8 +718,7 @@ EOTXT;
         \file_put_contents($file, $code);
         $this->fixReturnStatements($method, $nullable . $normalizedType);
     }
-    private static function getUseStatements(string $file) : array
-    {
+    private static function getUseStatements(string $file): array {
         $namespace = '';
         $useMap = [];
         $useOffset = 0;
@@ -765,8 +750,7 @@ EOTXT;
         }
         return [$namespace, $useOffset, $useMap];
     }
-    private function fixReturnStatements(\ReflectionMethod $method, string $returnType)
-    {
+    private function fixReturnStatements(\ReflectionMethod $method, string $returnType) {
         if ('7.1' === $this->patchTypes['php'] && 'object' === \ltrim($returnType, '?') && 'docblock' !== $this->patchTypes['force']) {
             return;
         }

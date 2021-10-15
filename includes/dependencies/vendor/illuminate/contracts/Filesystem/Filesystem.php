@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Filesystem;
 
-interface Filesystem
-{
+interface Filesystem {
     /**
      * The public visibility setting.
      *

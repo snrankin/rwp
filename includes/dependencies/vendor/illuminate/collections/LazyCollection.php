@@ -446,6 +446,22 @@ class LazyCollection implements Enumerable
         return \false;
     }
     /**
+     * Determine if any of the keys exist in the collection.
+     *
+     * @param  mixed  $key
+     * @return bool
+     */
+    public function hasAny($key)
+    {
+        $keys = \array_flip(\is_array($key) ? $key : \func_get_args());
+        foreach ($this as $key => $value) {
+            if (\array_key_exists($key, $keys)) {
+                return \true;
+            }
+        }
+        return \false;
+    }
+    /**
      * Concatenate values of a given key as a string.
      *
      * @param  string  $value
@@ -933,7 +949,7 @@ class LazyCollection implements Enumerable
      * @param  mixed  $value
      * @return mixed
      *
-     * @throwsItemNotFoundException
+     * @throws ItemNotFoundException
      */
     public function firstOrFail($key = null, $operator = null, $value = null)
     {

@@ -28,7 +28,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void withoutDoubleEncoding()
  * @method static void stringable(string|callable $class, callable|null $handler = null)
  *
- * @seeBladeCompiler
+ * @see BladeCompiler
  */
 class Blade extends Facade
 {

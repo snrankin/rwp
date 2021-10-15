@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface CastsInboundAttributes
-{
+interface CastsInboundAttributes {
     /**
      * Transform the attribute to its underlying model values.
      *

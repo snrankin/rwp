@@ -87,7 +87,7 @@ if (!\function_exists('RWP\\Vendor\\e')) {
     /**
      * Encode HTML special characters in a string.
      *
-     * @param DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string|null  $value
+     * @param  DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string|null  $value
      * @param  bool  $doubleEncode
      * @return string
      */

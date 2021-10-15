@@ -16,6 +16,7 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
+        '677c2998f792fb38ae4a447bdb2064f0' => __DIR__ . '/../..' . '/externals/data.php',
         'd3530954feb8a2649963c62af496a5c6' => __DIR__ . '/..' . '/wordpress/extended-cpts/extended-cpts.php',
         'e293c0a4e40dd0641a1102f9761efa73' => __DIR__ . '/..' . '/wordpress/wp-cache-remember/wp-cache-remember.php',
         'fb2f3051bc3c8116e8491eac5c5a06e2' => __DIR__ . '/..' . '/wordpress/wp-custom-bulk-actions/custom-bulk-actions.php',
@@ -44,7 +45,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
             'RWP\\Vendor\\Symfony\\Component\\ErrorHandler\\' => 42,
             'RWP\\Vendor\\Symfony\\Component\\DomCrawler\\' => 40,
             'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => 41,
-            'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\' => 41,
             'RWP\\Vendor\\SafeSVG\\' => 19,
             'RWP\\Vendor\\Psr\\SimpleCache\\' => 27,
             'RWP\\Vendor\\Psr\\Log\\' => 19,
@@ -136,10 +136,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
         'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
-        ),
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/class-loader',
         ),
         'RWP\\Vendor\\SafeSVG\\' => 
         array (
@@ -751,14 +747,6 @@ class ComposerStaticInitf76d5ab93197dccafd72fa584fad6725
         'RWP\\Vendor\\SafeSVG\\Sanitizer' => __DIR__ . '/..' . '/wordpress/safe-svg/includes/Sanitizer.php',
         'RWP\\Vendor\\SafeSVG\\Tags' => __DIR__ . '/..' . '/wordpress/safe-svg/includes/Tags.php',
         'RWP\\Vendor\\Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\ApcClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/ApcClassLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\ClassCollectionLoader' => __DIR__ . '/..' . '/symfony/class-loader/ClassCollectionLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\ClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/ClassLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\ClassMapGenerator' => __DIR__ . '/..' . '/symfony/class-loader/ClassMapGenerator.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\MapClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/MapClassLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\Psr4ClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/Psr4ClassLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\WinCacheClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/WinCacheClassLoader.php',
-        'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\XcacheClassLoader' => __DIR__ . '/..' . '/symfony/class-loader/XcacheClassLoader.php',
         'RWP\\Vendor\\Symfony\\Component\\CssSelector\\CssSelectorConverter' => __DIR__ . '/..' . '/symfony/css-selector/CssSelectorConverter.php',
         'RWP\\Vendor\\Symfony\\Component\\CssSelector\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/symfony/css-selector/Exception/ExceptionInterface.php',
         'RWP\\Vendor\\Symfony\\Component\\CssSelector\\Exception\\ExpressionErrorException' => __DIR__ . '/..' . '/symfony/css-selector/Exception/ExpressionErrorException.php',

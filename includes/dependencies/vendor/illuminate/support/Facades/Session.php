@@ -29,17 +29,15 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void setRequestOnHandler(\Illuminate\Http\Request $request)
  *
  * @seeSessionManager
- * @see \Illuminate\Session\Store
+ * @seeStore
  */
-class Session extends Facade
-{
+class Session extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'session';
     }
 }

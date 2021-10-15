@@ -8,11 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler\Exception;
 
 use RWP\Vendor\Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use RWP\Vendor\Symfony\Component\HttpFoundation\Response;
 use RWP\Vendor\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+
 /**
  * FlattenException wraps a PHP Error or Exception to be able to serialize it.
  *
@@ -20,8 +22,7 @@ use RWP\Vendor\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class FlattenException
-{
+class FlattenException {
     /** @var string */
     private $message;
     /** @var int|string */
@@ -49,15 +50,13 @@ class FlattenException
     /**
      * @return static
      */
-    public static function create(\Exception $exception, int $statusCode = null, array $headers = []) : self
-    {
+    public static function create(\Exception $exception, int $statusCode = null, array $headers = []): self {
         return static::createFromThrowable($exception, $statusCode, $headers);
     }
     /**
      * @return static
      */
-    public static function createFromThrowable(\Throwable $exception, int $statusCode = null, array $headers = []) : self
-    {
+    public static function createFromThrowable(\Throwable $exception, int $statusCode = null, array $headers = []): self {
         $e = new static();
         $e->setMessage($exception->getMessage());
         $e->setCode($exception->getCode());
@@ -88,92 +87,77 @@ class FlattenException
         }
         return $e;
     }
-    public function toArray() : array
-    {
+    public function toArray(): array {
         $exceptions = [];
         foreach (\array_merge([$this], $this->getAllPrevious()) as $exception) {
             $exceptions[] = ['message' => $exception->getMessage(), 'class' => $exception->getClass(), 'trace' => $exception->getTrace()];
         }
         return $exceptions;
     }
-    public function getStatusCode() : int
-    {
+    public function getStatusCode(): int {
         return $this->statusCode;
     }
     /**
      * @return $this
      */
-    public function setStatusCode(int $code) : self
-    {
+    public function setStatusCode(int $code): self {
         $this->statusCode = $code;
         return $this;
     }
-    public function getHeaders() : array
-    {
+    public function getHeaders(): array {
         return $this->headers;
     }
     /**
      * @return $this
      */
-    public function setHeaders(array $headers) : self
-    {
+    public function setHeaders(array $headers): self {
         $this->headers = $headers;
         return $this;
     }
-    public function getClass() : string
-    {
+    public function getClass(): string {
         return $this->class;
     }
     /**
      * @return $this
      */
-    public function setClass(string $class) : self
-    {
+    public function setClass(string $class): self {
         $this->class = \false !== \strpos($class, "@anonymous\0") ? ((\get_parent_class($class) ?: \key(\class_implements($class))) ?: 'class') . '@anonymous' : $class;
         return $this;
     }
-    public function getFile() : string
-    {
+    public function getFile(): string {
         return $this->file;
     }
     /**
      * @return $this
      */
-    public function setFile(string $file) : self
-    {
+    public function setFile(string $file): self {
         $this->file = $file;
         return $this;
     }
-    public function getLine() : int
-    {
+    public function getLine(): int {
         return $this->line;
     }
     /**
      * @return $this
      */
-    public function setLine(int $line) : self
-    {
+    public function setLine(int $line): self {
         $this->line = $line;
         return $this;
     }
-    public function getStatusText() : string
-    {
+    public function getStatusText(): string {
         return $this->statusText;
     }
-    public function setStatusText(string $statusText) : self
-    {
+    public function setStatusText(string $statusText): self {
         $this->statusText = $statusText;
         return $this;
     }
-    public function getMessage() : string
-    {
+    public function getMessage(): string {
         return $this->message;
     }
     /**
      * @return $this
      */
-    public function setMessage(string $message) : self
-    {
+    public function setMessage(string $message): self {
         if (\false !== \strpos($message, "@anonymous\0")) {
             $message = \preg_replace_callback('/[a-zA-Z_\\x7f-\\xff][\\\\a-zA-Z0-9_\\x7f-\\xff]*+@anonymous\\x00.*?\\.php(?:0x?|:[0-9]++\\$)[0-9a-fA-F]++/', function ($m) {
                 return \class_exists($m[0], \false) ? ((\get_parent_class($m[0]) ?: \key(\class_implements($m[0]))) ?: 'class') . '@anonymous' : $m[0];
@@ -185,8 +169,7 @@ class FlattenException
     /**
      * @return int|string int most of the time (might be a string with PDOException)
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
     /**
@@ -194,28 +177,24 @@ class FlattenException
      *
      * @return $this
      */
-    public function setCode($code) : self
-    {
+    public function setCode($code): self {
         $this->code = $code;
         return $this;
     }
-    public function getPrevious() : ?self
-    {
+    public function getPrevious(): ?self {
         return $this->previous;
     }
     /**
      * @return $this
      */
-    public function setPrevious(self $previous) : self
-    {
+    public function setPrevious(self $previous): self {
         $this->previous = $previous;
         return $this;
     }
     /**
      * @return self[]
      */
-    public function getAllPrevious() : array
-    {
+    public function getAllPrevious(): array {
         $exceptions = [];
         $e = $this;
         while ($e = $e->getPrevious()) {
@@ -223,15 +202,13 @@ class FlattenException
         }
         return $exceptions;
     }
-    public function getTrace() : array
-    {
+    public function getTrace(): array {
         return $this->trace;
     }
     /**
      * @return $this
      */
-    public function setTraceFromThrowable(\Throwable $throwable) : self
-    {
+    public function setTraceFromThrowable(\Throwable $throwable): self {
         $this->traceAsString = $throwable->getTraceAsString();
         return $this->setTrace($throwable->getTrace(), $throwable->getFile(), $throwable->getLine());
     }
@@ -239,8 +216,7 @@ class FlattenException
      *
      * @return $this
      */
-    public function setTrace(array $trace, ?string $file, ?int $line) : self
-    {
+    public function setTrace(array $trace, ?string $file, ?int $line): self {
         $this->trace = [];
         $this->trace[] = ['namespace' => '', 'short_class' => '', 'class' => '', 'type' => '', 'function' => '', 'file' => $file, 'line' => $line, 'args' => []];
         foreach ($trace as $entry) {
@@ -255,8 +231,7 @@ class FlattenException
         }
         return $this;
     }
-    private function flattenArgs(array $args, int $level = 0, int &$count = 0) : array
-    {
+    private function flattenArgs(array $args, int $level = 0, int &$count = 0): array {
         $result = [];
         foreach ($args as $key => $value) {
             if (++$count > 10000.0) {
@@ -288,25 +263,21 @@ class FlattenException
         }
         return $result;
     }
-    private function getClassNameFromIncomplete(\__PHP_Incomplete_Class $value) : string
-    {
+    private function getClassNameFromIncomplete(\__PHP_Incomplete_Class $value): string {
         $array = new \ArrayObject($value);
         return $array['__PHP_Incomplete_Class_Name'];
     }
-    public function getTraceAsString() : string
-    {
+    public function getTraceAsString(): string {
         return $this->traceAsString;
     }
     /**
      * @return $this
      */
-    public function setAsString(?string $asString) : self
-    {
+    public function setAsString(?string $asString): self {
         $this->asString = $asString;
         return $this;
     }
-    public function getAsString() : string
-    {
+    public function getAsString(): string {
         if (null !== $this->asString) {
             return $this->asString;
         }

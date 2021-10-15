@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Broadcasting;
 
-interface Broadcaster
-{
+interface Broadcaster {
     /**
      * Authenticate the incoming request for a given channel.
      *

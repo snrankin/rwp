@@ -11,7 +11,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static string generateKey(string $cipher)
  * @method static string getKey()
  *
- * @seeEncrypter
+ * @see Encrypter
  */
 class Crypt extends Facade
 {

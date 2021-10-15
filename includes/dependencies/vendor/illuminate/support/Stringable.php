@@ -181,7 +181,7 @@ class Stringable implements \JsonSerializable
      *
      * @param  string  $delimiter
      * @param  int  $limit
-     * @returnCollection
+     * @return Collection
      */
     public function explode($delimiter, $limit = \PHP_INT_MAX)
     {
@@ -193,7 +193,7 @@ class Stringable implements \JsonSerializable
      * @param  string|int  $pattern
      * @param  int  $limit
      * @param  int  $flags
-     * @returnCollection
+     * @return Collection
      */
     public function split($pattern, $limit = -1, $flags = 0)
     {
@@ -322,7 +322,7 @@ class Stringable implements \JsonSerializable
      * Get the string matching the given pattern.
      *
      * @param  string  $pattern
-     * @returnCollection
+     * @return Collection
      */
     public function matchAll($pattern)
     {
@@ -510,6 +510,16 @@ class Stringable implements \JsonSerializable
     public function start($prefix)
     {
         return new static(Str::start($this->value, $prefix));
+    }
+    /**
+     * Strip HTML and PHP tags from the given string.
+     *
+     * @param  string  $allowedTags
+     * @return static
+     */
+    public function stripTags($allowedTags = null)
+    {
+        return new static(\strip_tags($this->value, $allowedTags));
     }
     /**
      * Convert the given string to upper-case.
@@ -701,7 +711,7 @@ class Stringable implements \JsonSerializable
     /**
      * Dump the string and end the script.
      *
-     * @return void
+     * @return never
      */
     public function dd()
     {

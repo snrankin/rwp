@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler;
 
 /**
@@ -15,10 +16,8 @@ namespace RWP\Vendor\Symfony\Component\ErrorHandler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Debug
-{
-    public static function enable() : ErrorHandler
-    {
+class Debug {
+    public static function enable(): ErrorHandler {
         \error_reporting(-1);
         if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg'], \true)) {
             \ini_set('display_errors', 0);

@@ -3,7 +3,7 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
- * @method staticUrlGenerator setRootControllerNamespace(string $rootNamespace)
+ * @method static UrlGenerator setRootControllerNamespace(string $rootNamespace)
  * @method static bool hasValidSignature(\Illuminate\Http\Request $request, bool $absolute = true)
  * @method static string action(string|array $action, $parameters = [], bool $absolute = true)
  * @method static string asset(string $path, bool $secure = null)
@@ -22,7 +22,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void forceScheme(string $scheme)
  * @method static bool isValidUrl(string $path)
  *
- * @seeUrlGenerator
+ * @see UrlGenerator
  */
 class URL extends Facade
 {

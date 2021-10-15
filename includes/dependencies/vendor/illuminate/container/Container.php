@@ -13,7 +13,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use TypeError;
-class Container implements \ArrayAccess, Container
+class Container implements \ArrayAccess, ContainerContract
 {
     /**
      * The current globally available container (if any).
@@ -139,7 +139,7 @@ class Container implements \ArrayAccess, Container
      * Define a contextual binding.
      *
      * @param  array|string  $concrete
-     * @returnContextualBindingBuilder
+     * @return ContextualBindingBuilder
      */
     public function when($concrete)
     {
@@ -586,7 +586,7 @@ class Container implements \ArrayAccess, Container
      * @param  array  $parameters
      * @return mixed
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     public function makeWith($abstract, array $parameters = [])
     {
@@ -599,7 +599,7 @@ class Container implements \ArrayAccess, Container
      * @param  array  $parameters
      * @return mixed
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     public function make($abstract, array $parameters = [])
     {
@@ -629,8 +629,8 @@ class Container implements \ArrayAccess, Container
      * @param  bool  $raiseEvents
      * @return mixed
      *
-     * @throwsBindingResolutionException
-     * @throws \Illuminate\Contracts\Container\CircularDependencyException
+     * @throws BindingResolutionException
+     * @throws CircularDependencyException
      */
     protected function resolve($abstract, $parameters = [], $raiseEvents = \true)
     {
@@ -749,8 +749,8 @@ class Container implements \ArrayAccess, Container
      * @param  \Closure|string  $concrete
      * @return mixed
      *
-     * @throwsBindingResolutionException
-     * @throws \Illuminate\Contracts\Container\CircularDependencyException
+     * @throws BindingResolutionException
+     * @throws CircularDependencyException
      */
     public function build($concrete)
     {
@@ -802,7 +802,7 @@ class Container implements \ArrayAccess, Container
      * @param  \ReflectionParameter[]  $dependencies
      * @return array
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function resolveDependencies(array $dependencies)
     {
@@ -862,7 +862,7 @@ class Container implements \ArrayAccess, Container
      * @param  \ReflectionParameter  $parameter
      * @return mixed
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function resolvePrimitive(\ReflectionParameter $parameter)
     {
@@ -880,7 +880,7 @@ class Container implements \ArrayAccess, Container
      * @param  \ReflectionParameter  $parameter
      * @return mixed
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function resolveClass(\ReflectionParameter $parameter)
     {
@@ -921,7 +921,7 @@ class Container implements \ArrayAccess, Container
      * @param  string  $concrete
      * @return void
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function notInstantiable($concrete)
     {
@@ -939,7 +939,7 @@ class Container implements \ArrayAccess, Container
      * @param  \ReflectionParameter  $parameter
      * @return void
      *
-     * @throwsBindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function unresolvablePrimitive(\ReflectionParameter $parameter)
     {
@@ -1194,8 +1194,8 @@ class Container implements \ArrayAccess, Container
     /**
      * Set the shared instance of the container.
      *
-     * @param Container|null  $container
-     * @return \Illuminate\Contracts\Container\Container|static
+     * @param  Container|null  $container
+     * @return Container|static
      */
     public static function setInstance(Container $container = null)
     {

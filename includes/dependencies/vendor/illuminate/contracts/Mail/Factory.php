@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Mail;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a mailer instance by name.
      *

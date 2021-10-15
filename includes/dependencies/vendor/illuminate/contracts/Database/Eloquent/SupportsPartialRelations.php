@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface SupportsPartialRelations
-{
+interface SupportsPartialRelations {
     /**
      * Indicate that the relation is a single result of a larger one-to-many relationship.
      *

@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Redis;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a Redis connection by name.
      *

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer;
 
 /**
@@ -20,25 +21,20 @@ namespace RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer;
  *
  * @internal
  */
-class TokenizerEscaping
-{
+class TokenizerEscaping {
     private $patterns;
-    public function __construct(TokenizerPatterns $patterns)
-    {
+    public function __construct(TokenizerPatterns $patterns) {
         $this->patterns = $patterns;
     }
-    public function escapeUnicode(string $value) : string
-    {
+    public function escapeUnicode(string $value): string {
         $value = $this->replaceUnicodeSequences($value);
         return \preg_replace($this->patterns->getSimpleEscapePattern(), '$1', $value);
     }
-    public function escapeUnicodeAndNewLine(string $value) : string
-    {
+    public function escapeUnicodeAndNewLine(string $value): string {
         $value = \preg_replace($this->patterns->getNewLineEscapePattern(), '', $value);
         return $this->escapeUnicode($value);
     }
-    private function replaceUnicodeSequences(string $value) : string
-    {
+    private function replaceUnicodeSequences(string $value): string {
         return \preg_replace_callback($this->patterns->getUnicodeEscapePattern(), function ($match) {
             $c = \hexdec($match[1]);
             if (0x80 > ($c %= 0x200000)) {

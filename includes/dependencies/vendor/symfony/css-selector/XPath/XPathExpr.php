@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\XPath;
 
 /**
@@ -20,13 +21,11 @@ namespace RWP\Vendor\Symfony\Component\CssSelector\XPath;
  *
  * @internal
  */
-class XPathExpr
-{
+class XPathExpr {
     private $path;
     private $element;
     private $condition;
-    public function __construct(string $path = '', string $element = '*', string $condition = '', bool $starPrefix = \false)
-    {
+    public function __construct(string $path = '', string $element = '*', string $condition = '', bool $starPrefix = \false) {
         $this->path = $path;
         $this->element = $element;
         $this->condition = $condition;
@@ -34,29 +33,24 @@ class XPathExpr
             $this->addStarPrefix();
         }
     }
-    public function getElement() : string
-    {
+    public function getElement(): string {
         return $this->element;
     }
-    public function addCondition(string $condition) : self
-    {
+    public function addCondition(string $condition): self {
         $this->condition = $this->condition ? \sprintf('(%s) and (%s)', $this->condition, $condition) : $condition;
         return $this;
     }
-    public function getCondition() : string
-    {
+    public function getCondition(): string {
         return $this->condition;
     }
-    public function addNameTest() : self
-    {
+    public function addNameTest(): self {
         if ('*' !== $this->element) {
             $this->addCondition('name() = ' . Translator::getXpathLiteral($this->element));
             $this->element = '*';
         }
         return $this;
     }
-    public function addStarPrefix() : self
-    {
+    public function addStarPrefix(): self {
         $this->path .= '*/';
         return $this;
     }
@@ -65,8 +59,7 @@ class XPathExpr
      *
      * @return $this
      */
-    public function join(string $combiner, self $expr) : self
-    {
+    public function join(string $combiner, self $expr): self {
         $path = $this->__toString() . $combiner;
         if ('*/' !== $expr->path) {
             $path .= $expr->path;
@@ -76,8 +69,7 @@ class XPathExpr
         $this->condition = $expr->condition;
         return $this;
     }
-    public function __toString() : string
-    {
+    public function __toString(): string {
         $path = $this->path . $this->element;
         $condition = null === $this->condition || '' === $this->condition ? '' : '[' . $this->condition . ']';
         return $path . $condition;

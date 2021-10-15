@@ -4,18 +4,18 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Support\Testing\Fakes\MailFake;
 /**
- * @method staticMailer mailer(string|null $name = null)
- * @method static \Illuminate\Mail\PendingMail bcc($users)
- * @method static \Illuminate\Mail\PendingMail to($users)
- * @method static \Illuminate\Support\Collection queued(string $mailable, \Closure|string $callback = null)
- * @method static \Illuminate\Support\Collection sent(string $mailable, \Closure|string $callback = null)
+ * @method static Mailer mailer(string|null $name = null)
+ * @method static PendingMail bcc($users)
+ * @method static PendingMail to($users)
+ * @method static Collection queued(string $mailable, \Closure|string $callback = null)
+ * @method static Collection sent(string $mailable, \Closure|string $callback = null)
  * @method static array failures()
  * @method static bool hasQueued(string $mailable)
  * @method static bool hasSent(string $mailable)
- * @method static mixed later(\DateTimeInterface|\DateInterval|int $delay,Mailable|string|array $view, string $queue = null)
- * @method static mixed laterOn(string $queue, \DateTimeInterface|\DateInterval|int $delay, \Illuminate\Contracts\Mail\Mailable|string|array $view)
+ * @method static mixed later(\DateTimeInterface|\DateInterval|int $delay, Mailable|string|array $view, string $queue = null)
+ * @method static mixed laterOn(string $queue, \DateTimeInterface|\DateInterval|int $delay, Mailable|string|array $view)
  * @method static mixed queue(\Illuminate\Contracts\Mail\Mailable|string|array $view, string $queue = null)
- * @method static mixed queueOn(string $queue,Mailable|string|array $view)
+ * @method static mixed queueOn(string $queue, Mailable|string|array $view)
  * @method static void assertNotQueued(string $mailable, callable $callback = null)
  * @method static void assertNotSent(string $mailable, callable|int $callback = null)
  * @method static void assertNothingQueued()
@@ -27,15 +27,15 @@ use RWP\Vendor\Illuminate\Support\Testing\Fakes\MailFake;
  * @method static void html(string $html, $callback)
  * @method static void send(\Illuminate\Contracts\Mail\Mailable|string|array $view, array $data = [], \Closure|string $callback = null)
  *
- * @seeMailer
- * @see \Illuminate\Support\Testing\Fakes\MailFake
+ * @see Mailer
+ * @see MailFake
  */
 class Mail extends Facade
 {
     /**
      * Replace the bound instance with a fake.
      *
-     * @returnMailFake
+     * @return MailFake
      */
     public static function fake()
     {

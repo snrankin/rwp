@@ -10,7 +10,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void tearDownTestCase(callable $callback)
  * @method static int|false token()
  *
- * @seeParallelTesting
+ * @see ParallelTesting
  */
 class ParallelTesting extends Facade
 {

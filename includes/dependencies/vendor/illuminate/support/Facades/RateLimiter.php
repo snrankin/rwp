@@ -16,15 +16,13 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  *
  * @seeRateLimiter
  */
-class RateLimiter extends Facade
-{
+class RateLimiter extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'RWP\\Vendor\\Illuminate\\Cache\\RateLimiter';
     }
 }

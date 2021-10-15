@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 namespace RWP\Vendor\Symfony\Component\Finder\Iterator;
-use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
+
+use RWP\Vendor\Illuminate\Support\Str;
+
 /**
  * ExcludeDirectoryFilterIterator filters out directories.
  *

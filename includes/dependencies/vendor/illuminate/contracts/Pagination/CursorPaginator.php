@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Pagination;
 
-interface CursorPaginator
-{
+interface CursorPaginator {
     /**
      * Get the URL for a given cursor.
      *

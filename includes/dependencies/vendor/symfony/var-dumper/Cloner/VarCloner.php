@@ -8,20 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Cloner;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class VarCloner extends AbstractCloner
-{
+class VarCloner extends AbstractCloner {
     private static $gid;
     private static $arrayCache = [];
     /**
      * {@inheritdoc}
      */
-    protected function doClone($var)
-    {
+    protected function doClone($var) {
         $len = 1;
         // Length of $queue
         $pos = 0;
@@ -82,7 +81,7 @@ class VarCloner extends AbstractCloner
                     $zvalRef = $vals[$k] === $cookie;
                 }
                 if ($zvalRef) {
-                    $vals[$k] =& $stub;
+                    $vals[$k] = &$stub;
                     // Break hard references to make $queue completely
                     unset($stub);
                     // independent from the original structure
@@ -106,7 +105,7 @@ class VarCloner extends AbstractCloner
                     } else {
                         $refs[$k] = $vals[$k];
                         $h = \spl_object_id($refs[$k]);
-                        $hardRefs[$h] =& $refs[$k];
+                        $hardRefs[$h] = &$refs[$k];
                         $values[$h] = $v;
                     }
                 }
@@ -170,14 +169,14 @@ class VarCloner extends AbstractCloner
                                         $v->value = [$v->cut = \count($gv), Stub::TYPE_ARRAY => 0];
                                         $v->handle = -1;
                                         if (\PHP_VERSION_ID >= 70400) {
-                                            $gv =& $a[$gk];
-                                            $hardRefs[\ReflectionReference::fromArrayElement($a, $gk)->getId()] =& $gv;
+                                            $gv = &$a[$gk];
+                                            $hardRefs[\ReflectionReference::fromArrayElement($a, $gk)->getId()] = &$gv;
                                         } else {
-                                            $gv =& $hardRefs[\spl_object_id($v)];
+                                            $gv = &$hardRefs[\spl_object_id($v)];
                                         }
                                         $gv = $v;
                                     }
-                                    $a[$gk] =& $gv;
+                                    $a[$gk] = &$gv;
                                 }
                                 unset($gv);
                             } else {

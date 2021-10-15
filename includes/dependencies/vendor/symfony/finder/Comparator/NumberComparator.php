@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Finder\Comparator;
 
 /**
@@ -31,15 +32,13 @@ namespace RWP\Vendor\Symfony\Component\Finder\Comparator;
  *
  * @see http://physics.nist.gov/cuu/Units/binary.html
  */
-class NumberComparator extends Comparator
-{
+class NumberComparator extends Comparator {
     /**
      * @param string|int $test A comparison string or an integer
      *
      * @throws \InvalidArgumentException If the test is not understood
      */
-    public function __construct(?string $test)
-    {
+    public function __construct(?string $test) {
         if (null === $test || !\preg_match('#^\\s*(==|!=|[<>]=?)?\\s*([0-9\\.]+)\\s*([kmg]i?)?\\s*$#i', $test, $matches)) {
             throw new \InvalidArgumentException(\sprintf('Don\'t understand "%s" as a number test.', $test ?? 'null'));
         }

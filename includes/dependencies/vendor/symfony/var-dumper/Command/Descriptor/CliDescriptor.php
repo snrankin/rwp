@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Command\Descriptor;
 
 use RWP\Vendor\Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -16,6 +17,7 @@ use RWP\Vendor\Symfony\Component\Console\Output\OutputInterface;
 use RWP\Vendor\Symfony\Component\Console\Style\SymfonyStyle;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
 use RWP\Vendor\Symfony\Component\VarDumper\Dumper\CliDumper;
+
 /**
  * Describe collected data clones for cli output.
  *
@@ -23,18 +25,15 @@ use RWP\Vendor\Symfony\Component\VarDumper\Dumper\CliDumper;
  *
  * @final
  */
-class CliDescriptor implements DumpDescriptorInterface
-{
+class CliDescriptor implements DumpDescriptorInterface {
     private $dumper;
     private $lastIdentifier;
     private $supportsHref;
-    public function __construct(CliDumper $dumper)
-    {
+    public function __construct(CliDumper $dumper) {
         $this->dumper = $dumper;
         $this->supportsHref = \method_exists(OutputFormatterStyle::class, 'setHref');
     }
-    public function describe(OutputInterface $output, Data $data, array $context, int $clientId) : void
-    {
+    public function describe(OutputInterface $output, Data $data, array $context, int $clientId): void {
         $io = $output instanceof SymfonyStyle ? $output : new SymfonyStyle(new ArrayInput([]), $output);
         $this->dumper->setColors($output->isDecorated());
         $rows = [['date', \date('r', (int) $context['timestamp'])]];

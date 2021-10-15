@@ -8,23 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler;
 
 use RWP\Vendor\Psr\Log\AbstractLogger;
+
 /**
  * A buffering logger that stacks logs for later.
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class BufferingLogger extends AbstractLogger
-{
+class BufferingLogger extends Log\AbstractLogger {
     private $logs = [];
-    public function log($level, $message, array $context = []) : void
-    {
+    public function log($level, $message, array $context = []): void {
         $this->logs[] = [$level, $message, $context];
     }
-    public function cleanLogs() : array
-    {
+    public function cleanLogs(): array {
         $logs = $this->logs;
         $this->logs = [];
         return $logs;
@@ -32,16 +31,13 @@ class BufferingLogger extends AbstractLogger
     /**
      * @return array
      */
-    public function __sleep()
-    {
+    public function __sleep() {
         throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
-    public function __wakeup()
-    {
+    public function __wakeup() {
         throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
     }
-    public function __destruct()
-    {
+    public function __destruct() {
         foreach ($this->logs as [$level, $message, $context]) {
             if (\false !== \strpos($message, '{')) {
                 foreach ($context as $key => $val) {

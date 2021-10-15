@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * XliffFileDumper generates xliff files from a message catalogue.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-class XliffFileDumper extends FileDumper
-{
+class XliffFileDumper extends FileDumper {
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         $xliffVersion = '1.2';
         if (\array_key_exists('xliff_version', $options)) {
             $xliffVersion = $options['xliff_version'];
@@ -44,12 +44,10 @@ class XliffFileDumper extends FileDumper
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return 'xlf';
     }
-    private function dumpXliff1(string $defaultLocale, MessageCatalogue $messages, ?string $domain, array $options = [])
-    {
+    private function dumpXliff1(string $defaultLocale, MessageCatalogue $messages, ?string $domain, array $options = []) {
         $toolInfo = ['tool-id' => 'symfony', 'tool-name' => 'Symfony'];
         if (\array_key_exists('tool_info', $options)) {
             $toolInfo = \array_merge($toolInfo, $options['tool_info']);
@@ -106,8 +104,7 @@ class XliffFileDumper extends FileDumper
         }
         return $dom->saveXML();
     }
-    private function dumpXliff2(string $defaultLocale, MessageCatalogue $messages, ?string $domain)
-    {
+    private function dumpXliff2(string $defaultLocale, MessageCatalogue $messages, ?string $domain) {
         $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->formatOutput = \true;
         $xliff = $dom->appendChild($dom->createElement('xliff'));
@@ -159,8 +156,7 @@ class XliffFileDumper extends FileDumper
         }
         return $dom->saveXML();
     }
-    private function hasMetadataArrayInfo(string $key, array $metadata = null) : bool
-    {
+    private function hasMetadataArrayInfo(string $key, array $metadata = null): bool {
         return \is_iterable($metadata[$key] ?? null);
     }
 }

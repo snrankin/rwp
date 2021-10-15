@@ -24,7 +24,6 @@ return array(
     'RWP\\Vendor\\Symfony\\Component\\ErrorHandler\\' => array($vendorDir . '/symfony/error-handler'),
     'RWP\\Vendor\\Symfony\\Component\\DomCrawler\\' => array($vendorDir . '/symfony/dom-crawler'),
     'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
-    'RWP\\Vendor\\Symfony\\Component\\ClassLoader\\' => array($vendorDir . '/symfony/class-loader'),
     'RWP\\Vendor\\SafeSVG\\' => array($vendorDir . '/wordpress/safe-svg/includes'),
     'RWP\\Vendor\\Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'RWP\\Vendor\\Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),

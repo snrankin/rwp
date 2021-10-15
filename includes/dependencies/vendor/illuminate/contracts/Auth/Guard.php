@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth;
 
-interface Guard
-{
+interface Guard {
     /**
      * Determine if the current user is authenticated.
      *

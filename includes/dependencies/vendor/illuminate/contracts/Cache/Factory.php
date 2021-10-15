@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Cache;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a cache store instance by name.
      *

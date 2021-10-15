@@ -6,14 +6,14 @@ use RWP\Vendor\Illuminate\Contracts\Auth\PasswordBroker;
 /**
  * @method static mixed reset(array $credentials, \Closure $callback)
  * @method static string sendResetLink(array $credentials, \Closure $callback = null)
- * @method staticCanResetPassword getUser(array $credentials)
+ * @method static CanResetPassword getUser(array $credentials)
  * @method static string createToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
  * @method static void deleteToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
  * @method static bool tokenExists(\Illuminate\Contracts\Auth\CanResetPassword $user, string $token)
- * @method staticTokenRepositoryInterface getRepository()
- * @method static \Illuminate\Contracts\Auth\PasswordBroker broker(string|null $name = null)
+ * @method static TokenRepositoryInterface getRepository()
+ * @method static PasswordBroker broker(string|null $name = null)
  *
- * @seePasswordBroker
+ * @see PasswordBroker
  */
 class Password extends Facade
 {

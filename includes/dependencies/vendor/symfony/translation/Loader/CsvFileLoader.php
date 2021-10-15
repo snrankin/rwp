@@ -8,24 +8,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\NotFoundResourceException;
+
 /**
  * CsvFileLoader loads translations from CSV files.
  *
  * @author Saša Stamenković <umpirsky@gmail.com>
  */
-class CsvFileLoader extends FileLoader
-{
+class CsvFileLoader extends FileLoader {
     private $delimiter = ';';
     private $enclosure = '"';
     private $escape = '\\';
     /**
      * {@inheritdoc}
      */
-    protected function loadResource(string $resource)
-    {
+    protected function loadResource(string $resource) {
         $messages = [];
         try {
             $file = new \SplFileObject($resource, 'rb');
@@ -47,8 +47,7 @@ class CsvFileLoader extends FileLoader
     /**
      * Sets the delimiter, enclosure, and escape character for CSV.
      */
-    public function setCsvControl(string $delimiter = ';', string $enclosure = '"', string $escape = '\\')
-    {
+    public function setCsvControl(string $delimiter = ';', string $enclosure = '"', string $escape = '\\') {
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
         $this->escape = $escape;

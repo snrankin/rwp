@@ -3,33 +3,32 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Contracts\Routing\ResponseFactory as ResponseFactoryContract;
+
 /**
  * @method staticJsonResponse json(string|array $data = [], int $status = 200, array $headers = [], int $options = 0)
- * @method static \Illuminate\Http\JsonResponse jsonp(string $callback, string|array $data = [], int $status = 200, array $headers = [], int $options = 0)
- * @method static \Illuminate\Http\RedirectResponse redirectGuest(string $path, int $status = 302, array $headers = [], bool|null $secure = null)
- * @method static \Illuminate\Http\RedirectResponse redirectTo(string $path, int $status = 302, array $headers = [], bool|null $secure = null)
- * @method static \Illuminate\Http\RedirectResponse redirectToAction(string $action, mixed $parameters = [], int $status = 302, array $headers = [])
- * @method static \Illuminate\Http\RedirectResponse redirectToIntended(string $default = '/', int $status = 302, array $headers = [], bool|null $secure = null)
- * @method static \Illuminate\Http\RedirectResponse redirectToRoute(string $route, mixed $parameters = [], int $status = 302, array $headers = [])
- * @method static \Illuminate\Http\Response make(string $content = '', int $status = 200, array $headers = [])
- * @method static \Illuminate\Http\Response noContent($status = 204, array $headers = [])
- * @method static \Illuminate\Http\Response view(string $view, array $data = [], int $status = 200, array $headers = [])
- * @method static \Symfony\Component\HttpFoundation\BinaryFileResponse download(\SplFileInfo|string $file, string|null $name = null, array $headers = [], string|null $disposition = 'attachment')
- * @method static \Symfony\Component\HttpFoundation\BinaryFileResponse file($file, array $headers = [])
- * @method static \Symfony\Component\HttpFoundation\StreamedResponse stream(\Closure $callback, int $status = 200, array $headers = [])
- * @method static \Symfony\Component\HttpFoundation\StreamedResponse streamDownload(\Closure $callback, string|null $name = null, array $headers = [], string|null $disposition = 'attachment')
+ * @method staticJsonResponse jsonp(string $callback, string|array $data = [], int $status = 200, array $headers = [], int $options = 0)
+ * @method staticRedirectResponse redirectGuest(string $path, int $status = 302, array $headers = [], bool|null $secure = null)
+ * @method staticRedirectResponse redirectTo(string $path, int $status = 302, array $headers = [], bool|null $secure = null)
+ * @method staticRedirectResponse redirectToAction(string $action, mixed $parameters = [], int $status = 302, array $headers = [])
+ * @method staticRedirectResponse redirectToIntended(string $default = '/', int $status = 302, array $headers = [], bool|null $secure = null)
+ * @method staticRedirectResponse redirectToRoute(string $route, mixed $parameters = [], int $status = 302, array $headers = [])
+ * @method staticResponse make(string $content = '', int $status = 200, array $headers = [])
+ * @method staticResponse noContent($status = 204, array $headers = [])
+ * @method staticResponse view(string $view, array $data = [], int $status = 200, array $headers = [])
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\BinaryFileResponse download(\SplFileInfo|string $file, string|null $name = null, array $headers = [], string|null $disposition = 'attachment')
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\BinaryFileResponse file($file, array $headers = [])
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\StreamedResponse stream(\Closure $callback, int $status = 200, array $headers = [])
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\StreamedResponse streamDownload(\Closure $callback, string|null $name = null, array $headers = [], string|null $disposition = 'attachment')
  *
  * @seeResponseFactory
  */
-class Response extends Facade
-{
+class Response extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return ResponseFactory::class;
     }
 }

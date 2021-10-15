@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Validation;
 
 use RWP\Vendor\Illuminate\Contracts\Support\MessageProvider;
-interface Validator extends MessageProvider
-{
+
+interface Validator extends MessageProvider {
     /**
      * Run the validator's rules against its data.
      *

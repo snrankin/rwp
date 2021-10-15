@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Filesystem;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a filesystem implementation.
      *

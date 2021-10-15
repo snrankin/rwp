@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RdKafka\Conf;
@@ -22,15 +23,14 @@ use RdKafka\Topic;
 use RdKafka\TopicConf;
 use RdKafka\TopicPartition;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
+
 /**
  * Casts RdKafka related classes to array representation.
  *
  * @author Romain Neutron <imprec@gmail.com>
  */
-class RdKafkaCaster
-{
-    public static function castKafkaConsumer(\RdKafka\KafkaConsumer $c, array $a, Stub $stub, bool $isNested)
-    {
+class RdKafkaCaster {
+    public static function castKafkaConsumer(\RdKafka\KafkaConsumer $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         try {
             $assignment = $c->getAssignment();
@@ -41,72 +41,61 @@ class RdKafkaCaster
         $a += self::extractMetadata($c);
         return $a;
     }
-    public static function castTopic(\RdKafka\Topic $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castTopic(\RdKafka\Topic $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'name' => $c->getName()];
         return $a;
     }
-    public static function castTopicPartition(\RdKafka\TopicPartition $c, array $a)
-    {
+    public static function castTopicPartition(\RdKafka\TopicPartition $c, array $a) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'offset' => $c->getOffset(), $prefix . 'partition' => $c->getPartition(), $prefix . 'topic' => $c->getTopic()];
         return $a;
     }
-    public static function castMessage(\RdKafka\Message $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castMessage(\RdKafka\Message $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'errstr' => $c->errstr()];
         return $a;
     }
-    public static function castConf(\RdKafka\Conf $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castConf(\RdKafka\Conf $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         foreach ($c->dump() as $key => $value) {
             $a[$prefix . $key] = $value;
         }
         return $a;
     }
-    public static function castTopicConf(\RdKafka\TopicConf $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castTopicConf(\RdKafka\TopicConf $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         foreach ($c->dump() as $key => $value) {
             $a[$prefix . $key] = $value;
         }
         return $a;
     }
-    public static function castRdKafka(\RdKafka $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castRdKafka(\RdKafka $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'out_q_len' => $c->getOutQLen()];
         $a += self::extractMetadata($c);
         return $a;
     }
-    public static function castCollectionMetadata(\RdKafka\Metadata\Collection $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castCollectionMetadata(\RdKafka\Metadata\Collection $c, array $a, Stub $stub, bool $isNested) {
         $a += \iterator_to_array($c);
         return $a;
     }
-    public static function castTopicMetadata(\RdKafka\Metadata\Topic $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castTopicMetadata(\RdKafka\Metadata\Topic $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'name' => $c->getTopic(), $prefix . 'partitions' => $c->getPartitions()];
         return $a;
     }
-    public static function castPartitionMetadata(\RdKafka\Metadata\Partition $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castPartitionMetadata(\RdKafka\Metadata\Partition $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'id' => $c->getId(), $prefix . 'err' => $c->getErr(), $prefix . 'leader' => $c->getLeader()];
         return $a;
     }
-    public static function castBrokerMetadata(Broker $c, array $a, Stub $stub, bool $isNested)
-    {
+    public static function castBrokerMetadata(Metadata\Broker $c, array $a, Stub $stub, bool $isNested) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += [$prefix . 'id' => $c->getId(), $prefix . 'host' => $c->getHost(), $prefix . 'port' => $c->getPort()];
         return $a;
     }
-    private static function extractMetadata($c)
-    {
+    private static function extractMetadata($c) {
         $prefix = Caster::PREFIX_VIRTUAL;
         try {
             $m = $c->getMetadata(\true, null, 500);

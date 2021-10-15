@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Support;
 
 use Countable;
-interface MessageBag extends Arrayable, \Countable
-{
+
+interface MessageBag extends Arrayable, \Countable {
     /**
      * Get the keys present in the message bag.
      *

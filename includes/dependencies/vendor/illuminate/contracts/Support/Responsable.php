@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Support;
 
-interface Responsable
-{
+interface Responsable {
     /**
      * Create an HTTP response that represents the object.
      *
      * @param Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \RWP\Vendor\Symfony\HttpFoundation\Response
      */
     public function toResponse($request);
 }

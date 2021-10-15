@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation;
 
 use RWP\Vendor\Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * This translator should only be used in a development environment.
  */
-final class PseudoLocalizationTranslator implements TranslatorInterface
-{
+final class PseudoLocalizationTranslator implements Contracts\Translation\TranslatorInterface {
     private const EXPANSION_CHARACTER = '~';
     private $translator;
     private $accents;
@@ -56,8 +57,7 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
      *      description: the list of HTML attributes whose values can be altered - it is only useful when the "parse_html" option is set to true
      *      example: if ["title"], and with the "accents" option set to true, "<a href="#" title="Go to your profile">Profile</a>" => "<a href="#" title="Ĝö ţö ýöûŕ þŕöƒîļé">Þŕöƒîļé</a>" - if "title" was not in the "localizable_html_attributes" list, the title attribute data would be left unchanged.
      */
-    public function __construct(TranslatorInterface $translator, array $options = [])
-    {
+    public function __construct(Contracts\Translation\TranslatorInterface $translator, array $options = []) {
         $this->translator = $translator;
         $this->accents = $options['accents'] ?? \true;
         if (1.0 > ($this->expansionFactor = $options['expansion_factor'] ?? 1.0)) {
@@ -73,8 +73,7 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
     /**
      * {@inheritdoc}
      */
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null)
-    {
+    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null) {
         $trans = '';
         $visibleText = '';
         foreach ($this->getParts($this->translator->trans($id, $parameters, $domain, $locale)) as [$visible, $localizable, $text]) {
@@ -91,12 +90,10 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
         $this->addBrackets($trans);
         return $trans;
     }
-    public function getLocale() : string
-    {
+    public function getLocale(): string {
         return $this->translator->getLocale();
     }
-    private function getParts(string $originalTrans) : array
-    {
+    private function getParts(string $originalTrans): array {
         if (!$this->parseHTML) {
             return [[\true, \true, $originalTrans]];
         }
@@ -108,8 +105,7 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
         \libxml_use_internal_errors($useInternalErrors);
         return $this->parseNode($dom->childNodes->item(1)->childNodes->item(0)->childNodes->item(0));
     }
-    private function parseNode(\DOMNode $node) : array
-    {
+    private function parseNode(\DOMNode $node): array {
         $parts = [];
         foreach ($node->childNodes as $childNode) {
             if (!$childNode instanceof \DOMElement) {
@@ -135,12 +131,10 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
         }
         return $parts;
     }
-    private function addAccents(string &$trans, string $text) : void
-    {
+    private function addAccents(string &$trans, string $text): void {
         $trans .= $this->accents ? \strtr($text, [' ' => ' ', '!' => '¡', '"' => '″', '#' => '♯', '$' => '€', '%' => '‰', '&' => '⅋', '\'' => '´', '(' => '{', ')' => '}', '*' => '⁎', '+' => '⁺', ',' => '،', '-' => '‐', '.' => '·', '/' => '⁄', '0' => '⓪', '1' => '①', '2' => '②', '3' => '③', '4' => '④', '5' => '⑤', '6' => '⑥', '7' => '⑦', '8' => '⑧', '9' => '⑨', ':' => '∶', ';' => '⁏', '<' => '≤', '=' => '≂', '>' => '≥', '?' => '¿', '@' => '՞', 'A' => 'Å', 'B' => 'Ɓ', 'C' => 'Ç', 'D' => 'Ð', 'E' => 'É', 'F' => 'Ƒ', 'G' => 'Ĝ', 'H' => 'Ĥ', 'I' => 'Î', 'J' => 'Ĵ', 'K' => 'Ķ', 'L' => 'Ļ', 'M' => 'Ṁ', 'N' => 'Ñ', 'O' => 'Ö', 'P' => 'Þ', 'Q' => 'Ǫ', 'R' => 'Ŕ', 'S' => 'Š', 'T' => 'Ţ', 'U' => 'Û', 'V' => 'Ṽ', 'W' => 'Ŵ', 'X' => 'Ẋ', 'Y' => 'Ý', 'Z' => 'Ž', '[' => '⁅', '\\' => '∖', ']' => '⁆', '^' => '˄', '_' => '‿', '`' => '‵', 'a' => 'å', 'b' => 'ƀ', 'c' => 'ç', 'd' => 'ð', 'e' => 'é', 'f' => 'ƒ', 'g' => 'ĝ', 'h' => 'ĥ', 'i' => 'î', 'j' => 'ĵ', 'k' => 'ķ', 'l' => 'ļ', 'm' => 'ɱ', 'n' => 'ñ', 'o' => 'ö', 'p' => 'þ', 'q' => 'ǫ', 'r' => 'ŕ', 's' => 'š', 't' => 'ţ', 'u' => 'û', 'v' => 'ṽ', 'w' => 'ŵ', 'x' => 'ẋ', 'y' => 'ý', 'z' => 'ž', '{' => '(', '|' => '¦', '}' => ')', '~' => '˞']) : $text;
     }
-    private function expand(string &$trans, string $visibleText) : void
-    {
+    private function expand(string &$trans, string $visibleText): void {
         if (1.0 >= $this->expansionFactor) {
             return;
         }
@@ -195,15 +189,13 @@ final class PseudoLocalizationTranslator implements TranslatorInterface
             }
         }
     }
-    private function addBrackets(string &$trans) : void
-    {
+    private function addBrackets(string &$trans): void {
         if (!$this->brackets) {
             return;
         }
         $trans = '[' . $trans . ']';
     }
-    private function strlen(string $s) : int
-    {
+    private function strlen(string $s): int {
         return \false === ($encoding = \mb_detect_encoding($s, null, \true)) ? \strlen($s) : \mb_strlen($s, $encoding);
     }
 }

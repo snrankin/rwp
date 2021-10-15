@@ -76,6 +76,7 @@ if (!function_exists('stripslashes_deep')) {
 		return \RWP\Vendor\stripslashes_deep(...func_get_args());
 	}
 }
+
 if (!function_exists('get_page_for_post_type')) {
 	function get_page_for_post_type() {
 		return \RWP\Vendor\get_page_for_post_type(...func_get_args());
@@ -165,6 +166,11 @@ if (!function_exists('findTransUnitMismatches')) {
         return \RWP\Vendor\findTransUnitMismatches(...func_get_args());
 	}
 }
+if (!function_exists('isTranslationCompleted')) {
+    function isTranslationCompleted() {
+        return \RWP\Vendor\isTranslationCompleted(...func_get_args());
+    }
+}
 if (!function_exists('printTitle')) {
 	function printTitle() {
 		return \RWP\Vendor\printTitle(...func_get_args());
@@ -203,6 +209,251 @@ if (!function_exists('dd')) {
 if (!function_exists('trigger_deprecation')) {
 	function trigger_deprecation() {
 		return \RWP\Vendor\trigger_deprecation(...func_get_args());
+    }
+}
+if (!function_exists('twig_raw_filter')) {
+    function twig_raw_filter() {
+        return \RWP\Vendor\twig_raw_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_escape_filter')) {
+    function twig_escape_filter() {
+        return \RWP\Vendor\twig_escape_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_convert_encoding')) {
+    function twig_convert_encoding() {
+        return \RWP\Vendor\twig_convert_encoding(...func_get_args());
+    }
+}
+if (!function_exists('twig_escape_filter_is_safe')) {
+    function twig_escape_filter_is_safe() {
+        return \RWP\Vendor\twig_escape_filter_is_safe(...func_get_args());
+    }
+}
+if (!function_exists('twig_template_from_string')) {
+    function twig_template_from_string() {
+        return \RWP\Vendor\twig_template_from_string(...func_get_args());
+    }
+}
+if (!function_exists('twig_cycle')) {
+    function twig_cycle() {
+        return \RWP\Vendor\twig_cycle(...func_get_args());
+    }
+}
+if (!function_exists('twig_random')) {
+    function twig_random() {
+        return \RWP\Vendor\twig_random(...func_get_args());
+    }
+}
+if (!function_exists('twig_test_iterable')) {
+    function twig_test_iterable() {
+        return \RWP\Vendor\twig_test_iterable(...func_get_args());
+    }
+}
+if (!function_exists('twig_to_array')) {
+    function twig_to_array() {
+        return \RWP\Vendor\twig_to_array(...func_get_args());
+    }
+}
+if (!function_exists('twig_date_format_filter')) {
+    function twig_date_format_filter() {
+        return \RWP\Vendor\twig_date_format_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_date_converter')) {
+    function twig_date_converter() {
+        return \RWP\Vendor\twig_date_converter(...func_get_args());
+    }
+}
+if (!function_exists('twig_date_modify_filter')) {
+    function twig_date_modify_filter() {
+        return \RWP\Vendor\twig_date_modify_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_replace_filter')) {
+    function twig_replace_filter() {
+        return \RWP\Vendor\twig_replace_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_round')) {
+    function twig_round() {
+        return \RWP\Vendor\twig_round(...func_get_args());
+    }
+}
+if (!function_exists('twig_number_format_filter')) {
+    function twig_number_format_filter() {
+        return \RWP\Vendor\twig_number_format_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_urlencode_filter')) {
+    function twig_urlencode_filter() {
+        return \RWP\Vendor\twig_urlencode_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_merge')) {
+    function twig_array_merge() {
+        return \RWP\Vendor\twig_array_merge(...func_get_args());
+    }
+}
+if (!function_exists('twig_slice')) {
+    function twig_slice() {
+        return \RWP\Vendor\twig_slice(...func_get_args());
+    }
+}
+if (!function_exists('twig_first')) {
+    function twig_first() {
+        return \RWP\Vendor\twig_first(...func_get_args());
+    }
+}
+if (!function_exists('twig_last')) {
+    function twig_last() {
+        return \RWP\Vendor\twig_last(...func_get_args());
+    }
+}
+if (!function_exists('twig_join_filter')) {
+    function twig_join_filter() {
+        return \RWP\Vendor\twig_join_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_split_filter')) {
+    function twig_split_filter() {
+        return \RWP\Vendor\twig_split_filter(...func_get_args());
+    }
+}
+if (!function_exists('_twig_default_filter')) {
+    function _twig_default_filter() {
+        return \RWP\Vendor\_twig_default_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_test_empty')) {
+    function twig_test_empty() {
+        return \RWP\Vendor\twig_test_empty(...func_get_args());
+    }
+}
+if (!function_exists('twig_get_array_keys_filter')) {
+    function twig_get_array_keys_filter() {
+        return \RWP\Vendor\twig_get_array_keys_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_reverse_filter')) {
+    function twig_reverse_filter() {
+        return \RWP\Vendor\twig_reverse_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_sort_filter')) {
+    function twig_sort_filter() {
+        return \RWP\Vendor\twig_sort_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_in_filter')) {
+    function twig_in_filter() {
+        return \RWP\Vendor\twig_in_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_compare')) {
+    function twig_compare() {
+        return \RWP\Vendor\twig_compare(...func_get_args());
+    }
+}
+if (!function_exists('twig_trim_filter')) {
+    function twig_trim_filter() {
+        return \RWP\Vendor\twig_trim_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_spaceless')) {
+    function twig_spaceless() {
+        return \RWP\Vendor\twig_spaceless(...func_get_args());
+    }
+}
+if (!function_exists('twig_length_filter')) {
+    function twig_length_filter() {
+        return \RWP\Vendor\twig_length_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_upper_filter')) {
+    function twig_upper_filter() {
+        return \RWP\Vendor\twig_upper_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_lower_filter')) {
+    function twig_lower_filter() {
+        return \RWP\Vendor\twig_lower_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_title_string_filter')) {
+    function twig_title_string_filter() {
+        return \RWP\Vendor\twig_title_string_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_capitalize_string_filter')) {
+    function twig_capitalize_string_filter() {
+        return \RWP\Vendor\twig_capitalize_string_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_call_macro')) {
+    function twig_call_macro() {
+        return \RWP\Vendor\twig_call_macro(...func_get_args());
+    }
+}
+if (!function_exists('twig_ensure_traversable')) {
+    function twig_ensure_traversable() {
+        return \RWP\Vendor\twig_ensure_traversable(...func_get_args());
+    }
+}
+if (!function_exists('twig_include')) {
+    function twig_include() {
+        return \RWP\Vendor\twig_include(...func_get_args());
+    }
+}
+if (!function_exists('twig_source')) {
+    function twig_source() {
+        return \RWP\Vendor\twig_source(...func_get_args());
+    }
+}
+if (!function_exists('twig_constant')) {
+    function twig_constant() {
+        return \RWP\Vendor\twig_constant(...func_get_args());
+    }
+}
+if (!function_exists('twig_constant_is_defined')) {
+    function twig_constant_is_defined() {
+        return \RWP\Vendor\twig_constant_is_defined(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_batch')) {
+    function twig_array_batch() {
+        return \RWP\Vendor\twig_array_batch(...func_get_args());
+    }
+}
+if (!function_exists('twig_get_attribute')) {
+    function twig_get_attribute() {
+        return \RWP\Vendor\twig_get_attribute(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_column')) {
+    function twig_array_column() {
+        return \RWP\Vendor\twig_array_column(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_filter')) {
+    function twig_array_filter() {
+        return \RWP\Vendor\twig_array_filter(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_map')) {
+    function twig_array_map() {
+        return \RWP\Vendor\twig_array_map(...func_get_args());
+    }
+}
+if (!function_exists('twig_array_reduce')) {
+    function twig_array_reduce() {
+        return \RWP\Vendor\twig_array_reduce(...func_get_args());
+    }
+}
+if (!function_exists('twig_var_dump')) {
+    function twig_var_dump() {
+        return \RWP\Vendor\twig_var_dump(...func_get_args());
 	}
 }
 if (!function_exists('append_config')) {
@@ -344,162 +595,6 @@ if (!function_exists('sendPage')) {
     function sendPage() {
         return \RWP\Vendor\sendPage(...func_get_args());
 	}
-}
-
-
-/**
- * Additional data helper functions
- * @link https://gist.github.com/derekmd/34da3c9861c14a7ebe4dc78582e20a35
- */
-
-if (!function_exists('data_dot')) {
-    /**
-     * Flatten a multi-dimensional object with dots.
-     *
-     * @param  array|ArrayAccess|object $object
-     * @param  string $prepend
-     *
-     * @return array
-     */
-    function data_dot($object, $prepend = '')
-    {
-        $results = [];
-
-        if (\RWP\Vendor\Illuminate\Support\Arr::accessible($object)) {
-            $array = $object;
-        } elseif (is_object($object)) {
-            $array = get_object_vars($object);
-        } else {
-            $array = [];
-        }
-
-        foreach ($array as $key => $value) {
-            if (is_array($value) && !empty($value)) {
-                $results = array_merge($results, data_dot($value, $prepend . $key . '.'));
-            } elseif ($value instanceof \RWP\Vendor\Illuminate\Support\Collection) {
-                $results = array_merge($results, data_dot($value->all(), $prepend . $key . '.'));
-            } elseif (is_object($value) && !empty($props = get_object_vars($value))) {
-                $results = array_merge($results, data_dot($props, $prepend . $key . '.'));
-            } else {
-                $results[$prepend . $key] = $value;
-            }
-        }
-
-        return $results;
-    }
-}
-
-if (!function_exists('data_has')) {
-    /**
-     * Find if there is an item in an array or object using "dot" notation.
-     *
-     * @param  mixed   $target
-     * @param  string|array  $keys
-     *
-     * @return bool
-     */
-    function data_has($target, $keys)
-    {
-        if (is_null($keys)) {
-            return false;
-        }
-
-        $keys = (array) $keys;
-
-        if (!$target) {
-            return false;
-        }
-
-        if ($keys === []) {
-            return false;
-        }
-
-        foreach ($keys as $i => $key) {
-            $subKeyTarget = $target;
-
-            if (\RWP\Vendor\Illuminate\Support\Arr::accessible($subKeyTarget) && \RWP\Vendor\Illuminate\Support\Arr::exists($subKeyTarget, $key)) {
-                continue;
-            }
-
-            if (is_object($subKeyTarget) && \RWP\Vendor\Illuminate\Support\Arr::exists(get_object_vars($subKeyTarget), $key)) {
-                continue;
-            }
-
-            foreach (explode('.', $key) as $segment) {
-                if ($segment === '*') {
-                    if ($subKeyTarget instanceof \RWP\Vendor\Illuminate\Support\Collection) {
-                        $subKeyTarget = $subKeyTarget->all();
-                    } elseif (!is_array($subKeyTarget)) {
-                        return false;
-                    }
-
-                    if (empty($key)) {
-                        return true;
-                    }
-
-                    return array_reduce($subKeyTarget, function ($present, $item) use ($keys, $i) {
-                        return $present || data_has($item, array_slice($keys, $i + 1));
-                    }, false);
-                }
-
-                if (\RWP\Vendor\Illuminate\Support\Arr::accessible($subKeyTarget) && \RWP\Vendor\Illuminate\Support\Arr::exists($subKeyTarget, $segment)) {
-                    $subKeyTarget = $subKeyTarget[$segment];
-                } elseif (is_object($subKeyTarget) && isset($subKeyTarget->{$segment})) {
-                    $subKeyTarget = $subKeyTarget->{$segment};
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-}
-
-if (!\function_exists('data_remove')) {
-    /**
-     * Set an item on an array or object using dot notation.
-     *
-     * @param  mixed  $target
-     * @param  string|array  $key
-     * @return mixed
-     */
-    function data_remove(&$target, $key)
-    {
-        $segments = \is_array($key) ? $key : \explode('.', $key);
-        if (($segment = \array_shift($segments)) === '*') {
-            if (!\RWP\Vendor\Illuminate\Support\Arr::accessible($target)) {
-                return $target;
-            }
-            if ($segments) {
-                foreach ($target as &$inner) {
-                    data_remove($inner, $segments);
-                }
-            }  else {
-				unset($target[$segment]);
-			}
-        } elseif (\RWP\Vendor\Illuminate\Support\Arr::accessible($target)) {
-            if ($segments) {
-                if (!\RWP\Vendor\Illuminate\Support\Arr::exists($target, $segment)) {
-                    return $target;
-                }
-                data_remove($target[$segment], $segments);
-            }  else {
-				unset($target[$segment]);
-			}
-        } elseif (\is_object($target)) {
-            if ($segments) {
-                if (!isset($target->{$segment})) {
-                    return $target;
-                }
-                data_remove($target->{$segment}, $segments);
-            } else {
-				unset($target->{$segment});
-			}
-        } else {
-            return $target;
-        }
-    }
 }
 
 return $loader;

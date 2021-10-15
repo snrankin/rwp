@@ -40,7 +40,7 @@ class Str
      * Get a new stringable object from the given string.
      *
      * @param  string  $string
-     * @returnStringable
+     * @return Stringable
      */
     public static function of($string)
     {
@@ -360,7 +360,7 @@ class Str
      *
      * @param  string  $pattern
      * @param  string  $subject
-     * @returnCollection
+     * @return Collection
      */
     public static function matchAll($pattern, $subject)
     {

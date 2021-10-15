@@ -8,29 +8,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\DependencyInjection;
 
 use RWP\Vendor\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use RWP\Vendor\Symfony\Component\DependencyInjection\ContainerBuilder;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Reference;
+
 /**
  * Adds tagged translation.extractor services to translation extractor.
  */
-class TranslationExtractorPass implements CompilerPassInterface
-{
+class TranslationExtractorPass implements CompilerPassInterface {
     private $extractorServiceId;
     private $extractorTag;
-    public function __construct(string $extractorServiceId = 'translation.extractor', string $extractorTag = 'translation.extractor')
-    {
+    public function __construct(string $extractorServiceId = 'translation.extractor', string $extractorTag = 'translation.extractor') {
         if (0 < \func_num_args()) {
             trigger_deprecation('symfony/translation', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
         }
         $this->extractorServiceId = $extractorServiceId;
         $this->extractorTag = $extractorTag;
     }
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if (!$container->hasDefinition($this->extractorServiceId)) {
             return;
         }

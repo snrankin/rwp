@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Redis;
 
-interface Connector
-{
+interface Connector {
     /**
      * Create a connection to a Redis cluster.
      *

@@ -5,8 +5,8 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 /**
  * @method static \Psr\Log\LoggerInterface channel(string $channel = null)
  * @method static \Psr\Log\LoggerInterface stack(array $channels, string $channel = null)
- * @method staticLogger withContext(array $context = [])
- * @method static \Illuminate\Log\Logger withoutContext()
+ * @method static Logger withContext(array $context = [])
+ * @method static Logger withoutContext()
  * @method static void alert(string $message, array $context = [])
  * @method static void critical(string $message, array $context = [])
  * @method static void debug(string $message, array $context = [])
@@ -19,7 +19,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void write(string $level, string $message, array $context = [])
  * @method static void listen(\Closure $callback)
  *
- * @seeLogger
+ * @see Logger
  */
 class Log extends Facade
 {

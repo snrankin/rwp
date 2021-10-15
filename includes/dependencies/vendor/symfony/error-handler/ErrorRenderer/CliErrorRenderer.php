@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler\ErrorRenderer;
 
 use RWP\Vendor\Symfony\Component\ErrorHandler\Exception\FlattenException;
@@ -18,18 +19,14 @@ use RWP\Vendor\Symfony\Component\VarDumper\Dumper\CliDumper;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class CliErrorRenderer implements ErrorRendererInterface
-{
+class CliErrorRenderer implements ErrorRendererInterface {
     /**
      * {@inheritdoc}
      */
-    public function render(\Throwable $exception) : FlattenException
-    {
+    public function render(\Throwable $exception): FlattenException {
         $cloner = new VarCloner();
-        $dumper = new class extends CliDumper
-        {
-            protected function supportsColors() : bool
-            {
+        $dumper = new class extends CliDumper {
+            protected function supportsColors(): bool {
                 $outputStream = $this->outputStream;
                 $this->outputStream = \fopen('php://stdout', 'w');
                 try {

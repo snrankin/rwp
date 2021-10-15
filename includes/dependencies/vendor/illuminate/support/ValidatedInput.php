@@ -5,8 +5,8 @@ namespace RWP\Vendor\Illuminate\Support;
 use ArrayIterator;
 use RWP\Vendor\Illuminate\Contracts\Support\ValidatedData;
 use stdClass;
-class ValidatedInput implements ValidatedData
-{
+
+class ValidatedInput implements ValidatedData {
     /**
      * The underlying input.
      *
@@ -19,8 +19,7 @@ class ValidatedInput implements ValidatedData
      * @param  array  $input
      * @return void
      */
-    public function __construct(array $input)
-    {
+    public function __construct(array $input) {
         $this->input = $input;
     }
     /**
@@ -29,8 +28,7 @@ class ValidatedInput implements ValidatedData
      * @param  array|mixed  $keys
      * @return array
      */
-    public function only($keys)
-    {
+    public function only($keys) {
         $results = [];
         $input = $this->input;
         $placeholder = new \stdClass();
@@ -48,8 +46,7 @@ class ValidatedInput implements ValidatedData
      * @param  array|mixed  $keys
      * @return array
      */
-    public function except($keys)
-    {
+    public function except($keys) {
         $keys = \is_array($keys) ? $keys : \func_get_args();
         $results = $this->input;
         Arr::forget($results, $keys);
@@ -61,8 +58,7 @@ class ValidatedInput implements ValidatedData
      * @param  array  $items
      * @return static
      */
-    public function merge(array $items)
-    {
+    public function merge(array $items) {
         return new static(\array_merge($this->input, $items));
     }
     /**
@@ -70,8 +66,7 @@ class ValidatedInput implements ValidatedData
      *
      * @returnCollection
      */
-    public function collect()
-    {
+    public function collect() {
         return new Collection($this->input);
     }
     /**
@@ -79,8 +74,7 @@ class ValidatedInput implements ValidatedData
      *
      * @return array
      */
-    public function all()
-    {
+    public function all() {
         return $this->input;
     }
     /**
@@ -88,8 +82,7 @@ class ValidatedInput implements ValidatedData
      *
      * @return array
      */
-    public function toArray()
-    {
+    public function toArray() {
         return $this->all();
     }
     /**
@@ -98,8 +91,7 @@ class ValidatedInput implements ValidatedData
      * @param  string  $name
      * @return mixed
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         return $this->input[$name];
     }
     /**
@@ -109,8 +101,7 @@ class ValidatedInput implements ValidatedData
      * @param  mixed  $value
      * @return mixed
      */
-    public function __set($name, $value)
-    {
+    public function __set($name, $value) {
         $this->input[$name] = $value;
     }
     /**
@@ -118,8 +109,7 @@ class ValidatedInput implements ValidatedData
      *
      * @return bool
      */
-    public function __isset($name)
-    {
+    public function __isset($name) {
         return isset($this->input[$name]);
     }
     /**
@@ -128,8 +118,7 @@ class ValidatedInput implements ValidatedData
      * @param  string  $name
      * @return void
      */
-    public function __unset($name)
-    {
+    public function __unset($name) {
         unset($this->input[$name]);
     }
     /**
@@ -139,8 +128,7 @@ class ValidatedInput implements ValidatedData
      * @return bool
      */
 
-    public function offsetExists($key)
-    {
+    public function offsetExists($key) {
         return isset($this->input[$key]);
     }
     /**
@@ -150,8 +138,7 @@ class ValidatedInput implements ValidatedData
      * @return mixed
      */
 
-    public function offsetGet($key)
-    {
+    public function offsetGet($key) {
         return $this->input[$key];
     }
     /**
@@ -162,8 +149,7 @@ class ValidatedInput implements ValidatedData
      * @return void
      */
 
-    public function offsetSet($key, $value)
-    {
+    public function offsetSet($key, $value) {
         if (\is_null($key)) {
             $this->input[] = $value;
         } else {
@@ -177,8 +163,7 @@ class ValidatedInput implements ValidatedData
      * @return void
      */
 
-    public function offsetUnset($key)
-    {
+    public function offsetUnset($key) {
         unset($this->input[$key]);
     }
     /**
@@ -187,8 +172,7 @@ class ValidatedInput implements ValidatedData
      * @return \ArrayIterator
      */
 
-    public function getIterator()
-    {
+    public function getIterator() {
         return new \ArrayIterator($this->input);
     }
 }

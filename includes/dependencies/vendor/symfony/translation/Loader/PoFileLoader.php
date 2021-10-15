@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 /**
  * @copyright Copyright (c) 2010, Union of RAD https://github.com/UnionOfRAD/lithium
  * @copyright Copyright (c) 2012, Clemens Tolboom
  */
-class PoFileLoader extends FileLoader
-{
+class PoFileLoader extends FileLoader {
     /**
      * Parses portable object (PO) format.
      *
@@ -59,8 +59,7 @@ class PoFileLoader extends FileLoader
      *
      * {@inheritdoc}
      */
-    protected function loadResource(string $resource)
-    {
+    protected function loadResource(string $resource) {
         $stream = \fopen($resource, 'r');
         $defaults = ['ids' => [], 'translated' => null];
         $messages = [];
@@ -113,8 +112,7 @@ class PoFileLoader extends FileLoader
      * A .po file could contain by error missing plural indexes. We need to
      * fix these before saving them.
      */
-    private function addMessage(array &$messages, array $item)
-    {
+    private function addMessage(array &$messages, array $item) {
         if (!empty($item['ids']['singular'])) {
             $id = \stripcslashes($item['ids']['singular']);
             if (isset($item['ids']['plural'])) {

@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Server;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
 use RWP\Vendor\Symfony\Component\VarDumper\Dumper\ContextProvider\ContextProviderInterface;
+
 /**
  * Forwards serialized Data clones to a server.
  *
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-class Connection
-{
+class Connection {
     private $host;
     private $contextProviders;
     private $socket;
@@ -26,20 +27,17 @@ class Connection
      * @param string                     $host             The server host
      * @param ContextProviderInterface[] $contextProviders Context providers indexed by context name
      */
-    public function __construct(string $host, array $contextProviders = [])
-    {
+    public function __construct(string $host, array $contextProviders = []) {
         if (!\str_contains($host, '://')) {
             $host = 'tcp://' . $host;
         }
         $this->host = $host;
         $this->contextProviders = $contextProviders;
     }
-    public function getContextProviders() : array
-    {
+    public function getContextProviders(): array {
         return $this->contextProviders;
     }
-    public function write(Data $data) : bool
-    {
+    public function write(Data $data): bool {
         $socketIsFresh = !$this->socket;
         if (!($this->socket = $this->socket ?: $this->createSocket())) {
             return \false;
@@ -68,12 +66,10 @@ class Connection
         }
         return \false;
     }
-    private static function nullErrorHandler(int $t, string $m)
-    {
+    private static function nullErrorHandler(int $t, string $m) {
         // no-op
     }
-    private function createSocket()
-    {
+    private function createSocket() {
         \set_error_handler([self::class, 'nullErrorHandler']);
         try {
             return \stream_socket_client($this->host, $errno, $errstr, 3, \STREAM_CLIENT_CONNECT | \STREAM_CLIENT_ASYNC_CONNECT);

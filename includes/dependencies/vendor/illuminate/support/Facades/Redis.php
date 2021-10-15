@@ -3,12 +3,12 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
- * @method staticConnection connection(string $name = null)
- * @method static \Illuminate\Redis\Limiters\ConcurrencyLimiterBuilder funnel(string $name)
- * @method static \Illuminate\Redis\Limiters\DurationLimiterBuilder throttle(string $name)
+ * @method static Connection connection(string $name = null)
+ * @method static ConcurrencyLimiterBuilder funnel(string $name)
+ * @method static DurationLimiterBuilder throttle(string $name)
  *
- * @seeRedisManager
- * @see \Illuminate\Contracts\Redis\Factory
+ * @see RedisManager
+ * @see Factory
  */
 class Redis extends Facade
 {

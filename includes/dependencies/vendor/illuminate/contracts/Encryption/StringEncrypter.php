@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Encryption;
 
-interface StringEncrypter
-{
+interface StringEncrypter {
     /**
      * Encrypt a string without serialization.
      *

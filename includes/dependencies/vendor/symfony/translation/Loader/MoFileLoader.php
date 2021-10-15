@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidResourceException;
+
 /**
  * @copyright Copyright (c) 2010, Union of RAD http://union-of-rad.org (http://lithify.me/)
  */
-class MoFileLoader extends FileLoader
-{
+class MoFileLoader extends FileLoader {
     /**
      * Magic used for validating the format of an MO file as well as
      * detecting if the machine used to create that file was little endian.
@@ -36,8 +37,7 @@ class MoFileLoader extends FileLoader
      *
      * {@inheritdoc}
      */
-    protected function loadResource(string $resource)
-    {
+    protected function loadResource(string $resource) {
         $stream = \fopen($resource, 'r');
         $stat = \fstat($stream);
         if ($stat['size'] < self::MO_HEADER_SIZE) {
@@ -105,8 +105,7 @@ class MoFileLoader extends FileLoader
      *
      * @param resource $stream
      */
-    private function readLong($stream, bool $isBigEndian) : int
-    {
+    private function readLong($stream, bool $isBigEndian): int {
         $result = \unpack($isBigEndian ? 'N1' : 'V1', \fread($stream, 4));
         $result = \current($result);
         return (int) \substr($result, -8);

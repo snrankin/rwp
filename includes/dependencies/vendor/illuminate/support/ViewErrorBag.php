@@ -4,11 +4,11 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use Countable;
 use RWP\Vendor\Illuminate\Contracts\Support\MessageBag as MessageBagContract;
+
 /**
  * @mixinMessageBag
  */
-class ViewErrorBag implements \Countable
-{
+class ViewErrorBag implements \Countable {
     /**
      * The array of the view error bags.
      *
@@ -21,8 +21,7 @@ class ViewErrorBag implements \Countable
      * @param  string  $key
      * @return bool
      */
-    public function hasBag($key = 'default')
-    {
+    public function hasBag($key = 'default') {
         return isset($this->bags[$key]);
     }
     /**
@@ -31,8 +30,7 @@ class ViewErrorBag implements \Countable
      * @param  string  $key
      * @returnMessageBag
      */
-    public function getBag($key)
-    {
+    public function getBag($key) {
         return Arr::get($this->bags, $key) ?: new MessageBag();
     }
     /**
@@ -40,8 +38,7 @@ class ViewErrorBag implements \Countable
      *
      * @return array
      */
-    public function getBags()
-    {
+    public function getBags() {
         return $this->bags;
     }
     /**
@@ -51,8 +48,7 @@ class ViewErrorBag implements \Countable
      * @param MessageBag  $bag
      * @return $this
      */
-    public function put($key, MessageBag $bag)
-    {
+    public function put($key, MessageBag $bag) {
         $this->bags[$key] = $bag;
         return $this;
     }
@@ -61,8 +57,7 @@ class ViewErrorBag implements \Countable
      *
      * @return bool
      */
-    public function any()
-    {
+    public function any() {
         return $this->count() > 0;
     }
     /**
@@ -71,8 +66,7 @@ class ViewErrorBag implements \Countable
      * @return int
      */
 
-    public function count()
-    {
+    public function count() {
         return $this->getBag('default')->count();
     }
     /**
@@ -82,8 +76,7 @@ class ViewErrorBag implements \Countable
      * @param  array  $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
-    {
+    public function __call($method, $parameters) {
         return $this->getBag('default')->{$method}(...$parameters);
     }
     /**
@@ -92,8 +85,7 @@ class ViewErrorBag implements \Countable
      * @param  string  $key
      * @returnMessageBag
      */
-    public function __get($key)
-    {
+    public function __get($key) {
         return $this->getBag($key);
     }
     /**
@@ -103,8 +95,7 @@ class ViewErrorBag implements \Countable
      * @param MessageBag  $value
      * @return void
      */
-    public function __set($key, $value)
-    {
+    public function __set($key, $value) {
         $this->put($key, $value);
     }
     /**
@@ -112,8 +103,7 @@ class ViewErrorBag implements \Countable
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return (string) $this->getBag('default');
     }
 }

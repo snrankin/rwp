@@ -5,13 +5,13 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 use RWP\Vendor\Laravel\Ui\UiServiceProvider;
 use RuntimeException;
 /**
- * @method staticAuthManager extend(string $driver, \Closure $callback)
- * @method static \Illuminate\Auth\AuthManager provider(string $name, \Closure $callback)
- * @method static \Illuminate\Contracts\Auth\Authenticatable loginUsingId(mixed $id, bool $remember = false)
- * @method static \Illuminate\Contracts\Auth\Authenticatable|null user()
- * @method static \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
- * @method static \Illuminate\Contracts\Auth\UserProvider|null createUserProvider(string $provider = null)
- * @method static \Symfony\Component\HttpFoundation\Response|null onceBasic(string $field = 'email',array $extraConditions = [])
+ * @method static AuthManager extend(string $driver, \Closure $callback)
+ * @method static AuthManager provider(string $name, \Closure $callback)
+ * @method static Authenticatable loginUsingId(mixed $id, bool $remember = false)
+ * @method static Authenticatable|null user()
+ * @method static Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
+ * @method static UserProvider|null createUserProvider(string $provider = null)
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\Response|null onceBasic(string $field = 'email',array $extraConditions = [])
  * @method static bool attempt(array $credentials = [], bool $remember = false)
  * @method static bool check()
  * @method static bool guest()
@@ -27,10 +27,10 @@ use RuntimeException;
  * @method static void setUser(\Illuminate\Contracts\Auth\Authenticatable $user)
  * @method static void shouldUse(string $name);
  *
- * @seeAuthManager
- * @see \Illuminate\Contracts\Auth\Factory
- * @see \Illuminate\Contracts\Auth\Guard
- * @see \Illuminate\Contracts\Auth\StatefulGuard
+ * @see AuthManager
+ * @see Factory
+ * @see Guard
+ * @see StatefulGuard
  */
 class Auth extends Facade
 {

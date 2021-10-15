@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Mail;
 
-interface Mailer
-{
+interface Mailer {
     /**
      * Begin the process of mailing a mailable class instance.
      *

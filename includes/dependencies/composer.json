@@ -30,27 +30,13 @@
         "press-bits\/media-library-svg-display": "^0.1.2",
         "seravo\/wp-custom-bulk-actions": "^0.1.4",
         "stevegrunwell\/wp-cache-remember": "^1.1",
-        "symfony\/class-loader": "^3.4",
+        "symfony\/debug-bundle": "^5.3",
         "symfony\/error-handler": "^5.2",
         "symfony\/filesystem": "^5.2",
         "symfony\/finder": "^5.2",
         "symfony\/var-dumper": "^5.2",
         "wa72\/html-pretty-min": "^0.2.0",
         "wa72\/htmlpagedom": "^2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "RWP\\Vendor\\WPBP\\": "externals/wpbp/",
-            "RWP\\Vendor\\SafeSVG\\": "vendor/wordpress/safe-svg/includes",
-            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor/wordpress/hierarchy/src/"
-        },
-        "files": [
-            "vendor/wordpress/extended-cpts/extended-cpts.php",
-            "vendor/wordpress/wp-cache-remember/wp-cache-remember.php",
-            "vendor/wordpress/wp-custom-bulk-actions/custom-bulk-actions.php",
-            "vendor/wordpress/page-for-post-type/page-for-post-type.php",
-            "vendor/wordpress/safe-svg/safe-svg.php"
-        ]
     },
     "extra": {
         "installer-types": [
@@ -112,7 +98,7 @@
             "composer dump-autoload --working-dir . -o -a --no-dev"
         ],
         "dump-vendor": [
-            "composer dump-autoload --working-dir dependencies -o"
+            "composer dump-autoload --working-dir dependencies -o -a --no-dev"
         ],
         "prefix-deps": [
             "php-scoper add-prefix --config=.\/scoper.inc.php"
@@ -121,5 +107,20 @@
     "require-dev": {
         "oomphinc\/composer-installers-extender": "^2.0",
         "wikimedia\/composer-merge-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RWP\\Vendor\\WPBP\\": "externals/wpbp/",
+            "RWP\\Vendor\\SafeSVG\\": "vendor/wordpress/safe-svg/includes",
+            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor/wordpress/hierarchy/src/"
+        },
+        "files": [
+            "externals/data.php",
+            "vendor/wordpress/extended-cpts/extended-cpts.php",
+            "vendor/wordpress/wp-cache-remember/wp-cache-remember.php",
+            "vendor/wordpress/wp-custom-bulk-actions/custom-bulk-actions.php",
+            "vendor/wordpress/page-for-post-type/page-for-post-type.php",
+            "vendor/wordpress/safe-svg/safe-svg.php"
+        ]
     }
 }

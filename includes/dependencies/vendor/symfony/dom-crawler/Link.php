@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\DomCrawler;
 
 /**
@@ -15,14 +16,11 @@ namespace RWP\Vendor\Symfony\Component\DomCrawler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Link extends AbstractUriElement
-{
-    protected function getRawUri()
-    {
+class Link extends AbstractUriElement {
+    protected function getRawUri() {
         return $this->node->getAttribute('href');
     }
-    protected function setNode(\DOMElement $node)
-    {
+    protected function setNode(\DOMElement $node) {
         if ('a' !== $node->nodeName && 'area' !== $node->nodeName && 'link' !== $node->nodeName) {
             throw new \LogicException(\sprintf('Unable to navigate from a "%s" tag.', $node->nodeName));
         }

@@ -4,6 +4,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Database\Eloquent\Model;
 use RWP\Vendor\Illuminate\Support\Testing\Fakes\EventFake;
+
 /**
  * @method static \Closure createClassListener(string $listener, bool $wildcard = false)
  * @method static \Closure makeListener(\Closure|string $listener, bool $wildcard = false)
@@ -26,16 +27,14 @@ use RWP\Vendor\Illuminate\Support\Testing\Fakes\EventFake;
  *
  * @seeDispatcher
  */
-class Event extends Facade
-{
+class Event extends Facade {
     /**
      * Replace the bound instance with a fake.
      *
      * @param  array|string  $eventsToFake
      * @returnEventFake
      */
-    public static function fake($eventsToFake = [])
-    {
+    public static function fake($eventsToFake = []) {
         static::swap($fake = new EventFake(static::getFacadeRoot(), $eventsToFake));
         Model::setEventDispatcher($fake);
         Cache::refreshEventDispatcher();
@@ -48,11 +47,10 @@ class Event extends Facade
      * @param  array  $eventsToFake
      * @return mixed
      */
-    public static function fakeFor(callable $callable, array $eventsToFake = [])
-    {
+    public static function fakeFor(callable $callable, array $eventsToFake = []) {
         $originalDispatcher = static::getFacadeRoot();
         static::fake($eventsToFake);
-        return tap($callable(), function () use($originalDispatcher) {
+        return tap($callable(), function () use ($originalDispatcher) {
             static::swap($originalDispatcher);
             Model::setEventDispatcher($originalDispatcher);
             Cache::refreshEventDispatcher();
@@ -63,8 +61,7 @@ class Event extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'events';
     }
 }

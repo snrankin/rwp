@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Command;
 
 use RWP\Vendor\Symfony\Component\Console\Command\Command;
@@ -19,6 +20,7 @@ use RWP\Vendor\Symfony\Component\Console\Output\OutputInterface;
 use RWP\Vendor\Symfony\Component\Console\Style\SymfonyStyle;
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Util\XliffUtils;
+
 /**
  * Validates XLIFF files syntax and outputs encountered errors.
  *
@@ -26,8 +28,7 @@ use RWP\Vendor\Symfony\Component\Translation\Util\XliffUtils;
  * @author Robin Chalas <robin.chalas@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-class XliffLintCommand extends Command
-{
+class XliffLintCommand extends Command {
     protected static $defaultName = 'lint:xliff';
     protected static $defaultDescription = 'Lint an XLIFF file and outputs encountered errors';
     private $format;
@@ -35,8 +36,7 @@ class XliffLintCommand extends Command
     private $directoryIteratorProvider;
     private $isReadableProvider;
     private $requireStrictFileNames;
-    public function __construct(string $name = null, callable $directoryIteratorProvider = null, callable $isReadableProvider = null, bool $requireStrictFileNames = \true)
-    {
+    public function __construct(string $name = null, callable $directoryIteratorProvider = null, callable $isReadableProvider = null, bool $requireStrictFileNames = \true) {
         parent::__construct($name);
         $this->directoryIteratorProvider = $directoryIteratorProvider;
         $this->isReadableProvider = $isReadableProvider;
@@ -45,9 +45,9 @@ class XliffLintCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
-    {
-        $this->setDescription(self::$defaultDescription)->addArgument('filename', InputArgument::IS_ARRAY, 'A file, a directory or "-" for reading from STDIN')->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'txt')->setHelp(<<<EOF
+    protected function configure() {
+        $this->setDescription(self::$defaultDescription)->addArgument('filename', InputArgument::IS_ARRAY, 'A file, a directory or "-" for reading from STDIN')->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'txt')->setHelp(
+            <<<EOF
 The <info>%command.name%</info> command lints an XLIFF file and outputs to STDOUT
 the first encountered syntax error.
 
@@ -65,10 +65,9 @@ Or of a whole directory:
   <info>php %command.full_name% dirname --format=json</info>
 
 EOF
-);
+        );
     }
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $io = new SymfonyStyle($input, $output);
         $filenames = (array) $input->getArgument('filename');
         $this->format = $input->getOption('format');
@@ -90,8 +89,7 @@ EOF
         }
         return $this->display($io, $filesInfo);
     }
-    private function validate(string $content, string $file = null) : array
-    {
+    private function validate(string $content, string $file = null): array {
         $errors = [];
         // Avoid: Warning DOMDocument::loadXML(): Empty string supplied as input
         if ('' === \trim($content)) {
@@ -118,8 +116,7 @@ EOF
         \libxml_use_internal_errors($internal);
         return ['file' => $file, 'valid' => 0 === \count($errors), 'messages' => $errors];
     }
-    private function display(SymfonyStyle $io, array $files)
-    {
+    private function display(SymfonyStyle $io, array $files) {
         switch ($this->format) {
             case 'txt':
                 return $this->displayTxt($io, $files);
@@ -129,8 +126,7 @@ EOF
                 throw new InvalidArgumentException(\sprintf('The format "%s" is not supported.', $this->format));
         }
     }
-    private function displayTxt(SymfonyStyle $io, array $filesInfo)
-    {
+    private function displayTxt(SymfonyStyle $io, array $filesInfo) {
         $countFiles = \count($filesInfo);
         $erroredFiles = 0;
         foreach ($filesInfo as $info) {
@@ -152,10 +148,9 @@ EOF
         }
         return \min($erroredFiles, 1);
     }
-    private function displayJson(SymfonyStyle $io, array $filesInfo)
-    {
+    private function displayJson(SymfonyStyle $io, array $filesInfo) {
         $errors = 0;
-        \array_walk($filesInfo, function (&$v) use(&$errors) {
+        \array_walk($filesInfo, function (&$v) use (&$errors) {
             $v['file'] = (string) $v['file'];
             if (!$v['valid']) {
                 ++$errors;
@@ -164,8 +159,7 @@ EOF
         $io->writeln(\json_encode($filesInfo, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
         return \min($errors, 1);
     }
-    private function getFiles(string $fileOrDirectory)
-    {
+    private function getFiles(string $fileOrDirectory) {
         if (\is_file($fileOrDirectory)) {
             (yield new \SplFileInfo($fileOrDirectory));
             return;
@@ -177,8 +171,7 @@ EOF
             (yield $file);
         }
     }
-    private function getDirectoryIterator(string $directory)
-    {
+    private function getDirectoryIterator(string $directory) {
         $default = function ($directory) {
             return new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS), \RecursiveIteratorIterator::LEAVES_ONLY);
         };
@@ -187,8 +180,7 @@ EOF
         }
         return $default($directory);
     }
-    private function isReadable(string $fileOrDirectory)
-    {
+    private function isReadable(string $fileOrDirectory) {
         $default = function ($fileOrDirectory) {
             return \is_readable($fileOrDirectory);
         };
@@ -197,8 +189,7 @@ EOF
         }
         return $default($fileOrDirectory);
     }
-    private function getTargetLanguageFromFile(\DOMDocument $xliffContents) : ?string
-    {
+    private function getTargetLanguageFromFile(\DOMDocument $xliffContents): ?string {
         foreach ($xliffContents->getElementsByTagName('file')[0]->attributes ?? [] as $attribute) {
             if ('target-language' === $attribute->nodeName) {
                 return $attribute->nodeValue;

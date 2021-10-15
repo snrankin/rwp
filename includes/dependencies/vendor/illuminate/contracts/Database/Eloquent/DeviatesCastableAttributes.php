@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface DeviatesCastableAttributes
-{
+interface DeviatesCastableAttributes {
     /**
      * Increment the attribute.
      *

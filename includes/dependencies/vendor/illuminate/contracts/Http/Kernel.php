@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Http;
 
-interface Kernel
-{
+interface Kernel {
     /**
      * Bootstrap the application for HTTP requests.
      *
@@ -13,15 +12,15 @@ interface Kernel
     /**
      * Handle an incoming HTTP request.
      *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Request  $request
+     * @return \RWP\Vendor\Symfony\HttpFoundation\Response
      */
     public function handle($request);
     /**
      * Perform any final actions for the request lifecycle.
      *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @param  \Symfony\Component\HttpFoundation\Response  $response
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Request  $request
+     * @param  \RWP\Vendor\Symfony\HttpFoundation\Response  $response
      * @return void
      */
     public function terminate($request, $response);

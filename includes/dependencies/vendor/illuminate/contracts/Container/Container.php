@@ -4,8 +4,8 @@ namespace RWP\Vendor\Illuminate\Contracts\Container;
 
 use Closure;
 use RWP\Vendor\Psr\Container\ContainerInterface;
-interface Container extends ContainerInterface
-{
+
+interface Container extends ContainerInterface {
     /**
      * Determine if the given abstract type has been bound.
      *

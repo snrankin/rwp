@@ -4,8 +4,6 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use ArrayAccess;
 use ArrayIterator;
-use RWP\Vendor\Illuminate\Collections\ItemNotFoundException;
-use RWP\Vendor\Illuminate\Collections\MultipleItemsFoundException;
 use RWP\Vendor\Illuminate\Support\Traits\EnumeratesValues;
 use RWP\Vendor\Illuminate\Support\Traits\Macroable;
 use stdClass;
@@ -423,6 +421,25 @@ class Collection implements \ArrayAccess, Enumerable
         return \true;
     }
     /**
+     * Determine if any of the keys exist in the collection.
+     *
+     * @param  mixed  $key
+     * @return bool
+     */
+    public function hasAny($key)
+    {
+        if ($this->isEmpty()) {
+            return \false;
+        }
+        $keys = \is_array($key) ? $key : \func_get_args();
+        foreach ($keys as $value) {
+            if ($this->has($value)) {
+                return \true;
+            }
+        }
+        return \false;
+    }
+    /**
      * Concatenate values of a given key as a string.
      *
      * @param  string  $value
@@ -667,8 +684,8 @@ class Collection implements \ArrayAccess, Enumerable
     public function pop($count = 1)
     {
         if ($count === 1) {
-        return \array_pop($this->items);
-    }
+            return \array_pop($this->items);
+        }
         if ($this->isEmpty()) {
             return new static();
         }
@@ -813,7 +830,7 @@ class Collection implements \ArrayAccess, Enumerable
     public function shift($count = 1)
     {
         if ($count === 1) {
-        return \array_shift($this->items);
+            return \array_shift($this->items);
         }
         if ($this->isEmpty()) {
             return new static();
@@ -958,7 +975,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $value
      * @return mixed
      *
-     * @throwsItemNotFoundException
+     * @throws ItemNotFoundException
      */
     public function firstOrFail($key = null, $operator = null, $value = null)
     {
@@ -1333,5 +1350,3 @@ class Collection implements \ArrayAccess, Enumerable
         unset($this->items[$key]);
     }
 }
-
-class_alias(__NAMESPACE__ . '\\Collection', 'RWP_Vendor\Illuminate\Support\Collection', true);

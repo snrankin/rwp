@@ -9,8 +9,8 @@ use RWP\Vendor\Illuminate\Contracts\Foundation\CachesRoutes;
 use RWP\Vendor\Illuminate\Contracts\Support\DeferrableProvider;
 use RWP\Vendor\Illuminate\Database\Eloquent\Factory as ModelFactory;
 use RWP\Vendor\Illuminate\View\Compilers\BladeCompiler;
-abstract class ServiceProvider
-{
+
+abstract class ServiceProvider {
     /**
      * The application instance.
      *
@@ -47,8 +47,7 @@ abstract class ServiceProvider
      * @param Application  $app
      * @return void
      */
-    public function __construct($app)
-    {
+    public function __construct($app) {
         $this->app = $app;
     }
     /**
@@ -56,8 +55,7 @@ abstract class ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         //
     }
     /**
@@ -66,8 +64,7 @@ abstract class ServiceProvider
      * @param  \Closure  $callback
      * @return void
      */
-    public function booting(\Closure $callback)
-    {
+    public function booting(\Closure $callback) {
         $this->bootingCallbacks[] = $callback;
     }
     /**
@@ -76,8 +73,7 @@ abstract class ServiceProvider
      * @param  \Closure  $callback
      * @return void
      */
-    public function booted(\Closure $callback)
-    {
+    public function booted(\Closure $callback) {
         $this->bootedCallbacks[] = $callback;
     }
     /**
@@ -85,8 +81,7 @@ abstract class ServiceProvider
      *
      * @return void
      */
-    public function callBootingCallbacks()
-    {
+    public function callBootingCallbacks() {
         foreach ($this->bootingCallbacks as $callback) {
             $this->app->call($callback);
         }
@@ -96,8 +91,7 @@ abstract class ServiceProvider
      *
      * @return void
      */
-    public function callBootedCallbacks()
-    {
+    public function callBootedCallbacks() {
         foreach ($this->bootedCallbacks as $callback) {
             $this->app->call($callback);
         }
@@ -109,8 +103,7 @@ abstract class ServiceProvider
      * @param  string  $key
      * @return void
      */
-    protected function mergeConfigFrom($path, $key)
-    {
+    protected function mergeConfigFrom($path, $key) {
         if (!($this->app instanceof CachesConfiguration && $this->app->configurationIsCached())) {
             $config = $this->app->make('config');
             $config->set($key, \array_merge(require $path, $config->get($key, [])));
@@ -122,8 +115,7 @@ abstract class ServiceProvider
      * @param  string  $path
      * @return void
      */
-    protected function loadRoutesFrom($path)
-    {
+    protected function loadRoutesFrom($path) {
         if (!($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
             require $path;
         }
@@ -135,9 +127,8 @@ abstract class ServiceProvider
      * @param  string  $namespace
      * @return void
      */
-    protected function loadViewsFrom($path, $namespace)
-    {
-        $this->callAfterResolving('view', function ($view) use($path, $namespace) {
+    protected function loadViewsFrom($path, $namespace) {
+        $this->callAfterResolving('view', function ($view) use ($path, $namespace) {
             if (isset($this->app->config['view']['paths']) && \is_array($this->app->config['view']['paths'])) {
                 foreach ($this->app->config['view']['paths'] as $viewPath) {
                     if (\is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
@@ -155,9 +146,8 @@ abstract class ServiceProvider
      * @param  array  $components
      * @return void
      */
-    protected function loadViewComponentsAs($prefix, array $components)
-    {
-        $this->callAfterResolving(BladeCompiler::class, function ($blade) use($prefix, $components) {
+    protected function loadViewComponentsAs($prefix, array $components) {
+        $this->callAfterResolving(BladeCompiler::class, function ($blade) use ($prefix, $components) {
             foreach ($components as $alias => $component) {
                 $blade->component($component, \is_string($alias) ? $alias : null, $prefix);
             }
@@ -170,9 +160,8 @@ abstract class ServiceProvider
      * @param  string  $namespace
      * @return void
      */
-    protected function loadTranslationsFrom($path, $namespace)
-    {
-        $this->callAfterResolving('translator', function ($translator) use($path, $namespace) {
+    protected function loadTranslationsFrom($path, $namespace) {
+        $this->callAfterResolving('translator', function ($translator) use ($path, $namespace) {
             $translator->addNamespace($namespace, $path);
         });
     }
@@ -182,9 +171,8 @@ abstract class ServiceProvider
      * @param  string  $path
      * @return void
      */
-    protected function loadJsonTranslationsFrom($path)
-    {
-        $this->callAfterResolving('translator', function ($translator) use($path) {
+    protected function loadJsonTranslationsFrom($path) {
+        $this->callAfterResolving('translator', function ($translator) use ($path) {
             $translator->addJsonPath($path);
         });
     }
@@ -194,9 +182,8 @@ abstract class ServiceProvider
      * @param  array|string  $paths
      * @return void
      */
-    protected function loadMigrationsFrom($paths)
-    {
-        $this->callAfterResolving('migrator', function ($migrator) use($paths) {
+    protected function loadMigrationsFrom($paths) {
+        $this->callAfterResolving('migrator', function ($migrator) use ($paths) {
             foreach ((array) $paths as $path) {
                 $migrator->path($path);
             }
@@ -210,9 +197,8 @@ abstract class ServiceProvider
      * @param  array|string  $paths
      * @return void
      */
-    protected function loadFactoriesFrom($paths)
-    {
-        $this->callAfterResolving(Factory::class, function ($factory) use($paths) {
+    protected function loadFactoriesFrom($paths) {
+        $this->callAfterResolving(Factory::class, function ($factory) use ($paths) {
             foreach ((array) $paths as $path) {
                 $factory->load($path);
             }
@@ -225,8 +211,7 @@ abstract class ServiceProvider
      * @param  callable  $callback
      * @return void
      */
-    protected function callAfterResolving($name, $callback)
-    {
+    protected function callAfterResolving($name, $callback) {
         $this->app->afterResolving($name, $callback);
         if ($this->app->resolved($name)) {
             $callback($this->app->make($name), $this->app);
@@ -239,8 +224,7 @@ abstract class ServiceProvider
      * @param  mixed  $groups
      * @return void
      */
-    protected function publishes(array $paths, $groups = null)
-    {
+    protected function publishes(array $paths, $groups = null) {
         $this->ensurePublishArrayInitialized($class = static::class);
         static::$publishes[$class] = \array_merge(static::$publishes[$class], $paths);
         foreach ((array) $groups as $group) {
@@ -253,8 +237,7 @@ abstract class ServiceProvider
      * @param  string  $class
      * @return void
      */
-    protected function ensurePublishArrayInitialized($class)
-    {
+    protected function ensurePublishArrayInitialized($class) {
         if (!\array_key_exists($class, static::$publishes)) {
             static::$publishes[$class] = [];
         }
@@ -266,8 +249,7 @@ abstract class ServiceProvider
      * @param  array  $paths
      * @return void
      */
-    protected function addPublishGroup($group, $paths)
-    {
+    protected function addPublishGroup($group, $paths) {
         if (!\array_key_exists($group, static::$publishGroups)) {
             static::$publishGroups[$group] = [];
         }
@@ -280,8 +262,7 @@ abstract class ServiceProvider
      * @param  string|null  $group
      * @return array
      */
-    public static function pathsToPublish($provider = null, $group = null)
-    {
+    public static function pathsToPublish($provider = null, $group = null) {
         if (!\is_null($paths = static::pathsForProviderOrGroup($provider, $group))) {
             return $paths;
         }
@@ -296,8 +277,7 @@ abstract class ServiceProvider
      * @param  string|null  $group
      * @return array
      */
-    protected static function pathsForProviderOrGroup($provider, $group)
-    {
+    protected static function pathsForProviderOrGroup($provider, $group) {
         if ($provider && $group) {
             return static::pathsForProviderAndGroup($provider, $group);
         } elseif ($group && \array_key_exists($group, static::$publishGroups)) {
@@ -315,8 +295,7 @@ abstract class ServiceProvider
      * @param  string  $group
      * @return array
      */
-    protected static function pathsForProviderAndGroup($provider, $group)
-    {
+    protected static function pathsForProviderAndGroup($provider, $group) {
         if (!empty(static::$publishes[$provider]) && !empty(static::$publishGroups[$group])) {
             return \array_intersect_key(static::$publishes[$provider], static::$publishGroups[$group]);
         }
@@ -327,8 +306,7 @@ abstract class ServiceProvider
      *
      * @return array
      */
-    public static function publishableProviders()
-    {
+    public static function publishableProviders() {
         return \array_keys(static::$publishes);
     }
     /**
@@ -336,8 +314,7 @@ abstract class ServiceProvider
      *
      * @return array
      */
-    public static function publishableGroups()
-    {
+    public static function publishableGroups() {
         return \array_keys(static::$publishGroups);
     }
     /**
@@ -346,10 +323,9 @@ abstract class ServiceProvider
      * @param  array|mixed  $commands
      * @return void
      */
-    public function commands($commands)
-    {
+    public function commands($commands) {
         $commands = \is_array($commands) ? $commands : \func_get_args();
-        Application::starting(function ($artisan) use($commands) {
+        Application::starting(function ($artisan) use ($commands) {
             $artisan->resolveCommands($commands);
         });
     }
@@ -358,8 +334,7 @@ abstract class ServiceProvider
      *
      * @return array
      */
-    public function provides()
-    {
+    public function provides() {
         return [];
     }
     /**
@@ -367,8 +342,7 @@ abstract class ServiceProvider
      *
      * @return array
      */
-    public function when()
-    {
+    public function when() {
         return [];
     }
     /**
@@ -376,8 +350,7 @@ abstract class ServiceProvider
      *
      * @return bool
      */
-    public function isDeferred()
-    {
+    public function isDeferred() {
         return $this instanceof DeferrableProvider;
     }
 }

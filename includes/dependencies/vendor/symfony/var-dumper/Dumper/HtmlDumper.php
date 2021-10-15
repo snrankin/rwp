@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Dumper;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Cursor;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
+
 /**
  * HtmlDumper dumps variables as HTML.
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class HtmlDumper extends CliDumper
-{
+class HtmlDumper extends CliDumper {
     public static $defaultOutput = 'php://output';
     protected static $themes = ['dark' => ['default' => 'background-color:#18171B; color:#FF8400; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:99999; word-break: break-all', 'num' => 'font-weight:bold; color:#1299DA', 'const' => 'font-weight:bold', 'str' => 'font-weight:bold; color:#56DB3A', 'note' => 'color:#1299DA', 'ref' => 'color:#A0A0A0', 'public' => 'color:#FFFFFF', 'protected' => 'color:#FFFFFF', 'private' => 'color:#FFFFFF', 'meta' => 'color:#B729D9', 'key' => 'color:#56DB3A', 'index' => 'color:#1299DA', 'ellipsis' => 'color:#FF8400', 'ns' => 'user-select:none;'], 'light' => ['default' => 'background:none; color:#CC7832; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:99999; word-break: break-all', 'num' => 'font-weight:bold; color:#1299DA', 'const' => 'font-weight:bold', 'str' => 'font-weight:bold; color:#629755;', 'note' => 'color:#6897BB', 'ref' => 'color:#6E6E6E', 'public' => 'color:#262626', 'protected' => 'color:#262626', 'private' => 'color:#262626', 'meta' => 'color:#B729D9', 'key' => 'color:#789339', 'index' => 'color:#1299DA', 'ellipsis' => 'color:#CC7832', 'ns' => 'user-select:none;']];
     protected $dumpHeader;
@@ -34,8 +35,7 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function __construct($output = null, string $charset = null, int $flags = 0)
-    {
+    public function __construct($output = null, string $charset = null, int $flags = 0) {
         AbstractDumper::__construct($output, $charset, $flags);
         $this->dumpId = 'sf-dump-' . \mt_rand();
         $this->displayOptions['fileLinkFormat'] = \ini_get('xdebug.file_link_format') ?: \get_cfg_var('xdebug.file_link_format');
@@ -44,13 +44,11 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function setStyles(array $styles)
-    {
+    public function setStyles(array $styles) {
         $this->headerIsDumped = \false;
         $this->styles = $styles + $this->styles;
     }
-    public function setTheme(string $themeName)
-    {
+    public function setTheme(string $themeName) {
         if (!isset(static::$themes[$themeName])) {
             throw new \InvalidArgumentException(\sprintf('Theme "%s" does not exist in class "%s".', $themeName, static::class));
         }
@@ -61,31 +59,27 @@ class HtmlDumper extends CliDumper
      *
      * @param array $displayOptions A map of display options to customize the behavior
      */
-    public function setDisplayOptions(array $displayOptions)
-    {
+    public function setDisplayOptions(array $displayOptions) {
         $this->headerIsDumped = \false;
         $this->displayOptions = $displayOptions + $this->displayOptions;
     }
     /**
      * Sets an HTML header that will be dumped once in the output stream.
      */
-    public function setDumpHeader(?string $header)
-    {
+    public function setDumpHeader(?string $header) {
         $this->dumpHeader = $header;
     }
     /**
      * Sets an HTML prefix and suffix that will encapse every single dump.
      */
-    public function setDumpBoundaries(string $prefix, string $suffix)
-    {
+    public function setDumpBoundaries(string $prefix, string $suffix) {
         $this->dumpPrefix = $prefix;
         $this->dumpSuffix = $suffix;
     }
     /**
      * {@inheritdoc}
      */
-    public function dump(Data $data, $output = null, array $extraDisplayOptions = [])
-    {
+    public function dump(Data $data, $output = null, array $extraDisplayOptions = []) {
         $this->extraDisplayOptions = $extraDisplayOptions;
         $result = parent::dump($data, $output);
         $this->dumpId = 'sf-dump-' . \mt_rand();
@@ -94,13 +88,15 @@ class HtmlDumper extends CliDumper
     /**
      * Dumps the HTML header.
      */
-    protected function getDumpHeader()
-    {
+    protected function getDumpHeader() {
         $this->headerIsDumped = $this->outputStream ?? $this->lineDumper;
         if (null !== $this->dumpHeader) {
             return $this->dumpHeader;
         }
-        $line = \str_replace('{$options}', \json_encode($this->displayOptions, \JSON_FORCE_OBJECT), <<<'EOHTML'
+        $line = \str_replace(
+            '{$options}',
+            \json_encode($this->displayOptions, \JSON_FORCE_OBJECT),
+            <<<'EOHTML'
 <script>
 Sfdump = window.Sfdump || (function (doc) {
 
@@ -718,7 +714,7 @@ pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-count {
     font-size: 12px;
 }
 EOHTML
-);
+        );
         foreach ($this->styles as $class => $style) {
             $line .= 'pre.sf-dump' . ('default' === $class ? ', pre.sf-dump' : '') . ' .sf-dump-' . $class . '{' . $style . '}';
         }
@@ -728,8 +724,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    public function dumpString(Cursor $cursor, string $str, bool $bin, int $cut)
-    {
+    public function dumpString(Cursor $cursor, string $str, bool $bin, int $cut) {
         if ('' === $str && isset($cursor->attr['img-data'], $cursor->attr['content-type'])) {
             $this->dumpKey($cursor);
             $this->line .= $this->style('default', $cursor->attr['img-size'] ?? '', []);
@@ -745,8 +740,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    public function enterHash(Cursor $cursor, int $type, $class, bool $hasChild)
-    {
+    public function enterHash(Cursor $cursor, int $type, $class, bool $hasChild) {
         if (Cursor::HASH_OBJECT === $type) {
             $cursor->attr['depth'] = $cursor->depth;
         }
@@ -772,8 +766,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    public function leaveHash(Cursor $cursor, int $type, $class, bool $hasChild, int $cut)
-    {
+    public function leaveHash(Cursor $cursor, int $type, $class, bool $hasChild, int $cut) {
         $this->dumpEllipsis($cursor, $hasChild, $cut);
         if ($hasChild) {
             $this->line .= '</samp>';
@@ -783,8 +776,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    protected function style(string $style, string $value, array $attr = [])
-    {
+    protected function style(string $style, string $value, array $attr = []) {
         if ('' === $value) {
             return '';
         }
@@ -828,7 +820,7 @@ EOHTML
                 $v .= $label;
             }
         }
-        $v = "<span class=sf-dump-{$style}>" . \preg_replace_callback(static::$controlCharsRx, function ($c) use($map) {
+        $v = "<span class=sf-dump-{$style}>" . \preg_replace_callback(static::$controlCharsRx, function ($c) use ($map) {
             $s = $b = '<span class="sf-dump-default';
             $c = $c[$i = 0];
             if ($ns = "\r" === $c[$i] || "\n" === $c[$i]) {
@@ -862,8 +854,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    protected function dumpLine(int $depth, bool $endOfValue = \false)
-    {
+    protected function dumpLine(int $depth, bool $endOfValue = \false) {
         if (-1 === $this->lastDepth) {
             $this->line = \sprintf($this->dumpPrefix, $this->dumpId, $this->indentPad) . $this->line;
         }
@@ -885,8 +876,7 @@ EOHTML
         }
         AbstractDumper::dumpLine($depth);
     }
-    private function getSourceLink(string $file, int $line)
-    {
+    private function getSourceLink(string $file, int $line) {
         $options = $this->extraDisplayOptions + $this->displayOptions;
         if ($fmt = $options['fileLinkFormat']) {
             return \is_string($fmt) ? \strtr($fmt, ['%f' => $file, '%l' => $line]) : $fmt->format($file, $line);
@@ -894,7 +884,6 @@ EOHTML
         return \false;
     }
 }
-function esc(string $str)
-{
+function esc(string $str) {
     return \htmlspecialchars($str, \ENT_QUOTES, 'UTF-8');
 }

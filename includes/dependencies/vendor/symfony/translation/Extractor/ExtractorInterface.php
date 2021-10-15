@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Extractor;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * Extracts translation messages from a directory or files to the catalogue.
  * New found messages are injected to the catalogue using the prefix.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-interface ExtractorInterface
-{
+interface ExtractorInterface {
     /**
      * Extracts translation messages from files, a file or a directory to the catalogue.
      *

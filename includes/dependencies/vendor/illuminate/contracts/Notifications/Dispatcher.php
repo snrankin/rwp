@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Notifications;
 
-interface Dispatcher
-{
+interface Dispatcher {
     /**
      * Send the given notification to the given notifiable entities.
      *

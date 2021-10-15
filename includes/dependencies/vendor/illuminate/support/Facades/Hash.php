@@ -10,15 +10,13 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  *
  * @seeHashManager
  */
-class Hash extends Facade
-{
+class Hash extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'hash';
     }
 }

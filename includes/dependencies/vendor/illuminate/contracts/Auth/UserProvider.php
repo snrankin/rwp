@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth;
 
-interface UserProvider
-{
+interface UserProvider {
     /**
      * Retrieve a user by their unique identifier.
      *

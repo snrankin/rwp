@@ -30,7 +30,7 @@ use InvalidArgumentException;
  * @method static string getLocale()
  * @method static int getMidDayAt()
  * @method static Carbon getTestNow()
- * @method static \Symfony\Component\Translation\TranslatorInterface getTranslator()
+ * @method static \RWP\Vendor\Symfony\Translation\TranslatorInterface getTranslator()
  * @method static int getWeekEndsAt()
  * @method static int getWeekStartsAt()
  * @method static array getWeekendDays()

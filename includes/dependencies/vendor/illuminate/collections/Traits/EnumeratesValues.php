@@ -15,6 +15,7 @@ use RWP\Vendor\Illuminate\Support\HigherOrderWhenProxy;
 use JsonSerializable;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use Traversable;
+use UnexpectedValueException;
 /**
  * @property-read HigherOrderCollectionProxy $average
  * @property-read HigherOrderCollectionProxy $avg
@@ -628,6 +629,26 @@ trait EnumeratesValues
         $result = $initial;
         foreach ($this as $key => $value) {
             $result = $callback($result, $value, $key);
+        }
+        return $result;
+    }
+    /**
+     * Reduce the collection to multiple aggregate values.
+     *
+     * @param  callable  $callback
+     * @param  mixed  ...$initial
+     * @return array
+     *
+     * @throws \UnexpectedValueException
+     */
+    public function reduceMany(callable $callback, ...$initial)
+    {
+        $result = $initial;
+        foreach ($this as $key => $value) {
+            $result = \call_user_func_array($callback, \array_merge($result, [$value, $key]));
+            if (!\is_array($result)) {
+                throw new \UnexpectedValueException(\sprintf("%s::reduceMany expects reducer to return an array, but got a '%s' instead.", class_basename(static::class), \gettype($result)));
+            }
         }
         return $result;
     }

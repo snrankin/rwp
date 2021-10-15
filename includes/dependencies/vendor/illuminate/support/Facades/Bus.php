@@ -6,11 +6,11 @@ use RWP\Vendor\Illuminate\Contracts\Bus\Dispatcher as BusDispatcherContract;
 use RWP\Vendor\Illuminate\Foundation\Bus\PendingChain;
 use RWP\Vendor\Illuminate\Support\Testing\Fakes\BusFake;
 /**
- * @method staticBatch|null findBatch(string $batchId)
- * @method static \Illuminate\Bus\PendingBatch batch(array|mixed $jobs)
- * @method static \Illuminate\Contracts\Bus\Dispatcher map(array $map)
- * @method static \Illuminate\Contracts\Bus\Dispatcher pipeThrough(array $pipes)
- * @method static \Illuminate\Foundation\Bus\PendingChain chain(array $jobs)
+ * @method static Batch|null findBatch(string $batchId)
+ * @method static PendingBatch batch(array|mixed $jobs)
+ * @method static Dispatcher map(array $map)
+ * @method static Dispatcher pipeThrough(array $pipes)
+ * @method static PendingChain chain(array $jobs)
  * @method static bool hasCommandHandler($command)
  * @method static bool|mixed getCommandHandler($command)
  * @method static mixed dispatch($command)
@@ -25,7 +25,7 @@ use RWP\Vendor\Illuminate\Support\Testing\Fakes\BusFake;
  * @method static void assertBatched(callable $callback)
  * @method static void assertChained(array $expectedChain)
  *
- * @seeDispatcher
+ * @see Dispatcher
  */
 class Bus extends Facade
 {
@@ -33,7 +33,7 @@ class Bus extends Facade
      * Replace the bound instance with a fake.
      *
      * @param  array|string  $jobsToFake
-     * @returnBusFake
+     * @return BusFake
      */
     public static function fake($jobsToFake = [])
     {
@@ -44,7 +44,7 @@ class Bus extends Facade
      * Dispatch the given chain of jobs.
      *
      * @param  array|mixed  $jobs
-     * @returnPendingDispatch
+     * @return PendingDispatch
      */
     public static function dispatchChain($jobs)
     {

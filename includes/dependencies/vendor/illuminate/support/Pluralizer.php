@@ -4,7 +4,7 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use RWP\Vendor\Doctrine\Inflector\CachedWordInflector;
 use RWP\Vendor\Doctrine\Inflector\Inflector;
-use RWP\Vendor\Doctrine\Inflector\Rules\English\Rules;
+use RWP\Vendor\Doctrine\Inflector\Rules\English;
 use RWP\Vendor\Doctrine\Inflector\RulesetInflector;
 class Pluralizer
 {
@@ -70,13 +70,13 @@ class Pluralizer
     /**
      * Get the inflector instance.
      *
-     * @return Inflector
+     * @return \Doctrine\Inflector\Inflector
      */
     public static function inflector()
     {
         static $inflector;
         if (\is_null($inflector)) {
-            $inflector = new Inflector(new CachedWordInflector(new RulesetInflector(Rules::getSingularRuleset())), new CachedWordInflector(new RulesetInflector(Rules::getPluralRuleset())));
+            $inflector = new Inflector(new CachedWordInflector(new RulesetInflector(English\Rules::getSingularRuleset())), new CachedWordInflector(new RulesetInflector(English\Rules::getPluralRuleset())));
         }
         return $inflector;
     }

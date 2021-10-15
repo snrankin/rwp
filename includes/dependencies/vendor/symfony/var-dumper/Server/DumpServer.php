@@ -8,11 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Server;
 
 use RWP\Vendor\Psr\Log\LoggerInterface;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
+
 /**
  * A server collecting Data clones sent by a ServerDumper.
  *
@@ -20,27 +22,23 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class DumpServer
-{
+class DumpServer {
     private $host;
     private $socket;
     private $logger;
-    public function __construct(string $host, LoggerInterface $logger = null)
-    {
+    public function __construct(string $host, Log\LoggerInterface $logger = null) {
         if (!\str_contains($host, '://')) {
             $host = 'tcp://' . $host;
         }
         $this->host = $host;
         $this->logger = $logger;
     }
-    public function start() : void
-    {
+    public function start(): void {
         if (!($this->socket = \stream_socket_server($this->host, $errno, $errstr))) {
             throw new \RuntimeException(\sprintf('Server start failed on "%s": ', $this->host) . $errstr . ' ' . $errno);
         }
     }
-    public function listen(callable $callback) : void
-    {
+    public function listen(callable $callback): void {
         if (null === $this->socket) {
             $this->start();
         }
@@ -48,7 +46,7 @@ class DumpServer
             if ($this->logger) {
                 $this->logger->info('Received a payload from client {clientId}', ['clientId' => $clientId]);
             }
-            $payload = @\unserialize(\base64_decode($message), ['allowed_classes' => [Data::class, Stub::class]]);
+            $payload = @\unserialize(\base64_decode($message), ['allowed_classes' => [Component\VarDumper\Cloner\Data::class, Stub::class]]);
             // Impossible to decode the message, give up.
             if (\false === $payload) {
                 if ($this->logger) {
@@ -66,12 +64,10 @@ class DumpServer
             $callback($data, $context, $clientId);
         }
     }
-    public function getHost() : string
-    {
+    public function getHost(): string {
         return $this->host;
     }
-    private function getMessages() : iterable
-    {
+    private function getMessages(): iterable {
         $sockets = [(int) $this->socket => $this->socket];
         $write = [];
         while (\true) {

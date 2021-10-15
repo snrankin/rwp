@@ -8,23 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation;
 
 use RWP\Vendor\Symfony\Component\Translation\Catalogue\AbstractOperation;
 use RWP\Vendor\Symfony\Component\Translation\Catalogue\TargetOperation;
-final class TranslatorBag implements TranslatorBagInterface
-{
+
+final class TranslatorBag implements TranslatorBagInterface {
     /** @var MessageCatalogue[] */
     private $catalogues = [];
-    public function addCatalogue(MessageCatalogue $catalogue) : void
-    {
+    public function addCatalogue(MessageCatalogue $catalogue): void {
         if (null !== ($existingCatalogue = $this->getCatalogue($catalogue->getLocale()))) {
             $catalogue->addCatalogue($existingCatalogue);
         }
         $this->catalogues[$catalogue->getLocale()] = $catalogue;
     }
-    public function addBag(TranslatorBagInterface $bag) : void
-    {
+    public function addBag(TranslatorBagInterface $bag): void {
         foreach ($bag->getCatalogues() as $catalogue) {
             $this->addCatalogue($catalogue);
         }
@@ -32,8 +31,7 @@ final class TranslatorBag implements TranslatorBagInterface
     /**
      * {@inheritdoc}
      */
-    public function getCatalogue(string $locale = null)
-    {
+    public function getCatalogue(string $locale = null) {
         if (null === $locale || !isset($this->catalogues[$locale])) {
             $this->catalogues[$locale] = new MessageCatalogue($locale);
         }
@@ -42,12 +40,10 @@ final class TranslatorBag implements TranslatorBagInterface
     /**
      * {@inheritdoc}
      */
-    public function getCatalogues() : array
-    {
+    public function getCatalogues(): array {
         return \array_values($this->catalogues);
     }
-    public function diff(TranslatorBagInterface $diffBag) : self
-    {
+    public function diff(TranslatorBagInterface $diffBag): self {
         $diff = new self();
         foreach ($this->catalogues as $locale => $catalogue) {
             if (null === ($diffCatalogue = $diffBag->getCatalogue($locale))) {
@@ -64,8 +60,7 @@ final class TranslatorBag implements TranslatorBagInterface
         }
         return $diff;
     }
-    public function intersect(TranslatorBagInterface $intersectBag) : self
-    {
+    public function intersect(TranslatorBagInterface $intersectBag): self {
         $diff = new self();
         foreach ($this->catalogues as $locale => $catalogue) {
             if (null === ($intersectCatalogue = $intersectBag->getCatalogue($locale))) {
