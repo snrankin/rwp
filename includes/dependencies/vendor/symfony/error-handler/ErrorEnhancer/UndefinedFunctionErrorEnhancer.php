@@ -8,20 +8,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\ErrorHandler\ErrorEnhancer;
 
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\FatalError;
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\UndefinedFunctionError;
+
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class UndefinedFunctionErrorEnhancer implements ErrorEnhancerInterface
-{
+class UndefinedFunctionErrorEnhancer implements ErrorEnhancerInterface {
     /**
      * {@inheritdoc}
      */
-    public function enhance(\Throwable $error) : ?\Throwable
-    {
+    public function enhance(\Throwable $error): ?\Throwable {
         if ($error instanceof FatalError) {
             return null;
         }

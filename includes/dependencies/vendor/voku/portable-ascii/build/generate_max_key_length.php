@@ -3,10 +3,10 @@
 namespace RWP\Vendor;
 
 require __DIR__ . '/../vendor/autoload.php';
-$languages = ASCII::getAllLanguages();
+$languages = \RWP\Vendor\voku\helper\ASCII::getAllLanguages();
 $languagesKeyLengths = [];
 foreach ($languages as $language) {
-    $langSpecific = ASCII::charsArrayWithOneLanguage($language, \false, \false);
+    $langSpecific = \RWP\Vendor\voku\helper\ASCII::charsArrayWithOneLanguage($language, \false, \false);
     $langSpecificKeyLength = \array_map('\\mb_strlen', \array_keys($langSpecific));
     if (\count($langSpecificKeyLength) === 0) {
         $languagesKeyLengths[$language] = 0;

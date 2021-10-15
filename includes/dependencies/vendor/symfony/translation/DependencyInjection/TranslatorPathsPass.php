@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\DependencyInjection;
 
 use RWP\Vendor\Symfony\Component\DependencyInjection\Compiler\AbstractRecursivePass;
@@ -15,11 +16,11 @@ use RWP\Vendor\Symfony\Component\DependencyInjection\ContainerBuilder;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Definition;
 use RWP\Vendor\Symfony\Component\DependencyInjection\Reference;
 use RWP\Vendor\Symfony\Component\DependencyInjection\ServiceLocator;
+
 /**
  * @author Yonel Ceruto <yonelceruto@gmail.com>
  */
-class TranslatorPathsPass extends AbstractRecursivePass
-{
+class TranslatorPathsPass extends AbstractRecursivePass {
     private $translatorServiceId;
     private $debugCommandServiceId;
     private $updateCommandServiceId;
@@ -28,8 +29,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
     private $paths = [];
     private $definitions = [];
     private $controllers = [];
-    public function __construct(string $translatorServiceId = 'translator', string $debugCommandServiceId = 'console.command.translation_debug', string $updateCommandServiceId = 'console.command.translation_update', string $resolverServiceId = 'argument_resolver.service')
-    {
+    public function __construct(string $translatorServiceId = 'translator', string $debugCommandServiceId = 'console.command.translation_debug', string $updateCommandServiceId = 'console.command.translation_update', string $resolverServiceId = 'argument_resolver.service') {
         if (0 < \func_num_args()) {
             trigger_deprecation('symfony/translation', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
         }
@@ -38,8 +38,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
         $this->updateCommandServiceId = $updateCommandServiceId;
         $this->resolverServiceId = $resolverServiceId;
     }
-    public function process(ContainerBuilder $container)
-    {
+    public function process(ContainerBuilder $container) {
         if (!$container->hasDefinition($this->translatorServiceId)) {
             return;
         }
@@ -56,6 +55,9 @@ class TranslatorPathsPass extends AbstractRecursivePass
             foreach ($this->paths as $class => $_) {
                 if (($r = $container->getReflectionClass($class)) && !$r->isInterface()) {
                     $paths[] = $r->getFileName();
+                    foreach ($r->getTraits() as $trait) {
+                        $paths[] = $trait->getFileName();
+                    }
                 }
             }
             if ($paths) {
@@ -74,8 +76,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
             $this->definitions = [];
         }
     }
-    protected function processValue($value, bool $isRoot = \false)
-    {
+    protected function processValue($value, bool $isRoot = \false) {
         if ($value instanceof Reference) {
             if ((string) $value === $this->translatorServiceId) {
                 for ($i = $this->level - 1; $i >= 0; --$i) {
@@ -103,8 +104,7 @@ class TranslatorPathsPass extends AbstractRecursivePass
         }
         return parent::processValue($value, $isRoot);
     }
-    private function findControllerArguments(ContainerBuilder $container) : array
-    {
+    private function findControllerArguments(ContainerBuilder $container): array {
         if ($container->hasDefinition($this->resolverServiceId)) {
             $argument = $container->getDefinition($this->resolverServiceId)->getArgument(0);
             if ($argument instanceof Reference) {

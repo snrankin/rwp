@@ -1,10 +1,10 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\Package\PackageInterface;
-
-class OxidInstaller extends \Composer\Installers\BaseInstaller {
+use RWP\Vendor\Composer\Package\PackageInterface;
+class OxidInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     const VENDOR_PATTERN = '/^modules\\/(?P<vendor>.+)\\/.+/';
     protected $locations = array('module' => 'modules/{$name}/', 'theme' => 'application/views/{$name}/', 'out' => 'out/{$name}/');
     /**
@@ -14,7 +14,8 @@ class OxidInstaller extends \Composer\Installers\BaseInstaller {
      * @param string $frameworkType
      * @return string
      */
-    public function getInstallPath(\Composer\Package\PackageInterface $package, $frameworkType = '') {
+    public function getInstallPath(\RWP\Vendor\Composer\Package\PackageInterface $package, $frameworkType = '')
+    {
         $installPath = parent::getInstallPath($package, $frameworkType);
         $type = $this->package->getType();
         if ($type === 'oxid-module') {
@@ -31,7 +32,8 @@ class OxidInstaller extends \Composer\Installers\BaseInstaller {
      * @param string $installPath
      * @return void
      */
-    protected function prepareVendorDirectory($installPath) {
+    protected function prepareVendorDirectory($installPath)
+    {
         $matches = '';
         $hasVendorDirectory = \preg_match(self::VENDOR_PATTERN, $installPath, $matches);
         if (!$hasVendorDirectory) {

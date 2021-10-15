@@ -12,8 +12,8 @@ interface Kernel {
     /**
      * Handle an incoming console command.
      *
-     * @param   InputInterface  $input
-     * @param   OutputInterface|null  $output
+     * @param  \RWP\Vendor\Symfony\Input\InputInterface  $input
+     * @param  \RWP\Vendor\Symfony\Output\OutputInterface|null  $output
      * @return int
      */
     public function handle($input, $output = null);
@@ -22,7 +22,7 @@ interface Kernel {
      *
      * @param  string  $command
      * @param  array  $parameters
-     * @param   OutputInterface|null  $outputBuffer
+     * @param  \RWP\Vendor\Symfony\Output\OutputInterface|null  $outputBuffer
      * @return int
      */
     public function call($command, array $parameters = [], $outputBuffer = null);
@@ -31,7 +31,7 @@ interface Kernel {
      *
      * @param  string  $command
      * @param  array  $parameters
-     * @return PendingDispatch
+     * @returnPendingDispatch
      */
     public function queue($command, array $parameters = []);
     /**
@@ -49,7 +49,7 @@ interface Kernel {
     /**
      * Terminate the application.
      *
-     * @param   InputInterface  $input
+     * @param  \RWP\Vendor\Symfony\Input\InputInterface  $input
      * @param  int  $status
      * @return void
      */

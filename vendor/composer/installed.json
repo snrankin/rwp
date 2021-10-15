@@ -3356,6 +3356,69 @@
             "install-path": "../phpdocumentor/type-resolver"
         },
         {
+            "name": "phpro/grumphp-shim",
+            "version": "v1.5.0",
+            "version_normalized": "1.5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpro/grumphp-shim.git",
+                "reference": "14d62e7ba488671f9ea3e0723eec2bb498c21c46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpro/grumphp-shim/zipball/14d62e7ba488671f9ea3e0723eec2bb498c21c46",
+                "reference": "14d62e7ba488671f9ea3e0723eec2bb498c21c46",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "~1.0 || ~2.0",
+                "ext-json": "*",
+                "php": "^7.3 || ^8.0"
+            },
+            "replace": {
+                "phpro/grumphp": "self.version"
+            },
+            "require-dev": {
+                "humbug/box": "^3.12.2",
+                "jetbrains/phpstorm-stubs": "dev-master@dev"
+            },
+            "time": "2021-09-24T10:18:42+00:00",
+            "bin": [
+                "grumphp",
+                "grumphp.phar"
+            ],
+            "type": "composer-plugin",
+            "extra": {
+                "class": "GrumPHP\\Composer\\GrumPHPPlugin"
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "GrumPHP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Verwerft",
+                    "email": "toon.verwerft@phpro.be"
+                },
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/phpro/grumphp/graphs/contributors"
+                }
+            ],
+            "description": "GrumPHP Phar distribution",
+            "support": {
+                "issues": "https://github.com/phpro/grumphp-shim/issues",
+                "source": "https://github.com/phpro/grumphp-shim/tree/v1.5.0"
+            },
+            "install-path": "../phpro/grumphp-shim"
+        },
+        {
             "name": "phpspec/prophecy",
             "version": "1.14.0",
             "version_normalized": "1.14.0.0",
@@ -7826,6 +7889,7 @@
         "phpdocumentor/reflection-common",
         "phpdocumentor/reflection-docblock",
         "phpdocumentor/type-resolver",
+        "phpro/grumphp-shim",
         "phpspec/prophecy",
         "phpstan/phpstan",
         "phpunit/php-code-coverage",

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
 
 /**
@@ -18,15 +19,13 @@ namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class InputFormField extends FormField
-{
+class InputFormField extends FormField {
     /**
      * Initializes the form field.
      *
      * @throws \LogicException When node type is incorrect
      */
-    protected function initialize()
-    {
+    protected function initialize() {
         if ('input' !== $this->node->nodeName && 'button' !== $this->node->nodeName) {
             throw new \LogicException(\sprintf('An InputFormField can only be created from an input or button tag (%s given).', $this->node->nodeName));
         }

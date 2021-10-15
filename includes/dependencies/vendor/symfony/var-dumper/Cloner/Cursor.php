@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Cloner;
 
 /**
@@ -15,8 +16,7 @@ namespace RWP\Vendor\Symfony\Component\VarDumper\Cloner;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class Cursor
-{
+class Cursor {
     public const HASH_INDEXED = Stub::ARRAY_INDEXED;
     public const HASH_ASSOC = Stub::ARRAY_ASSOC;
     public const HASH_OBJECT = Stub::TYPE_OBJECT;

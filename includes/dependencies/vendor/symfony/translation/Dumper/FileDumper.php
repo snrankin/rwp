@@ -8,11 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\RuntimeException;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * FileDumper is an implementation of DumperInterface that dump a message catalogue to file(s).
  *
@@ -21,8 +23,7 @@ use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-abstract class FileDumper implements DumperInterface
-{
+abstract class FileDumper implements DumperInterface {
     /**
      * A template for the relative paths to files.
      *
@@ -34,15 +35,13 @@ abstract class FileDumper implements DumperInterface
      *
      * @param string $relativePathTemplate A template for the relative paths to files
      */
-    public function setRelativePathTemplate(string $relativePathTemplate)
-    {
+    public function setRelativePathTemplate(string $relativePathTemplate) {
         $this->relativePathTemplate = $relativePathTemplate;
     }
     /**
      * {@inheritdoc}
      */
-    public function dump(MessageCatalogue $messages, array $options = [])
-    {
+    public function dump(MessageCatalogue $messages, array $options = []) {
         if (!\array_key_exists('path', $options)) {
             throw new InvalidArgumentException('The file dumper needs a path option.');
         }
@@ -88,8 +87,7 @@ abstract class FileDumper implements DumperInterface
     /**
      * Gets the relative file path using the template.
      */
-    private function getRelativePath(string $domain, string $locale) : string
-    {
+    private function getRelativePath(string $domain, string $locale): string {
         return \strtr($this->relativePathTemplate, ['%domain%' => $domain, '%locale%' => $locale, '%extension%' => $this->getExtension()]);
     }
 }

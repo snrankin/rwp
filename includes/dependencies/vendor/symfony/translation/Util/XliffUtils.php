@@ -8,18 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Util;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidResourceException;
+
 /**
  * Provides some utility methods for XLIFF translation files, such as validating
  * their contents according to the XSD schema.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class XliffUtils
-{
+class XliffUtils {
     /**
      * Gets xliff file version based on the root "version" attribute.
      *
@@ -27,8 +28,7 @@ class XliffUtils
      *
      * @throws InvalidArgumentException
      */
-    public static function getVersionNumber(\DOMDocument $dom) : string
-    {
+    public static function getVersionNumber(\DOMDocument $dom): string {
         /** @var \DOMNode $xliff */
         foreach ($dom->getElementsByTagName('xliff') as $xliff) {
             $version = $xliff->attributes->getNamedItem('version');
@@ -51,8 +51,7 @@ class XliffUtils
      *
      * @throws InvalidResourceException
      */
-    public static function validateSchema(\DOMDocument $dom) : array
-    {
+    public static function validateSchema(\DOMDocument $dom): array {
         $xliffVersion = static::getVersionNumber($dom);
         $internalErrors = \libxml_use_internal_errors(\true);
         if ($shouldEnable = self::shouldEnableEntityLoader()) {
@@ -73,8 +72,7 @@ class XliffUtils
         \libxml_use_internal_errors($internalErrors);
         return [];
     }
-    private static function shouldEnableEntityLoader() : bool
-    {
+    private static function shouldEnableEntityLoader(): bool {
         // Version prior to 8.0 can be enabled without deprecation
         if (\PHP_VERSION_ID < 80000) {
             return \true;
@@ -84,7 +82,7 @@ class XliffUtils
             $dom = new \DOMDocument();
             $dom->loadXML('<?xml version="1.0"?><test/>');
             $tmpfile = \tempnam(\sys_get_temp_dir(), 'symfony');
-            \register_shutdown_function(static function () use($tmpfile) {
+            \register_shutdown_function(static function () use ($tmpfile) {
                 @\unlink($tmpfile);
             });
             $schema = '<?xml version="1.0" encoding="utf-8"?>
@@ -99,16 +97,14 @@ class XliffUtils
         }
         return !@$dom->schemaValidateSource($schema);
     }
-    public static function getErrorsAsString(array $xmlErrors) : string
-    {
+    public static function getErrorsAsString(array $xmlErrors): string {
         $errorsAsString = '';
         foreach ($xmlErrors as $error) {
             $errorsAsString .= \sprintf("[%s %s] %s (in %s - line %d, column %d)\n", \LIBXML_ERR_WARNING === $error['level'] ? 'WARNING' : 'ERROR', $error['code'], $error['message'], $error['file'], $error['line'], $error['column']);
         }
         return $errorsAsString;
     }
-    private static function getSchema(string $xliffVersion) : string
-    {
+    private static function getSchema(string $xliffVersion): string {
         if ('1.2' === $xliffVersion) {
             $schemaSource = \file_get_contents(__DIR__ . '/../Resources/schemas/xliff-core-1.2-strict.xsd');
             $xmlUri = 'http://www.w3.org/2001/xml.xsd';
@@ -123,8 +119,7 @@ class XliffUtils
     /**
      * Internally changes the URI of a dependent xsd to be loaded locally.
      */
-    private static function fixXmlLocation(string $schemaSource, string $xmlUri) : string
-    {
+    private static function fixXmlLocation(string $schemaSource, string $xmlUri): string {
         $newPath = \str_replace('\\', '/', __DIR__) . '/../Resources/schemas/xml.xsd';
         $parts = \explode('/', $newPath);
         $locationstart = 'file:///';
@@ -145,8 +140,7 @@ class XliffUtils
     /**
      * Returns the XML errors of the internal XML parser.
      */
-    private static function getXmlErrors(bool $internalErrors) : array
-    {
+    private static function getXmlErrors(bool $internalErrors): array {
         $errors = [];
         foreach (\libxml_get_errors() as $error) {
             $errors[] = ['level' => \LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR', 'code' => $error->code, 'message' => \trim($error->message), 'file' => $error->file ?: 'n/a', 'line' => $error->line, 'column' => $error->column];

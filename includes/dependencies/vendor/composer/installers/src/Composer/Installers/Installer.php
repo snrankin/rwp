@@ -1,23 +1,23 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\Composer;
-use Composer\Installer\BinaryInstaller;
-use Composer\Installer\LibraryInstaller;
-use Composer\IO\IOInterface;
-use Composer\Package\PackageInterface;
-use Composer\Repository\InstalledRepositoryInterface;
-use Composer\Util\Filesystem;
+use RWP\Vendor\Composer\Composer;
+use RWP\Vendor\Composer\Installer\BinaryInstaller;
+use RWP\Vendor\Composer\Installer\LibraryInstaller;
+use RWP\Vendor\Composer\IO\IOInterface;
+use RWP\Vendor\Composer\Package\PackageInterface;
+use RWP\Vendor\Composer\Repository\InstalledRepositoryInterface;
+use RWP\Vendor\Composer\Util\Filesystem;
 use RWP\Vendor\React\Promise\PromiseInterface;
-
-class Installer extends \Composer\Installer\LibraryInstaller {
+class Installer extends \RWP\Vendor\Composer\Installer\LibraryInstaller
+{
     /**
      * Package types to installer class map
      *
      * @var array
      */
-    private $supportedTypes = array('aimeos' => 'AimeosInstaller', 'asgard' => 'AsgardInstaller', 'attogram' => 'AttogramInstaller', 'agl' => 'AglInstaller', 'annotatecms' => 'AnnotateCmsInstaller', 'bitrix' => 'BitrixInstaller', 'bonefish' => 'BonefishInstaller', 'cakephp' => 'CakePHPInstaller', 'chef' => 'ChefInstaller', 'civicrm' => 'CiviCrmInstaller', 'ccframework' => 'ClanCatsFrameworkInstaller', 'cockpit' => 'CockpitInstaller', 'codeigniter' => 'CodeIgniterInstaller', 'concrete5' => 'Concrete5Installer', 'craft' => 'CraftInstaller', 'croogo' => 'CroogoInstaller', 'dframe' => 'DframeInstaller', 'dokuwiki' => 'DokuWikiInstaller', 'dolibarr' => 'DolibarrInstaller', 'decibel' => 'DecibelInstaller', 'drupal' => 'DrupalInstaller', 'elgg' => 'ElggInstaller', 'eliasis' => 'EliasisInstaller', 'ee3' => 'ExpressionEngineInstaller', 'ee2' => 'ExpressionEngineInstaller', 'ezplatform' => 'EzPlatformInstaller', 'fuel' => 'FuelInstaller', 'fuelphp' => 'FuelphpInstaller', 'grav' => 'GravInstaller', 'hurad' => 'HuradInstaller', 'tastyigniter' => 'TastyIgniterInstaller', 'imagecms' => 'ImageCMSInstaller', 'itop' => 'ItopInstaller', 'joomla' => 'JoomlaInstaller', 'kanboard' => 'KanboardInstaller', 'kirby' => 'KirbyInstaller', 'known' => 'KnownInstaller', 'kodicms' => 'KodiCMSInstaller', 'kohana' => 'KohanaInstaller', 'lms' => 'LanManagementSystemInstaller', 'laravel' => 'LaravelInstaller', 'lavalite' => 'LavaLiteInstaller', 'lithium' => 'LithiumInstaller', 'magento' => 'MagentoInstaller', 'majima' => 'MajimaInstaller', 'mantisbt' => 'MantisBTInstaller', 'mako' => 'MakoInstaller', 'maya' => 'MayaInstaller', 'mautic' => 'MauticInstaller', 'mediawiki' => 'MediaWikiInstaller', 'miaoxing' => 'MiaoxingInstaller', 'microweber' => 'MicroweberInstaller', 'modulework' => 'MODULEWorkInstaller', 'modx' => 'ModxInstaller', 'modxevo' => 'MODXEvoInstaller', 'moodle' => 'MoodleInstaller', 'october' => 'OctoberInstaller', 'ontowiki' => 'OntoWikiInstaller', 'oxid' => 'OxidInstaller', 'osclass' => 'OsclassInstaller', 'pxcms' => 'PxcmsInstaller', 'phpbb' => 'PhpBBInstaller', 'pimcore' => 'PimcoreInstaller', 'piwik' => 'PiwikInstaller', 'plentymarkets' => 'PlentymarketsInstaller', 'ppi' => 'PPIInstaller', 'puppet' => 'PuppetInstaller', 'radphp' => 'RadPHPInstaller', 'phifty' => 'PhiftyInstaller', 'porto' => 'PortoInstaller', 'processwire' => 'ProcessWireInstaller', 'redaxo' => 'RedaxoInstaller', 'redaxo5' => 'Redaxo5Installer', 'reindex' => 'ReIndexInstaller', 'roundcube' => 'RoundcubeInstaller', 'shopware' => 'ShopwareInstaller', 'sitedirect' => 'SiteDirectInstaller', 'silverstripe' => 'SilverStripeInstaller', 'smf' => 'SMFInstaller', 'starbug' => 'StarbugInstaller', 'sydes' => 'SyDESInstaller', 'sylius' => 'SyliusInstaller', 'symfony1' => 'Symfony1Installer', 'tao' => 'TaoInstaller', 'thelia' => 'TheliaInstaller', 'tusk' => 'TuskInstaller', 'typo3-cms' => 'TYPO3CmsInstaller', 'typo3-flow' => 'TYPO3FlowInstaller', 'userfrosting' => 'UserFrostingInstaller', 'vanilla' => 'VanillaInstaller', 'whmcs' => 'WHMCSInstaller', 'winter' => 'WinterInstaller', 'wolfcms' => 'WolfCMSInstaller', 'wordpress' => 'WordPressInstaller', 'yawik' => 'YawikInstaller', 'zend' => 'ZendInstaller', 'zikula' => 'ZikulaInstaller', 'prestashop' => 'PrestashopInstaller');
+    private $supportedTypes = array('aimeos' => 'AimeosInstaller', 'asgard' => 'AsgardInstaller', 'attogram' => 'AttogramInstaller', 'agl' => 'AglInstaller', 'annotatecms' => 'AnnotateCmsInstaller', 'bitrix' => 'BitrixInstaller', 'bonefish' => 'BonefishInstaller', 'cakephp' => 'CakePHPInstaller', 'chef' => 'ChefInstaller', 'civicrm' => 'CiviCrmInstaller', 'ccframework' => 'ClanCatsFrameworkInstaller', 'cockpit' => 'CockpitInstaller', 'codeigniter' => 'CodeIgniterInstaller', 'concrete5' => 'Concrete5Installer', 'craft' => 'CraftInstaller', 'croogo' => 'CroogoInstaller', 'dframe' => 'DframeInstaller', 'dokuwiki' => 'DokuWikiInstaller', 'dolibarr' => 'DolibarrInstaller', 'decibel' => 'DecibelInstaller', 'drupal' => 'DrupalInstaller', 'elgg' => 'ElggInstaller', 'eliasis' => 'EliasisInstaller', 'ee3' => 'ExpressionEngineInstaller', 'ee2' => 'ExpressionEngineInstaller', 'ezplatform' => 'EzPlatformInstaller', 'fuel' => 'FuelInstaller', 'fuelphp' => 'FuelphpInstaller', 'grav' => 'GravInstaller', 'hurad' => 'HuradInstaller', 'tastyigniter' => 'TastyIgniterInstaller', 'imagecms' => 'ImageCMSInstaller', 'itop' => 'ItopInstaller', 'joomla' => 'JoomlaInstaller', 'kanboard' => 'KanboardInstaller', 'kirby' => 'KirbyInstaller', 'known' => 'KnownInstaller', 'kodicms' => 'KodiCMSInstaller', 'kohana' => 'KohanaInstaller', 'lms' => 'LanManagementSystemInstaller', 'laravel' => 'LaravelInstaller', 'lavalite' => 'LavaLiteInstaller', 'lithium' => 'LithiumInstaller', 'magento' => 'MagentoInstaller', 'majima' => 'MajimaInstaller', 'mantisbt' => 'MantisBTInstaller', 'mako' => 'MakoInstaller', 'maya' => 'MayaInstaller', 'mautic' => 'MauticInstaller', 'mediawiki' => 'MediaWikiInstaller', 'miaoxing' => 'MiaoxingInstaller', 'microweber' => 'MicroweberInstaller', 'modulework' => 'MODULEWorkInstaller', 'modx' => 'ModxInstaller', 'modxevo' => 'MODXEvoInstaller', 'moodle' => 'MoodleInstaller', 'october' => 'OctoberInstaller', 'ontowiki' => 'OntoWikiInstaller', 'oxid' => 'OxidInstaller', 'osclass' => 'OsclassInstaller', 'pxcms' => 'PxcmsInstaller', 'phpbb' => 'PhpBBInstaller', 'pimcore' => 'PimcoreInstaller', 'piwik' => 'PiwikInstaller', 'plentymarkets' => 'PlentymarketsInstaller', 'ppi' => 'PPIInstaller', 'puppet' => 'PuppetInstaller', 'radphp' => 'RadPHPInstaller', 'phifty' => 'PhiftyInstaller', 'porto' => 'PortoInstaller', 'processwire' => 'ProcessWireInstaller', 'quicksilver' => 'PantheonInstaller', 'redaxo' => 'RedaxoInstaller', 'redaxo5' => 'Redaxo5Installer', 'reindex' => 'ReIndexInstaller', 'roundcube' => 'RoundcubeInstaller', 'shopware' => 'ShopwareInstaller', 'sitedirect' => 'SiteDirectInstaller', 'silverstripe' => 'SilverStripeInstaller', 'smf' => 'SMFInstaller', 'starbug' => 'StarbugInstaller', 'sydes' => 'SyDESInstaller', 'sylius' => 'SyliusInstaller', 'symfony1' => 'Symfony1Installer', 'tao' => 'TaoInstaller', 'thelia' => 'TheliaInstaller', 'tusk' => 'TuskInstaller', 'typo3-cms' => 'TYPO3CmsInstaller', 'typo3-flow' => 'TYPO3FlowInstaller', 'userfrosting' => 'UserFrostingInstaller', 'vanilla' => 'VanillaInstaller', 'whmcs' => 'WHMCSInstaller', 'winter' => 'WinterInstaller', 'wolfcms' => 'WolfCMSInstaller', 'wordpress' => 'WordPressInstaller', 'yawik' => 'YawikInstaller', 'zend' => 'ZendInstaller', 'zikula' => 'ZikulaInstaller', 'prestashop' => 'PrestashopInstaller');
     /**
      * Installer constructor.
      *
@@ -30,14 +30,16 @@ class Installer extends \Composer\Installer\LibraryInstaller {
      * @param Filesystem|null      $filesystem
      * @param BinaryInstaller|null $binaryInstaller
      */
-    public function __construct(\Composer\IO\IOInterface $io, \Composer\Composer $composer, $type = 'library', \Composer\Util\Filesystem $filesystem = null, \Composer\Installer\BinaryInstaller $binaryInstaller = null) {
+    public function __construct(\RWP\Vendor\Composer\IO\IOInterface $io, \RWP\Vendor\Composer\Composer $composer, $type = 'library', \RWP\Vendor\Composer\Util\Filesystem $filesystem = null, \RWP\Vendor\Composer\Installer\BinaryInstaller $binaryInstaller = null)
+    {
         parent::__construct($io, $composer, $type, $filesystem, $binaryInstaller);
         $this->removeDisabledInstallers();
     }
     /**
      * {@inheritDoc}
      */
-    public function getInstallPath(\Composer\Package\PackageInterface $package) {
+    public function getInstallPath(\RWP\Vendor\Composer\Package\PackageInterface $package)
+    {
         $type = $package->getType();
         $frameworkType = $this->findFrameworkType($type);
         if ($frameworkType === \false) {
@@ -47,10 +49,11 @@ class Installer extends \Composer\Installer\LibraryInstaller {
         $installer = new $class($package, $this->composer, $this->getIO());
         return $installer->getInstallPath($package, $frameworkType);
     }
-    public function uninstall(\Composer\Repository\InstalledRepositoryInterface $repo, \Composer\Package\PackageInterface $package) {
+    public function uninstall(\RWP\Vendor\Composer\Repository\InstalledRepositoryInterface $repo, \RWP\Vendor\Composer\Package\PackageInterface $package)
+    {
         $installPath = $this->getPackageBasePath($package);
         $io = $this->io;
-        $outputStatus = function () use ($io, $installPath) {
+        $outputStatus = function () use($io, $installPath) {
             $io->write(\sprintf('Deleting %s - %s', $installPath, !\file_exists($installPath) ? '<comment>deleted</comment>' : '<error>not deleted</error>'));
         };
         $promise = parent::uninstall($repo, $package);
@@ -65,7 +68,8 @@ class Installer extends \Composer\Installer\LibraryInstaller {
     /**
      * {@inheritDoc}
      */
-    public function supports($packageType) {
+    public function supports($packageType)
+    {
         $frameworkType = $this->findFrameworkType($packageType);
         if ($frameworkType === \false) {
             return \false;
@@ -79,7 +83,8 @@ class Installer extends \Composer\Installer\LibraryInstaller {
      * @param  string       $type
      * @return string|false
      */
-    protected function findFrameworkType($type) {
+    protected function findFrameworkType($type)
+    {
         \krsort($this->supportedTypes);
         foreach ($this->supportedTypes as $key => $val) {
             if ($key === \substr($type, 0, \strlen($key))) {
@@ -95,7 +100,8 @@ class Installer extends \Composer\Installer\LibraryInstaller {
      * @param  string $frameworkType
      * @return string
      */
-    protected function getLocationPattern($frameworkType) {
+    protected function getLocationPattern($frameworkType)
+    {
         $pattern = \false;
         if (!empty($this->supportedTypes[$frameworkType])) {
             $frameworkClass = 'Composer\\Installers\\' . $this->supportedTypes[$frameworkType];
@@ -111,7 +117,8 @@ class Installer extends \Composer\Installer\LibraryInstaller {
      *
      * @return IOInterface
      */
-    private function getIO() {
+    private function getIO()
+    {
         return $this->io;
     }
     /**
@@ -125,7 +132,8 @@ class Installer extends \Composer\Installer\LibraryInstaller {
      *
      * @return void
      */
-    protected function removeDisabledInstallers() {
+    protected function removeDisabledInstallers()
+    {
         $extra = $this->composer->getPackage()->getExtra();
         if (!isset($extra['installer-disable']) || $extra['installer-disable'] === \false) {
             // No installers are disabled

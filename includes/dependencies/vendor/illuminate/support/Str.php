@@ -217,10 +217,12 @@ class Str
     public static function is($pattern, $value)
     {
         $patterns = Arr::wrap($pattern);
+        $value = (string) $value;
         if (empty($patterns)) {
             return \false;
         }
         foreach ($patterns as $pattern) {
+            $pattern = (string) $pattern;
             // If the given value is an exact match we can of course return true right
             // from the beginning. Otherwise, we will translate asterisks and do an
             // actual pattern match against the two strings to see if they match.
@@ -336,7 +338,37 @@ class Str
     public static function markdown($string, array $options = [])
     {
         $converter = new GithubFlavoredMarkdownConverter($options);
-        return $converter->convertToHtml($string);
+        return (string) $converter->convertToHtml($string);
+    }
+    /**
+     * Get the string matching the given pattern.
+     *
+     * @param  string  $pattern
+     * @param  string  $subject
+     * @return string
+     */
+    public static function match($pattern, $subject)
+    {
+        \preg_match($pattern, $subject, $matches);
+        if (!$matches) {
+            return '';
+        }
+        return $matches[1] ?? $matches[0];
+    }
+    /**
+     * Get the string matching the given pattern.
+     *
+     * @param  string  $pattern
+     * @param  string  $subject
+     * @return Collection
+     */
+    public static function matchAll($pattern, $subject)
+    {
+        \preg_match_all($pattern, $subject, $matches);
+        if (empty($matches[0])) {
+            return collect();
+        }
+        return collect($matches[1] ?? $matches[0]);
     }
     /**
      * Pad both sides of a string with another.

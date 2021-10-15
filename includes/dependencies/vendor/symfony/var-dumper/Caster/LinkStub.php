@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 /**
@@ -15,13 +16,11 @@ namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class LinkStub extends ConstStub
-{
+class LinkStub extends ConstStub {
     public $inVendor = \false;
     private static $vendorRoots;
     private static $composerRoots;
-    public function __construct($label, int $line = 0, $href = null)
-    {
+    public function __construct(string $label, int $line = 0, string $href = null) {
         $this->value = $label;
         if (null === $href) {
             $href = $label;
@@ -29,12 +28,12 @@ class LinkStub extends ConstStub
         if (!\is_string($href)) {
             return;
         }
-        if (0 === \strpos($href, 'file://')) {
+        if (\str_starts_with($href, 'file://')) {
             if ($href === $label) {
                 $label = \substr($label, 7);
             }
             $href = \substr($href, 7);
-        } elseif (\false !== \strpos($href, '://')) {
+        } elseif (\str_contains($href, '://')) {
             $this->attr['href'] = $href;
             return;
         }
@@ -57,12 +56,11 @@ class LinkStub extends ConstStub
             $this->attr['ellipsis-tail'] = 1;
         }
     }
-    private function getComposerRoot(string $file, bool &$inVendor)
-    {
+    private function getComposerRoot(string $file, bool &$inVendor) {
         if (null === self::$vendorRoots) {
             self::$vendorRoots = [];
             foreach (\get_declared_classes() as $class) {
-                if ('C' === $class[0] && 0 === \strpos($class, 'ComposerAutoloaderInit')) {
+                if ('C' === $class[0] && \str_starts_with($class, 'ComposerAutoloaderInit')) {
                     $r = new \ReflectionClass($class);
                     $v = \dirname($r->getFileName(), 2);
                     if (\is_file($v . '/composer/installed.json')) {
@@ -76,7 +74,7 @@ class LinkStub extends ConstStub
             return self::$composerRoots[$dir];
         }
         foreach (self::$vendorRoots as $root) {
-            if ($inVendor = 0 === \strpos($file, $root)) {
+            if ($inVendor = \str_starts_with($file, $root)) {
                 return $root;
             }
         }

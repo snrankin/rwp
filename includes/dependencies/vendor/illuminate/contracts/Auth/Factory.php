@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a guard instance by name.
      *
      * @param  string|null  $name
-     * @return Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @returnGuard|\Illuminate\Contracts\Auth\StatefulGuard
      */
     public function guard($name = null);
     /**

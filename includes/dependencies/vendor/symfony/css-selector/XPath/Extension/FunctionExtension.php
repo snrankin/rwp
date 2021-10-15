@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\XPath\Extension;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Exception\ExpressionErrorException;
@@ -16,6 +17,7 @@ use RWP\Vendor\Symfony\Component\CssSelector\Node\FunctionNode;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Parser;
 use RWP\Vendor\Symfony\Component\CssSelector\XPath\Translator;
 use RWP\Vendor\Symfony\Component\CssSelector\XPath\XPathExpr;
+
 /**
  * XPath expression translator function extension.
  *
@@ -26,20 +28,17 @@ use RWP\Vendor\Symfony\Component\CssSelector\XPath\XPathExpr;
  *
  * @internal
  */
-class FunctionExtension extends AbstractExtension
-{
+class FunctionExtension extends AbstractExtension {
     /**
      * {@inheritdoc}
      */
-    public function getFunctionTranslators() : array
-    {
+    public function getFunctionTranslators(): array {
         return ['nth-child' => [$this, 'translateNthChild'], 'nth-last-child' => [$this, 'translateNthLastChild'], 'nth-of-type' => [$this, 'translateNthOfType'], 'nth-last-of-type' => [$this, 'translateNthLastOfType'], 'contains' => [$this, 'translateContains'], 'lang' => [$this, 'translateLang']];
     }
     /**
      * @throws ExpressionErrorException
      */
-    public function translateNthChild(XPathExpr $xpath, FunctionNode $function, bool $last = \false, bool $addNameTest = \true) : XPathExpr
-    {
+    public function translateNthChild(XPathExpr $xpath, FunctionNode $function, bool $last = \false, bool $addNameTest = \true): XPathExpr {
         try {
             [$a, $b] = Parser::parseSeries($function->getArguments());
         } catch (SyntaxErrorException $e) {
@@ -81,19 +80,16 @@ class FunctionExtension extends AbstractExtension
         // -n means -1n
         // -1n+6 means elements 6 and previous
     }
-    public function translateNthLastChild(XPathExpr $xpath, FunctionNode $function) : XPathExpr
-    {
+    public function translateNthLastChild(XPathExpr $xpath, FunctionNode $function): XPathExpr {
         return $this->translateNthChild($xpath, $function, \true);
     }
-    public function translateNthOfType(XPathExpr $xpath, FunctionNode $function) : XPathExpr
-    {
+    public function translateNthOfType(XPathExpr $xpath, FunctionNode $function): XPathExpr {
         return $this->translateNthChild($xpath, $function, \false, \false);
     }
     /**
      * @throws ExpressionErrorException
      */
-    public function translateNthLastOfType(XPathExpr $xpath, FunctionNode $function) : XPathExpr
-    {
+    public function translateNthLastOfType(XPathExpr $xpath, FunctionNode $function): XPathExpr {
         if ('*' === $xpath->getElement()) {
             throw new ExpressionErrorException('"*:nth-of-type()" is not implemented.');
         }
@@ -102,8 +98,7 @@ class FunctionExtension extends AbstractExtension
     /**
      * @throws ExpressionErrorException
      */
-    public function translateContains(XPathExpr $xpath, FunctionNode $function) : XPathExpr
-    {
+    public function translateContains(XPathExpr $xpath, FunctionNode $function): XPathExpr {
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
@@ -115,8 +110,7 @@ class FunctionExtension extends AbstractExtension
     /**
      * @throws ExpressionErrorException
      */
-    public function translateLang(XPathExpr $xpath, FunctionNode $function) : XPathExpr
-    {
+    public function translateLang(XPathExpr $xpath, FunctionNode $function): XPathExpr {
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
@@ -128,8 +122,7 @@ class FunctionExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getName() : string
-    {
+    public function getName(): string {
         return 'function';
     }
 }

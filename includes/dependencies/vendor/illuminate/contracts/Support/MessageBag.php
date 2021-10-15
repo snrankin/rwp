@@ -2,8 +2,9 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Support;
 
-interface MessageBag extends Arrayable
-{
+use Countable;
+
+interface MessageBag extends Arrayable, \Countable {
     /**
      * Get the keys present in the message bag.
      *
@@ -21,7 +22,7 @@ interface MessageBag extends Arrayable
     /**
      * Merge a new array of messages into the bag.
      *
-     * @param  MessageProvider|array  $messages
+     * @param MessageProvider|array  $messages
      * @return $this
      */
     public function merge($messages);
@@ -86,10 +87,4 @@ interface MessageBag extends Arrayable
      * @return bool
      */
     public function isNotEmpty();
-    /**
-     * Get the number of messages in the container.
-     *
-     * @return int
-     */
-    public function count();
 }

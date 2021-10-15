@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Session;
 
-interface Session
-{
+interface Session {
     /**
      * Get the name of the session.
      *
@@ -172,7 +171,7 @@ interface Session
     /**
      * Set the request on the handler instance.
      *
-     * @param  Request  $request
+     * @param Request  $request
      * @return void
      */
     public function setRequestOnHandler($request);

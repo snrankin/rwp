@@ -13,7 +13,7 @@ namespace RWP\Vendor\Symfony\Component\OptionsResolver\Exception;
 
 /**
  * Thrown when trying to read an option outside of or write it inside of
- * {@link  Options::resolve()}.
+ * {@link Options::resolve()}.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */

@@ -3,15 +3,15 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 use RWP\Vendor\Illuminate\Filesystem\Filesystem;
-
 /**
  * @method static Filesystem assertExists(string|array $path)
  * @method static Filesystem assertMissing(string|array $path)
  * @method static Filesystem cloud()
+ * @method static Filesystem build(string|array $root)
  * @method static Filesystem disk(string|null $name = null)
  * @method static FilesystemManager extend(string $driver, \Closure $callback)
- * @method static  StreamedResponse download(string $path, string|null $name = null, array|null $headers = [])
- * @method static  StreamedResponse response(string $path, string|null $name = null, array|null $headers = [], string|null $disposition = 'inline')
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\StreamedResponse download(string $path, string|null $name = null, array|null $headers = [])
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\StreamedResponse response(string $path, string|null $name = null, array|null $headers = [], string|null $disposition = 'inline')
  * @method static array allDirectories(string|null $directory = null)
  * @method static array allFiles(string|null $directory = null)
  * @method static array directories(string|null $directory = null, bool $recursive = false)
@@ -42,7 +42,8 @@ use RWP\Vendor\Illuminate\Filesystem\Filesystem;
  *
  * @see FilesystemManager
  */
-class Storage extends Facade {
+class Storage extends Facade
+{
     /**
      * Replace the given disk with a local testing disk.
      *
@@ -50,7 +51,8 @@ class Storage extends Facade {
      * @param  array  $config
      * @return Filesystem
      */
-    public static function fake($disk = null, array $config = []) {
+    public static function fake($disk = null, array $config = [])
+    {
         $disk = $disk ?: static::$app['config']->get('filesystems.default');
         $root = storage_path('framework/testing/disks/' . $disk);
         if ($token = ParallelTesting::token()) {
@@ -67,7 +69,8 @@ class Storage extends Facade {
      * @param  array  $config
      * @return Filesystem
      */
-    public static function persistentFake($disk = null, array $config = []) {
+    public static function persistentFake($disk = null, array $config = [])
+    {
         $disk = $disk ?: static::$app['config']->get('filesystems.default');
         static::set($disk, $fake = static::createLocalDriver(\array_merge($config, ['root' => storage_path('framework/testing/disks/' . $disk)])));
         return $fake;
@@ -77,7 +80,8 @@ class Storage extends Facade {
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'filesystem';
     }
 }

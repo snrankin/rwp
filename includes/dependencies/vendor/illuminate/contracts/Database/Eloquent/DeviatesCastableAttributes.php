@@ -2,12 +2,11 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface DeviatesCastableAttributes
-{
+interface DeviatesCastableAttributes {
     /**
      * Increment the attribute.
      *
-     * @param  Model  $model
+     * @param Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
@@ -17,7 +16,7 @@ interface DeviatesCastableAttributes
     /**
      * Decrement the attribute.
      *
-     * @param  Model  $model
+     * @param Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes

@@ -8,18 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Reader;
 
 use RWP\Vendor\Symfony\Component\Finder\Finder;
 use RWP\Vendor\Symfony\Component\Translation\Loader\LoaderInterface;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * TranslationReader reads translation messages from translation files.
  *
  * @author Michel Salib <michelsalib@hotmail.com>
  */
-class TranslationReader implements TranslationReaderInterface
-{
+class TranslationReader implements TranslationReaderInterface {
     /**
      * Loaders used for import.
      *
@@ -31,15 +32,13 @@ class TranslationReader implements TranslationReaderInterface
      *
      * @param string $format The format of the loader
      */
-    public function addLoader(string $format, LoaderInterface $loader)
-    {
+    public function addLoader(string $format, LoaderInterface $loader) {
         $this->loaders[$format] = $loader;
     }
     /**
      * {@inheritdoc}
      */
-    public function read(string $directory, MessageCatalogue $catalogue)
-    {
+    public function read(string $directory, MessageCatalogue $catalogue) {
         if (!\is_dir($directory)) {
             return;
         }

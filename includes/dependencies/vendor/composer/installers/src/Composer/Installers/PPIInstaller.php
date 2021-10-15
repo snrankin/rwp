@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class PPIInstaller extends \Composer\Installers\BaseInstaller {
+class PPIInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'modules/{$name}/');
 }

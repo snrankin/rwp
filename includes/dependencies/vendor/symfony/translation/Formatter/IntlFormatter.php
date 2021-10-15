@@ -8,23 +8,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Formatter;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\LogicException;
+
 /**
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
-class IntlFormatter implements IntlFormatterInterface
-{
+class IntlFormatter implements IntlFormatterInterface {
     private $hasMessageFormatter;
     private $cache = [];
     /**
      * {@inheritdoc}
      */
-    public function formatIntl(string $message, string $locale, array $parameters = []) : string
-    {
+    public function formatIntl(string $message, string $locale, array $parameters = []): string {
         // MessageFormatter constructor throws an exception if the message is empty
         if ('' === $message) {
             return '';

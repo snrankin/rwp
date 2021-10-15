@@ -2,19 +2,18 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Broadcasting;
 
-interface Broadcaster
-{
+interface Broadcaster {
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  Request  $request
+     * @param Request  $request
      * @return mixed
      */
     public function auth($request);
     /**
      * Return the valid authentication response.
      *
-     * @param  Request  $request
+     * @param Request  $request
      * @param  mixed  $result
      * @return mixed
      */

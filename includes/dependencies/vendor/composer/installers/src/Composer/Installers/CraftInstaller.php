@@ -1,11 +1,12 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  * Installer for Craft Plugins
  */
-class CraftInstaller extends \Composer\Installers\BaseInstaller {
+class CraftInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     const NAME_PREFIX = 'craft';
     const NAME_SUFFIX = 'plugin';
     protected $locations = array('plugin' => 'craft/plugins/{$name}/');
@@ -16,10 +17,12 @@ class CraftInstaller extends \Composer\Installers\BaseInstaller {
      *
      * @return array
      */
-    public final function inflectPackageVars($vars) {
+    public final function inflectPackageVars($vars)
+    {
         return $this->inflectPluginVars($vars);
     }
-    private function inflectPluginVars($vars) {
+    private function inflectPluginVars($vars)
+    {
         $vars['name'] = \preg_replace('/-' . self::NAME_SUFFIX . '$/i', '', $vars['name']);
         $vars['name'] = \preg_replace('/^' . self::NAME_PREFIX . '-/i', '', $vars['name']);
         return $vars;

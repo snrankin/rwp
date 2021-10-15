@@ -3,11 +3,11 @@
 namespace RWP\Vendor\Illuminate\Support\Facades;
 
 /**
- * @method static TaggedCache tags(array|mixed $names)
- * @method static Lock lock(string $name, int $seconds = 0, mixed $owner = null)
- * @method static Lock restoreLock(string $name, string $owner)
- * @method static Repository  store(string|null $name = null)
- * @method static Store getStore()
+ * @method staticTaggedCache tags(array|mixed $names)
+ * @method staticLock lock(string $name, int $seconds = 0, mixed $owner = null)
+ * @method staticLock restoreLock(string $name, string $owner)
+ * @method staticRepository  store(string|null $name = null)
+ * @method staticStore getStore()
  * @method static bool add(string $key, $value, \DateTimeInterface|\DateInterval|int $ttl = null)
  * @method static bool flush()
  * @method static bool forever(string $key, $value)
@@ -23,18 +23,16 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static mixed rememberForever(string $key, \Closure $callback)
  * @method static mixed sear(string $key, \Closure $callback)
  *
- * @see CacheManager
- * @see Repository
+ * @seeCacheManager
+ * @seeRepository
  */
-class Cache extends Facade
-{
+class Cache extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'cache';
     }
 }

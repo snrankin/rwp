@@ -10,11 +10,9 @@ namespace RWP\Vendor;
  * Author: Human Made Limited
  * Author URI: http://hmn.md
  */
-if(function_exists('add_action')){
-\add_action('plugins_loaded', array('Page_For_Post_Type', 'get_instance'));
-}
-
-class Page_For_Post_Type {
+add_action('plugins_loaded', array('Page_For_Post_Type', 'get_instance'));
+class Page_For_Post_Type
+{
 	protected $excludes = array();
 	protected $original_slugs = array();
 	protected static $instance;

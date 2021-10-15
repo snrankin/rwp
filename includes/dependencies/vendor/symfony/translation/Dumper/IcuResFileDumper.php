@@ -8,16 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * IcuResDumper generates an ICU ResourceBundle formatted string representation of a message catalogue.
  *
  * @author Stealth35
  */
-class IcuResFileDumper extends FileDumper
-{
+class IcuResFileDumper extends FileDumper {
     /**
      * {@inheritdoc}
      */
@@ -25,8 +26,7 @@ class IcuResFileDumper extends FileDumper
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         $data = $indexes = $resources = '';
         foreach ($messages->all($domain) as $source => $target) {
             $indexes .= \pack('v', \strlen($data) + 28);
@@ -86,20 +86,17 @@ class IcuResFileDumper extends FileDumper
         );
         return $header . $root . $data;
     }
-    private function writePadding(string $data) : ?string
-    {
+    private function writePadding(string $data): ?string {
         $padding = \strlen($data) % 4;
-        return $padding ? \str_repeat("ª", 4 - $padding) : null;
+        return $padding ? \str_repeat("ï¿½", 4 - $padding) : null;
     }
-    private function getPosition(string $data)
-    {
+    private function getPosition(string $data) {
         return (\strlen($data) + 28) / 4;
     }
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return 'res';
     }
 }

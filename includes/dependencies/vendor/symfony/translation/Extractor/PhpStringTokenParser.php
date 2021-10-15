@@ -106,7 +106,7 @@ class PhpStringTokenParser
         // strip last newline (thanks tokenizer for sticking it into the string!)
         $str = \preg_replace('~(\\r\\n|\\n|\\r)$~', '', $str);
         // nowdoc string
-        if (\false !== \strpos($startToken, '\'')) {
+        if (\str_contains($startToken, '\'')) {
             return $str;
         }
         return self::parseEscapeSequences($str, null);

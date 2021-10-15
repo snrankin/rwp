@@ -8,16 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation;
 
 use RWP\Vendor\Symfony\Component\Config\Resource\ResourceInterface;
+
 /**
  * MessageCatalogueInterface.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface MessageCatalogueInterface
-{
+interface MessageCatalogueInterface {
     public const INTL_DOMAIN_SUFFIX = '+intl-icu';
     /**
      * Gets the catalogue locale.

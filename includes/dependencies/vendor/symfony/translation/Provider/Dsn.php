@@ -8,16 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Provider;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\MissingRequiredOptionException;
+
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Oskar Stark <oskarstark@googlemail.com>
  */
-final class Dsn
-{
+final class Dsn {
     private $scheme;
     private $host;
     private $user;
@@ -26,8 +27,7 @@ final class Dsn
     private $path;
     private $options;
     private $originalDsn;
-    public function __construct(string $dsn)
-    {
+    public function __construct(string $dsn) {
         $this->originalDsn = $dsn;
         if (\false === ($parsedDsn = \parse_url($dsn))) {
             throw new InvalidArgumentException(\sprintf('The "%s" translation provider DSN is invalid.', $dsn));
@@ -46,47 +46,37 @@ final class Dsn
         $this->path = $parsedDsn['path'] ?? null;
         \parse_str($parsedDsn['query'] ?? '', $this->options);
     }
-    public function getScheme() : string
-    {
+    public function getScheme(): string {
         return $this->scheme;
     }
-    public function getHost() : string
-    {
+    public function getHost(): string {
         return $this->host;
     }
-    public function getUser() : ?string
-    {
+    public function getUser(): ?string {
         return $this->user;
     }
-    public function getPassword() : ?string
-    {
+    public function getPassword(): ?string {
         return $this->password;
     }
-    public function getPort(int $default = null) : ?int
-    {
+    public function getPort(int $default = null): ?int {
         return $this->port ?? $default;
     }
-    public function getOption(string $key, $default = null)
-    {
+    public function getOption(string $key, $default = null) {
         return $this->options[$key] ?? $default;
     }
-    public function getRequiredOption(string $key)
-    {
+    public function getRequiredOption(string $key) {
         if (!\array_key_exists($key, $this->options) || '' === \trim($this->options[$key])) {
             throw new MissingRequiredOptionException($key);
         }
         return $this->options[$key];
     }
-    public function getOptions() : array
-    {
+    public function getOptions(): array {
         return $this->options;
     }
-    public function getPath() : ?string
-    {
+    public function getPath(): ?string {
         return $this->path;
     }
-    public function getOriginalDsn() : string
-    {
+    public function getOriginalDsn(): string {
         return $this->originalDsn;
     }
 }

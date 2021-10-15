@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Class to extend functionality of HtmlPageCrawler
  *
@@ -99,6 +100,20 @@ class Html extends HtmlPageCrawler {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * The html element tag to remove
+	 * @param string $tag
+	 * @return static
+	 */
+	public function removeElementByTag( $tag ) {
+		$pagecrawler = $this->reduce(function ( self $crawler ) use ( $tag ) {
+			$node = $crawler->getNode( 0 );
+			return ( $tag !== $node->nodeName ); // phpcs:ignore
+		});
+
+		return $pagecrawler;
 	}
 
 	/**

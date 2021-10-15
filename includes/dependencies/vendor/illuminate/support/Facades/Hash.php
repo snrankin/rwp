@@ -8,17 +8,15 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static bool needsRehash(string $hashedValue, array $options = [])
  * @method static string make(string $value, array $options = [])
  *
- * @see HashManager
+ * @seeHashManager
  */
-class Hash extends Facade
-{
+class Hash extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'hash';
     }
 }

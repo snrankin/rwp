@@ -4,7 +4,7 @@ namespace RWP\Vendor;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/vendor/autoload.php';
-$readmeGenerator = new GenerateApi();
+$readmeGenerator = new \RWP\Vendor\voku\PhpReadmeHelper\GenerateApi();
 $readmeGenerator->templateMethod = <<<RAW
 #### %name%
 <a href="#voku-php-readme-class-methods">↑</a>

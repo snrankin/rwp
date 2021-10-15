@@ -5,21 +5,21 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
 /**
  * @method static \Closure getRouteResolver()
  * @method static \Closure getUserResolver()
- * @method static Request capture()
- * @method static Request createFrom(\Illuminate\Http\Request $from, Request|null $to = null)
- * @method static Request createFromBase(\Symfony\Component\HttpFoundation\Request $request)
- * @method static Request duplicate(array|null $query = null, array|null $request = null, array|null $attributes = null, array|null $cookies = null, array|null $files = null, array|null $server = null)
- * @method static Request instance()
- * @method static Request merge(array $input)
- * @method static Request replace(array $input)
- * @method static Request setJson(\Symfony\Component\HttpFoundation\ParameterBag $json)
- * @method static Request setRouteResolver(\Closure $callback)
- * @method static Request setUserResolver(\Closure $callback)
- * @method static UploadedFile|\Illuminate\Http\UploadedFile[]|array|null file(string|null $key = null, mixed $default = null)
- * @method static Route|object|string route(string|null $param = null, string|null $default = null)
- * @method static Store session()
- * @method static Store|null getSession()
- * @method static  ParameterBag|mixed json(string|null $key = null, mixed $default = null)
+ * @method staticRequest capture()
+ * @method staticRequest createFrom(\Illuminate\Http\Request $from,Request|null $to = null)
+ * @method staticRequest createFromBase(\Symfony\Component\HttpFoundation\Request $request)
+ * @method staticRequest duplicate(array|null $query = null, array|null $request = null, array|null $attributes = null, array|null $cookies = null, array|null $files = null, array|null $server = null)
+ * @method staticRequest instance()
+ * @method staticRequest merge(array $input)
+ * @method staticRequest replace(array $input)
+ * @method staticRequest setJson(\Symfony\Component\HttpFoundation\ParameterBag $json)
+ * @method staticRequest setRouteResolver(\Closure $callback)
+ * @method staticRequest setUserResolver(\Closure $callback)
+ * @method staticUploadedFile|\Illuminate\Http\UploadedFile[]|array|null file(string|null $key = null, mixed $default = null)
+ * @method staticRoute|object|string route(string|null $param = null, string|null $default = null)
+ * @method staticStore session()
+ * @method staticStore|null getSession()
+ * @method static \RWP\Vendor\Symfony\HttpFoundation\ParameterBag|mixed json(string|null $key = null, mixed $default = null)
  * @method static array all(array|mixed|null $keys = null)
  * @method static array allFiles()
  * @method static array except(array|mixed $keys)
@@ -87,7 +87,7 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static void offsetUnset(string $offset)
  * @method static void setLaravelSession(\Illuminate\Contracts\Session\Session $session)
  *
- * @see Request
+ * @seeRequest
  */
 class Request extends Facade {
     /**

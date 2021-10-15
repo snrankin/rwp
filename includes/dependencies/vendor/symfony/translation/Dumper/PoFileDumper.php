@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * PoFileDumper generates a gettext formatted string representation of a message catalogue.
  *
  * @author Stealth35
  */
-class PoFileDumper extends FileDumper
-{
+class PoFileDumper extends FileDumper {
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         $output = 'msgid ""' . "\n";
         $output .= 'msgstr ""' . "\n";
         $output .= '"Content-Type: text/plain; charset=UTF-8\\n"' . "\n";
@@ -61,8 +61,7 @@ class PoFileDumper extends FileDumper
         }
         return $output;
     }
-    private function getStandardRules(string $id)
-    {
+    private function getStandardRules(string $id) {
         // Partly copied from TranslatorTrait::trans.
         $parts = [];
         if (\preg_match('/^\\|++$/', $id)) {
@@ -102,16 +101,13 @@ EOF;
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return 'po';
     }
-    private function escape(string $str) : string
-    {
+    private function escape(string $str): string {
         return \addcslashes($str, "\0..\37\"\\");
     }
-    private function formatComments($comments, string $prefix = '') : ?string
-    {
+    private function formatComments($comments, string $prefix = ''): ?string {
         $output = null;
         foreach ((array) $comments as $comment) {
             $output .= \sprintf('#%s %s' . "\n", $prefix, $comment);

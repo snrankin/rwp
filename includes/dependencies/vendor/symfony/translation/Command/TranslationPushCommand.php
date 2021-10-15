@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Command;
 
 use RWP\Vendor\Symfony\Component\Console\Command\Command;
@@ -20,13 +21,13 @@ use RWP\Vendor\Symfony\Component\Console\Style\SymfonyStyle;
 use RWP\Vendor\Symfony\Component\Translation\Provider\TranslationProviderCollection;
 use RWP\Vendor\Symfony\Component\Translation\Reader\TranslationReaderInterface;
 use RWP\Vendor\Symfony\Component\Translation\TranslatorBag;
+
 /**
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
  *
  * @experimental in 5.3
  */
-final class TranslationPushCommand extends Command
-{
+final class TranslationPushCommand extends Command {
     use TranslationTrait;
     protected static $defaultName = 'translation:push';
     protected static $defaultDescription = 'Push translations to a given provider.';
@@ -34,8 +35,7 @@ final class TranslationPushCommand extends Command
     private $reader;
     private $transPaths;
     private $enabledLocales;
-    public function __construct(TranslationProviderCollection $providers, TranslationReaderInterface $reader, array $transPaths = [], array $enabledLocales = [])
-    {
+    public function __construct(TranslationProviderCollection $providers, TranslationReaderInterface $reader, array $transPaths = [], array $enabledLocales = []) {
         $this->providers = $providers;
         $this->reader = $reader;
         $this->transPaths = $transPaths;
@@ -45,11 +45,11 @@ final class TranslationPushCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
-    {
+    protected function configure() {
         $keys = $this->providers->keys();
         $defaultProvider = 1 === \count($keys) ? $keys[0] : null;
-        $this->setDefinition([new InputArgument('provider', null !== $defaultProvider ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'The provider to push translations to.', $defaultProvider), new InputOption('force', null, InputOption::VALUE_NONE, 'Override existing translations with local ones (it will delete not synchronized messages).'), new InputOption('delete-missing', null, InputOption::VALUE_NONE, 'Delete translations available on provider but not locally.'), new InputOption('domains', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the domains to push.'), new InputOption('locales', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the locales to push.', $this->enabledLocales)])->setHelp(<<<'EOF'
+        $this->setDefinition([new InputArgument('provider', null !== $defaultProvider ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'The provider to push translations to.', $defaultProvider), new InputOption('force', null, InputOption::VALUE_NONE, 'Override existing translations with local ones (it will delete not synchronized messages).'), new InputOption('delete-missing', null, InputOption::VALUE_NONE, 'Delete translations available on provider but not locally.'), new InputOption('domains', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the domains to push.'), new InputOption('locales', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the locales to push.', $this->enabledLocales)])->setHelp(
+            <<<'EOF'
 The <info>%command.name%</> command pushes translations to the given provider. Only new
 translations are pushed, existing ones are not overwritten.
 
@@ -69,18 +69,17 @@ This command pushes all translations associated with the <comment>messages</> an
 Provider translations for the specified domains and locale are deleted if they're not present locally and overwritten if it's the case.
 Provider translations for others domains and locales are ignored.
 EOF
-);
+        );
     }
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output) : int
-    {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
+        $provider = $this->providers->get($input->getArgument('provider'));
         if (!$this->enabledLocales) {
-            throw new InvalidArgumentException('You must define "framework.translator.enabled_locales" or "framework.translator.providers.%s.locales" config key in order to work with translation providers.');
+            throw new InvalidArgumentException(\sprintf('You must define "framework.translator.enabled_locales" or "framework.translator.providers.%s.locales" config key in order to work with translation providers.', \parse_url($provider, \PHP_URL_SCHEME)));
         }
         $io = new SymfonyStyle($input, $output);
-        $provider = $this->providers->get($input->getArgument('provider'));
         $domains = $input->getOption('domains');
         $locales = $input->getOption('locales');
         $force = $input->getOption('force');
@@ -110,8 +109,7 @@ EOF
         $io->success(\sprintf('%s local translations has been sent to "%s" (for "%s" locale(s), and "%s" domain(s)).', $force ? 'All' : 'New', \parse_url($provider, \PHP_URL_SCHEME), \implode(', ', $locales), \implode(', ', $domains)));
         return 0;
     }
-    private function getDomainsFromTranslatorBag(TranslatorBag $translatorBag) : array
-    {
+    private function getDomainsFromTranslatorBag(TranslatorBag $translatorBag): array {
         $domains = [];
         foreach ($translatorBag->getCatalogues() as $catalogue) {
             $domains += $catalogue->getDomains();

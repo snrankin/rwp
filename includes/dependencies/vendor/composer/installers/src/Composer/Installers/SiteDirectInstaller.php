@@ -1,13 +1,16 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class SiteDirectInstaller extends \Composer\Installers\BaseInstaller {
+class SiteDirectInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'modules/{$vendor}/{$name}/', 'plugin' => 'plugins/{$vendor}/{$name}/');
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         return $this->parseVars($vars);
     }
-    protected function parseVars($vars) {
+    protected function parseVars($vars)
+    {
         $vars['vendor'] = \strtolower($vars['vendor']) == 'sitedirect' ? 'SiteDirect' : $vars['vendor'];
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));

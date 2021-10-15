@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Command;
 
 use RWP\Vendor\Symfony\Component\Console\Command\Command;
@@ -21,13 +22,13 @@ use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
 use RWP\Vendor\Symfony\Component\Translation\Provider\TranslationProviderCollection;
 use RWP\Vendor\Symfony\Component\Translation\Reader\TranslationReaderInterface;
 use RWP\Vendor\Symfony\Component\Translation\Writer\TranslationWriterInterface;
+
 /**
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
  *
  * @experimental in 5.3
  */
-final class TranslationPullCommand extends Command
-{
+final class TranslationPullCommand extends Command {
     use TranslationTrait;
     protected static $defaultName = 'translation:pull';
     protected static $defaultDescription = 'Pull translations from a given provider.';
@@ -37,8 +38,7 @@ final class TranslationPullCommand extends Command
     private $defaultLocale;
     private $transPaths;
     private $enabledLocales;
-    public function __construct(TranslationProviderCollection $providerCollection, TranslationWriterInterface $writer, TranslationReaderInterface $reader, string $defaultLocale, array $transPaths = [], array $enabledLocales = [])
-    {
+    public function __construct(TranslationProviderCollection $providerCollection, TranslationWriterInterface $writer, TranslationReaderInterface $reader, string $defaultLocale, array $transPaths = [], array $enabledLocales = []) {
         $this->providerCollection = $providerCollection;
         $this->writer = $writer;
         $this->reader = $reader;
@@ -50,11 +50,11 @@ final class TranslationPullCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
-    {
+    protected function configure() {
         $keys = $this->providerCollection->keys();
         $defaultProvider = 1 === \count($keys) ? $keys[0] : null;
-        $this->setDefinition([new InputArgument('provider', null !== $defaultProvider ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'The provider to pull translations from.', $defaultProvider), new InputOption('force', null, InputOption::VALUE_NONE, 'Override existing translations with provider ones (it will delete not synchronized messages).'), new InputOption('intl-icu', null, InputOption::VALUE_NONE, 'Associated to --force option, it will write messages in "%domain%+intl-icu.%locale%.xlf" files.'), new InputOption('domains', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the domains to pull.'), new InputOption('locales', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the locales to pull.'), new InputOption('format', null, InputOption::VALUE_OPTIONAL, 'Override the default output format.', 'xlf12')])->setHelp(<<<'EOF'
+        $this->setDefinition([new InputArgument('provider', null !== $defaultProvider ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'The provider to pull translations from.', $defaultProvider), new InputOption('force', null, InputOption::VALUE_NONE, 'Override existing translations with provider ones (it will delete not synchronized messages).'), new InputOption('intl-icu', null, InputOption::VALUE_NONE, 'Associated to --force option, it will write messages in "%domain%+intl-icu.%locale%.xlf" files.'), new InputOption('domains', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the domains to pull.'), new InputOption('locales', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Specify the locales to pull.'), new InputOption('format', null, InputOption::VALUE_OPTIONAL, 'Override the default output format.', 'xlf12')])->setHelp(
+            <<<'EOF'
 The <info>%command.name%</> command pulls translations from the given provider. Only
 new translations are pulled, existing ones are not overwritten.
 
@@ -70,13 +70,12 @@ This command pulls all translations associated with the <comment>messages</> and
 Local translations for the specified domains and locale are deleted if they're not present on the provider and overwritten if it's the case.
 Local translations for others domains and locales are ignored.
 EOF
-);
+        );
     }
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output) : int
-    {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
         $io = new SymfonyStyle($input, $output);
         $provider = $this->providerCollection->get($input->getArgument('provider'));
         $force = $input->getOption('force');
@@ -91,7 +90,7 @@ EOF
         switch ($format) {
             case 'xlf20':
                 $xliffVersion = '2.0';
-            // no break
+                // no break
             case 'xlf12':
                 $format = 'xlf';
         }

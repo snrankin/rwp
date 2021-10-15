@@ -2,12 +2,11 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Pagination;
 
-interface CursorPaginator
-{
+interface CursorPaginator {
     /**
      * Get the URL for a given cursor.
      *
-     * @param  Cursor|null  $cursor
+     * @param Cursor|null  $cursor
      * @return string
      */
     public function url($cursor);
@@ -47,13 +46,13 @@ interface CursorPaginator
     /**
      * Get the "cursor" of the previous set of items.
      *
-     * @return Cursor|null
+     * @returnCursor|null
      */
     public function previousCursor();
     /**
      * Get the "cursor" of the next set of items.
      *
-     * @return Cursor|null
+     * @returnCursor|null
      */
     public function nextCursor();
     /**
@@ -65,7 +64,7 @@ interface CursorPaginator
     /**
      * Get the current cursor being paginated.
      *
-     * @return Cursor|null
+     * @returnCursor|null
      */
     public function cursor();
     /**

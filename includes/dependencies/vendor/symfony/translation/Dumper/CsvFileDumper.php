@@ -8,23 +8,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Dumper;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * CsvFileDumper generates a csv formatted string representation of a message catalogue.
  *
  * @author Stealth35
  */
-class CsvFileDumper extends FileDumper
-{
+class CsvFileDumper extends FileDumper {
     private $delimiter = ';';
     private $enclosure = '"';
     /**
      * {@inheritdoc}
      */
-    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = [])
-    {
+    public function formatCatalogue(MessageCatalogue $messages, string $domain, array $options = []) {
         $handle = \fopen('php://memory', 'r+');
         foreach ($messages->all($domain) as $source => $target) {
             \fputcsv($handle, [$source, $target], $this->delimiter, $this->enclosure);
@@ -37,16 +37,14 @@ class CsvFileDumper extends FileDumper
     /**
      * Sets the delimiter and escape character for CSV.
      */
-    public function setCsvControl(string $delimiter = ';', string $enclosure = '"')
-    {
+    public function setCsvControl(string $delimiter = ';', string $enclosure = '"') {
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
     }
     /**
      * {@inheritdoc}
      */
-    protected function getExtension()
-    {
+    protected function getExtension() {
         return 'csv';
     }
 }

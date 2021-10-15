@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Command;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
 use RWP\Vendor\Symfony\Component\Translation\TranslatorBag;
+
 /**
  * @internal
  */
-trait TranslationTrait
-{
-    private function readLocalTranslations(array $locales, array $domains, array $transPaths) : TranslatorBag
-    {
+trait TranslationTrait {
+    private function readLocalTranslations(array $locales, array $domains, array $transPaths): TranslatorBag {
         $bag = new TranslatorBag();
         foreach ($locales as $locale) {
             $catalogue = new MessageCatalogue($locale);
@@ -37,8 +37,7 @@ trait TranslationTrait
         }
         return $bag;
     }
-    private function filterCatalogue(MessageCatalogue $catalogue, string $domain) : MessageCatalogue
-    {
+    private function filterCatalogue(MessageCatalogue $catalogue, string $domain): MessageCatalogue {
         $filteredCatalogue = new MessageCatalogue($catalogue->getLocale());
         // extract intl-icu messages only
         $intlDomain = $domain . MessageCatalogueInterface::INTL_DOMAIN_SUFFIX;

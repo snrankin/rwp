@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class ClanCatsFrameworkInstaller extends \Composer\Installers\BaseInstaller {
+class ClanCatsFrameworkInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('ship' => 'CCF/orbit/{$name}/', 'theme' => 'CCF/app/themes/{$name}/');
 }

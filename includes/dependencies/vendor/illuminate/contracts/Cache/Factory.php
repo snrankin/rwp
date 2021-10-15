@@ -2,13 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Cache;
 
-interface Factory
-{
+interface Factory {
     /**
      * Get a cache store instance by name.
      *
      * @param  string|null  $name
-     * @return Repository
+     * @returnRepository
      */
     public function store($name = null);
 }

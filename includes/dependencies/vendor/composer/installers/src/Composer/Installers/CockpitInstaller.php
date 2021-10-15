@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class CockpitInstaller extends \Composer\Installers\BaseInstaller {
+class CockpitInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'cockpit/modules/addons/{$name}/');
     /**
      * Format module name.
@@ -11,13 +12,15 @@ class CockpitInstaller extends \Composer\Installers\BaseInstaller {
      *
      * {@inheritDoc}
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] == 'cockpit-module') {
             return $this->inflectModuleVars($vars);
         }
         return $vars;
     }
-    public function inflectModuleVars($vars) {
+    public function inflectModuleVars($vars)
+    {
         $vars['name'] = \ucfirst(\preg_replace('/cockpit-/i', '', $vars['name']));
         return $vars;
     }

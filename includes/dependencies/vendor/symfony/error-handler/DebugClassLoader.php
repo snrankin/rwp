@@ -11,10 +11,11 @@
 
 namespace RWP\Vendor\Symfony\Component\ErrorHandler;
 
-use Composer\InstalledVersions;
+use RWP\Vendor\Composer\InstalledVersions;
 use RWP\Vendor\Doctrine\Common\Persistence\Proxy as LegacyProxy;
 use RWP\Vendor\Doctrine\Persistence\Proxy;
 use RWP\Vendor\Mockery\MockInterface;
+use RWP\Vendor\Phake\IMock;
 use RWP\Vendor\PHPUnit\Framework\MockObject\Matcher\StatelessInvocation;
 use RWP\Vendor\PHPUnit\Framework\MockObject\MockObject;
 use RWP\Vendor\Prophecy\Prophecy\ProphecySubjectInterface;
@@ -88,7 +89,7 @@ class DebugClassLoader {
             } elseif (\substr($test, -\strlen($file)) === $file) {
                 // filesystem is case insensitive and realpath() normalizes the case of characters
                 self::$caseCheck = 1;
-            } elseif (\false !== \stripos(\PHP_OS, 'darwin')) {
+            } elseif ('Darwin' === \PHP_OS_FAMILY) {
                 // on MacOSX, HFS+ is case insensitive but realpath() doesn't normalize the case of characters
                 self::$caseCheck = 2;
             } else {
@@ -111,7 +112,7 @@ class DebugClassLoader {
     public static function enable(): void {
         // Ensures we don't hit https://bugs.php.net/42098
         \class_exists(ErrorHandler::class);
-        \class_exists(LogLevel::class);
+        \class_exists(Log\LogLevel::class);
         if (!\is_array($functions = \spl_autoload_functions())) {
             return;
         }
@@ -160,7 +161,7 @@ class DebugClassLoader {
         foreach ($offsets as $getSymbols => $i) {
             $symbols = $getSymbols();
             for (; $i < \count($symbols); ++$i) {
-                if (!\is_subclass_of($symbols[$i], MockObject::class) && !\is_subclass_of($symbols[$i], ProphecySubjectInterface::class) && !\is_subclass_of($symbols[$i], Proxy::class) && !\is_subclass_of($symbols[$i], ProxyInterface::class) && !\is_subclass_of($symbols[$i], Proxy::class) && !\is_subclass_of($symbols[$i], MockInterface::class)) {
+                if (!\is_subclass_of($symbols[$i], Framework\MockObject\MockObject::class) && !\is_subclass_of($symbols[$i], Prophecy\ProphecySubjectInterface::class) && !\is_subclass_of($symbols[$i], Persistence\Proxy::class) && !\is_subclass_of($symbols[$i], Proxy\ProxyInterface::class) && !\is_subclass_of($symbols[$i], Common\Persistence\Proxy::class) && !\is_subclass_of($symbols[$i], MockInterface::class) && !\is_subclass_of($symbols[$i], IMock::class)) {
                     $loader->checkClass($symbols[$i]);
                 }
             }
@@ -397,7 +398,7 @@ class DebugClassLoader {
                 }
                 $canAddReturnType = \false !== \strpos($refl->getFileName(), \DIRECTORY_SEPARATOR . 'Tests' . \DIRECTORY_SEPARATOR) || $refl->isFinal() || $method->isFinal() || $method->isPrivate() || '' === (self::$internal[$class] ?? null) && !$refl->isAbstract() || '' === (self::$final[$class] ?? null) || \preg_match('/@(final|internal)$/m', $doc);
             }
-            if (null !== ($returnType = self::$returnTypes[$class][$method->name] ?? self::MAGIC_METHODS[$method->name] ?? null) && !$method->hasReturnType() && !($doc && \preg_match('/\\n\\s+\\* @return +(\\S+)/', $doc))) {
+            if (null !== ($returnType = self::$returnTypes[$class][$method->name] ?? self::MAGIC_METHODS[$method->name] ?? null) && !$method->hasReturnType() && !($doc && \preg_match('/\\n\\s+\\* @return +([^\\s<(]+)/', $doc))) {
                 [$normalizedType, $returnType, $declaringClass, $declaringFile] = \is_string($returnType) ? [$returnType, $returnType, '', ''] : $returnType;
                 if ('void' === $normalizedType) {
                     $canAddReturnType = \false;
@@ -418,7 +419,7 @@ class DebugClassLoader {
                 continue;
             }
             $matches = [];
-            if (!$method->hasReturnType() && (\false !== \strpos($doc, '@return') && \preg_match('/\\n\\s+\\* @return +(\\S+)/', $doc, $matches) || 'void' !== (self::MAGIC_METHODS[$method->name] ?? 'void'))) {
+            if (!$method->hasReturnType() && (\false !== \strpos($doc, '@return') && \preg_match('/\\n\\s+\\* @return +([^\\s<(]+)/', $doc, $matches) || 'void' !== (self::MAGIC_METHODS[$method->name] ?? 'void'))) {
                 $matches = $matches ?: [1 => self::MAGIC_METHODS[$method->name]];
                 $this->setReturnType($matches[1], $method, $parent);
                 if (isset(self::$returnTypes[$class][$method->name][0]) && $canAddReturnType) {
@@ -440,7 +441,7 @@ class DebugClassLoader {
                     $finalOrInternal = \true;
                 }
             }
-            if ($finalOrInternal || $method->isConstructor() || \false === \strpos($doc, '@param') || StatelessInvocation::class === $class) {
+            if ($finalOrInternal || $method->isConstructor() || \false === \strpos($doc, '@param') || Framework\MockObject\Matcher\StatelessInvocation::class === $class) {
                 continue;
             }
             if (!\preg_match_all('#\\n\\s+\\* @param +((?(?!callable *\\().*?|callable *\\(.*\\).*?))(?<= )\\$([a-zA-Z0-9_\\x7f-\\xff]++)#', $doc, $matches, \PREG_SET_ORDER)) {

@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class RoundcubeInstaller extends \Composer\Installers\BaseInstaller {
+class RoundcubeInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'plugins/{$name}/');
     /**
      * Lowercase name and changes the name to a underscores
@@ -10,7 +11,8 @@ class RoundcubeInstaller extends \Composer\Installers\BaseInstaller {
      * @param  array $vars
      * @return array
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         $vars['name'] = \strtolower(\str_replace('-', '_', $vars['name']));
         return $vars;
     }

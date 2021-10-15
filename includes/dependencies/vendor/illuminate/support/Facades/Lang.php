@@ -10,17 +10,15 @@ namespace RWP\Vendor\Illuminate\Support\Facades;
  * @method static string getLocale()
  * @method static void setLocale(string $locale)
  *
- * @see Translator
+ * @seeTranslator
  */
-class Lang extends Facade
-{
+class Lang extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
+    protected static function getFacadeAccessor() {
         return 'translator';
     }
 }

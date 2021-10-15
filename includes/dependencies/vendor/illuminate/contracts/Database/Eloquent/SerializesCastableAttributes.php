@@ -2,12 +2,11 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Database\Eloquent;
 
-interface SerializesCastableAttributes
-{
+interface SerializesCastableAttributes {
     /**
      * Serialize the attribute when converting the model to an array.
      *
-     * @param  Model  $model
+     * @param Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes

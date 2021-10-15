@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\DataCollector;
 
 use RWP\Vendor\Symfony\Component\HttpFoundation\Request;
@@ -16,23 +17,21 @@ use RWP\Vendor\Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use RWP\Vendor\Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
 use RWP\Vendor\Symfony\Component\Translation\DataCollectorTranslator;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
+
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  *
  * @final
  */
-class TranslationDataCollector extends DataCollector implements LateDataCollectorInterface
-{
+class TranslationDataCollector extends DataCollector implements LateDataCollectorInterface {
     private $translator;
-    public function __construct(DataCollectorTranslator $translator)
-    {
+    public function __construct(DataCollectorTranslator $translator) {
         $this->translator = $translator;
     }
     /**
      * {@inheritdoc}
      */
-    public function lateCollect()
-    {
+    public function lateCollect() {
         $messages = $this->sanitizeCollectedMessages($this->translator->getCollectedMessages());
         $this->data += $this->computeCount($messages);
         $this->data['messages'] = $messages;
@@ -41,66 +40,56 @@ class TranslationDataCollector extends DataCollector implements LateDataCollecto
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
-    {
+    public function collect(Request $request, Response $response, \Throwable $exception = null) {
         $this->data['locale'] = $this->translator->getLocale();
         $this->data['fallback_locales'] = $this->translator->getFallbackLocales();
     }
     /**
      * {@inheritdoc}
      */
-    public function reset()
-    {
+    public function reset() {
         $this->data = [];
     }
     /**
      * @return array|Data
      */
-    public function getMessages()
-    {
+    public function getMessages() {
         return $this->data['messages'] ?? [];
     }
     /**
      * @return int
      */
-    public function getCountMissings()
-    {
-        return $this->data[DataCollectorTranslator::MESSAGE_MISSING] ?? 0;
+    public function getCountMissings() {
+        return $this->data[Component\Translation\DataCollectorTranslator::MESSAGE_MISSING] ?? 0;
     }
     /**
      * @return int
      */
-    public function getCountFallbacks()
-    {
-        return $this->data[DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK] ?? 0;
+    public function getCountFallbacks() {
+        return $this->data[Component\Translation\DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK] ?? 0;
     }
     /**
      * @return int
      */
-    public function getCountDefines()
-    {
-        return $this->data[DataCollectorTranslator::MESSAGE_DEFINED] ?? 0;
+    public function getCountDefines() {
+        return $this->data[Component\Translation\DataCollectorTranslator::MESSAGE_DEFINED] ?? 0;
     }
-    public function getLocale()
-    {
+    public function getLocale() {
         return !empty($this->data['locale']) ? $this->data['locale'] : null;
     }
     /**
      * @internal
      */
-    public function getFallbackLocales()
-    {
+    public function getFallbackLocales() {
         return isset($this->data['fallback_locales']) && \count($this->data['fallback_locales']) > 0 ? $this->data['fallback_locales'] : [];
     }
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
+    public function getName() {
         return 'translation';
     }
-    private function sanitizeCollectedMessages(array $messages)
-    {
+    private function sanitizeCollectedMessages(array $messages) {
         $result = [];
         foreach ($messages as $key => $message) {
             $messageId = $message['locale'] . $message['domain'] . $message['id'];
@@ -119,16 +108,14 @@ class TranslationDataCollector extends DataCollector implements LateDataCollecto
         }
         return $result;
     }
-    private function computeCount(array $messages)
-    {
-        $count = [DataCollectorTranslator::MESSAGE_DEFINED => 0, DataCollectorTranslator::MESSAGE_MISSING => 0, DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK => 0];
+    private function computeCount(array $messages) {
+        $count = [Component\Translation\DataCollectorTranslator::MESSAGE_DEFINED => 0, DataCollectorTranslator::MESSAGE_MISSING => 0, DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK => 0];
         foreach ($messages as $message) {
             ++$count[$message['state']];
         }
         return $count;
     }
-    private function sanitizeString(string $string, int $length = 80)
-    {
+    private function sanitizeString(string $string, int $length = 80) {
         $string = \trim(\preg_replace('/\\s+/', ' ', $string));
         if (\false !== ($encoding = \mb_detect_encoding($string, null, \true))) {
             if (\mb_strlen($string, $encoding) > $length) {

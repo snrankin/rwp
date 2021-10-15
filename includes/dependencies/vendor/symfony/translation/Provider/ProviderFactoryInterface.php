@@ -8,16 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Provider;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\IncompleteDsnException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\UnsupportedSchemeException;
-interface ProviderFactoryInterface
-{
+
+interface ProviderFactoryInterface {
     /**
      * @throws UnsupportedSchemeException
      * @throws IncompleteDsnException
      */
-    public function create(Dsn $dsn) : ProviderInterface;
-    public function supports(Dsn $dsn) : bool;
+    public function create(Dsn $dsn): ProviderInterface;
+    public function supports(Dsn $dsn): bool;
 }

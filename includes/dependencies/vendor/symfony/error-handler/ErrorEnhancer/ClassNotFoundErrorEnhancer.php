@@ -11,7 +11,7 @@
 
 namespace RWP\Vendor\Symfony\Component\ErrorHandler\ErrorEnhancer;
 
-use Composer\Autoload\ClassLoader;
+use RWP\Vendor\Composer\Autoload\ClassLoader;
 use RWP\Vendor\Symfony\Component\ErrorHandler\DebugClassLoader;
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\ClassNotFoundError;
 use RWP\Vendor\Symfony\Component\ErrorHandler\Error\FatalError;
@@ -79,7 +79,7 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface {
                     continue;
                 }
             }
-            if ($function[0] instanceof ClassLoader) {
+            if ($function[0] instanceof Autoload\ClassLoader) {
                 foreach ($function[0]->getPrefixes() as $prefix => $paths) {
                     foreach ($paths as $path) {
                         $classes = \array_merge($classes, $this->findClassInPath($path, $class, $prefix));

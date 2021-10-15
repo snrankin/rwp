@@ -8,9 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Catalogue;
 
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
+
 /**
  * Target operation between two catalogues:
  * intersection = source ∩ target = {x: x ∈ source ∧ x ∈ target}
@@ -21,13 +23,11 @@ use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
  *
  * @author Michael Lee <michael.lee@zerustech.com>
  */
-class TargetOperation extends AbstractOperation
-{
+class TargetOperation extends AbstractOperation {
     /**
      * {@inheritdoc}
      */
-    protected function processDomain(string $domain)
-    {
+    protected function processDomain(string $domain) {
         $this->messages[$domain] = ['all' => [], 'new' => [], 'obsolete' => []];
         $intlDomain = $domain . MessageCatalogueInterface::INTL_DOMAIN_SUFFIX;
         // For 'all' messages, the code can't be simplified as ``$this->messages[$domain]['all'] = $target->all($domain);``,

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Loader;
 
 use RWP\Vendor\Symfony\Component\Config\Resource\FileResource;
@@ -19,18 +20,17 @@ use RWP\Vendor\Symfony\Component\Translation\Exception\NotFoundResourceException
 use RWP\Vendor\Symfony\Component\Translation\Exception\RuntimeException;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
 use RWP\Vendor\Symfony\Component\Translation\Util\XliffUtils;
+
 /**
  * XliffFileLoader loads translations from XLIFF files.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class XliffFileLoader implements LoaderInterface
-{
+class XliffFileLoader implements LoaderInterface {
     /**
      * {@inheritdoc}
      */
-    public function load($resource, string $locale, string $domain = 'messages')
-    {
+    public function load($resource, string $locale, string $domain = 'messages') {
         if (!\class_exists(XmlUtils::class)) {
             throw new RuntimeException('Loading translations from the Xliff format requires the Symfony Config component.');
         }
@@ -51,7 +51,7 @@ class XliffFileLoader implements LoaderInterface
             } else {
                 $dom = XmlUtils::loadFile($resource);
             }
-        } catch (\InvalidArgumentException|XmlParsingException|InvalidXmlException $e) {
+        } catch (\InvalidArgumentException | XmlParsingException | InvalidXmlException $e) {
             throw new InvalidResourceException(\sprintf('Unable to load "%s": ', $resource) . $e->getMessage(), $e->getCode(), $e);
         }
         if ($errors = XliffUtils::validateSchema($dom)) {
@@ -64,8 +64,7 @@ class XliffFileLoader implements LoaderInterface
         }
         return $catalogue;
     }
-    private function extract($dom, MessageCatalogue $catalogue, string $domain)
-    {
+    private function extract(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain) {
         $xliffVersion = XliffUtils::getVersionNumber($dom);
         if ('1.2' === $xliffVersion) {
             $this->extractXliff1($dom, $catalogue, $domain);
@@ -77,10 +76,9 @@ class XliffFileLoader implements LoaderInterface
     /**
      * Extract messages and metadata from DOMDocument into a MessageCatalogue.
      */
-    private function extractXliff1(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
-    {
+    private function extractXliff1(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain) {
         $xml = \simplexml_import_dom($dom);
-        $encoding = \strtoupper($dom->encoding);
+        $encoding = $dom->encoding ? \strtoupper($dom->encoding) : null;
         $namespace = 'urn:oasis:names:tc:xliff:document:1.2';
         $xml->registerXPathNamespace('xliff', $namespace);
         foreach ($xml->xpath('//xliff:file') as $file) {
@@ -113,8 +111,7 @@ class XliffFileLoader implements LoaderInterface
             }
         }
     }
-    private function extractXliff2(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
-    {
+    private function extractXliff2(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain) {
         $xml = \simplexml_import_dom($dom);
         $encoding = $dom->encoding ? \strtoupper($dom->encoding) : null;
         $xml->registerXPathNamespace('xliff', 'urn:oasis:names:tc:xliff:document:2.0');
@@ -151,15 +148,13 @@ class XliffFileLoader implements LoaderInterface
     /**
      * Convert a UTF8 string to the specified encoding.
      */
-    private function utf8ToCharset(string $content, string $encoding = null) : string
-    {
+    private function utf8ToCharset(string $content, string $encoding = null): string {
         if ('UTF-8' !== $encoding && !empty($encoding)) {
             return \mb_convert_encoding($content, $encoding, 'UTF-8');
         }
         return $content;
     }
-    private function parseNotesMetadata(\SimpleXMLElement $noteElement = null, string $encoding = null) : array
-    {
+    private function parseNotesMetadata(\SimpleXMLElement $noteElement = null, string $encoding = null): array {
         $notes = [];
         if (null === $noteElement) {
             return $notes;
@@ -178,8 +173,7 @@ class XliffFileLoader implements LoaderInterface
         }
         return $notes;
     }
-    private function isXmlString(string $resource) : bool
-    {
+    private function isXmlString(string $resource): bool {
         return 0 === \strpos($resource, '<?xml');
     }
 }

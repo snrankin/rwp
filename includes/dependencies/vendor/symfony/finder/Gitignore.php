@@ -68,6 +68,6 @@ class Gitignore
         $regex = \preg_replace('~(?:(?:\\\\\\*){2,}(/?))+~', '(?:(?:(?!//).(?<!//))+$1)?', $regex);
         $regex = \preg_replace('~\\\\\\*~', '[^/]*', $regex);
         $regex = \preg_replace('~\\\\\\?~', '[^/]', $regex);
-        return ($isAbsolute ? '' : '(?:[^/]+/)*') . $regex . ('/' !== \substr($gitignoreLine, -1) ? '(?:$|/)' : '');
+        return ($isAbsolute ? '' : '(?:[^/]+/)*') . $regex . (!\str_ends_with($gitignoreLine, '/') ? '(?:$|/)' : '');
     }
 }

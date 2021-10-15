@@ -8,12 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\Translation\Catalogue;
 
 use RWP\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use RWP\Vendor\Symfony\Component\Translation\Exception\LogicException;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogue;
 use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
+
 /**
  * Base catalogues binary operation class.
  *
@@ -22,8 +24,7 @@ use RWP\Vendor\Symfony\Component\Translation\MessageCatalogueInterface;
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
  */
-abstract class AbstractOperation implements OperationInterface
-{
+abstract class AbstractOperation implements OperationInterface {
     public const OBSOLETE_BATCH = 'obsolete';
     public const NEW_BATCH = 'new';
     public const ALL_BATCH = 'all';
@@ -59,8 +60,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * @throws LogicException
      */
-    public function __construct(MessageCatalogueInterface $source, MessageCatalogueInterface $target)
-    {
+    public function __construct(MessageCatalogueInterface $source, MessageCatalogueInterface $target) {
         if ($source->getLocale() !== $target->getLocale()) {
             throw new LogicException('Operated catalogues must belong to the same locale.');
         }
@@ -72,8 +72,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function getDomains()
-    {
+    public function getDomains() {
         if (null === $this->domains) {
             $this->domains = \array_values(\array_unique(\array_merge($this->source->getDomains(), $this->target->getDomains())));
         }
@@ -82,8 +81,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function getMessages(string $domain)
-    {
+    public function getMessages(string $domain) {
         if (!\in_array($domain, $this->getDomains())) {
             throw new InvalidArgumentException(\sprintf('Invalid domain: "%s".', $domain));
         }
@@ -95,8 +93,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function getNewMessages(string $domain)
-    {
+    public function getNewMessages(string $domain) {
         if (!\in_array($domain, $this->getDomains())) {
             throw new InvalidArgumentException(\sprintf('Invalid domain: "%s".', $domain));
         }
@@ -108,8 +105,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function getObsoleteMessages(string $domain)
-    {
+    public function getObsoleteMessages(string $domain) {
         if (!\in_array($domain, $this->getDomains())) {
             throw new InvalidArgumentException(\sprintf('Invalid domain: "%s".', $domain));
         }
@@ -121,8 +117,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function getResult()
-    {
+    public function getResult() {
         foreach ($this->getDomains() as $domain) {
             if (!isset($this->messages[$domain])) {
                 $this->processDomain($domain);
@@ -133,8 +128,7 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * @param self::*_BATCH $batch
      */
-    public function moveMessagesToIntlDomainsIfPossible(string $batch = self::ALL_BATCH) : void
-    {
+    public function moveMessagesToIntlDomainsIfPossible(string $batch = self::ALL_BATCH): void {
         // If MessageFormatter class does not exists, intl domains are not supported.
         if (!\class_exists(\MessageFormatter::class)) {
             return;

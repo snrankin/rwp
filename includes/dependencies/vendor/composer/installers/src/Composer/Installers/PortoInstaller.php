@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class PortoInstaller extends \Composer\Installers\BaseInstaller {
+class PortoInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('container' => 'app/Containers/{$name}/');
 }

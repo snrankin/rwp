@@ -5,18 +5,18 @@ namespace RWP\Vendor\Illuminate\Support;
 use Closure;
 use RWP\Vendor\Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
-abstract class Manager
-{
+
+abstract class Manager {
     /**
      * The container instance.
      *
-     * @var Container
+     * @varContainer
      */
     protected $container;
     /**
      * The configuration repository instance.
      *
-     * @var Repository
+     * @varRepository
      */
     protected $config;
     /**
@@ -34,11 +34,10 @@ abstract class Manager
     /**
      * Create a new manager instance.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return void
      */
-    public function __construct(Container $container)
-    {
+    public function __construct(Container $container) {
         $this->container = $container;
         $this->config = $container->make('config');
     }
@@ -56,8 +55,7 @@ abstract class Manager
      *
      * @throws \InvalidArgumentException
      */
-    public function driver($driver = null)
-    {
+    public function driver($driver = null) {
         $driver = $driver ?: $this->getDefaultDriver();
         if (\is_null($driver)) {
             throw new \InvalidArgumentException(\sprintf('Unable to resolve NULL driver for [%s].', static::class));
@@ -78,8 +76,7 @@ abstract class Manager
      *
      * @throws \InvalidArgumentException
      */
-    protected function createDriver($driver)
-    {
+    protected function createDriver($driver) {
         // First, we will determine if a custom driver creator exists for the given driver and
         // if it does not we will check for a creator method for the driver. Custom creator
         // callbacks allow developers to build their own "drivers" easily using Closures.
@@ -99,8 +96,7 @@ abstract class Manager
      * @param  string  $driver
      * @return mixed
      */
-    protected function callCustomCreator($driver)
-    {
+    protected function callCustomCreator($driver) {
         return $this->customCreators[$driver]($this->container);
     }
     /**
@@ -110,8 +106,7 @@ abstract class Manager
      * @param  \Closure  $callback
      * @return $this
      */
-    public function extend($driver, \Closure $callback)
-    {
+    public function extend($driver, \Closure $callback) {
         $this->customCreators[$driver] = $callback;
         return $this;
     }
@@ -120,27 +115,24 @@ abstract class Manager
      *
      * @return array
      */
-    public function getDrivers()
-    {
+    public function getDrivers() {
         return $this->drivers;
     }
     /**
      * Get the container instance used by the manager.
      *
-     * @return Container
+     * @returnContainer
      */
-    public function getContainer()
-    {
+    public function getContainer() {
         return $this->container;
     }
     /**
      * Set the container instance used by the manager.
      *
-     * @param  Container  $container
+     * @param Container  $container
      * @return $this
      */
-    public function setContainer(Container $container)
-    {
+    public function setContainer(Container $container) {
         $this->container = $container;
         return $this;
     }
@@ -149,8 +141,7 @@ abstract class Manager
      *
      * @return $this
      */
-    public function forgetDrivers()
-    {
+    public function forgetDrivers() {
         $this->drivers = [];
         return $this;
     }
@@ -161,8 +152,7 @@ abstract class Manager
      * @param  array  $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
-    {
+    public function __call($method, $parameters) {
         return $this->driver()->{$method}(...$parameters);
     }
 }

@@ -2,8 +2,7 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Validation;
 
-interface Factory
-{
+interface Factory {
     /**
      * Create a new Validator instance.
      *
@@ -11,7 +10,7 @@ interface Factory
      * @param  array  $rules
      * @param  array  $messages
      * @param  array  $customAttributes
-     * @return Validator
+     * @returnValidator
      */
     public function make(array $data, array $rules, array $messages = [], array $customAttributes = []);
     /**

@@ -10,6 +10,8 @@
  */
 namespace RWP\Vendor\Symfony\Component\Finder\Iterator;
 
+use RWP\Vendor\Illuminate\Support\Str;
+
 /**
  * ExcludeDirectoryFilterIterator filters out directories.
  *
@@ -32,7 +34,7 @@ class ExcludeDirectoryFilterIterator extends \FilterIterator implements \Recursi
         $patterns = [];
         foreach ($directories as $directory) {
             $directory = \rtrim($directory, '/');
-            if (!$this->isRecursive || \false !== \strpos($directory, '/')) {
+            if (!$this->isRecursive || Str::contains($directory, '/')) {
                 $patterns[] = \preg_quote($directory, '#');
             } else {
                 $this->excludedDirs[$directory] = \true;
@@ -48,6 +50,7 @@ class ExcludeDirectoryFilterIterator extends \FilterIterator implements \Recursi
      *
      * @return bool True if the value should be kept, false otherwise
      */
+
     public function accept()
     {
         if ($this->isRecursive && isset($this->excludedDirs[$this->getFilename()]) && $this->isDir()) {
@@ -63,10 +66,15 @@ class ExcludeDirectoryFilterIterator extends \FilterIterator implements \Recursi
     /**
      * @return bool
      */
+
     public function hasChildren()
     {
         return $this->isRecursive && $this->iterator->hasChildren();
     }
+    /**
+     * @return self
+     */
+
     public function getChildren()
     {
         $children = new self($this->iterator->getChildren(), []);
