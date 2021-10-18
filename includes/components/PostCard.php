@@ -30,8 +30,8 @@ class PostCard extends Card {
 	public function __construct( $post = null, $args = [] ) {
 
 		$this->post = rwp_object_type( $post );
-		$post_type  = data_get($this->post, 'subtype', 'post');
-		$post_id    = data_get($this->post, 'id', 0);
+		$post_type  = data_get( $this->post, 'subtype', 'post' );
+		$post_id    = data_get( $this->post, 'id', 0 );
 
 		$url = rwp_post_link( $post );
 
@@ -41,17 +41,17 @@ class PostCard extends Card {
 			'inner' => array(
 				'tag' => 'a',
 				'atts' => array(
-					'href' => $url
-				)
+					'href' => $url,
+				),
 			),
 			'atts' => array(
 				'class' => array(
-					'post-image'
-				)
-			)
+					'post-image',
+				),
+			),
 		));
 
-		if( $image ){
+		if ( $image ) {
 			$image = $image->toArray();
 		}
 
@@ -68,8 +68,10 @@ class PostCard extends Card {
 			'links' => array(
 				'text' => 'Read More',
 				'link' => $url,
-			)
+			),
 		);
+
+		$post_type = rwp()->unprefix( $post_type ); // Remove rwp_ to prevent double rwp_rwp_ below
 
 		$defaults = apply_filters( "rwp_{$post_type}_card_defaults", $defaults, $post );
 

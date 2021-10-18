@@ -31,6 +31,7 @@ class Testimonial extends PostType {
 	);
 
 	public function initialize() {
+
 		$this->admin_cols['rating'] = array(
 			'title'       => 'Rating',
 			'function' => function () {
@@ -38,6 +39,8 @@ class Testimonial extends PostType {
 				echo \StarRatingField::output_stars($field); // phpcs:ignore
 			},
 		);
+
+		parent::initialize();
 	}
 
 }

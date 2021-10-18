@@ -130,13 +130,13 @@ class Card extends Element {
 		if ( $this->content->isNotEmpty() ) {
 			$content = $this->content;
             $content->transform( function( $item ) {
-				if(is_string( $item )){
+				if ( is_string( $item ) ) {
 					$item = rwp_html( $item );
 				}
 				if ( is_array( $item ) ) {
 					$item = new Element( $item );
 				}
-				if( $item instanceof Element ){
+				if ( $item instanceof Element ) {
 					$item = $item->html;
 				}
 
@@ -208,24 +208,23 @@ class Card extends Element {
 			'tag' => 'p',
 			'atts' => array(
 				'class' => array(
-					'card-text'
-				)
-			)
+					'card-text',
+				),
+			),
 		);
 
-		if( $text instanceof Html ){
+		if ( $text instanceof Html ) {
 			$text = $text->saveHTML();
 		}
 
-		if( is_string( $text ) ){
-			if( rwp_string_is_html( $text ) ){
+		if ( is_string( $text ) ) {
+			if ( rwp_string_is_html( $text ) ) {
 				$text = rwp_extract_html_attributes( $text, '', true, true );
 			} else {
 				$text = array(
-					'content' => $text
+					'content' => $text,
 				);
 			}
-
 		}
 
 		if ( is_array( $text ) ) {
@@ -234,7 +233,7 @@ class Card extends Element {
 
 		$text = new Element( $text );
 
-		if( $text instanceof Element ){
+		if ( $text instanceof Element ) {
 			$text->add_class( 'card-text' );
 		}
 
@@ -242,8 +241,7 @@ class Card extends Element {
 
 		$order = data_get( $text, 'key', 3 );
 
-
-		if( $order >= 3 ){ // Making sure additional content is added at the end of the content array
+		if ( $order >= 3 ) { // Making sure additional content is added at the end of the content array
 			$content_count = $this->$location->content->count();
 
 			$order = $content_count + $order;
@@ -268,24 +266,23 @@ class Card extends Element {
 			'tag' => 'h3',
 			'atts' => array(
 				'class' => array(
-					'card-title'
-				)
-			)
+					'card-title',
+				),
+			),
 		);
 
-		if( $title instanceof Html ){
+		if ( $title instanceof Html ) {
 			$title = $title->saveHTML();
 		}
 
-		if( is_string( $title ) ){
-			if( rwp_string_is_html( $title ) ){
+		if ( is_string( $title ) ) {
+			if ( rwp_string_is_html( $title ) ) {
 				$title = rwp_extract_html_attributes( $title, '', true, true );
 			} else {
 				$title = array(
-					'content' => $title
+					'content' => $title,
 				);
 			}
-
 		}
 
 		if ( is_array( $title ) ) {
@@ -294,7 +291,7 @@ class Card extends Element {
 
 		$title = new Element( $title );
 
-		if( $title instanceof Element ){
+		if ( $title instanceof Element ) {
 			$title->add_class( 'card-title' );
 		}
 
@@ -321,24 +318,23 @@ class Card extends Element {
 			'tag' => 'h4',
 			'atts' => array(
 				'class' => array(
-					'card-subtitle'
-				)
-			)
+					'card-subtitle',
+				),
+			),
 		);
 
-		if( $title instanceof Html ){
+		if ( $title instanceof Html ) {
 			$title = $title->saveHTML();
 		}
 
-		if( is_string( $title ) ){
-			if( rwp_string_is_html( $title ) ){
+		if ( is_string( $title ) ) {
+			if ( rwp_string_is_html( $title ) ) {
 				$title = rwp_extract_html_attributes( $title, '', true, true );
 			} else {
 				$title = array(
-					'content' => $title
+					'content' => $title,
 				);
 			}
-
 		}
 
 		if ( is_array( $title ) ) {
@@ -347,7 +343,7 @@ class Card extends Element {
 
 		$title = new Element( $title );
 
-		if( $title instanceof Element ){
+		if ( $title instanceof Element ) {
 			$title->add_class( 'card-title' );
 		}
 
@@ -377,11 +373,10 @@ class Card extends Element {
 			'is_btn' => false,
 		);
 
-
-		if( is_array( $link ) ){
-			if( wp_is_numeric_array( $link ) ){
+		if ( is_array( $link ) ) {
+			if ( wp_is_numeric_array( $link ) ) {
 				$links = $link;
-				foreach ($links as $link) {
+				foreach ( $links as $link ) {
 					$this->add_link( $link );
 				}
 			} else {
@@ -396,26 +391,25 @@ class Card extends Element {
 		$location = data_get( $defaults, 'location', 'body' );
 		$order = data_get( $defaults, 'key', 4 );
 
-		if( $link instanceof Html ){
-			if( $link->filter( 'a' )->hasClass( 'btn' ) ){
+		if ( $link instanceof Html ) {
+			if ( $link->filter( 'a' )->hasClass( 'btn' ) ) {
 				$is_btn = true;
 			}
 			$link = $link->saveHTML();
 		}
 
-		if( is_string( $link ) ){
+		if ( is_string( $link ) ) {
 
-			if( rwp_string_is_html( $link ) ){
+			if ( rwp_string_is_html( $link ) ) {
 				$html = rwp_html( $link );
-				if( $html->filter( 'a' )->hasClass( 'btn' ) ){
+				if ( $html->filter( 'a' )->hasClass( 'btn' ) ) {
 					$is_btn = true;
 				}
 				$link = rwp_extract_html_attributes( $link, '', true, true );
 			}
-
 		}
 
-		if( $is_btn ){
+		if ( $is_btn ) {
 			$link = new Button( $link );
 			$link->set_attr( 'href', $href );
 			$link->text->set_content( $text, 0 );
@@ -426,10 +420,10 @@ class Card extends Element {
 			$link->set_content( $text, 0 );
 		}
 
-		if( ( $link->has_attr( 'href' ) && ! empty( $link->get_attr( 'href' ) ) && 'a' === $link->tag ) || ( 'button' === $link->tag ) ){
+		if ( ( $link->has_attr( 'href' ) && ! empty( $link->get_attr( 'href' ) ) && 'a' === $link->tag ) || ( 'button' === $link->tag ) ) {
 			$link = $link->html();
 
-			if( $order >= 4 ){ // Making sure additional content is added at the end of the content array
+			if ( $order >= 4 ) { // Making sure additional content is added at the end of the content array
 				$content_count = $this->$location->content->count();
 
 				$order = $content_count + $order;
@@ -446,9 +440,9 @@ class Card extends Element {
 	 *
 	 * @return void
 	 */
-	public function setup_header(){
+	public function setup_header() {
 		if ( in_array( 'header', $this->order, true ) ) {
-			if( ! $this->header->has_content() ){
+			if ( ! $this->header->has_content() ) {
 				$this->remove_order_item( 'header' );
 			} else {
 				if ( empty( $this->header->order ) ) {
@@ -465,9 +459,9 @@ class Card extends Element {
 	 *
 	 * @return void
 	 */
-	public function setup_image(){
+	public function setup_image() {
 		if ( in_array( 'image', $this->order, true ) ) {
-			if( ! $this->image->has( 'src' ) || empty( $this->image->get( 'src' ) ) ){
+			if ( ! $this->image->has( 'src' ) || empty( $this->image->get( 'src' ) ) ) {
 				$this->remove_order_item( 'image' );
 			}
 		}
@@ -478,9 +472,9 @@ class Card extends Element {
 	 *
 	 * @return void
 	 */
-	public function setup_body(){
+	public function setup_body() {
 		if ( in_array( 'body', $this->order, true ) ) {
-			if( ! $this->body->has_content() ){
+			if ( ! $this->body->has_content() ) {
 				$this->remove_order_item( 'body' );
 			} else {
 				if ( empty( $this->body->order ) ) {
@@ -497,9 +491,9 @@ class Card extends Element {
 	 *
 	 * @return void
 	 */
-	public function setup_footer(){
+	public function setup_footer() {
 		if ( in_array( 'footer', $this->order, true ) ) {
-			if( ! $this->footer->has_content() ){
+			if ( ! $this->footer->has_content() ) {
 				$this->remove_order_item( 'footer' );
 			} else {
 				if ( empty( $this->footer->order ) ) {
