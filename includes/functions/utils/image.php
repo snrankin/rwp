@@ -132,74 +132,74 @@ function rwp_extract_img_src( $image, $size = 'full' ) {
      $src = false;
 
 	 $image_types = array(
-		// Jpeg
-		'jpg',
-		'jpeg',
-		'jpe',
-		'jif',
-		'jfif',
-		'jfi',
-		// PNG
-		'png',
-		// GIF
-		'gif',
-		// Google Webp
-		'webp',
-		// SVGS
-		'svg',
-		'svgz',
-		// iOS High Efficiency Image File
-		'heif',
-		'heic',
-		// Jpeg 2000
-		'jp2',
-		'j2k',
-		'jpf',
-		'jpx',
-		'jpm',
-		'mj2',
-		// TIFF
-		'tiff',
-		'tif',
-		// Icons
-		'ico',
-		// Windows
-		'bmp',
-		'dib',
-    );
+		 // Jpeg
+		 'jpg',
+		 'jpeg',
+		 'jpe',
+		 'jif',
+		 'jfif',
+		 'jfi',
+		 // PNG
+		 'png',
+		 // GIF
+		 'gif',
+		 // Google Webp
+		 'webp',
+		 // SVGS
+		 'svg',
+		 'svgz',
+		 // iOS High Efficiency Image File
+		 'heif',
+		 'heic',
+		 // Jpeg 2000
+		 'jp2',
+		 'j2k',
+		 'jpf',
+		 'jpx',
+		 'jpm',
+		 'mj2',
+		 // TIFF
+		 'tiff',
+		 'tif',
+		 // Icons
+		 'ico',
+		 // Windows
+		 'bmp',
+		 'dib',
+	 );
 
-    if ( is_string( $image ) ) {
-        if ( ! rwp_string_is_html( $image ) ) {
-            $ext = pathinfo( $image, PATHINFO_EXTENSION );
-            if( in_array( $ext, $image_types ) ) {
-				$src = $image;
-			}
-        } elseif ( is_numeric( $image ) ) {
-            $image = intval( $image );
-            $src = wp_get_attachment_image_url( $image, $size, false );
-        } elseif ( rwp_string_is_html( $image ) ) {
-            $image = rwp_html( $image );
-            $src = $image->getAttribute( 'src' );
-            if ( empty( $src ) ) {
-                $src = $image->getAttribute( 'data-src' );
-            }
-        }
-    } elseif ( ( $image instanceof \WP_Post ) ) {
-        $src = wp_get_attachment_image_url( $image->ID, $size, false );
-    } elseif ( is_int( $image ) ) {
-        $src = wp_get_attachment_image_url( $image, $size, false );
-    } elseif ( $image instanceof Element ) {
-        $src = $image->get_attr( 'src', $src );
-        if ( empty( $src ) ) {
-            $src = $image->get_attr( 'data-src', $src );
-        }
-    } elseif ( $image instanceof Html ) {
-        $src = $image->getAttribute( 'src' );
-        if ( empty( $src ) ) {
-            $src = $image->getAttribute( 'data-src' );
-        }
-    }
-    return $src;
+	 if ( is_string( $image ) ) {
+		 if ( ! rwp_string_is_html( $image ) ) {
+			 $ext = pathinfo( $image, PATHINFO_EXTENSION );
+			 if ( in_array( $ext, $image_types ) ) {
+				 $src = $image;
+			 }
+		 } elseif ( is_numeric( $image ) ) {
+			 $image = intval( $image );
+			 $src = wp_get_attachment_image_url( $image, $size, false );
+		 } elseif ( rwp_string_is_html( $image ) ) {
+			 $image = rwp_html( $image );
+			 $src = $image->getAttribute( 'src' );
+			 if ( empty( $src ) ) {
+				 $src = $image->getAttribute( 'data-src' );
+			 }
+		 }
+	 } elseif ( ( $image instanceof \WP_Post ) ) {
+		 $src = wp_get_attachment_image_url( $image->ID, $size, false );
+	 } elseif ( is_int( $image ) ) {
+		 $src = wp_get_attachment_image_url( $image, $size, false );
+	 } elseif ( $image instanceof Element ) {
+		 $src = $image->get_attr( 'src', $src );
+		 if ( empty( $src ) ) {
+			 $src = $image->get_attr( 'data-src', $src );
+		 }
+	 } elseif ( $image instanceof Html ) {
+		 $src = $image->getAttribute( 'src' );
+		 if ( empty( $src ) ) {
+			 $src = $image->getAttribute( 'data-src' );
+		 }
+	 }
+	 return $src;
 }
 
 /**
@@ -289,17 +289,17 @@ function rwp_get_logo( $args = array() ) {
  * @return false|int|string
  */
 
-function rwp_featured_image_id($post = null) {
+function rwp_featured_image_id( $post = null ) {
 
 	$id      = false;
-	$post    = rwp_post_object($post);
-	$post_id = rwp_id( $post );
+	$post    = rwp_post_object( $post );
+	$post_id = rwp_post_id( $post );
 
 	if ( has_post_thumbnail( $post_id ) ) {
 		$id = get_post_thumbnail_id( $post_id );
 	}
 
-	$id = apply_filters('rwp_featured_image_id', $id, $post);
+	$id = apply_filters( 'rwp_featured_image_id', $id, $post );
 
 	return $id;
 }
@@ -312,17 +312,16 @@ function rwp_featured_image_id($post = null) {
  * @param array $args
  * @return Image|false
  */
-function rwp_get_featured_image($post = null, $size = 'full',  $args = [], $html = '') {
+function rwp_get_featured_image( $post = null, $size = 'full', $args = [], $html = '' ) {
 
-	$post    = rwp_post_object($post);
-	$post_id = rwp_id( $post );
+	$post    = rwp_post_object( $post );
+	$post_id = rwp_post_id( $post );
 
-	$image = data_get($args, 'image', array());
+	$image = data_get( $args, 'image', array() );
 
 	$id = rwp_featured_image_id( $post );
 
-
-	if ($id) {
+	if ( $id ) {
 
 		$args['src'] = $id;
 		$args['size'] = $size;
@@ -333,10 +332,10 @@ function rwp_get_featured_image($post = null, $size = 'full',  $args = [], $html
 		}
 
 		if ( ! rwp_array_has( 'alt', $image['atts'] ) && ! empty( $post_id ) ) {
-			$image['atts']['alt'] = rwp_title( $post, false, '', ' Post Image' );
+			$image['atts']['alt'] = rwp_post_title( $post, false, '', ' Post Image' );
 		}
 		if ( ! rwp_array_has( 'title', $image['atts'] ) && ! empty( $post_id ) ) {
-			$image['atts']['title'] = rwp_title( $post );
+			$image['atts']['title'] = rwp_post_title( $post );
 		}
 		if ( ! rwp_array_has( 'itemprop', $image['atts'] ) ) {
 			$image['atts']['itemprop'] = 'image';
@@ -348,9 +347,9 @@ function rwp_get_featured_image($post = null, $size = 'full',  $args = [], $html
 
 		$args['image'] = $image;
 
-		$args = apply_filters('rwp_get_featured_image', $args, $post);
+		$args = apply_filters( 'rwp_get_featured_image', $args, $post );
 
-		return rwp_image($args);
+		return rwp_image( $args );
 	} else {
 		return false;
 	}

@@ -15,7 +15,6 @@ use RWP\Vendor\Illuminate\Support\Collection;
 
 class PostCard extends Card {
 
-
 	/**
 	 * @var int The current post id
 	 */
@@ -26,16 +25,21 @@ class PostCard extends Card {
 	 */
 	public $post;
 
+	/**
+	 * @var string The current post type
+	 */
+	public $post_type;
+
 
 	public function __construct( $post = null, $args = [] ) {
 
-		$this->post = rwp_object_type( $post );
+		$this->post = rwp_post( $post );
 		$post_type  = data_get( $this->post, 'subtype', 'post' );
 		$post_id    = data_get( $this->post, 'id', 0 );
 
 		$url = rwp_post_link( $post );
 
-		$title = rwp_title( $post );
+		$title = rwp_post_title( $post );
 
 		$image = rwp_get_featured_image($post, 'medium', array(
 			'inner' => array(
@@ -57,8 +61,8 @@ class PostCard extends Card {
 
 		$defaults = array(
 			'atts' => array(
-				'id' => rwp_post_id( $post ),
-				'class' => rwp_parse_classes( get_post_class( 'card', $post_id ) ),
+				'id' => rwp_post_id_html( $post ),
+				'class' => rwp_get_post_class( $post_id, 'card' ),
 			),
 			'image' => $image,
 			'title' => array(
@@ -71,6 +75,8 @@ class PostCard extends Card {
 			),
 		);
 
+		$this->post_type = $post_type;
+
 		$post_type = rwp()->unprefix( $post_type ); // Remove rwp_ to prevent double rwp_rwp_ below
 
 		$defaults = apply_filters( "rwp_{$post_type}_card_defaults", $defaults, $post );
@@ -80,5 +86,16 @@ class PostCard extends Card {
 		parent::__construct( $args );
 
     }
+
+	public function setup_html() {
+
+		parent::setup_html();
+
+		$post_type = rwp()->unprefix( $this->post_type );
+		$post_id = $this->post_id;
+
+		apply_filters( "rwp_{$post_type}_card", $this );
+		apply_filters( "rwp_{$post_type}_{$post_id}_card", $this );
+	}
 
 }

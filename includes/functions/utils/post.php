@@ -34,7 +34,7 @@ function rwp_is_blog( $post = null ) {
  * @return int|false
  */
 
-function rwp_home_page() {
+function rwp_get_home_page() {
      $home = get_option( 'page_on_front' );
     if ( $home ) {
         $home = intval( $home );
@@ -48,7 +48,7 @@ function rwp_home_page() {
  * @return int|false
  */
 
-function rwp_blog_page() {
+function rwp_get_blog_page() {
      $blog = get_option( 'page_for_posts' );
     if ( $blog ) {
         $blog = intval( $blog );
@@ -62,7 +62,7 @@ function rwp_blog_page() {
  * @param  mixed $post Post object or ID
  * @return boolean
  */
-function rwp_is_cpt( $post = null ) {
+function rwp_post_is_cpt( $post = null ) {
     $all_custom_post_types = get_post_types( array( '_builtin' => false ) );
 
     // there are no custom post types
@@ -137,7 +137,7 @@ function rwp_tax_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
  *
  * }
  */
-function rwp_object_type( $obj = null, $type = 'post' ) {
+function rwp_post( $obj = null, $type = 'post' ) {
 
     if ( ! is_array( $obj ) ) {
 
@@ -327,7 +327,7 @@ function rwp_object_type( $obj = null, $type = 'post' ) {
  * @return WP_Post|null
  */
 function rwp_post_object( $post = null ) {
-    $post = rwp_object_type( $post );
+    $post = rwp_post( $post );
     $post = data_get( $post, 'object', null );
 
     global $wp_query;
@@ -352,9 +352,9 @@ function rwp_post_object( $post = null ) {
  * @return mixed
  */
 
-function rwp_item_type( $post = null ) {
+function rwp_post_subtype( $post = null ) {
 
-    return data_get( rwp_object_type( $post ), 'subtype', 'post' );
+    return data_get( rwp_post( $post ), 'subtype', 'post' );
 }
 
 
@@ -367,8 +367,8 @@ function rwp_item_type( $post = null ) {
  * @param  mixed|null $id_type
  * @return int|string
  */
-function rwp_id( $obj = null, $id_type = null ) {
-    $obj_type = rwp_object_type( $obj );
+function rwp_post_id( $obj = null, $id_type = null ) {
+    $obj_type = rwp_post( $obj );
     $id       = data_get( $obj_type, 'id', 0 );
     $acf_id   = data_get( $obj_type, 'acf_id', 'options' );
 
@@ -417,9 +417,9 @@ function rwp_filtered_content( $content = '' ) {
  * @return string
  */
 
-function rwp_get_content( $post = null, $more_link_text = null, $strip_teaser = false ) {
+function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser = false ) {
 
-    $obj = rwp_object_type( $post );
+    $obj = rwp_post( $post );
 
     $object_type  = data_get( $obj, 'type', 'post' );
     $subtype      = data_get( $obj, 'subtype', 'post' );
@@ -463,7 +463,7 @@ function rwp_get_content( $post = null, $more_link_text = null, $strip_teaser = 
  * @return string
  */
 function rwp_post_excerpt( $post = null, $args = [] ) {
-    $obj = rwp_object_type( $post );
+    $obj = rwp_post( $post );
 
     $excerpt = '';
 
@@ -477,7 +477,7 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
         $allowed_tags = data_get( $args, 'allowed_tags', array( 'em', 'i', 'b', 'strong' ) );
         $excerpt      = get_the_excerpt( $post );
         if ( empty( $excerpt ) ) {
-            $excerpt = rwp_get_content( $post );
+            $excerpt = rwp_post_content( $post );
             $excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags );
         }
         if ( ! empty( $length ) ) {
@@ -496,7 +496,7 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
  * @return string
  */
 function rwp_post_link( $post = null ) {
-    $obj = rwp_object_type( $post );
+    $obj = rwp_post( $post );
 
     $link = data_get( $obj, 'url', '' );
 
@@ -514,9 +514,9 @@ function rwp_post_link( $post = null ) {
  * @return string
  */
 
-function rwp_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
+function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
 
-    $obj = rwp_object_type( $post );
+    $obj = rwp_post( $post );
 
     $title = '';
 
@@ -534,7 +534,7 @@ function rwp_title( $post = null, $use_alt = false, $before = '', $after = '' ) 
 
 	$title = rwp_add_suffix( $title, $after );
 
-    $title = apply_filters( 'rwp_title', $title, $use_alt, $obj );
+    $title = apply_filters( 'rwp_post_title', $title, $use_alt, $obj );
     return $title;
 }
 
@@ -546,9 +546,9 @@ function rwp_title( $post = null, $use_alt = false, $before = '', $after = '' ) 
  */
 function rwp_ancestors( $post = null ) {
 
-    $obj = rwp_object_type( $post );
+    $obj = rwp_post( $post );
 
-    $home_page = rwp_home_page();
+    $home_page = rwp_get_home_page();
 
     $ancestors = rwp_collection();
 
@@ -572,11 +572,11 @@ function rwp_ancestors( $post = null ) {
                 }
 
                 if ( 'post' === $subtype ) {
-                    $parent = rwp_blog_page();
+                    $parent = rwp_get_blog_page();
                     if ( $parent ) {
                         $ancestors->push( $parent );
                     }
-                } elseif ( rwp_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+                } elseif ( rwp_post_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
                     $parent = get_page_for_post_type( $subtype );
                     if ( $parent ) {
                         $ancestors->push( $parent );
@@ -598,7 +598,7 @@ function rwp_ancestors( $post = null ) {
 
         $ancestors->transform(
             function ( $item ) {
-                return rwp_object_type( $item );
+                return rwp_post( $item );
             }
         );
 
@@ -609,7 +609,7 @@ function rwp_ancestors( $post = null ) {
     return $ancestors;
 }
 /**
- * Get Root Page
+ * Find Root Page for deeply nested posts (That is not home page);
  *
  * @param int|null|\WP_Post $post
  *
@@ -617,10 +617,10 @@ function rwp_ancestors( $post = null ) {
  */
 
 function rwp_root_page( $post = null ) {
-    $post_id = rwp_id( $post );
+    $post_id = rwp_post_id( $post );
     $ancestors = rwp_ancestors( $post );
 
-    $home_page = rwp_home_page();
+    $home_page = rwp_get_home_page();
 
     $root = null;
 
@@ -643,18 +643,19 @@ function rwp_root_page( $post = null ) {
 }
 
 /**
+ * Get the post parent
  *
  * @param  mixed|null $post
  * @return array|false
  */
 
-function rwp_parent( $post = null ) {
+function rwp_post_parent( $post = null ) {
 
-    $post_id = rwp_id( $post );
+    $post_id = rwp_post_id( $post );
 
     $ancestors = rwp_ancestors( $post );
 
-    $home_page = rwp_home_page();
+    $home_page = rwp_get_home_page();
 
     if ( $ancestors->isNotEmpty() ) {
         if ( $home_page ) {
@@ -684,8 +685,8 @@ function rwp_parent( $post = null ) {
  * @return string
  */
 
-function rwp_post_id( $post = null ) {
-    $post    = rwp_object_type( $post );
+function rwp_post_id_html( $post = null ) {
+    $post    = rwp_post( $post );
     $type    = data_get( $post, 'type', 'post' );
     $subtype = data_get( $post, 'subtype', '' );
     $slug    = data_get( $post, 'slug', '' );
@@ -715,4 +716,29 @@ function rwp_post_id( $post = null ) {
     $html_id = rwp_change_case( $html_id, 'slug' );
 
     return esc_attr( $html_id );
+}
+
+/**
+ * Get array of post classes
+ *
+ * @param \WP_Post|int|null $post
+ * @param string|string[]   $classes
+ *
+ * @return string[]
+ */
+function rwp_get_post_class( $post, $classes = '' ) {
+	$post_id = rwp_post_id( $post );
+	return rwp_parse_classes( get_post_class( $classes, $post_id ) );
+}
+
+/**
+ * Output string of post classes
+ *
+ * @param \WP_Post|int|null $post
+ * @param string|string[]   $classes
+ *
+ * @return string
+ */
+function rwp_post_class( $post, $classes = '' ) {
+	return rwp_output_classes( rwp_get_post_class( $post, $classes ) );
 }

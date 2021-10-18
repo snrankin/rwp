@@ -22,13 +22,13 @@ abstract class Shortcode extends Singleton {
 	/**
 	 * @var string $tag The shortcode tag
 	 */
-	public static $tag = '';
+	protected static $tag = '';
 
 
 	/**
 	 * @var array $defaults The shortcode defaults
 	 */
-	public static $defaults = array();
+	protected static $defaults = array();
 
 	/**
 	 * Initialize the class.
@@ -37,15 +37,7 @@ abstract class Shortcode extends Singleton {
 	 */
 	public function initialize() {
 
-		$shortcode_tag = $this::$tag;
-		if ( empty( $shortcode_tag ) ) {
-			$shortcode_tag  = explode( '\\', get_called_class() );
-			$shortcode_tag  = end( $shortcode_tag );
-		}
-
-		$shortcode_tag  = rwp()->prefix( $shortcode_tag );
-
-		$this::$tag = $shortcode_tag;
+		self::set_tag();
 
 		\add_action( 'init', function() {
 			\add_shortcode( $this::$tag, array( $this, 'output' ) );
@@ -85,6 +77,23 @@ abstract class Shortcode extends Singleton {
 
 	public static function output( $atts ) {
 		return '';
+	}
+
+	/**
+	 * Set the shortcode tag
+	 *
+	 * @return void
+	 */
+	final public static function set_tag() {
+		$shortcode_tag = self::$tag;
+		if ( empty( $shortcode_tag ) ) {
+			$shortcode_tag  = explode( '\\', get_called_class() );
+			$shortcode_tag  = end( $shortcode_tag );
+		}
+
+		$shortcode_tag  = rwp()->prefix( $shortcode_tag );
+
+		self::$tag = $shortcode_tag;
 	}
 
 }
