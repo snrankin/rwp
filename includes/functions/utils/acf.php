@@ -14,12 +14,12 @@
  * @return false|array
  */
 function rwp_get_acf_fields( $post = null ) {
-     $post = rwp_id( $post, 'acf' );
+     $post = rwp_post_id( $post, 'acf' );
     if ( function_exists( 'acfe_get_fields' ) ) {
         return acfe_get_fields( $post );
 
     } else if ( function_exists( 'get_fields' ) ) {
-        return get_fields( rwp_id( $post, 'acf' ) );
+        return get_fields( rwp_post_id( $post, 'acf' ) );
     }
 
     return array();
@@ -33,8 +33,8 @@ function rwp_get_acf_fields( $post = null ) {
  */
 
 function rwp_get_fields( $post = null ) {
-    $post_type = rwp_object_type( $post );
-    $post_id = rwp_id( $post );
+    $post_type = rwp_post( $post );
+    $post_id = rwp_post_id( $post );
 
     $fields = array();
 
@@ -51,7 +51,7 @@ function rwp_get_fields( $post = null ) {
             }
         }
         if ( empty( $fields ) && function_exists( 'get_fields' ) ) {
-            $fields = get_fields( rwp_id( $post, 'acf' ) );
+            $fields = get_fields( rwp_post_id( $post, 'acf' ) );
 
         }
     }
@@ -82,7 +82,7 @@ function rwp_get_field( $field, $post = null, $default = null ) {
  * @return string
  */
 function rwp_get_star_rating( $post = null ) {
-	$post_id = rwp_id( $post, 'acf' );
+	$post_id = rwp_post_id( $post, 'acf' );
 	$field = get_field_object( 'rating', $post_id );
 	return \StarRatingField::output_stars( $field );
 }

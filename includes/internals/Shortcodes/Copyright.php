@@ -16,7 +16,7 @@ use RWP\Engine\Abstracts\Shortcode;
 
 class Copyright extends Shortcode {
 
-	public static $defaults = array(
+	protected static $defaults = array(
 		'before' => '&copy; Copyright ',
 		'after'  => ', All Rights Reserved.',
 	);

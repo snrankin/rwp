@@ -17,7 +17,7 @@ use RWP\Internals\PostTypes;
 
 class TeamGrid extends Shortcode {
 
-	public static $defaults = array(
+	protected static $defaults = array(
 		'cat'     => '',
 		'd_cols'  => '3',
 		't_cols'  => '2',

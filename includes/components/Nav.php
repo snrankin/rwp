@@ -84,7 +84,7 @@ class Nav extends Element {
 		$parent_id = $this->parent;
 
 		// if(is_object($parent_id)){
-		// 	$parent_id = rwp_id($parent_id);
+		// 	$parent_id = rwp_post_id($parent_id);
 		// }
 
 		switch ( $this->child_type ) {
