@@ -521,17 +521,17 @@ function rwp_post_link( $post = null ) {
 
 function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
 
-    $obj = rwp_post( $post );
-	$type        = data_get( $obj, 'type', 'post' );
+    $obj    = rwp_post( $post );
+	$type   = data_get( $obj, 'type', 'post' );
 	$acf_id = data_get( $obj, 'acf_id', 'options' );
-    $title = data_get( $obj, 'title', '' );
+    $title  = data_get( $obj, 'title', '' );
 
 	if ( 'post' === $type ) {
-		$title = the_title( $before, $after, false );
+		$title = get_the_title( $post );
 	} elseif ( 'archive' === $type || 'term' === $type ) {
         ob_start();
 
-		the_archive_title( $before, $after );
+		the_archive_title();
 
 		$title = ob_get_contents();
 

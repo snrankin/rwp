@@ -85,12 +85,8 @@ abstract class Shortcode extends Singleton {
 	 * @return void
 	 */
 	final public static function set_tag() {
-		$shortcode_tag = self::$tag;
-		if ( empty( $shortcode_tag ) ) {
-			$shortcode_tag  = explode( '\\', get_called_class() );
-			$shortcode_tag  = end( $shortcode_tag );
-		}
-
+		$shortcode_tag  = explode( '\\', get_called_class() );
+		$shortcode_tag  = end( $shortcode_tag );
 		$shortcode_tag  = rwp()->prefix( $shortcode_tag );
 
 		self::$tag = $shortcode_tag;
