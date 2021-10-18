@@ -218,7 +218,7 @@ class Card extends Element {
 		}
 
 		if ( is_string( $text ) ) {
-			if ( rwp_string_is_html( $text ) ) {
+			if ( rwp_str_is_html( $text ) ) {
 				$text = rwp_extract_html_attributes( $text, '', true, true );
 			} else {
 				$text = array(
@@ -276,7 +276,7 @@ class Card extends Element {
 		}
 
 		if ( is_string( $title ) ) {
-			if ( rwp_string_is_html( $title ) ) {
+			if ( rwp_str_is_html( $title ) ) {
 				$title = rwp_extract_html_attributes( $title, '', true, true );
 			} else {
 				$title = array(
@@ -328,7 +328,7 @@ class Card extends Element {
 		}
 
 		if ( is_string( $title ) ) {
-			if ( rwp_string_is_html( $title ) ) {
+			if ( rwp_str_is_html( $title ) ) {
 				$title = rwp_extract_html_attributes( $title, '', true, true );
 			} else {
 				$title = array(
@@ -400,7 +400,7 @@ class Card extends Element {
 
 		if ( is_string( $link ) ) {
 
-			if ( rwp_string_is_html( $link ) ) {
+			if ( rwp_str_is_html( $link ) ) {
 				$html = rwp_html( $link );
 				if ( $html->filter( 'a' )->hasClass( 'btn' ) ) {
 					$is_btn = true;

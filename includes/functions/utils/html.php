@@ -6,7 +6,7 @@
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== 
+ * ==========================================================================
  */
 
 use RWP\Vendor\Illuminate\Support\Collection;
@@ -18,7 +18,7 @@ use RWP\Components\Html;
  * @param  mixed $string
  * @return bool
  */
-function rwp_string_is_html( $string ) {
+function rwp_str_is_html( $string ) {
 	if ( ! is_string( $string ) ) {
         return false;
 	}
@@ -33,7 +33,7 @@ function rwp_string_is_html( $string ) {
  * @return bool
  */
 function rwp_is_element( $string, $tag ) {
-	if ( rwp_string_is_html( $string ) ) {
+	if ( rwp_str_is_html( $string ) ) {
         return preg_match( '/\s*\<' . $tag . '/m', $string ) ? true : false;
 	} else {
 		return false;
@@ -94,7 +94,7 @@ function rwp_parse_classes( $classes, $additional_classes = '', $filter = false 
  *
  * @return array|mixed $styles_array The processed styles
  */
-function rwp_parse_styles( $styles ) { 
+function rwp_parse_styles( $styles ) {
     if ( empty( $styles ) ) {
         return $styles;
     }
@@ -137,7 +137,7 @@ function rwp_parse_styles( $styles ) {
  *
  * @return string The processed url
  */
-function rwp_output_href( $link = '' ) { 
+function rwp_output_href( $link = '' ) {
     if ( rwp_is_phone_number( $link ) ) {
         $link = rwp_add_prefix( $link, 'tel:' );
     } elseif ( is_email( $link ) ) {
@@ -161,7 +161,7 @@ function rwp_output_href( $link = '' ) {
  *
  * @return array The modified array.
  */
-function rwp_parse_href( $atts = array() ) { 
+function rwp_parse_href( $atts = array() ) {
     if ( rwp_array_has( 'href', $atts ) ) {
         $atts['href'] = rwp_output_href( $atts['href'] );
         if ( rwp_is_outbound_link( $atts['href'] ) ) {
@@ -187,7 +187,7 @@ function rwp_parse_href( $atts = array() ) {
  * @return string
  */
 
-function rwp_output_classes( $classes, $filter = false ) { 
+function rwp_output_classes( $classes, $filter = false ) {
     if ( rwp_is_collection( $classes ) ) {
         $classes = $classes->all();
     }
@@ -278,7 +278,7 @@ function rwp_prepare_args( $args = array() ) {
  *
  * @return array The merged array
  */
-function rwp_merge_args( $defaults = array(), $args = array() ) { 
+function rwp_merge_args( $defaults = array(), $args = array() ) {
     $defaults = rwp_prepare_args( $defaults );
     $args     = rwp_prepare_args( $args );
     if ( empty( $args ) ) {
@@ -458,7 +458,7 @@ function rwp_input_to_button( $input = '', $args = array() ) {
  * @throws Exception
  */
 function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $include_content = false ) {
-	if ( ! rwp_string_is_html( $html ) ) {
+	if ( ! rwp_str_is_html( $html ) ) {
         return array();
 	}
 

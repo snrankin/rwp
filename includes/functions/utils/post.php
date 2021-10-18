@@ -10,7 +10,7 @@
  * ========================================================================== */
 
 
-use \RWP\Vendor\Illuminate\Support\Collection;
+use \RWP\Vendor\Illuminate\Support\{Collection, Str};
 use RWP\Internals\PostTypes;
 use RWP\Internals\Taxonomies;
 /**
@@ -226,19 +226,19 @@ function rwp_post( $obj = null, $type = 'post' ) {
                 $sub_type = $obj->name; // What type of archive is it?
                 $title    = $obj->label;
                 $slug     = 'archive-' . $obj->name;
+
                 $url      = get_post_type_archive_link( $sub_type );
 
-                $custom_archive_page = rwp_get_option( 'custom_archive_pages', $sub_type );
+				$custom_archive_page = false;
+
+				if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+					$custom_archive_page = get_page_for_post_type( $sub_type );
+				}
 
                 if ( ! empty( $custom_archive_page ) ) {
-                    $obj      = get_post( $custom_archive_page );
-                    $id       = $obj->ID;
-                    $acf_id   = $id;
-                    $title    = $obj->post_title;
-                    $parent   = $obj->post_parent;
-                    $slug     = $obj->post_name;
-                    $url      = get_permalink( $id );
+                    return rwp_post( $custom_archive_page );
                 }
+				$info['description'] = $obj->description;
             } else if ( $obj instanceof \WP_Term ) {
                 $type     = 'term';
                 $sub_type = $obj->taxonomy; // What type of term is it?
@@ -276,17 +276,17 @@ function rwp_post( $obj = null, $type = 'post' ) {
                 $title    = $obj->label;
                 $slug     = 'taxonomy-' . $sub_type;
 
-                $custom_archive_page = rwp_get_option( 'custom_archive_pages', $sub_type );
+                $custom_archive_page = false;
+
+				if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+					$custom_archive_page = get_page_for_post_type( $sub_type );
+				}
 
                 if ( ! empty( $custom_archive_page ) ) {
-                    $obj      = get_post( $custom_archive_page );
-                    $id       = $obj->ID;
-                    $acf_id   = $id;
-                    $title    = $obj->post_title;
-                    $parent   = $obj->post_parent;
-                    $slug     = $obj->post_name;
-                    $url      = get_permalink( $id );
+                    return rwp_post( $custom_archive_page );
                 }
+
+				$info['description'] = $obj->description;
             }
 
             $object = $obj;
@@ -422,6 +422,7 @@ function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser =
     $obj = rwp_post( $post );
 
     $object_type  = data_get( $obj, 'type', 'post' );
+	$post_object  = data_get( $obj, 'object' );
     $subtype      = data_get( $obj, 'subtype', 'post' );
 
     $id = data_get( $obj, 'id', 0 );
@@ -431,20 +432,11 @@ function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser =
     if ( 'post' === $object_type ) {
         $content = get_the_content( $more_link_text, $strip_teaser, $id );
     } elseif ( 'term' === $object_type ) {
-        $content = term_description( $id );
+        $content = get_term_field( 'description', $post_object );
     } elseif ( 'archive' === $object_type ) {
-        $post_id = data_get( 'custom_archive_pages', $subtype );
-        if ( ! empty( $post_id ) ) {
-            $content = get_the_content( $more_link_text, $strip_teaser, $post_id );
-        } else {
-            $post_type_obj = get_post_type_object( $subtype );
-
-            // Check if a description is set.
-            if ( rwp_object_has( 'description', $post_type_obj ) ) {
-                $content = $post_type_obj->description;
-                $content = apply_filters( 'get_the_post_type_description', $content, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-            }
-        }
+        $content = data_get( $obj, 'description', '' );
+		$post_type_obj = get_post_type_object( $subtype );
+        $content = apply_filters( 'get_the_post_type_description', $content, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
     }
 
     $content = rwp_filtered_content( $content );
@@ -463,29 +455,42 @@ function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser =
  * @return string
  */
 function rwp_post_excerpt( $post = null, $args = [] ) {
-    $obj = rwp_post( $post );
+    $obj         = rwp_post( $post );
+	$type        = data_get( $obj, 'type', 'post' );
+	$post_object = data_get( $obj, 'object' );
+	$subtype     = data_get( $obj, 'subtype', 'post' );
+    $excerpt     = '';
+	$post        = data_get( $obj, 'object', $post );
 
-    $excerpt = '';
+	$args         = apply_filters( 'rwp_excerpt_args', $args );
+	$args         = apply_filters( "rwp_{$type}_excerpt_args", $args );
+	$args         = apply_filters( "rwp_{$subtype}_excerpt_args", $args );
 
-    if ( is_array( $obj ) ) {
+	$length       = data_get( $args, 'length', 15 );
+	$variable     = data_get( $args, 'variable', true );
+	$excerpt_end  = data_get( $args, 'excerpt_end', '' );
+	$allowed_tags = data_get( $args, 'allowed_tags', array( 'em', 'i', 'b', 'strong' ) );
+	$trim_type    = data_get( $args, 'trim_type', 'words' );
 
-        $post         = data_get( $obj, 'object', $post );
-        $args         = apply_filters( 'rwp_pre_excerpt_trim', $args, $post );
-        $length       = data_get( $args, 'length', 15 );
-        $variable     = data_get( $args, 'variable', true );
-        $excerpt_end  = data_get( $args, 'excerpt_end', '' );
-        $allowed_tags = data_get( $args, 'allowed_tags', array( 'em', 'i', 'b', 'strong' ) );
-        $excerpt      = get_the_excerpt( $post );
-        if ( empty( $excerpt ) ) {
-            $excerpt = rwp_post_content( $post );
-            $excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags );
-        }
-        if ( ! empty( $length ) ) {
-            $excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags );
-        }
+	if ( 'post' === $type ) {
+		$excerpt      = get_the_excerpt( $post );
+	} elseif ( 'term' === $type ) {
+        $excerpt = get_term_field( 'description', $post_object );
+    } elseif ( 'archive' === $type ) {
+        $excerpt = data_get( $obj, 'description', '' );
+		$post_type_obj = get_post_type_object( $subtype );
+        $excerpt = apply_filters( 'get_the_post_type_description', $excerpt, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
     }
-    $excerpt = apply_filters( 'rwp_post_excerpt_trim', $excerpt, $post );
-    $excerpt = wp_kses_data( $excerpt );
+	if ( empty( $excerpt ) ) {
+		$excerpt = rwp_post_content( $post );
+		$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
+	}
+	if ( ! empty( $length ) ) {
+		$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
+	}
+    $excerpt         = apply_filters( 'rwp_excerpt', $excerpt );
+	$excerpt         = apply_filters( "rwp_{$type}_excerpt", $excerpt );
+	$excerpt         = apply_filters( "rwp_{$subtype}_excerpt", $excerpt );
     return $excerpt;
 }
 
@@ -517,18 +522,28 @@ function rwp_post_link( $post = null ) {
 function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
 
     $obj = rwp_post( $post );
+	$type        = data_get( $obj, 'type', 'post' );
+	$acf_id = data_get( $obj, 'acf_id', 'options' );
+    $title = data_get( $obj, 'title', '' );
 
-    $title = '';
+	if ( 'post' === $type ) {
+		$title = the_title( $before, $after, false );
+	} elseif ( 'archive' === $type || 'term' === $type ) {
+        ob_start();
 
-    if ( is_array( $obj ) ) {
-        $post         = data_get( $obj, 'object', $post );
-        $title        = data_get( $obj, 'title', '' );
-        $alt_title    = rwp_get_field( 'alt_title', $post );
+		the_archive_title( $before, $after );
 
-        if ( ! empty( $alt_title ) && $use_alt ) {
-            $title = $alt_title;
-        }
+		$title = ob_get_contents();
+
+		ob_end_clean();
     }
+
+    if ( $use_alt ) {
+			$alt_title    = get_field( 'alt_title', $acf_id );
+		if ( ! empty( $alt_title ) ) {
+			$title = $alt_title;
+		}
+	}
 
 	$title = rwp_add_prefix( $title, $before );
 

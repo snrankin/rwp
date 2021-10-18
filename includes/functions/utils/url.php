@@ -20,7 +20,7 @@
  * @return bool Whether or not the string is a url
  */
 function rwp_is_url( $url = '' ) {
-	$input = wp_parse_url($url );
+	$input = wp_parse_url( $url );
 
     if ( empty( $input ) ) {
         return false;
@@ -64,7 +64,7 @@ function rwp_is_outbound_link( $link ) {
 	}
 	if ( rwp_is_url( $link ) && ! rwp_is_relative_url( $link ) ) {
 		$home = network_home_url();
-		if ( ! rwp_string_has( $link, $home ) ) {
+		if ( ! rwp_str_has( $link, $home ) ) {
 			return true;
 		} else {
 			return false;
