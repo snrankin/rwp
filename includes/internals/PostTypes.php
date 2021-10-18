@@ -23,7 +23,10 @@ use RWP\Vendor\Illuminate\Support\Collection;
  */
 class PostTypes extends Singleton {
 
-	public $cpts;
+	/**
+	 * @var Collection $cpts The registered cpts
+	 */
+	public static $cpts;
 
 	/**
 	 * Initialize the class.
@@ -35,7 +38,7 @@ class PostTypes extends Singleton {
 			rwp_get_plugin_file( 'page-for-post-type.php', 'includes/dependencies/vendor/wordpress/page-for-post-type', true, true );
 		}
 
-		$this->cpts = rwp_collection( rwp_get_option( 'cpt_options.cpts', array() ) )->mapWithKeys(function ( $item ) {
+		$this::$cpts = rwp_collection( rwp_get_option( 'cpt_options.cpts', array() ) )->mapWithKeys(function ( $item ) {
 			return [ $item['value'] => $item['label'] ];
 		});
 
@@ -74,7 +77,7 @@ class PostTypes extends Singleton {
 		/**
 		 * @var Collection $cpts
 		 */
-		$cpts = $this->cpts->reject(function ( array $item ) {
+		$cpts = $this::$cpts->reject(function ( array $item ) {
 			return $item['exclude_from_search'];
 		})->mapWithKeys(function ( array $item ) {
 			return [ $item['type'] => $item ];
@@ -107,13 +110,12 @@ class PostTypes extends Singleton {
 	 * @return void
 	 */
 	public function load_cpts() {
-
-		if ( ! empty( $this->cpts ) ) {
-			foreach ( $this->cpts->keys() as $cpt ) {
+		if ( ! empty( $this::$cpts ) ) {
+			$this::$cpts->transform(function ( $args, $cpt ) {
 				$label = rwp_singulizer( $cpt );
-				$args = self::new_cpt( $label );
-				data_set( $this, "cpts.$cpt", $args );
-			}
+				$args = self::new_cpt( $label, '', '', '', $args );
+				return $args;
+			});
 		}
 	}
 
@@ -205,6 +207,7 @@ class PostTypes extends Singleton {
 			),
 			'labels' => array(
 				'name_admin_bar'           => $title_singular,
+				'menu_name'                => $menu,
 				'add_new_item'             => wp_sprintf( 'Add New %s', $title_singular ),
 				'update_item'              => wp_sprintf( 'Update %s', $title_singular ),
 				'new_item'                 => wp_sprintf( 'New %s', $title_singular ),
@@ -233,5 +236,9 @@ class PostTypes extends Singleton {
 				'item_link_description'    => wp_sprintf( 'A link to a %s.', $lower_singular ),
 			),
 		);
+	}
+
+	public static function registered_cpts() {
+		return self::$cpts;
 	}
 }

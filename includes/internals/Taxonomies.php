@@ -15,6 +15,7 @@
 namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
+use RWP\Vendor\Illuminate\Support\Collection;
 
 /**
  * Post Types and Taxonomies
@@ -23,25 +24,9 @@ class Taxonomies extends Singleton {
 
 
 	/**
-	 * Initialize the class.
-	 *
-	 * @return void
+	 * @var Collection $taxonomies The registered taxonomies
 	 */
-	public function initialize() {
-
-		$cpts = rwp_get_option( 'cpt_options.cpts', array() );
-		$cpts = rwp_collection( $cpts );
-
-		$cpts = $cpts->mapWithKeys(
-			function ( $item, $key ) {
-				return [ $item['value'] => $item['label'] ];
-			}
-		);
-
-		if ( $cpts->has( 'team_member' ) ) {
-			\add_action( 'init', array( $this, 'init_team_member_tax' ) );
-		}
-	}
+	public static $taxonomies;
 
 	/**
 	 * Add a new tax
@@ -70,7 +55,7 @@ class Taxonomies extends Singleton {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$type = rwp()->prefix( $singular, '_', 'snake' );
+		$type = rwp()->prefix( $singular );
 
 		$names  = $labels['names'];
 
@@ -117,6 +102,7 @@ class Taxonomies extends Singleton {
 			'labels' => array(
 				'name'                       => $title_plural,
 				'singular_name'              => $title_singular,
+				'menu_name'                  => $menu,
 				'search_items'               => wp_sprintf( 'Search %s', $title_plural ),
 				'popular_items'              => wp_sprintf( 'Popular %s', $title_plural ),
 				'all_items'                  => wp_sprintf( 'All %s', $title_plural ),
@@ -142,4 +128,7 @@ class Taxonomies extends Singleton {
 		);
 	}
 
+	public static function registered_taxonomies() {
+		return self::$taxonomies;
+	}
 }

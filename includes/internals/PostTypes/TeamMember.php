@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * TeamMember
  *
@@ -17,18 +18,6 @@ use RWP\Engine\Abstracts\PostType;
 
 class TeamMember extends PostType {
 
-	/**
-	 * @var array $supports The post type supports
-	 */
-
-	public $supports = array(
-		'title',
-		'editor',
-		'excerpt',
-		'thumbnail',
-		'custom-fields',
-		'page-attributes',
-	);
 
 	/**
 	 * @var string $menu_icon The post type admin menu icon (dashicons)
@@ -48,10 +37,10 @@ class TeamMember extends PostType {
 			// The default Title column:
 			'title',
 			// A taxonomy terms column:
-			'category' => array(
+			'rwp_team_category' => array(
+				'title'    => 'Category',
 				'taxonomy' => 'rwp_team_category',
 			),
 		),
 	);
-
 }
