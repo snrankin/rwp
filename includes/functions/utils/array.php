@@ -54,11 +54,11 @@ function rwp_array_is_multi( $array ) {
  * @return array The sorted array
  */
 function rwp_sort_array_by_keys( $array, $order ) {
-     uksort(
-        $array, function ( $key1, $key2 ) use ( $order ) {
-            return ( ( array_search( $key1, $order, true ) > array_search( $key2, $order, true ) ) ? 1 : -1 );
-        }
-    );
+    uksort( $array, function ( $key1, $key2 ) use ( $order ) {
+		if ( is_array( $order ) && ! empty( $order ) ) {
+			return ( ( array_search( $key1, $order, true ) > array_search( $key2, $order, true ) ) ? 1 : -1 );
+		}
+	});
 
     return $array;
 }

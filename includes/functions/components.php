@@ -51,6 +51,10 @@ function rwp_html( $html ) {
 	return new Html( $html );
 }
 
+function rwp_element( $args = array() ) {
+	return new RWP\Components\Element( $args );
+}
+
 function rwp_icon( $args = array() ) {
 	return new RWP\Components\Icon( $args );
 }
@@ -103,6 +107,6 @@ function rwp_card( $args = array() ) {
 	return new RWP\Components\Card( $args );
 }
 
-function rwp_post_card( $args = array() ) {
-	return new RWP\Components\PostCard( $args );
+function rwp_post_card( $post = null, $args = [] ) {
+	return new RWP\Components\PostCard( $post, $args );
 }

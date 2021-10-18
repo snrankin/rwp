@@ -87,6 +87,11 @@ abstract class PostType extends Singleton {
 	public $slug = '';
 
 	/**
+	 * @var array $labels The labels array
+	 */
+	public $labels = array();
+
+	/**
 	 * Initialize the class.
 	 *
 	 * @return void

@@ -11,11 +11,10 @@
 
 namespace RWP\Engine;
 
-use RWP\Engine\Interfaces\Core;
 use RWP\Engine\Abstracts\Plugin;
 use RWP\Vendor\Illuminate\Support\Str;
 
-class Base extends Plugin implements Core {
+class Base extends Plugin {
 
 	use Traits\Assets;
 

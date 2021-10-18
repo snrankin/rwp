@@ -83,6 +83,8 @@ abstract class Shortcode extends Singleton {
 	 * @return string
 	 */
 
-	public static function output( $atts ) {}
+	public static function output( $atts ) {
+		return '';
+	}
 
 }

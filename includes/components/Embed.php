@@ -229,7 +229,7 @@ class Embed extends Element {
 					'playbar=false',
 					'controlsVisibleOnLoad=false',
 				);
-				if ( $this->is_bg !== false ) {
+				if ( false !== $this->is_bg ) {
 					$wistia_classes = rwp_parse_classes($wistia_classes, array(
 						'autoPlay=true',
 						'muted=true',
@@ -267,7 +267,7 @@ class Embed extends Element {
 				$height = data_get( $meta, 'height', '' );
 				$mime = data_get( $meta, 'mime_type', '' );
 
-				if ( $this->is_bg !== false ) {
+				if ( false !== $this->is_bg ) {
 					$this->embed->set_attr( 'muted', '' );
 					$this->embed->set_attr( 'autoplay', '' );
 					$this->embed->set_attr( 'loop', '' );

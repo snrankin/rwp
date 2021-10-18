@@ -652,7 +652,7 @@ class Element {
 				$this->set_content( $this->$elements, $elements );
 			} else if ( is_array( $elements ) ) {
 				foreach ( $elements as $element ) {
-					if( is_string( $element ) ){
+					if ( is_string( $element ) ) {
 						$this->add_sub_elements( $element );
 					}
 				}
@@ -854,8 +854,7 @@ class Element {
 	 */
 
 	public function toArray() {
-
-		return  rwp_object_to_array( $this );
+		return rwp_object_to_array( $this );
 	}
 
 	/**

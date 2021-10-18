@@ -118,7 +118,7 @@ class TeamGrid extends Shortcode {
 		}
 
 		/**
-		 * @var WP_Post[] $members
+		 * @var \WP_Post[] $members
 		 */
 		$members = get_posts( $args );
 		$output  = '';
