@@ -63,7 +63,7 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
  * @param  string|string[] $needles
  * @return bool
  */
-function rwp_string_has( $haystack, $needles ) {
+function rwp_str_has( $haystack, $needles ) {
     return Str::contains( $haystack, $needles );
 }
 
@@ -226,22 +226,25 @@ function rwp_is_phone_number( $str = '' ) {
  *                               text
  * @param string[] $allowed_tags Allowable html tags. Set to null for plain
  *                               text
+ * @param string   $trim_type    Trim content based on `words` or `chars`. Default:`words`
  *
  * @return string
  */
 
-function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array() ) {
+function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array(), $trim_type = 'words' ) {
     /**
      * @var string[] $allowedtags
      */
 
     global $allowedtags;
 
-	$allowedtags = array_keys( $allowedtags );
+	$allowedtags_keys = array_keys( $allowedtags );
 
     if ( is_array( $allowed_tags ) ) {
-        $allowed_tags = array_merge( $allowed_tags, $allowedtags );
+        $allowed_tags = array_merge( $allowed_tags, $allowedtags_keys );
     }
+
+	$out    = '';
 
     if ( ! empty( $text ) ) {
         $text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
@@ -254,42 +257,22 @@ function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end 
 
             $allowed_tags = implode( '', $allowed_tags );
         }
-        $text   = strip_tags( $text, $allowed_tags );
-        $tokens = array();
-        $out    = '';
-        $word   = 0;
+        $text = strip_tags( $text, $allowed_tags );
 
         if ( ! empty( $length ) ) {
-            //Divide the string into tokens; HTML tags, or words, followed by any whitespace.
-            $regex = '/(<[^>]+>|[^<>\s]+)\s*/u';
-            preg_match_all( $regex, $text, $tokens );
-            foreach ( $tokens[0] as $t ) {
-                //Parse each token
-                if ( $word >= $length && ! $variable ) {
-                    //Limit reached
-                    break;
-                }
-                if ( '<' !== $t[0] ) {
-                    //Token is not a tag.
-                    //Regular expression that checks for the end of the sentence: '.', '?' or '!'
-                    $regex1 = '/[\?\.\!]\s*$/uS';
-                    if ( $word >= $length && $variable && preg_match( $regex1, $t ) === 1 ) {
-                        //Limit reached, continue until ? . or ! occur to reach the end of the sentence.
-                        $out .= trim( $t );
-                        break;
-                    }
-                    $word++;
-                }
-                $out .= $t;
-            }
-        } else {
-            $out = $text;
+
+			if ( $variable ) {
+				$text = Str::match( $text, '/(.*)[\?\.\!]\s*/uS' );
+			} else {
+				if ( 'chars' === $trim_type ) {
+					$text = Str::limit( $text, $length, $excerpt_end );
+				} else {
+					$text = Str::words( $text, $length, $excerpt_end );
+				}
+			}
+		} else {
+            $out = $text . $excerpt_end;
         }
-
-        $out .= $excerpt_end;
-
-        return trim( force_balance_tags( $out ) );
-    } else {
-        return '';
-    }
+	}
+	return trim( force_balance_tags( $out ) );
 }

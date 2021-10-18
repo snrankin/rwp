@@ -28,7 +28,7 @@ class Copyright extends Shortcode {
 	 */
 	public function initialize() {
 
-		$this->set( 'defaults.name', get_bloginfo( 'name' ) );
+		self::$defaults['name'] = get_bloginfo( 'name' );
 
 		parent::initialize();
 	}

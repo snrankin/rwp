@@ -171,7 +171,7 @@ class Embed extends Element {
 
 		$src = $this->get( 'src' );
 		$html = $this->get( 'html' );
-		if ( rwp_string_is_html( $args ) ) {
+		if ( rwp_str_is_html( $args ) ) {
 			$html = $args;
 		}
 
@@ -404,13 +404,13 @@ class Embed extends Element {
 		$url = '';
 		$id = '';
 
-		if ( rwp_string_has( $string, array( 'youtube.com', 'youtu.be' ) ) ) {
+		if ( rwp_str_has( $string, array( 'youtube.com', 'youtu.be' ) ) ) {
 			$host = 'youtube';
-		} elseif ( rwp_string_has( $string, array( 'wistia', 'wi.st' ) ) ) {
+		} elseif ( rwp_str_has( $string, array( 'wistia', 'wi.st' ) ) ) {
 			$host = 'wistia';
-		} elseif ( rwp_string_has( $string, 'vimeo' ) ) {
+		} elseif ( rwp_str_has( $string, 'vimeo' ) ) {
 			$host = 'vimeo';
-		} elseif ( rwp_string_has( $string, 'wp-content' ) || is_int( $string ) || is_numeric( $string ) ) {
+		} elseif ( rwp_str_has( $string, 'wp-content' ) || is_int( $string ) || is_numeric( $string ) ) {
 			$host = 'self';
 			if ( is_int( $string ) || is_numeric( $string ) ) {
 				$url = wp_get_attachment_url( $string );
@@ -418,7 +418,7 @@ class Embed extends Element {
 			}
 		}
 
-		if ( rwp_string_is_html( $string ) ) {
+		if ( rwp_str_is_html( $string ) ) {
 			preg_match( '/(?<=src=\")([^\"]+)/', $string, $url_match );
 
 			if ( ! empty( $url_match ) ) {

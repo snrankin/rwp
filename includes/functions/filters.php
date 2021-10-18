@@ -130,7 +130,7 @@ function rwp_empty_html_attributes_filter( $args = array(), $remove_empty = true
 	if ( $remove_empty ) {
 
 		foreach ( $args as $key => $value ) {
-			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) && ! rwp_string_has( $key, 'data-' ) ) {
+			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) && ! rwp_str_has( $key, 'data-' ) ) {
 				unset( $args[ $key ] );
 			}
 		}

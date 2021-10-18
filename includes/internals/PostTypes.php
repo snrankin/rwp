@@ -58,7 +58,7 @@ class PostTypes extends Singleton {
 	 */
 	public function clean_post_classes( $classes, $class = array(), $post_id = 0 ) {
 		foreach ( $classes as $index => $post_class ) {
-			if ( rwp_string_has( $post_class, 'rwp_' ) ) {
+			if ( rwp_str_has( $post_class, 'rwp_' ) ) {
 				$classes[ $index ] = Str::remove( 'rwp_', $post_class );
 			}
 		}

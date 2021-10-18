@@ -157,7 +157,7 @@ class Image extends Element {
 		$src  = '';
 		$size = 'full';
 		$html = '';
-		if ( rwp_string_is_html( $args ) ) {
+		if ( rwp_str_is_html( $args ) ) {
 			$html = $args;
 		}
 

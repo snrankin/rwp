@@ -100,7 +100,7 @@ function rwp_is_image( $image ) {
     );
 
     if ( is_string( $image ) ) {
-        if ( ! rwp_string_is_html( $image ) ) {
+        if ( ! rwp_str_is_html( $image ) ) {
             $ext = pathinfo( $image, PATHINFO_EXTENSION );
             return in_array( $ext, $image_types );
         } else {
@@ -169,7 +169,7 @@ function rwp_extract_img_src( $image, $size = 'full' ) {
 	 );
 
 	 if ( is_string( $image ) ) {
-		 if ( ! rwp_string_is_html( $image ) ) {
+		 if ( ! rwp_str_is_html( $image ) ) {
 			 $ext = pathinfo( $image, PATHINFO_EXTENSION );
 			 if ( in_array( $ext, $image_types ) ) {
 				 $src = $image;
@@ -177,7 +177,7 @@ function rwp_extract_img_src( $image, $size = 'full' ) {
 		 } elseif ( is_numeric( $image ) ) {
 			 $image = intval( $image );
 			 $src = wp_get_attachment_image_url( $image, $size, false );
-		 } elseif ( rwp_string_is_html( $image ) ) {
+		 } elseif ( rwp_str_is_html( $image ) ) {
 			 $image = rwp_html( $image );
 			 $src = $image->getAttribute( 'src' );
 			 if ( empty( $src ) ) {

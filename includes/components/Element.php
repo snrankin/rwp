@@ -176,7 +176,7 @@ class Element {
 		);
 
 		$string = \force_balance_tags( $string );
-		if ( ! rwp_string_is_html( $string ) ) {
+		if ( ! rwp_str_is_html( $string ) ) {
 			$args['content'][] = $string;
 		} else {
 			$html = new Html( $string );
@@ -488,7 +488,7 @@ class Element {
 						$parent_elem->set_style( 'background-image', $bg );
 					}
 				}
-            } else if ( $bg instanceof Element || rwp_string_is_html( $bg ) ) {
+            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) ) {
 				array_unshift( $parent_elem->order, 'background' );
 			}
 			$parent_elem->add_class( 'has-bg' );

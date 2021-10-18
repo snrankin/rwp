@@ -104,7 +104,7 @@ class Nav_Menus extends Singleton {
 			$is_current_parent = data_get( $item, 'current_item_parent', false );
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 
-			$is_active = rwp_string_has( $this->current, $item_url );
+			$is_active = rwp_str_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
@@ -159,7 +159,7 @@ class Nav_Menus extends Singleton {
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 			$is_parent = data_get( $args, 'has_children', false );
 
-			$is_active = rwp_string_has( $this->current, $item_url );
+			$is_active = rwp_str_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
