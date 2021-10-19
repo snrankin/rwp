@@ -73,44 +73,59 @@ class SubpageGrid extends Shortcode {
 
 		$atts = rwp_process_shortcode( $atts, self::$defaults );
 
-		$parent_id = data_get( $atts, 'parent' );
+		$parent_id      = data_get( $atts, 'parent' );
 		$exclude_active = data_get( $atts, 'exclude_active', false );
+		$orderby        = data_get( $atts, 'orderby', 'ASC' );
+		$order          = data_get( $atts, 'order', 'menu_order' );
 
 		$parent = get_post();
+
+		$output  = '';
 
 		if ( ! empty( $parent_id ) ) {
 			$parent = get_post( $parent_id );
 		}
-		$orderby         = data_get( $atts, 'orderby', 'ASC' );
-		$order           = data_get( $atts, 'order', 'menu_order' );
 
-		// WP_Query arguments
-		$args = array(
-			'post_type'      => $parent->post_type,
-			'post_parent'    => $parent->ID,
-			'order'          => $order,
-			'orderby'        => $orderby,
-		);
-
-		/**
-		 * @var \WP_Post[] $posts
-		 */
-		$posts = get_posts( $args );
-		$output  = '';
-		$current_post = get_post();
-		if ( ! empty( $posts ) ) {
-			$team = self::wrapper( '', $atts );
-
-			foreach ( $posts as $post ) {
-				if ( $exclude_active && $current_post !== $post->ID ) {
-					$post = rwp_post_card( $post )->html();
-					$team->add_item( array( 'content' => $post ) );
-				} else if ( ! $exclude_active ) {
-					$post = rwp_post_card( $post )->html();
-					$team->add_item( array( 'content' => $post ) );
-				}
+		// Get the sibling posts if the current post has no children
+		if ( ! rwp_post_has_children( $parent ) ) {
+			$parent = rwp_post_parent( $parent );
+			if ( $parent ) {
+				/**
+				 * @var \WP_Post $parent
+				 */
+				$parent = data_get( $parent, 'object' );
 			}
-			$output = $team->html();
+		}
+
+		if ( $parent instanceof \WP_Post ) {
+			// WP_Query arguments
+			$args = array(
+				'post_type'      => $parent->post_type,
+				'post_parent'    => $parent->ID,
+				'order'          => $order,
+				'orderby'        => $orderby,
+			);
+
+			/**
+			 * @var \WP_Post[] $posts
+			 */
+			$posts = get_posts( $args );
+
+			$current_post = get_post();
+			if ( ! empty( $posts ) ) {
+				$team = self::wrapper( '', $atts );
+
+				foreach ( $posts as $post ) {
+					if ( $exclude_active && $current_post !== $post->ID ) {
+						$post = rwp_post_card( $post )->html();
+						$team->add_item( array( 'content' => $post ) );
+					} else if ( ! $exclude_active ) {
+						$post = rwp_post_card( $post )->html();
+						$team->add_item( array( 'content' => $post ) );
+					}
+				}
+				$output = $team->html();
+			}
 		}
 
 		return $output;

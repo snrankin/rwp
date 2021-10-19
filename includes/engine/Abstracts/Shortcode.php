@@ -40,7 +40,7 @@ abstract class Shortcode extends Singleton {
 		self::set_tag();
 
 		\add_action( 'init', function() {
-			\add_shortcode( $this::$tag, array( $this, 'output' ) );
+			\add_shortcode( self::$tag, array( $this, 'output' ) );
 		} );
 	}
 

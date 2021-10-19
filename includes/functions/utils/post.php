@@ -765,3 +765,26 @@ function rwp_get_post_class( $post, $classes = '' ) {
 function rwp_post_class( $post, $classes = '' ) {
 	return rwp_output_classes( rwp_get_post_class( $post, $classes ) );
 }
+
+/**
+ * Check if a post has children
+ *
+ * @param mixed|null $post
+ *
+ * @return bool
+ */
+function rwp_post_has_children( $post = null ) {
+
+	if ( ! ( $post instanceof WP_Post ) ) {
+		$post = get_post( $post );
+	}
+
+	$args = array(
+		'post_type' => $post->post_type,
+		'post_parent' => $post->ID,
+	);
+
+	$pages = get_posts( $args );
+
+	return count( $pages ) > 0;
+}
