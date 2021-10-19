@@ -24,6 +24,8 @@ class SiblingGrid extends Shortcode {
 		'order'          => 'ASC',
 		'orderby'        => 'menu_order',
 		'exclude_active' => true,
+		'id'             => '',
+		'class'          => '',
 	);
 
 	/**

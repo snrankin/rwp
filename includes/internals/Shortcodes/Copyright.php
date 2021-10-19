@@ -19,6 +19,8 @@ class Copyright extends Shortcode {
 	public $defaults = array(
 		'before' => '&copy; Copyright ',
 		'after'  => ', All Rights Reserved.',
+		'id'     => '',
+		'class'  => '',
 	);
 
 	/**
