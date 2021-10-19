@@ -22,13 +22,13 @@ abstract class Shortcode extends Singleton {
 	/**
 	 * @var string $tag The shortcode tag
 	 */
-	protected static $tag = '';
+	public $tag = '';
 
 
 	/**
 	 * @var array $defaults The shortcode defaults
 	 */
-	protected static $defaults = array();
+	public $defaults = array();
 
 	/**
 	 * Initialize the class.
@@ -37,10 +37,10 @@ abstract class Shortcode extends Singleton {
 	 */
 	public function initialize() {
 
-		self::set_tag();
+		$this->set_tag();
 
 		\add_action( 'init', function() {
-			\add_shortcode( self::$tag, array( $this, 'output' ) );
+			\add_shortcode( $this->tag, array( $this, 'output' ) );
 		} );
 	}
 
@@ -51,12 +51,12 @@ abstract class Shortcode extends Singleton {
 	 * @param array $args
 	 * @return Element
 	 */
-	public static function wrapper( $content = '', $args = array() ) {
+	public function wrapper( $content = '', $args = array() ) {
 		$wrapper = array(
 			'tag' => 'span',
 			'atts' => array(
 				'class' => array(
-					rwp_change_case( self::$tag ),
+					rwp_change_case( $this->tag ),
 				),
 			),
 		);
@@ -75,7 +75,7 @@ abstract class Shortcode extends Singleton {
 	 * @return string
 	 */
 
-	public static function output( $atts ) {
+	public function output( $atts ) {
 		return '';
 	}
 
@@ -84,12 +84,18 @@ abstract class Shortcode extends Singleton {
 	 *
 	 * @return void
 	 */
-	final public static function set_tag() {
-		$shortcode_tag  = explode( '\\', get_called_class() );
-		$shortcode_tag  = end( $shortcode_tag );
+	public function set_tag() {
+		$shortcode_tag  = $this->tag;
+		if ( empty( $shortcode_tag ) ) {
+			$shortcode_tag  = explode( '\\', get_called_class() );
+			$shortcode_tag  = end( $shortcode_tag );
+
+		}
+
 		$shortcode_tag  = rwp()->prefix( $shortcode_tag );
 
-		self::$tag = $shortcode_tag;
+		$this->tag = $shortcode_tag;
+
 	}
 
 }

@@ -16,7 +16,7 @@ use RWP\Engine\Abstracts\Shortcode;
 
 class SubpageGrid extends Shortcode {
 
-	protected static $defaults = array(
+	public $defaults = array(
 		'parent'         => '',
 		'd_cols'         => '3',
 		't_cols'         => '2',
@@ -33,7 +33,7 @@ class SubpageGrid extends Shortcode {
 	 * @param array $args
 	 * @return \RWP\Components\Row
 	 */
-	public static function wrapper( $content = '', $args = array() ) {
+	public function wrapper( $content = '', $args = array() ) {
 		$desktop_columns = data_get( $args, 'd_cols', '' );
 		$tablet_columns  = data_get( $args, 't_cols', '' );
 
@@ -47,7 +47,7 @@ class SubpageGrid extends Shortcode {
 			$classes[] = 'row-cols-md-' . $tablet_columns;
 		}
 
-		$classes[] = rwp_change_case( self::$tag );
+		$classes[] = rwp_change_case( $this->tag );
 
 		$wrapper = array(
 			'atts' => array(
@@ -69,9 +69,9 @@ class SubpageGrid extends Shortcode {
 	 * @return string
 	 */
 
-	public static function output( $atts ) {
+	public function output( $atts ) {
 
-		$atts = rwp_process_shortcode( $atts, self::$defaults );
+		$atts = rwp_process_shortcode( $atts, $this->defaults );
 
 		$parent_id      = data_get( $atts, 'parent' );
 		$exclude_active = data_get( $atts, 'exclude_active', false );
@@ -113,7 +113,7 @@ class SubpageGrid extends Shortcode {
 
 			$current_post = get_post();
 			if ( ! empty( $posts ) ) {
-				$team = self::wrapper( '', $atts );
+				$team = $this->wrapper( '', $atts );
 
 				foreach ( $posts as $post ) {
 					if ( $exclude_active && $current_post !== $post->ID ) {
