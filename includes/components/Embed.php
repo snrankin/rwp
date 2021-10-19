@@ -312,15 +312,6 @@ class Embed extends Element {
 				break;
 		}
 
-		if ( ! empty( $this->ratio ) ) {
-			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
-				$this->set_style( '--bs-aspect-ratio', $this->ratio );
-			} else {
-				$this->add_class( 'ratio-' . $this->ratio );
-			}
-			$this->add_class( 'ratio' );
-		}
-
 	}
 
 	/**
@@ -388,6 +379,16 @@ class Embed extends Element {
 
 	public function setup_html() {
 		$this->setup_embed();
+
+		if ( ! empty( $this->ratio ) ) {
+			$this->inner->add_class( 'ratio' );
+			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
+				$this->set_style( '--bs-aspect-ratio', $this->ratio );
+			} else {
+				$this->inner->add_class( 'ratio-' . $this->ratio );
+			}
+		}
+
 		$this->inner->set_content( $this->embed, 'embed' );
 	}
 

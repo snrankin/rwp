@@ -12,7 +12,7 @@
 use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
 
 if ( ! defined( 'RWP_TITLE_CASE' ) ) {
-    define( 'RWP_TITLE_CASE', array() );
+	define( 'RWP_TITLE_CASE', array() );
 }
 /**
  * Change Case
@@ -35,25 +35,25 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 		case 'title':
 			$string = preg_replace( '/((?<=\w)-(?=\w)|\_)/m', ' ', $string );
 			$string = Str::title( $string );
-            break;
+			break;
 		case 'lower':
 			$string = Str::lower( $string );
-            break;
+			break;
 		case 'snake':
 			$string = Str::snake( $string );
-            break;
+			break;
 		case 'kebab':
 			$string = Str::kebab( $string );
-            break;
+			break;
 		case 'slug':
 			$string = Str::slug( $string );
-            break;
+			break;
 		case 'camel':
 			$string = Str::camel( $string );
-            break;
+			break;
 	}
 
-    return $string;
+	return $string;
 }
 
 /**
@@ -64,7 +64,7 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
  * @return bool
  */
 function rwp_str_has( $haystack, $needles ) {
-    return Str::contains( $haystack, $needles );
+	return Str::contains( $haystack, $needles );
 }
 
 /**
@@ -77,7 +77,7 @@ function rwp_str_has( $haystack, $needles ) {
  */
 
 function rwp_pluralizer( $string = '' ) {
-     return Pluralizer::plural( $string );
+	return Pluralizer::plural( $string );
 }
 
 /**
@@ -90,7 +90,7 @@ function rwp_pluralizer( $string = '' ) {
  */
 
 function rwp_singulizer( $string = '' ) {
-     return Pluralizer::singular( $string );
+	return Pluralizer::singular( $string );
 }
 
 /**
@@ -101,7 +101,7 @@ function rwp_singulizer( $string = '' ) {
  * @return bool
  */
 function rwp_str_starts_with( $haystack, $needles ) {
-     return Str::startsWith( $haystack, $needles );
+	return Str::startsWith( $haystack, $needles );
 }
 
 /**
@@ -113,7 +113,7 @@ function rwp_str_starts_with( $haystack, $needles ) {
  */
 
 function rwp_str_ends_with( $haystack, $needles ) {
-     return Str::endsWith( $haystack, $needles );
+	return Str::endsWith( $haystack, $needles );
 }
 
 /**
@@ -126,13 +126,13 @@ function rwp_str_ends_with( $haystack, $needles ) {
  */
 function rwp_add_prefix( $string = '', $prefix = '' ) {
 	if ( empty( $prefix ) || empty( $string ) ) {
-        return $string;
+		return $string;
 	}
 
 	if ( ! rwp_str_starts_with( $string, $prefix ) ) {
 		$string = Str::start( $string, $prefix );
 	}
-    return $string;
+	return $string;
 }
 
 /**
@@ -145,12 +145,12 @@ function rwp_add_prefix( $string = '', $prefix = '' ) {
  */
 function rwp_remove_prefix( $string = '', $prefix = '' ) {
 	if ( empty( $prefix ) || empty( $string ) ) {
-        return $string;
+		return $string;
 	}
 	if ( rwp_str_starts_with( $string, $prefix ) ) {
 		$string = Str::after( $string, $prefix );
 	}
-    return $string;
+	return $string;
 }
 
 /**
@@ -163,13 +163,13 @@ function rwp_remove_prefix( $string = '', $prefix = '' ) {
  */
 function rwp_add_suffix( $string = '', $suffix = '' ) {
 	if ( empty( $suffix ) || empty( $string ) ) {
-        return $string;
+		return $string;
 	}
 
 	if ( ! rwp_str_ends_with( $string, $suffix ) ) {
 		$string = Str::finish( $string, $suffix );
 	}
-    return $string;
+	return $string;
 }
 
 /**
@@ -182,12 +182,12 @@ function rwp_add_suffix( $string = '', $suffix = '' ) {
  */
 function rwp_remove_suffix( $string = '', $suffix = '' ) {
 	if ( empty( $suffix ) || empty( $string ) ) {
-        return $string;
+		return $string;
 	}
 	if ( rwp_str_starts_with( $string, $suffix ) ) {
 		$string = Str::before( $string, $suffix );
 	}
-    return $string;
+	return $string;
 }
 
 /**
@@ -199,11 +199,11 @@ function rwp_remove_suffix( $string = '', $suffix = '' ) {
  */
 function rwp_is_phone_number( $str = '' ) {
 	if ( ! is_string( $str ) ) {
-        return $str;
+		return $str;
 	}
-    $str         = rwp_remove_prefix( $str, 'tel:' );
-    $phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
-    preg_match( $phone_regex, $str, $matches );
+	$str         = rwp_remove_prefix( $str, 'tel:' );
+	$phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
+	preg_match( $phone_regex, $str, $matches );
 
 	if ( ! empty( $matches ) ) {
 		return true;
@@ -217,52 +217,48 @@ function rwp_is_phone_number( $str = '' ) {
  *
  * @global array       $allowedtags
  *
- * @param string   $text         The text to trim
- * @param int      $length       Max length of excerpt (will vary if
- *                               $variable = true). So 0 to disable
- * @param bool     $variable     Should the sentence finish or should there
- *                               be a hard cut off.
- * @param string   $excerpt_end  Text to append to the end of the trimmed
- *                               text
- * @param string[] $allowed_tags Allowable html tags. Set to null for plain
- *                               text
- * @param string   $trim_type    Trim content based on `words` or `chars`. Default:`words`
+ * @param string          $text         The text to trim
+ * @param int             $length       Max length of excerpt (will vary if
+ *                                      $variable = true). So 0 to disable
+ * @param bool            $variable     Should the sentence finish or should there
+ *                                      be a hard cut off.
+ * @param string          $excerpt_end  Text to append to the end of the trimmed
+ *                                      text
+ * @param string|string[] $allowed_tags Allowable html tags. Set to null for
+ *                                      plain text
+ * @param string          $trim_type    Trim content based on `words` or `chars`.
+ *                                      Default:`words`
  *
  * @return string
  */
 
 function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end = '', $allowed_tags = array(), $trim_type = 'words' ) {
-    /**
-     * @var string[] $allowedtags
-     */
+	/**
+	 * @var string[] $allowedtags
+	 */
 
-    global $allowedtags;
+	global $allowedtags;
 
 	$allowedtags_keys = array_keys( $allowedtags );
 
-    if ( is_array( $allowed_tags ) ) {
-        $allowed_tags = array_merge( $allowed_tags, $allowedtags_keys );
-    }
+	if ( is_string( $allowed_tags ) ) {
+		$allowed_tags = explode( ',', $allowed_tags );
+	}
+
+	$allowed_tags = rwp_collection( $allowed_tags );
+	$allowed_tags = $allowed_tags->merge( $allowedtags_keys )->unique()->all();
 
 	$out    = '';
 
-    if ( ! empty( $text ) ) {
-        $text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
-        if ( is_array( $allowed_tags ) ) {
-            foreach ( $allowed_tags as $i => $tag ) {
-                $tag = rwp_add_prefix( $tag, '<' );
-                $tag = rwp_add_suffix( $tag, '>' );
-                $allowed_tags[ $i ] = $tag;
-            }
+	if ( ! empty( $text ) ) {
+		$text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
 
-            $allowed_tags = implode( '', $allowed_tags );
-        }
-        $text = strip_tags( $text, $allowed_tags );
+		$text = strip_tags( $text, $allowed_tags );
 
-        if ( ! empty( $length ) ) {
+		if ( ! empty( $length ) ) {
 
 			if ( $variable ) {
-				$text = Str::match( $text, '/(.*)[\?\.\!]\s*/uS' );
+				$text = Str::match( '/(.*)[\?\.\!]\s*/Us', $text );
 			} else {
 				if ( 'chars' === $trim_type ) {
 					$text = Str::limit( $text, $length, $excerpt_end );
@@ -271,8 +267,8 @@ function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end 
 				}
 			}
 		} else {
-            $out = $text . $excerpt_end;
-        }
+			$out = $text . $excerpt_end;
+		}
 	}
 	return trim( force_balance_tags( $out ) );
 }

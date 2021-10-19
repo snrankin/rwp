@@ -64,6 +64,7 @@ return array(
     'RWP\\Internals\\PostTypes\\Testimonial' => $baseDir . '/includes/internals/PostTypes/Testimonial.php',
     'RWP\\Internals\\Relative_Urls' => $baseDir . '/includes/internals/Relative_Urls.php',
     'RWP\\Internals\\Shortcodes\\Copyright' => $baseDir . '/includes/internals/Shortcodes/Copyright.php',
+    'RWP\\Internals\\Shortcodes\\SubpageGrid' => $baseDir . '/includes/internals/Shortcodes/SubpageGrid.php',
     'RWP\\Internals\\Shortcodes\\TeamGrid' => $baseDir . '/includes/internals/Shortcodes/TeamGrid.php',
     'RWP\\Internals\\Taxonomies' => $baseDir . '/includes/internals/Taxonomies.php',
     'RWP\\Internals\\Taxonomies\\TeamCategory' => $baseDir . '/includes/internals/Taxonomies/TeamCategory.php',
