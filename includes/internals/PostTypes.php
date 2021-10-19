@@ -74,20 +74,21 @@ class PostTypes extends Singleton {
 	 * @return void
 	 */
 	public function filter_search( \WP_Query $query ) {
-		/**
-		 * @var Collection $cpts
-		 */
-		$cpts = $this::$cpts->reject(function ( array $item ) {
-			return $item['exclude_from_search'];
-		})->mapWithKeys(function ( array $item ) {
-			return [ $item['type'] => $item ];
-		});
+		if ( is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+		if ( $query->is_search ) {
+			/**
+			 * @var Collection $cpts
+			 */
+			$cpts = $this::$cpts->reject(function ( array $item ) {
+				return $item['exclude_from_search'];
+			})->mapWithKeys(function ( array $item ) {
+				return [ $item['type'] => $item ];
+			});
 
-		if ( $cpts->isNotEmpty() ) {
-			if ( is_admin() || ! $query->is_main_query() ) {
-				return;
-			}
-			if ( $query->is_search ) {
+			if ( $cpts->isNotEmpty() ) {
+
 				$post_types = $query->get( 'post_type' );
 
 				if ( ! is_array( $post_types ) ) {

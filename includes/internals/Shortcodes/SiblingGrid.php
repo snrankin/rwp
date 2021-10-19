@@ -14,7 +14,7 @@ namespace RWP\Internals\Shortcodes;
 
 use RWP\Engine\Abstracts\Shortcode;
 
-class SubpageGrid extends Shortcode {
+class SiblingGrid extends Shortcode {
 
 	public $defaults = array(
 		'parent'         => '',
@@ -23,6 +23,7 @@ class SubpageGrid extends Shortcode {
 		'num'            => '-1',
 		'order'          => 'ASC',
 		'orderby'        => 'menu_order',
+		'exclude_active' => true,
 	);
 
 	/**
@@ -73,16 +74,22 @@ class SubpageGrid extends Shortcode {
 		$atts = rwp_process_shortcode( $atts, $this->defaults );
 
 		$parent_id      = data_get( $atts, 'parent' );
+		$exclude_active = data_get( $atts, 'exclude_active', true );
 		$num            = data_get( $atts, 'num', '-1' );
 		$orderby        = data_get( $atts, 'orderby', 'ASC' );
 		$order          = data_get( $atts, 'order', 'menu_order' );
 
-		$parent = get_post();
-
+		$current_post = get_post();
+		$parent = null;
 		$output  = '';
 
 		if ( ! empty( $parent_id ) ) {
 			$parent = get_post( $parent_id );
+		} else {
+			$parent = rwp_post_parent( $parent_id );
+			if ( $parent ) {
+				$parent = data_get( $parent, 'object' );
+			}
 		}
 
 		if ( $parent instanceof \WP_Post ) {
@@ -95,12 +102,16 @@ class SubpageGrid extends Shortcode {
 				'orderby'        => $orderby,
 			);
 
+			if ( $exclude_active ) {
+				$args['post__not_in'] = array( $current_post->ID );
+			}
+
 			/**
 			 * @var \WP_Query $posts
 			 */
-			$posts = wp_cache_remember( $parent->ID . '_children', function () use ( $args ) {
+			$posts = wp_cache_remember( $current_post->ID . '_siblings', function () use ( $args ) {
 				return new \WP_Query( $args );
-    		}, $parent->post_type . '_children', HOUR_IN_SECONDS );
+    		}, $current_post->post_type . '_siblings', HOUR_IN_SECONDS );
 
 			if ( $posts->have_posts() ) {
 				$grid = $this->wrapper( '', $atts );
