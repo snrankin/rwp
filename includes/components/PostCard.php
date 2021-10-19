@@ -48,6 +48,7 @@ class PostCard extends Card {
 					'href' => $url,
 				),
 			),
+			'size' => 'small',
 			'atts' => array(
 				'class' => array(
 					'post-image',

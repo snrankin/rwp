@@ -303,6 +303,16 @@ class Image extends Element {
 
 	public function setup_html() {
 		self::add_lazysizes( $this->image );
+
+		if ( ! empty( $this->ratio ) ) {
+			$this->inner->add_class( 'ratio' );
+			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
+				$this->set_style( '--bs-aspect-ratio', $this->ratio );
+			} else {
+				$this->inner->add_class( 'ratio-' . $this->ratio );
+			}
+		}
+
 		$this->inner->set_content( $this->image, 'image' );
 	}
 

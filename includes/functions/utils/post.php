@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * post
  *
@@ -13,6 +14,7 @@
 use \RWP\Vendor\Illuminate\Support\{Collection, Str};
 use RWP\Internals\PostTypes;
 use RWP\Internals\Taxonomies;
+
 /**
  * Is item a blog post
  *
@@ -21,11 +23,11 @@ use RWP\Internals\Taxonomies;
  * @return bool
  */
 function rwp_is_blog( $post = null ) {
-    if ( ! ( $post instanceof \WP_Post ) ) {
-        $post = get_post( $post );
-    }
-    $posttype = get_post_type( $post );
-    return ( ( ( is_archive() ) || ( is_category() ) || ( is_home() ) || ( is_single() ) || ( is_tag() ) ) && ( 'post' === $posttype ) ) ? true : false;
+	if ( ! ( $post instanceof \WP_Post ) ) {
+		$post = get_post( $post );
+	}
+	$posttype = get_post_type( $post );
+	return ( ( ( is_archive() ) || ( is_category() ) || ( is_home() ) || ( is_single() ) || ( is_tag() ) ) && ( 'post' === $posttype ) ) ? true : false;
 }
 
 /**
@@ -35,11 +37,11 @@ function rwp_is_blog( $post = null ) {
  */
 
 function rwp_get_home_page() {
-     $home = get_option( 'page_on_front' );
-    if ( $home ) {
-        $home = intval( $home );
-    }
-    return $home;
+	$home = get_option( 'page_on_front' );
+	if ( $home ) {
+		$home = intval( $home );
+	}
+	return $home;
 }
 
 /**
@@ -49,11 +51,11 @@ function rwp_get_home_page() {
  */
 
 function rwp_get_blog_page() {
-     $blog = get_option( 'page_for_posts' );
-    if ( $blog ) {
-        $blog = intval( $blog );
-    }
-    return $blog;
+	$blog = get_option( 'page_for_posts' );
+	if ( $blog ) {
+		$blog = intval( $blog );
+	}
+	return $blog;
 }
 
 /**
@@ -63,22 +65,22 @@ function rwp_get_blog_page() {
  * @return boolean
  */
 function rwp_post_is_cpt( $post = null ) {
-    $all_custom_post_types = get_post_types( array( '_builtin' => false ) );
+	$all_custom_post_types = get_post_types( array( '_builtin' => false ) );
 
-    // there are no custom post types
-    if ( empty( $all_custom_post_types ) ) {
-        return false;
-    }
+	// there are no custom post types
+	if ( empty( $all_custom_post_types ) ) {
+		return false;
+	}
 
-    $custom_types      = array_keys( $all_custom_post_types );
-    $current_post_type = get_post_type( $post );
+	$custom_types      = array_keys( $all_custom_post_types );
+	$current_post_type = get_post_type( $post );
 
-    // could not detect current type
-    if ( ! $current_post_type ) {
-        return false;
-    }
+	// could not detect current type
+	if ( ! $current_post_type ) {
+		return false;
+	}
 
-    return in_array( $current_post_type, $custom_types );
+	return in_array( $current_post_type, $custom_types );
 }
 
 /**
@@ -95,7 +97,7 @@ function rwp_post_is_cpt( $post = null ) {
  */
 function rwp_cpt_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 
-    return PostTypes::labels( $singular, $plural, $menu, $slug );
+	return PostTypes::labels( $singular, $plural, $menu, $slug );
 }
 
 /**
@@ -112,7 +114,7 @@ function rwp_cpt_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
  */
 function rwp_tax_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 
-    return Taxonomies::labels( $singular, $plural, $menu, $slug );
+	return Taxonomies::labels( $singular, $plural, $menu, $slug );
 }
 
 /**
@@ -139,20 +141,20 @@ function rwp_tax_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
  */
 function rwp_post( $obj = null, $type = 'post' ) {
 
-    if ( ! is_array( $obj ) ) {
+	if ( ! is_array( $obj ) ) {
 
-        $info = array();
+		$info = array();
 
-        $object   = null;
-        $sub_type = '';
-        $id       = 0;
-        $acf_id   = 'options';
-        $title    = '';
-        $parent   = 0;
-        $slug     = '';
-        $url      = '';
+		$object   = null;
+		$sub_type = '';
+		$id       = 0;
+		$acf_id   = 'options';
+		$title    = '';
+		$parent   = 0;
+		$slug     = '';
+		$url      = '';
 
-        $search = array(
+		$search = array(
 			'type'    => 'search',
 			'subtype' => $sub_type,
 			'id'      => $id,
@@ -162,8 +164,8 @@ function rwp_post( $obj = null, $type = 'post' ) {
 			'slug'    => 'search',
 			'url'     => '/search',
 			'object'  => null,
-        );
-        $error  = array(
+		);
+		$error  = array(
 			'type'    => 'error',
 			'subtype' => $sub_type,
 			'id'      => $id,
@@ -173,61 +175,61 @@ function rwp_post( $obj = null, $type = 'post' ) {
 			'slug'    => 'error-404',
 			'url'     => '',
 			'object'  => null,
-        );
+		);
 
-        if ( is_404() && empty( $obj ) ) {
-            return $error;
-        }
+		if ( is_404() && empty( $obj ) ) {
+			return $error;
+		}
 
-        if ( is_search() && empty( $obj ) ) {
-            return $search;
-        }
+		if ( is_search() && empty( $obj ) ) {
+			return $search;
+		}
 
-        if ( is_numeric( $obj ) ) {
-            $id = intval( $obj );
+		if ( is_numeric( $obj ) ) {
+			$id = intval( $obj );
 
-            if ( ! empty( $id ) ) {
-                switch ( $type ) {
+			if ( ! empty( $id ) ) {
+				switch ( $type ) {
 					case 'comment':
 						$obj = get_comment( $id );
-                        break;
+						break;
 					case 'term':
 						$obj = get_term( $id );
-                        break;
+						break;
 					case 'user':
 						$obj = get_userdata( $id );
-                        break;
+						break;
 					default:
 						$obj = get_post( $id );
-                        break;
-                }
-            } else {
-                return $error;
-            }
-        }
+						break;
+				}
+			} else {
+				return $error;
+			}
+		}
 
-        if ( empty( $obj ) ) {
-            $obj = get_queried_object();
-        }
+		if ( empty( $obj ) ) {
+			$obj = get_queried_object();
+		}
 
-        if ( is_object( $obj ) ) {
+		if ( is_object( $obj ) ) {
 
-            if ( $obj instanceof \WP_Post ) {
-                $type     = 'post';
-                $sub_type = $obj->post_type; // What type of post is it?
-                $id       = $obj->ID;
-                $acf_id   = $id;
-                $title    = $obj->post_title;
-                $parent   = $obj->post_parent;
-                $slug     = $obj->post_name;
-                $url      = get_permalink( $id );
-            } else if ( $obj instanceof \WP_Post_Type ) {
-                $type     = 'archive';
-                $sub_type = $obj->name; // What type of archive is it?
-                $title    = $obj->label;
-                $slug     = 'archive-' . $obj->name;
+			if ( $obj instanceof \WP_Post ) {
+				$type     = 'post';
+				$sub_type = $obj->post_type; // What type of post is it?
+				$id       = $obj->ID;
+				$acf_id   = $id;
+				$title    = $obj->post_title;
+				$parent   = $obj->post_parent;
+				$slug     = $obj->post_name;
+				$url      = get_permalink( $id );
+			} else if ( $obj instanceof \WP_Post_Type ) {
+				$type     = 'archive';
+				$sub_type = $obj->name; // What type of archive is it?
+				$title    = $obj->label;
+				$slug     = 'archive-' . $obj->name;
 
-                $url      = get_post_type_archive_link( $sub_type );
+				$url      = get_post_type_archive_link( $sub_type );
 
 				$custom_archive_page = false;
 
@@ -235,88 +237,88 @@ function rwp_post( $obj = null, $type = 'post' ) {
 					$custom_archive_page = get_page_for_post_type( $sub_type );
 				}
 
-                if ( ! empty( $custom_archive_page ) ) {
-                    return rwp_post( $custom_archive_page );
-                }
+				if ( ! empty( $custom_archive_page ) ) {
+					return rwp_post( $custom_archive_page );
+				}
 				$info['description'] = $obj->description;
-            } else if ( $obj instanceof \WP_Term ) {
-                $type     = 'term';
-                $sub_type = $obj->taxonomy; // What type of term is it?
-                $id       = $obj->term_id;
-                $acf_id   = "{$type}_{$id}";
-                $title    = $obj->name;
-                $parent   = $obj->parent;
-                $slug     = $obj->slug;
-                $url      = get_term_link( $id, $sub_type );
-            } else if ( $obj instanceof \WP_User ) {
-                $type     = 'user';
-                $sub_type = $obj->cap_key; // What type of user is it?
-                $id       = $obj->ID;
-                $acf_id   = "{$type}_{$id}";
-                $title    = $obj->display_name;
-                $slug     = $title;
-            } else if ( $obj instanceof \WP_Widget ) {
-                $type     = 'widget';
-                $sub_type = $obj->name; // What type of widget is it?
-                $id       = $obj->id;
-                $acf_id   = "{$type}_{$id}";
-                $slug     = rwp_change_case( $id, 'slug' );
-            } else if ( $obj instanceof \WP_Comment ) {
-                $type     = 'comment';
-                $sub_type = $obj->comment_type;
-                $id       = $obj->comment_ID;
-                $acf_id   = "{$type}_{$id}";
-                $parent   = $obj->comment_parent;
-                $slug     = $id;
-                $url      = get_comment_link( $obj );
-                $info['post_parent'] = $obj->comment_post_ID; // ID of the post the comment is associated with.
-            } else if ( $obj instanceof \WP_Taxonomy ) {
-                $type     = 'taxonomy';
-                $sub_type = $obj->name; // What type of taxonomy is it?
-                $title    = $obj->label;
-                $slug     = 'taxonomy-' . $sub_type;
+			} else if ( $obj instanceof \WP_Term ) {
+				$type     = 'term';
+				$sub_type = $obj->taxonomy; // What type of term is it?
+				$id       = $obj->term_id;
+				$acf_id   = "{$type}_{$id}";
+				$title    = $obj->name;
+				$parent   = $obj->parent;
+				$slug     = $obj->slug;
+				$url      = get_term_link( $id, $sub_type );
+			} else if ( $obj instanceof \WP_User ) {
+				$type     = 'user';
+				$sub_type = $obj->cap_key; // What type of user is it?
+				$id       = $obj->ID;
+				$acf_id   = "{$type}_{$id}";
+				$title    = $obj->display_name;
+				$slug     = $title;
+			} else if ( $obj instanceof \WP_Widget ) {
+				$type     = 'widget';
+				$sub_type = $obj->name; // What type of widget is it?
+				$id       = $obj->id;
+				$acf_id   = "{$type}_{$id}";
+				$slug     = rwp_change_case( $id, 'slug' );
+			} else if ( $obj instanceof \WP_Comment ) {
+				$type     = 'comment';
+				$sub_type = $obj->comment_type;
+				$id       = $obj->comment_ID;
+				$acf_id   = "{$type}_{$id}";
+				$parent   = $obj->comment_parent;
+				$slug     = $id;
+				$url      = get_comment_link( $obj );
+				$info['post_parent'] = $obj->comment_post_ID; // ID of the post the comment is associated with.
+			} else if ( $obj instanceof \WP_Taxonomy ) {
+				$type     = 'taxonomy';
+				$sub_type = $obj->name; // What type of taxonomy is it?
+				$title    = $obj->label;
+				$slug     = 'taxonomy-' . $sub_type;
 
-                $custom_archive_page = false;
+				$custom_archive_page = false;
 
 				if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
 					$custom_archive_page = get_page_for_post_type( $sub_type );
 				}
 
-                if ( ! empty( $custom_archive_page ) ) {
-                    return rwp_post( $custom_archive_page );
-                }
+				if ( ! empty( $custom_archive_page ) ) {
+					return rwp_post( $custom_archive_page );
+				}
 
 				$info['description'] = $obj->description;
-            }
+			}
 
-            $object = $obj;
-        }
+			$object = $obj;
+		}
 
-        if ( ! empty( $url ) ) {
-            $url = rwp_relative_url( $url );
-        }
-        if ( ! empty( $slug ) ) {
-            $slug = rwp_change_case( $slug, 'slug' );
-        }
+		if ( ! empty( $url ) ) {
+			$url = rwp_relative_url( $url );
+		}
+		if ( ! empty( $slug ) ) {
+			$slug = rwp_change_case( $slug, 'slug' );
+		}
 
-        $info['type']    = $type;
-        $info['subtype'] = $sub_type;
-        $info['id']      = $id;
-        $info['acf_id']  = $acf_id;
-        $info['title']   = $title;
-        $info['parent']  = $parent;
-        $info['slug']    = $slug;
-        $info['url']     = $url;
-        $info['object']  = $object;
+		$info['type']    = $type;
+		$info['subtype'] = $sub_type;
+		$info['id']      = $id;
+		$info['acf_id']  = $acf_id;
+		$info['title']   = $title;
+		$info['parent']  = $parent;
+		$info['slug']    = $slug;
+		$info['url']     = $url;
+		$info['object']  = $object;
 
-        if ( ! empty( $info ) ) {
-            return $info;
-        } else {
-            return $error;
-        }
-    } else {
-        return $obj;
-    }
+		if ( ! empty( $info ) ) {
+			return $info;
+		} else {
+			return $error;
+		}
+	} else {
+		return $obj;
+	}
 }
 
 /**
@@ -327,16 +329,16 @@ function rwp_post( $obj = null, $type = 'post' ) {
  * @return WP_Post|null
  */
 function rwp_post_object( $post = null ) {
-    $post = rwp_post( $post );
-    $post = data_get( $post, 'object', null );
+	$post = rwp_post( $post );
+	$post = data_get( $post, 'object', null );
 
-    global $wp_query;
+	global $wp_query;
 
-    if ( ( is_search() && $wp_query->is_main_query() ) || is_404() ) {
-        $post = null;
-    }
+	if ( ( is_search() && $wp_query->is_main_query() ) || is_404() ) {
+		$post = null;
+	}
 
-    return $post;
+	return $post;
 }
 
 /**
@@ -354,7 +356,7 @@ function rwp_post_object( $post = null ) {
 
 function rwp_post_subtype( $post = null ) {
 
-    return data_get( rwp_post( $post ), 'subtype', 'post' );
+	return data_get( rwp_post( $post ), 'subtype', 'post' );
 }
 
 
@@ -368,16 +370,16 @@ function rwp_post_subtype( $post = null ) {
  * @return int|string
  */
 function rwp_post_id( $obj = null, $id_type = null ) {
-    $obj_type = rwp_post( $obj );
-    $id       = data_get( $obj_type, 'id', 0 );
-    $acf_id   = data_get( $obj_type, 'acf_id', 'options' );
+	$obj_type = rwp_post( $obj );
+	$id       = data_get( $obj_type, 'id', 0 );
+	$acf_id   = data_get( $obj_type, 'acf_id', 'options' );
 
-    if ( 'acf' === $id_type ) {
+	if ( 'acf' === $id_type ) {
 
-        $id = $acf_id;
-    }
+		$id = $acf_id;
+	}
 
-    return $id;
+	return $id;
 }
 
 /**
@@ -394,16 +396,16 @@ function rwp_post_id( $obj = null, $id_type = null ) {
  */
 function rwp_filtered_content( $content = '' ) {
 
-    if ( ! is_string( $content ) ) {
-        return $content;
-    }
+	if ( ! is_string( $content ) ) {
+		return $content;
+	}
 
-    $content = apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-    $content = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
-    $content = preg_replace( "/\r|\n|\h{2,}|\t/", '', $content );
-    $content = force_balance_tags( $content );
+	$content = apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+	$content = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
+	$content = preg_replace( "/\r|\n|\h{2,}|\t/", '', $content );
+	$content = force_balance_tags( $content );
 
-    return $content;
+	return $content;
 }
 
 
@@ -419,29 +421,29 @@ function rwp_filtered_content( $content = '' ) {
 
 function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser = false ) {
 
-    $obj = rwp_post( $post );
+	$obj = rwp_post( $post );
 
-    $object_type  = data_get( $obj, 'type', 'post' );
+	$object_type  = data_get( $obj, 'type', 'post' );
 	$post_object  = data_get( $obj, 'object' );
-    $subtype      = data_get( $obj, 'subtype', 'post' );
+	$subtype      = data_get( $obj, 'subtype', 'post' );
 
-    $id = data_get( $obj, 'id', 0 );
+	$id = data_get( $obj, 'id', 0 );
 
-    $content = '';
+	$content = '';
 
-    if ( 'post' === $object_type ) {
-        $content = get_the_content( $more_link_text, $strip_teaser, $id );
-    } elseif ( 'term' === $object_type ) {
-        $content = get_term_field( 'description', $post_object );
-    } elseif ( 'archive' === $object_type ) {
-        $content = data_get( $obj, 'description', '' );
+	if ( 'post' === $object_type ) {
+		$content = get_the_content( $more_link_text, $strip_teaser, $id );
+	} elseif ( 'term' === $object_type ) {
+		$content = get_term_field( 'description', $post_object );
+	} elseif ( 'archive' === $object_type ) {
+		$content = data_get( $obj, 'description', '' );
 		$post_type_obj = get_post_type_object( $subtype );
-        $content = apply_filters( 'get_the_post_type_description', $content, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-    }
+		$content = apply_filters( 'get_the_post_type_description', $content, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+	}
 
-    $content = rwp_filtered_content( $content );
+	$content = rwp_filtered_content( $content );
 
-    return $content;
+	return $content;
 }
 
 /**
@@ -455,12 +457,13 @@ function rwp_post_content( $post = null, $more_link_text = null, $strip_teaser =
  * @return string
  */
 function rwp_post_excerpt( $post = null, $args = [] ) {
-    $obj         = rwp_post( $post );
-	$type        = data_get( $obj, 'type', 'post' );
-	$post_object = data_get( $obj, 'object' );
-	$subtype     = data_get( $obj, 'subtype', 'post' );
-    $excerpt     = '';
-	$post        = data_get( $obj, 'object', $post );
+	$obj          = rwp_post( $post );
+	$type         = data_get( $obj, 'type', 'post' );
+	$post_object  = data_get( $obj, 'object' );
+	$subtype      = data_get( $obj, 'subtype', 'post' );
+	$subtype      = rwp()->unprefix( $subtype );
+	$excerpt      = '';
+	$post         = data_get( $obj, 'object', $post );
 
 	$args         = apply_filters( 'rwp_excerpt_args', $args );
 	$args         = apply_filters( "rwp_{$type}_excerpt_args", $args );
@@ -473,25 +476,27 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
 	$trim_type    = data_get( $args, 'trim_type', 'words' );
 
 	if ( 'post' === $type ) {
-		$excerpt      = get_the_excerpt( $post );
+		if ( has_excerpt( $post ) ) {
+			$excerpt      = get_the_excerpt( $post );
+		}
 	} elseif ( 'term' === $type ) {
-        $excerpt = get_term_field( 'description', $post_object );
-    } elseif ( 'archive' === $type ) {
-        $excerpt = data_get( $obj, 'description', '' );
+		$excerpt = get_term_field( 'description', $post_object );
+	} elseif ( 'archive' === $type ) {
+		$excerpt = data_get( $obj, 'description', '' );
 		$post_type_obj = get_post_type_object( $subtype );
-        $excerpt = apply_filters( 'get_the_post_type_description', $excerpt, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-    }
+		$excerpt = apply_filters( 'get_the_post_type_description', $excerpt, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+	}
 	if ( empty( $excerpt ) ) {
 		$excerpt = rwp_post_content( $post );
-		$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
+		if ( ! empty( $length ) ) {
+			$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
+		}
 	}
-	if ( ! empty( $length ) ) {
-		$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
-	}
-    $excerpt         = apply_filters( 'rwp_excerpt', $excerpt );
+
+	$excerpt         = apply_filters( 'rwp_excerpt', $excerpt );
 	$excerpt         = apply_filters( "rwp_{$type}_excerpt", $excerpt );
 	$excerpt         = apply_filters( "rwp_{$subtype}_excerpt", $excerpt );
-    return $excerpt;
+	return $excerpt;
 }
 
 /**
@@ -501,11 +506,11 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
  * @return string
  */
 function rwp_post_link( $post = null ) {
-    $obj = rwp_post( $post );
+	$obj = rwp_post( $post );
 
-    $link = data_get( $obj, 'url', '' );
+	$link = data_get( $obj, 'url', '' );
 
-    return esc_url( $link );
+	return esc_url( $link );
 }
 
 /**
@@ -521,36 +526,39 @@ function rwp_post_link( $post = null ) {
 
 function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = '' ) {
 
-    $obj    = rwp_post( $post );
-	$type   = data_get( $obj, 'type', 'post' );
-	$acf_id = data_get( $obj, 'acf_id', 'options' );
-    $title  = data_get( $obj, 'title', '' );
+	$obj     = rwp_post( $post );
+	$type    = data_get( $obj, 'type', 'post' );
+	$subtype = data_get( $obj, 'subtype', 'post' );
+	$subtype = rwp()->unprefix( $subtype );
+	$acf_id  = data_get( $obj, 'acf_id', 'options' );
+	$title   = data_get( $obj, 'title', '' );
 
 	if ( 'post' === $type ) {
 		$title = get_the_title( $post );
 	} elseif ( 'archive' === $type || 'term' === $type ) {
-        ob_start();
+		ob_start();
 
 		the_archive_title();
 
 		$title = ob_get_contents();
 
 		ob_end_clean();
-    }
+	}
 
-    if ( $use_alt ) {
-			$alt_title    = get_field( 'alt_title', $acf_id );
+	if ( $use_alt ) {
+		$alt_title    = get_field( 'alt_title', $acf_id );
 		if ( ! empty( $alt_title ) ) {
 			$title = $alt_title;
 		}
 	}
 
 	$title = rwp_add_prefix( $title, $before );
-
 	$title = rwp_add_suffix( $title, $after );
+	$title = apply_filters( 'rwp_title', $title, $use_alt, $obj );
+	$title = apply_filters( "rwp_{$type}_title", $title, $use_alt, $obj );
+	$title = apply_filters( "rwp_{$subtype}_title", $title, $use_alt, $obj );
 
-    $title = apply_filters( 'rwp_post_title', $title, $use_alt, $obj );
-    return $title;
+	return $title;
 }
 
 /**
@@ -561,67 +569,67 @@ function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = 
  */
 function rwp_ancestors( $post = null ) {
 
-    $obj = rwp_post( $post );
+	$obj = rwp_post( $post );
 
-    $home_page = rwp_get_home_page();
+	$home_page = rwp_get_home_page();
 
-    $ancestors = rwp_collection();
+	$ancestors = rwp_collection();
 
-    if ( $home_page ) {
-        $ancestors->push( $home_page );
-    }
+	if ( $home_page ) {
+		$ancestors->push( $home_page );
+	}
 
-    if ( is_array( $obj ) ) {
-        $subtype      = data_get( $obj, 'subtype', 'post' );
-        $post         = data_get( $obj, 'object', $post );
-        $id           = data_get( $obj, 'id', 0 );
-        $type         = data_get( $obj, 'type', 0 );
+	if ( is_array( $obj ) ) {
+		$subtype      = data_get( $obj, 'subtype', 'post' );
+		$post         = data_get( $obj, 'object', $post );
+		$id           = data_get( $obj, 'id', 0 );
+		$type         = data_get( $obj, 'type', 0 );
 
-        if ( 'post' === $type ) {
-            if ( ! empty( $post ) ) {
+		if ( 'post' === $type ) {
+			if ( ! empty( $post ) ) {
 
-                $parents = get_ancestors( $id, $subtype );
+				$parents = get_ancestors( $id, $subtype );
 
-                if ( ! empty( $parents ) ) {
-                    $ancestors = $ancestors->concat( array_reverse( $parents ) );
-                }
+				if ( ! empty( $parents ) ) {
+					$ancestors = $ancestors->concat( array_reverse( $parents ) );
+				}
 
-                if ( 'post' === $subtype ) {
-                    $parent = rwp_get_blog_page();
-                    if ( $parent ) {
-                        $ancestors->push( $parent );
-                    }
-                } elseif ( rwp_post_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
-                    $parent = get_page_for_post_type( $subtype );
-                    if ( $parent ) {
-                        $ancestors->push( $parent );
-                    }
-                }
-            }
-        } else if ( 'taxonomy' === $type ) {
-            if ( ! empty( $post ) ) {
+				if ( 'post' === $subtype ) {
+					$parent = rwp_get_blog_page();
+					if ( $parent ) {
+						$ancestors->push( $parent );
+					}
+				} elseif ( rwp_post_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+					$parent = get_page_for_post_type( $subtype );
+					if ( $parent ) {
+						$ancestors->push( $parent );
+					}
+				}
+			}
+		} else if ( 'taxonomy' === $type ) {
+			if ( ! empty( $post ) ) {
 
-                $parents = get_ancestors( $id, $subtype, $type );
+				$parents = get_ancestors( $id, $subtype, $type );
 
-                if ( ! empty( $parents ) ) {
-                    $ancestors = $ancestors->concat( array_reverse( $parents ) );
-                }
-            }
-        }
+				if ( ! empty( $parents ) ) {
+					$ancestors = $ancestors->concat( array_reverse( $parents ) );
+				}
+			}
+		}
 
-        $ancestors = apply_filters( 'rwp_ancestors_pre_filter', $ancestors, $id, $subtype );
+		$ancestors = apply_filters( 'rwp_ancestors_pre_filter', $ancestors, $id, $subtype );
 
-        $ancestors->transform(
-            function ( $item ) {
-                return rwp_post( $item );
-            }
-        );
+		$ancestors->transform(
+			function ( $item ) {
+				return rwp_post( $item );
+			}
+		);
 
-        $ancestors->push( $obj );
-    }
-    $ancestors = apply_filters( 'rwp_ancestors_post_filter', $ancestors, $obj, $subtype );
+		$ancestors->push( $obj );
+	}
+	$ancestors = apply_filters( 'rwp_ancestors_post_filter', $ancestors, $obj, $subtype );
 
-    return $ancestors;
+	return $ancestors;
 }
 /**
  * Find Root Page for deeply nested posts (That is not home page);
@@ -632,29 +640,29 @@ function rwp_ancestors( $post = null ) {
  */
 
 function rwp_root_page( $post = null ) {
-    $post_id = rwp_post_id( $post );
-    $ancestors = rwp_ancestors( $post );
+	$post_id = rwp_post_id( $post );
+	$ancestors = rwp_ancestors( $post );
 
-    $home_page = rwp_get_home_page();
+	$home_page = rwp_get_home_page();
 
-    $root = null;
+	$root = null;
 
-    if ( $home_page ) {
+	if ( $home_page ) {
 
-        $root = $ancestors->first(
-            function ( $value ) use ( $home_page, $post_id ) {
-                return ( $value['id'] !== $home_page && $value['id'] !== $post_id );
-            }
-        );
-    } else {
-        $root = $ancestors->first(
-            function ( $value ) use ( $post_id ) {
-                return ( $value['id'] !== $post_id );
-            }
-        );
-    }
+		$root = $ancestors->first(
+			function ( $value ) use ( $home_page, $post_id ) {
+				return ( $value['id'] !== $home_page && $value['id'] !== $post_id );
+			}
+		);
+	} else {
+		$root = $ancestors->first(
+			function ( $value ) use ( $post_id ) {
+				return ( $value['id'] !== $post_id );
+			}
+		);
+	}
 
-    return $root;
+	return $root;
 }
 
 /**
@@ -666,31 +674,31 @@ function rwp_root_page( $post = null ) {
 
 function rwp_post_parent( $post = null ) {
 
-    $post_id = rwp_post_id( $post );
+	$post_id = rwp_post_id( $post );
 
-    $ancestors = rwp_ancestors( $post );
+	$ancestors = rwp_ancestors( $post );
 
-    $home_page = rwp_get_home_page();
+	$home_page = rwp_get_home_page();
 
-    if ( $ancestors->isNotEmpty() ) {
-        if ( $home_page ) {
-            $parent = $ancestors->reverse()->first(
-                function ( $value ) use ( $home_page, $post_id ) {
-                    return ( $value['id'] !== $home_page && $value['id'] !== $post_id );
-                }
-            );
-        } else {
-            $parent = $ancestors->reverse()->first(
-                function ( $value ) use ( $post_id ) {
-                    return ( $value['id'] !== $post_id );
-                }
-            );
-        }
+	if ( $ancestors->isNotEmpty() ) {
+		if ( $home_page ) {
+			$parent = $ancestors->reverse()->first(
+				function ( $value ) use ( $home_page, $post_id ) {
+					return ( $value['id'] !== $home_page && $value['id'] !== $post_id );
+				}
+			);
+		} else {
+			$parent = $ancestors->reverse()->first(
+				function ( $value ) use ( $post_id ) {
+					return ( $value['id'] !== $post_id );
+				}
+			);
+		}
 
-        return $parent;
-    } else {
-        return false;
-    }
+		return $parent;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -701,36 +709,36 @@ function rwp_post_parent( $post = null ) {
  */
 
 function rwp_post_id_html( $post = null ) {
-    $post    = rwp_post( $post );
-    $type    = data_get( $post, 'type', 'post' );
-    $subtype = data_get( $post, 'subtype', '' );
-    $slug    = data_get( $post, 'slug', '' );
-    $id      = data_get( $post, 'id', 0 );
-    $html_id = array();
+	$post    = rwp_post( $post );
+	$type    = data_get( $post, 'type', 'post' );
+	$subtype = data_get( $post, 'subtype', '' );
+	$slug    = data_get( $post, 'slug', '' );
+	$id      = data_get( $post, 'id', 0 );
+	$html_id = array();
 
-    if ( 'post' === $type ) {
-        if ( ! empty( $subtype ) ) {
-            $html_id[] = $subtype;
-        } else {
-            $html_id[] = $type;
-        }
-    } else {
-        $html_id[] = $type;
-        if ( ! empty( $subtype ) ) {
-            $html_id[] = $subtype;
-        }
-    }
+	if ( 'post' === $type ) {
+		if ( ! empty( $subtype ) ) {
+			$html_id[] = $subtype;
+		} else {
+			$html_id[] = $type;
+		}
+	} else {
+		$html_id[] = $type;
+		if ( ! empty( $subtype ) ) {
+			$html_id[] = $subtype;
+		}
+	}
 
-    if ( ! empty( $slug ) ) {
-        $html_id[] = $slug;
-    }
+	if ( ! empty( $slug ) ) {
+		$html_id[] = $slug;
+	}
 
-    $html_id[] = $id;
+	$html_id[] = $id;
 
-    $html_id = join( '-', $html_id );
-    $html_id = rwp_change_case( $html_id, 'slug' );
+	$html_id = join( '-', $html_id );
+	$html_id = rwp_change_case( $html_id, 'slug' );
 
-    return esc_attr( $html_id );
+	return esc_attr( $html_id );
 }
 
 /**
