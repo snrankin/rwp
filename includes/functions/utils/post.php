@@ -775,16 +775,20 @@ function rwp_post_class( $post, $classes = '' ) {
  */
 function rwp_post_has_children( $post = null ) {
 
-	if ( ! ( $post instanceof WP_Post ) ) {
-		$post = get_post( $post );
+	$ancestors = rwp_ancestors( $post );
+
+	$post_id = rwp_post_id( $post );
+
+	if ( $ancestors->isNotEmpty() ) {
+		$ancestors = $ancestors->keyBy( 'id' )->keys();
+
+		$last_item = $ancestors->last();
+
+		if ( $post_id == $last_item ) {
+			return false;
+		} else {
+			return true;
+		}
 	}
-
-	$args = array(
-		'post_type' => $post->post_type,
-		'post_parent' => $post->ID,
-	);
-
-	$pages = get_posts( $args );
-
-	return count( $pages ) > 0;
+	return false;
 }

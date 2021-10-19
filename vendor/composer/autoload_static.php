@@ -109,6 +109,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Internals\\PostTypes\\Testimonial' => __DIR__ . '/../..' . '/includes/internals/PostTypes/Testimonial.php',
         'RWP\\Internals\\Relative_Urls' => __DIR__ . '/../..' . '/includes/internals/Relative_Urls.php',
         'RWP\\Internals\\Shortcodes\\Copyright' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Copyright.php',
+        'RWP\\Internals\\Shortcodes\\SiblingGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SiblingGrid.php',
         'RWP\\Internals\\Shortcodes\\SubpageGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SubpageGrid.php',
         'RWP\\Internals\\Shortcodes\\TeamGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/TeamGrid.php',
         'RWP\\Internals\\Taxonomies' => __DIR__ . '/../..' . '/includes/internals/Taxonomies.php',

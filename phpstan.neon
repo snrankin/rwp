@@ -43,3 +43,4 @@ parameters:
     - '#^Function get_page_for_post_type invoked with 1 parameter, 0 required\.$#'
     - '#^Function register_extended_post_type invoked with 3 parameters, 0 required\.$#'
     - '#^Function register_extended_taxonomy invoked with 4 parameters, 0 required\.$#'
+    - '#^Function wp_cache_remember invoked with 4 parameters, 0 required\.$#'
