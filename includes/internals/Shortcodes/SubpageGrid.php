@@ -17,12 +17,14 @@ use RWP\Engine\Abstracts\Shortcode;
 class SubpageGrid extends Shortcode {
 
 	public $defaults = array(
-		'parent'         => '',
-		'd_cols'         => '3',
-		't_cols'         => '2',
-		'num'            => '-1',
-		'order'          => 'ASC',
-		'orderby'        => 'menu_order',
+		'parent'  => '',
+		'd_cols'  => '3',
+		't_cols'  => '2',
+		'num'     => '-1',
+		'order'   => 'ASC',
+		'orderby' => 'menu_order',
+		'id'      => '',
+		'class'   => '',
 	);
 
 	/**

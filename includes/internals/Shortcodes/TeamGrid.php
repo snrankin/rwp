@@ -24,6 +24,8 @@ class TeamGrid extends Shortcode {
 		'num'     => '-1',
 		'order'   => 'ASC',
 		'orderby' => 'menu_order',
+		'id'      => '',
+		'class'   => '',
 	);
 
 	/**
