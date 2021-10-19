@@ -17,7 +17,7 @@ use RWP\Internals\PostTypes;
 
 class TeamGrid extends Shortcode {
 
-	protected static $defaults = array(
+	public $defaults = array(
 		'cat'     => '',
 		'd_cols'  => '3',
 		't_cols'  => '2',
@@ -47,7 +47,7 @@ class TeamGrid extends Shortcode {
 	 * @param array $args
 	 * @return \RWP\Components\Row
 	 */
-	public static function wrapper( $content = '', $args = array() ) {
+	public function wrapper( $content = '', $args = array() ) {
 		$categories      = data_get( $args, 'cat' );
 		$desktop_columns = data_get( $args, 'd_cols', '' );
 		$tablet_columns  = data_get( $args, 't_cols', '' );
@@ -68,7 +68,7 @@ class TeamGrid extends Shortcode {
 			$classes[] = 'row-cols-md-' . $tablet_columns;
 		}
 
-		$classes[] = rwp_change_case( self::$tag );
+		$classes[] = rwp_change_case( $this->tag );
 
 		$wrapper = array(
 			'atts' => array(
@@ -90,9 +90,9 @@ class TeamGrid extends Shortcode {
 	 * @return string
 	 */
 
-	public static function output( $atts ) {
+	public function output( $atts ) {
 
-		$atts = rwp_process_shortcode( $atts, self::$defaults );
+		$atts = rwp_process_shortcode( $atts, $this->defaults );
 
 		$categories      = data_get( $atts, 'cat' );
 		$num             = data_get( $atts, 'num', '-1' );
@@ -123,7 +123,7 @@ class TeamGrid extends Shortcode {
 		$members = get_posts( $args );
 		$output  = '';
 		if ( ! empty( $members ) ) {
-			$team = self::wrapper( '', $atts );
+			$team = $this->wrapper( '', $atts );
 			foreach ( $members as $member ) {
 				$member = rwp_post_card( $member )->html();
 				$team->add_item( array( 'content' => $member ) );

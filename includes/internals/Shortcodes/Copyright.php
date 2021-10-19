@@ -16,7 +16,7 @@ use RWP\Engine\Abstracts\Shortcode;
 
 class Copyright extends Shortcode {
 
-	protected static $defaults = array(
+	public $defaults = array(
 		'before' => '&copy; Copyright ',
 		'after'  => ', All Rights Reserved.',
 	);
@@ -28,7 +28,7 @@ class Copyright extends Shortcode {
 	 */
 	public function initialize() {
 
-		self::$defaults['name'] = get_bloginfo( 'name' );
+		$this->defaults['name'] = get_bloginfo( 'name' );
 
 		parent::initialize();
 	}
@@ -39,13 +39,13 @@ class Copyright extends Shortcode {
 	 * @return string
 	 */
 
-	public static function output( $atts ) {
+	public function output( $atts ) {
 
-        $atts = rwp_process_shortcode( $atts, self::$defaults );
+        $atts = rwp_process_shortcode( $atts, $this->defaults );
 
 		$content = wp_sprintf( '%s%d%s,%s', $atts['before'], gmdate( 'Y' ), $atts['name'], $atts['after'] );
 
-		$copyright = self::wrapper( $content, $atts )->html();
+		$copyright = $this->wrapper( $content, $atts )->html();
 
 		return $copyright;
     }
