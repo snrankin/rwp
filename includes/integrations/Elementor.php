@@ -387,8 +387,8 @@ class Elementor extends Singleton {
 	 */
 	public function remove_section_options( $section, $section_id, $args ) {
 		if ( 'section' === $section->get_name() ) {
-			$section->remove_control( 'gap' );
-			$section->remove_responsive_control( 'gap_columns_custom', );
+			// $section->remove_control('gap');
+			// $section->remove_responsive_control('gap_columns_custom',);
 			$section->remove_control( 'column_position' );
 			$section->remove_control( 'content_position' );
 		}
@@ -445,13 +445,49 @@ class Elementor extends Singleton {
 
 			self::add_responsive_control_to_elementor(
 				$section,
+				'gap',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => '',
+					'options' => [
+						'' => esc_html__( 'Default', 'rwp' ),
+						'no' => esc_html__( 'No Gap', 'rwp' ),
+						'narrow' => esc_html__( 'Narrow', 'rwp' ),
+						'extended' => esc_html__( 'Extended', 'rwp' ),
+						'wide' => esc_html__( 'Wide', 'rwp' ),
+						'wider' => esc_html__( 'Wider', 'rwp' ),
+						'custom' => esc_html__( 'Custom', 'rwp' ),
+					],
+					'prefix_class' => 'elementor-row-gap-x%s-',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
+				'gap',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
 				'gap-x',
 				array(
 					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
 					'type' => Controls_Manager::SELECT,
-					'default' => 'default',
+					'default' => '',
 					'options' => [
-						'default' => esc_html__( 'Default', 'rwp' ),
+						'' => esc_html__( 'Default', 'rwp' ),
 						'no' => esc_html__( 'No Gap', 'rwp' ),
 						'narrow' => esc_html__( 'Narrow', 'rwp' ),
 						'extended' => esc_html__( 'Extended', 'rwp' ),
@@ -469,9 +505,9 @@ class Elementor extends Singleton {
 				array(
 					'label' => esc_html__( 'Columns Vertical Gap', 'rwp' ),
 					'type' => Controls_Manager::SELECT,
-					'default' => 'default',
+					'default' => '',
 					'options' => [
-						'default' => esc_html__( 'Default', 'rwp' ),
+						'' => esc_html__( 'Default', 'rwp' ),
 						'no' => esc_html__( 'No Gap', 'rwp' ),
 						'narrow' => esc_html__( 'Narrow', 'rwp' ),
 						'extended' => esc_html__( 'Extended', 'rwp' ),

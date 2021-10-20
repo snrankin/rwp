@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * TeamGrid
  *
@@ -109,20 +110,20 @@ class SiblingGrid extends Shortcode {
 			}
 
 			/**
-			 * @var \WP_Query $posts
+			 * @var \WP_Query $grid_posts
 			 */
-			$posts = wp_cache_remember( $current_post->ID . '_siblings', function () use ( $args ) {
+			$grid_posts = wp_cache_remember($current_post->ID . '_siblings', function () use ( $args ) {
 				return new \WP_Query( $args );
-    		}, $current_post->post_type . '_siblings', HOUR_IN_SECONDS );
+			}, $current_post->post_type . '_siblings', HOUR_IN_SECONDS);
 
-			if ( $posts->have_posts() ) {
+			if ( $grid_posts->have_posts() ) {
 				$grid = $this->wrapper( '', $atts );
 
-				while ( $posts->have_posts() ) {
-					$posts->the_post();
-					global $post;
-					$item = $post;
-					$item = rwp_post_card( $item )->html();
+				while ( $grid_posts->have_posts() ) {
+					$grid_posts->the_post();
+					$item = get_post();
+					$item = rwp_post_card( $item );
+					$item = $item->html();
 					$grid->add_item( array( 'content' => $item ) );
 				}
 				$output = $grid->html();
@@ -131,6 +132,5 @@ class SiblingGrid extends Shortcode {
 		}
 
 		return $output;
-    }
-
+	}
 }

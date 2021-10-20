@@ -335,13 +335,13 @@ function rwp_get_dependency_file( $filename, $dir = '', $require = false, $once 
 	if ( is_string( $filename ) ) {
         $file = '';
 		$base_dir = 'includes/dependencies/';
-		if(!empty($dir)){
-			$dir = rwp_add_suffix($base_dir, $dir);
+		if ( ! empty( $dir ) ) {
+			$dir = rwp_add_suffix( $base_dir, $dir );
 			$dir = wp_normalize_path( $dir );
 		} else {
 			$dir = $base_dir;
 		}
-		$dir = rwp_trailingslashit($dir);
+		$dir = rwp_trailingslashit( $dir );
         $type = pathinfo( $filename, PATHINFO_EXTENSION );
         if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
             $filename = rwp_find_plugin_file( $filename, $dir );

@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Gravity Forms Integration
  *
@@ -54,7 +55,6 @@ class GravityForms extends Singleton {
 		add_filter( 'gform_progress_bar', array( $this, 'progress_bar' ), 30, 3 );
 		add_filter( 'gform_validation_message', array( $this, 'validation_message' ), 20, 2 );
 		add_filter( 'gform_us_states', array( $this, 'use_state_abbreviations' ) );
-
 	}
 
 	/**
@@ -97,11 +97,11 @@ class GravityForms extends Singleton {
 
 
 	/**
-	* Function to change the quote types for string to match gravity forms
-	*
-	* @param mixed $string
-	* @return string
-	*/
+	 * Function to change the quote types for string to match gravity forms
+	 *
+	 * @param mixed $string
+	 * @return string
+	 */
 	public static function gravity_forms_string_filter( $string ) {
 		$string = trim( str_replace( '"', "'", $string ) );
 		$string = str_replace( "\'", '"', $string );
@@ -367,6 +367,14 @@ class GravityForms extends Singleton {
 
 		$form_class = rwp_parse_classes( data_get( $form, 'cssClass', '' ) );
 
+		$is_complex = false;
+
+		$label_tag = $field_input->filter( '.gfield_label' );
+
+		if ( 'legend' === $label_tag->getNode( 0 )->nodeName ) {
+			$is_complex = true;
+		}
+
 		if ( in_array( 'use-select2', $css_class ) ) {
 
 			$input_id = $field_input->filter( 'select' )->getAttribute( 'id' );
@@ -399,27 +407,36 @@ class GravityForms extends Singleton {
 
 		$field_input->filter( '.gfield_label' )->addClass( 'form-label' );
 
+		if ( in_array( 'small', $css_class ) ) {
+			$field->size = 'small';
+			$field_input->filter( '.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
+			$field_input->filter( '.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
+		}
+
+		if ( in_array( 'large', $css_class ) ) {
+			$field->size = 'large';
+			$field_input->filter( '.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
+			$field_input->filter( '.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
+		}
+
 		if ( in_array( 'medium', $css_class ) ) {
 			$field->size = 'medium';
 		}
 
 		switch ( $field->size ) {
 			case 'small':
-				$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
-				$field_input->filter( '.small.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
+				$field_input->filter( '.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
+				$field_input->filter( '.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
 				break;
 
 			case 'large':
-				$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
-				$field_input->filter( '.large.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
+				$field_input->filter( '.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
+				$field_input->filter( '.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
 				break;
 
 			default:
-				$field_input->filter( '.medium' )->removeClass( 'medium' );
-				$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control' );
-				$field_input->filter( '.form-control-sm' )->removeClass( 'form-control-sm' )->addClass( 'form-control' );
-				$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control' );
-				$field_input->filter( '.form-control-lg' )->removeClass( 'form-control-lg' )->addClass( 'form-control' );
+				$field_input->filter( '.form-control' )->removeClass( 'medium' );
+				$field_input->filter( '.form-select' )->removeClass( 'medium' );
 				break;
 		}
 
@@ -540,11 +557,34 @@ class GravityForms extends Singleton {
 		}
 
 		if ( in_array( 'form-floating', $form_class, true ) || in_array( 'form-floating', $css_class, true ) ) {
-			$label = $field_input->filter( 'label' )->makeClone();
-			$label = $label->getNode( 0 );
-			$field_input = $field_input->removeElementByTag( 'label' );
+			if ( ! $is_complex ) {
+				$label = $field_input->filter( 'label' )->makeClone();
+				$label = $label->getNode( 0 );
+				$field_input = $field_input->removeElementByTag( 'label' );
 
-			$field_input->filter( '.ginput_container' )->addClass( 'form-floating' )->append( $label );
+				$field_input->filter( '.ginput_container' )->addClass( 'form-floating' )->append( $label );
+			} else {
+
+				if ( 'below' !== $form['subLabelPlacement'] ) {
+					$fields = $field_input->filter( '.col' );
+					$fields = rwp_collection( $fields->getIterator() );
+
+					if ( $fields->isNotEmpty() ) {
+						$fields->transform(function ( \DOMElement $field ) use ( $field_input ) {
+							$field_id = $field->getAttribute( 'id' );
+							$field = rwp_html( $field );
+							$label = $field->filter( 'label' )->makeClone();
+							$label = $label->getNode( 0 );
+							$field = $field->removeElementByTag( 'label' );
+
+							$field->addClass( 'form-floating' )->append( $label );
+							$field_input->filter( '#' . $field_id )->replaceWith( $field );
+						});
+					}
+				} else {
+					$field_input->filter( '.col' )->addClass( 'form-floating' );
+				}
+			}
 		}
 
 		$field_input = $field_input->saveHTML();

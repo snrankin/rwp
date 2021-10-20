@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Card
  *
@@ -9,7 +10,7 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
- namespace RWP\Components;
+namespace RWP\Components;
 
 use RWP\Vendor\Illuminate\Support\Collection;
 
@@ -41,14 +42,13 @@ class PostCard extends Card {
 
 		$title = rwp_post_title( $post );
 
-		$image = rwp_get_featured_image($post, 'medium', array(
+		$image = rwp_get_featured_image($post, 'small', array(
 			'inner' => array(
 				'tag' => 'a',
 				'atts' => array(
 					'href' => $url,
 				),
 			),
-			'size' => 'small',
 			'atts' => array(
 				'class' => array(
 					'post-image',
@@ -85,8 +85,7 @@ class PostCard extends Card {
 		$args = rwp_merge_args( $defaults, $args );
 
 		parent::__construct( $args );
-
-    }
+	}
 
 	public function setup_html() {
 
@@ -98,5 +97,4 @@ class PostCard extends Card {
 		apply_filters( "rwp_{$post_type}_card", $this );
 		apply_filters( "rwp_{$post_type}_{$post_id}_card", $this );
 	}
-
 }

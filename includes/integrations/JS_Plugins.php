@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * JS_Plugins
  *
@@ -135,9 +136,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_lazysizes() {
-		rwp()->register_assets( 'lazysizes' );
-		rwp()->enqueue_assets( 'lazysizes' );
+		rwp()->register_scripts( 'lazysizes' );
+		rwp()->enqueue_scripts( 'lazysizes' );
 	}
-
-
 }
