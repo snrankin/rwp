@@ -8,7 +8,7 @@
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
- * ========================================================================== 
+ * ==========================================================================
  */
 
 use RWP\Components\Element;
@@ -22,7 +22,7 @@ use RWP\Components\Html;
  * @return WP_Term|false False if $menu param isn't supplied or term does not exist, menu object if successful.
  */
 
-function rwp_get_menu( $menu = '' ) { 
+function rwp_get_menu( $menu = '' ) {
     // Get the nav menu based on the theme_location.
     $locations = get_nav_menu_locations();
 
@@ -43,7 +43,13 @@ function rwp_get_menu( $menu = '' ) {
  * @return array
  */
 
-function rwp_menu_args( $args = [] ) { 
+function rwp_menu_args( $args = [] ) {
+
+	$classes = data_get( $args, 'menu_class', '' );
+	$classes .= ' nav';
+
+	$args['menu_class'] = $classes;
+
     $args = rwp_collection( $args );
 
     // Get the nav menu based on the requested menu.
@@ -114,12 +120,20 @@ function rwp_menu_args( $args = [] ) {
     // Set the container label to the incoming arguments or set it as tthe menu name
     $container_label = data_get( $args, 'container_aria_label', data_get( $menu, 'name' ) );
 
+	$direction = data_get( $custom_args, 'direction', 'vertical' );
+	$type = data_get( $custom_args, 'type', 'nav' );
+
     // Build the arguments array for the Nav class
     $new_args = array(
-		'direction' => data_get( $custom_args, 'direction', 'vertical' ),
-		'wp_menu' => $menu,
+		'direction'  => $direction,
+		'type'       => $type,
+		'wp_menu'    => $menu,
 		'child_type' => data_get( $custom_args, 'child_type' ),
-		'list'    => array(
+		'list'       => array(
+			'direction'  => $direction,
+			'type'       => $type,
+			'wp_menu'    => $menu,
+			'child_type' => data_get( $custom_args, 'child_type' ),
 			'content' => array(
 				'%3$s',
 			),
@@ -129,8 +143,8 @@ function rwp_menu_args( $args = [] ) {
 			),
 		),
 		'atts'    => array(
-			'id' => $container_id,
-			'class' => $container_class,
+			'id'         => $container_id,
+			'class'      => $container_class,
 			'aria-label' => $container_label,
 		),
     );
@@ -202,8 +216,6 @@ function rwp_menu_args( $args = [] ) {
     $defaults->put( 'container_id', '' );
     $defaults->put( 'container', '' );
     $defaults->put( 'items_wrap', $items_wrap );
-    $defaults->put( 'walker', new \RWP\Integrations\Walkers\Nav() );
-    $defaults->put( 'fallback_cb', '\RWP\Integrations\Walkers\Nav::fallback' );
 
     return $defaults->all();
 }
@@ -216,7 +228,7 @@ function rwp_menu_args( $args = [] ) {
  *
  * @return Html
  */
-function rwp_navbar( $html, $custom_args, $menu ) { 
+function rwp_navbar( $html, $custom_args, $menu ) {
     rwp_log( $custom_args );
 
     if ( is_string( $menu ) ) {

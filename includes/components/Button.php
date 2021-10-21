@@ -130,7 +130,7 @@ class Button extends Element {
 		if ( ! empty( $href ) ) {
 			$this->set( 'link', $href, false );
 		} elseif ( ! blank( $this->link ) && rwp_is_url( $this->link ) ) {
-			$this->set_attr( 'link', $this->link, false );
+			$this->set_attr( 'href', $this->link, false );
 		}
 
 		if ( ! blank( $this->toggle ) ) {
@@ -151,7 +151,7 @@ class Button extends Element {
 		$link = $this->link;
 		$toggle = $this->toggle;
 
-		if ( ! rwp_is_url( $link ) ) {
+		if ( rwp_str_starts_with( $link, '#' ) ) {
 			$target = rwp_remove_prefix( $link, '#' );
 			$this->set_attr( 'id', $target . '-btn' );
 		}
@@ -230,6 +230,13 @@ class Button extends Element {
 	public function setup_html() {
 		if ( ! blank( $this->toggle ) ) {
 			$this->toggle_atts();
+		} else {
+			if ( ( $this->has_attr( 'href' ) && rwp_is_url( $this->get_attr( 'href' ) ) ) || rwp_is_url( $this->link ) ) {
+				$this->set_tag( 'a' );
+			} else {
+				$this->set_tag( 'button' );
+				$this->remove_attr( 'href' );
+			}
 		}
 		if ( $this->disabled ) {
 			$this->add_class( 'disabled' );
@@ -239,11 +246,6 @@ class Button extends Element {
 
 		if ( $this->active ) {
 			$this->add_class( 'active' );
-		}
-		if ( ( $this->has_attr( 'href' ) && rwp_is_url( $this->get_attr( 'href' ) ) ) || rwp_is_url( $this->link ) ) {
-			$this->set_tag( 'a' );
-		} else {
-			$this->set_tag( 'button' );
 		}
 
 		if ( 'a' === $this->tag ) {

@@ -31,7 +31,7 @@ class NavItem extends Element {
 	);
 
 	/**
-	 * @var (string|string[][])[]|Element $link
+	 * @var mixed $link
 	 */
 
 	public $link = array(
@@ -44,11 +44,19 @@ class NavItem extends Element {
 	);
 
 	/**
-	 * @var (string|string[][])[]|Element $toggle
+	 * @var mixed $toggle
 	 */
 
 	public $toggle = array(
 		'tag' => 'button',
+		'text' => array(
+			'content' => 'Toggle submenu',
+			'atts' => array(
+				'class'     => array(
+					'visually-hidden',
+				),
+			),
+		),
 		'atts' => array(
 			'class'     => array(
 				'nav-toggle',
@@ -87,7 +95,7 @@ class NavItem extends Element {
 	public $parent;
 
 	/**
-     * @var bool $is_parent Is item active?
+     * @var bool $is_parent Is item a parent item?
      */
     public $is_parent = false;
 
@@ -117,9 +125,14 @@ class NavItem extends Element {
 		}
 
 		if ( $this->has_link ) {
-			if ( ! array_search( 'link', $this->order ) ) {
-				$this->set_order( 'link', 0 );
+			if ( false === array_search( 'link', $this->order ) ) {
+				$this->set_order( 'link', 1 );
 			}
+		}
+
+		if ( false === $this->is_parent ) {
+			$this->remove_order_item( 'toggle' );
+			$this->remove_order_item( 'dropdown' );
 		}
 	}
 
@@ -135,17 +148,16 @@ class NavItem extends Element {
 	}
 
 	public function setup_toggle() {
-		if ( $this->is_parent && false !== $this->toggle_type ) {
+		if ( $this->is_parent && false !== $this->toggle_type && is_array( $this->toggle ) ) {
 			$this->set( 'toggle.toggle', $this->toggle_type );
 
 			$this->toggle = new Button( $this->toggle );
-			$this->toggle->set_attr( 'data-bs-parent', $this->parent );
 			if ( ! array_search( 'toggle', $this->order ) ) {
-				$this->set_order( 'toggle', 1 );
+				$this->set_order( 'toggle', 2 );
 			}
-		} else {
-			$this->order = rwp_array_remove( $this->order, 'toggle' );
-			$this->order = rwp_array_remove( $this->order, 'dropdown' );
+		} elseif ( false === $this->is_parent ) {
+			$this->remove_order_item( 'toggle' );
+			$this->remove_order_item( 'dropdown' );
 		}
 	}
 
@@ -175,6 +187,8 @@ class NavItem extends Element {
 			} else {
 				$this->has_link = false;
 			}
+		} else {
+			$this->remove_nav_atts();
 		}
 	}
 
@@ -187,12 +201,14 @@ class NavItem extends Element {
         $this->remove_attr( 'itemtype' );
         $this->remove_attr( 'itemscope' );
         $this->remove_attr( 'role' );
-		$this->remove_class( 'nav-item' );
-		$this->link->remove_class( 'nav-link' );
         $this->link->remove_attr( 'href' );
         $this->link->remove_attr( 'target' );
         $this->link->remove_attr( 'rel' );
         $this->link->remove_attr( 'title' );
         $this->link->remove_attr( 'role' );
+		if ( 'a' === $this->link->tag ) {
+			$this->link->set( 'tag', 'span' );
+		}
+
     }
 }
