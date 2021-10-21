@@ -487,7 +487,7 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
 		$excerpt = apply_filters( 'get_the_post_type_description', $excerpt, $post_type_obj ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 	if ( empty( $excerpt ) ) {
-		$excerpt = rwp_post_content( $post );
+		$excerpt = $post->post_content;
 		if ( ! empty( $length ) ) {
 			$excerpt = rwp_trim_text( $excerpt, $length, $variable, $excerpt_end, $allowed_tags, $trim_type );
 		}

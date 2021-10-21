@@ -11,6 +11,8 @@
 
 namespace RWP\Integrations\Walkers;
 
+use RuntimeException;
+use Exception;
 use RWP\Vendor\Illuminate\Support\Str;
 use RWP\Components\NavItem;
 use RWP\Components\Nav as HtmlNav;
@@ -40,10 +42,21 @@ class Nav extends \Walker_Nav_Menu {
 	 * @var string[] $icon_patterns An array of regex patterns to search for icons
 	 */
 	public $icon_patterns = array(
-		'glyphicon',
-		'fa(s|r|l|b)?',
-		'bs',
-		'glyphicon',
+		'fa(s|r|l|b)?[\w\-]*', // Font Awesome
+		'glyphicon[\w\-]*', // WordPress Glyphicons
+		'bs[\w\-]*', // Bootstrap 5 Icons
+	);
+
+	/**
+	 * @var string[] $linkmod_patterns An array of regex patterns to search for special link modifiers
+	 */
+	public $linkmod_patterns = array(
+		'disabled',
+		'visually-hidden',
+		'[\w\-]*logo[\w\-]*',
+		'[\w\-]*search[\w\-]*',
+		'dropdown[\w\-]*',
+		'vr',
 	);
 
 	/**
@@ -85,6 +98,11 @@ class Nav extends \Walker_Nav_Menu {
 	 * @var Collection The collection of ancestors
 	 */
 	public $ancestors;
+
+	public function __construct() {
+		// Allow modifying icon patterns
+		$this->icon_patterns = apply_filters( 'rwp_nav_icon_patters', $this->icon_patterns );
+	}
 
 	/**
 	 * Check if current is active based on the classes
@@ -255,27 +273,23 @@ class Nav extends \Walker_Nav_Menu {
 			$this->parent = $parent;
 		}
 
+		$linkmod_classes = array();
+
+		$icon_classes = array();
+
 		/**
 		 * Get an updated $classes array without linkmod or icon classes.
-		 *
-		 * @since 4.1.0 The `$depth` parameter was added.
-		 *
-		 * @param string[] $classes         Array of the CSS classes that are
-		 *                                  applied to the menu item's `<li>` element.
-		 * @param array   $linkmod_classes  Array of modifying classes
-		 * @param array   $args             Array of icon classes
-		 * @param int     $depth            Depth of menu item. Used for padding.
 		 */
-		//self::separate_linkmods_and_icons_from_classes( $classes, $linkmod_classes, $icon_classes, $depth );
+		$this->separate_linkmods_and_icons_from_classes( $classes, $linkmod_classes, $icon_classes );
 
 		// Set a typeflag to easily test if this is a linkmod or not.
 		$linkmod_classes = rwp_parse_classes( $linkmod_classes );
 
 		$icon_classes = rwp_parse_classes( $icon_classes );
 
-		// if ( get_field( 'icon', $item ) ) {
-		// 	$icon_classes = rwp_parse_classes( get_field( 'icon', $item ) );
-		// }
+		if ( get_field( 'icon', $item ) ) {
+			$icon_classes = rwp_parse_classes( get_field( 'icon', $item ) );
+		}
 
 		/**
 		 * Initiate empty icon var, then if we have a string containing any
@@ -286,8 +300,8 @@ class Nav extends \Walker_Nav_Menu {
 		if ( ! empty( $icon_classes ) ) {
 			// Append an <i> with the icon classes to what is output before links.
 			$icon_classes[] = 'nav-icon';
-			$icon = rwp_icon( [ 'atts' => [ 'class' => $icon_classes ] ] );
-			$icon = $icon->__toString();
+			$icon = rwp_icon( rwp_output_classes( $icon_classes ) );
+			$icon = $icon->html();
 		}
 
 		$title = data_get( $item, 'title' );
@@ -430,6 +444,9 @@ class Nav extends \Walker_Nav_Menu {
 		// Update atts of this item based on any custom linkmod classes.
 		$this->nav_item = new NavItem( $nav_item_args );
 
+		$this->update_atts_for_linkmod_type( $linkmod_classes );
+
+		$this->nav_item->build();
 		$item_output = $this->nav_item->start_tag();
 		$item_output = apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$item_output .= $this->nav_item->content();
@@ -457,5 +474,172 @@ class Nav extends \Walker_Nav_Menu {
 		$indent = str_repeat( $t, $depth );
 		$output .= $n . $indent;
 		$output .= '</ul></nav>';
+	}
+
+	/**
+	 * Find any custom linkmod or icon classes and store in their holder
+	 * arrays then remove them from the main classes array.
+	 *
+	 * **Supported linkmods:**
+	 * * `.disabled`,
+	 * * `.dropdown-header`,
+	 * * `.dropdown-divider`,
+	 * * `.dropdown-text`,
+	 * * `.visually-hidden`
+	 * * `.logo`
+	 * * `.search`
+	 *
+	 * **Supported iconsets:**
+	 * * Font Awesome 4/5,
+	 * * Glypicons
+	 * * Bootstrap 5
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param array   $classes            an array of classes currently assigned to the item (passed by reference).
+	 * @param array   $linkmod_classes    an array to hold linkmod classes (passed by reference).
+	 * @param array   $icon_classes       an array to hold icon classes (passed by reference).
+	 *
+	 * @return void
+	 */
+	public function separate_linkmods_and_icons_from_classes( &$classes, &$linkmod_classes, &$icon_classes ) {
+		$icon_patterns = implode( '|', $this->icon_patterns );
+		$icon_patterns = "/$icon_patterns/i";
+		$linkmod_patterns = implode( '|', $this->linkmod_patterns );
+		$linkmod_patterns = "/$linkmod_patterns/i";
+
+		if ( preg_grep( $icon_patterns, $classes ) ) {
+			$icon_classes = preg_grep( $icon_patterns, $classes );
+			$classes = array_diff( $classes, $icon_classes );
+		}
+		if ( preg_grep( $linkmod_patterns, $classes ) ) {
+			$linkmod_classes = preg_grep( $linkmod_patterns, $classes );
+			$classes = array_diff( $classes, $linkmod_classes );
+		}
+	}
+
+	/**
+	 * Update the attributes of a nav item depending on the linkmod classes.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param array    $linkmod_type    Array of atts for the current link in nav item.
+	 * @return void
+	 * @throws RuntimeException
+	 * @throws Exception
+	 */
+	private function update_atts_for_linkmod_type( $linkmod_type ) {
+
+		if ( empty( $linkmod_type ) ) {
+			return;
+		}
+
+		if ( preg_grep( '/disabled|dropdown[\w\-]*|vr/i', $linkmod_type ) ) {
+
+			$this->nav_item->remove_nav_atts();
+			$this->nav_item->link->set_tag( 'span' );
+
+			if ( in_array( 'dropdown-header', $linkmod_type ) ) {
+				$this->nav_item->link->add_class( 'h6' );
+			}
+
+			if ( in_array( 'dropdown-divider', $linkmod_type ) ) {
+				$this->nav_item->link->add_class( 'dropdown-divider' );
+				$this->nav_item->link->make_empty();
+				$this->nav_item->link->set_tag( 'hr' );
+			}
+
+			if ( in_array( 'vr', $linkmod_type ) ) {
+				$this->nav_item->link->add_class( 'vr' );
+				$this->nav_item->link->make_empty();
+				$this->nav_item->link->set_tag( 'span' );
+			}
+
+			if ( in_array( 'disabled', $linkmod_type ) ) {
+				$this->nav_item->disabled = true;
+			}
+		}
+
+		if ( preg_grep( '/[\w\-]*search[\w\-]*/', $linkmod_type ) ) {
+			$this->nav_item->link->make_empty();
+			$this->nav_item->remove_nav_atts();
+			$this->nav_item->link->set_tag( 'span' );
+			$this->nav_item->link->set_content( get_search_form( [ 'echo' => 0 ] ) );
+		}
+
+		if ( ( preg_grep( '/[\w\-]*logo[\w\-]*/i', $linkmod_type ) ) && has_custom_logo() ) {
+			$logo = get_custom_logo();
+			$link_atts = rwp_extract_html_attributes( $logo, 'a' );
+
+			if ( $link_atts ) {
+				$this->nav_item->link->merge_atts( $link_atts );
+			}
+
+			$logo = rwp_html( $logo )->filter( 'img' );
+
+			$logo = apply_filters( 'rwp_nav_logo', $logo );
+
+			$logo = $logo->saveHtml();
+			$this->nav_item->link->make_empty();
+			$this->nav_item->link->set_content( $logo );
+			$this->nav_item->add_class( 'navbar-item-brand' );
+			$this->nav_item->link->add_class( 'navbar-brand' );
+		}
+	}
+
+	/**
+	 * Menu Fallback.
+	 *
+	 * If this function is assigned to the wp_nav_menu's fallback_cb variable
+	 * and a menu has not been assigned to the theme location in the WordPress
+	 * menu manager the function with display nothing to a non-logged in user,
+	 * and will add a link to the WordPress menu manager if logged in as an admin.
+	 *
+	 * @param array $args passed from the wp_nav_menu function.
+	 */
+	public static function fallback( $args ) {
+		if ( current_user_can( 'edit_theme_options' ) ) {
+
+			$container_tag = data_get( $args, 'container', 'nav' );
+			$container_id = data_get( $args, 'container_id', '' );
+			$container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
+
+			$menu_id = data_get( $args, 'menu_id', '' );
+			$menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ) );
+
+			// Initialize var to store fallback html.
+			$fallback_output = new HtmlNav(array(
+				'tag' => $container_tag,
+				'atts' => array(
+					'id'    => $container_id,
+					'class' => $container_class,
+				),
+				'list' => array(
+					'atts' => array(
+						'id'    => $menu_id,
+						'class' => $menu_class,
+					),
+				),
+			));
+
+			$nav_item = new NavItem(array(
+				'link' => array(
+					'content' => __( 'Add a menu', 'rwp' ),
+					'atts' => array(
+						'href' => esc_url( admin_url( 'nav-menus.php' ) ),
+
+					),
+				),
+			));
+
+			$fallback_output->list->add_item( $nav_item );
+
+			// If $args has 'echo' key and it's true echo, otherwise return.
+			if ( array_key_exists( 'echo', $args ) && $args['echo'] ) {
+				echo $fallback_output; // WPCS: XSS OK.
+			} else {
+				return $fallback_output->html();
+			}
+		}
 	}
 }

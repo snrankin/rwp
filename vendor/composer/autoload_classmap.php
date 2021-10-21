@@ -47,6 +47,7 @@ return array(
     'RWP\\Frontend\\Extras\\Nice_Search' => $baseDir . '/includes/frontend/Extras/Nice_Search.php',
     'RWP\\Integrations\\ACF' => $baseDir . '/includes/integrations/ACF.php',
     'RWP\\Integrations\\Bootstrap' => $baseDir . '/includes/integrations/Bootstrap.php',
+    'RWP\\Integrations\\BugHerd' => $baseDir . '/includes/integrations/BugHerd.php',
     'RWP\\Integrations\\Elementor' => $baseDir . '/includes/integrations/Elementor.php',
     'RWP\\Integrations\\FakePage' => $baseDir . '/includes/integrations/FakePage.php',
     'RWP\\Integrations\\GravityForms' => $baseDir . '/includes/integrations/GravityForms.php',

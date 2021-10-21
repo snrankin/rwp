@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Icon
  *
@@ -8,7 +9,10 @@
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
+
 namespace RWP\Components;
+
+use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
 
 class Icon extends Element {
 	/**
@@ -23,6 +27,9 @@ class Icon extends Element {
 	public $atts = array(
 		'aria-hidden' => 'true',
 		'role'        => 'presentation',
+		'class'       => array(
+			'rwp-icon',
+		),
 	);
 
 	/**
@@ -37,22 +44,22 @@ class Icon extends Element {
 
 		if ( is_string( $args ) ) {
 			if ( rwp_is_element( $args, 'svg' ) ) {
-				$this->set_content( $args );
-				$this->add_class( 'svg-icon' );
-				$this->set_tag( 'span' );
-			} else if ( is_file( $args ) && rwp_file_exists( $args ) ) {
+				$args = new SVG( $args );
+			} else if ( ( is_file( $args ) && rwp_file_exists( $args ) ) || rwp_is_url( $args ) ) {
 				if ( rwp_str_ends_with( $args, 'svg' ) ) {
-					$icon = new SVG( array( 'src' => $args ) );
-					$this->set_content( $icon->html() );
-					$this->add_class( 'svg-icon' );
+					if ( rwp_is_url( $args ) && ! rwp_is_outbound_link( $args ) && rwp_str_has( $args, 'wp-content' ) ) {
+						$dir = rwp_filesystem()->wp_content_dir();
+						$args = Str::after( $args, 'wp-content/' );
+						$args = $dir . DIRECTORY_SEPARATOR . $args;
+					}
+					$args = new SVG( array( 'src' => $args ) );
+					$args->build();
+					$args = $args->toArray();
 				} else if ( rwp_str_ends_with( $args, array( 'jpg', 'jpeg', 'png', 'gif', 'ico' ) ) ) {
-					$icon = new Image( array( 'src' => $args ) );
-					$this->set_content( $icon );
-					$this->add_class( 'img-icon' );
+					$args = new Image( array( 'src' => $args ) );
+					$args->build();
+					$args = $args->image->toArray();
 				}
-
-				$this->set_tag( 'span' );
-				$args = array();
 			} else {
 				/**
 				 * Assuming the arguments are class names (ex: fas fa-facebook)
@@ -63,19 +70,28 @@ class Icon extends Element {
 					),
 				);
 			}
-        } elseif ( rwp_array_has( 'src', $args ) ) {
+		} elseif ( rwp_array_has( 'src', $args ) ) {
 
-			if ( rwp_str_ends_with( $args['src'], 'svg' ) ) {
-				$icon = new SVG( $args );
-				$this->set_content( $icon->html() );
-				$this->add_class( 'svg-icon' );
-			} else if ( rwp_str_ends_with( $args['src'], array( 'jpg', 'jpeg', 'png', 'gif', 'ico' ) ) ) {
-				$icon = new Image( $args );
-				$this->set_content( $icon );
-				$this->add_class( 'img-icon' );
+			$src = $args['src'];
+
+			if ( ( is_file( $src ) && rwp_file_exists( $src ) ) || rwp_is_url( $src ) ) {
+				if ( rwp_str_ends_with( $src, 'svg' ) ) {
+					if ( rwp_is_url( $src ) && ! rwp_is_outbound_link( $src ) && rwp_str_has( $src, 'wp-content' ) ) {
+						$dir = rwp_filesystem()->wp_content_dir();
+						$src = Str::after( $src, 'wp-content/' );
+						$src = $dir . DIRECTORY_SEPARATOR . $src;
+					}
+					$args['src'] = $src;
+					$args = new SVG( $args );
+					$args->build();
+					$args = $args->toArray();
+				} else if ( rwp_str_ends_with( $src, array( 'jpg', 'jpeg', 'png', 'gif', 'ico' ) ) ) {
+					$args['src'] = $src;
+					$args = new Image( $args );
+					$args->build();
+					$args = $args->image->toArray();
+				}
 			}
-
-			$this->set_tag( 'span' );
 		}
 
 		parent::__construct( $args );

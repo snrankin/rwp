@@ -92,6 +92,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Frontend\\Extras\\Nice_Search' => __DIR__ . '/../..' . '/includes/frontend/Extras/Nice_Search.php',
         'RWP\\Integrations\\ACF' => __DIR__ . '/../..' . '/includes/integrations/ACF.php',
         'RWP\\Integrations\\Bootstrap' => __DIR__ . '/../..' . '/includes/integrations/Bootstrap.php',
+        'RWP\\Integrations\\BugHerd' => __DIR__ . '/../..' . '/includes/integrations/BugHerd.php',
         'RWP\\Integrations\\Elementor' => __DIR__ . '/../..' . '/includes/integrations/Elementor.php',
         'RWP\\Integrations\\FakePage' => __DIR__ . '/../..' . '/includes/integrations/FakePage.php',
         'RWP\\Integrations\\GravityForms' => __DIR__ . '/../..' . '/includes/integrations/GravityForms.php',

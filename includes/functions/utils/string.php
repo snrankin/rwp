@@ -259,11 +259,14 @@ function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end 
 
 			if ( $variable ) {
 				$text = Str::match( '/(.*)[\?\.\!]\s*/Us', $text );
+				$out = $text . $excerpt_end;
 			} else {
 				if ( 'chars' === $trim_type ) {
 					$text = Str::limit( $text, $length, $excerpt_end );
+					$out = $text;
 				} else {
 					$text = Str::words( $text, $length, $excerpt_end );
+					$out = $text;
 				}
 			}
 		} else {

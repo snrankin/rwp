@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Card
  *
@@ -25,7 +26,7 @@ class Card extends Element {
 	 */
 	public $atts = array(
 		'class' => array(
-            'card',
+			'card',
 		),
 	);
 
@@ -33,16 +34,16 @@ class Card extends Element {
 	 * @var array $order Array that sets the order of the child nodes
 	 */
 
-    public $order = array( 'header', 'image', 'body', 'footer' );
+	public $order = array( 'header', 'image', 'body', 'footer' );
 
 	/**
 	 * @var array|string|Element $header The header content wrapper
 	 */
-    public $header = array(
+	public $header = array(
 		'tag' => 'header',
-        'atts' => array(
-            'class' => array(
-                'card-header',
+		'atts' => array(
+			'class' => array(
+				'card-header',
 			),
 		),
 	);
@@ -50,11 +51,11 @@ class Card extends Element {
 	/**
 	 * @var mixed $image The image content wrapper
 	 */
-    public $image = array(
+	public $image = array(
 		'size' => 'medium',
-        'atts' => array(
-            'class' => array(
-                'card-img',
+		'atts' => array(
+			'class' => array(
+				'card-img',
 			),
 		),
 	);
@@ -62,11 +63,11 @@ class Card extends Element {
 	/**
 	 * @var array|string|Element $body The body content wrapper
 	 */
-    public $body = array(
+	public $body = array(
 		'tag' => 'div',
-        'atts' => array(
-            'class' => array(
-                'card-body',
+		'atts' => array(
+			'class' => array(
+				'card-body',
 			),
 		),
 	);
@@ -74,11 +75,11 @@ class Card extends Element {
 	/**
 	 * @var array|string|Element $footer The footer content wrapper
 	 */
-    public $footer = array(
+	public $footer = array(
 		'tag' => 'footer',
-        'atts' => array(
-            'class' => array(
-                'card-footer',
+		'atts' => array(
+			'class' => array(
+				'card-footer',
 			),
 		),
 	);
@@ -87,15 +88,15 @@ class Card extends Element {
 	 * @var mixed  $background  A background class, a css color, or an Image
 	 *                          element
 	 */
-    public $background;
+	public $background;
 
 	/**
 	 * @var string  $style  A card style. One of `vertical (default) | overlay | horizontal`
 	 */
-    public $style = 'vertical';
+	public $style = 'vertical';
 
 
-    public function __construct( $args = [] ) {
+	public function __construct( $args = [] ) {
 
 		$image = data_get( $args, 'image' );
 
@@ -107,7 +108,7 @@ class Card extends Element {
 			}
 		}
 
-        parent::__construct( $args );
+		parent::__construct( $args );
 
 		$elements = array(
 			'header',
@@ -129,7 +130,7 @@ class Card extends Element {
 
 		if ( $this->content->isNotEmpty() ) {
 			$content = $this->content;
-            $content->transform( function( $item ) {
+			$content->transform(function ( $item ) {
 				if ( is_string( $item ) ) {
 					$item = rwp_html( $item );
 				}
@@ -150,47 +151,49 @@ class Card extends Element {
 				$html->filter( 'a:not(.btn)' )->addClass( 'card-link' );
 
 				return $html->saveHtml();
-			} );
+			});
 			$this->body->content = $content;
-            $this->content = new Collection();
-        }
+			$this->content = new Collection();
+		}
 
-		if ( $this->has( 'title' ) ) {
+		if ( $this->has( 'title' ) && ! empty( $this->get( 'title' ) ) ) {
 			$title = $this->get( 'title' );
 
 			$this->add_title( $title );
 
 			$this->remove( 'title' );
-
 		}
 
-		if ( $this->has( 'subtitle' ) ) {
+		if ( $this->has( 'subtitle' ) && ! empty( $this->get( 'subtitle' ) ) ) {
 			$subtitle = $this->get( 'subtitle' );
 
 			$this->add_subtitle( $subtitle );
 
 			$this->remove( 'subtitle' );
-
 		}
 
-		if ( $this->has( 'text' ) ) {
+		if ( $this->has( 'text' ) && ! empty( $this->get( 'text' ) ) ) {
 			$text = $this->get( 'text' );
 
 			$this->add_text( $text );
 
 			$this->remove( 'text' );
-
 		}
 
-		if ( $this->has( 'links' ) ) {
+		if ( $this->has( 'links' ) && ! empty( $this->get( 'links' ) ) ) {
 			$links = $this->get( 'links' );
 
-			$this->add_link( $links );
+			if ( wp_is_numeric_array( $links ) ) {
+				foreach ( $links as $link ) {
+					$this->add_link( $link );
+				}
+			} else {
+				$this->add_link( $links );
+			}
 
 			$this->remove( 'links' );
-
 		}
-    }
+	}
 
 	/**
 	 * Add text to card
@@ -201,7 +204,7 @@ class Card extends Element {
 	 */
 	public function add_text( $text ) {
 
-        $defaults = array(
+		$defaults = array(
 			'content' => array(),
 			'location' => 'body',
 			'key' => null,
@@ -250,7 +253,7 @@ class Card extends Element {
 		$text = $text->html();
 
 		$this->$location->set_content( $text, $order );
-    }
+	}
 
 	/**
 	 * Set the card title
@@ -259,7 +262,7 @@ class Card extends Element {
 	 *
 	 */
 	public function add_title( $title ) {
-        $defaults = array(
+		$defaults = array(
 			'content' => array(),
 			'location' => 'body',
 			'key' => null,
@@ -302,7 +305,7 @@ class Card extends Element {
 		$title = $title->html();
 
 		$this->$location->set_content( $title, $order );
-    }
+	}
 
 	/**
 	 * Set the card title
@@ -311,7 +314,7 @@ class Card extends Element {
 	 *
 	 */
 	public function add_subtitle( $title ) {
-        $defaults = array(
+		$defaults = array(
 			'content' => array(),
 			'location' => 'body',
 			'key' => null,
@@ -354,7 +357,7 @@ class Card extends Element {
 		$title = $title->html();
 
 		$this->$location->set_content( $title, $order );
-    }
+	}
 
 	/**
 	 * Add a link to a card
@@ -365,7 +368,7 @@ class Card extends Element {
 	 */
 	public function add_link( $link ) {
 
-        $defaults = array(
+		$defaults = array(
 			'content' => array(),
 			'location' => 'body',
 			'key' => null,
@@ -430,10 +433,8 @@ class Card extends Element {
 			}
 
 			$this->$location->set_content( $link, $order );
-
 		}
-
-    }
+	}
 
 	/**
 	 * Setup card header (or remove if empty)

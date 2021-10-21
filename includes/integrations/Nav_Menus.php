@@ -70,6 +70,9 @@ class Nav_Menus extends Singleton {
 
 		$args['menu_class'] = rwp_output_classes( $classes );
 
+		$args['walker'] = new \RWP\Integrations\Walkers\Nav();
+		$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
+
 		return $args;
 	}
 

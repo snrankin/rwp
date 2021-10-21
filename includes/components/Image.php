@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Image
  *
@@ -9,6 +10,7 @@
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
+
 namespace RWP\Components;
 
 use RWP\Vendor\Exceptions\Data\FormatException;
@@ -112,8 +114,8 @@ class Image extends Element {
 	 */
 	public $image = array(
 		'tag' => 'img',
-        'atts' => array(
-            'class' => array(
+		'atts' => array(
+			'class' => array(
 				'media-src',
 				'media-image',
 			),
@@ -195,7 +197,6 @@ class Image extends Element {
 		$this->inner = new Element( $this->inner );
 		$this->caption = new Element( $this->caption );
 		$this->title = new Element( $this->title );
-
 	}
 
 	/**
@@ -255,8 +256,10 @@ class Image extends Element {
 
 		$image->set_attr( 'data-sizes', 'auto' );
 
-		return $image;
+		$image->set_attr( 'data-parent', '.media-content' );
+		$image->set_attr( 'data-parent-fit', 'cover' );
 
+		return $image;
 	}
 
 	/**
@@ -315,5 +318,4 @@ class Image extends Element {
 
 		$this->inner->set_content( $this->image, 'image' );
 	}
-
 }

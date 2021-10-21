@@ -190,7 +190,7 @@ trait Assets {
 
 		$src = rwp_add_suffix( $src, '.js' ); // Only adds js if it isn't already there
 
-		if ( is_string( $src ) && ! rwp_is_url( $src ) ) { // if the source is not an external url
+		if ( is_string( $src ) && ( ! rwp_is_url( $src ) || rwp_is_relative_url( $src ) ) ) { // if the source is not an external url
 			$file = $this->asset_path( $src );
 			$src  = $this->asset_uri( $src );
 			if ( $src && empty( $ver ) ) {
@@ -363,7 +363,7 @@ trait Assets {
 
 		$src = rwp_add_suffix( $src, '.css' ); // Only adds css if it isn't already there
 
-		if ( is_string( $src ) && ! rwp_is_url( $src ) ) { // if the source is not an external url
+		if ( is_string( $src ) && ( ! rwp_is_url( $src ) || rwp_is_relative_url( $src ) ) ) { // if the source is not an external url
 			$file = $this->asset_path( $src );
 			$src  = $this->asset_uri( $src );
 
