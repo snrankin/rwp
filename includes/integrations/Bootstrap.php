@@ -224,7 +224,7 @@ class Bootstrap extends Singleton {
 				'src'   => $url,
 				'embed' => $video,
 				'inner' => $link,
-				'atts'  => $wrapper,
+				'atts'  => $wrapper['atts'],
 			);
 
 			$video = rwp_embed( $args );

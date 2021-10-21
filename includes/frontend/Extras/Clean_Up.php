@@ -41,7 +41,6 @@ class Clean_Up extends Singleton {
 		 */
 		add_filter( 'the_generator', '__return_false' );
 		add_filter( 'script_loader_tag', array( $this, 'clean_script_tag' ) );
-		add_filter( 'body_class', array( $this, 'body_class' ) );
 		rwp_add_filters( array( 'get_avatar', 'comment_id_fields', 'post_thumbnail_html' ), array( $this, 'remove_self_closing_tags' ) );
 		add_filter( 'get_bloginfo_rss', array( $this, 'remove_default_description' ) );
 	}
@@ -143,37 +142,6 @@ class Clean_Up extends Singleton {
 	public function clean_script_tag( $input ) {
 		$input = str_replace( "type='text/javascript' ", '', $input );
 		return str_replace( "'", '"', $input );
-	}
-
-	/**
-	 * Add and remove body_class() classes
-	 *
-	 * @param array $classes
-	 *
-	 * @return array
-	 */
-	public function body_class( $classes ) {
-		// Add post/page slug if not present
-		if ( is_single() || is_page() && ! is_front_page() ) {
-			$url = get_permalink();
-			if ( $url ) {
-				$basename = basename( $url );
-
-				if ( ! in_array( $basename, $classes, true ) ) {
-					$classes[] = $basename;
-				}
-			}
-		}
-
-		// Remove unnecessary classes
-		$home_id_class  = 'page-id-' . get_option( 'page_on_front' );
-		$remove_classes = array(
-			'page-template-default',
-			$home_id_class,
-		);
-		$classes        = array_diff( $classes, $remove_classes );
-
-		return $classes;
 	}
 
 	/**
