@@ -29,13 +29,25 @@ class Nav_Menus extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
+		if ( ! rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
+			return;
+		}
 
-		if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
 			\add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_item_class' ), 10, 4 );
 			\add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes' ), 10, 4 );
 			\add_filter( 'nav_menu_submenu_css_class', array( $this, 'nav_menu_submenu_css_class' ), 10, 3 );
-			\add_filter( 'wp_nav_menu_args', array( $this, 'wp_nav_menu_args' ), 5 );
-		}
+			\add_filter( 'wp_nav_menu_args', 'rwp_menu_args', 5 );
+
+			\add_filter( 'wp_nav_menu_args', function( array $args ) {
+
+				if ( rwp_get_option( 'modules.bootstrap.nav.navwalker', false ) ) {
+					$args['walker'] = new \RWP\Integrations\Walkers\Nav( $args );
+
+					$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
+
+				}
+				return $args;
+			}, 20 );
 
 		$this->current = data_get( $_SERVER, 'REQUEST_URI' );
 	}
@@ -55,25 +67,6 @@ class Nav_Menus extends Singleton {
 		$classes[] = 'level-' . ( $depth + 1 ) . '-menu';
 
 		return $classes;
-	}
-
-	/**
-	 * Updates nav classes
-	 *
-	 * @param mixed $args
-	 * @return mixed
-	 */
-
-	public function wp_nav_menu_args( $args ) {
-		$classes = data_get( $args, 'menu_class', '' );
-		$classes .= ' nav';
-
-		$args['menu_class'] = rwp_output_classes( $classes );
-
-		$args['walker'] = new \RWP\Integrations\Walkers\Nav();
-		$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
-
-		return $args;
 	}
 
 	/**
@@ -160,7 +153,10 @@ class Nav_Menus extends Singleton {
 			$is_current = data_get( $item, 'current', false );
 			$is_current_parent = data_get( $item, 'current_item_parent', false );
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
-			$is_parent = data_get( $args, 'has_children', false );
+			$is_parent = false;
+			if ( ! empty( preg_grep( '/.*has-children.*/i', $classes ) ) ) {
+				$is_parent = true;
+			}
 
 			$is_active = rwp_str_has( $this->current, $item_url );
 

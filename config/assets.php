@@ -73,6 +73,10 @@ $rwp_plugin_assets = [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
         ],
+		'wordpress' => [
+            'handle'   => 'wordpress',
+            'location' => 'global',
+        ],
         'admin' => [
             'handle'   => 'admin',
             'location' => 'admin',

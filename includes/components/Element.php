@@ -239,7 +239,7 @@ class Element {
 	public function remove_order_item( $key ) {
 		$order = $this->order;
 
-		if ( rwp_array_has( $key, $order ) ) {
+		if ( array_search( $key, $order ) ) {
 			$order = rwp_array_remove( $order, $key );
 		}
 

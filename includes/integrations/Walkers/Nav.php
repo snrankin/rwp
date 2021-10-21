@@ -28,17 +28,6 @@ use stdClass;
 class Nav extends \Walker_Nav_Menu {
 
 	/**
-	 * @var bool $cpt is current post a custom post type
-	 */
-
-	private $cpt;
-
-	/**
-	 * @var string|false $archive Stores the archive page for current URL
-	 */
-	private $archive;
-
-	/**
 	 * @var string[] $icon_patterns An array of regex patterns to search for icons
 	 */
 	public $icon_patterns = array(
@@ -75,6 +64,11 @@ class Nav extends \Walker_Nav_Menu {
 	public $menu;
 
 	/**
+	 * @var string The current menu id
+	 */
+	public $menu_id;
+
+	/**
 	 * @var NavItem The current nav item object
 	 */
 	public $nav_item;
@@ -85,7 +79,7 @@ class Nav extends \Walker_Nav_Menu {
 	public $item;
 
 	/**
-	 * @var bool|\WP_Post  The current nav item parent object
+	 * @var bool|string  The current nav item parent object
 	 */
 	public $parent = false;
 
@@ -99,9 +93,29 @@ class Nav extends \Walker_Nav_Menu {
 	 */
 	public $ancestors;
 
-	public function __construct() {
+	public function __construct( $args = array() ) {
 		// Allow modifying icon patterns
-		$this->icon_patterns = apply_filters( 'rwp_nav_icon_patters', $this->icon_patterns );
+		$this->icon_patterns = apply_filters( 'rwp_nav_icon_patterns', $this->icon_patterns );
+
+		$menu = data_get( $args, 'menu' );
+		if ( empty( $menu ) ) {
+			$menu = data_get( $args, 'theme_location' );
+		}
+		// Get the requested menu, either a menu ID or a theme location
+		$menu = rwp_get_menu( $menu );
+
+		$this->menu = $menu;
+
+		$menu_id = data_get( $args, 'menu_id' );
+
+		if ( empty( $menu_id ) ) {
+			$wrapper = \data_get( $args, 'items_wrap', '' );
+			$wrapper = rwp_extract_html_attributes( $wrapper, 'ul' );
+			$menu_id = \data_get( $wrapper, 'atts.id', '' );
+		}
+
+		$this->menu_id = $menu_id;
+
 	}
 
 	/**
@@ -164,8 +178,9 @@ class Nav extends \Walker_Nav_Menu {
 
 		$output .= $n . $indent;
 		$sub_menu_args = array(
-			'depth'      => $menu_depth,
-			'atts' => array(
+			'depth'  => $menu_depth,
+			'parent' => $this->parent,
+			'atts'   => array(
 				'id'    => $id,
 				'class' => $classes,
 			),
@@ -173,10 +188,9 @@ class Nav extends \Walker_Nav_Menu {
 
 		$sub_menu = new HtmlNav( $sub_menu_args );
 		$this->sub_menu = $sub_menu;
-		$nav_output = $sub_menu->html();
-		$nav_output = Str::replaceLast( '</nav>', '', $nav_output );
-		$nav_output = Str::replaceLast( '</ul>', '', $nav_output );
-		$output .= $nav_output;
+		$item_output = $sub_menu->start_tag( true );
+		$item_output = Str::replaceLast( '</ul>', '', $item_output );
+		$output .= $item_output;
 	}
 
 	/**
@@ -203,12 +217,7 @@ class Nav extends \Walker_Nav_Menu {
 		}
 		$menu = $this->menu;
 
-		if ( empty( $menu ) && wp_get_nav_menu_object( $args->menu ) ) {
-			$menu = wp_get_nav_menu_object( $args->menu );
-			$this->menu = $menu;
-		}
-
-		$menu_id = \data_get( $args, 'menu_id', '' );
+		$menu_id = $this->menu_id;
 
 		$this->item = $item;
 
@@ -270,8 +279,14 @@ class Nav extends \Walker_Nav_Menu {
 
 		if ( 0 !== $parent ) {
 			$parent = get_post( $parent );
-			$this->parent = $parent;
+			if ( $parent ) {
+				$parent = '#item-' . $parent->ID . '-sub-menu';
+			}
+		} else {
+			$parent = '#' . $menu_id;
 		}
+
+		$this->parent = $parent;
 
 		$linkmod_classes = array();
 
@@ -381,17 +396,12 @@ class Nav extends \Walker_Nav_Menu {
 			'menu'       => $menu,
 			'active'     => $this->checkCurrent( $classes ),
 			'is_parent'  => $is_parent,
+			'parent'     => $parent,
 			'atts'       => array(
 				'id'     => $id,
 				'class'  => $classes,
 			),
 		);
-
-		if ( 0 !== $parent ) {
-			$nav_item_args['parent'] = $parent;
-		} else {
-			$nav_item_args['parent'] = '#' . $menu_id;
-		}
 
 		$nav_item_order = array( 'link' );
 
@@ -446,7 +456,6 @@ class Nav extends \Walker_Nav_Menu {
 
 		$this->update_atts_for_linkmod_type( $linkmod_classes );
 
-		$this->nav_item->build();
 		$item_output = $this->nav_item->start_tag();
 		$item_output = apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$item_output .= $this->nav_item->content();
@@ -544,12 +553,14 @@ class Nav extends \Walker_Nav_Menu {
 			}
 
 			if ( in_array( 'dropdown-divider', $linkmod_type ) ) {
-				$this->nav_item->link->add_class( 'dropdown-divider' );
+				$this->nav_item->link->add_class( array( 'dropdown-divider', 'flex-fill' ) );
 				$this->nav_item->link->make_empty();
+				$this->nav_item->link->remove_class( 'nav-link' );
 				$this->nav_item->link->set_tag( 'hr' );
 			}
 
 			if ( in_array( 'vr', $linkmod_type ) ) {
+				$this->nav_item->link->remove_class( 'nav-link' );
 				$this->nav_item->link->add_class( 'vr' );
 				$this->nav_item->link->make_empty();
 				$this->nav_item->link->set_tag( 'span' );
@@ -563,6 +574,7 @@ class Nav extends \Walker_Nav_Menu {
 		if ( preg_grep( '/[\w\-]*search[\w\-]*/', $linkmod_type ) ) {
 			$this->nav_item->link->make_empty();
 			$this->nav_item->remove_nav_atts();
+			$this->nav_item->link->remove_class( 'nav-link' );
 			$this->nav_item->link->set_tag( 'span' );
 			$this->nav_item->link->set_content( get_search_form( [ 'echo' => 0 ] ) );
 		}

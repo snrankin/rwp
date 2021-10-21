@@ -120,6 +120,9 @@
 						"./js/vendor/select2.js",
 						"./css/vendor/select2.scss"
 					]
+				},
+				"wordpress": {
+					"wordpress": ["./css/vendor/wordpress.scss"]
 				}
 			}
 		}

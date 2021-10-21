@@ -9,17 +9,6 @@
 @import '~bootstrap/scss/root';
 
 :root {
-	@each $color, $value in $colors {
-		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
-	}
-	@each $color, $value in $grays {
-		--#{$variable-prefix}gray-#{$color}-contrast: #{color-contrast($value)};
-	}
-
-	@each $color, $value in $theme-colors {
-		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
-	}
-
 	--hair-space: 0.0417em; // 0.7px || Width varies, but narrower than thin space
 	--fine-space: 0.125em; // 2px || Bien ! For French punctuation
 	--one-sixth-space: 0.1667em; // 2.7px || Might be suitable for grouping

@@ -310,6 +310,52 @@ acf_add_local_field_group(array(
 							'ui_off_text' => '',
 						),
 						array(
+							'key' => 'field_6171d7ce91e30',
+							'label' => 'Nav Options',
+							'name' => 'nav',
+							'type' => 'group',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => array(
+								array(
+									array(
+										'field' => 'field_60dcecd768be3',
+										'operator' => '==',
+										'value' => '1',
+									),
+								),
+							),
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'layout' => 'block',
+							'acfe_seamless_style' => 0,
+							'acfe_group_modal' => 0,
+							'sub_fields' => array(
+								array(
+									'key' => 'field_6171d7fa91e31',
+									'label' => 'Use Plugin NavWalker',
+									'name' => 'navwalker',
+									'type' => 'true_false',
+									'instructions' => '',
+									'required' => 0,
+									'conditional_logic' => 0,
+									'wrapper' => array(
+										'width' => '',
+										'class' => '',
+										'id' => '',
+									),
+									'message' => '',
+									'default_value' => 1,
+									'ui' => 1,
+									'ui_on_text' => '',
+									'ui_off_text' => '',
+								),
+							),
+						),
+						array(
 							'key' => 'field_614a574fc6589',
 							'label' => 'Elementor',
 							'name' => 'elementor',
@@ -791,7 +837,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1634754725,
+	'modified' => 1634853265,
 ));
 
 endif;

@@ -21,5 +21,6 @@
   "font-awesome.css": "css/rwp-font-awesome.css",
   "fa-solid-900.svg": "imgs/7a8b4f130182d19a2d7c.svg",
   "fa-brands-400.svg": "imgs/2f517e09eb2ca6650ff5.svg",
-  "fa-regular-400.svg": "imgs/4689f52cc96215721344.svg"
+  "fa-regular-400.svg": "imgs/4689f52cc96215721344.svg",
+  "wordpress.css": "css/rwp-wordpress.css"
 }
