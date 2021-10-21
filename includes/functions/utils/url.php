@@ -25,11 +25,7 @@ function rwp_is_url( $url = '' ) {
     if ( empty( $input ) ) {
         return false;
     }
-	if ( filter_var( $url, FILTER_VALIDATE_URL ) == true ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-        return true;
-	} else {
-		return false;
-	}
+	return true;
 }
 
 /**

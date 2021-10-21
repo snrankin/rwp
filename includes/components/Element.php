@@ -188,6 +188,28 @@ class Element {
 	}
 
 	/**
+	 * Merge arguments into the current object
+	 *
+	 * @param mixed $args
+	 * @param bool $overwrite
+	 *
+	 * @return void
+	 */
+	public function merge_args( $args, $overwrite = false ) {
+		$properties = get_object_vars( $this );
+
+		if ( $args instanceof self ) {
+			$args = get_object_vars( $args );
+		}
+
+		$properties = rwp_merge_args( $properties, $args );
+
+		foreach ( $properties as $key => $value ) {
+			$this->set( $key, $value, $overwrite );
+		}
+	}
+
+	/**
 	 * Add a content item key to the elements order
 	 *
 	 * @param mixed $key
@@ -251,6 +273,47 @@ class Element {
 	}
 
 	/**
+	 * Get All Attributes
+	 *
+	 * @return Collection|array
+	 */
+
+	public function get_atts() {
+		return $this->get( 'atts' );
+	}
+
+	/**
+	 * Merge Attributes
+	 *
+	 * @param mixed $atts
+	 * @param bool $overwrite
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function merge_atts( $atts, $overwrite = false ) {
+		$defaults = $this->get_atts();
+		if ( is_string( $atts ) && rwp_str_is_html( $atts ) ) {
+			$html = new Html( $atts );
+			$atts = $html->extractAll();
+		}
+
+		if ( $atts instanceof self ) {
+			$atts = $atts->get_atts();
+		}
+
+		$atts = rwp_merge_args( $defaults, $atts );
+
+		foreach ( $atts as $key => $value ) {
+			if ( 'class' === $key || 'style' === $key ) {
+				$this->set_attr( $key, $value, true ); // Always update the merged classes/styles
+			} else {
+				$this->set_attr( $key, $value, $overwrite );
+			}
+		}
+	}
+
+	/**
 	 * Remove Attribute
 	 *
 	 * @param string|string[]  $key        The attribute(s) to remove
@@ -274,16 +337,7 @@ class Element {
 	 */
 
 	public function set_attr( $key, $value, $overwrite = false ) {
-		if ( 'class' === $key ) {
-			$this->add_class( $value );
-		} else if ( 'style' === $key && is_array( $value ) ) {
-			$styles = $value;
-			foreach ( $styles as $prop => $style ) {
-				$this->set_style( $prop, $style, $overwrite );
-			}
-		} else {
-			$this->set( "atts.$key", $value, $overwrite );
-		}
+		$this->set( "atts.$key", $value, $overwrite );
 
 	}
 
@@ -381,11 +435,9 @@ class Element {
 			}
 			$classes = $this->get_attr( 'class', array() );
 
-			$index = array_search( $value, $classes, true );
-			if ( false !== $index ) {
-				unset( $classes[ $index ] );
-				$this->set_attr( 'class', $classes );
-			}
+			$classes = rwp_array_remove( $classes, $value );
+
+			$this->set_attr( 'class', $classes, true );
 		} elseif ( is_array( $value ) ) {
 			$values = $value;
 			foreach ( $values as $value ) {
@@ -536,6 +588,15 @@ class Element {
 
 	public function remove_content( $key ) {
 		$this->remove( "content.$key" );
+	}
+
+	/**
+	 * Reset the content property to an empty collection
+	 *
+	 * @return void
+	 */
+	public function make_empty() {
+		$this->content = new Collection();
 	}
 
 	/**
