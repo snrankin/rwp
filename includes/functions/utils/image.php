@@ -262,7 +262,7 @@ function rwp_get_logo( $args = array() ) {
 
         $content = sprintf(
             '<a href="%1$s" class="custom-logo-link" rel="home"%2$s>%3$s</a>',
-            esc_url( home_url( '/' ) ),
+            home_url( '/' ),
             $aria_current,
             $content
         );

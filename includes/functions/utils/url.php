@@ -79,10 +79,11 @@ function rwp_is_outbound_link( $link ) {
  */
 function rwp_relative_url( $input ) {
 	if ( ! rwp_is_url( $input ) ) {
-        return $input;
+		return $input;
 	}
 
 	if ( ! rwp_is_relative_url( $input ) && ! rwp_is_outbound_link( $input ) && \rwp_get_option( 'modules.relative_urls', false ) ) {
+		$link          = $input;
 		$url           = wp_parse_url( $input );
 		$hosts_match   = true;
 		$schemes_match = true;
@@ -114,7 +115,10 @@ function rwp_relative_url( $input ) {
 		if ( $hosts_match && $schemes_match && $ports_match ) {
 			$input = wp_make_link_relative( $input );
 		}
-		return esc_url( $input );
+
+		$input = apply_filters( 'rwp_relative_url', $input, $link );
+
+		return $input;
 	} else {
 		return $input;
 	}
