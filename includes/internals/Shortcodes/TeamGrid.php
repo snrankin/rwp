@@ -103,6 +103,7 @@ class TeamGrid extends Shortcode {
 
 		// WP_Query arguments
 		$args = array(
+			'post_status'    => array( 'publish' ),
 			'post_type'      => array( 'rwp_team_member' ),
 			'posts_per_page' => $num,
 			'order'          => $order,
@@ -119,19 +120,30 @@ class TeamGrid extends Shortcode {
 			);
 		}
 
-		/**
-		 * @var \WP_Post[] $members
-		 */
-		$members = get_posts( $args );
 		$output  = '';
-		if ( ! empty( $members ) ) {
-			$team = $this->wrapper( '', $atts );
-			foreach ( $members as $member ) {
-				$member = rwp_post_card( $member )->html();
-				$team->add_item( array( 'content' => $member ) );
+
+		/**
+		 * @var \WP_Query $posts
+		 */
+		$posts = wp_cache_remember( 'rwp_team_members', function () use ( $args ) {
+			return new \WP_Query( $args );
+		}, 'rwp_team_members', HOUR_IN_SECONDS );
+
+		if ( $posts->have_posts() ) {
+			$grid = $this->wrapper( '', $atts );
+
+			while ( $posts->have_posts() ) {
+				$posts->the_post();
+				$item = get_post();
+				$is_protected = post_password_required( $item->ID );
+				if ( ! $is_protected ) {
+					$item = rwp_post_card( $item )->html();
+					$grid->add_item( array( 'content' => $item ) );
+				}
 			}
-			$output = $team->html();
+			$output = $grid->html();
 		}
+		wp_reset_postdata();
 
 		return $output;
     }

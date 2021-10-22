@@ -98,6 +98,7 @@ class SiblingGrid extends Shortcode {
 		if ( $parent instanceof \WP_Post ) {
 			// WP_Query arguments
 			$args = array(
+				'post_status'    => array( 'publish' ),
 				'post_type'      => $parent->post_type,
 				'post_parent'    => $parent->ID,
 				'posts_per_page' => $num,
@@ -122,15 +123,17 @@ class SiblingGrid extends Shortcode {
 				while ( $grid_posts->have_posts() ) {
 					$grid_posts->the_post();
 					$item = get_post();
-					$item = rwp_post_card( $item );
-					$item = $item->html();
-					$grid->add_item( array( 'content' => $item ) );
+					$is_protected = post_password_required( $item->ID );
+					if ( ! $is_protected ) {
+						$item = rwp_post_card( $item )->html();
+						$grid->add_item( array( 'content' => $item ) );
+					}
 				}
+
 				$output = $grid->html();
 			}
 			wp_reset_postdata();
 		}
-
 		return $output;
 	}
 }
