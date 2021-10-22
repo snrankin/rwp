@@ -147,8 +147,6 @@ function rwp_output_href( $link = '' ) {
         $link = rwp_relative_url( $link );
     }
 
-    $link = esc_url( $link );
-
     return $link;
 }
 
@@ -359,6 +357,12 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 					case 'style':
 						$value = rwp_output_styles( $value );
                         break;
+					case 'title':
+					case 'alt':
+					case 'label':
+					case 'aria-label':
+						$value = esc_attr( $value );
+                        break;
 					default:
 						if ( rwp_is_collection( $value ) ) {
 							$value   = $value->toJson( JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT | JSON_BIGINT_AS_STRING );
@@ -369,8 +373,6 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 						} elseif ( rwp_str_starts_with( $attr, 'on' ) ) {
 							$value = str_replace( '"', "'", $value );
 							$value = esc_js( $value );
-						} else {
-							$value = esc_attr( $value );
 						}
 
                         break;

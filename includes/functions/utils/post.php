@@ -510,7 +510,7 @@ function rwp_post_link( $post = null ) {
 
 	$link = data_get( $obj, 'url', '' );
 
-	return esc_url( $link );
+	return $link;
 }
 
 /**

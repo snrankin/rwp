@@ -27,7 +27,7 @@ class Relative_Urls extends Singleton {
 
 		\add_filter('wp_calculate_image_srcset', function ( $sources ) {
 			foreach ( (array) $sources as $source => $src ) {
-				$sources[ $source ]['url'] = $this->root_relative_url( $src['url'] );
+				$sources[ $source ]['url'] = rwp_relative_url( $src['url'] );
 			}
 			return $sources;
 		});
@@ -52,49 +52,18 @@ class Relative_Urls extends Singleton {
 			'theme_file_uri',
 			'parent_theme_file_uri',
 		]);
-		\rwp_add_filters( $rwp_root_rel_filters, array( $this, 'root_relative_url' ) );
+		\rwp_add_filters( $rwp_root_rel_filters, 'rwp_relative_url' );
 
 		/**
 		 * Compatibility with The SEO Framework
 		 */
 		\add_action('the_seo_framework_do_before_output', function () {
-			\remove_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
+			\remove_filter( 'wp_get_attachment_url', 'rwp_relative_url' );
 		});
 		\add_action('the_seo_framework_do_after_output', function () {
-			\add_filter( 'wp_get_attachment_url', array( $this, 'root_relative_url' ) );
+			\add_filter( 'wp_get_attachment_url', 'rwp_relative_url' );
 		});
 
-	}
-
-	 /**
-	  * Make a URL relative
-	  *
-	  * @param string $input
-	  * @return string
-	  */
-	public function root_relative_url( $input ) {
-		if ( \is_feed() ) {
-			return $input;
-		}
-
-		$url = parse_url( $input );
-		if ( ! isset( $url['host'] ) || ! isset( $url['path'] ) ) {
-			return $input;
-		}
-		$site_url = parse_url( \network_home_url() );  // falls back to home_url
-
-		if ( ! isset( $url['scheme'] ) ) {
-			$url['scheme'] = $site_url['scheme'];
-		}
-		$hosts_match = $site_url['host'] === $url['host'];
-		$schemes_match = $site_url['scheme'] === $url['scheme'];
-		$ports_exist = isset( $site_url['port'] ) && isset( $url['port'] );
-		$ports_match = ( $ports_exist ) ? $site_url['port'] === $url['port'] : true;
-
-		if ( $hosts_match && $schemes_match && $ports_match ) {
-			return \wp_make_link_relative( $input );
-		}
-		return $input;
 	}
 
 	/**
@@ -107,6 +76,6 @@ class Relative_Urls extends Singleton {
 	public function url_compare( $url, $rel ) {
 		$url = \trailingslashit( $url );
 		$rel = \trailingslashit( $rel );
-		return ( ( strcasecmp( $url, $rel ) === 0 ) || $this->root_relative_url( $url ) == $rel );
+		return ( ( strcasecmp( $url, $rel ) === 0 ) || rwp_relative_url( $url ) == $rel );
 	}
 }
