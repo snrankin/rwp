@@ -90,6 +90,7 @@ class SubpageGrid extends Shortcode {
 		if ( $parent instanceof \WP_Post ) {
 			// WP_Query arguments
 			$args = array(
+				'post_status'    => array( 'publish' ),
 				'post_type'      => $parent->post_type,
 				'post_parent'    => $parent->ID,
 				'posts_per_page' => $num,
@@ -109,10 +110,12 @@ class SubpageGrid extends Shortcode {
 
 				while ( $posts->have_posts() ) {
 					$posts->the_post();
-					global $post;
-					$item = $post;
-					$item = rwp_post_card( $item )->html();
-					$grid->add_item( array( 'content' => $item ) );
+					$item = get_post();
+					$is_protected = post_password_required( $item->ID );
+					if ( ! $is_protected ) {
+						$item = rwp_post_card( $item )->html();
+						$grid->add_item( array( 'content' => $item ) );
+					}
 				}
 				$output = $grid->html();
 			}

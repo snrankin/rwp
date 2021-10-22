@@ -31,6 +31,8 @@ if ( ! defined( 'RWP_TITLE_CASE' ) ) {
  * @return string
  */
 function rwp_change_case( $string = '', $case = 'slug' ) {
+
+	$original = $string;
 	switch ( $case ) {
 		case 'title':
 			$string = preg_replace( '/((?<=\w)-(?=\w)|\_)/m', ' ', $string );
@@ -52,6 +54,8 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 			$string = Str::camel( $string );
 			break;
 	}
+
+	$string = apply_filters( 'rwp_change_case', $string, $original, $case );
 
 	return $string;
 }

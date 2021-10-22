@@ -17,23 +17,25 @@ use RWP\Components\Html;
 /**
  * Get menu by theme location or name of menu
  *
- * @var string    $menu
+ * @var string|\WP_Term    $menu
  *
  * @return WP_Term|false False if $menu param isn't supplied or term does not exist, menu object if successful.
  */
 
 function rwp_get_menu( $menu = '' ) {
-    // Get the nav menu based on the theme_location.
-    $locations = get_nav_menu_locations();
+    if ( ! ( $menu instanceof \WP_Term ) ) {
+		$locations = get_nav_menu_locations();
 
-    if ( ! empty( $menu ) && rwp_array_has( $menu, $locations ) ) {
-        $menu = $locations[ $menu ];
-    }
+		if ( ! empty( $locations ) ) {
+			if ( ! empty( $menu ) && rwp_array_has( $menu, $locations ) ) {
+				$menu = $locations[ $menu ];
+			}
+		}
 
-    // Get the nav menu based on the requested menu.
-    $menu = wp_get_nav_menu_object( $menu );
+		$menu = wp_get_nav_menu_object( $menu );
+	}
 
-    return $menu;
+	return $menu;
 }
 
 /**
