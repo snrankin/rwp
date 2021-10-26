@@ -32,7 +32,7 @@ function rwp_str_is_html( $string ) {
  * @param  mixed $tag
  * @return bool
  */
-function rwp_is_element( $string, $tag ) {
+function rwp_str_is_element( $string, $tag ) {
 	if ( rwp_str_is_html( $string ) ) {
         return preg_match( '/\s*\<' . $tag . '/m', $string ) ? true : false;
 	} else {
@@ -429,7 +429,7 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
  */
 
 function rwp_input_to_button( $input = '', $args = array() ) {
-	if ( ! rwp_is_element( $input, 'input' ) ) {
+	if ( ! rwp_str_is_element( $input, 'input' ) ) {
         return $input;
 	}
 

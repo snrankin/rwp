@@ -194,7 +194,8 @@ class Bootstrap extends Singleton {
 		);
 
 		if ( ! empty( $group ) ) {
-			return data_get( $atts, $group );
+			$value = data_get( $atts, $group );
+			return $value;
 		} else {
 			return $atts;
 		}

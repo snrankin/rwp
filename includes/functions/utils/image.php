@@ -104,7 +104,7 @@ function rwp_is_image( $image ) {
             $ext = pathinfo( $image, PATHINFO_EXTENSION );
             return in_array( $ext, $image_types );
         } else {
-            return rwp_is_element( $image, 'img' );
+            return rwp_str_is_element( $image, 'img' );
         }
     } elseif ( $image instanceof \WP_Post ) {
         return wp_attachment_is_image( $image );

@@ -51,6 +51,15 @@ function rwp_html( $html ) {
 	return new Html( $html );
 }
 
+/**
+ * Check if a variable is an instance of Element class
+ * @param mixed $item
+ * @return bool
+ */
+function rwp_is_element( $item ) {
+	return ( $item instanceof RWP\Components\Element );
+}
+
 function rwp_element( $args = array() ) {
 	return new RWP\Components\Element( $args );
 }

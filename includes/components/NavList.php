@@ -35,12 +35,6 @@ class NavList extends HtmlList {
 	public $depth = 0;
 
 	/**
-	 * @var mixed $wp_menu The associated nav menu
-	 */
-
-	public $wp_menu;
-
-	/**
 	 * @var string $type The type of navigation. One of `nav|navbar|tabs|pills`
 	 * @link https://getbootstrap.com/docs/5.0/components/navs-tabs/#base-nav
 	 */
@@ -52,15 +46,10 @@ class NavList extends HtmlList {
 	public $direction = 'vertical';
 
 	/**
-	 * @var string $parent The subnav parent id or the menu id if `$depth == 0`
-	 */
-	public $parent;
-
-	/**
-	 * @var string $child_type  The type of dropdown. Can be one of `
+	 * @var string $toggle_type  The type of dropdown. Can be one of `
 	 *                          collapse|dropdown|tabs|indented`
 	 */
-	public $child_type = 'collapse';
+	public $toggle_type = 'collapse';
 
 	/**
 	 * Initialize the class

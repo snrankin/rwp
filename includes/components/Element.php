@@ -106,6 +106,10 @@ class Element {
 			$args = $this->create_from_string( $args );
 		}
 
+		if ( rwp_is_collection( $args ) ) {
+			$args = rwp_object_to_array( $args );
+		}
+
 		if ( is_array( $args ) ) {
 			$tag = data_get( $args, 'tag', $this->tag );
 			$html = data_get( $args, 'html', $this->html );

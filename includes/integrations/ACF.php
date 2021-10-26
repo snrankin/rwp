@@ -31,6 +31,10 @@ class ACF extends Singleton {
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
 
+		rwp_get_dependency_file( 'acf-address-map.php', 'externals/acf/acf-address-map-field', true, true );
+
+		//rwp_get_dependency_file( 'acf-fonticonpicker.php', 'externals/acf/acf-icon-picker', true, true );
+
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 
 		\add_action( 'acf/init', array( $this, 'setup_acf' ) );
@@ -43,8 +47,11 @@ class ACF extends Singleton {
 		// Field Filters
 
 		\add_filter( 'acf/load_field/name=sidebar_id', array( $this, 'add_widget_area_choices' ) );
-		\add_filter( 'acf/load_field/name=bs_colors', array( $this, 'add_color_choices' ) );
-		\add_action( 'acf/render_field/name=bs_colors', array( $this, 'add_color_values' ) );
+		\add_filter( 'acf/load_field/name=bs_bg_color', array( $this, 'add_color_choices' ) );
+		\add_filter( 'acf/load_field/name=bs_text_color', array( $this, 'add_color_choices' ) );
+		\add_filter( 'acf/load_field/name=bs_border_color', array( $this, 'add_color_choices' ) );
+		\add_filter( 'acf/load_field/name=bs_btn_style', array( $this, 'add_color_choices' ) );
+		\add_action( 'acf/render_field/name=bs_color', array( $this, 'add_color_values' ) );
 	}
 
 	/**
@@ -150,6 +157,7 @@ class ACF extends Singleton {
 		$fields = \get_fields( $term_id );
 
 		$fields = self::sanitize_acf_array( $fields, $term_id ); // phpcs:ignore
+
 		\update_term_meta( $object->term_id, '_rwp_acf', $fields );
 	}
 
@@ -187,32 +195,33 @@ class ACF extends Singleton {
 	 */
 
 	public static function sanitize_acf_array( $fields, $post_id ) {
-		$acf_fields = array();
+		$acf_fields = rwp_collection( $fields );
 
-		if ( ! empty( $fields ) ) {
-			foreach ( $fields as $key => $field ) {
-				if ( rwp_has_value( $key ) && rwp_has_value( $field ) ) {
+		$acf_fields = $acf_fields->reject( function ( $item ) {
+            return empty( $item );
+		});
 
-					if ( \have_rows( $key, $post_id ) ) {
-						if ( rwp_array_has( 'label', $field ) && is_numeric( $key ) ) {
-							$key = $field['label'];
-							unset( $field['label'] );
-						}
+		if ( $acf_fields->isNotEmpty() ) {
 
-						if ( 1 === count( $field ) && ! rwp_array_has( 'label', $field[0] ) && wp_is_numeric_array( $field ) ) {
-							$field = reset( $field );
-						}
-
-						if ( is_array( $field ) ) {
-							$field = self::sanitize_acf_array( $field, $post_id );
-						}
+			if ( wp_is_numeric_array( $fields ) && rwp_array_is_multi( $fields ) ) {
+				$acf_fields = $acf_fields->mapWithKeys(function ( $item ) {
+					if ( is_array( $item ) ) {
+						return [ $item['label'] => $item ];
 					}
-                    $acf_fields[ $key ] = $field;
-				}
+				});
 			}
+
+			$acf_fields->transform( function( $value, $key ) use ( $post_id ) {
+				if ( is_array( $value ) ) {
+					$value = self::sanitize_acf_array( $value, $post_id );
+				}
+				return $value;
+			} );
 
 			$fields = $acf_fields;
 		}
+
+		$fields = apply_filters( 'rwp_format_fields', $fields, $post_id );
 
         return $fields;
     }
@@ -243,14 +252,34 @@ class ACF extends Singleton {
 	 */
 
 	public function add_color_choices( $field ) {
-		$colors = Bootstrap::bs_atts( 'colors' );
 
-		if ( isset( $field['choices'] ) ) {
+		if ( isset( $field['choices'] ) && empty( $field['choices'] ) ) {
 
-			foreach ( $colors as $color ) {
-				$name = rwp_change_case( $color, 'title' );
-				$field['choices'][ $color ] = $name;
+			if ( rwp_str_has( $field['name'], 'bs_bg_' ) ) {
+				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'bg-' ) );
+			} else if ( rwp_str_has( $field['name'], 'bs_border_' ) ) {
+				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'border-' ) );
+			} else if ( rwp_str_has( $field['name'], 'bs_text_' ) ) {
+				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'text-' ) );
+			} else if ( rwp_str_has( $field['name'], 'bs_btn_style' ) ) {
+				$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
+				$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' ) );
+
+				$colors = $btn_options_solid->merge( $btn_options_outline );
+
+			} else {
+				$colors = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
 			}
+
+			$colors = $colors->mapWithKeys( function( $item ) {
+				return [ $item['value'] => $item['label'] ];
+			});
+
+			$choices = rwp_collection( $field['choices'] );
+
+			$choices = $choices->merge( $colors )->put( 'custom', 'Custom' )->unique()->all();
+
+			$field['choices'] = $choices;
 		}
 
 		return $field;

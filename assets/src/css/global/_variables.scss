@@ -29,3 +29,7 @@ $em-space        : 1em; // 16px || width of em-dash
 
 
 @import '~bootstrap/scss/variables';
+
+$colors: map-merge($grays, $colors);
+
+$theme-colors: map-merge($colors, $theme-colors);
