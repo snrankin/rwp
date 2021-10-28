@@ -1936,6 +1936,7 @@ return array(
     'RWP\\Internals\\PostTypes\\Testimonial' => $baseDir . '/includes/internals/PostTypes/Testimonial.php',
     'RWP\\Internals\\Relative_Urls' => $baseDir . '/includes/internals/Relative_Urls.php',
     'RWP\\Internals\\Shortcodes\\Copyright' => $baseDir . '/includes/internals/Shortcodes/Copyright.php',
+    'RWP\\Internals\\Shortcodes\\Location' => $baseDir . '/includes/internals/Shortcodes/Location.php',
     'RWP\\Internals\\Shortcodes\\SiblingGrid' => $baseDir . '/includes/internals/Shortcodes/SiblingGrid.php',
     'RWP\\Internals\\Shortcodes\\SubpageGrid' => $baseDir . '/includes/internals/Shortcodes/SubpageGrid.php',
     'RWP\\Internals\\Shortcodes\\TeamGrid' => $baseDir . '/includes/internals/Shortcodes/TeamGrid.php',

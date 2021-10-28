@@ -12,7 +12,6 @@
 namespace RWP\Integrations\Yoast;
 
 use Yoast\WP\SEO\Generators\Schema\Organization;
-use RWP\Components\Location;
 use RWP\Vendor\Illuminate\Support\Collection;
 class Locations extends Organization {
 
@@ -27,27 +26,29 @@ class Locations extends Organization {
         /**
 		 * @var Collection $locations
 		 */
-		$locations = rwp_get_option( 'locations' );
+		$locations = rwp_get_option( 'locations', rwp_collection() );
 
-		if ( $locations->count() > 1 ) {
-			$main_location = $locations->filter(function( $location ) {
+		if ( $locations->isNotEmpty() ) {
+			$main_location = $locations->filter( function( $location ) {
 				return $location->get( 'main_location' );
 			});
+			$main_location = $main_location->first()->all();
+			$main_location = $this->setup_location( $main_location );
+
+			unset( $main_location['name'] );
 
 			$locations = $locations->reject(function( $location ) {
 				return $location->get( 'main_location' );
 			});
-			foreach ( $locations->all() as $key => $value ) {
-				$data['department'][] = $this->setup_location( $value );
+			if ( $locations->isNotEmpty() ) {
+				foreach ( $locations->all() as $key => $value ) {
+					$data['department'][] = $this->setup_location( $value );
+				}
 			}
-			$main_location = $main_location->first()->all();
-			$main_location = $this->setup_location( $main_location );
 			$data = array_merge( $data, $main_location );
-		} else {
-			$value = $locations->first();
-			$location = $this->setup_location( $value );
-			$data = array_merge( $data, $location );
 		}
+
+		$data = apply_filters( 'rwp_yoast_locations', $data );
 
 		return $data;
 	}
