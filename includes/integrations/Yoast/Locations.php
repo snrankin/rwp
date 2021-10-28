@@ -48,6 +48,8 @@ class Locations extends Organization {
 			$data = array_merge( $data, $main_location );
 		}
 
+		$data = apply_filters( 'rwp_yoast_locations', $data );
+
 		return $data;
 	}
 
