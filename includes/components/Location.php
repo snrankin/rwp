@@ -106,7 +106,11 @@ class Location extends Element {
 		parent::__construct( $args );
 
 		if ( is_string( $location ) ) {
-			$order = preg_replace( '/title/', 'label', $this->order );
+			$order = $this->order;
+			if ( in_array( 'title', $order ) ) {
+				$order = preg_replace( '/title/', 'label', $order );
+			}
+
 			$this->location = self::get_location_info( $location, $order );
 		}
 

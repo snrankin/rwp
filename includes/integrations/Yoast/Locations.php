@@ -26,7 +26,11 @@ class Locations extends Organization {
         /**
 		 * @var Collection $locations
 		 */
+<<<<<<< HEAD
 		$locations = rwp_get_option('locations', rwp_collection());
+=======
+		$locations = rwp_get_option( 'locations', rwp_collection() );
+>>>>>>> develop
 
 		if ( $locations->isNotEmpty() ) {
 			$main_location = $locations->filter( function( $location ) {
