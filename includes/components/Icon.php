@@ -43,7 +43,7 @@ class Icon extends Element {
 	public function __construct( $args = array() ) {
 
 		if ( is_string( $args ) ) {
-			if ( rwp_is_element( $args, 'svg' ) ) {
+			if ( rwp_str_is_element( $args, 'svg' ) ) {
 				$args = new SVG( $args );
 			} else if ( ( is_file( $args ) && rwp_file_exists( $args ) ) || rwp_is_url( $args ) ) {
 				if ( rwp_str_ends_with( $args, 'svg' ) ) {

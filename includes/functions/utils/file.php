@@ -61,7 +61,8 @@ function rwp_basename( $string ) {
  * Simplified wrapper for getting file data
  *
  * @param string $url
- * @param bool   $local Whether the url is a local path
+ * @param bool   $local  Whether the url is a local path
+ * @param string $output The output type
  *
  * @throws HttpException
  * @throws JsonException
@@ -69,10 +70,11 @@ function rwp_basename( $string ) {
  * @return mixed|false
  */
 
-function rwp_get_file_data( $url, $local = false ) {
-     $url  = esc_url_raw( $url );
+function rwp_get_file_data( $url, $local = false, $output = 'OBJECT' ) {
+    $url  = esc_url_raw( $url );
     $data = null;
     $type = pathinfo( $url, PATHINFO_EXTENSION );
+	$is_array = ( 'ARRAY' === $output );
 
     if ( $local ) {
         if ( rwp_file_exists( $url ) ) {
@@ -96,9 +98,9 @@ function rwp_get_file_data( $url, $local = false ) {
     if ( 'json' === $type ) {
         try {
             if ( ! empty( $data ) ) {
-                $data = json_decode( $data, false, 512, JSON_THROW_ON_ERROR );
+                $data = json_decode( $data, $is_array, 512, JSON_THROW_ON_ERROR );
 
-                if ( is_object( $data ) && filled( $data ) ) {
+                if ( filled( $data ) ) {
                     return $data;
                 }
             }

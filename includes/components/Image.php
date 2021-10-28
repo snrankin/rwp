@@ -185,9 +185,9 @@ class Image extends Element {
 		$args['image']['atts']['src'] = $src;
 		$args['size'] = $size;
 
-		if ( rwp_is_element( $html, 'div|figure' ) ) {
+		if ( rwp_str_is_element( $html, 'div|figure' ) ) {
 			$args['html'] = $html;
-		} else if ( rwp_is_element( $html, 'img|svg' ) ) {
+		} else if ( rwp_str_is_element( $html, 'img|svg' ) ) {
 			$args['image']['html'] = $html;
 		}
 

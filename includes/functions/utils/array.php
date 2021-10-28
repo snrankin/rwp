@@ -19,11 +19,20 @@
  */
 function rwp_array_has( $key, $array ) {
 	if ( is_array( $array ) ) {
-        if ( isset( $array[ $key ] ) && filled( $array[ $key ] ) ) {
-            return true;
-        } else {
-            return false;
-        }
+		if ( ! wp_is_numeric_array( $array ) ) {
+			if ( isset( $array[ $key ] ) && filled( $array[ $key ] ) ) {
+						return true;
+			} else {
+				return false;
+			}
+		} else {
+			$index = array_search( $key, $array, true );
+			if ( false !== $index ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	} else {
 		return false;
 	}

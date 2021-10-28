@@ -215,6 +215,18 @@ class Nav extends \Walker_Nav_Menu {
 			$t = "\t";
 			$n = "\n";
 		}
+
+		/**
+		 * Filters the arguments for a single nav menu item.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param stdClass $args  An object of wp_nav_menu() arguments.
+		 * @param \WP_Post  $item  Menu item data object.
+		 * @param int      $depth Depth of menu item. Used for padding.
+		 */
+		$args = apply_filters( 'nav_menu_item_args', $args, $item, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
 		$menu = $this->menu;
 
 		$menu_id = $this->menu_id;
@@ -230,30 +242,27 @@ class Nav extends \Walker_Nav_Menu {
 		 */
 		$classes   = empty( $item->classes ) ? array() : (array) $item->classes;
 
-		/**
-		 * Initialize some holder variables to store specially handled item
-		 * wrappers and icons.
-		 */
-
 		 /**
 		 * @var string[] $linkmod_classes
 		 */
 		$linkmod_classes = array();
+
 		/**
 		 * @var string[] $icon_classes
 		 */
 		$icon_classes    = array();
 
 		/**
-		 * Filters the arguments for a single nav menu item.
-		 *
-		 * @since 4.4.0
-		 *
-		 * @param stdClass $args  An object of wp_nav_menu() arguments.
-		 * @param \WP_Post  $item  Menu item data object.
-		 * @param int      $depth Depth of menu item. Used for padding.
+		 * Get an updated $classes array without linkmod or icon classes.
 		 */
-		$args = apply_filters( 'nav_menu_item_args', $args, $item, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$this->separate_linkmods_and_icons_from_classes( $classes, $linkmod_classes, $icon_classes );
+
+		// Set a typeflag to easily test if this is a linkmod or not.
+		$linkmod_classes = rwp_parse_classes( $linkmod_classes );
+
+		$icon_classes = rwp_parse_classes( $icon_classes );
+
+		$nav_item_options = rwp_get_field( 'nav_item_options', $item );
 
 		/**
 		 * Filters the CSS classes applied to a menu item's list item element.
@@ -277,34 +286,26 @@ class Nav extends \Walker_Nav_Menu {
 
 		$parent = intval( data_get( $item, 'menu_item_parent', 0 ) );
 
-		if ( 0 !== $parent ) {
-			$parent = get_post( $parent );
-			if ( $parent ) {
-				$parent = '#item-' . $parent->ID . '-sub-menu';
-			}
+		if ( $parent ) {
+				$parent = '#item-' . $parent . '-sub-menu';
 		} else {
 			$parent = '#' . $menu_id;
 		}
 
 		$this->parent = $parent;
 
-		$linkmod_classes = array();
-
-		$icon_classes = array();
-
 		/**
-		 * Get an updated $classes array without linkmod or icon classes.
+		 * Filters the ID applied to a menu item's list item element.
+		 *
+		 * @since 3.0.1
+		 * @since 4.1.0 The `$depth` parameter was added.
+		 *
+		 * @param string    $menu_id The ID that is applied to the menu item's `<li>` element.
+		 * @param \WP_Post  $item    The current menu item.
+		 * @param stdClass  $args    An object of wp_nav_menu() arguments.
+		 * @param int       $depth   Depth of menu item. Used for padding.
 		 */
-		$this->separate_linkmods_and_icons_from_classes( $classes, $linkmod_classes, $icon_classes );
-
-		// Set a typeflag to easily test if this is a linkmod or not.
-		$linkmod_classes = rwp_parse_classes( $linkmod_classes );
-
-		$icon_classes = rwp_parse_classes( $icon_classes );
-
-		if ( get_field( 'icon', $item ) ) {
-			$icon_classes = rwp_parse_classes( get_field( 'icon', $item ) );
-		}
+		$id = apply_filters( 'nav_menu_item_id', 'item-' . $item->ID, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		/**
 		 * Initiate empty icon var, then if we have a string containing any
@@ -334,19 +335,6 @@ class Nav extends \Walker_Nav_Menu {
 		 */
 		$title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
-		/**
-		 * Filters the ID applied to a menu item's list item element.
-		 *
-		 * @since 3.0.1
-		 * @since 4.1.0 The `$depth` parameter was added.
-		 *
-		 * @param string    $menu_id The ID that is applied to the menu item's `<li>` element.
-		 * @param \WP_Post  $item    The current menu item.
-		 * @param stdClass  $args    An object of wp_nav_menu() arguments.
-		 * @param int       $depth   Depth of menu item. Used for padding.
-		 */
-		$id = apply_filters( 'nav_menu_item_id', 'item-' . $item->ID, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-
 		$link_attr_title = data_get( $item, 'attr_title', strip_tags( $title ) );
 		$link_target     = data_get( $item, 'target', '' );
 		$link_xfn        = data_get( $item, 'xfn', '' );
@@ -360,11 +348,6 @@ class Nav extends \Walker_Nav_Menu {
 			'href'         => rwp_relative_url( $link_url ),
 			'aria-current' => $link_current ? 'page' : '',
 		);
-
-		if ( rwp_get_field( 'link_atts', $item ) ) {
-			$link_atts_custom = rwp_get_field( 'link_atts', $item );
-			$link_atts = rwp_merge_args( $link_atts, $link_atts_custom );
-		}
 
 		/**
 		 * Filters the HTML attributes applied to a menu item's anchor element.
@@ -388,7 +371,31 @@ class Nav extends \Walker_Nav_Menu {
 
 		$link_atts = apply_filters( 'nav_menu_link_attributes', $link_atts, $item, $args, $depth ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
-		// If the .sr-only class was set apply to the nav items text only.
+		$link_atts = rwp_prepare_args( $link_atts );
+
+		$nav_link_args = array(
+			'atts' => $link_atts,
+		);
+
+		$nav_link_content = array(
+			'title' => $title,
+		);
+
+		$nav_link_order = array( 'title' );
+
+		if ( rwp_object_has( 'before', $args ) ) {
+			array_unshift( $nav_link_order, 'before' );
+			$nav_link_content['before'] = $args->before;
+		}
+
+		if ( rwp_object_has( 'after', $args ) ) {
+			$nav_link_order[] = 'after';
+			$nav_link_content['after'] = $args->after;
+		}
+
+		$nav_link_args['content'] = $nav_link_content;
+
+		$nav_link_args = rwp_add_acf_bg_color( $nav_link_args, $nav_item_options, $item );
 
 		$nav_item_args = array(
 			'nav_item'   => $item,
@@ -407,42 +414,49 @@ class Nav extends \Walker_Nav_Menu {
 
 		if ( rwp_object_has( 'link_before', $args ) ) {
 			array_unshift( $nav_item_order, 'before' );
-			$nav_item_args['before'] = $args->link_before;
+			$nav_item_args['content']['before'] = $args->link_before;
 		}
 
 		if ( $is_parent ) {
 			$this->sub_menu_id = $id . '-sub-menu';
 			$nav_item_order[] = 'toggle';
 			$nav_item_args['toggle']['link'] = '#' . $id . '-sub-menu';
+
+			$toggle_type = data_get( $args, 'toggle_type' );
+			$custom_toggle_type = data_get( $nav_item_options, 'toggle_type' );
+
+			if ( ! empty( $custom_toggle_type ) ) {
+				$toggle_type = $custom_toggle_type;
+			}
+			$nav_item_args['toggle_type'] = $toggle_type;
+
+			$toggle_icon = data_get( $args, 'item_toggle_icon' );
+			$custom_toggle_icon = data_get( $nav_item_options, 'toggle_icon' );
+
+			if ( ! empty( $custom_toggle_icon ) && ( ! empty( data_get( $custom_toggle_icon, 'icon_opened' ) ) || ! empty( data_get( $custom_toggle_icon, 'icon_closed' ) ) ) ) {
+				$toggle_icon = $toggle_icon->merge( $custom_toggle_icon );
+
+			}
+			$icon_opened = rwp_parse_classes( data_get( $toggle_icon, 'icon_opened' ) );
+			if ( ! empty( $icon_opened ) ) {
+				$nav_item_args = data_set( $nav_item_args, 'toggle.icon_opened.atts.class', $icon_opened );
+				$nav_item_args = data_set( $nav_item_args, 'toggle.icon_opened.content', '' );
+			}
+
+			$icon_closed = rwp_parse_classes( data_get( $toggle_icon, 'icon_closed' ) );
+
+			if ( ! empty( $icon_closed ) ) {
+				$nav_item_args = data_set( $nav_item_args, 'toggle.icon_closed.atts.class', $icon_closed );
+				$nav_item_args = data_set( $nav_item_args, 'toggle.icon_closed.content', '' );
+			}
 		}
 
-		if ( rwp_object_has( 'link_after', $args ) ) {
+		if ( rwp_object_has( 'link_after', $args ) && filled( $args->link_after ) ) {
 			$nav_item_order[] = 'after';
-			$nav_item_args['after'] = $args->link_after;
+			$nav_item_args['content']['after'] = $args->link_after;
 		}
 
 		$nav_item_args['order'] = $nav_item_order;
-
-		$nav_link_args = array(
-			'atts' => $link_atts,
-		);
-
-		$nav_link_content = array(
-			'title' => $title,
-		);
-
-		if ( rwp_object_has( 'before', $args ) ) {
-			$nav_link_content = array(
-				'before' => $args->before,
-				'title'  => $title,
-			);
-		}
-
-		if ( rwp_object_has( 'after', $args ) ) {
-			$nav_link_content['after'] = $args->after;
-		}
-
-		$nav_link_args['content'] = $nav_link_content;
 
 		$nav_item_args['link'] = $nav_link_args;
 

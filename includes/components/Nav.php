@@ -34,10 +34,15 @@ class Nav extends Element {
 	public $depth = 0;
 
 	/**
-	 * @var NavList $list
+	 * @var mixed $list
 	 */
 
-	public $list;
+	public $list = array(
+        'class'     => array(
+            'nav',
+		),
+		'role' => 'menu',
+	);
 
 	/**
 	 * @var mixed $parent The subnav parent id
@@ -45,10 +50,10 @@ class Nav extends Element {
 	public $parent;
 
 	/**
-	 * @var string $child_type The type of dropdown.
+	 * @var string $toggle_type The type of dropdown.
 	 *                         Can be one of `collapse|dropdown|tabs|indented`
 	 */
-	public $child_type = 'collapse';
+	public $toggle_type = 'collapse';
 
 	/**
 	 * @var string $nested_type The type of dropdown. Can be one of `collapse|indented`
@@ -74,29 +79,21 @@ class Nav extends Element {
 
 		$navlist_args = $this->get( 'list', array() );
 
-		data_set( $navlist_args, 'direction', $this->direction );
-		data_set( $navlist_args, 'child_type', $this->child_type );
+		$navlist_args = data_set( $navlist_args, 'direction', $this->direction );
+		$navlist_args = data_set( $navlist_args, 'toggle_type', $this->toggle_type );
 
 		$this->list = new NavList( $navlist_args );
 	}
 
 	public function setup_html() {
-		$parent_id = $this->parent;
 
-		// if(is_object($parent_id)){
-		// 	$parent_id = rwp_post_id($parent_id);
-		// }
-
-		switch ( $this->child_type ) {
+		switch ( $this->toggle_type ) {
 			case 'dropdown':
 				if ( $this->nested_type_depth === $this->depth ) {
 					$this->add_class( 'dropdown-menu' );
 				} elseif ( $this->nested_type_depth < $this->depth ) {
 					if ( 'collapse' === $this->nested_type ) {
 						$this->add_class( 'collapse' );
-						if ( ! empty( $parent_id ) ) {
-							$this->set_attr( 'data-bs-parent', $parent_id );
-						}
 					}
 				}
 				break;
@@ -113,16 +110,13 @@ class Nav extends Element {
 			case 'collapse':
 				if ( $this->depth > 0 ) {
 					$this->add_class( 'collapse' );
-					if ( ! empty( $parent_id ) ) {
-						$this->set_attr( 'data-bs-parent', $parent_id );
-					}
 				}
 				break;
 		}
 
 		if ( 0 < $this->depth ) {
 			$this->add_class( array( 'sub-nav', 'level-' . ( $this->depth ) . '-menu' ) );
-			if ( ! empty( $this->child_type ) ) {
+			if ( ! empty( $this->toggle_type ) ) {
 				$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
 			}
 		}

@@ -26,6 +26,7 @@ parameters:
     - ../elementor-pro
     - ../gravityforms
     - ../query-monitor
+    - ../wordpress-seo
   scanFiles:
     - %currentWorkingDirectory%/includes/dependencies/vendor/scoper-autoload.php
     - ../advanced-custom-fields-pro/acf.php
@@ -34,6 +35,7 @@ parameters:
     - ../elementor-pro/elementor-pro.php
     - ../gravityforms/gravityforms.php
     - ../query-monitor/query-monitor.php
+    - ../wordpress-seo/wp-seo.php
   ignoreErrors:
     # - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
     - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'

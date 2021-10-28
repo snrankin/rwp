@@ -231,7 +231,9 @@ class Button extends Element {
 		if ( ! blank( $this->toggle ) ) {
 			$this->toggle_atts();
 		} else {
-			if ( ( $this->has_attr( 'href' ) && rwp_is_url( $this->get_attr( 'href' ) ) ) || rwp_is_url( $this->link ) ) {
+			if ( $this->has_attr( 'href' ) && rwp_is_url( $this->get_attr( 'href' ) ) ) {
+				$this->set_tag( 'a' );
+			} elseif ( rwp_is_url( $this->link ) ) {
 				$this->set_tag( 'a' );
 			} else {
 				$this->set_tag( 'button' );

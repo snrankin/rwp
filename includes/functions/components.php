@@ -51,6 +51,15 @@ function rwp_html( $html ) {
 	return new Html( $html );
 }
 
+/**
+ * Check if a variable is an instance of Element class
+ * @param mixed $item
+ * @return bool
+ */
+function rwp_is_element( $item ) {
+	return ( $item instanceof RWP\Components\Element );
+}
+
 function rwp_element( $args = array() ) {
 	return new RWP\Components\Element( $args );
 }
@@ -109,4 +118,12 @@ function rwp_card( $args = array() ) {
 
 function rwp_post_card( $post = null, $args = [] ) {
 	return new RWP\Components\PostCard( $post, $args );
+}
+
+function rwp_location( $location, $args = [] ) {
+	return new RWP\Components\Location( $location, $args );
+}
+
+function rwp_locations( $locations = array(), $args = [] ) {
+	return RWP\Components\Location::output_locations( $locations, $args );
 }

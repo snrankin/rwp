@@ -4,6 +4,12 @@
 
 $loader = require_once __DIR__ . '/autoload.php';
 
+if( !function_exists('str_contains')){
+	function str_contains() {
+		return \RWP\Vendor\Illuminate\Support\Str::contains(...func_get_args());
+	}
+}
+
 // Aliases for the whitelisted classes. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/README.md#class-whitelisting
 if (!class_exists('Page_For_Post_Type', false) && !interface_exists('Page_For_Post_Type', false) && !trait_exists('Page_For_Post_Type', false)) {
