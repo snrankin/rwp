@@ -109,6 +109,8 @@ function rwp_menu_args( $args = [] ) {
     // Merge the menu classes from the ACF fields with classes set in the $args variable
     $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ) );
 
+	$menu_class[] = 'nav';
+
     // Merge the container classes from the ACF fields with classes set in the
     // $args variable
     $container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
@@ -209,6 +211,13 @@ function rwp_menu_args( $args = [] ) {
     $defaults->put( 'container', '' );
     $defaults->put( 'items_wrap', $items_wrap );
 
+	if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
+		$walker = new \RWP\Integrations\Walkers\Nav( $defaults->all() );
+		$defaults->put( 'walker', $walker );
+		$defaults->put( 'fallback_cb', '\RWP\Integrations\Walkers\Nav::fallback' );
+
+	}
+
     return $defaults->all();
 }
 
@@ -221,7 +230,6 @@ function rwp_menu_args( $args = [] ) {
  * @return Html
  */
 function rwp_navbar( $html, $custom_args, $menu ) {
-    rwp_log( $custom_args );
 
     if ( is_string( $menu ) ) {
         $menu = rwp_get_menu( $menu );
@@ -281,13 +289,11 @@ function rwp_navbar( $html, $custom_args, $menu ) {
     }
 
     if ( false !== $order->search( 'search' ) ) {
-        $search = rwp_html(
-            get_search_form(
+        $search = get_search_form(
                 array(
 					'echo' => 0,
                 )
-            )
-        )->addClass( 'd-flex' )->saveHTML();
+            );
 
         $navbar_content->set_content( $search, 'search' );
     }

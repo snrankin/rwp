@@ -43,12 +43,15 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 			break;
 		case 'snake':
 			$string = Str::snake( $string );
+			$string = str_replace( '-', '_', $string );
 			break;
 		case 'kebab':
 			$string = Str::kebab( $string );
+			$string = str_replace( '_', '-', $string );
 			break;
 		case 'slug':
 			$string = Str::slug( $string );
+			$string = str_replace( '_', '-', $string );
 			break;
 		case 'camel':
 			$string = Str::camel( $string );

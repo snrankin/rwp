@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -310,52 +310,6 @@ acf_add_local_field_group(array(
 							'ui_off_text' => '',
 						),
 						array(
-							'key' => 'field_6171d7ce91e30',
-							'label' => 'Nav Options',
-							'name' => 'nav',
-							'type' => 'group',
-							'instructions' => '',
-							'required' => 0,
-							'conditional_logic' => array(
-								array(
-									array(
-										'field' => 'field_60dcecd768be3',
-										'operator' => '==',
-										'value' => '1',
-									),
-								),
-							),
-							'wrapper' => array(
-								'width' => '',
-								'class' => '',
-								'id' => '',
-							),
-							'layout' => 'block',
-							'acfe_seamless_style' => 0,
-							'acfe_group_modal' => 0,
-							'sub_fields' => array(
-								array(
-									'key' => 'field_6171d7fa91e31',
-									'label' => 'Use Plugin NavWalker',
-									'name' => 'navwalker',
-									'type' => 'true_false',
-									'instructions' => '',
-									'required' => 0,
-									'conditional_logic' => 0,
-									'wrapper' => array(
-										'width' => '',
-										'class' => '',
-										'id' => '',
-									),
-									'message' => '',
-									'default_value' => 1,
-									'ui' => 1,
-									'ui_on_text' => '',
-									'ui_off_text' => '',
-								),
-							),
-						),
-						array(
 							'key' => 'field_614a574fc6589',
 							'label' => 'Elementor',
 							'name' => 'elementor',
@@ -572,9 +526,9 @@ acf_add_local_field_group(array(
 					),
 				),
 				array(
-					'key' => 'field_61705f4a2c3ba',
-					'label' => 'BugHerd',
-					'name' => 'bugherd',
+					'key' => 'field_6179a8fb3a449',
+					'label' => 'Yoast Options',
+					'name' => 'yoast',
 					'type' => 'group',
 					'instructions' => '',
 					'required' => 0,
@@ -589,68 +543,13 @@ acf_add_local_field_group(array(
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
-							'key' => 'field_61705f702c3bb',
-							'label' => 'Enable',
-							'name' => 'enable',
+							'key' => 'field_6179a91b3a44a',
+							'label' => 'Use Bootstrap Markup for Breadcrumbs',
+							'name' => 'bootstrap_breadcrumbs',
 							'type' => 'true_false',
 							'instructions' => '',
 							'required' => 0,
 							'conditional_logic' => 0,
-							'wrapper' => array(
-								'width' => '',
-								'class' => '',
-								'id' => '',
-							),
-							'message' => '',
-							'default_value' => 0,
-							'ui' => 1,
-							'ui_on_text' => '',
-							'ui_off_text' => '',
-						),
-						array(
-							'key' => 'field_61705f842c3bc',
-							'label' => 'Project Key',
-							'name' => 'project_key',
-							'type' => 'text',
-							'instructions' => '',
-							'required' => 1,
-							'conditional_logic' => array(
-								array(
-									array(
-										'field' => 'field_61705f702c3bb',
-										'operator' => '==',
-										'value' => '1',
-									),
-								),
-							),
-							'wrapper' => array(
-								'width' => '',
-								'class' => '',
-								'id' => '',
-							),
-							'acfe_save_meta' => 0,
-							'default_value' => '',
-							'placeholder' => '',
-							'prepend' => '',
-							'append' => '',
-							'maxlength' => '',
-						),
-						array(
-							'key' => 'field_61705f9c2c3bd',
-							'label' => 'Add to Front End',
-							'name' => 'frontend',
-							'type' => 'true_false',
-							'instructions' => '',
-							'required' => 0,
-							'conditional_logic' => array(
-								array(
-									array(
-										'field' => 'field_61705f702c3bb',
-										'operator' => '==',
-										'value' => '1',
-									),
-								),
-							),
 							'wrapper' => array(
 								'width' => '',
 								'class' => '',
@@ -663,9 +562,9 @@ acf_add_local_field_group(array(
 							'ui_off_text' => '',
 						),
 						array(
-							'key' => 'field_61705fb92c3be',
-							'label' => 'Add to WordPress Admin',
-							'name' => 'backend',
+							'key' => 'field_6179a9463a44b',
+							'label' => 'Update Page Type Based on the URL',
+							'name' => 'update_url',
 							'type' => 'true_false',
 							'instructions' => '',
 							'required' => 0,
@@ -676,47 +575,48 @@ acf_add_local_field_group(array(
 								'id' => '',
 							),
 							'message' => '',
-							'default_value' => 0,
+							'default_value' => 1,
 							'ui' => 1,
 							'ui_on_text' => '',
 							'ui_off_text' => '',
 						),
 						array(
-							'key' => 'field_61705fd62c3bf',
-							'label' => 'Environments to add the script to',
-							'name' => 'environments',
-							'type' => 'select',
+							'key' => 'field_6179a9833a44d',
+							'label' => 'Use Bootstrap Accordion Markup for FAQs',
+							'name' => 'bootstrap_faqs',
+							'type' => 'true_false',
 							'instructions' => '',
 							'required' => 0,
-							'conditional_logic' => array(
-								array(
-									array(
-										'field' => 'field_61705f702c3bb',
-										'operator' => '==',
-										'value' => '1',
-									),
-								),
-							),
+							'conditional_logic' => 0,
 							'wrapper' => array(
 								'width' => '',
 								'class' => '',
 								'id' => '',
 							),
-							'choices' => array(
-								'local' => 'Local',
-								'development' => 'Development',
-								'staging' => 'Staging',
-								'production' => 'Production',
-							),
-							'default_value' => array(
-							),
-							'allow_null' => 0,
-							'multiple' => 1,
+							'message' => '',
+							'default_value' => 1,
 							'ui' => 1,
-							'ajax' => 0,
-							'return_format' => 'value',
-							'allow_custom' => 0,
-							'placeholder' => '',
+							'ui_on_text' => '',
+							'ui_off_text' => '',
+						),
+						array(
+							'key' => 'field_6179a9a33a44e',
+							'label' => 'Update page paths',
+							'name' => 'update_paths',
+							'type' => 'true_false',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'message' => '',
+							'default_value' => 1,
+							'ui' => 1,
+							'ui_on_text' => '',
+							'ui_off_text' => '',
 						),
 					),
 				),
@@ -794,7 +694,6 @@ acf_add_local_field_group(array(
 						'team_member' => 'Team Members',
 						'page_header' => 'Custom Page Headers',
 						'global_block' => 'Global Blocks',
-						'testimonial' => 'Testimonials',
 					),
 					'allow_custom' => 0,
 					'default_value' => array(
@@ -838,7 +737,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1634853265,
+	'modified' => 1635364186,
 ));
 
 endif;

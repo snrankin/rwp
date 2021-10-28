@@ -46,7 +46,7 @@ class LandingPage extends PostType {
 		 * @link https://gist.github.com/kellenmace/a79dfde1e5a14d51a8014d880dac52e7
 		 */
 
-		add_filter( 'post_type_link', function ( $post_link, $post ) {
+		\add_filter( 'post_type_link', function ( $post_link, $post ) {
 
 			if ( $this->type === $post->post_type && 'publish' === $post->post_status ) {
 				$post_link = str_replace( '/' . $post->post_type . '/', '/', $post_link );
@@ -80,7 +80,7 @@ class LandingPage extends PostType {
 			}
 
 			// Bail if this query doesn't match our very specific rewrite rule.
-			if ( ! isset( $query->query['page'] ) || 2 !== count( $query->query ) ) {
+			if ( ! isset( $query->query['page'] ) ) {
 				return;
 			}
 
@@ -89,14 +89,26 @@ class LandingPage extends PostType {
 				return;
 			}
 
-			// Add CPT to the list of post types WP will include when it queries based on the post name.
-			$post_types = $query->get( 'post_type', array() );
+			$post_types = array_keys( get_post_types( array(
+				'public' => true,
+				'publicly_queryable' => true,
+			) ) );
 
-			$post_types[] = $this->type;
+			$post_types[] = 'page';
 
+			// // Add CPT to the list of post types WP will include when it queries based on the post name.
+			// $post_types = $query->get( 'post_type', $post_types );
+
+			// if ( is_string( $post_types ) ) {
+			// 	$post_types = explode( ', ', $post_types );
+			// }
+
+			// if ( ! rwp_array_has( $this->type, $post_types ) ) {
+
+			// 	$post_types[] = $this->type;
+
+            // }
 			$query->set( 'post_type', $post_types );
 		});
 	}
-
-
 }

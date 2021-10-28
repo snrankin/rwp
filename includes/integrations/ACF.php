@@ -13,7 +13,8 @@ namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Integrations\Bootstrap;
-
+use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
+use RWP\Vendor\Illuminate\Support\Str;
 class ACF extends Singleton {
 
 	/**
@@ -26,16 +27,6 @@ class ACF extends Singleton {
 		if ( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			return;
 		}
-
-		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
-		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
-		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
-
-		rwp_get_dependency_file( 'acf-address-map.php', 'externals/acf/acf-address-map-field', true, true );
-
-		//rwp_get_dependency_file( 'acf-fonticonpicker.php', 'externals/acf/acf-icon-picker', true, true );
-
-		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 
 		\add_action( 'acf/init', array( $this, 'setup_acf' ) );
 		\add_action( 'acfe/init', array( $this, 'init_acfe' ) );
@@ -51,7 +42,13 @@ class ACF extends Singleton {
 		\add_filter( 'acf/load_field/name=bs_text_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_border_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_btn_style', array( $this, 'add_color_choices' ) );
-		\add_action( 'acf/render_field/name=bs_color', array( $this, 'add_color_values' ) );
+		\add_filter('acf/fields/google_map/api', function( array $api ) {
+			$api['key'] = 'AIzaSyDJMJ6Ah3VGf2pLLJlI0qyT6qizD4tTj1M';
+
+			return $api;
+		});
+
+		$this->include_acf_extras();
 	}
 
 	/**
@@ -66,16 +63,11 @@ class ACF extends Singleton {
 
 		$path = RWP_PLUGIN_ROOT . 'config/acf/';
 
-		foreach ( glob( $path . '/*.*' ) as $file ) {
-			$filename = basename( $file );
-			if ( 'group_nav_item_options.php' === $filename || 'group_nav_options.php' === $filename ) {
-				if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
-					require_once $file;
-				}
-			} else {
-				require_once $file;
-			}
+		foreach ( glob( $path . '/*.php' ) as $file ) {
+			require_once $file;
 		}
+
+		acf_update_setting( 'google_api_key', 'AIzaSyDJMJ6Ah3VGf2pLLJlI0qyT6qizD4tTj1M' );
 
 		if ( function_exists( 'acf_add_options_page' ) ) {
 
@@ -88,7 +80,33 @@ class ACF extends Singleton {
 				'icon_url'   => rwp()->get_setting( 'icon' ),
 				'autoload'   => true,
 			));
+
+			acf_add_options_page(array(
+				'page_title' => __( 'Company Schema Information', 'rwp' ),
+				'menu_title' => __( 'Company Info', 'rwp' ),
+				'menu_slug'  => rwp()->prefix( 'company-info', '-' ),
+				'icon_url'   => 'dashicons-building',
+				'autoload'   => true,
+			));
 		}
+	}
+
+	/**
+	 * Get ACF Addons
+	 *
+	 * @return void
+	 * @throws FileNotFoundException
+	 */
+	public function include_acf_extras() {
+		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
+		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
+		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
+
+		rwp_get_dependency_file( 'acf-address-map.php', 'externals/acf/acf-address-map-field', true, true );
+
+		//rwp_get_dependency_file( 'acf-fonticonpicker.php', 'externals/acf/acf-icon-picker', true, true );
+
+		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 	}
 
 	/**
@@ -139,7 +157,7 @@ class ACF extends Singleton {
 
 		$fields = \get_fields( $post_id );
 
-		$fields = self::sanitize_acf_array( $fields, $post_id ); // phpcs:ignore
+		$fields = self::sanitize_acf_array( $fields, '', $post_id ); // phpcs:ignore
 		\update_post_meta( $object->ID, '_rwp_acf', $fields );
 	}
 
@@ -156,7 +174,7 @@ class ACF extends Singleton {
 
 		$fields = \get_fields( $term_id );
 
-		$fields = self::sanitize_acf_array( $fields, $term_id ); // phpcs:ignore
+		$fields = self::sanitize_acf_array( $fields, '', $term_id ); // phpcs:ignore
 
 		\update_term_meta( $object->term_id, '_rwp_acf', $fields );
 	}
@@ -176,9 +194,9 @@ class ACF extends Singleton {
 
 		$fields = \get_fields( $post_id );
 
-		$fields = self::sanitize_acf_array( $fields, $post_id ); // phpcs:ignore
+		$fields = self::sanitize_acf_array( $fields, '', $post_id ); // phpcs:ignore
 
-		if ( rwp()->prefix( 'options', '-' ) === $option ) {
+		if ( rwp_str_has( $option, 'rwp-' ) ) {
 			rwp()->update_option( 'options', $fields );
         } else {
 			$option = rwp_change_case( $option, 'snake' );
@@ -190,15 +208,16 @@ class ACF extends Singleton {
 	/**
 	 *
 	 * @param array $fields
+	 * @param string $key
 	 * @param mixed $post_id
 	 * @return mixed
 	 */
 
-	public static function sanitize_acf_array( $fields, $post_id ) {
+	public static function sanitize_acf_array( $fields, $key = '', $post_id = 'options' ) {
 		$acf_fields = rwp_collection( $fields );
 
 		$acf_fields = $acf_fields->reject( function ( $item ) {
-            return empty( $item );
+            return blank( $item );
 		});
 
 		if ( $acf_fields->isNotEmpty() ) {
@@ -206,22 +225,40 @@ class ACF extends Singleton {
 			if ( wp_is_numeric_array( $fields ) && rwp_array_is_multi( $fields ) ) {
 				$acf_fields = $acf_fields->mapWithKeys(function ( $item ) {
 					if ( is_array( $item ) ) {
-						return [ $item['label'] => $item ];
+						return [ rwp_change_case( $item['label'], 'snake' ) => $item ];
 					}
 				});
 			}
 
 			$acf_fields->transform( function( $value, $key ) use ( $post_id ) {
 				if ( is_array( $value ) ) {
-					$value = self::sanitize_acf_array( $value, $post_id );
+					$value = self::sanitize_acf_array( $value, $key, $post_id );
 				}
+
 				return $value;
 			} );
+
+			if ( 'locations' === $key ) {
+				$acf_fields->transform( function( $value ) {
+					if ( $value->has( 'unit' ) ) {
+						$unit = $value->pull( 'unit' );
+						$value = data_set( $value, 'address.unit', $unit );
+						$address = data_get( $value, 'address.address' );
+						$street = data_get( $value, 'address.name' );
+						$street_with_unit = $street . ' ' . $unit;
+						$address = Str::replace( $street, $street_with_unit, $address );
+						$value = data_set( $value, 'address.address', $address );
+						$value = data_set( $value, 'address.name', $street_with_unit );
+					}
+					return $value;
+				} );
+
+			}
 
 			$fields = $acf_fields;
 		}
 
-		$fields = apply_filters( 'rwp_format_fields', $fields, $post_id );
+		$fields = apply_filters( 'rwp_format_fields', $fields, $key, $post_id );
 
         return $fields;
     }

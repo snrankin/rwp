@@ -119,3 +119,11 @@ function rwp_card( $args = array() ) {
 function rwp_post_card( $post = null, $args = [] ) {
 	return new RWP\Components\PostCard( $post, $args );
 }
+
+function rwp_location( $location, $args = [] ) {
+	return new RWP\Components\Location( $location, $args );
+}
+
+function rwp_locations( $locations = array(), $args = [] ) {
+	return RWP\Components\Location::output_locations( $locations, $args );
+}

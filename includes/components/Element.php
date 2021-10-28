@@ -224,7 +224,7 @@ class Element {
 	public function set_order( $key, $position = null ) {
 		$order = $this->order;
 
-		if ( empty( $postition ) ) {
+		if ( blank( $position ) ) {
 			$order[] = $key;
 		} else {
 			rwp_array_insert( $order, $position, $key );

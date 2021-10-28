@@ -34,10 +34,15 @@ class Nav extends Element {
 	public $depth = 0;
 
 	/**
-	 * @var NavList $list
+	 * @var mixed $list
 	 */
 
-	public $list;
+	public $list = array(
+        'class'     => array(
+            'nav',
+		),
+		'role' => 'menu',
+	);
 
 	/**
 	 * @var mixed $parent The subnav parent id
@@ -74,8 +79,8 @@ class Nav extends Element {
 
 		$navlist_args = $this->get( 'list', array() );
 
-		data_set( $navlist_args, 'direction', $this->direction );
-		data_set( $navlist_args, 'toggle_type', $this->toggle_type );
+		$navlist_args = data_set( $navlist_args, 'direction', $this->direction );
+		$navlist_args = data_set( $navlist_args, 'toggle_type', $this->toggle_type );
 
 		$this->list = new NavList( $navlist_args );
 	}

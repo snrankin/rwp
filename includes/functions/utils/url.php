@@ -20,6 +20,9 @@
  * @return bool Whether or not the string is a url
  */
 function rwp_is_url( $url = '' ) {
+	if ( empty( $url ) ) {
+        return false;
+    }
 	$input = wp_parse_url( $url );
 
     if ( empty( $input ) ) {

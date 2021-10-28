@@ -383,6 +383,16 @@ function rwp_post_id( $obj = null, $id_type = null ) {
 }
 
 /**
+ * Get the post slug
+ *
+ * @param mixed|null $post
+ * @return mixed
+ */
+function rwp_post_slug( $post = null ) {
+	return data_get( rwp_post( $post ), 'slug' );
+}
+
+/**
  * Filter Content
  *
  * Filters any string of content, makes sure the tags are balanced and applies

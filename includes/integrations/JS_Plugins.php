@@ -15,7 +15,7 @@
 namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
-
+use RWP\Vendor\Illuminate\Support\Collection;
 class JS_Plugins extends Singleton {
 
 	/**
@@ -24,29 +24,36 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		$rwp_js_plugins = rwp_get_option( 'modules.js_plugins', array() );
-		$rwp_icon_fonts = rwp_get_option( 'modules.icon_fonts', array() );
+		/**
+		 * @var Collection $rwp_js_plugins
+		 */
+		$rwp_js_plugins = rwp_get_option( 'modules.js_plugins', rwp_collection() );
 
-		if ( preg_grep( '/fancybox/i', $rwp_js_plugins ) ) {
+		/**
+		 * @var Collection $rwp_icon_fonts
+		 */
+		$rwp_icon_fonts = rwp_get_option( 'modules.icon_fonts', rwp_collection() );
+
+		if ( $rwp_js_plugins->search( 'Fancybox' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_fancybox' ) );
 		}
 
-		if ( preg_grep( '/select2/i', $rwp_js_plugins ) ) {
+		if ( $rwp_js_plugins->search( 'Select2' ) ) {
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_select2' ) );
 		}
 
-		if ( preg_grep( '/tiny(?:\s|\-)slider/i', $rwp_js_plugins ) ) {
+		if ( $rwp_js_plugins->search( 'Tiny Slider' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_tiny_slider' ) );
 		}
 
-		if ( preg_grep( '/font(?:\s|\-)awesome/i', $rwp_icon_fonts ) ) {
+		if ( $rwp_icon_fonts->search( 'Font Awesome' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_font_awesome' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_font_awesome' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_font_awesome' ) );
 		}
 
-		if ( preg_grep( '/bootstrap(?:\s|\-)icons/i', $rwp_icon_fonts ) ) {
+		if ( $rwp_icon_fonts->search( 'Bootstrap Icons' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_bootstrap_icons' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_bootstrap_icons' ) );

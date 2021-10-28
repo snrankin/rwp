@@ -45,6 +45,69 @@ class PostTypes extends Singleton {
 		\add_action( 'init', array( $this, 'load_cpts' ) );
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
+
+		if ( rwp_get_option( 'blog_permalinks', true ) ) {
+			\add_filter( 'register_post_type_args', array( $this, 'add_blog_page_to_post_url' ), 10, 2 );
+			\add_action( 'init', array( $this, 'update_post_permalinks' ) );
+		}
+
+	}
+
+	/**
+	 *
+	 * @param mixed $args
+	 * @param mixed $post_type
+	 * @return mixed
+	 */
+
+	public function add_blog_page_to_post_url( $args, $post_type ) {
+		$blog_page = rwp_get_blog_page();
+		if ( ! $blog_page ) {
+			return $args;
+		}
+
+		$blog_page = get_post( $blog_page );
+
+		if ( 'post' !== $post_type && ! ( $blog_page instanceof \WP_Post ) ) {
+			return $args;
+		}
+
+		$args['rewrite'] = array(
+			'slug' => $blog_page->post_name,
+			'with_front' => true,
+		);
+
+		return $args;
+
+	}
+
+	/**
+	 * Update post links if there is a custom blog page set
+	 *
+	 * @return void
+	 */
+	public function update_post_permalinks() {
+		$blog_page = rwp_get_blog_page();
+
+		if ( ! $blog_page ) {
+			return;
+		}
+		$blog_page = get_post( $blog_page );
+
+		if ( ! ( $blog_page instanceof \WP_Post ) ) {
+			return;
+		}
+		$blog_slug = $blog_page->post_name;
+		$permalink_structure = get_option( 'permalink_structure', '/%postname%/' );
+
+		$updated_permalink_structure = rwp_add_prefix( $permalink_structure, '/' . $blog_slug );
+
+		if ( '/%postname%/' === $permalink_structure ) {
+			update_option( 'permalink_structure', $updated_permalink_structure );
+		}
+
+		flush_rewrite_rules( true );
+
 	}
 
 	/**

@@ -36,6 +36,7 @@ class Bootstrap extends Singleton {
 		if ( rwp_get_option( 'modules.bootstrap.gutenberg', false ) ) {
 			add_filter( 'render_block', array( $this, 'embed_block' ), 10, 2 );
 		}
+
 	}
 
 
