@@ -96,7 +96,7 @@ function rwp_register_required_plugins() {
 		array(
 			'name'               => 'Advanced Custom Fields Pro',
 			'slug'               => 'advanced-custom-fields-pro',
-			'source'             => 'advanced-custom-fields-pro.zip',
+			'source'             => 'http://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9ODYzMzN8dHlwZT1kZXZlbG9wZXJ8ZGF0ZT0yMDE2LTA3LTI1IDIyOjE4OjI3',
 			'required'           => true,
 		),
 		array(
@@ -107,13 +107,13 @@ function rwp_register_required_plugins() {
 		array(
 			'name'               => 'Gravity Forms',
 			'slug'               => 'gravityforms',
-			'source'             => 'gravityforms.zip',
+			'source'             => 'https://s3.amazonaws.com/gravityforms/releases/gravityforms_2.5.14.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=9UeHBET48Uc8nEE2opQoi%2FtSvXc%3D',
 			'required'           => false,
 		),
 		array(
 			'name'               => 'Gravity Forms reCAPTCHA',
 			'slug'               => 'gravityformsrecaptcha',
-			'source'             => 'gravityformsrecaptcha.zip',
+			'source'             => 'https://s3.amazonaws.com/gravityforms/addons/recaptcha/gravityformsrecaptcha_1.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=G9YrzAAQFhL1wbJlKrWeX5jM41I%3D',
 			'required'           => false,
 		)
 	);

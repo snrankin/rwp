@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Filesystem;
 
-interface Filesystem {
+interface Filesystem
+{
     /**
      * The public visibility setting.
      *
@@ -28,7 +29,7 @@ interface Filesystem {
      * @param  string  $path
      * @return string
      *
-     * @throwsFileNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function get($path);
     /**
@@ -37,7 +38,7 @@ interface Filesystem {
      * @param  string  $path
      * @return resource|null The path resource or null on failure.
      *
-     * @throwsFileNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function readStream($path);
     /**
@@ -58,7 +59,7 @@ interface Filesystem {
      * @return bool
      *
      * @throws \InvalidArgumentException If $resource is not a file handle.
-     * @throwsFileExistsException
+     * @throws \Illuminate\Contracts\Filesystem\FileExistsException
      */
     public function writeStream($path, $resource, array $options = []);
     /**

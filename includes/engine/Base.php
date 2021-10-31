@@ -12,7 +12,7 @@
 namespace RWP\Engine;
 
 use RWP\Engine\Abstracts\Plugin;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 
 class Base extends Plugin {
 

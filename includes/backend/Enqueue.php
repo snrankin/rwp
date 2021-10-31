@@ -21,9 +21,6 @@ class Enqueue extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		if ( ! parent::initialize() ) {
-			return;
-		}
 
 		// Load admin style sheet and JavaScript.
 		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );

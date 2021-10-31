@@ -11,7 +11,7 @@
  * ========================================================================== */
 
 
-use \RWP\Vendor\Illuminate\Support\{Collection, Str};
+use \RWP\Vendor\Illuminate\Support\Collection;
 use RWP\Internals\PostTypes;
 use RWP\Internals\Taxonomies;
 
@@ -115,6 +115,29 @@ function rwp_cpt_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 function rwp_tax_labels( $singular, $plural = '', $menu = '', $slug = '' ) {
 
 	return Taxonomies::labels( $singular, $plural, $menu, $slug );
+}
+
+/**
+ * Get the page ID for the given or current post type
+ *
+ * @param bool|string $post_type
+ *
+ * @return bool|int
+ */
+function rwp_get_page_for_post_type( $post_type = false ) {
+	if ( ! $post_type && is_post_type_archive() ) {
+		$post_type = get_queried_object()->name;
+	}
+	if ( ! $post_type && is_singular() ) {
+		$post_type = get_queried_object()->post_type;
+	}
+	if ( ! $post_type && in_the_loop() ) {
+		$post_type = get_post_type();
+	}
+	if ( $post_type && in_array( $post_type, get_post_types() ) ) {
+		return get_option( "page_for_{$post_type}", false );
+	}
+	return false;
 }
 
 /**
@@ -234,7 +257,7 @@ function rwp_post( $obj = null, $type = 'post' ) {
 				$custom_archive_page = false;
 
 				if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
-					$custom_archive_page = get_page_for_post_type( $sub_type );
+					$custom_archive_page = rwp_get_page_for_post_type( $sub_type );
 				}
 
 				if ( ! empty( $custom_archive_page ) ) {
@@ -281,7 +304,7 @@ function rwp_post( $obj = null, $type = 'post' ) {
 				$custom_archive_page = false;
 
 				if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
-					$custom_archive_page = get_page_for_post_type( $sub_type );
+					$custom_archive_page = rwp_get_page_for_post_type( $sub_type );
 				}
 
 				if ( ! empty( $custom_archive_page ) ) {
@@ -610,7 +633,7 @@ function rwp_ancestors( $post = null ) {
 						$ancestors->push( $parent );
 					}
 				} elseif ( rwp_post_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
-					$parent = get_page_for_post_type( $subtype );
+					$parent = rwp_get_page_for_post_type( $subtype );
 					if ( $parent ) {
 						$ancestors->push( $parent );
 					}

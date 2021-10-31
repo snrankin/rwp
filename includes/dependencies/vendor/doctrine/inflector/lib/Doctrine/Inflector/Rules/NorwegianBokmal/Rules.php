@@ -11,10 +11,10 @@ final class Rules
 {
     public static function getSingularRuleset() : Ruleset
     {
-        return new Ruleset(new Transformations(...Inflectible::getSingular()), new Patterns(...Uninflected::getSingular()), (new Substitutions(...Inflectible::getIrregular()))->getFlippedSubstitutions());
+        return new Ruleset(new Transformations(...Rules\NorwegianBokmal\Inflectible::getSingular()), new Patterns(...Rules\NorwegianBokmal\Uninflected::getSingular()), (new Substitutions(...Rules\NorwegianBokmal\Inflectible::getIrregular()))->getFlippedSubstitutions());
     }
     public static function getPluralRuleset() : Ruleset
     {
-        return new Ruleset(new Transformations(...Inflectible::getPlural()), new Patterns(...Uninflected::getPlural()), new Substitutions(...Inflectible::getIrregular()));
+        return new Ruleset(new Transformations(...Rules\NorwegianBokmal\Inflectible::getPlural()), new Patterns(...Rules\NorwegianBokmal\Uninflected::getPlural()), new Substitutions(...Rules\NorwegianBokmal\Inflectible::getIrregular()));
     }
 }

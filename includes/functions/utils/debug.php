@@ -9,7 +9,7 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-use RWP\Vendor\WPBP\Debug\Debug;
+use RWP\Integrations\QM;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 
 /**
@@ -36,8 +36,7 @@ function rwp_dump( $var ) {
  * @return void
  */
 function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
-    $rwp_qm = Debug::instance( 'RWP' );
-    $rwp_qm->log( $var, $die, $function );
+	QM::instance()->log( $var, $die, $function );
 }
 
 

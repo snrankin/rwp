@@ -2,14 +2,15 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Cache;
 
-interface LockProvider {
+interface LockProvider
+{
     /**
      * Get a lock instance.
      *
      * @param  string  $name
      * @param  int  $seconds
      * @param  string|null  $owner
-     * @returnLock
+     * @return \Illuminate\Contracts\Cache\Lock
      */
     public function lock($name, $seconds = 0, $owner = null);
     /**
@@ -17,7 +18,7 @@ interface LockProvider {
      *
      * @param  string  $name
      * @param  string  $owner
-     * @returnLock
+     * @return \Illuminate\Contracts\Cache\Lock
      */
     public function restoreLock($name, $owner);
 }

@@ -14,7 +14,8 @@ namespace RWP\Vendor\Masterminds\HTML5\Parser;
  *
  * @deprecated since 2.4, to remove in 3.0. Use a string in the scanner instead.
  */
-class FileInputStream extends StringInputStream implements InputStream {
+class FileInputStream extends StringInputStream implements InputStream
+{
     /**
      * Load a file input stream.
      *
@@ -22,7 +23,8 @@ class FileInputStream extends StringInputStream implements InputStream {
      * @param string $encoding The encoding to use for the data.
      * @param string $debug    A fprintf format to use to echo the data on stdout.
      */
-    public function __construct($data, $encoding = 'UTF-8', $debug = '') {
+    public function __construct($data, $encoding = 'UTF-8', $debug = '')
+    {
         // Get the contents of the file.
         $content = \file_get_contents($data);
         parent::__construct($content, $encoding, $debug);

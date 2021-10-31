@@ -21,17 +21,17 @@ final class InflectorFactory
     {
         switch ($language) {
             case Language::ENGLISH:
-                return new InflectorFactory();
+                return new English\InflectorFactory();
             case Language::FRENCH:
-                return new InflectorFactory();
+                return new French\InflectorFactory();
             case Language::NORWEGIAN_BOKMAL:
-                return new InflectorFactory();
+                return new NorwegianBokmal\InflectorFactory();
             case Language::PORTUGUESE:
-                return new InflectorFactory();
+                return new Portuguese\InflectorFactory();
             case Language::SPANISH:
-                return new InflectorFactory();
+                return new Spanish\InflectorFactory();
             case Language::TURKISH:
-                return new InflectorFactory();
+                return new Turkish\InflectorFactory();
             default:
                 throw new \InvalidArgumentException(\sprintf('Language "%s" is not supported.', $language));
         }

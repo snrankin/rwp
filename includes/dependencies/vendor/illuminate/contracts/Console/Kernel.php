@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Console;
 
-interface Kernel {
+interface Kernel
+{
     /**
      * Bootstrap the application for artisan commands.
      *
@@ -12,8 +13,8 @@ interface Kernel {
     /**
      * Handle an incoming console command.
      *
-     * @param  \RWP\Vendor\Symfony\Input\InputInterface  $input
-     * @param  \RWP\Vendor\Symfony\Output\OutputInterface|null  $output
+     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param  \Symfony\Component\Console\Output\OutputInterface|null  $output
      * @return int
      */
     public function handle($input, $output = null);
@@ -22,7 +23,7 @@ interface Kernel {
      *
      * @param  string  $command
      * @param  array  $parameters
-     * @param  \RWP\Vendor\Symfony\Output\OutputInterface|null  $outputBuffer
+     * @param  \Symfony\Component\Console\Output\OutputInterface|null  $outputBuffer
      * @return int
      */
     public function call($command, array $parameters = [], $outputBuffer = null);
@@ -31,7 +32,7 @@ interface Kernel {
      *
      * @param  string  $command
      * @param  array  $parameters
-     * @returnPendingDispatch
+     * @return \Illuminate\Foundation\Bus\PendingDispatch
      */
     public function queue($command, array $parameters = []);
     /**
@@ -49,7 +50,7 @@ interface Kernel {
     /**
      * Terminate the application.
      *
-     * @param  \RWP\Vendor\Symfony\Input\InputInterface  $input
+     * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  int  $status
      * @return void
      */

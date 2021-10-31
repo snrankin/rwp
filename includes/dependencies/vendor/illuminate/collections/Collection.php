@@ -4,10 +4,11 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use ArrayAccess;
 use ArrayIterator;
+use RWP\Vendor\Illuminate\Contracts\Support\CanBeEscapedWhenCastToString;
 use RWP\Vendor\Illuminate\Support\Traits\EnumeratesValues;
 use RWP\Vendor\Illuminate\Support\Traits\Macroable;
 use stdClass;
-class Collection implements \ArrayAccess, Enumerable
+class Collection implements \ArrayAccess, CanBeEscapedWhenCastToString, Enumerable
 {
     use EnumeratesValues, Macroable;
     /**
@@ -1255,7 +1256,7 @@ class Collection implements \ArrayAccess, Enumerable
      *
      * @return \ArrayIterator
      */
-
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->items);
@@ -1265,7 +1266,7 @@ class Collection implements \ArrayAccess, Enumerable
      *
      * @return int
      */
-
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return \count($this->items);
@@ -1306,7 +1307,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $key
      * @return bool
      */
-
+    #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
         return isset($this->items[$key]);
@@ -1317,7 +1318,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $key
      * @return mixed
      */
-
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         return $this->items[$key];
@@ -1329,7 +1330,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  mixed  $value
      * @return void
      */
-
+    #[\ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
         if (\is_null($key)) {
@@ -1344,7 +1345,7 @@ class Collection implements \ArrayAccess, Enumerable
      * @param  string  $key
      * @return void
      */
-
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         unset($this->items[$key]);

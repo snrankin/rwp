@@ -16,24 +16,12 @@
         }
     ],
     "require": {
-        "airesvsg\/acf-to-rest-api": "^3.3",
         "brain\/hierarchy": "^2.5",
         "crazycodr\/standard-exceptions": "^2.4",
-        "darylldoyle\/safe-svg": "^1.9",
-        "humanmade\/page-for-post-type": "dev-master",
-        "illuminate\/config": "^8.33",
-        "illuminate\/container": "^8.37",
-        "illuminate\/support": "^8.33",
+        "doctrine\/inflector": "^2.0",
+        "illuminate\/collections": "^8.68",
         "johnbillion\/extended-cpts": "^4.5",
         "masterminds\/html5": "^2.7",
-        "mcguffin\/acf-quick-edit-fields": "^3.1",
-        "press-bits\/media-library-svg-display": "^0.1.2",
-        "seravo\/wp-custom-bulk-actions": "^0.1.4",
-        "stevegrunwell\/wp-cache-remember": "^1.1",
-        "symfony\/debug-bundle": "^5.3",
-        "symfony\/error-handler": "^5.2",
-        "symfony\/filesystem": "^5.2",
-        "symfony\/finder": "^5.2",
         "symfony\/var-dumper": "^5.2",
         "wa72\/html-pretty-min": "^0.2.0",
         "wa72\/htmlpagedom": "^2.0"
@@ -110,17 +98,12 @@
     },
     "autoload": {
         "psr-4": {
-            "RWP\\Vendor\\WPBP\\": "externals/wpbp/",
-            "RWP\\Vendor\\SafeSVG\\": "vendor/wordpress/safe-svg/includes",
             "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor/wordpress/hierarchy/src/"
         },
         "files": [
             "externals/data.php",
-            "vendor/wordpress/extended-cpts/extended-cpts.php",
-            "vendor/wordpress/wp-cache-remember/wp-cache-remember.php",
-            "vendor/wordpress/wp-custom-bulk-actions/custom-bulk-actions.php",
-            "vendor/wordpress/page-for-post-type/page-for-post-type.php",
-            "vendor/wordpress/safe-svg/safe-svg.php"
+            "vendor/wordpress/extended-cpts/functions.php",
+            "vendor/wordpress/extended-cpts/extended-cpts.php"
         ]
     }
 }

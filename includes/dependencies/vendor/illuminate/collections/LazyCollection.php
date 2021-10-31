@@ -5,11 +5,12 @@ namespace RWP\Vendor\Illuminate\Support;
 use ArrayIterator;
 use Closure;
 use DateTimeInterface;
+use RWP\Vendor\Illuminate\Contracts\Support\CanBeEscapedWhenCastToString;
 use RWP\Vendor\Illuminate\Support\Traits\EnumeratesValues;
 use RWP\Vendor\Illuminate\Support\Traits\Macroable;
 use IteratorAggregate;
 use stdClass;
-class LazyCollection implements Enumerable
+class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
 {
     use EnumeratesValues, Macroable;
     /**
@@ -1255,7 +1256,7 @@ class LazyCollection implements Enumerable
      *
      * @return \Traversable
      */
-
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->makeIterator($this->source);
@@ -1265,7 +1266,7 @@ class LazyCollection implements Enumerable
      *
      * @return int
      */
-
+    #[\ReturnTypeWillChange]
     public function count()
     {
         if (\is_array($this->source)) {

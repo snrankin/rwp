@@ -2,13 +2,14 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Redis;
 
-interface Connector {
+interface Connector
+{
     /**
      * Create a connection to a Redis cluster.
      *
      * @param  array  $config
      * @param  array  $options
-     * @returnConnection
+     * @return \Illuminate\Redis\Connections\Connection
      */
     public function connect(array $config, array $options);
     /**
@@ -17,7 +18,7 @@ interface Connector {
      * @param  array  $config
      * @param  array  $clusterOptions
      * @param  array  $options
-     * @returnConnection
+     * @return \Illuminate\Redis\Connections\Connection
      */
     public function connectToCluster(array $config, array $clusterOptions, array $options);
 }

@@ -17,7 +17,7 @@ use RWP\Vendor\Symfony\Component\CssSelector\Node\NodeInterface;
 use RWP\Vendor\Symfony\Component\CssSelector\Node\SelectorNode;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Parser;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\ParserInterface;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 /**
  * XPath expression translator interface.
  *

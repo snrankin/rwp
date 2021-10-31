@@ -15,7 +15,7 @@
 namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 use RWP\Vendor\Illuminate\Support\Collection;
 
 /**
@@ -34,9 +34,6 @@ class PostTypes extends Singleton {
 	 * @return void
 	 */
 	public function initialize() {
-		if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
-			rwp_get_plugin_file( 'page-for-post-type.php', 'includes/dependencies/vendor/wordpress/page-for-post-type', true, true );
-		}
 
 		$this::$cpts = rwp_collection( rwp_get_option( 'cpt_options.cpts', array() ) )->mapWithKeys(function ( $item ) {
 			return [ $item['value'] => $item['label'] ];

@@ -2,14 +2,15 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Encryption;
 
-interface StringEncrypter {
+interface StringEncrypter
+{
     /**
      * Encrypt a string without serialization.
      *
      * @param  string  $value
      * @return string
      *
-     * @throwsEncryptException
+     * @throws \Illuminate\Contracts\Encryption\EncryptException
      */
     public function encryptString($value);
     /**
@@ -18,7 +19,7 @@ interface StringEncrypter {
      * @param  string  $payload
      * @return string
      *
-     * @throwsDecryptException
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function decryptString($payload);
 }

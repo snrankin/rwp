@@ -2,11 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Support;
 
-interface MessageProvider {
+interface MessageProvider
+{
     /**
      * Get the messages for the instance.
      *
-     * @returnMessageBag
+     * @return \Illuminate\Contracts\Support\MessageBag
      */
     public function getMessageBag();
 }

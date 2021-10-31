@@ -4,7 +4,6 @@ namespace RWP\Vendor\Masterminds\HTML5\Parser;
 
 use RWP\Vendor\Masterminds\HTML5\Elements;
 use RWP\Vendor\Masterminds\HTML5\InstructionProcessor;
-
 /**
  * Create an HTML5 DOM tree from events.
  *
@@ -23,7 +22,8 @@ use RWP\Vendor\Masterminds\HTML5\InstructionProcessor;
  * re-written to accomodate this. See, for example, the Go language HTML5
  * parser.
  */
-class DOMTreeBuilder implements EventHandler {
+class DOMTreeBuilder implements EventHandler
+{
     /**
      * Defined in http://www.w3.org/TR/html51/infrastructure.html#html-namespace-0.
      */
@@ -108,7 +108,8 @@ class DOMTreeBuilder implements EventHandler {
      */
     protected $quirks = \true;
     protected $errors = array();
-    public function __construct($isFragment = \false, array $options = array()) {
+    public function __construct($isFragment = \false, array $options = array())
+    {
         $this->options = $options;
         if (isset($options[self::OPT_TARGET_DOC])) {
             $this->doc = $options[self::OPT_TARGET_DOC];
@@ -119,7 +120,7 @@ class DOMTreeBuilder implements EventHandler {
             // documents, and attempting to up-convert any older DTDs to HTML5.
             $dt = $impl->createDocumentType('html');
             // $this->doc = \DOMImplementation::createDocument(NULL, 'html', $dt);
-            $this->doc = $impl->createDocument(null, null, $dt);
+            $this->doc = $impl->createDocument(null, '', $dt);
             $this->doc->encoding = !empty($options['encoding']) ? $options['encoding'] : 'UTF-8';
         }
         $this->errors = array();
@@ -144,7 +145,8 @@ class DOMTreeBuilder implements EventHandler {
     /**
      * Get the document.
      */
-    public function document() {
+    public function document()
+    {
         return $this->doc;
     }
     /**
@@ -157,7 +159,8 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return \DOMDocumentFragment
      */
-    public function fragment() {
+    public function fragment()
+    {
         return $this->frag;
     }
     /**
@@ -168,10 +171,12 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @param InstructionProcessor $proc
      */
-    public function setInstructionProcessor(InstructionProcessor $proc) {
+    public function setInstructionProcessor(InstructionProcessor $proc)
+    {
         $this->processor = $proc;
     }
-    public function doctype($name, $idType = 0, $id = null, $quirks = \false) {
+    public function doctype($name, $idType = 0, $id = null, $quirks = \false)
+    {
         // This is used solely for setting quirks mode. Currently we don't
         // try to preserve the inbound DT. We convert it to HTML5.
         $this->quirks = $quirks;
@@ -194,7 +199,8 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return int
      */
-    public function startTag($name, $attributes = array(), $selfClosing = \false) {
+    public function startTag($name, $attributes = array(), $selfClosing = \false)
+    {
         $lname = $this->normalizeTagName($name);
         // Make sure we have an html element.
         if (!$this->doc->documentElement && 'html' !== $name && !$this->frag) {
@@ -309,6 +315,7 @@ class DOMTreeBuilder implements EventHandler {
             } elseif ($this->insertMode === static::IM_IN_MATHML) {
                 $aName = Elements::normalizeMathMlAttribute($aName);
             }
+            $aVal = (string) $aVal;
             try {
                 $prefix = ($pos = \strpos($aName, ':')) ? \substr($aName, 0, $pos) : \false;
                 if ('xmlns' === $prefix) {
@@ -363,7 +370,8 @@ class DOMTreeBuilder implements EventHandler {
         // various processing rules.
         return Elements::element($name);
     }
-    public function endTag($name) {
+    public function endTag($name)
+    {
         $lname = $this->normalizeTagName($name);
         // Special case within 12.2.6.4.7: An end tag whose tag name is "br" should be treated as an opening tag
         if ('br' === $name) {
@@ -417,12 +425,14 @@ class DOMTreeBuilder implements EventHandler {
                 break;
         }
     }
-    public function comment($cdata) {
+    public function comment($cdata)
+    {
         // TODO: Need to handle case where comment appears outside of the HTML tag.
         $node = $this->doc->createComment($cdata);
         $this->current->appendChild($node);
     }
-    public function text($data) {
+    public function text($data)
+    {
         // XXX: Hmmm.... should we really be this strict?
         if ($this->insertMode < static::IM_IN_HEAD) {
             // Per '8.2.5.4.3 The "before head" insertion mode' the characters
@@ -440,20 +450,25 @@ class DOMTreeBuilder implements EventHandler {
         $node = $this->doc->createTextNode($data);
         $this->current->appendChild($node);
     }
-    public function eof() {
+    public function eof()
+    {
         // If the $current isn't the $root, do we need to do anything?
     }
-    public function parseError($msg, $line = 0, $col = 0) {
+    public function parseError($msg, $line = 0, $col = 0)
+    {
         $this->errors[] = \sprintf('Line %d, Col %d: %s', $line, $col, $msg);
     }
-    public function getErrors() {
+    public function getErrors()
+    {
         return $this->errors;
     }
-    public function cdata($data) {
+    public function cdata($data)
+    {
         $node = $this->doc->createCDATASection($data);
         $this->current->appendChild($node);
     }
-    public function processingInstruction($name, $data = null) {
+    public function processingInstruction($name, $data = null)
+    {
         // XXX: Ignore initial XML declaration, per the spec.
         if ($this->insertMode === static::IM_INITIAL && 'xml' === \strtolower($name)) {
             return;
@@ -481,13 +496,15 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return string The normalized tag name.
      */
-    protected function normalizeTagName($tagName) {
+    protected function normalizeTagName($tagName)
+    {
         /*
          * Section 2.9 suggests that we should not do this. if (strpos($name, ':') !== false) { // We know from the grammar that there must be at least one other // char besides :, since : is not a legal tag start. $parts = explode(':', $name); return array_pop($parts); }
          */
         return $tagName;
     }
-    protected function quirksTreeResolver($name) {
+    protected function quirksTreeResolver($name)
+    {
         throw new \Exception('Not implemented.');
     }
     /**
@@ -497,7 +514,8 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return bool
      */
-    protected function autoclose($tagName) {
+    protected function autoclose($tagName)
+    {
         $working = $this->current;
         do {
             if (\XML_ELEMENT_NODE !== $working->nodeType) {
@@ -520,7 +538,8 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return bool
      */
-    protected function isAncestor($tagName) {
+    protected function isAncestor($tagName)
+    {
         $candidate = $this->current;
         while (\XML_ELEMENT_NODE === $candidate->nodeType) {
             if ($candidate->tagName === $tagName) {
@@ -537,7 +556,8 @@ class DOMTreeBuilder implements EventHandler {
      *
      * @return bool
      */
-    protected function isParent($tagName) {
+    protected function isParent($tagName)
+    {
         return $this->current->tagName === $tagName;
     }
 }

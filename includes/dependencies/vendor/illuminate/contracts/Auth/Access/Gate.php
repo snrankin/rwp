@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth\Access;
 
-interface Gate {
+interface Gate
+{
     /**
      * Determine if a given ability has been defined.
      *
@@ -86,9 +87,9 @@ interface Gate {
      *
      * @param  string  $ability
      * @param  array|mixed  $arguments
-     * @returnResponse
+     * @return \Illuminate\Auth\Access\Response
      *
-     * @throwsAuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorize($ability, $arguments = []);
     /**
@@ -96,7 +97,7 @@ interface Gate {
      *
      * @param  string  $ability
      * @param  array|mixed  $arguments
-     * @returnResponse
+     * @return \Illuminate\Auth\Access\Response
      */
     public function inspect($ability, $arguments = []);
     /**
@@ -106,7 +107,7 @@ interface Gate {
      * @param  array|mixed  $arguments
      * @return mixed
      *
-     * @throwsAuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function raw($ability, $arguments = []);
     /**
@@ -121,7 +122,7 @@ interface Gate {
     /**
      * Get a guard instance for the given user.
      *
-     * @param Authenticatable|mixed  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
      * @return static
      */
     public function forUser($user);

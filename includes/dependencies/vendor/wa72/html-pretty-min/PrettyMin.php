@@ -182,7 +182,7 @@ class PrettyMin
             $code = $element->nodeValue;
             $element->nodeValue = '';
             if (\trim($code)) {
-                $min = new Minifier();
+                $min = new CSSmin();
                 if (\trim($code)) {
                     $code = \trim($min->run($code));
                 }

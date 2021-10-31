@@ -111,7 +111,7 @@ hr.wp-block-separator {
   border-radius: 0;
 }
 @media screen {
-  body.rwp {
+  body.rwp:not(.wp-admin) {
     display: flex;
     flex-direction: column;
     min-height: 100vh;

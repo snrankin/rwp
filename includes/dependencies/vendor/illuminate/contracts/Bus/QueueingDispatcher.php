@@ -2,19 +2,20 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Bus;
 
-interface QueueingDispatcher extends Dispatcher {
+interface QueueingDispatcher extends Dispatcher
+{
     /**
      * Attempt to find the batch with the given ID.
      *
      * @param  string  $batchId
-     * @returnBatch|null
+     * @return \Illuminate\Bus\Batch|null
      */
     public function findBatch(string $batchId);
     /**
      * Create a new batch of queueable jobs.
      *
-     * @param Collection|array  $jobs
-     * @returnPendingBatch
+     * @param  Collection|array  $jobs
+     * @return \Illuminate\Bus\PendingBatch
      */
     public function batch($jobs);
     /**

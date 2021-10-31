@@ -11,10 +11,10 @@ final class Rules
 {
     public static function getSingularRuleset() : Ruleset
     {
-        return new Ruleset(new Transformations(...Inflectible::getSingular()), new Patterns(...Uninflected::getSingular()), (new Substitutions(...Inflectible::getIrregular()))->getFlippedSubstitutions());
+        return new Ruleset(new Transformations(...Rules\Turkish\Inflectible::getSingular()), new Patterns(...Rules\Turkish\Uninflected::getSingular()), (new Substitutions(...Rules\Turkish\Inflectible::getIrregular()))->getFlippedSubstitutions());
     }
     public static function getPluralRuleset() : Ruleset
     {
-        return new Ruleset(new Transformations(...Inflectible::getPlural()), new Patterns(...Uninflected::getPlural()), new Substitutions(...Inflectible::getIrregular()));
+        return new Ruleset(new Transformations(...Rules\Turkish\Inflectible::getPlural()), new Patterns(...Rules\Turkish\Uninflected::getPlural()), new Substitutions(...Rules\Turkish\Inflectible::getIrregular()));
     }
 }

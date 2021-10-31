@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Notifications;
 
-interface Factory {
+interface Factory
+{
     /**
      * Get a channel instance by name.
      *
@@ -13,7 +14,7 @@ interface Factory {
     /**
      * Send the given notification to the given notifiable entities.
      *
-     * @param Collection|array|mixed  $notifiables
+     * @param  Collection|array|mixed  $notifiables
      * @param  mixed  $notification
      * @return void
      */
@@ -21,7 +22,7 @@ interface Factory {
     /**
      * Send the given notification immediately.
      *
-     * @param Collection|array|mixed  $notifiables
+     * @param  Collection|array|mixed  $notifiables
      * @param  mixed  $notification
      * @return void
      */

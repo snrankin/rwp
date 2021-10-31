@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Encryption;
 
-interface Encrypter {
+interface Encrypter
+{
     /**
      * Encrypt the given value.
      *
@@ -10,7 +11,7 @@ interface Encrypter {
      * @param  bool  $serialize
      * @return string
      *
-     * @throwsEncryptException
+     * @throws \Illuminate\Contracts\Encryption\EncryptException
      */
     public function encrypt($value, $serialize = \true);
     /**
@@ -20,7 +21,7 @@ interface Encrypter {
      * @param  bool  $unserialize
      * @return mixed
      *
-     * @throwsDecryptException
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function decrypt($payload, $unserialize = \true);
 }

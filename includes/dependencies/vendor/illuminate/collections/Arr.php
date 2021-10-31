@@ -327,6 +327,18 @@ class Arr
         return \array_keys($keys) !== $keys;
     }
     /**
+     * Determines if an array is a list.
+     *
+     * An array is a "list" if all array keys are sequential integers starting from 0 with no gaps in between.
+     *
+     * @param  array  $array
+     * @return bool
+     */
+    public static function isList($array)
+    {
+        return !self::isAssoc($array);
+    }
+    /**
      * Get a subset of the items from the given array.
      *
      * @param  array  $array
