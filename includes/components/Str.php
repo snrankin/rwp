@@ -36,6 +36,53 @@ class Str {
      */
     protected static $studly_cache = [];
 
+	/**
+     * The cache of title-cased words.
+     *
+     * @var array
+     */
+    protected static $title_leave_alone = [
+		'and',
+		'as',
+		'as if',
+		'as long as',
+		'at',
+		'but',
+		'by',
+		'even if',
+		'for',
+		'from',
+		'if',
+		'if only',
+		'in',
+		'into',
+		'like',
+		'near',
+		'now that',
+		'nor',
+		'of',
+		'off',
+		'on',
+		'on top of',
+		'once',
+		'onto',
+		'or',
+		'out of',
+		'over',
+		'past',
+		'so',
+		'so that',
+		'than',
+		'that',
+		'till',
+		'to',
+		'up',
+		'upon',
+		'with',
+		'when',
+		'yet',
+	];
+
     /**
      * Return the remainder of a string after the first occurrence of a given value.
      *
@@ -504,7 +551,24 @@ class Str {
      * @return string
      */
     public static function title( $value ) {
-        return \mb_convert_case( $value, \MB_CASE_TITLE, 'UTF-8' );
+		$value = explode( ' ', $value );
+		$prepositions = self::$title_leave_alone;
+		$leave_alone = (array) apply_filters( 'rwp_title_leave_alone', $prepositions );
+
+		$leave_alone = implode( '|', $leave_alone );
+		$leave_alone = "/$leave_alone/";
+
+		foreach ( $value as $index => $item ) {
+			if ( ( 0 === $index && in_array( $item, $prepositions ) ) || ! preg_match( $leave_alone, $item ) ) {
+				$item = \mb_convert_case( $item, \MB_CASE_TITLE, 'UTF-8' );
+			}
+
+			$value[ $index ] = $item;
+		}
+
+		$value = implode( ' ', $value );
+
+		return $value;
     }
     /**
      * Get the singular form of an English word.

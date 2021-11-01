@@ -93,8 +93,7 @@ html {
 }
 
 .rwp.wp-core-ui .attachment-preview[class*="subtype-svg+xml"] .centered {
-  -webkit-transform: none;
-          transform: none;
+  transform: none;
 }
 .rwp.wp-core-ui .attachment-preview[class*="subtype-svg+xml"] .centered img {
   top: 50%;

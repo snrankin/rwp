@@ -10,7 +10,9 @@
  */
 
 const path = require('path');
+const fs = require('fs');
 const _ = require('lodash');
+const { argv } = require('yargs');
 const { merge, mergeWithCustomize, customizeArray } = require('webpack-merge');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const magicImporter = require('node-sass-magic-importer');
@@ -18,19 +20,23 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const ExtractCssChunks = require('mini-css-extract-plugin');
 const RemovePlugin = require('remove-files-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+
 const { createConfig } = require('./config');
-const { argv } = require('yargs');
+
+const isProduction =
+	!_.isNil(argv.env) && 'production' === argv.env ? true : false;
 const groupName = !_.isNil(argv.name) ? argv.name : '';
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
 const config = createConfig(groupName, configName);
-const isProduction = config.enabled.production;
-const fs = require('fs');
-const { extendDefaultPlugins } = require('svgo');
-const styleTypes = new RegExp(/\.css$/);
-const scriptTypes = new RegExp(/\.js$/);
-const imageTypes = new RegExp(/\.(png|jpe?g|gif|svg|ico)$/);
-const fontTypes = new RegExp(/\.(ttf|otf|eot|woff2?)$/);
+
+const manifestPath = path.join(config.paths.dist, 'manifest.json');
+const manifestSeed = fs.existsSync(manifestPath)
+	? JSON.parse(fs.readFileSync(manifestPath))
+	: {};
+
 const cssLoaders = [
 	{
 		loader: ExtractCssChunks.loader,
@@ -97,9 +103,27 @@ const startingPlugins = config.enabled.cachebusting
 
 exports.startingPlugins = startingPlugins;
 
-const assetname = config.enabled.cachebusting
-	? `${config.cachebusting}`
-	: '[name]';
+const endingPlugins = [
+	new WebpackManifestPlugin({
+		basePath: '',
+		publicPath: '',
+		map: (file) => {
+			let fileName = !_.isNil(file.name) ? file.name : file.path;
+			fileName = path.basename(fileName.replace(/\?.*/gm, ''));
+			file.name = fileName;
+			return file;
+		},
+		seed: manifestSeed,
+		removeKeyHash: true,
+		writeToFileEmit: true,
+	}),
+	new FriendlyErrorsWebpackPlugin({
+		logLevel: buildWatch ? 'SILENT' : 'WARNING',
+		clearConsole: true,
+	}),
+];
+
+exports.endingPlugins = endingPlugins;
 
 let webpackConfig = {
 	module: {
@@ -130,17 +154,35 @@ let webpackConfig = {
 			},
 			{
 				test: /\.(ttf|otf|eot|woff2?)$/,
-				type: 'asset/resource',
+				type: 'asset',
+				dependency: { not: ['url'] },
 				generator: {
 					filename: `${config.folders.fonts}/${config.assetname}`,
 				},
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8192,
+						},
+					},
+				],
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg|ico)$/,
-				type: 'asset/resource',
+				type: 'asset',
+				dependency: { not: ['url'] },
 				generator: {
 					filename: `${config.folders.images}/${config.assetname}`,
 				},
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8192,
+						},
+					},
+				],
 			},
 		],
 	},
@@ -198,46 +240,6 @@ if (isProduction) {
 					plugins: ['gifsicle', 'jpegtran', 'optipng', 'svgo'],
 				},
 				loader: false,
-			}),
-		],
-	});
-}
-
-if (config.enabled.manifest && !buildWatch) {
-	const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-	const manifestPath = path.join(config.paths.dist, 'manifest.json');
-
-	let manifestSeed = {};
-	if (fs.existsSync(manifestPath)) {
-		const rawdata = fs.readFileSync(manifestPath);
-		manifestSeed = JSON.parse(rawdata);
-	}
-	webpackConfig = mergeWithCustomize({
-		customizeArray: customizeArray({
-			plugins: 'append',
-		}),
-	})(webpackConfig, {
-		plugins: [
-			new WebpackManifestPlugin({
-				basePath: '',
-				publicPath: '',
-				filter: (file) => {
-					let fileName = !_.isNil(file.name) ? file.name : file.path;
-					fileName = path.basename(fileName.replace(/\?.*/gm, ''));
-					if (fontTypes.test(fileName)) {
-						return false;
-					}
-					return true;
-				},
-				map: (file) => {
-					let fileName = !_.isNil(file.name) ? file.name : file.path;
-					fileName = path.basename(fileName.replace(/\?.*/gm, ''));
-					file.name = fileName;
-					return file;
-				},
-				seed: manifestSeed,
-				removeKeyHash: true,
-				writeToFileEmit: true,
 			}),
 		],
 	});

@@ -1,22 +1,20 @@
 <?php
-
 /** ============================================================================
  * WordPress Widgets Helper Class
  *
- * Based on @link https://github.com/sksmatt/WordPress-Widgets-Helper-Class
- *
- * @package   RWP\/dependencies/vendor/wpbp/WidgetsHelper/WidgetsHelper.php
  * @link      https://github.com/WPBP/Widgets-Helper
  * @since     0.2.0
  * @version   1.0.12
  * @author    Matt Varone & riesurya & Mte90
- * @copyright 2020 - 2021 RIESTER Advertising Agency
- * @license   GPL-2.0+
  * ========================================================================== */
 
-namespace RWP\Internals;
+namespace RWP\Engine\Abstracts;
 
-class WidgetBase extends \WP_Widget {
+if ( ! \defined( 'ABSPATH' ) ) {
+	die( 'FU!' );
+}
+
+abstract class Widget extends \WP_Widget {
 
     /**
      * Create Widget

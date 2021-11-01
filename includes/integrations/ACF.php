@@ -214,9 +214,11 @@ class ACF extends Singleton {
 		if ( $acf_fields->isNotEmpty() ) {
 
 			if ( wp_is_numeric_array( $fields ) && rwp_array_is_multi( $fields ) ) {
-				$acf_fields = $acf_fields->mapWithKeys(function ( $item ) {
-					if ( is_array( $item ) ) {
+				$acf_fields = $acf_fields->mapWithKeys(function ( $item, $key ) {
+					if ( is_array( $item ) && rwp_array_has( 'label', $item ) ) {
 						return [ rwp_change_case( $item['label'], 'snake' ) => $item ];
+					} else {
+						return [ $key => $item ];
 					}
 				});
 			}

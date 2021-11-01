@@ -175,7 +175,7 @@ function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, 
                                $file = include $filename;
                         }
                     }
-                } elseif ( 'css' === $type || 'js' === $type ) {
+                } elseif ( 'css' === $type || 'js' === $type || 'json' === $type ) {
                     $file = rwp_get_file_data( $filename, true );
                 } else {
                     $file = $filename;

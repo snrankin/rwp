@@ -15,11 +15,44 @@
 	padding: $gutter / 2;
 }
 
-@mixin acf-row($gutter: $acf-gutter) {
-	@include make-row(0);
+@mixin acf-row($x-gutter: 12px, $y-gutter: 15px) {
+	--#{$variable-prefix}gutter-x: #{$x-gutter};
+	--#{$variable-prefix}gutter-y: #{$y-gutter};
 
+	display: flex;
+	flex-wrap: wrap;
+	padding-right: calc(
+		var(--#{$variable-prefix}gutter-x) * 0.5
+	) !important; // stylelint-disable-line function-disallowed-list
+	padding-left: calc(
+		var(--#{$variable-prefix}gutter-x) * 0.5
+	) !important; // stylelint-disable-line function-disallowed-list
 	width: 100%;
-	padding: $gutter / 2;
+	padding-bottom: var(--#{$variable-prefix}gutter-y);
+}
+
+// Grid system
+//
+// Generate semantic grid columns with these mixins.
+
+@mixin make-row-2($x-gutter: 12px, $y-gutter: 15px) {
+	--#{$variable-prefix}gutter-x: #{$x-gutter};
+	--#{$variable-prefix}gutter-y: #{$y-gutter};
+
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: calc(
+		var(--#{$variable-prefix}gutter-y) * -1
+	); // stylelint-disable-line function-disallowed-list
+	margin-right: calc(
+		var(--#{$variable-prefix}gutter-x) * -0.5
+	); // stylelint-disable-line function-disallowed-list
+	margin-left: calc(
+		var(--#{$variable-prefix}gutter-x) * -0.5
+	); // stylelint-disable-line function-disallowed-list
+	width: calc(100% + var(--#{$variable-prefix}gutter-x));
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 @mixin acf-table-row() {

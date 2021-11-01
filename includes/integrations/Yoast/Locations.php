@@ -20,10 +20,10 @@ class Locations extends Organization {
      *
      * @return array Person Schema markup.
      */
-    public function generate() {
-        $data = parent::generate();
+	public function generate() {
+		$data = parent::generate();
 
-        /**
+		/**
 		 * @var Collection $locations
 		 */
 		$locations = rwp_get_option( 'locations', rwp_collection() );
@@ -76,7 +76,6 @@ class Locations extends Organization {
 
 		if ( ! empty( $city ) ) {
 			$address['addressLocality'] = $city;
-
 		}
 
 		if ( ! empty( $state ) ) {
@@ -109,10 +108,102 @@ class Locations extends Organization {
 			);
 		}
 
+		$map_url = data_get( $location, 'map_url.url' );
+
+		if ( ! empty( $map_url ) ) {
+			$data['hasMap'] = $map_url;
+		}
+
+		$page_url = data_get( $location, 'page_url.url' );
+
+		if ( ! empty( $page_url ) ) {
+			$data['url'] = $page_url;
+		}
+
 		$phone = data_get( $location, 'phone' );
 
 		if ( ! empty( $phone ) ) {
 			$data['telephone'] = $phone;
+		}
+
+		$email = data_get( $location, 'email' );
+
+		if ( ! empty( $email ) ) {
+			$data['email'] = $email;
+		}
+
+		/**
+		 * @var Collection $schedules
+		 */
+		$schedules = data_get( $location, 'schedules', rwp_collection() );
+
+		if ( rwp_is_collection( $schedules ) && $schedules->isNotEmpty() ) {
+			$schedules = $schedules->filter(function( $schedule ) {
+				return $schedule->get( 'add_to_schema' );
+			});
+
+			if ( $schedules->isNotEmpty() ) {
+				$data['openingHoursSpecification'] = array();
+				/**
+				 * @var Collection $schedule
+				 */
+				$schedule = $schedules->first();
+
+				if ( rwp_is_collection( $schedule ) && $schedule->isNotEmpty() ) {
+
+					/**
+					 * @var Collection $hours
+					 */
+					$hours = $schedule->get( 'hours' );
+
+					$hours = $hours->where( 'type', '===', 'opened' );
+
+					if ( rwp_is_collection( $hours ) && $hours->isNotEmpty() ) {
+
+						foreach ( $hours->all() as $value ) {
+							/**
+							 * @var Collection $days
+							 */
+							$days = data_get( $value, 'days' );
+
+							$all_day = data_get( $value, 'all_day', false );
+
+							$times = data_get( $value, 'times', array() );
+
+							$timezone = wp_timezone();
+
+							$start_time = '';
+							$end_time = '';
+
+							if ( 1 == $days->count() ) {
+								$days = $days->first();
+							} else {
+								$days = $days->all();
+							}
+
+							if ( ! $all_day ) {
+								$start_time = data_get( $times, 'start' );
+								$start_time = new \DateTime( $start_time, $timezone );
+								$start_time = $start_time->format( 'H:i' );
+
+								$end_time = data_get( $times, 'end' );
+								$end_time = new \DateTime( $end_time, $timezone );
+								$end_time = $end_time->format( 'H:i' );
+
+							} else {
+								$start_time = '00:00';
+								$end_time = '23:59';
+							}
+							$data['openingHoursSpecification'][] = array(
+								'@type' => 'OpeningHoursSpecification',
+								'dayOfWeek' => $days,
+								'opens' => $start_time,
+								'closes' => $end_time,
+							);
+						}
+					}
+				}
+			}
 		}
 
 		return $data;

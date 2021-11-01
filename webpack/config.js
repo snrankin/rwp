@@ -139,12 +139,15 @@ const createConfig = (groupName = '', configName = '') => {
 					customConfig.folders.js,
 					`${filenameTemplate}.js`
 				),
+				assetModuleFilename: path.join(
+					customConfig.folders.images,
+					assetnameTemplate
+				),
 			},
 			stats: buildStats,
 			watchOptions: {
 				ignored: [
 					'**/*.php',
-					'node_modules/**',
 					'**/*.json',
 					'node_modules/**',
 					config.paths.dist,

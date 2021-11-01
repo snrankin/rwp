@@ -1,0 +1,37 @@
+/// ======================================================================== ///
+/// @name   _repeater
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-repeater {
+		&.-block {
+			> table {
+				> tbody {
+					> tr {
+						> .acf-fields {
+							@include acf-row();
+						}
+						> .acf-row-handle {
+							padding: $acf-gutter/2;
+							width: auto;
+							width: 32px;
+							.acf-icon {
+								margin: 0 !important;
+								top: 0;
+								left: 50%;
+								transform: translate(-50%, -50%);
+							}
+						}
+					}
+				}
+				.acf-actions {
+					margin-top: var(--#{$variable-prefix}gutter-y);
+				}
+			}
+		}
+	}
+}

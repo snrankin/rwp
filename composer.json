@@ -82,7 +82,7 @@
             "vendor/bin/phpcs"
         ],
         "phpstan": [
-            "vendor/bin/phpstan analyse --ansi --debug --memory-limit=1G"
+            "vendor/bin/phpstan analyse --ansi --memory-limit=-1"
         ],
         "test": [
             "@grum"

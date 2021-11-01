@@ -12,9 +12,13 @@
 const { mergeWithCustomize, customizeArray, merge } = require('webpack-merge');
 const webpack = require('webpack');
 const _ = require('lodash');
-const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
-const { startingPlugins, baseConfig } = require('./webpack.config');
-const { rwpDebug } = require('./utils');
+
+const {
+	startingPlugins,
+	baseConfig,
+	endingPlugins,
+} = require('./webpack.config');
+// const { rwpDebug } = require('./utils');
 let webpackConfig = {
 	module: {
 		rules: [
@@ -52,7 +56,6 @@ let webpackConfig = {
 			jQuery: 'jquery',
 			'window.jQuery': 'jquery',
 		}),
-		new FriendlyErrorsWebpackPlugin(),
 	],
 };
 
@@ -64,8 +67,16 @@ webpackConfig = mergeWithCustomize({
 	}),
 })(webpackConfig, { plugins: startingPlugins });
 
+webpackConfig = mergeWithCustomize({
+	customizeArray: customizeArray({
+		plugins: 'append',
+	}),
+})(webpackConfig, { plugins: endingPlugins });
+
 if (_.has(webpackConfig, 'name')) {
 	webpackConfig = [webpackConfig];
 }
-// rwpDebug(webpackConfig);
+
+//rwpDebug(webpackConfig);
+
 module.exports = webpackConfig;
