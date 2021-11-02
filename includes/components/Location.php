@@ -413,9 +413,11 @@ class Location extends Element {
 			$phone = $this->location->get( 'phone' );
 		}
 
+		$label = $this->location->get( 'label' );
+
 		if ( is_array( $args ) && ! empty( $args ) ) {
 			$defaults = $this->phone->toArray();
-			$defaults = rwp_merge_args( $phone, $args );
+			$defaults = rwp_merge_args( $defaults, $args );
 
 			$this->phone = new Element( $defaults );
 		}
@@ -425,6 +427,9 @@ class Location extends Element {
 		if ( 'a' === $this->phone->tag ) {
 			$link = rwp_output_href( $phone );
 			$this->phone->set_attr( 'href', $link );
+			$title = wp_sprintf( 'Call %s at %s', get_bloginfo( 'name' ), $phone );
+			$title = apply_filters( 'rwp_phone_link_title', $title, $label );
+			$this->phone->set_attr( 'title', $title );
 		}
 
 	}
@@ -441,9 +446,11 @@ class Location extends Element {
 			$email = $this->location->get( 'email' );
 		}
 
+		$label = $this->location->get( 'label' );
+
 		if ( is_array( $args ) && ! empty( $args ) ) {
 			$defaults = $this->email->toArray();
-			$defaults = rwp_merge_args( $email, $args );
+			$defaults = rwp_merge_args( $defaults, $args );
 
 			$this->email = new Element( $defaults );
 		}
@@ -453,6 +460,9 @@ class Location extends Element {
 		if ( 'a' === $this->email->tag ) {
 			$link = rwp_output_href( $email );
 			$this->email->set_attr( 'href', $link );
+			$title = wp_sprintf( 'Email %s at %s', get_bloginfo( 'name' ), $email );
+			$title = apply_filters( 'rwp_email_link_title', $title, $label );
+			$this->email->set_attr( 'title', $title );
 		}
 
 	}
