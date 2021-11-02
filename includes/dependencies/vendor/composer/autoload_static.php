@@ -39,6 +39,8 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
             'RWP\\Vendor\\JSMin\\' => 17,
             'RWP\\Vendor\\Illuminate\\Support\\' => 30,
             'RWP\\Vendor\\Illuminate\\Contracts\\' => 32,
+            'RWP\\Vendor\\Illuminate\\Container\\' => 32,
+            'RWP\\Vendor\\Illuminate\\Config\\' => 29,
             'RWP\\Vendor\\Exceptions\\Helpers\\' => 30,
             'RWP\\Vendor\\Exceptions\\' => 22,
             'RWP\\Vendor\\Doctrine\\Inflector\\' => 30,
@@ -115,6 +117,14 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         'RWP\\Vendor\\Illuminate\\Contracts\\' => 
         array (
             0 => __DIR__ . '/..' . '/illuminate/contracts',
+        ),
+        'RWP\\Vendor\\Illuminate\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/container',
+        ),
+        'RWP\\Vendor\\Illuminate\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/config',
         ),
         'RWP\\Vendor\\Exceptions\\Helpers\\' => 
         array (
@@ -320,6 +330,13 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         'RWP\\Vendor\\Exceptions\\Tag\\NotFoundTag' => __DIR__ . '/..' . '/crazycodr/standard-exceptions/Exceptions/Tag/NotFoundTag.php',
         'RWP\\Vendor\\Exceptions\\Tag\\OperationAbortedException' => __DIR__ . '/..' . '/crazycodr/standard-exceptions/Exceptions/Tag/OperationAbortedException.php',
         'RWP\\Vendor\\Exceptions\\Tag\\UnauthorizedTag' => __DIR__ . '/..' . '/crazycodr/standard-exceptions/Exceptions/Tag/UnauthorizedTag.php',
+        'RWP\\Vendor\\Illuminate\\Config\\Repository' => __DIR__ . '/..' . '/illuminate/config/Repository.php',
+        'RWP\\Vendor\\Illuminate\\Container\\BoundMethod' => __DIR__ . '/..' . '/illuminate/container/BoundMethod.php',
+        'RWP\\Vendor\\Illuminate\\Container\\Container' => __DIR__ . '/..' . '/illuminate/container/Container.php',
+        'RWP\\Vendor\\Illuminate\\Container\\ContextualBindingBuilder' => __DIR__ . '/..' . '/illuminate/container/ContextualBindingBuilder.php',
+        'RWP\\Vendor\\Illuminate\\Container\\EntryNotFoundException' => __DIR__ . '/..' . '/illuminate/container/EntryNotFoundException.php',
+        'RWP\\Vendor\\Illuminate\\Container\\RewindableGenerator' => __DIR__ . '/..' . '/illuminate/container/RewindableGenerator.php',
+        'RWP\\Vendor\\Illuminate\\Container\\Util' => __DIR__ . '/..' . '/illuminate/container/Util.php',
         'RWP\\Vendor\\Illuminate\\Contracts\\Auth\\Access\\Authorizable' => __DIR__ . '/..' . '/illuminate/contracts/Auth/Access/Authorizable.php',
         'RWP\\Vendor\\Illuminate\\Contracts\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/illuminate/contracts/Auth/Access/Gate.php',
         'RWP\\Vendor\\Illuminate\\Contracts\\Auth\\Authenticatable' => __DIR__ . '/..' . '/illuminate/contracts/Auth/Authenticatable.php',

@@ -23,6 +23,8 @@ return array(
     'RWP\\Vendor\\JSMin\\' => array($vendorDir . '/mrclay/jsmin-php/src/JSMin'),
     'RWP\\Vendor\\Illuminate\\Support\\' => array($vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/macroable'),
     'RWP\\Vendor\\Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
+    'RWP\\Vendor\\Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
+    'RWP\\Vendor\\Illuminate\\Config\\' => array($vendorDir . '/illuminate/config'),
     'RWP\\Vendor\\Exceptions\\Helpers\\' => array($vendorDir . '/crazycodr/standard-exceptions/Helpers'),
     'RWP\\Vendor\\Exceptions\\' => array($vendorDir . '/crazycodr/standard-exceptions/Exceptions'),
     'RWP\\Vendor\\Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
