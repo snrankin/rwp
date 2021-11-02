@@ -129,6 +129,16 @@ class Location extends Element {
 	 */
 	public $time_separator = ' &ndash; ';
 
+	/**
+	 * @var string $day_format
+	 */
+	public $day_format = 'D';
+
+	/**
+	 * @var string $time_format
+	 */
+	public $time_format = 'g:i a';
+
 
 	public function __construct( $location, $args = [] ) {
 
@@ -143,8 +153,11 @@ class Location extends Element {
 			$this->location = self::get_location_info( $location );
 		}
 
-		$this->day_separator = apply_filters( 'rwp_schedules_day_seperator', $this->day_separator );
-		$this->time_separator = apply_filters( 'rwp_schedules_time_seperator', $this->time_separator );
+		$this->day_separator = apply_filters( 'rwp_schedules_day_separator', $this->day_separator );
+		$this->time_separator = apply_filters( 'rwp_schedules_time_separator', $this->time_separator );
+
+		$this->day_format = apply_filters( 'rwp_schedules_day_format', $this->day_format );
+		$this->time_format = apply_filters( 'rwp_schedules_time_format', $this->time_format );
 
 		if ( empty( self::$weekday_order ) ) {
 			$weekdays = rwp_collection(array(
@@ -522,8 +535,8 @@ class Location extends Element {
 
 	public function set_schedule( $label = '', $args = array() ) {
 
-		$day_format = data_get( $args, 'day_format', 'l' );
-		$time_format = data_get( $args, 'time_format', 'g:i a' );
+		$day_format = $this->day_format;
+		$time_format = $this->time_format;
 		$combine = data_get( $args, 'combine', false );
 		$add_label = data_get( $args, 'add_label', true );
 

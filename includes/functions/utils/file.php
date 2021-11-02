@@ -156,6 +156,7 @@ function rwp_find_plugin_file( $filename, $dir = '' ) {
 function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, $once = false ) {
 	if ( is_string( $filename ) ) {
         $file = '';
+		$filename = Str::before( $filename, '?' );
         $type = pathinfo( $filename, PATHINFO_EXTENSION );
         if ( filter_var( $filename, FILTER_VALIDATE_URL ) == false ) {
             $filename = rwp_find_file( $filename, $dir, $base );

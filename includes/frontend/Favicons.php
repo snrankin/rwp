@@ -11,7 +11,7 @@
 namespace RWP\Frontend;
 
 use RWP\Engine\Abstracts\Singleton;
-
+use RWP\Components\Str;
 class Favicons extends Singleton {
 
 	/**
@@ -165,7 +165,7 @@ class Favicons extends Singleton {
 				$item = rwp_get_file( $item, '', $path );
 
 				if ( $item ) {
-					$item = get_site_url( null, $item );
+					$item = '/wp-content' . Str::after( $item, 'wp-content' );
 
 					if ( 'meta' === $atts['tag'] ) {
 						$atts['atts']['content'] = $item;
