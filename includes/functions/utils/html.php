@@ -11,7 +11,7 @@
 
 use RWP\Vendor\Illuminate\Support\Collection;
 use RWP\Components\Html;
-
+use RWP\Components\Str;
 /**
  * Check if a string is an html string
  *
@@ -139,7 +139,22 @@ function rwp_parse_styles( $styles ) {
  */
 function rwp_output_href( $link = '' ) {
     if ( rwp_is_phone_number( $link ) ) {
+		$phone_regex = "/(?(DEFINE)(?'spacers'\h|\.|\-))(?<country_code>\+?\d+)?(?P>spacers)*(?<area_code>\(?\d{3}\)?)(?P>spacers)*(?<group1>\d{3})(?P>spacers)*(?<group2>\d{4})(?<ext>\h.*)?/";
+		preg_match( $phone_regex, $link, $matches );
+
+		if ( ! empty( $matches ) ) {
+			$country_code = data_get($matches, 'country_code', '');
+			$area_code = data_get($matches, 'area_code', '');
+			if(!empty( $area_code)){
+				$area_code = Str::remove(array('(', ')'), $area_code);
+			}
+			$group1 = data_get($matches, 'group1', '');
+			$group2 = data_get($matches, 'group2', '');
+
+			$link = $country_code . $area_code . $group1 . $group2;
+		}
         $link = rwp_add_prefix( $link, 'tel:' );
+		$link = esc_url( $link, 'tel:' );
     } elseif ( is_email( $link ) ) {
         $link = antispambot( sanitize_email( $link ) );
         $link = rwp_add_prefix( $link, 'mailto:' );

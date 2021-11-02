@@ -61,7 +61,7 @@ function rwp_is_outbound_link( $link ) {
 	if ( ! is_string( $link ) ) {
         return false;
 	}
-	if ( rwp_is_url( $link ) && ! rwp_is_relative_url( $link ) ) {
+	if ( rwp_is_url( $link ) && ! rwp_is_relative_url( $link ) && ! rwp_str_starts_with( $link, array( 'tel:', 'mailto:' ) ) ) {
 		$home = network_home_url();
 		if ( ! rwp_str_has( $link, $home ) ) {
 			return true;

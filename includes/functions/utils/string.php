@@ -215,7 +215,7 @@ function rwp_is_phone_number( $str = '' ) {
 		return $str;
 	}
 	$str         = rwp_remove_prefix( $str, 'tel:' );
-	$phone_regex = "/(?(DEFINE)(?'spacers'\s?\.?\-?))^\+?\d?(?P>spacers)((\(\d{3}\)?)|(\d{3}))(?P>spacers)(\d{3})(?P>spacers)(\d{4})/";
+	$phone_regex = "/(?(DEFINE)(?'spacers'\h|\.|\-))(?<country_code>\+?\d+)?(?P>spacers)*(?<area_code>\(?\d{3}\)?)(?P>spacers)*(?<group1>\d{3})(?P>spacers)*(?<group2>\d{4})(?<ext>\h.*)?/";
 	preg_match( $phone_regex, $str, $matches );
 
 	if ( ! empty( $matches ) ) {

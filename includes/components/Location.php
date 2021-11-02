@@ -413,9 +413,11 @@ class Location extends Element {
 			$phone = $this->location->get( 'phone' );
 		}
 
+		$label = $this->location->get( 'label' );
+
 		if ( is_array( $args ) && ! empty( $args ) ) {
 			$defaults = $this->phone->toArray();
-			$defaults = rwp_merge_args( $phone, $args );
+			$defaults = rwp_merge_args( $defaults, $args );
 
 			$this->phone = new Element( $defaults );
 		}
@@ -425,6 +427,9 @@ class Location extends Element {
 		if ( 'a' === $this->phone->tag ) {
 			$link = rwp_output_href( $phone );
 			$this->phone->set_attr( 'href', $link );
+			$title = wp_sprintf( 'Call %s at %s', get_bloginfo( 'name' ), $phone );
+			$title = apply_filters( 'rwp_phone_link_title', $title, $label );
+			$this->phone->set_attr( 'title', $title );
 		}
 
 	}
@@ -441,9 +446,11 @@ class Location extends Element {
 			$email = $this->location->get( 'email' );
 		}
 
+		$label = $this->location->get( 'label' );
+
 		if ( is_array( $args ) && ! empty( $args ) ) {
 			$defaults = $this->email->toArray();
-			$defaults = rwp_merge_args( $email, $args );
+			$defaults = rwp_merge_args( $defaults, $args );
 
 			$this->email = new Element( $defaults );
 		}
@@ -453,6 +460,9 @@ class Location extends Element {
 		if ( 'a' === $this->email->tag ) {
 			$link = rwp_output_href( $email );
 			$this->email->set_attr( 'href', $link );
+			$title = wp_sprintf( 'Email %s at %s', get_bloginfo( 'name' ), $email );
+			$title = apply_filters( 'rwp_email_link_title', $title, $label );
+			$this->email->set_attr( 'title', $title );
 		}
 
 	}
@@ -680,11 +690,11 @@ class Location extends Element {
 	public function setup_times( $times, $time_format = 'g:i a' ) {
 
 		$time_output = rwp_element( array(
-			'tag' => 'time',
+			'tag' => 'span',
 			'atts' => array(
 				'class' => array(
 					'schedule',
-					'time',
+					'time-row',
 				),
 			),
 		) );
@@ -702,6 +712,16 @@ class Location extends Element {
 
 	public function setup_time( &$time_output, $time, $time_format = 'g:i a' ) {
 
+		$time_block = rwp_element( array(
+			'tag' => 'time',
+			'atts' => array(
+				'class' => array(
+					'schedule',
+					'time',
+				),
+			),
+		) );
+
 		$time_separator = ! empty( $this->time_separator ) ? wp_sprintf( '<span class="schedule time-separator">%s</span>', $this->time_separator ) : '';
 		if ( is_array( $time ) ) {
 
@@ -710,7 +730,7 @@ class Location extends Element {
 			 */
 			$start_time = data_get( $time, 'start' );
 			$start_time = ! empty( $start_time ) ? wp_sprintf( '<span class="schedule time start">%s</span>', $start_time->format( $time_format ) ) : $start_time;
-			$time_output->set_content( $start_time );
+			$time_block->set_content( $start_time );
 
 			/**
 			 * @var null|\DateTime $end_time
@@ -718,15 +738,17 @@ class Location extends Element {
 			$end_time = data_get( $time, 'end' );
 
 			if ( ! empty( $time_separator ) && ! empty( $start_time ) && ! empty( $end_time ) ) {
-				$time_output->set_content( $time_separator );
+				$time_block->set_content( $time_separator );
 			}
 
 			$end_time = ! empty( $end_time ) ? wp_sprintf( '<span class="schedule time end">%s</span>', $end_time->format( $time_format ) ) : $end_time;
-			$time_output->set_content( $end_time );
+			$time_block->set_content( $end_time );
 		} else {
 			$time = wp_sprintf( '<span class="schedule time all-day">%s</span>', $time );
-			$time_output->set_content( $time );
+			$time_block->set_content( $time );
 		}
+
+		$time_output->set_content( $time_block );
 	}
 
 
