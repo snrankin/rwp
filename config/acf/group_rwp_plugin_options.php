@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -694,6 +694,7 @@ acf_add_local_field_group(array(
 						'team_member' => 'Team Members',
 						'page_header' => 'Custom Page Headers',
 						'global_block' => 'Global Blocks',
+						'testimonial' => 'Testimonials',
 					),
 					'allow_custom' => 0,
 					'default_value' => array(

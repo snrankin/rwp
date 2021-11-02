@@ -202,7 +202,8 @@ class Location extends Element {
 					$this->set_email();
 					break;
 				case 'schedule':
-					$this->set_schedule();
+					$labels = $this->schedule->order;
+					$this->set_schedule( $labels );
 					break;
 			}
 		}
@@ -533,19 +534,17 @@ class Location extends Element {
 
 	}
 
-	public function set_schedule( $label = '', $args = array() ) {
+	/**
+	 *
+	 * @param string|string[] $label
+	 * @return void
+	 */
+	public function set_schedule( $label = '' ) {
 
 		$day_format = $this->day_format;
 		$time_format = $this->time_format;
-		$combine = data_get( $args, 'combine', false );
-		$add_label = data_get( $args, 'add_label', true );
-
-		if ( is_array( $args ) && ! empty( $args ) ) {
-			$defaults = $this->schedule->toArray();
-			$defaults = rwp_merge_args( $defaults, $args );
-
-			$this->schedule = new Element( $defaults );
-		}
+		$combine = data_get( $this->schedule, 'combine', false );
+		$add_label = data_get( $this->schedule, 'add_label', true );
 
 		/**
 		 * @var Collection $schedules
@@ -555,111 +554,125 @@ class Location extends Element {
 			return;
 		}
 
-		if ( ! empty( $label ) && $schedules->has( $label ) ) {
-			/**
-			 * @var Collection $schedule
-			 */
-			$schedule = $schedules->get( $label );
-			$schedule->transform(function( $day, $key ) use ( $time_format, $day_format ) {
+		if ( ! empty( $label ) ) {
 
-				$times = array();
-
-				foreach ( $day->all() as $key => $item ) {
-					$times[] = $item['time'];
-					$weekday = $item['day'];
-				}
-
-				$times_output = $this->setup_times( $times, $time_format );
-
-				return array(
-					'day'  => $weekday->format( $day_format ),
-					'time' => $times_output,
-				);
-
-			});
-
-			if ( $combine ) {
-				$schedule = $schedule->groupBy( 'time', true )->values();
-			} else {
-				$schedule = $schedule->groupBy( 'day', true )->values();
-			}
-
-			$schedule_output = rwp_element( array(
-				'tag' => 'div',
-				'atts' => array(
-					'class' => array(
-						'schedule',
-						rwp_change_case( $label ),
-					),
-				),
-			) );
-
-			if ( $add_label ) {
-				$title = rwp_change_case( $label, 'title' );
-				$this->schedule->set_content( '<span class="schedule-label">' . $title . '</span>' );
-			}
-
-			foreach ( $schedule->all() as $key => $group ) {
+			if ( is_string( $label ) && $schedules->has( $label ) ) {
 				/**
-				 * @var Collection $group
+				 * @var Collection $schedule
 				 */
+				$schedule = $schedules->get( $label );
+				$schedule->transform(function( $day, $key ) use ( $time_format, $day_format ) {
 
-				 $schedule_row = rwp_element( array(
-					 'tag' => 'span',
-					 'atts' => array(
-						 'class' => array(
-							 'schedule-row',
-						 ),
-					 ),
-				 ) );
+					$times = array();
 
-				/**
-				 * @var array $item
-				 */
-				$item = $group->first();
+					if ( rwp_is_collection( $day ) ) {
+						$day = $day->all();
+					}
 
-				$time = $item['time'];
+					foreach ( $day as $key => $item ) {
+						$times[] = $item['time'];
+						$weekday = $item['day'];
+					}
 
-				/**
-				 * @var Collection $group
-				 */
-				if ( 1 < $group->count() ) {
-					$weekday = $group->keys()->join( ', ' );
+					$times_output = $this->setup_times( $times, $time_format );
 
+					if ( $weekday instanceof \DateTime ) {
+						$weekday = $weekday->format( $day_format );
+					}
+
+					return array(
+						'day'  => $weekday,
+						'time' => $times_output,
+					);
+
+				});
+
+				if ( $combine ) {
+					$schedule = $schedule->groupBy( 'time', true )->values();
 				} else {
-					$weekday = $item['day'];
+					$schedule = $schedule->groupBy( 'day', true )->values();
 				}
 
-				$day_output = rwp_element( array(
-					'tag' => 'span',
+				$schedule_output = rwp_element( array(
+					'tag' => 'div',
 					'atts' => array(
 						'class' => array(
 							'schedule',
-							'day',
+							rwp_change_case( $label ),
 						),
 					),
 				) );
 
-				$day_output->set_content( $weekday );
-				if ( ! empty( $this->day_separator ) ) {
-					$day_separator = wp_sprintf( '<span class="schedule day-separator">%s</span>', $this->day_separator );
-					$day_output->set_content( $day_separator );
+				if ( $add_label ) {
+					$title = rwp_change_case( $label, 'title' );
+					$this->schedule->set_content( '<span class="schedule-label">' . $title . '</span>' );
 				}
 
-				$day_output = $day_output->html();
+				foreach ( $schedule->all() as $key => $group ) {
+					/**
+					 * @var Collection $group
+					 */
 
-				$schedule_row->set_content( $day_output );
-				$schedule_row->set_content( $time );
+					 $schedule_row = rwp_element( array(
+						 'tag' => 'span',
+						 'atts' => array(
+							 'class' => array(
+								 'schedule-row',
+							 ),
+						 ),
+					 ) );
 
-				$schedule_output->set_content( $schedule_row );
+					/**
+					 * @var array $item
+					 */
+					$item = $group->first();
 
+					$time = $item['time'];
+
+					/**
+					 * @var Collection $group
+					 */
+					if ( 1 < $group->count() ) {
+						$weekday = $group->keys()->join( ', ' );
+
+					} else {
+						$weekday = $item['day'];
+					}
+
+					$day_output = rwp_element( array(
+						'tag' => 'span',
+						'atts' => array(
+							'class' => array(
+								'schedule',
+								'day',
+							),
+						),
+					) );
+
+					$day_output->set_content( $weekday );
+					if ( ! empty( $this->day_separator ) ) {
+						$day_separator = wp_sprintf( '<span class="schedule day-separator">%s</span>', $this->day_separator );
+						$day_output->set_content( $day_separator );
+					}
+
+					$day_output = $day_output->html();
+
+					$schedule_row->set_content( $day_output );
+					$schedule_row->set_content( $time );
+
+					$schedule_output->set_content( $schedule_row );
+
+				}
+
+				$this->schedule->set_content( $schedule_output );
+			} elseif ( is_array( $label ) ) {
+				foreach ( $label as $item ) {
+					$this->set_schedule( $item );
+				}
 			}
-
-			$this->schedule->set_content( $schedule_output );
-
-		} elseif ( empty( $label ) ) {
-			$schedules->keys()->each(function( $schedule ) use ( $args ) {
-				$this->set_schedule( $schedule, $args );
+		} else {
+			$schedules->keys()->each(function( $schedule ) {
+				$this->set_schedule( $schedule );
 			});
 		}
 	}
