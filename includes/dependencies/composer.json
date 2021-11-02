@@ -20,6 +20,8 @@
         "crazycodr\/standard-exceptions": "^2.4",
         "doctrine\/inflector": "^2.0",
         "illuminate\/collections": "^8.68",
+        "illuminate\/config": "^8.68",
+        "illuminate\/container": "^8.68",
         "johnbillion\/extended-cpts": "^4.5",
         "masterminds\/html5": "^2.7",
         "symfony\/var-dumper": "^5.2",
@@ -98,12 +100,12 @@
     },
     "autoload": {
         "psr-4": {
-            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor/wordpress/hierarchy/src/"
+            "RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/"
         },
         "files": [
-            "externals/data.php",
-            "vendor/wordpress/extended-cpts/functions.php",
-            "vendor/wordpress/extended-cpts/extended-cpts.php"
+            "externals\/data.php",
+            "vendor\/wordpress\/extended-cpts\/functions.php",
+            "vendor\/wordpress\/extended-cpts\/extended-cpts.php"
         ]
     }
 }
