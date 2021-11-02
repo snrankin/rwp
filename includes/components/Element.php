@@ -20,7 +20,7 @@ use RWP\Vendor\Exceptions\Collection\EmptyException;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use RWP\Vendor\Exceptions\Data\TypeException;
 use RWP\Vendor\Illuminate\Support\Collection;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 
 class Element {
 

@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Queue;
 
-interface Queue {
+interface Queue
+{
     /**
      * Get the size of the queue.
      *
@@ -70,7 +71,7 @@ interface Queue {
      * Pop the next job off of the queue.
      *
      * @param  string|null  $queue
-     * @returnJob|null
+     * @return \Illuminate\Contracts\Queue\Job|null
      */
     public function pop($queue = null);
     /**

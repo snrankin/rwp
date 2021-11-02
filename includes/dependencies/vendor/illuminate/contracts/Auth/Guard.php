@@ -2,7 +2,8 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Auth;
 
-interface Guard {
+interface Guard
+{
     /**
      * Determine if the current user is authenticated.
      *
@@ -18,7 +19,7 @@ interface Guard {
     /**
      * Get the currently authenticated user.
      *
-     * @returnAuthenticatable|null
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function user();
     /**
@@ -37,7 +38,7 @@ interface Guard {
     /**
      * Set the current user.
      *
-     * @param Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return void
      */
     public function setUser(Authenticatable $user);

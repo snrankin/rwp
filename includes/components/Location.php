@@ -37,10 +37,15 @@ class Location extends Element {
 	);
 
 	/**
+	 * @var Collection $weekday_order
+	 */
+	public static $weekday_order;
+
+	/**
 	 * @var array $order Array that sets the order of the child nodes
 	 */
 
-	public $order = array( 'title', 'address', 'phone', 'email' );
+	public $order = array( 'title', 'address', 'phone', 'email', 'schedule' );
 
 	/**
 	 * @var array|string|Element $title The header content wrapper
@@ -100,6 +105,30 @@ class Location extends Element {
 		),
 	);
 
+	/**
+	 * @var array|string|Element $schedule The image content wrapper
+	 */
+	public $schedule = array(
+		'tag' => 'div',
+		'atts' => array(
+			'class' => array(
+				'location-schedules',
+			),
+		),
+	);
+
+	public $hours;
+
+	/**
+	 * @var string $day_separator
+	 */
+	public $day_separator = ':';
+
+	/**
+	 * @var string $time_separator
+	 */
+	public $time_separator = ' &ndash; ';
+
 
 	public function __construct( $location, $args = [] ) {
 
@@ -111,8 +140,36 @@ class Location extends Element {
 				$order = preg_replace( '/title/', 'label', $order );
 			}
 
-			$this->location = self::get_location_info( $location, $order );
+			$this->location = self::get_location_info( $location );
 		}
+
+		$this->day_separator = apply_filters( 'rwp_schedules_day_seperator', $this->day_separator );
+		$this->time_separator = apply_filters( 'rwp_schedules_time_seperator', $this->time_separator );
+
+		if ( empty( self::$weekday_order ) ) {
+			$weekdays = rwp_collection(array(
+				'Sunday',
+				'Monday',
+				'Tuesday',
+				'Wednesday',
+				'Thursday',
+				'Friday',
+				'Saturday',
+			));
+
+			$start_of_week_index = (int) get_option( 'start_of_week', 1 );
+
+			if ( $start_of_week_index < 6 ) {
+
+				$weekday = $weekdays->get( $start_of_week_index );
+
+				$weekday_order_part_last = $weekdays->takeUntil( $weekday );
+				$weekday_order_part_first = $weekdays->skipUntil( $weekday );
+				self::$weekday_order = $weekday_order_part_first->merge( $weekday_order_part_last );
+			}
+		}
+
+		$this->setup_hours();
 
 		$elements = $this->order;
 
@@ -131,8 +188,12 @@ class Location extends Element {
 				case 'email':
 					$this->set_email();
 					break;
+				case 'schedule':
+					$this->set_schedule();
+					break;
 			}
 		}
+
 	}
 
 	/**
@@ -381,6 +442,269 @@ class Location extends Element {
 		}
 
 	}
+
+	public function setup_hours() {
+
+		/**
+		 * @var Collection $schedules
+		 */
+		$schedules = $this->location->get( 'schedules' );
+		if ( ! rwp_is_collection( $schedules ) || $schedules->isEmpty() ) {
+			return;
+		}
+
+		$this->hours = $schedules->transform( function( $schedule ) {
+			$weekdays = self::$weekday_order;
+
+			$hours = $schedule->get( 'hours' );
+
+			$hours_order = rwp_collection();
+
+			foreach ( $weekdays->all() as $weekday ) {
+				$day_schedules = $hours->filter(function( $hour ) use ( $weekday ) {
+					/**
+					 * @var Collection $days
+					 */
+					$days = data_get( $hour, 'days', rwp_collection() );
+					$day = $days->search( $weekday );
+
+					if ( false !== $day ) {
+						return true;
+					} else {
+						return false;
+					}
+
+				});
+
+				if ( $day_schedules->isNotEmpty() ) {
+
+					$day_schedules = $day_schedules->values()->all();
+
+					$weekday_schedules = rwp_collection();
+
+					foreach ( $day_schedules as $index => $day ) {
+						$timezone = wp_timezone();
+						$week_day = new \DateTime( $weekday, $timezone );
+						$all_day = $day->get( 'all_day' );
+						$type = $day->get( 'type' );
+						$time = '';
+						if ( ! $all_day ) {
+							$start_time = data_get( $day, 'times.start' );
+							$start_time = new \DateTime( $start_time, $timezone );
+
+							$end_time = data_get( $day, 'times.end' );
+							$end_time = new \DateTime( $end_time, $timezone );
+							$time = array(
+								'start' => $start_time,
+								'end'  => $end_time,
+							);
+						} else {
+							$all_day_text = __( 'All Day', 'rwp' );
+							$all_day_text = rwp_change_case( $type . ' ' . $all_day_text, 'title' );
+							$time = apply_filters( "rwp_all_day_text_{$type}", $all_day_text );
+						}
+
+						$weekday_schedules->put($index, array(
+							'type' => $type,
+							'day' => $week_day,
+							'time' => $time,
+						));
+
+					}
+					$hours_order->put( $weekday, $weekday_schedules );
+				}
+			}
+
+			return $hours_order;
+		} );
+
+	}
+
+	public function set_schedule( $label = '', $args = array() ) {
+
+		$day_format = data_get( $args, 'day_format', 'l' );
+		$time_format = data_get( $args, 'time_format', 'g:i a' );
+		$combine = data_get( $args, 'combine', false );
+		$add_label = data_get( $args, 'add_label', true );
+
+		if ( is_array( $args ) && ! empty( $args ) ) {
+			$defaults = $this->schedule->toArray();
+			$defaults = rwp_merge_args( $defaults, $args );
+
+			$this->schedule = new Element( $defaults );
+		}
+
+		/**
+		 * @var Collection $schedules
+		 */
+		$schedules = $this->get( 'hours' );
+		if ( ! rwp_is_collection( $schedules ) || $schedules->isEmpty() ) {
+			return;
+		}
+
+		if ( ! empty( $label ) && $schedules->has( $label ) ) {
+			/**
+			 * @var Collection $schedule
+			 */
+			$schedule = $schedules->get( $label );
+			$schedule->transform(function( $day, $key ) use ( $time_format, $day_format ) {
+
+				$times = array();
+
+				foreach ( $day->all() as $key => $item ) {
+					$times[] = $item['time'];
+					$weekday = $item['day'];
+				}
+
+				$times_output = $this->setup_times( $times, $time_format );
+
+				return array(
+					'day'  => $weekday->format( $day_format ),
+					'time' => $times_output,
+				);
+
+			});
+
+			if ( $combine ) {
+				$schedule = $schedule->groupBy( 'time', true )->values();
+			} else {
+				$schedule = $schedule->groupBy( 'day', true )->values();
+			}
+
+			$schedule_output = rwp_element( array(
+				'tag' => 'div',
+				'atts' => array(
+					'class' => array(
+						'schedule',
+						rwp_change_case( $label ),
+					),
+				),
+			) );
+
+			if ( $add_label ) {
+				$title = rwp_change_case( $label, 'title' );
+				$this->schedule->set_content( '<span class="schedule-label">' . $title . '</span>' );
+			}
+
+			foreach ( $schedule->all() as $key => $group ) {
+				/**
+				 * @var Collection $group
+				 */
+
+				 $schedule_row = rwp_element( array(
+					 'tag' => 'span',
+					 'atts' => array(
+						 'class' => array(
+							 'schedule-row',
+						 ),
+					 ),
+				 ) );
+
+				/**
+				 * @var array $item
+				 */
+				$item = $group->first();
+
+				$time = $item['time'];
+
+				/**
+				 * @var Collection $group
+				 */
+				if ( 1 < $group->count() ) {
+					$weekday = $group->keys()->join( ', ' );
+
+				} else {
+					$weekday = $item['day'];
+				}
+
+				$day_output = rwp_element( array(
+					'tag' => 'span',
+					'atts' => array(
+						'class' => array(
+							'schedule',
+							'day',
+						),
+					),
+				) );
+
+				$day_output->set_content( $weekday );
+				if ( ! empty( $this->day_separator ) ) {
+					$day_separator = wp_sprintf( '<span class="schedule day-separator">%s</span>', $this->day_separator );
+					$day_output->set_content( $day_separator );
+				}
+
+				$day_output = $day_output->html();
+
+				$schedule_row->set_content( $day_output );
+				$schedule_row->set_content( $time );
+
+				$schedule_output->set_content( $schedule_row );
+
+			}
+
+			$this->schedule->set_content( $schedule_output );
+
+		} elseif ( empty( $label ) ) {
+			$schedules->keys()->each(function( $schedule ) use ( $args ) {
+				$this->set_schedule( $schedule, $args );
+			});
+		}
+	}
+
+	public function setup_times( $times, $time_format = 'g:i a' ) {
+
+		$time_output = rwp_element( array(
+			'tag' => 'time',
+			'atts' => array(
+				'class' => array(
+					'schedule',
+					'time',
+				),
+			),
+		) );
+
+		if ( wp_is_numeric_array( $times ) ) {
+			foreach ( $times as $item ) {
+				$this->setup_time( $time_output, $item, $time_format );
+			}
+		} else if ( is_array( $times ) && ! wp_is_numeric_array( $times ) ) {
+
+			$this->setup_time( $time_output, $times, $time_format );
+		}
+		return $time_output->html();
+	}
+
+	public function setup_time( &$time_output, $time, $time_format = 'g:i a' ) {
+
+		$time_separator = ! empty( $this->time_separator ) ? wp_sprintf( '<span class="schedule time-separator">%s</span>', $this->time_separator ) : '';
+		if ( is_array( $time ) ) {
+
+			/**
+			 * @var null|\DateTime $start_time
+			 */
+			$start_time = data_get( $time, 'start' );
+			$start_time = ! empty( $start_time ) ? wp_sprintf( '<span class="schedule time start">%s</span>', $start_time->format( $time_format ) ) : $start_time;
+			$time_output->set_content( $start_time );
+
+			/**
+			 * @var null|\DateTime $end_time
+			 */
+			$end_time = data_get( $time, 'end' );
+
+			if ( ! empty( $time_separator ) && ! empty( $start_time ) && ! empty( $end_time ) ) {
+				$time_output->set_content( $time_separator );
+			}
+
+			$end_time = ! empty( $end_time ) ? wp_sprintf( '<span class="schedule time end">%s</span>', $end_time->format( $time_format ) ) : $end_time;
+			$time_output->set_content( $end_time );
+		} else {
+			$time = wp_sprintf( '<span class="schedule time all-day">%s</span>', $time );
+			$time_output->set_content( $time );
+		}
+	}
+
+
+
 
 	public function setup_html() {
 

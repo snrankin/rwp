@@ -26,7 +26,22 @@ class Settings extends Singleton {
 	public function initialize() {
 
 		\add_filter( 'plugin_action_links_' . plugin_basename( RWP_PLUGIN_ABSOLUTE ), array( $this, 'add_action_links' ), );
+		\add_filter( 'admin_body_class', array( $this, 'add_plugin_class' ) );
 
+	}
+
+	/**
+	 * Add class in the body on the backend
+	 *
+	 * @param array $classes The array with all the classes of the page.
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public static function add_plugin_class( $classes ) {
+
+		$classes = rwp_output_classes( rwp_parse_classes( $classes, rwp()->get_slug() ) );
+
+		return $classes;
 	}
 
 	/**

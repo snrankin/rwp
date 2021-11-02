@@ -4,10 +4,11 @@ namespace RWP\Vendor\Illuminate\Support;
 
 use ArrayAccess;
 use ArrayIterator;
+use RWP\Vendor\Illuminate\Contracts\Support\CanBeEscapedWhenCastToString;
 use RWP\Vendor\Illuminate\Support\Traits\EnumeratesValues;
 use RWP\Vendor\Illuminate\Support\Traits\Macroable;
 use stdClass;
-class Collection implements \ArrayAccess, Enumerable
+class Collection implements \ArrayAccess, CanBeEscapedWhenCastToString, Enumerable
 {
     use EnumeratesValues, Macroable;
     /**

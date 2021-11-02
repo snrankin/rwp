@@ -4,8 +4,8 @@ namespace RWP\Vendor\Illuminate\Contracts\Cache;
 
 use Closure;
 use RWP\Vendor\Psr\SimpleCache\CacheInterface;
-
-interface Repository extends CacheInterface {
+interface Repository extends CacheInterface
+{
     /**
      * Retrieve an item from the cache and delete it.
      *
@@ -91,7 +91,7 @@ interface Repository extends CacheInterface {
     /**
      * Get the cache store implementation.
      *
-     * @returnStore
+     * @return \Illuminate\Contracts\Cache\Store
      */
     public function getStore();
 }

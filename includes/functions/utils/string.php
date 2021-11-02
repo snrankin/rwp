@@ -9,10 +9,16 @@
  * ==========================================================================
  */
 
-use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
+use RWP\Components\Str;
 
 if ( ! defined( 'RWP_TITLE_CASE' ) ) {
 	define( 'RWP_TITLE_CASE', array() );
+}
+
+if ( ! function_exists( 'str_contains' ) ) {
+	function str_contains() { // phpcs:ignore
+		return Str::contains( ...func_get_args() );
+	}
 }
 /**
  * Change Case
@@ -84,7 +90,7 @@ function rwp_str_has( $haystack, $needles ) {
  */
 
 function rwp_pluralizer( $string = '' ) {
-	return Pluralizer::plural( $string );
+	return Str::plural( $string );
 }
 
 /**
@@ -97,7 +103,7 @@ function rwp_pluralizer( $string = '' ) {
  */
 
 function rwp_singulizer( $string = '' ) {
-	return Pluralizer::singular( $string );
+	return Str::singular( $string );
 }
 
 /**

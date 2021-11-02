@@ -14,15 +14,9 @@
  * ==========================================================================
  */
 
-
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
-use RWP\Vendor\Exceptions\IO\Filesystem\FileNotReadableException;
-use RWP\Vendor\Exceptions\IO\Filesystem\NotAFileException;
-use RWP\Vendor\Exceptions\IO\Filesystem\DirectoryNotFoundException;
-use RWP\Vendor\Exceptions\IO\Filesystem\DirectoryNotReadableException;
 use RWP\Vendor\Exceptions\Http\HttpException;
-use RWP\Vendor\Symfony\Component\Finder\Finder;
-use \RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
+use RWP\Components\Str;
 
 
 /**
@@ -57,62 +51,6 @@ function rwp_basename( $string ) {
     return $string;
 }
 
-/**
- * Simplified wrapper for getting file data
- *
- * @param string $url
- * @param bool   $local  Whether the url is a local path
- * @param string $output The output type
- *
- * @throws HttpException
- * @throws JsonException
- *
- * @return mixed|false
- */
-
-function rwp_get_file_data( $url, $local = false, $output = 'OBJECT' ) {
-    $url  = esc_url_raw( $url );
-    $data = null;
-    $type = pathinfo( $url, PATHINFO_EXTENSION );
-	$is_array = ( 'ARRAY' === $output );
-
-    if ( $local ) {
-        if ( rwp_file_exists( $url ) ) {
-            $data = rwp_filesystem()->get_contents( $url );
-        }
-    } else {
-        $response = wp_safe_remote_get( $url );
-        try {
-            if ( ! is_wp_error( $response ) ) {
-                $data = wp_remote_retrieve_body( $response );
-            } else {
-                $code = $response->get_error_code();
-                $message = $response->get_error_message( $code );
-                throw new Exception( $message, $code );
-            }
-        } catch ( Exception $e ) {
-            rwp_error( $e->getMessage(), 'error' );
-        }
-    }
-
-    if ( 'json' === $type ) {
-        try {
-            if ( ! empty( $data ) ) {
-                $data = json_decode( $data, $is_array, 512, JSON_THROW_ON_ERROR );
-
-                if ( filled( $data ) ) {
-                    return $data;
-                }
-            }
-        } catch ( JsonException $e ) {
-            rwp_error( $e->getMessage(), 'error' );
-        }
-    } else {
-        return $data;
-    }
-
-}
-
 
 /**
  * Access the WordPress Filesystem class
@@ -131,58 +69,6 @@ function rwp_filesystem() {
     WP_Filesystem();
 
     return $wp_filesystem;
-}
-
-/**
- * Get file
- *
- * @param string $filename The file name or array of file names to include
- * @param string $dir      The sub-directory to look in
- * @param string $base     The folder to start searching from.
- *
- * @throws FileNotFoundException Throws error if the file is not found
- * @throws FileNotReadableException Throws error if the file is not readable
- * @throws DirectoryNotReadableException Throws error if the directory is not readable
- * @throws DirectoryNotFoundException Throws error if the directory is not found
- *
- * @return string|false
- */
-
-function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
-    $base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
-
-    $finder = new Finder();
-    $finder->ignoreUnreadableDirs()->in( $base . $dir )->files()->name( $filename );
-
-    $filepath = false;
-
-    // check if there are any search results
-    if ( $finder->hasResults() ) {
-        foreach ( $finder as $file ) {
-            $filepath = $file->getRealPath();
-        }
-    }
-
-    return $filepath;
-}
-
-
-/**
- * Get plugin file
- *
- * @param string $filename The file name or array of file names to include
- * @param string $dir      The sub-directory to look in
- *
- * @throws FileNotFoundException Throws error if the file is not found
- * @throws FileNotReadableException Throws error if the file is not readable
- * @throws DirectoryNotReadableException Throws error if the directory is not readable
- * @throws DirectoryNotFoundException Throws error if the directory is not found
- *
- * @return string|false
- */
-
-function rwp_find_plugin_file( $filename, $dir = '' ) {
-     return rwp_find_file( $filename, $dir, RWP_PLUGIN_ROOT );
 }
 
 /**
@@ -208,6 +94,50 @@ function rwp_file_exists( $filepath ) {
     return false;
 }
 
+/**
+ * Get file
+ *
+ * @param string $filename The file name or array of file names to include
+ * @param string $dir      The sub-directory to look in
+ * @param string $base     The folder to start searching from.
+ *
+ * @return string|false
+ *
+ * @throws FileNotFoundException
+ */
+
+function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
+    $base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
+
+	$folder = $base . $dir;
+    $folder = rwp_filesystem()->find_folder( $folder );
+
+	if ( $folder ) {
+		$folder = rwp_trailingslashit( $folder );
+		$filepath = $folder . $filename;
+		if ( rwp_file_exists( $filepath ) ) {
+			return $filepath;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Get plugin file
+ *
+ * @param string $filename The file name or array of file names to include
+ * @param string $dir      The sub-directory to look in
+ *
+ *
+ * @return string|false
+ */
+
+function rwp_find_plugin_file( $filename, $dir = '' ) {
+     return rwp_find_file( $filename, $dir, RWP_PLUGIN_ROOT );
+}
 
 /**
  * Get file
@@ -245,7 +175,7 @@ function rwp_get_file( $filename, $dir = '', $base = __DIR__, $require = false, 
                                $file = include $filename;
                         }
                     }
-                } elseif ( 'css' === $type || 'js' === $type ) {
+                } elseif ( 'css' === $type || 'js' === $type || 'json' === $type ) {
                     $file = rwp_get_file_data( $filename, true );
                 } else {
                     $file = $filename;
@@ -381,4 +311,60 @@ function rwp_get_dependency_file( $filename, $dir = '', $require = false, $once 
 			rwp_get_plugin_file( $file, $dir, $require, $once );
 		}
 	}
+}
+
+/**
+ * Simplified wrapper for getting file data
+ *
+ * @param string $url
+ * @param bool   $local  Whether the url is a local path
+ * @param string $output The output type
+ *
+ * @throws HttpException
+ * @throws JsonException
+ *
+ * @return mixed|false
+ */
+
+function rwp_get_file_data( $url, $local = false, $output = 'OBJECT' ) {
+    $url  = esc_url_raw( $url );
+    $data = null;
+    $type = pathinfo( $url, PATHINFO_EXTENSION );
+	$is_array = ( 'ARRAY' === $output );
+
+    if ( $local ) {
+        if ( rwp_file_exists( $url ) ) {
+            $data = rwp_filesystem()->get_contents( $url );
+        }
+    } else {
+        $response = wp_safe_remote_get( $url );
+        try {
+            if ( ! is_wp_error( $response ) ) {
+                $data = wp_remote_retrieve_body( $response );
+            } else {
+                $code = $response->get_error_code();
+                $message = $response->get_error_message( $code );
+                throw new Exception( $message, $code );
+            }
+        } catch ( Exception $e ) {
+            rwp_error( $e->getMessage(), 'error' );
+        }
+    }
+
+    if ( 'json' === $type ) {
+        try {
+            if ( ! empty( $data ) ) {
+                $data = json_decode( $data, $is_array, 512, JSON_THROW_ON_ERROR );
+
+                if ( filled( $data ) ) {
+                    return $data;
+                }
+            }
+        } catch ( JsonException $e ) {
+            rwp_error( $e->getMessage(), 'error' );
+        }
+    } else {
+        return $data;
+    }
+
 }

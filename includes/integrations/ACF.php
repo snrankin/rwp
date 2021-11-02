@@ -14,7 +14,7 @@ namespace RWP\Integrations;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Integrations\Bootstrap;
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 class ACF extends Singleton {
 
 	/**
@@ -42,11 +42,6 @@ class ACF extends Singleton {
 		\add_filter( 'acf/load_field/name=bs_text_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_border_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_btn_style', array( $this, 'add_color_choices' ) );
-		\add_filter('acf/fields/google_map/api', function( array $api ) {
-			$api['key'] = 'AIzaSyDJMJ6Ah3VGf2pLLJlI0qyT6qizD4tTj1M';
-
-			return $api;
-		});
 
 		$this->include_acf_extras();
 	}
@@ -101,10 +96,6 @@ class ACF extends Singleton {
 		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
-
-		rwp_get_dependency_file( 'acf-address-map.php', 'externals/acf/acf-address-map-field', true, true );
-
-		//rwp_get_dependency_file( 'acf-fonticonpicker.php', 'externals/acf/acf-icon-picker', true, true );
 
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 	}
@@ -223,9 +214,11 @@ class ACF extends Singleton {
 		if ( $acf_fields->isNotEmpty() ) {
 
 			if ( wp_is_numeric_array( $fields ) && rwp_array_is_multi( $fields ) ) {
-				$acf_fields = $acf_fields->mapWithKeys(function ( $item ) {
-					if ( is_array( $item ) ) {
+				$acf_fields = $acf_fields->mapWithKeys(function ( $item, $key ) {
+					if ( is_array( $item ) && rwp_array_has( 'label', $item ) ) {
 						return [ rwp_change_case( $item['label'], 'snake' ) => $item ];
+					} else {
+						return [ $key => $item ];
 					}
 				});
 			}

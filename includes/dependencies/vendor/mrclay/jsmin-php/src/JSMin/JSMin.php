@@ -107,7 +107,7 @@ class JSMin
             $mbIntEnc = \mb_internal_encoding();
             \mb_internal_encoding('8bit');
         }
-        if (isset($this->input[0]) && $this->input[0] === "ï") {
+        if (isset($this->input[0]) && $this->input[0] === "ï¿½") {
             $this->input = \substr($this->input, 3);
         }
         $this->input = \str_replace("\r\n", "\n", $this->input);

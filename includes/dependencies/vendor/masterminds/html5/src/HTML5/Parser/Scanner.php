@@ -3,11 +3,11 @@
 namespace RWP\Vendor\Masterminds\HTML5\Parser;
 
 use RWP\Vendor\Masterminds\HTML5\Exception;
-
 /**
  * The scanner scans over a given data input to react appropriately to characters.
  */
-class Scanner {
+class Scanner
+{
     const CHARS_HEX = 'abcdefABCDEF01234567890';
     const CHARS_ALNUM = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890';
     const CHARS_ALPHA = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -35,7 +35,8 @@ class Scanner {
      *
      * @throws Exception If the given data cannot be encoded to UTF-8.
      */
-    public function __construct($data, $encoding = 'UTF-8') {
+    public function __construct($data, $encoding = 'UTF-8')
+    {
         if ($data instanceof InputStream) {
             @\trigger_error('InputStream objects are deprecated since version 2.4 and will be removed in 3.0. Use strings instead.', \E_USER_DEPRECATED);
             $data = (string) $data;
@@ -68,7 +69,8 @@ class Scanner {
      *
      * @return bool
      */
-    public function sequenceMatches($sequence, $caseSensitive = \true) {
+    public function sequenceMatches($sequence, $caseSensitive = \true)
+    {
         $portion = \substr($this->data, $this->char, \strlen($sequence));
         return $caseSensitive ? $portion === $sequence : 0 === \strcasecmp($portion, $sequence);
     }
@@ -77,7 +79,8 @@ class Scanner {
      *
      * @return int The current intiger byte position.
      */
-    public function position() {
+    public function position()
+    {
         return $this->char;
     }
     /**
@@ -85,7 +88,8 @@ class Scanner {
      *
      * @return string The next character.
      */
-    public function peek() {
+    public function peek()
+    {
         if ($this->char + 1 <= $this->EOF) {
             return $this->data[$this->char + 1];
         }
@@ -97,7 +101,8 @@ class Scanner {
      *
      * @return string The next character.
      */
-    public function next() {
+    public function next()
+    {
         ++$this->char;
         if ($this->char < $this->EOF) {
             return $this->data[$this->char];
@@ -110,7 +115,8 @@ class Scanner {
      *
      * @return string The current character.
      */
-    public function current() {
+    public function current()
+    {
         if ($this->char < $this->EOF) {
             return $this->data[$this->char];
         }
@@ -121,7 +127,8 @@ class Scanner {
      *
      * @param int $count
      */
-    public function consume($count = 1) {
+    public function consume($count = 1)
+    {
         $this->char += $count;
     }
     /**
@@ -130,7 +137,8 @@ class Scanner {
      *
      * @param int $howMany The number of characters to move the pointer back.
      */
-    public function unconsume($howMany = 1) {
+    public function unconsume($howMany = 1)
+    {
         if ($this->char - $howMany >= 0) {
             $this->char -= $howMany;
         }
@@ -142,7 +150,8 @@ class Scanner {
      *
      * @return string The next group that is hex characters.
      */
-    public function getHex() {
+    public function getHex()
+    {
         return $this->doCharsWhile(static::CHARS_HEX);
     }
     /**
@@ -152,7 +161,8 @@ class Scanner {
      *
      * @return string The next group of ASCII alpha characters.
      */
-    public function getAsciiAlpha() {
+    public function getAsciiAlpha()
+    {
         return $this->doCharsWhile(static::CHARS_ALPHA);
     }
     /**
@@ -162,7 +172,8 @@ class Scanner {
      *
      * @return string The next group of ASCII alpha characters and numbers.
      */
-    public function getAsciiAlphaNum() {
+    public function getAsciiAlphaNum()
+    {
         return $this->doCharsWhile(static::CHARS_ALNUM);
     }
     /**
@@ -172,7 +183,8 @@ class Scanner {
      *
      * @return string The next group of numbers.
      */
-    public function getNumeric() {
+    public function getNumeric()
+    {
         return $this->doCharsWhile('0123456789');
     }
     /**
@@ -181,7 +193,8 @@ class Scanner {
      *
      * @return int The length of the matched whitespaces.
      */
-    public function whitespace() {
+    public function whitespace()
+    {
         if ($this->char >= $this->EOF) {
             return \false;
         }
@@ -194,7 +207,8 @@ class Scanner {
      *
      * @return int The current line number.
      */
-    public function currentLine() {
+    public function currentLine()
+    {
         if (empty($this->EOF) || 0 === $this->char) {
             return 1;
         }
@@ -209,7 +223,8 @@ class Scanner {
      *
      * @return mixed
      */
-    public function charsUntil($mask) {
+    public function charsUntil($mask)
+    {
         return $this->doCharsUntil($mask);
     }
     /**
@@ -219,7 +234,8 @@ class Scanner {
      *
      * @return int
      */
-    public function charsWhile($mask) {
+    public function charsWhile($mask)
+    {
         return $this->doCharsWhile($mask);
     }
     /**
@@ -229,7 +245,8 @@ class Scanner {
      *
      * @return int The column number.
      */
-    public function columnOffset() {
+    public function columnOffset()
+    {
         // Short circuit for the first char.
         if (0 === $this->char) {
             return 0;
@@ -258,7 +275,8 @@ class Scanner {
      *
      * @return int The number of characters remaining.
      */
-    public function remainingChars() {
+    public function remainingChars()
+    {
         if ($this->char < $this->EOF) {
             $data = \substr($this->data, $this->char);
             $this->char = $this->EOF;
@@ -274,7 +292,8 @@ class Scanner {
      *
      * @return string
      */
-    private function replaceLinefeeds($data) {
+    private function replaceLinefeeds($data)
+    {
         /*
          * U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED (LF) characters are treated specially.
          * Any CR characters that are followed by LF characters must be removed, and any CR characters not
@@ -299,7 +318,8 @@ class Scanner {
      * @return mixed Index or false if no match is found. You should use strong
      *               equality when checking the result, since index could be 0.
      */
-    private function doCharsUntil($bytes, $max = null) {
+    private function doCharsUntil($bytes, $max = null)
+    {
         if ($this->char >= $this->EOF) {
             return \false;
         }
@@ -325,7 +345,8 @@ class Scanner {
      *
      * @return string
      */
-    private function doCharsWhile($bytes, $max = null) {
+    private function doCharsWhile($bytes, $max = null)
+    {
         if ($this->char >= $this->EOF) {
             return \false;
         }

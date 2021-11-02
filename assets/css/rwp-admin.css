@@ -92,6 +92,21 @@ html {
   height: auto;
 }
 
+.rwp.wp-core-ui .attachment-preview[class*="subtype-svg+xml"] .centered {
+  transform: none;
+}
+.rwp.wp-core-ui .attachment-preview[class*="subtype-svg+xml"] .centered img {
+  top: 50%;
+  left: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+  font-family: "object-fit: contain";
+}
+
 .editor-styles-wrapper .rwp.is-hovered, .editor-styles-wrapper .rwp.is-selected {
   outline: solid 1px #007bba;
 }

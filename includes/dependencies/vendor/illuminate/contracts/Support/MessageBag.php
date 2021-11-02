@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Support;
 
 use Countable;
-
-interface MessageBag extends Arrayable, \Countable {
+interface MessageBag extends Arrayable, \Countable
+{
     /**
      * Get the keys present in the message bag.
      *
@@ -22,7 +22,7 @@ interface MessageBag extends Arrayable, \Countable {
     /**
      * Merge a new array of messages into the bag.
      *
-     * @param MessageProvider|array  $messages
+     * @param  \Illuminate\Contracts\Support\MessageProvider|array  $messages
      * @return $this
      */
     public function merge($messages);

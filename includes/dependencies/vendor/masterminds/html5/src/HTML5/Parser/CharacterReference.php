@@ -3,13 +3,13 @@
 namespace RWP\Vendor\Masterminds\HTML5\Parser;
 
 use RWP\Vendor\Masterminds\HTML5\Entities;
-
 /**
  * Manage entity references.
  *
  * This is a simple resolver for HTML5 character reference entitites. See Entities for the list of supported entities.
  */
-class CharacterReference {
+class CharacterReference
+{
     protected static $numeric_mask = array(0x0, 0x2ffff, 0, 0xffff);
     /**
      * Given a name (e.g. 'amp'), lookup the UTF-8 character ('&').
@@ -18,7 +18,8 @@ class CharacterReference {
      *
      * @return string The character sequence. In UTF-8 this may be more than one byte.
      */
-    public static function lookupName($name) {
+    public static function lookupName($name)
+    {
         // Do we really want to return NULL here? or FFFD
         return isset(Entities::$byName[$name]) ? Entities::$byName[$name] : null;
     }
@@ -29,7 +30,8 @@ class CharacterReference {
      *
      * @return false|string|string[]|null
      */
-    public static function lookupDecimal($int) {
+    public static function lookupDecimal($int)
+    {
         $entity = '&#' . $int . ';';
         // UNTESTED: This may fail on some planes. Couldn't find full documentation
         // on the value of the mask array.
@@ -42,7 +44,8 @@ class CharacterReference {
      *
      * @return false|string|string[]|null
      */
-    public static function lookupHex($hexdec) {
+    public static function lookupHex($hexdec)
+    {
         return static::lookupDecimal(\hexdec($hexdec));
     }
 }

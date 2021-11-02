@@ -27,7 +27,7 @@ class DateCaster {
         $location = $d->getTimezone()->getLocation();
         $fromNow = (new \DateTime())->diff($d);
         $title = $d->format('l, F j, Y') . "\n" . self::formatInterval($fromNow) . ' from now' . ($location ? $d->format('I') ? "\nDST On" : "\nDST Off" : '');
-        unset($a[Component\VarDumper\Caster\Caster::PREFIX_DYNAMIC . 'date'], $a[Component\VarDumper\Caster\Caster::PREFIX_DYNAMIC . 'timezone'], $a[Component\VarDumper\Caster\Caster::PREFIX_DYNAMIC . 'timezone_type']);
+        unset($a[Caster::PREFIX_DYNAMIC . 'date'], $a[Caster::PREFIX_DYNAMIC . 'timezone'], $a[Caster::PREFIX_DYNAMIC . 'timezone_type']);
         $a[$prefix . 'date'] = new ConstStub(self::formatDateTime($d, $location ? ' e (P)' : ' P'), $title);
         $stub->class .= $d->format(' @U');
         return $a;
@@ -36,7 +36,7 @@ class DateCaster {
         $now = new \DateTimeImmutable();
         $numberOfSeconds = $now->add($interval)->getTimestamp() - $now->getTimestamp();
         $title = \number_format($numberOfSeconds, 0, '.', ' ') . 's';
-        $i = [Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'interval' => new ConstStub(self::formatInterval($interval), $title)];
+        $i = [Caster::PREFIX_VIRTUAL . 'interval' => new ConstStub(self::formatInterval($interval), $title)];
         return $filter & Caster::EXCLUDE_VERBOSE ? $i : $i + $a;
     }
     private static function formatInterval(\DateInterval $i): string {
@@ -56,7 +56,7 @@ class DateCaster {
         $location = $timeZone->getLocation();
         $formatted = (new \DateTime('now', $timeZone))->format($location ? 'e (P)' : 'P');
         $title = $location && \extension_loaded('intl') ? \Locale::getDisplayRegion('-' . $location['country_code']) : '';
-        $z = [Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'timezone' => new ConstStub($formatted, $title)];
+        $z = [Caster::PREFIX_VIRTUAL . 'timezone' => new ConstStub($formatted, $title)];
         return $filter & Caster::EXCLUDE_VERBOSE ? $z : $z + $a;
     }
     public static function castPeriod(\DatePeriod $p, array $a, Stub $stub, bool $isNested, int $filter) {
@@ -70,7 +70,7 @@ class DateCaster {
             $dates[] = \sprintf('%s) %s', $i + 1, self::formatDateTime($d));
         }
         $period = \sprintf('every %s, from %s (%s) %s', self::formatInterval($p->getDateInterval()), self::formatDateTime($p->getStartDate()), $p->include_start_date ? 'included' : 'excluded', ($end = $p->getEndDate()) ? 'to ' . self::formatDateTime($end) : 'recurring ' . $p->recurrences . ' time/s');
-        $p = [Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'period' => new ConstStub($period, \implode("\n", $dates))];
+        $p = [Caster::PREFIX_VIRTUAL . 'period' => new ConstStub($period, \implode("\n", $dates))];
         return $filter & Caster::EXCLUDE_VERBOSE ? $p : $p + $a;
     }
     private static function formatDateTime(\DateTimeInterface $d, string $extra = ''): string {

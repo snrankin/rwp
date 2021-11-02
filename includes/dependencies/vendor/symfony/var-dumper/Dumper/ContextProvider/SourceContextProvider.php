@@ -16,7 +16,7 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\VarCloner;
 use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use RWP\Vendor\Twig\Template;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 
 /**
  * Tries to provide context from sources (class name, file, line, code excerpt, ...).

@@ -13,7 +13,7 @@ namespace RWP\Integrations\Walkers;
 
 use RuntimeException;
 use Exception;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 use RWP\Components\NavItem;
 use RWP\Components\Nav as HtmlNav;
 use RWP\Vendor\Illuminate\Support\Collection;

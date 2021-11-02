@@ -1,0 +1,15 @@
+/// ======================================================================== ///
+/// @name   _true-false
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-field {
+		&.acf-field-true-false {
+			@include make-col-auto;
+		}
+	}
+}

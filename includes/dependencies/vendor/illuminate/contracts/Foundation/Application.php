@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Foundation;
 
 use RWP\Vendor\Illuminate\Contracts\Container\Container;
-
-interface Application extends Container {
+interface Application extends Container
+{
     /**
      * Get the version number of the application.
      *
@@ -86,9 +86,9 @@ interface Application extends Container {
     /**
      * Register a service provider with the application.
      *
-     * @param ServiceProvider|string  $provider
+     * @param  ServiceProvider|string  $provider
      * @param  bool  $force
-     * @returnServiceProvider
+     * @return ServiceProvider
      */
     public function register($provider, $force = \false);
     /**
@@ -103,7 +103,7 @@ interface Application extends Container {
      * Resolve a service provider instance from the class name.
      *
      * @param  string  $provider
-     * @returnServiceProvider
+     * @return ServiceProvider
      */
     public function resolveProvider($provider);
     /**
@@ -150,7 +150,7 @@ interface Application extends Container {
     /**
      * Get the registered service provider instances if any exist.
      *
-     * @param ServiceProvider|string  $provider
+     * @param  ServiceProvider|string  $provider
      * @return array
      */
     public function getProviders($provider);

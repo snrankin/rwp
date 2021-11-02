@@ -2,11 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Broadcasting;
 
-interface ShouldBroadcast {
+interface ShouldBroadcast
+{
     /**
      * Get the channels the event should broadcast on.
      *
-     * @returnChannel|\Illuminate\Broadcasting\Channel[]|string[]|string
+     * @return \Illuminate\Broadcasting\Channel|\Illuminate\Broadcasting\Channel[]|string[]|string
      */
     public function broadcastOn();
 }

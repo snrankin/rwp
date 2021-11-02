@@ -2,11 +2,12 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Mail;
 
-interface MailQueue {
+interface MailQueue
+{
     /**
      * Queue a new e-mail message for sending.
      *
-     * @param Mailable|string|array  $view
+     * @param  \Illuminate\Contracts\Mail\Mailable|string|array  $view
      * @param  string|null  $queue
      * @return mixed
      */
@@ -15,7 +16,7 @@ interface MailQueue {
      * Queue a new e-mail message for sending after (n) seconds.
      *
      * @param  \DateTimeInterface|\DateInterval|int  $delay
-     * @param Mailable|string|array  $view
+     * @param  \Illuminate\Contracts\Mail\Mailable|string|array  $view
      * @param  string|null  $queue
      * @return mixed
      */
