@@ -139,6 +139,10 @@ class Element {
 			$properties = get_object_vars( $this );
 			$properties = rwp_merge_args( $properties, $args );
 
+			if ( rwp_array_has( 'order', $args ) ) {
+				$properties['order'] = $args['order'];
+			}
+
 			foreach ( $properties as $key => $value ) {
 				$this->$key = $value;
 			}
