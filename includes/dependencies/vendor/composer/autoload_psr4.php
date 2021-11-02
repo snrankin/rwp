@@ -17,6 +17,7 @@ return array(
     'RWP\\Vendor\\Symfony\\Component\\OptionsResolver\\' => array($vendorDir . '/symfony/options-resolver'),
     'RWP\\Vendor\\Symfony\\Component\\DomCrawler\\' => array($vendorDir . '/symfony/dom-crawler'),
     'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\' => array($vendorDir . '/wordpress/hierarchy/src'),
     'RWP\\Vendor\\Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'RWP\\Vendor\\Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'RWP\\Vendor\\Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
@@ -28,5 +29,4 @@ return array(
     'RWP\\Vendor\\Exceptions\\Helpers\\' => array($vendorDir . '/crazycodr/standard-exceptions/Helpers'),
     'RWP\\Vendor\\Exceptions\\' => array($vendorDir . '/crazycodr/standard-exceptions/Exceptions'),
     'RWP\\Vendor\\Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
-    'RWP\\Vendor\\Brain\\Hierarchy\\' => array($vendorDir . '/wordpress/hierarchy/src'),
 );
