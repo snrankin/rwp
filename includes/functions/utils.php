@@ -14,6 +14,7 @@ if ( ! function_exists( 'rwp_get_plugin_file' ) ) {
 if ( function_exists( 'rwp_get_plugin_file' ) ) {
 	rwp_get_plugin_file(array(
 		'debug.php',
+		'cache.php',
 		'string.php',
 		'url.php',
 		'array.php',
