@@ -43,10 +43,96 @@ class PostTypes extends Singleton {
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
-		if ( rwp_get_option( 'blog_permalinks', true ) ) {
+		if ( rwp_get_option( 'modules.blog.update_urls', false ) && ! is_plugin_active( 'elementor/elementor.php' ) ) { // can't rewrite basic permalinks with ELementor :(
 			\add_filter( 'register_post_type_args', array( $this, 'add_blog_page_to_post_url' ), 10, 2 );
-			\add_action( 'init', array( $this, 'update_post_permalinks' ) );
+			\add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
+			\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
+			//\add_action( 'init', array( $this, 'update_post_permalinks' ) );
 		}
+
+	}
+
+	/**
+	 * Rewrite WordPress URLs to Include /blog/ in Post Permalink Structure
+	 *
+	 * @author   Golden Oak Web Design <info@goldenoakwebdesign.com>
+	 * @license  https://www.gnu.org/licenses/gpl-2.0.html GPLv2+
+	 */
+	public function generate_blog_rewrite_rules( $wp_rewrite ) {
+		$blog_page = rwp_get_blog_page();
+		if ( ! $blog_page ) {
+			return;
+		}
+
+		$blog_page = get_post( $blog_page );
+
+		$blog_page = untrailingslashit( wp_make_link_relative( get_permalink( $blog_page ) ) );
+		$blog_page = rwp_remove_prefix( $blog_page, '/' );
+
+		$rules = $wp_rewrite->rules;
+
+		$new_rules = array(
+			'/' . $blog_page . '/?$' => 'index.php?post_type=post',
+			'/' . $blog_page . '/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post_type=post&feed=$matches[1]',
+			'/' . $blog_page . '/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post_type=post&feed=$matches[1]',
+			'/' . $blog_page . '/page/([0-9]{1,})/?$' => 'index.php?post_type=post&paged=$matches[1]',
+			$blog_page . '/([^/]+)/page/?([0-9]{1,})/?$' => 'index.php?acfe-dt=$matches[1]&paged=$matches[2]',
+			$blog_page . '/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?acfe-dt=$matches[1]&cpage=$matches[2]',
+			$blog_page . '/([^/]+)/?$' => 'index.php?wp_template=$matches[1]',
+			$blog_page . '/(.+?)/page/?([0-9]{1,})/?$' => 'index.php?acfe-dop=$matches[1]&paged=$matches[2]',
+			$blog_page . '/(.+?)/comment-page-([0-9]{1,})/?$' => 'index.php?acfe-dop=$matches[1]&cpage=$matches[2]',
+			$blog_page . '/(.+?)/?$' => 'index.php?post_type=page&pagename=$matches[1]',
+			$blog_page . '/.+?/attachment/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
+			$blog_page . '/.+?/attachment/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
+			$blog_page . '/.+?/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/.+?/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/.+?/attachment/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
+			$blog_page . '/.+?/attachment/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
+			$blog_page . '/(.+?)/embed/?$' => 'index.php?acfe-dop=$matches[1]&embed=true',
+			$blog_page . '/(.+?)/trackback/?$' => 'index.php?acfe-dop=$matches[1]&tb=1',
+			$blog_page . '/(.+?)(?:/([0-9]+))?/?$' => 'index.php?acfe-dop=$matches[1]&page=$matches[2]',
+			$blog_page . '/[^/]+/attachment/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
+			$blog_page . '/[^/]+/attachment/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
+			$blog_page . '/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
+			$blog_page . '/[^/]+/attachment/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
+			$blog_page . '/([^/]+)/embed/?$' => 'index.php?acfe-dt=$matches[1]&embed=true',
+			$blog_page . '/([^/]+)/trackback/?$' => 'index.php?acfe-dt=$matches[1]&tb=1',
+			$blog_page . '/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post=$matches[1]&feed=$matches[2]',
+			$blog_page . '/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post=$matches[1]&feed=$matches[2]',
+			$blog_page . '/([^/]+)(?:/([0-9]+))?/?$' => 'index.php?acfe-dt=$matches[1]&page=$matches[2]',
+			$blog_page . '/[^/]+/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
+			$blog_page . '/[^/]+/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
+			$blog_page . '/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
+			$blog_page . '/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
+			$blog_page . '/[^/]+/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
+		);
+		$rules = array_merge( $rules, $new_rules );
+		$wp_rewrite->rules = $rules;
+	}
+
+	/**
+	 *
+	 * @param string   $permalink  The site's permalink structure .
+	 * @param \WP_Post $post       The post in question .
+	 * @param bool     $leavename  Whether to keep the post name .
+	 * @return mixed
+	 */
+	public function post_link( $post_link, $post, $leavename ) {
+		$blog_page = rwp_get_blog_page();
+		if ( ! $blog_page ) {
+			return $post_link;
+		}
+
+		$blog_page = get_post( $blog_page );
+
+		if ( $post instanceof \WP_Post && $blog_page instanceof \WP_Post && 'post' === $post->post_type ) {
+			$blog_page = untrailingslashit( wp_make_link_relative( get_permalink( $blog_page ) ) );
+			$post_link = '/' . $blog_page . $post_link;
+		}
+		return $post_link;
 
 	}
 
@@ -69,8 +155,10 @@ class PostTypes extends Singleton {
 			return $args;
 		}
 
+		$blog_page = untrailingslashit( wp_make_link_relative( get_permalink( $blog_page ) ) );
+
 		$args['rewrite'] = array(
-			'slug' => $blog_page->post_name,
+			'slug' => $blog_page,
 			'with_front' => true,
 		);
 

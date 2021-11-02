@@ -107,8 +107,7 @@ abstract class Singleton {
 
 	public function debug( $qm = false ) {
 		if ( $qm ) {
-			$qm = Debug::instance( 'RWP' );
-			$qm->log( $this );
+			rwp_log( $this );
 		} else {
 			return VarDumper::dump( $this );
 		}

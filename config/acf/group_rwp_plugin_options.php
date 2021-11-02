@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -620,6 +620,44 @@ acf_add_local_field_group(array(
 						),
 					),
 				),
+				array(
+					'key' => 'field_6180ca2716989',
+					'label' => 'Blog Options',
+					'name' => 'blog',
+					'type' => 'group',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'layout' => 'block',
+					'acfe_seamless_style' => 0,
+					'acfe_group_modal' => 0,
+					'sub_fields' => array(
+						array(
+							'key' => 'field_6180ca381698a',
+							'label' => 'Update Urls',
+							'name' => 'update_urls',
+							'type' => 'true_false',
+							'instructions' => 'If a custom page is set for the blog, then automatically append that page path to post urls',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'message' => '',
+							'default_value' => 0,
+							'ui' => 1,
+							'ui_on_text' => '',
+							'ui_off_text' => '',
+						),
+					),
+				),
 			),
 		),
 		array(
@@ -738,7 +776,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1635364186,
+	'modified' => 1635830458,
 ));
 
 endif;

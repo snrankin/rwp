@@ -13,6 +13,7 @@ namespace RWP\Engine\Abstracts;
 
 use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
+use RWP\Vendor\Illuminate\Support\Collection;
 use RWP\Components\Str;
 
 abstract class Plugin extends Singleton implements Component {
@@ -41,7 +42,7 @@ abstract class Plugin extends Singleton implements Component {
 	public $settings = array();
 
 	/**
-	 * @var array $options The option keys available in the database
+	 * @var array|Collection $options The option keys available in the database
 	 */
 	public $options = array();
 
@@ -71,6 +72,9 @@ abstract class Plugin extends Singleton implements Component {
         \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
         parent::__construct();
+		if ( is_array( $this->options ) ) {
+			$this->options = rwp_collection( $this->options );
+		}
 		$this->initialize_paths();
 		$this->initialize_settings();
 
@@ -221,14 +225,8 @@ abstract class Plugin extends Singleton implements Component {
      * @return mixed $option
      */
     public function get_option( $key, $default = null, $global = false ) {
+		return data_get( $this->options, $key, $default );
 
-		if ( $global ) {
-			$value = get_network_option( get_current_network_id(), $this->prefix( $key ), $default );
-		} else {
-			$value = get_option( $this->prefix( $key ), $default );
-		}
-
-		return $value;
     }
 
     /**
@@ -238,7 +236,7 @@ abstract class Plugin extends Singleton implements Component {
      *
      * @param string  $key  The name of the option (without the prefix)
      *
-	 * @return void
+	 * @return bool
      *
      */
     public function delete_option( $key, $global = false ) {
@@ -251,10 +249,9 @@ abstract class Plugin extends Singleton implements Component {
 			$deleted = delete_option( $this->prefix( $key ) );
 		}
 
-		if ( $deleted && in_array( $key, $this->options ) ) {
-			$index = array_search( $key, $this->options );
-			$this->remove( "options.$index" );
-		}
+		$this->options = data_remove( $this->options, $key );
+
+		return $deleted;
     }
 
     /**
@@ -271,14 +268,16 @@ abstract class Plugin extends Singleton implements Component {
      */
     public function update_option( $key, $value, $autoload = true, $global = false ) {
 
-		if ( ! in_array( $key, $this->options, true ) ) {
-			array_push( $this->options, $key );
-		}
-
 		if ( $global ) {
 			$updated = update_network_option( get_current_network_id(), $this->prefix( $key ), $value );
 		} else {
 			$updated = update_option( $this->prefix( $key ), $value, $autoload );
+		}
+
+		if ( 'options' === $key ) {
+			$this->set( 'options', $value );
+		} else {
+			$this->options = data_set( $this->options, $key, $value );
 		}
 
         return $updated;
