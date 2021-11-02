@@ -91,42 +91,55 @@ class Nav_Menus extends Singleton {
 
 	public function nav_menu_link_attributes( $atts, $item, $args, $depth ) {
 
+		global $post;
+
 		$classes = data_get( $atts, 'class', '' );
 		$classes = rwp_parse_classes( $classes );
-		if ( 'nav_menu_item' === $item->post_type ) {
-			$item_url = data_get( $item, 'url', '' );
-			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
-			$is_current = data_get( $item, 'current', false );
-			$is_current_parent = data_get( $item, 'current_item_parent', false );
-			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
+		$item_url = data_get( $item, 'url', '' );
+		$href = $item_url;
+		$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
+		$post_id = data_get( $item, 'object_id', '' );
+		if ( ! empty( $post_id ) ) {
+			$post_id = intval( $post_id );
+		}
+		$is_current = data_get( $item, 'current', false );
+		$is_current_parent = data_get( $item, 'current_item_parent', false );
+		$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 
-			$is_active = rwp_str_has( $this->current, $item_url );
+		$is_active = rwp_str_has( $this->current, $item_url );
 
-			if ( $is_current ) {
-				$is_active = true;
-			}
-			if ( $is_current_parent ) {
-				$is_active = true;
-			}
+		$blog_page = rwp_get_blog_page();
 
-			if ( $is_current_ancestor ) {
-				$is_active = true;
-			}
-
-			if ( is_search() || is_404() ) {
-				$is_active = false;
-			}
-
-			if ( $is_active ) {
-				$classes[] = 'active';
-			}
-
-			$classes[] = 'nav-link';
-
-			$atts['class'] = rwp_output_classes( $classes );
+		if ( $post instanceof \WP_Post && 'post' === $post->post_type && $post_id === $blog_page ) {
+			$is_active = true;
 		}
 
+		if ( $is_current ) {
+			$is_active = true;
+		}
+		if ( $is_current_parent ) {
+			$is_active = true;
+		}
+
+		if ( $is_current_ancestor ) {
+			$is_active = true;
+		}
+
+		if ( is_search() || is_404() ) {
+			$is_active = false;
+		}
+
+		if ( $is_active ) {
+			$classes[] = 'active';
+		}
+
+		$classes[] = 'nav-link';
+
+		$atts['class'] = rwp_output_classes( $classes );
+
 		$atts = rwp_format_html_atts( $atts, 'array', true );
+
+		$atts['href'] = $href;
 
 		return $atts;
 	}

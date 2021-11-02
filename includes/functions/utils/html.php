@@ -143,13 +143,13 @@ function rwp_output_href( $link = '' ) {
 		preg_match( $phone_regex, $link, $matches );
 
 		if ( ! empty( $matches ) ) {
-			$country_code = data_get($matches, 'country_code', '');
-			$area_code = data_get($matches, 'area_code', '');
-			if(!empty( $area_code)){
-				$area_code = Str::remove(array('(', ')'), $area_code);
+			$country_code = data_get( $matches, 'country_code', '' );
+			$area_code = data_get( $matches, 'area_code', '' );
+			if ( ! empty( $area_code ) ) {
+				$area_code = Str::remove( array( '(', ')' ), $area_code );
 			}
-			$group1 = data_get($matches, 'group1', '');
-			$group2 = data_get($matches, 'group2', '');
+			$group1 = data_get( $matches, 'group1', '' );
+			$group2 = data_get( $matches, 'group2', '' );
 
 			$link = $country_code . $area_code . $group1 . $group2;
 		}
@@ -411,13 +411,12 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
         if ( rwp_array_has( 'tag', $atts ) ) {
             unset( $atts['tag'] );
         }
-
         /**
-         * Run attributes array through a filter before output
-         *
-         * @var array $atts
-         */
-        $atts = apply_filters( 'rwp_html_attributes_filter', $atts, $remove_empty );
+		 * Run attributes array through a filter before output
+		 *
+		 * @var array $atts
+		 */
+		$atts = rwp_empty_html_attributes_filter( $atts, $remove_empty );
 
         if ( 'string' === $output ) {
             $html = implode( ' ', $atts );

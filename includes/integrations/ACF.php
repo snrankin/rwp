@@ -189,6 +189,7 @@ class ACF extends Singleton {
 
 		if ( rwp_str_has( $option, 'rwp-' ) ) {
 			rwp()->update_option( 'options', $fields );
+
         } else {
 			$option = rwp_change_case( $option, 'snake' );
 			update_option( $option, $fields );
