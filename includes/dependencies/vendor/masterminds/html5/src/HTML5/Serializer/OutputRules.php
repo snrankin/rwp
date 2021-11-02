@@ -7,15 +7,14 @@
  * These output rules are likely to generate output similar to the document that
  * was parsed. It is not intended to output exactly the document that was parsed.
  */
-
 namespace RWP\Vendor\Masterminds\HTML5\Serializer;
 
 use RWP\Vendor\Masterminds\HTML5\Elements;
-
 /**
  * Generate the output html5 based on element rules.
  */
-class OutputRules implements RulesInterface {
+class OutputRules implements RulesInterface
+{
     /**
      * Defined in http://www.w3.org/TR/html51/infrastructure.html#html-namespace-0.
      */
@@ -59,7 +58,8 @@ class OutputRules implements RulesInterface {
         array('nodeNamespace' => 'http://www.w3.org/1999/xhtml', 'xpath' => 'starts-with(local-name(), \'data-\')'),
     );
     const DOCTYPE = '<!DOCTYPE html>';
-    public function __construct($output, $options = array()) {
+    public function __construct($output, $options = array())
+    {
         if (isset($options['encode_entities'])) {
             $this->encode = $options['encode_entities'];
         }
@@ -67,18 +67,22 @@ class OutputRules implements RulesInterface {
         $this->out = $output;
         $this->hasHTML5 = \defined('ENT_HTML5');
     }
-    public function addRule(array $rule) {
+    public function addRule(array $rule)
+    {
         $this->nonBooleanAttributes[] = $rule;
     }
-    public function setTraverser(Traverser $traverser) {
+    public function setTraverser(Traverser $traverser)
+    {
         $this->traverser = $traverser;
         return $this;
     }
-    public function unsetTraverser() {
+    public function unsetTraverser()
+    {
         $this->traverser = null;
         return $this;
     }
-    public function document($dom) {
+    public function document($dom)
+    {
         $this->doctype();
         if ($dom->documentElement) {
             foreach ($dom->childNodes as $node) {
@@ -87,11 +91,13 @@ class OutputRules implements RulesInterface {
             $this->nl();
         }
     }
-    protected function doctype() {
+    protected function doctype()
+    {
         $this->wr(static::DOCTYPE);
         $this->nl();
     }
-    public function element($ele) {
+    public function element($ele)
+    {
         $name = $ele->tagName;
         // Per spec:
         // If the element has a declared namespace in the HTML, MathML or
@@ -136,7 +142,8 @@ class OutputRules implements RulesInterface {
      *
      * @param \DOMText $ele The text node to write.
      */
-    public function text($ele) {
+    public function text($ele)
+    {
         if (isset($ele->parentNode) && isset($ele->parentNode->tagName) && Elements::isA($ele->parentNode->localName, Elements::TEXT_RAW)) {
             $this->wr($ele->data);
             return;
@@ -144,16 +151,19 @@ class OutputRules implements RulesInterface {
         // FIXME: This probably needs some flags set.
         $this->wr($this->enc($ele->data));
     }
-    public function cdata($ele) {
+    public function cdata($ele)
+    {
         // This encodes CDATA.
         $this->wr($ele->ownerDocument->saveXML($ele));
     }
-    public function comment($ele) {
+    public function comment($ele)
+    {
         // These produce identical output.
         // $this->wr('<!--')->wr($ele->data)->wr('-->');
         $this->wr($ele->ownerDocument->saveXML($ele));
     }
-    public function processorInstruction($ele) {
+    public function processorInstruction($ele)
+    {
         $this->wr('<?')->wr($ele->target)->wr(' ')->wr($ele->data)->wr('?>');
     }
     /**
@@ -161,7 +171,8 @@ class OutputRules implements RulesInterface {
      *
      * @param \DOMNode $ele The element being written.
      */
-    protected function namespaceAttrs($ele) {
+    protected function namespaceAttrs($ele)
+    {
         if (!$this->xpath || $this->xpath->document !== $ele->ownerDocument) {
             $this->xpath = new \DOMXPath($ele->ownerDocument);
         }
@@ -179,7 +190,8 @@ class OutputRules implements RulesInterface {
      *
      * @param \DOMNode $ele The element being written.
      */
-    protected function openTag($ele) {
+    protected function openTag($ele)
+    {
         $this->wr('<')->wr($this->traverser->isLocalElement($ele) ? $ele->localName : $ele->tagName);
         $this->attrs($ele);
         $this->namespaceAttrs($ele);
@@ -193,7 +205,8 @@ class OutputRules implements RulesInterface {
             }
         }
     }
-    protected function attrs($ele) {
+    protected function attrs($ele)
+    {
         // FIXME: Needs support for xml, xmlns, xlink, and namespaced elements.
         if (!$ele->hasAttributes()) {
             return $this;
@@ -223,7 +236,8 @@ class OutputRules implements RulesInterface {
             }
         }
     }
-    protected function nonBooleanAttribute(\DOMAttr $attr) {
+    protected function nonBooleanAttribute(\DOMAttr $attr)
+    {
         $ele = $attr->ownerElement;
         foreach ($this->nonBooleanAttributes as $rule) {
             if (isset($rule['nodeNamespace']) && $rule['nodeNamespace'] !== $ele->namespaceURI) {
@@ -259,7 +273,8 @@ class OutputRules implements RulesInterface {
         }
         return \false;
     }
-    private function getXPath(\DOMNode $node) {
+    private function getXPath(\DOMNode $node)
+    {
         if (!$this->xpath) {
             $this->xpath = new \DOMXPath($node->ownerDocument);
         }
@@ -273,7 +288,8 @@ class OutputRules implements RulesInterface {
      *
      * @param \DOMNode $ele The element being written.
      */
-    protected function closeTag($ele) {
+    protected function closeTag($ele)
+    {
         if ($this->outputMode == static::IM_IN_HTML || $ele->hasChildNodes()) {
             $this->wr('</')->wr($this->traverser->isLocalElement($ele) ? $ele->localName : $ele->tagName)->wr('>');
         }
@@ -285,7 +301,8 @@ class OutputRules implements RulesInterface {
      *
      * @return $this
      */
-    protected function wr($text) {
+    protected function wr($text)
+    {
         \fwrite($this->out, $text);
         return $this;
     }
@@ -294,7 +311,8 @@ class OutputRules implements RulesInterface {
      *
      * @return $this
      */
-    protected function nl() {
+    protected function nl()
+    {
         \fwrite($this->out, \PHP_EOL);
         return $this;
     }
@@ -325,7 +343,8 @@ class OutputRules implements RulesInterface {
      *
      * @return string The encoded text.
      */
-    protected function enc($text, $attribute = \false) {
+    protected function enc($text, $attribute = \false)
+    {
         // Escape the text rather than convert to named character references.
         if (!$this->encode) {
             return $this->escape($text, $attribute);
@@ -355,7 +374,8 @@ class OutputRules implements RulesInterface {
      * @param string $text      Text to escape.
      * @param bool   $attribute True if we are escaping an attrubute, false otherwise.
      */
-    protected function escape($text, $attribute = \false) {
+    protected function escape($text, $attribute = \false)
+    {
         // Not using htmlspecialchars because, while it does escaping, it doesn't
         // match the requirements of section 8.5. For example, it doesn't handle
         // non-breaking spaces.

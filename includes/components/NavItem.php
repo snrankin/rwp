@@ -16,6 +16,8 @@ class NavItem extends Element {
 	 */
 	public $tag = 'li';
 
+	public $order = array( 'link', 'toggle', 'dropdown' );
+
 	/**
 	 * @var array $atts
 	 */
@@ -29,7 +31,7 @@ class NavItem extends Element {
 	);
 
 	/**
-	 * @var (string|string[][])[]|Element $link
+	 * @var mixed $link
 	 */
 
 	public $link = array(
@@ -42,11 +44,19 @@ class NavItem extends Element {
 	);
 
 	/**
-	 * @var (string|string[][])[]|Element $toggle
+	 * @var mixed $toggle
 	 */
 
 	public $toggle = array(
 		'tag' => 'button',
+		'text' => array(
+			'content' => 'Toggle submenu',
+			'atts' => array(
+				'class'     => array(
+					'visually-hidden',
+				),
+			),
+		),
 		'atts' => array(
 			'class'     => array(
 				'nav-toggle',
@@ -60,9 +70,9 @@ class NavItem extends Element {
     public $depth = 0;
 
 	/**
-     * @var false|string $has_toggle The toggle type or false
+     * @var false|string $toggle_type The toggle type or false
      */
-    public $has_toggle = 'collapse';
+    public $toggle_type = 'collapse';
 
 	/**
      * @var bool $has_link Does this item have link
@@ -85,7 +95,7 @@ class NavItem extends Element {
 	public $parent;
 
 	/**
-     * @var bool $is_parent Is item active?
+     * @var bool $is_parent Is item a parent item?
      */
     public $is_parent = false;
 
@@ -103,20 +113,26 @@ class NavItem extends Element {
 
 		$this->link = new Element( $this->link );
 
-		if ( $this->has_link ) {
-			if ( ! array_search( 'link', $this->order ) ) {
-				$this->order[] = 'link';
+		$url = $this->link->get_attr( 'href' );
+
+		if ( $url ) {
+			if ( ! rwp_is_url( $url ) ) {
+				if ( '#' === $url ) { // if it is not the pound sign on it's own
+					$this->remove_nav_atts();
+					$this->has_link = false;
+				}
 			}
 		}
 
-		if ( $this->is_parent && false !== $this->has_toggle ) {
-			$this->set( 'toggle.toggle', $this->has_toggle );
-
-			$this->toggle = new Button( $this->toggle );
-			$this->toggle->set_attr( 'data-bs-parent', $this->parent );
-			if ( ! array_search( 'toggle', $this->order ) ) {
-				$this->order[] = 'toggle';
+		if ( $this->has_link ) {
+			if ( false === array_search( 'link', $this->order ) ) {
+				$this->set_order( 'link', 1 );
 			}
+		}
+
+		if ( false === $this->is_parent ) {
+			$this->remove_order_item( 'toggle' );
+			$this->remove_order_item( 'dropdown' );
 		}
 	}
 
@@ -127,12 +143,72 @@ class NavItem extends Element {
 	 */
 
 	public function setup_html() {
-		if ( $this->disabled ) {
-            $this->link->add_class( 'disabled' );
-        }
-
-        if ( $this->active ) {
-            $this->link->add_class( 'active' );
-        }
+		$this->setup_link();
+		$this->setup_toggle();
 	}
+
+	public function setup_toggle() {
+		if ( $this->is_parent && false !== $this->toggle_type && is_array( $this->toggle ) ) {
+			$this->set( 'toggle.toggle', $this->toggle_type );
+
+			$this->toggle = new Button( $this->toggle );
+			if ( ! array_search( 'toggle', $this->order ) ) {
+				$this->set_order( 'toggle', 2 );
+			}
+		} elseif ( false === $this->is_parent ) {
+			$this->remove_order_item( 'toggle' );
+			$this->remove_order_item( 'dropdown' );
+		}
+	}
+
+	public function setup_link() {
+		if ( $this->has_link ) {
+			if ( $this->disabled ) {
+				$this->link->add_class( 'disabled' );
+			}
+
+			if ( $this->active ) {
+				$this->link->add_class( 'active' );
+			}
+
+			$url = $this->link->get_attr( 'href' );
+
+			if ( $url ) {
+				if ( ! rwp_is_url( $url ) ) {
+					if ( '#' === $url ) { // if it is not the pound sign on it's own
+						$this->remove_nav_atts();
+
+					} else { // else make it a button
+						$link = $this->link->toArray();
+
+						$this->link = new Button( $link );
+					}
+				}
+			} else {
+				$this->has_link = false;
+			}
+		} else {
+			$this->remove_nav_atts();
+		}
+	}
+
+	/**
+	 * Remove attributes specifically for navigation menu items
+	 * @return void
+	 */
+
+	public function remove_nav_atts() {
+        $this->remove_attr( 'itemtype' );
+        $this->remove_attr( 'itemscope' );
+        $this->remove_attr( 'role' );
+        $this->link->remove_attr( 'href' );
+        $this->link->remove_attr( 'target' );
+        $this->link->remove_attr( 'rel' );
+        $this->link->remove_attr( 'title' );
+        $this->link->remove_attr( 'role' );
+		if ( 'a' === $this->link->tag ) {
+			$this->link->set( 'tag', 'span' );
+		}
+
+    }
 }

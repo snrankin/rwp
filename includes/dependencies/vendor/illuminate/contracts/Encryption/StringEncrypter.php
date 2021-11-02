@@ -10,7 +10,7 @@ interface StringEncrypter
      * @param  string  $value
      * @return string
      *
-     * @throws EncryptException
+     * @throws \Illuminate\Contracts\Encryption\EncryptException
      */
     public function encryptString($value);
     /**
@@ -19,7 +19,7 @@ interface StringEncrypter
      * @param  string  $payload
      * @return string
      *
-     * @throws DecryptException
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function decryptString($payload);
 }

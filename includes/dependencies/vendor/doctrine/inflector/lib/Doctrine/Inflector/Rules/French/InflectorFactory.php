@@ -9,10 +9,10 @@ final class InflectorFactory extends GenericLanguageInflectorFactory
 {
     protected function getSingularRuleset() : Ruleset
     {
-        return Rules::getSingularRuleset();
+        return French\Rules::getSingularRuleset();
     }
     protected function getPluralRuleset() : Ruleset
     {
-        return Rules::getPluralRuleset();
+        return French\Rules::getPluralRuleset();
     }
 }

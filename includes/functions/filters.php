@@ -14,7 +14,7 @@
 
 add_filter('rwp_classes_to_execute', function( $classes ) {
 
-	$classes_to_filter = preg_grep( '/Walkers|Elementr\\\\/i', $classes );
+	$classes_to_filter = preg_grep( '/Walkers\\\\|Elementor\\\\|Yoast\\\\|QM\\\\|SVG\\\\|Abstracts\\\\/i', $classes );
 
 	if ( ! empty( $classes_to_filter ) ) {
 		foreach ( array_keys( $classes_to_filter ) as $index ) {
@@ -81,7 +81,7 @@ add_action('init', function() {
 });
 
 /**
- * Removes empty attributes (unless they're boolean attributes)
+ * Removes empty attributes (unless they're boolean attributes or data attributes)
  *
  * @link https://meiert.com/en/blog/boolean-attributes-of-html/
  *
@@ -130,7 +130,7 @@ function rwp_empty_html_attributes_filter( $args = array(), $remove_empty = true
 	if ( $remove_empty ) {
 
 		foreach ( $args as $key => $value ) {
-			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) ) {
+			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) && ! rwp_str_has( $key, 'data-' ) ) {
 				unset( $args[ $key ] );
 			}
 		}

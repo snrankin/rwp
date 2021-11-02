@@ -26,6 +26,4 @@ class Grid extends Element {
 		$this->rows = new Collection( $this->rows );
 		$this->columns = new Collection( $this->columns );
 	}
-
-
 }

@@ -26,10 +26,9 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 use RWP\Vendor\Masterminds\HTML5\Exception;
-
-class UTF8Utils {
+class UTF8Utils
+{
     /**
      * The Unicode replacement character.
      */
@@ -42,7 +41,8 @@ class UTF8Utils {
      *
      * @return int
      */
-    public static function countChars($string) {
+    public static function countChars($string)
+    {
         // Get the length for the string we need.
         if (\function_exists('mb_strlen')) {
             return \mb_strlen($string, 'utf-8');
@@ -71,7 +71,8 @@ class UTF8Utils {
      *
      * @return string
      */
-    public static function convertToUTF8($data, $encoding = 'UTF-8') {
+    public static function convertToUTF8($data, $encoding = 'UTF-8')
+    {
         /*
          * From the HTML5 spec: Given an encoding, the bytes in the input stream must be converted
          * to Unicode characters for the tokeniser, as described by the rules for that encoding,
@@ -122,7 +123,8 @@ class UTF8Utils {
      *
      * @return array An array of (string) error messages produced by the scanning
      */
-    public static function checkForIllegalCodepoints($data) {
+    public static function checkForIllegalCodepoints($data)
+    {
         // Vestigal error handling.
         $errors = array();
         /*

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Dumper\ContextProvider;
 
 use RWP\Vendor\Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
@@ -15,27 +16,26 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\VarCloner;
 use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use RWP\Vendor\Twig\Template;
+use RWP\Components\Str;
+
 /**
  * Tries to provide context from sources (class name, file, line, code excerpt, ...).
  *
  * @author Nicolas Grekas <p@tchwork.com>
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-final class SourceContextProvider implements ContextProviderInterface
-{
+final class SourceContextProvider implements ContextProviderInterface {
     private $limit;
     private $charset;
     private $projectDir;
     private $fileLinkFormatter;
-    public function __construct(string $charset = null, string $projectDir = null, FileLinkFormatter $fileLinkFormatter = null, int $limit = 9)
-    {
+    public function __construct(string $charset = null, string $projectDir = null, FileLinkFormatter $fileLinkFormatter = null, int $limit = 9) {
         $this->charset = $charset;
         $this->projectDir = $projectDir;
         $this->fileLinkFormatter = $fileLinkFormatter;
         $this->limit = $limit;
     }
-    public function getContext() : ?array
-    {
+    public function getContext(): ?array {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT | \DEBUG_BACKTRACE_IGNORE_ARGS, $this->limit);
         $file = $trace[1]['file'];
         $line = $trace[1]['line'];
@@ -46,7 +46,7 @@ final class SourceContextProvider implements ContextProviderInterface
                 $file = $trace[$i]['file'] ?? $file;
                 $line = $trace[$i]['line'] ?? $line;
                 while (++$i < $this->limit) {
-                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && 0 !== \strpos($trace[$i]['function'], 'call_user_func')) {
+                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && Str::startsWith($trace[$i]['function'], 'call_user_func')) {
                         $file = $trace[$i]['file'];
                         $line = $trace[$i]['line'];
                         break;
@@ -81,7 +81,7 @@ final class SourceContextProvider implements ContextProviderInterface
         $context['file_excerpt'] = $fileExcerpt;
         if (null !== $this->projectDir) {
             $context['project_dir'] = $this->projectDir;
-            if (0 === \strpos($file, $this->projectDir)) {
+            if (\str_starts_with($file, $this->projectDir)) {
                 $context['file_relative'] = \ltrim(\substr($file, \strlen($this->projectDir)), \DIRECTORY_SEPARATOR);
             }
         }
@@ -90,10 +90,9 @@ final class SourceContextProvider implements ContextProviderInterface
         }
         return $context;
     }
-    private function htmlEncode(string $s) : string
-    {
+    private function htmlEncode(string $s): string {
         $html = '';
-        $dumper = new HtmlDumper(function ($line) use(&$html) {
+        $dumper = new HtmlDumper(function ($line) use (&$html) {
             $html .= $line;
         }, $this->charset);
         $dumper->setDumpHeader('');

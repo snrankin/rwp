@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Image
  *
@@ -9,6 +10,7 @@
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
+
 namespace RWP\Components;
 
 use RWP\Vendor\Exceptions\Data\FormatException;
@@ -111,9 +113,9 @@ class Image extends Element {
 	 * @var string|array|Element $image The image content
 	 */
 	public $image = array(
-		'tag' => 'image',
-        'atts' => array(
-            'class' => array(
+		'tag' => 'img',
+		'atts' => array(
+			'class' => array(
 				'media-src',
 				'media-image',
 			),
@@ -157,7 +159,7 @@ class Image extends Element {
 		$src  = '';
 		$size = 'full';
 		$html = '';
-		if ( rwp_string_is_html( $args ) ) {
+		if ( rwp_str_is_html( $args ) ) {
 			$html = $args;
 		}
 
@@ -165,6 +167,9 @@ class Image extends Element {
 
 			if ( is_string( $args ) || is_numeric( $args ) ) {
 				$src = rwp_extract_img_src( $args, $size );
+				if ( is_numeric( $args ) ) {
+					$html = wp_get_attachment_image( $args, $size, false );
+				}
 			} elseif ( is_array( $args ) ) {
 				$src  = data_get( $args, 'src', '' );
 				$size = data_get( $args, 'size', $size );
@@ -177,11 +182,12 @@ class Image extends Element {
 		}
 
 		$args['src'] = $src;
+		$args['image']['atts']['src'] = $src;
 		$args['size'] = $size;
 
-		if ( rwp_is_element( $html, 'div|figure' ) ) {
+		if ( rwp_str_is_element( $html, 'div|figure' ) ) {
 			$args['html'] = $html;
-		} else if ( rwp_is_element( $html, '[img|svg]' ) ) {
+		} else if ( rwp_str_is_element( $html, 'img|svg' ) ) {
 			$args['image']['html'] = $html;
 		}
 
@@ -191,48 +197,69 @@ class Image extends Element {
 		$this->inner = new Element( $this->inner );
 		$this->caption = new Element( $this->caption );
 		$this->title = new Element( $this->title );
-
-		$this->add_lazysizes();
-
 	}
 
-	public function add_lazysizes() {
+	/**
+	 * Add lazysizes to an image
+	 *
+	 * @param mixed $image
+	 * @return Element
+	 */
 
-		$lazyload  = $this->get( 'lazysizes.lazyload', false );
+	public static function add_lazysizes( $image = '' ) {
 
-		$this->image->add_class( 'lazyload' );
+		if ( ! ( $image instanceof Element ) ) {
+			$image = new Element( $image );
+		}
+
+		$lazysizes = array(
+			'lazyload'  => rwp_get_option( 'modules.lazysizes.lazyload', false ),
+			'noscript'  => rwp_get_option( 'modules.lazysizes.noscript', false ),
+			'blurup'    => rwp_get_option( 'modules.lazysizes.blurup', false ),
+			'fadein'    => rwp_get_option( 'modules.lazysizes.fadein', false ),
+			'parentfit' => rwp_get_option( 'modules.lazysizes.parentfit', false ),
+			'artdirect' => rwp_get_option( 'modules.lazysizes.artdirect', false ),
+		);
+
+		$lazyload  = data_get( $lazysizes, 'lazyload', false );
 
 		if ( ! $lazyload ) {
-			$this->image->remove_class( 'lazyload' );
-			return;
+			return $image;
 		}
 
-		if ( $this->get( 'lazysizes.blurup', false ) ) {
-			$this->image->add_class( 'blur-up' );
+		$image->add_class( 'lazyload' );
+
+		if ( data_get( $lazysizes, 'blurup', false ) ) {
+			$image->add_class( 'blur-up' );
 		} else {
-			$this->image->remove_class( 'blur-up' );
+			$image->remove_class( 'blur-up' );
 		}
 
-		if ( $this->image->has_attr( 'src' ) ) {
-			$this->image->set_attr( 'data-src', $this->image->get_attr( 'src' ) );
-			$this->image->remove_attr( 'src' );
+		if ( $image->has_attr( 'src' ) ) {
+			$image->set_attr( 'data-src', $image->get_attr( 'src' ) );
+			$image->remove_attr( 'src' );
 		}
 
-		if ( $this->image->has_attr( 'srcset' ) ) {
-			$this->image->set_attr( 'data-srcset', $this->image->get_attr( 'srcset' ) );
-			$this->image->set_attr( 'srcset', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==', true ); // set to trasparent gif
+		$placeholder_srcset = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
+		if ( $image->has_attr( 'srcset' ) ) {
+			$srcset = $image->get_attr( 'srcset' );
+			if ( $srcset !== $placeholder_srcset ) {
+				$image->set_attr( 'data-srcset', $image->get_attr( 'srcset' ) );
+				$image->set_attr( 'srcset', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==', true ); // set to trasparent gif
+			}
 		}
 
-		if ( $this->image->has_attr( 'sizes' ) ) {
-			$this->image->remove_attr( 'sizes' );
+		if ( $image->has_attr( 'sizes' ) ) {
+			$image->remove_attr( 'sizes' );
 		}
 
-		$this->image->set_attr( 'data-sizes', 'auto' );
+		$image->set_attr( 'data-sizes', 'auto' );
 
-		if ( $this->image->get( 'lazysizes.parentfit', false ) ) {
-			$this->image->set_attr( 'data-parent-fit', $this->fit );
-		}
+		$image->set_attr( 'data-parent', '.media-content' );
+		$image->set_attr( 'data-parent-fit', 'cover' );
 
+		return $image;
 	}
 
 	/**
@@ -278,8 +305,17 @@ class Image extends Element {
 	}
 
 	public function setup_html() {
-		$this->add_lazysizes();
+		self::add_lazysizes( $this->image );
+
+		if ( ! empty( $this->ratio ) ) {
+			$this->inner->add_class( 'ratio' );
+			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
+				$this->set_style( '--bs-aspect-ratio', $this->ratio );
+			} else {
+				$this->inner->add_class( 'ratio-' . $this->ratio );
+			}
+		}
+
 		$this->inner->set_content( $this->image, 'image' );
 	}
-
 }

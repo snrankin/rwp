@@ -2,14 +2,15 @@
 
 namespace RWP\Vendor\Illuminate\Contracts\Routing;
 
-interface ResponseFactory {
+interface ResponseFactory
+{
     /**
      * Create a new response instance.
      *
      * @param  string  $content
      * @param  int  $status
      * @param  array  $headers
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function make($content = '', $status = 200, array $headers = []);
     /**
@@ -17,7 +18,7 @@ interface ResponseFactory {
      *
      * @param  int  $status
      * @param  array  $headers
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function noContent($status = 204, array $headers = []);
     /**
@@ -27,7 +28,7 @@ interface ResponseFactory {
      * @param  array  $data
      * @param  int  $status
      * @param  array  $headers
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function view($view, $data = [], $status = 200, array $headers = []);
     /**
@@ -37,7 +38,7 @@ interface ResponseFactory {
      * @param  int  $status
      * @param  array  $headers
      * @param  int  $options
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function json($data = [], $status = 200, array $headers = [], $options = 0);
     /**
@@ -48,7 +49,7 @@ interface ResponseFactory {
      * @param  int  $status
      * @param  array  $headers
      * @param  int  $options
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function jsonp($callback, $data = [], $status = 200, array $headers = [], $options = 0);
     /**
@@ -57,7 +58,7 @@ interface ResponseFactory {
      * @param  \Closure  $callback
      * @param  int  $status
      * @param  array  $headers
-     * @return  StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function stream($callback, $status = 200, array $headers = []);
     /**
@@ -67,7 +68,7 @@ interface ResponseFactory {
      * @param  string|null  $name
      * @param  array  $headers
      * @param  string|null  $disposition
-     * @return  StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function streamDownload($callback, $name = null, array $headers = [], $disposition = 'attachment');
     /**
@@ -77,7 +78,7 @@ interface ResponseFactory {
      * @param  string|null  $name
      * @param  array  $headers
      * @param  string|null  $disposition
-     * @return  BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function download($file, $name = null, array $headers = [], $disposition = 'attachment');
     /**
@@ -85,7 +86,7 @@ interface ResponseFactory {
      *
      * @param  \SplFileInfo|string  $file
      * @param  array  $headers
-     * @return  BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function file($file, array $headers = []);
     /**
@@ -95,7 +96,7 @@ interface ResponseFactory {
      * @param  int  $status
      * @param  array  $headers
      * @param  bool|null  $secure
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectTo($path, $status = 302, $headers = [], $secure = null);
     /**
@@ -105,7 +106,7 @@ interface ResponseFactory {
      * @param  mixed  $parameters
      * @param  int  $status
      * @param  array  $headers
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToRoute($route, $parameters = [], $status = 302, $headers = []);
     /**
@@ -115,7 +116,7 @@ interface ResponseFactory {
      * @param  mixed  $parameters
      * @param  int  $status
      * @param  array  $headers
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToAction($action, $parameters = [], $status = 302, $headers = []);
     /**
@@ -125,7 +126,7 @@ interface ResponseFactory {
      * @param  int  $status
      * @param  array  $headers
      * @param  bool|null  $secure
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectGuest($path, $status = 302, $headers = [], $secure = null);
     /**
@@ -135,7 +136,7 @@ interface ResponseFactory {
      * @param  int  $status
      * @param  array  $headers
      * @param  bool|null  $secure
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToIntended($default = '/', $status = 302, $headers = [], $secure = null);
 }

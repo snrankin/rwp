@@ -156,7 +156,10 @@ class HtmlPage
             $node = $this->dom->createElement('base');
             $this->getHeadNode()->appendChild($node);
         }
-        $node->setAttribute('href', $url);
+		if($node instanceof \DOMNode){
+			$node->setAttribute('href', $url);
+		}
+
     }
     /**
      * Get the href attribute from the base tag, null if not present in document

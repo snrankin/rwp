@@ -22,7 +22,7 @@ interface StatefulGuard extends Guard
     /**
      * Log a user into the application.
      *
-     * @param  Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  bool  $remember
      * @return void
      */
@@ -32,14 +32,14 @@ interface StatefulGuard extends Guard
      *
      * @param  mixed  $id
      * @param  bool  $remember
-     * @return Authenticatable|bool
+     * @return \Illuminate\Contracts\Auth\Authenticatable|bool
      */
     public function loginUsingId($id, $remember = \false);
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
      * @param  mixed  $id
-     * @return Authenticatable|bool
+     * @return \Illuminate\Contracts\Auth\Authenticatable|bool
      */
     public function onceUsingId($id);
     /**

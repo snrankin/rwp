@@ -20,7 +20,7 @@ abstract class GenericLanguageInflectorFactory implements LanguageInflectorFacto
     {
         return new Inflector(new CachedWordInflector(new RulesetInflector(...$this->singularRulesets)), new CachedWordInflector(new RulesetInflector(...$this->pluralRulesets)));
     }
-    public final function withSingularRules(?Ruleset $singularRules, bool $reset = \false) : LanguageInflectorFactory
+    public final function withSingularRules(?Rules\Ruleset $singularRules, bool $reset = \false) : LanguageInflectorFactory
     {
         if ($reset) {
             $this->singularRulesets = [];
@@ -30,7 +30,7 @@ abstract class GenericLanguageInflectorFactory implements LanguageInflectorFacto
         }
         return $this;
     }
-    public final function withPluralRules(?Ruleset $pluralRules, bool $reset = \false) : LanguageInflectorFactory
+    public final function withPluralRules(?Rules\Ruleset $pluralRules, bool $reset = \false) : LanguageInflectorFactory
     {
         if ($reset) {
             $this->pluralRulesets = [];

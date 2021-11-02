@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Dumper\ContextProvider;
 
 /**
@@ -15,10 +16,8 @@ namespace RWP\Vendor\Symfony\Component\VarDumper\Dumper\ContextProvider;
  *
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-final class CliContextProvider implements ContextProviderInterface
-{
-    public function getContext() : ?array
-    {
+final class CliContextProvider implements ContextProviderInterface {
+    public function getContext(): ?array {
         if ('cli' !== \PHP_SAPI) {
             return null;
         }

@@ -11,7 +11,7 @@ interface Encrypter
      * @param  bool  $serialize
      * @return string
      *
-     * @throws EncryptException
+     * @throws \Illuminate\Contracts\Encryption\EncryptException
      */
     public function encrypt($value, $serialize = \true);
     /**
@@ -21,7 +21,7 @@ interface Encrypter
      * @param  bool  $unserialize
      * @return mixed
      *
-     * @throws DecryptException
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function decrypt($payload, $unserialize = \true);
 }

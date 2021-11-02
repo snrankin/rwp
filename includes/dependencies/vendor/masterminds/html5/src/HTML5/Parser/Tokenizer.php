@@ -3,7 +3,6 @@
 namespace RWP\Vendor\Masterminds\HTML5\Parser;
 
 use RWP\Vendor\Masterminds\HTML5\Elements;
-
 /**
  * The HTML5 tokenizer.
  *
@@ -24,7 +23,8 @@ use RWP\Vendor\Masterminds\HTML5\Elements;
  *
  * @see http://www.w3.org/TR/2012/CR-html5-20121217/
  */
-class Tokenizer {
+class Tokenizer
+{
     protected $scanner;
     protected $events;
     protected $tok;
@@ -51,7 +51,8 @@ class Tokenizer {
      * @param EventHandler $eventHandler An event handler, initialized and ready to receive events.
      * @param string       $mode
      */
-    public function __construct($scanner, $eventHandler, $mode = self::CONFORMANT_HTML) {
+    public function __construct($scanner, $eventHandler, $mode = self::CONFORMANT_HTML)
+    {
         $this->scanner = $scanner;
         $this->events = $eventHandler;
         $this->mode = $mode;
@@ -67,7 +68,8 @@ class Tokenizer {
      * the parser will attempt to continue parsing until the
      * entire input stream is read.
      */
-    public function parse() {
+    public function parse()
+    {
         do {
             $this->consumeData();
             // FIXME: Add infinite loop protection.
@@ -91,7 +93,8 @@ class Tokenizer {
      * @param string $untilTag The tag that should stop RAW or RCDATA mode. Normal mode does not
      *                         use this indicator.
      */
-    public function setTextMode($textmode, $untilTag = null) {
+    public function setTextMode($textmode, $untilTag = null)
+    {
         $this->textMode = $textmode & (Elements::TEXT_RAW | Elements::TEXT_RCDATA);
         $this->untilTag = $untilTag;
     }
@@ -99,7 +102,8 @@ class Tokenizer {
      * Consume a character and make a move.
      * HTML5 8.2.4.1.
      */
-    protected function consumeData() {
+    protected function consumeData()
+    {
         $tok = $this->scanner->current();
         if ('&' === $tok) {
             // Character reference
@@ -162,7 +166,8 @@ class Tokenizer {
      *
      * @see Elements::TEXT_RAW Elements::TEXT_RCDATA.
      */
-    protected function characterData() {
+    protected function characterData()
+    {
         $tok = $this->scanner->current();
         if (\false === $tok) {
             return \false;
@@ -186,7 +191,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function text($tok) {
+    protected function text($tok)
+    {
         // This should never happen...
         if (\false === $tok) {
             return \false;
@@ -206,7 +212,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function rawText($tok) {
+    protected function rawText($tok)
+    {
         if (\is_null($this->untilTag)) {
             return $this->text($tok);
         }
@@ -223,7 +230,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function rcdata($tok) {
+    protected function rcdata($tok)
+    {
         if (\is_null($this->untilTag)) {
             return $this->text($tok);
         }
@@ -253,7 +261,8 @@ class Tokenizer {
     /**
      * If the document is read, emit an EOF event.
      */
-    protected function eof() {
+    protected function eof()
+    {
         // fprintf(STDOUT, "EOF");
         $this->flushBuffer();
         $this->events->eof();
@@ -262,7 +271,8 @@ class Tokenizer {
     /**
      * Look for markup.
      */
-    protected function markupDeclaration() {
+    protected function markupDeclaration()
+    {
         $tok = $this->scanner->next();
         // Comment:
         if ('-' == $tok && '-' == $this->scanner->peek()) {
@@ -283,7 +293,8 @@ class Tokenizer {
     /**
      * Consume an end tag. See section 8.2.4.9.
      */
-    protected function endTag() {
+    protected function endTag()
+    {
         if ('/' != $this->scanner->current()) {
             return \false;
         }
@@ -316,7 +327,8 @@ class Tokenizer {
     /**
      * Consume a tag name and body. See section 8.2.4.10.
      */
-    protected function tagName() {
+    protected function tagName()
+    {
         // We know this is at least one char.
         $name = $this->scanner->charsWhile(':_-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
         $name = self::CONFORMANT_XML === $this->mode ? $name : \strtolower($name);
@@ -342,7 +354,8 @@ class Tokenizer {
     /**
      * Check if the scanner has reached the end of a tag.
      */
-    protected function isTagEnd(&$selfClose) {
+    protected function isTagEnd(&$selfClose)
+    {
         $tok = $this->scanner->current();
         if ('/' == $tok) {
             $this->scanner->consume();
@@ -379,7 +392,8 @@ class Tokenizer {
      *
      * @throws ParseError
      */
-    protected function attribute(&$attributes) {
+    protected function attribute(&$attributes)
+    {
         $tok = $this->scanner->current();
         if ('/' == $tok || '>' == $tok || \false === $tok) {
             return \false;
@@ -426,7 +440,8 @@ class Tokenizer {
      *
      * @return string|null
      */
-    protected function attributeValue() {
+    protected function attributeValue()
+    {
         if ('=' != $this->scanner->current()) {
             return null;
         }
@@ -466,7 +481,8 @@ class Tokenizer {
      *
      * @return string The attribute value.
      */
-    protected function quotedAttributeValue($quote) {
+    protected function quotedAttributeValue($quote)
+    {
         $stoplist = "\f" . $quote;
         $val = '';
         while (\true) {
@@ -486,7 +502,8 @@ class Tokenizer {
         $this->scanner->consume();
         return $val;
     }
-    protected function unquotedAttributeValue() {
+    protected function unquotedAttributeValue()
+    {
         $val = '';
         $tok = $this->scanner->current();
         while (\false !== $tok) {
@@ -531,7 +548,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function bogusComment($leading = '') {
+    protected function bogusComment($leading = '')
+    {
         $comment = $leading;
         $tokens = $this->scanner->charsUntil('>');
         if (\false !== $tokens) {
@@ -552,7 +570,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function comment() {
+    protected function comment()
+    {
         $tok = $this->scanner->current();
         $comment = '';
         // <!-->. Emit an empty comment because 8.2.4.46 says to.
@@ -580,7 +599,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function isCommentEnd() {
+    protected function isCommentEnd()
+    {
         $tok = $this->scanner->current();
         // EOF
         if (\false === $tok) {
@@ -612,7 +632,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function doctype() {
+    protected function doctype()
+    {
         // Check that string is DOCTYPE.
         if ($this->scanner->sequenceMatches('DOCTYPE', \false)) {
             $this->scanner->consume(7);
@@ -706,7 +727,8 @@ class Tokenizer {
      *
      * @return mixed String if one is found (quotations omitted).
      */
-    protected function quotedString($stopchars) {
+    protected function quotedString($stopchars)
+    {
         $tok = $this->scanner->current();
         if ('"' == $tok || "'" == $tok) {
             $this->scanner->consume();
@@ -726,7 +748,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function cdataSection() {
+    protected function cdataSection()
+    {
         $cdata = '';
         $this->scanner->consume();
         $chars = $this->scanner->charsWhile('CDAT');
@@ -762,7 +785,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function processingInstruction() {
+    protected function processingInstruction()
+    {
         if ('?' != $this->scanner->current()) {
             return \false;
         }
@@ -802,7 +826,8 @@ class Tokenizer {
      *
      * @return string
      */
-    protected function readUntilSequence($sequence) {
+    protected function readUntilSequence($sequence)
+    {
         $buffer = '';
         // Optimization for reading larger blocks faster.
         $first = \substr($sequence, 0, 1);
@@ -837,7 +862,8 @@ class Tokenizer {
      *
      * @return bool
      */
-    protected function sequenceMatches($sequence, $caseSensitive = \true) {
+    protected function sequenceMatches($sequence, $caseSensitive = \true)
+    {
         @\trigger_error(__METHOD__ . ' method is deprecated since version 2.4 and will be removed in 3.0. Use Scanner::sequenceMatches() instead.', \E_USER_DEPRECATED);
         return $this->scanner->sequenceMatches($sequence, $caseSensitive);
     }
@@ -848,7 +874,8 @@ class Tokenizer {
      * temporary text buffer. (The buffer is used to group as much PCDATA
      * as we can instead of emitting lots and lots of TEXT events.)
      */
-    protected function flushBuffer() {
+    protected function flushBuffer()
+    {
         if ('' === $this->text) {
             return;
         }
@@ -862,7 +889,8 @@ class Tokenizer {
      *
      * @param string $str
      */
-    protected function buffer($str) {
+    protected function buffer($str)
+    {
         $this->text .= $str;
     }
     /**
@@ -875,7 +903,8 @@ class Tokenizer {
      *
      * @return string
      */
-    protected function parseError($msg) {
+    protected function parseError($msg)
+    {
         $args = \func_get_args();
         if (\count($args) > 1) {
             \array_shift($args);
@@ -896,7 +925,8 @@ class Tokenizer {
      *
      * @return string
      */
-    protected function decodeCharacterReference($inAttribute = \false) {
+    protected function decodeCharacterReference($inAttribute = \false)
+    {
         // Next char after &.
         $tok = $this->scanner->next();
         $start = $this->scanner->position();

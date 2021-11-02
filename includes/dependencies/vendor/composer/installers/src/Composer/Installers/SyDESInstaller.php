@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class SyDESInstaller extends \Composer\Installers\BaseInstaller {
+class SyDESInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'app/modules/{$name}/', 'theme' => 'themes/{$name}/');
     /**
      * Format module name.
@@ -11,7 +12,8 @@ class SyDESInstaller extends \Composer\Installers\BaseInstaller {
      *
      * {@inerhitDoc}
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($vars['type'] == 'sydes-module') {
             return $this->inflectModuleVars($vars);
         }
@@ -20,13 +22,15 @@ class SyDESInstaller extends \Composer\Installers\BaseInstaller {
         }
         return $vars;
     }
-    public function inflectModuleVars($vars) {
+    public function inflectModuleVars($vars)
+    {
         $vars['name'] = \preg_replace('/(^sydes-|-module$)/i', '', $vars['name']);
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));
         return $vars;
     }
-    protected function inflectThemeVars($vars) {
+    protected function inflectThemeVars($vars)
+    {
         $vars['name'] = \preg_replace('/(^sydes-|-theme$)/', '', $vars['name']);
         $vars['name'] = \strtolower($vars['name']);
         return $vars;

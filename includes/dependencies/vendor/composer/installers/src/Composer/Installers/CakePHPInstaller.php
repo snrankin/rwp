@@ -1,16 +1,17 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\DependencyResolver\Pool;
-use Composer\Semver\Constraint\Constraint;
-
-class CakePHPInstaller extends \Composer\Installers\BaseInstaller {
+use RWP\Vendor\Composer\DependencyResolver\Pool;
+use RWP\Vendor\Composer\Semver\Constraint\Constraint;
+class CakePHPInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'Plugin/{$name}/');
     /**
      * Format package name to CamelCase
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($this->matchesCakeVersion('>=', '3.0.0')) {
             return $vars;
         }
@@ -26,7 +27,8 @@ class CakePHPInstaller extends \Composer\Installers\BaseInstaller {
     /**
      * Change the default plugin location when cakephp >= 3.0
      */
-    public function getLocations() {
+    public function getLocations()
+    {
         if ($this->matchesCakeVersion('>=', '3.0.0')) {
             $this->locations['plugin'] = $this->composer->getConfig()->get('vendor-dir') . '/{$vendor}/{$name}/';
         }
@@ -38,8 +40,10 @@ class CakePHPInstaller extends \Composer\Installers\BaseInstaller {
      * @param string $matcher
      * @param string $version
      * @return bool
+     * @phpstan-param Constraint::STR_OP_* $matcher
      */
-    protected function matchesCakeVersion($matcher, $version) {
+    protected function matchesCakeVersion($matcher, $version)
+    {
         $repositoryManager = $this->composer->getRepositoryManager();
         if (!$repositoryManager) {
             return \false;
@@ -48,6 +52,6 @@ class CakePHPInstaller extends \Composer\Installers\BaseInstaller {
         if (!$repos) {
             return \false;
         }
-        return $repos->findPackage('cakephp/cakephp', new \Composer\Semver\Constraint\Constraint($matcher, $version)) !== null;
+        return $repos->findPackage('cakephp/cakephp', new \RWP\Vendor\Composer\Semver\Constraint\Constraint($matcher, $version)) !== null;
     }
 }

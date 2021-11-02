@@ -43,7 +43,7 @@ if (!empty($_POST)) {
     $linebreak_pos = \trim($linebreak_pos) !== '' ? $linebreak_pos : \false;
     $raise_php = isset($raise_php) ? \true : \false;
     // Create a new CSSmin object and try to raise PHP settings
-    $compressor = new Minifier($raise_php);
+    $compressor = new CSSmin($raise_php);
     if ($linebreak_pos !== \false) {
         $compressor->setLineBreakPosition($linebreak_pos);
     }

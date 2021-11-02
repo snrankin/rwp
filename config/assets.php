@@ -21,34 +21,34 @@ $rwp_plugin_assets = [
             'handle'   => 'app',
             'deps'     => ['jquery', 'lodash'],
             'location' => 'global',
-			'footer'   => true,
+            'footer'   => true,
         ],
         'public' => [
             'handle'   => 'public',
             'deps'     => ['jquery', 'rwp-app'],
             'location' => 'public',
-			'footer'   => true,
+        	'footer'   => true,
         ],
         'modernizr' => [
             'handle'   => 'modernizr',
             'location' => 'modernizr',
-			'footer'   => true,
+        	'footer'   => true,
         ],
         'admin' => [
             'handle'   => 'admin',
             'deps'     => ['jquery', 'rwp-app'],
             'location' => 'admin',
-			'footer'   => true,
+        	'footer'   => true,
         ],
-        'acf' => [
-            'handle'   => 'acf',
-        'deps'     => ['jquery', 'rwp-app'],
-            'location' => 'acf',
-			'footer'   => true,
-        ],
+        // 'acf' => [
+        //     'handle'   => 'acf',
+        // 	'deps'     => ['jquery', 'rwp-app'],
+        //     'location' => 'acf',
+        // 	'footer'   => true,
+        // ],
         'modal' => [
             'handle'   => 'modal',
-            'deps'     => ['rwp-public'],
+            'deps'     => ['rwp-app'],
             'location' => 'modal',
             'footer'   => true,
         ],
@@ -59,7 +59,7 @@ $rwp_plugin_assets = [
         ],
         'slider' => [
             'handle'   => 'slider',
-            'deps'     => ['rwp-public'],
+            'deps'     => ['rwp-app'],
             'location' => 'slider',
             'footer'   => true,
         ],
@@ -73,14 +73,18 @@ $rwp_plugin_assets = [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
         ],
+		'wordpress' => [
+            'handle'   => 'wordpress',
+            'location' => 'global',
+        ],
         'admin' => [
             'handle'   => 'admin',
             'location' => 'admin',
         ],
-        'acf' => [
-            'handle'   => 'acf',
-            'location' => 'acf',
-        ],
+        // 'acf' => [
+        //     'handle'   => 'acf',
+        //     'location' => 'acf',
+        // ],
         'modal' => [
             'handle'   => 'modal',
             'location' => 'modal',
@@ -99,14 +103,10 @@ $rwp_plugin_assets = [
         ],
         'font-awesome' => [
             'handle'   => 'font-awesome',
-            'src'      => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css',
-        'ver'      => '5.15.4',
             'location' => 'font-awesome',
         ],
         'bootstrap-icons' => [
             'handle'   => 'bootstrap-icons',
-            'src'      => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css',
-        'ver'      => '1.5.0',
             'location' => 'bootstrap-icons',
         ],
     ],

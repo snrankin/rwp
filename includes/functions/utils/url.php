@@ -1,11 +1,13 @@
 <?php
 
-/** ============================================================================
+/**
+ * ============================================================================
  * RWP URL Utilities
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 /**
  * Is URL
@@ -18,11 +20,15 @@
  * @return bool Whether or not the string is a url
  */
 function rwp_is_url( $url = '' ) {
-	if ( filter_var( $url, FILTER_VALIDATE_URL ) == true ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-		return true;
-	} else {
-		return false;
-	}
+	if ( empty( $url ) ) {
+        return false;
+    }
+	$input = wp_parse_url( $url );
+
+    if ( empty( $input ) ) {
+        return false;
+    }
+	return true;
 }
 
 /**
@@ -34,13 +40,13 @@ function rwp_is_url( $url = '' ) {
  */
 
 function rwp_is_relative_url( $input ) {
-	$input = wp_parse_url( $input );
+    $input = wp_parse_url( $input );
 
-	if ( empty( $input ) ) {
-		return false;
-	}
+    if ( empty( $input ) ) {
+        return false;
+    }
 
-	return ! rwp_array_has( 'scheme', $input );
+    return ! rwp_array_has( 'scheme', $input );
 }
 
 /**
@@ -53,11 +59,11 @@ function rwp_is_relative_url( $input ) {
 
 function rwp_is_outbound_link( $link ) {
 	if ( ! is_string( $link ) ) {
-		return false;
+        return false;
 	}
 	if ( rwp_is_url( $link ) && ! rwp_is_relative_url( $link ) ) {
 		$home = network_home_url();
-		if ( ! rwp_string_has( $link, $home ) ) {
+		if ( ! rwp_str_has( $link, $home ) ) {
 			return true;
 		} else {
 			return false;
@@ -80,6 +86,7 @@ function rwp_relative_url( $input ) {
 	}
 
 	if ( ! rwp_is_relative_url( $input ) && ! rwp_is_outbound_link( $input ) && \rwp_get_option( 'modules.relative_urls', false ) ) {
+		$link          = $input;
 		$url           = wp_parse_url( $input );
 		$hosts_match   = true;
 		$schemes_match = true;
@@ -111,7 +118,10 @@ function rwp_relative_url( $input ) {
 		if ( $hosts_match && $schemes_match && $ports_match ) {
 			$input = wp_make_link_relative( $input );
 		}
-		return esc_url( $input );
+
+		$input = apply_filters( 'rwp_relative_url', $input, $link );
+
+		return $input;
 	} else {
 		return $input;
 	}
@@ -121,14 +131,14 @@ function rwp_relative_url( $input ) {
 /**
  * Compare URL against relative URL
  *
- * @param string $url
- * @param string $rel
+ * @param  string $url
+ * @param  string $rel
  * @return bool
  */
 function rwp_url_compare( $url, $rel ) {
-	$url = trailingslashit( $url );
-	$rel = trailingslashit( $rel );
-	return ( ( strcasecmp( $url, $rel ) === 0 ) || rwp_relative_url( $url ) === $rel );
+     $url = trailingslashit( $url );
+    $rel = trailingslashit( $rel );
+    return ( ( strcasecmp( $url, $rel ) === 0 ) || rwp_relative_url( $url ) === $rel );
 }
 
 /**
@@ -142,10 +152,10 @@ function rwp_url_compare( $url, $rel ) {
  */
 function rwp_format_phone_url( $number = '' ) {
 	if ( ! rwp_is_phone_number( $number ) ) {
-		return $number;
+        return $number;
 	}
 
-	$formatted_number = preg_replace( '/\s*\D*/', '', $number );
+    $formatted_number = preg_replace( '/\s*\D*/', '', $number );
 
 	if ( ! empty( $formatted_number ) ) {
 		return $formatted_number;

@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class MODULEWorkInstaller extends \Composer\Installers\BaseInstaller {
+class MODULEWorkInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('module' => 'modules/{$name}/');
 }

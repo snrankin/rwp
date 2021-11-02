@@ -8,17 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\DomCrawler;
 
 use RWP\Vendor\Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use RWP\Vendor\Symfony\Component\DomCrawler\Field\FormField;
+
 /**
  * Form represents an HTML form.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Form extends Link implements \ArrayAccess
-{
+class Form extends Link implements \ArrayAccess {
     /**
      * @var \DOMElement
      */
@@ -33,14 +34,13 @@ class Form extends Link implements \ArrayAccess
     private $baseHref;
     /**
      * @param \DOMElement $node       A \DOMElement instance
-     * @param string      $currentUri The URI of the page where the form is embedded
-     * @param string      $method     The method to use for the link (if null, it defaults to the method defined by the form)
-     * @param string      $baseHref   The URI of the <base> used for relative links, but not for empty action
+     * @param string|null $currentUri The URI of the page where the form is embedded
+     * @param string|null $method     The method to use for the link (if null, it defaults to the method defined by the form)
+     * @param string|null $baseHref   The URI of the <base> used for relative links, but not for empty action
      *
      * @throws \LogicException if the node is not a button inside a form tag
      */
-    public function __construct(\DOMElement $node, string $currentUri = null, string $method = null, string $baseHref = null)
-    {
+    public function __construct(\DOMElement $node, string $currentUri = null, string $method = null, string $baseHref = null) {
         parent::__construct($node, $currentUri, $method);
         $this->baseHref = $baseHref;
         $this->initialize();
@@ -50,8 +50,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return \DOMElement A \DOMElement instance
      */
-    public function getFormNode()
-    {
+    public function getFormNode() {
         return $this->node;
     }
     /**
@@ -61,8 +60,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return $this
      */
-    public function setValues(array $values)
-    {
+    public function setValues(array $values) {
         foreach ($values as $name => $value) {
             $this->fields->set($name, $value);
         }
@@ -75,8 +73,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return array An array of field values
      */
-    public function getValues()
-    {
+    public function getValues() {
         $values = [];
         foreach ($this->fields->all() as $name => $field) {
             if ($field->isDisabled()) {
@@ -93,8 +90,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return array An array of file field values
      */
-    public function getFiles()
-    {
+    public function getFiles() {
         if (!\in_array($this->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH'])) {
             return [];
         }
@@ -117,8 +113,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return array An array of field values
      */
-    public function getPhpValues()
-    {
+    public function getPhpValues() {
         $values = [];
         foreach ($this->getValues() as $name => $value) {
             $qs = \http_build_query([$name => $value], '', '&');
@@ -142,8 +137,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return array An array of file field values
      */
-    public function getPhpFiles()
-    {
+    public function getPhpFiles() {
         $values = [];
         foreach ($this->getFiles() as $name => $value) {
             $qs = \http_build_query([$name => $value], '', '&');
@@ -170,8 +164,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return string The URI
      */
-    public function getUri()
-    {
+    public function getUri() {
         $uri = parent::getUri();
         if (!\in_array($this->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH'])) {
             $query = \parse_url($uri, \PHP_URL_QUERY);
@@ -186,8 +179,7 @@ class Form extends Link implements \ArrayAccess
         }
         return $uri;
     }
-    protected function getRawUri()
-    {
+    protected function getRawUri() {
         // If the form was created from a button rather than the form node, check for HTML5 action overrides
         if ($this->button !== $this->node && $this->button->getAttribute('formaction')) {
             return $this->button->getAttribute('formaction');
@@ -201,8 +193,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return string The method
      */
-    public function getMethod()
-    {
+    public function getMethod() {
         if (null !== $this->method) {
             return $this->method;
         }
@@ -217,8 +208,7 @@ class Form extends Link implements \ArrayAccess
      *
      * If no name is defined on the form, an empty string is returned.
      */
-    public function getName() : string
-    {
+    public function getName(): string {
         return $this->node->getAttribute('name');
     }
     /**
@@ -226,15 +216,13 @@ class Form extends Link implements \ArrayAccess
      *
      * @return bool true if the field exists, false otherwise
      */
-    public function has(string $name)
-    {
+    public function has(string $name) {
         return $this->fields->has($name);
     }
     /**
      * Removes a field from the form.
      */
-    public function remove(string $name)
-    {
+    public function remove(string $name) {
         $this->fields->remove($name);
     }
     /**
@@ -244,15 +232,13 @@ class Form extends Link implements \ArrayAccess
      *
      * @throws \InvalidArgumentException When field is not present in this form
      */
-    public function get(string $name)
-    {
+    public function get(string $name) {
         return $this->fields->get($name);
     }
     /**
      * Sets a named field.
      */
-    public function set(FormField $field)
-    {
+    public function set(FormField $field) {
         $this->fields->add($field);
     }
     /**
@@ -260,8 +246,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return FormField[]
      */
-    public function all()
-    {
+    public function all() {
         return $this->fields->all();
     }
     /**
@@ -271,8 +256,8 @@ class Form extends Link implements \ArrayAccess
      *
      * @return bool true if the field exists, false otherwise
      */
-    public function offsetExists($name)
-    {
+
+    public function offsetExists($name) {
         return $this->has($name);
     }
     /**
@@ -284,8 +269,8 @@ class Form extends Link implements \ArrayAccess
      *
      * @throws \InvalidArgumentException if the field does not exist
      */
-    public function offsetGet($name)
-    {
+
+    public function offsetGet($name) {
         return $this->fields->get($name);
     }
     /**
@@ -294,19 +279,23 @@ class Form extends Link implements \ArrayAccess
      * @param string       $name  The field name
      * @param string|array $value The value of the field
      *
+     * @return void
+     *
      * @throws \InvalidArgumentException if the field does not exist
      */
-    public function offsetSet($name, $value)
-    {
+
+    public function offsetSet($name, $value) {
         $this->fields->set($name, $value);
     }
     /**
      * Removes a field from the form.
      *
      * @param string $name The field name
+     *
+     * @return void
      */
-    public function offsetUnset($name)
-    {
+
+    public function offsetUnset($name) {
         $this->fields->remove($name);
     }
     /**
@@ -314,8 +303,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @return self
      */
-    public function disableValidation()
-    {
+    public function disableValidation() {
         foreach ($this->fields->all() as $field) {
             if ($field instanceof ChoiceFormField) {
                 $field->disableValidation();
@@ -330,8 +318,7 @@ class Form extends Link implements \ArrayAccess
      *
      * @throws \LogicException If given node is not a button or input or does not have a form ancestor
      */
-    protected function setNode(\DOMElement $node)
-    {
+    protected function setNode(\DOMElement $node) {
         $this->button = $node;
         if ('button' === $node->nodeName || 'input' === $node->nodeName && \in_array(\strtolower($node->getAttribute('type')), ['submit', 'button', 'image'])) {
             if ($node->hasAttribute('form')) {
@@ -362,8 +349,7 @@ class Form extends Link implements \ArrayAccess
      * the form node or the entire document depending on whether we need
      * to find non-descendant elements through HTML5 'form' attribute.
      */
-    private function initialize()
-    {
+    private function initialize() {
         $this->fields = new FormFieldRegistry();
         $xpath = new \DOMXPath($this->node->ownerDocument);
         // add submitted button if it has a valid name
@@ -403,8 +389,7 @@ class Form extends Link implements \ArrayAccess
             $this->currentUri = $this->baseHref;
         }
     }
-    private function addField(\DOMElement $node)
-    {
+    private function addField(\DOMElement $node) {
         if (!$node->hasAttribute('name') || !$node->getAttribute('name')) {
             return;
         }

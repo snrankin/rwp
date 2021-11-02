@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class AimeosInstaller extends \Composer\Installers\BaseInstaller {
+class AimeosInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('extension' => 'ext/{$name}/');
 }

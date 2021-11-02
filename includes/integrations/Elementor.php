@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Elementor
  *
@@ -12,7 +13,7 @@
 namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Internals\Bootstrap;
+use RWP\Integrations\Bootstrap;
 use Elementor\Element_Base;
 use Elementor\Plugin as Elementor_Instance;
 use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
@@ -35,8 +36,13 @@ class Elementor extends Singleton {
 
 		//add_action( 'elementor/experiments/default-features-registered', array( $this, 'update_elementor_features' ) );
 		//add_action( 'elementor/init', array( $this, 'auto_add_bs_breakpoints' ) );
-		add_action( 'elementor/element/before_section_end', array( $this, 'add_bootstrap_options' ), 10, 3 );
 
+		add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
+		add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
+
+		add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
+		add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
+		add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
 	}
 
 	/**
@@ -133,29 +139,24 @@ class Elementor extends Singleton {
 		$breakpoints = array(
 			'desktop' => 'lg',
 			'tablet'  => 'md',
-			'mobile'  => 'sm',
+			'mobile'  => '',
 		);
 
 		if ( in_array( 'mobile_extra', $devices, true ) ) {
 			$breakpoints['mobile_extra'] = 'sm';
-			$breakpoints['mobile']       = 'xs';
 		}
 
 		if ( in_array( 'tablet_extra', $devices, true ) ) {
 			$breakpoints['tablet_extra'] = 'lg';
-			$breakpoints['desktop']      = 'xl';
-			if ( in_array( 'laptop', $devices, true ) ) {
-				$breakpoints['desktop'] = 'xxl';
-			}
 		}
 
 		if ( in_array( 'laptop', $devices, true ) ) {
 			$breakpoints['laptop']  = 'lg';
 			$breakpoints['desktop'] = 'xl';
-			if ( in_array( 'tablet_extra', $devices, true ) ) {
-				$breakpoints['laptop']  = 'xl';
-				$breakpoints['desktop'] = 'xxl';
-			}
+		}
+
+		if ( in_array( 'widescreen', $devices, true ) ) {
+			$breakpoints['widescreen'] = 'xxl';
 		}
 
 		$responsive_duplication_mode   = self::plugin()->breakpoints->get_responsive_control_duplication_mode();
@@ -170,9 +171,9 @@ class Elementor extends Singleton {
 			$args['is_responsive'] = true;
 
 			if ( ! empty( $options['overwrite'] ) ) {
-				$section->update_control( $id, $args, array(
+				$section->update_control($id, $args, array(
 					'recursive' => ! empty( $options['recursive'] ),
-				) );
+				));
 			} else {
 				$section->add_control( $id, $args, $options );
 			}
@@ -202,10 +203,14 @@ class Elementor extends Singleton {
 				}
 
 				if ( ! empty( $args['prefix_class'] ) ) {
-					$control_args['prefix_class'] = wp_sprintf( $args['prefix_class'], '-' . $device_class );
+					$device_prefix_class = $device_class;
+					if ( ! empty( $device_prefix_class ) ) {
+						$device_prefix_class = '-' . $device_prefix_class;
+					}
+					$control_args['prefix_class'] = wp_sprintf( $args['prefix_class'], $device_prefix_class );
 				}
 
-				$direction = 'max';
+				$direction = 'min';
 
 				if ( Breakpoints_Manager::BREAKPOINT_KEY_DESKTOP !== $device_name ) {
 					$direction = $active_breakpoints[ $device_name ]->get_direction();
@@ -236,14 +241,14 @@ class Elementor extends Singleton {
 				$section->update_control( $control_args['parent'], array( 'inheritors' => array( $control_name ) ) );
 
 				if ( ! empty( $options['overwrite'] ) ) {
-					$section->update_control( $control_name, $control_args, array(
+					$section->update_control($control_name, $control_args, array(
 						'recursive' => ! empty( $options['recursive'] ),
-					) );
+					));
 				} else {
 					if ( rwp_array_has( $control_name, $controls ) ) {
-						$section->update_control( $control_name, $control_args, array(
+						$section->update_control($control_name, $control_args, array(
 							'recursive' => ! empty( $options['recursive'] ),
-						) );
+						));
 					} else {
 						$section->add_control( $control_name, $control_args, $options );
 					}
@@ -253,7 +258,7 @@ class Elementor extends Singleton {
 	}
 
 	/**
-	 * Filter to updated elementor columns and buttons
+	 * Filter to remove certain options from Elementor columns
 	 *
 	 * @param Element_Base $section
 	 * @param string $section_id
@@ -261,7 +266,24 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_bootstrap_options( $section, $section_id, $args ) {
+	public function remove_column_options( $section, $section_id, $args ) {
+		if ( 'column' === $section->get_name() ) {
+			$section->remove_responsive_control( '_inline_size' );
+			$section->remove_responsive_control( 'align' );
+			$section->remove_responsive_control( 'content_position' );
+		}
+	}
+
+	/**
+	 * Filter to add certain options from Elementor columns
+	 *
+	 * @param Element_Base $section
+	 * @param string $section_id
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	public function add_column_options( $section, $section_id, $args ) {
 		if ( 'column' === $section->get_name() ) {
 			$col_class = $section->get_render_attributes( '_wrapper', 'class' );
 
@@ -281,19 +303,35 @@ class Elementor extends Singleton {
 
 			self::add_responsive_control_to_elementor(
 				$section,
-				'content_horizontal_alignment',
+				'content_direction',
 				array(
-					'label'        => esc_html__( 'Content Horizontal Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Flex: Direction', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''              => esc_html__( 'Default', 'gtb' ),
-						'start'         => esc_html__( 'Left', 'gtb' ),
-						'center'        => esc_html__( 'Center', 'gtb' ),
-						'end'           => esc_html__( 'Right', 'gtb' ),
-						'space-between' => esc_html__( 'Space Between', 'gtb' ),
-						'space-around'  => esc_html__( 'Space Around', 'gtb' ),
-						'space-evenly'  => esc_html__( 'Space Evenly', 'gtb' ),
+						''       => esc_html__( 'Default', 'rwp' ),
+						'row'    => esc_html__( 'Horizontal', 'rwp' ),
+						'column' => esc_html__( 'Vertical', 'rwp' ),
+					),
+					'prefix_class' => 'elementor-column-align%s-',
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
+				'content_horizontal_alignment',
+				array(
+					'label'        => esc_html__( 'Flex: Justify Content', 'rwp' ),
+					'type'         => Controls_Manager::SELECT,
+					'default'      => '',
+					'options'      => array(
+						''              => esc_html__( 'Default', 'rwp' ),
+						'start'         => esc_html__( 'Left', 'rwp' ),
+						'center'        => esc_html__( 'Center', 'rwp' ),
+						'end'           => esc_html__( 'Right', 'rwp' ),
+						'space-between' => esc_html__( 'Space Between', 'rwp' ),
+						'space-around'  => esc_html__( 'Space Around', 'rwp' ),
+						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-h-align%s-',
 				)
@@ -302,46 +340,212 @@ class Elementor extends Singleton {
 				$section,
 				'content_vertical_alignment',
 				array(
-					'label'        => esc_html__( 'Content Vertical Alignment', 'gtb' ),
+					'label'        => esc_html__( 'Flex: Align Items', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
 					'options'      => array(
-						''        => esc_html__( 'Default', 'gtb' ),
-						'start'   => esc_html__( 'Top', 'gtb' ),
-						'center'  => esc_html__( 'Center', 'gtb' ),
-						'end'     => esc_html__( 'Bottom', 'gtb' ),
-						'stretch' => esc_html__( 'Full Width', 'gtb' ),
+						''        => esc_html__( 'Default', 'rwp' ),
+						'start'   => esc_html__( 'Top', 'rwp' ),
+						'center'  => esc_html__( 'Center', 'rwp' ),
+						'end'     => esc_html__( 'Bottom', 'rwp' ),
+						'stretch' => esc_html__( 'Full Width', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-v-align%s-',
 				)
 			);
 
-			$section->remove_responsive_control( '_inline_size' );
-			$section->remove_responsive_control( 'align' );
-			$section->remove_responsive_control( 'content_position' );
-		} elseif ( 'button' === $section->get_name() && 'section_button' === $section_id ) {
+			self::add_responsive_control_to_elementor(
+				$section,
+				'content_vertical_wrap',
+				array(
+					'label'        => esc_html__( 'Flex: Align Content', 'rwp' ),
+					'type'         => Controls_Manager::SELECT,
+					'default'      => '',
+					'options'      => array(
+						''              => esc_html__( 'Default', 'rwp' ),
+						'start'         => esc_html__( 'Top', 'rwp' ),
+						'center'        => esc_html__( 'Center', 'rwp' ),
+						'end'           => esc_html__( 'Bottom', 'rwp' ),
+						'space-between' => esc_html__( 'Space Between', 'rwp' ),
+						'space-around'  => esc_html__( 'Space Around', 'rwp' ),
+						'stretch'       => esc_html__( 'Fill Rows', 'rwp' ),
+					),
+					'prefix_class' => 'elementor-column-v-wrap%s-',
+				)
+			);
+		}
+	}
 
+	/**
+	 * Filter to remove certain options from Elementor sections
+	 *
+	 * @param Element_Base $section
+	 * @param string $section_id
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	public function remove_section_options( $section, $section_id, $args ) {
+		if ( 'section' === $section->get_name() ) {
+			// $section->remove_control('gap');
+			// $section->remove_responsive_control('gap_columns_custom',);
+			$section->remove_control( 'column_position' );
+			$section->remove_control( 'content_position' );
+		}
+	}
 
-			// Adding Bootstrap button types to elementor buttons
-
-			$btn_options_solid = (array) Bootstrap::bs_atts('colors');
-			$btn_options_outline = (array) Bootstrap::bs_atts('colors', 'outline-', '',  '', ' Outline');
-
-			$btn_options = array(
-				'' => 'Default'
+	/**
+	 * Filter to add certain options from Elementor sections
+	 *
+	 * @param Element_Base $section
+	 * @param string $section_id
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	public function add_section_options( $section, $section_id, $args ) {
+		if ( 'section' === $section->get_name() ) {
+			self::add_responsive_control_to_elementor(
+				$section,
+				'column_horizontal_alignment',
+				array(
+					'label'        => esc_html__( 'Column Horizontal Alignment', 'rwp' ),
+					'type'         => Controls_Manager::SELECT,
+					'default'      => '',
+					'options'      => array(
+						''              => esc_html__( 'Default', 'rwp' ),
+						'start'         => esc_html__( 'Start', 'rwp' ),
+						'center'        => esc_html__( 'Center', 'rwp' ),
+						'end'           => esc_html__( 'End', 'rwp' ),
+						'space-between' => esc_html__( 'Space Between', 'rwp' ),
+						'space-around'  => esc_html__( 'Space Around', 'rwp' ),
+						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
+					),
+					'prefix_class' => 'elementor-row-h-align%s-',
+				)
+			);
+			self::add_responsive_control_to_elementor(
+				$section,
+				'column_vertical_alignment',
+				array(
+					'label'        => esc_html__( 'Column Vertical Alignment', 'rwp' ),
+					'type'         => Controls_Manager::SELECT,
+					'default'      => '',
+					'options'      => array(
+						''         => esc_html__( 'Default', 'rwp' ),
+						'start'    => esc_html__( 'Top', 'rwp' ),
+						'center'   => esc_html__( 'Center', 'rwp' ),
+						'end'      => esc_html__( 'Bottom', 'rwp' ),
+						'baseline' => esc_html__( 'Baseline', 'rwp' ),
+						'stretch'  => esc_html__( 'Stretch', 'rwp' ),
+					),
+					'prefix_class' => 'elementor-row-v-align%s-',
+				)
 			);
 
-			foreach ($btn_options_solid as $key => $value) {
-				$label = data_get($value, 'label');
-				$class = data_get($value, 'value');
-				$btn_options[$class] = $label;
-			}
+			self::add_responsive_control_to_elementor(
+				$section,
+				'gap',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => '',
+					'options' => [
+						'' => esc_html__( 'Default', 'rwp' ),
+						'no' => esc_html__( 'No Gap', 'rwp' ),
+						'narrow' => esc_html__( 'Narrow', 'rwp' ),
+						'extended' => esc_html__( 'Extended', 'rwp' ),
+						'wide' => esc_html__( 'Wide', 'rwp' ),
+						'wider' => esc_html__( 'Wider', 'rwp' ),
+						'custom' => esc_html__( 'Custom', 'rwp' ),
+					],
+					'prefix_class' => 'elementor-row-gap-x%s-',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
 
-			foreach ($btn_options_outline as $key => $value) {
-				$label = data_get($value, 'label');
-				$class = data_get($value, 'value');
-				$btn_options[$class] = $label;
-			}
+			self::add_responsive_control_to_elementor(
+				$section,
+				'gap',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
+				'gap-x',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => '',
+					'options' => [
+						'' => esc_html__( 'Default', 'rwp' ),
+						'no' => esc_html__( 'No Gap', 'rwp' ),
+						'narrow' => esc_html__( 'Narrow', 'rwp' ),
+						'extended' => esc_html__( 'Extended', 'rwp' ),
+						'wide' => esc_html__( 'Wide', 'rwp' ),
+						'wider' => esc_html__( 'Wider', 'rwp' ),
+						'custom' => esc_html__( 'Custom', 'rwp' ),
+					],
+					'prefix_class' => 'elementor-row-gap-x%s-',
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
+				'gap-y',
+				array(
+					'label' => esc_html__( 'Columns Vertical Gap', 'rwp' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => '',
+					'options' => [
+						'' => esc_html__( 'Default', 'rwp' ),
+						'no' => esc_html__( 'No Gap', 'rwp' ),
+						'narrow' => esc_html__( 'Narrow', 'rwp' ),
+						'extended' => esc_html__( 'Extended', 'rwp' ),
+						'wide' => esc_html__( 'Wide', 'rwp' ),
+						'wider' => esc_html__( 'Wider', 'rwp' ),
+						'custom' => esc_html__( 'Custom', 'rwp' ),
+					],
+					'prefix_class' => 'elementor-row-gap-y%s-',
+				)
+			);
+		}
+	}
+
+	/**
+	 * Filter to add certain options from Elementor buttons
+	 *
+	 * @param Element_Base $section
+	 * @param string $section_id
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	public function add_button_options( $section, $section_id, $args ) {
+		if ( 'button' === $section->get_name() && 'section_button' === $section_id ) {
+			// Adding Bootstrap button types to elementor buttons
+
+			$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
+			$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' ) );
+
+			$btn_options_solid = $btn_options_solid->mapWithKeys(function ( $item ) {
+				return [ $item['value'] => $item['label'] ];
+			});
+
+			$btn_options_outline = $btn_options_outline->mapWithKeys(function ( $item ) {
+				return [ $item['value'] => $item['label'] ];
+			});
+
+			$btn_options = $btn_options_solid->merge( $btn_options_outline )->prepend( 'Default', 'default' )->all();
 
 			$section->add_control(
 				'button_type',
@@ -354,44 +558,6 @@ class Elementor extends Singleton {
 				),
 				array(
 					'overwrite' => true,
-				)
-			);
-		} elseif ( 'section' === $section->get_name() ) {
-			self::add_responsive_control_to_elementor(
-				$section,
-				'column_horizontal_alignment',
-				array(
-					'label'        => esc_html__( 'Column Horizontal Alignment', 'gtb' ),
-					'type'         => Controls_Manager::SELECT,
-					'default'      => '',
-					'options'      => array(
-						''              => esc_html__( 'Default', 'gtb' ),
-						'start'         => esc_html__( 'Start', 'gtb' ),
-						'center'        => esc_html__( 'Center', 'gtb' ),
-						'end'           => esc_html__( 'End', 'gtb' ),
-						'space-between' => esc_html__( 'Space Between', 'gtb' ),
-						'space-around'  => esc_html__( 'Space Around', 'gtb' ),
-						'space-evenly'  => esc_html__( 'Space Evenly', 'gtb' ),
-					),
-					'prefix_class' => 'elementor-columns-h-align%s-',
-				)
-			);
-			self::add_responsive_control_to_elementor(
-				$section,
-				'column_vertical_alignment',
-				array(
-					'label'        => esc_html__( 'Column Vertical Alignment', 'gtb' ),
-					'type'         => Controls_Manager::SELECT,
-					'default'      => '',
-					'options'      => array(
-						''         => esc_html__( 'Default', 'gtb' ),
-						'start'    => esc_html__( 'Top', 'gtb' ),
-						'center'   => esc_html__( 'Center', 'gtb' ),
-						'end'      => esc_html__( 'Bottom', 'gtb' ),
-						'baseline' => esc_html__( 'Baseline', 'gtb' ),
-						'stretch'  => esc_html__( 'Stretch', 'gtb' ),
-					),
-					'prefix_class' => 'elementor-columns-v-align%s-',
 				)
 			);
 		}

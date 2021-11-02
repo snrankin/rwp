@@ -11,7 +11,8 @@ namespace RWP\Vendor\Masterminds\HTML5\Serializer;
  *
  * @see http://www.w3.org/TR/2012/CR-html5-20121217/syntax.html#serializing-html-fragments
  */
-class Traverser {
+class Traverser
+{
     /**
      * Namespaces that should be treated as "local" to HTML5.
      */
@@ -32,7 +33,8 @@ class Traverser {
      *                                       charachter references. Defaults to false which escapes &'<>".
      *                                       - output_rules: The path to the class handling the output rules.
      */
-    public function __construct($dom, $out, RulesInterface $rules, $options = array()) {
+    public function __construct($dom, $out, RulesInterface $rules, $options = array())
+    {
         $this->dom = $dom;
         $this->out = $out;
         $this->rules = $rules;
@@ -44,7 +46,8 @@ class Traverser {
      *
      * @return resource $out Returns the output stream.
      */
-    public function walk() {
+    public function walk()
+    {
         if ($this->dom instanceof \DOMDocument) {
             $this->rules->document($this->dom);
         } elseif ($this->dom instanceof \DOMDocumentFragment) {
@@ -66,7 +69,8 @@ class Traverser {
      *
      * @param mixed $node A node implementing \DOMNode.
      */
-    public function node($node) {
+    public function node($node)
+    {
         // A listing of types is at http://php.net/manual/en/dom.constants.php
         switch ($node->nodeType) {
             case \XML_ELEMENT_NODE:
@@ -84,7 +88,7 @@ class Traverser {
             case \XML_COMMENT_NODE:
                 $this->rules->comment($node);
                 break;
-                // Currently we don't support embedding DTDs.
+            // Currently we don't support embedding DTDs.
             default:
                 //print '<!-- Skipped -->';
                 break;
@@ -95,7 +99,8 @@ class Traverser {
      *
      * @param \DOMNodeList $nl A list of child elements to walk through.
      */
-    public function children($nl) {
+    public function children($nl)
+    {
         foreach ($nl as $node) {
             $this->node($node);
         }
@@ -107,7 +112,8 @@ class Traverser {
      *
      * @return bool true if local and false otherwise.
      */
-    public function isLocalElement($ele) {
+    public function isLocalElement($ele)
+    {
         $uri = $ele->namespaceURI;
         if (empty($uri)) {
             return \false;

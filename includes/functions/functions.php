@@ -25,19 +25,6 @@ function rwp( $method = '', ...$args ) {
 	}
 }
 
-/**
- * Creates Notice.
- *
- * @param string $notice_content Notice content.
- * @param string $notice_type Notice type.
- * @param bool $dismissible Dismissible notice.
- * @param int $priority Notice priority,
- *
- * @return RWP\Vendor\WPDesk\Notice\Notice
- */
-function rwp_admin_notice( $notice_content, $notice_type = 'info', $dismissible = false, $priority = 10 ) {
-	return WPDeskWpNotice( $notice_content, $notice_type, $dismissible, $priority );
-}
 
 /**
  * Get the settings of the plugin in a filterable way
@@ -139,4 +126,48 @@ function rwp_plugin_asset_path( $asset, $folder = '', $prefix = true ) {
 
 function rwp_plugin_asset_uri( $asset, $folder = '', $prefix = true ) {
 	return rwp()->asset_uri( $asset, $folder, $prefix );
+}
+
+/**
+ * Process a shortcode
+ *
+ * @param mixed $atts The shortcode atts
+ * @param array $defaults
+ * @return array
+ */
+
+function rwp_process_shortcode( $atts, $defaults = array() ) {
+	$atts = shortcode_atts(
+		$defaults,
+		$atts
+	);
+	$args = array(
+		'atts' => array(),
+	);
+	foreach ( $atts as $key => $value ) {
+		switch ( $key ) {
+			case 'class':
+				if ( ! empty( $value ) ) {
+					$value = rwp_parse_classes( $value );
+					$args['atts']['class'] = $value;
+				}
+				break;
+			case 'id':
+				if ( ! empty( $value ) ) {
+					$args['atts']['id'] = $value;
+				}
+				break;
+
+			default:
+				if ( is_string( $value ) && ( 'true' === $value || 'false' === $value ) ) {
+					$args[ $key ] = boolval( $value );
+				} else if ( ! empty( $value ) ) {
+					$args[ $key ] = $value;
+				}
+
+				break;
+		}
+	}
+	$args['atts'] = rwp_prepare_args( $args['atts'] );
+	return $args;
 }

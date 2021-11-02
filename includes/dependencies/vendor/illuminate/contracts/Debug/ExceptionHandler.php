@@ -3,8 +3,8 @@
 namespace RWP\Vendor\Illuminate\Contracts\Debug;
 
 use Throwable;
-
-interface ExceptionHandler {
+interface ExceptionHandler
+{
     /**
      * Report or log an exception.
      *
@@ -24,9 +24,9 @@ interface ExceptionHandler {
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $e
-     * @return  Response
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
@@ -34,7 +34,7 @@ interface ExceptionHandler {
     /**
      * Render an exception to the console.
      *
-     * @param   OutputInterface  $output
+     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      * @param  \Throwable  $e
      * @return void
      */

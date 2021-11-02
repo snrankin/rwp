@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Gravity Forms Integration
  *
@@ -36,6 +37,7 @@ class GravityForms extends Singleton {
 
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
 
 		rwp_add_filters(array(
 			'gform_preview_styles',
@@ -53,7 +55,6 @@ class GravityForms extends Singleton {
 		add_filter( 'gform_progress_bar', array( $this, 'progress_bar' ), 30, 3 );
 		add_filter( 'gform_validation_message', array( $this, 'validation_message' ), 20, 2 );
 		add_filter( 'gform_us_states', array( $this, 'use_state_abbreviations' ) );
-
 	}
 
 	/**
@@ -96,11 +97,11 @@ class GravityForms extends Singleton {
 
 
 	/**
-	* Function to change the quote types for string to match gravity forms
-	*
-	* @param mixed $string
-	* @return string
-	*/
+	 * Function to change the quote types for string to match gravity forms
+	 *
+	 * @param mixed $string
+	 * @return string
+	 */
 	public static function gravity_forms_string_filter( $string ) {
 		$string = trim( str_replace( '"', "'", $string ) );
 		$string = str_replace( "\'", '"', $string );
@@ -355,7 +356,7 @@ class GravityForms extends Singleton {
 
 		$is_error = $field->failed_validation;
 
-		$css_class = $field->cssClass; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$css_class = rwp_parse_classes( data_get( $field, 'cssClass', '' ) );
 
 		$size = $field->size;
 		$select2_size = "select2--$size";
@@ -364,7 +365,17 @@ class GravityForms extends Singleton {
 
 		$form = GFAPI::get_form( $form_id );
 
-		if ( rwp_string_has( $css_class, 'use-select2' ) ) {
+		$form_class = rwp_parse_classes( data_get( $form, 'cssClass', '' ) );
+
+		$is_complex = false;
+
+		$label_tag = $field_input->filter( '.gfield_label' );
+
+		if ( 'legend' === $label_tag->getNode( 0 )->nodeName ) {
+			$is_complex = true;
+		}
+
+		if ( in_array( 'use-select2', $css_class ) ) {
 
 			$input_id = $field_input->filter( 'select' )->getAttribute( 'id' );
 			$field_input->filter( '#' . $input_id )->addClass( 'select2' )->setAttribute( 'data-dropdown-parent', '#' . $input_id . '_container' )->setAttribute( 'data-theme', 'bootstrap-5' )->setAttribute( 'data-selection-css-class', $select2_size )->setAttribute( 'data-dropdown-css-class', $select2_size );
@@ -396,27 +407,40 @@ class GravityForms extends Singleton {
 
 		$field_input->filter( '.gfield_label' )->addClass( 'form-label' );
 
-		if ( rwp_string_has( $css_class, 'medium' ) ) {
+		if ( in_array( 'small', $css_class ) ) {
+			$field->size = 'small';
+			$field_input->filter( '.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
+			$field_input->filter( '.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
+		}
+
+		if ( in_array( 'large', $css_class ) ) {
+			$field->size = 'large';
+			$field_input->filter( '.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
+			$field_input->filter( '.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
+		}
+
+		if ( in_array( 'medium', $css_class ) ) {
 			$field->size = 'medium';
 		}
 
 		switch ( $field->size ) {
 			case 'small':
-				$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
-				$field_input->filter( '.small.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
+				$field_input->filter( '.form-control' )->removeClass( 'small' )->addClass( 'form-control-sm' );
+				$field_input->filter( '.form-select' )->removeClass( 'small' )->addClass( 'form-select-sm' );
 				break;
 
 			case 'large':
-				$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
-				$field_input->filter( '.large.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
+				$field_input->filter( '.form-control' )->removeClass( 'large' )->addClass( 'form-control-lg' );
+				$field_input->filter( '.form-select' )->removeClass( 'large' )->addClass( 'form-select-lg' );
 				break;
 
 			default:
-				$field_input->filter( '.medium' )->removeClass( 'medium' );
+				$field_input->filter( '.form-control' )->removeClass( 'medium' );
+				$field_input->filter( '.form-select' )->removeClass( 'medium' );
 				break;
 		}
 
-		if ( rwp_string_has( $css_class, 'medium' ) ) {
+		if ( in_array( 'medium', $css_class ) ) {
 			$field_input->filter( '.small.form-control' )->removeClass( 'small' )->addClass( 'form-control' );
 			$field_input->filter( '.form-control-sm' )->removeClass( 'form-control-sm' )->addClass( 'form-control' );
 			$field_input->filter( '.large.form-control' )->removeClass( 'large' )->addClass( 'form-control' );
@@ -497,37 +521,14 @@ class GravityForms extends Singleton {
 			case 'date':
 				$field_input->filter( '.datepicker' )->addClass( 'form-control' );
 				break;
-			case 'html':
-				if ( rwp_string_has( $css_class, 'inline-submit' ) && 'text' === $form['buttonType'] ) {
-					$js = 'document.getElementById( "gform_submit_button_' . $form_id . '" ).click();';
-					if ( ! empty( $field_content ) ) {
-						$button = rwp_button( $field_content );
-						$button->text->set_content( $form['buttonText'], 0 );
-						$button->set_attr( 'onclick', $js );
-					} else {
-						$button = rwp_button(array(
-							'text' => array(
-								'content' => $form['buttonText'],
-							),
-							'atts' => array(
-								'onclick' => $js,
-							),
-						));
-					}
-
-					$button = apply_filters( 'rwp_gravity_form_button', $button, $form );
-
-					$field_input = rwp_html( '<div class="ginput_container ginput_submit">' . $button . '</div><style type="text/css">#gform_wrapper_' . $form_id . ' .gform_footer { visibility: hidden; position: absolute; left: -100vw; }</style>' );
-				}
-
-				break;
 			case 'list':
 				$field_input->filter( '.gfield_list_group' )->addClass( 'input-group' );
 
 				$button_classes = 'btn btn-primary';
 				$button_classes = apply_filters( 'rwp_gravity_forms_list_button_classes', $button_classes, $form );
 
-				$field_input->filter( 'button' )->addClass( $button_classes )->wrapInner( '<span class="btn-text screen-reader-text">' )->append( '<span class="btn-icon"><i aria-hidden="true" role="presentation"></i></span>' );
+				$field_input->filter( 'button' )->addClass( $button_classes )->wrapInner( '<span class="btn-text screen-reader-text">' );
+				$field_input->filter( 'button' )->append( '<span class="btn-icon"><i aria-hidden="true" role="presentation"></i></span>' );
 				$field_input->filter( '.gfield_list_cell' )->addClass( 'form-control flex-fill' );
 
 				$add_item_icon_classes = '';
@@ -555,6 +556,37 @@ class GravityForms extends Singleton {
 			$field_input->filter( 'input' )->addClass( 'is-invalid' );
 		}
 
+		if ( in_array( 'form-floating', $form_class, true ) || in_array( 'form-floating', $css_class, true ) ) {
+			if ( ! $is_complex ) {
+				$label = $field_input->filter( 'label' )->makeClone();
+				$label = $label->getNode( 0 );
+				$field_input = $field_input->removeElementByTag( 'label' );
+
+				$field_input->filter( '.ginput_container' )->addClass( 'form-floating' )->append( $label );
+			} else {
+
+				if ( 'below' !== $form['subLabelPlacement'] ) {
+					$fields = $field_input->filter( '.col' );
+					$fields = rwp_collection( $fields->getIterator() );
+
+					if ( $fields->isNotEmpty() ) {
+						$fields->transform(function ( \DOMElement $field ) use ( $field_input ) {
+							$field_id = $field->getAttribute( 'id' );
+							$field = rwp_html( $field );
+							$label = $field->filter( 'label' )->makeClone();
+							$label = $label->getNode( 0 );
+							$field = $field->removeElementByTag( 'label' );
+
+							$field->addClass( 'form-floating' )->append( $label );
+							$field_input->filter( '#' . $field_id )->replaceWith( $field );
+						});
+					}
+				} else {
+					$field_input->filter( '.col' )->addClass( 'form-floating' );
+				}
+			}
+		}
+
 		$field_input = $field_input->saveHTML();
 
 		$field_input = self::gravity_forms_string_filter( $field_input );
@@ -563,5 +595,4 @@ class GravityForms extends Singleton {
 
 		return $field_content;
 	}
-
 }

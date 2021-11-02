@@ -2,6 +2,7 @@
 
 namespace RWP\Vendor;
 
-class UnhandledMatchError extends \Error {
+class UnhandledMatchError extends \Error
+{
 }
-\class_alias(__NAMESPACE__ . '\\UnhandledMatchError', 'UnhandledMatchError', \false);
+\class_alias('RWP\\Vendor\\UnhandledMatchError', 'UnhandledMatchError', \false);

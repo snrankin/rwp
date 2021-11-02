@@ -93,27 +93,29 @@ function rwp_register_required_plugins() {
 	 * If the source is NOT from the .org repo, then source is also required.
 	 */
 	$plugins = array(
-
-		// This is an example of how to include a plugin bundled with a theme.
 		array(
-			'name'               => 'Advanced Custom Fields Pro', // The plugin name.
-			'slug'               => 'advanced-custom-fields-pro', // The plugin slug (typically the folder name).
-			'source'             => dirname( __FILE__ ) . '/includes/dependencies/externals/plugins/advanced-custom-fields-pro.zip', // The plugin source.
+			'name'               => 'Advanced Custom Fields Pro',
+			'slug'               => 'advanced-custom-fields-pro',
+			'source'             => 'http://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9ODYzMzN8dHlwZT1kZXZlbG9wZXJ8ZGF0ZT0yMDE2LTA3LTI1IDIyOjE4OjI3',
 			'required'           => true,
 		),
-
-		// This is an example of how to include a plugin from the WordPress Plugin Repository.
 		array(
 			'name'      => 'Advanced Custom Fields: Extended',
 			'slug'      => 'acf-extended',
 			'required'  => true,
 		),
 		array(
-			'name'        => 'WordPress SEO by Yoast',
-			'slug'        => 'wordpress-seo',
-			'is_callable' => 'wpseo_init',
+			'name'               => 'Gravity Forms',
+			'slug'               => 'gravityforms',
+			'source'             => 'https://s3.amazonaws.com/gravityforms/releases/gravityforms_2.5.14.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=9UeHBET48Uc8nEE2opQoi%2FtSvXc%3D',
+			'required'           => false,
 		),
-
+		array(
+			'name'               => 'Gravity Forms reCAPTCHA',
+			'slug'               => 'gravityformsrecaptcha',
+			'source'             => 'https://s3.amazonaws.com/gravityforms/addons/recaptcha/gravityformsrecaptcha_1.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=G9YrzAAQFhL1wbJlKrWeX5jM41I%3D',
+			'required'           => false,
+		)
 	);
 
 	/*
@@ -127,9 +129,9 @@ function rwp_register_required_plugins() {
 	 */
 	$config = array(
 		'id'           => 'rwp',                 // Unique ID for hashing notices for multiple instances of TGMPA.
-		'default_path' => '',                      // Default absolute path to bundled plugins.
+		'default_path' => plugin_dir_path( __FILE__ ) . '/includes/dependencies/externals/plugins/',                      // Default absolute path to bundled plugins.
 		'menu'         => 'tgmpa-install-plugins', // Menu slug.
-		'parent_slug'  => 'plugins.php',            // Parent menu slug.
+		'parent_slug'  => add_query_arg( 'page', 'rwp-options', 'admin.php' ),            // Parent menu slug.
 		'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
 		'has_notices'  => true,                    // Show admin notices or not.
 		'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
@@ -141,20 +143,13 @@ function rwp_register_required_plugins() {
 }
 add_action( 'tgmpa_register', 'rwp_register_required_plugins' );
 
-$rwp_libraries = require __DIR__ . '/vendor/autoload.php';
-
 require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
+$rwp_libraries =  require RWP_PLUGIN_ROOT . '/vendor/autoload.php';
+
 require_once RWP_PLUGIN_ROOT . 'includes/functions/functions.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/components.php';
-
-// Documentation to integrate GitHub, GitLab or BitBucket https://github.com/YahnisElsts/plugin-update-checker/blob/master/README.md
-// Puc_v4_Factory::buildUpdateChecker(
-// 	'https://github.com/user-name/repo-name/',
-// 	__FILE__,
-// 	'unique-plugin-or-theme-slug'
-// );
 
 if ( ! wp_installing() ) {
 	add_action(

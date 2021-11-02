@@ -87,9 +87,9 @@ interface Gate
      *
      * @param  string  $ability
      * @param  array|mixed  $arguments
-     * @return Response
+     * @return \Illuminate\Auth\Access\Response
      *
-     * @throws AuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorize($ability, $arguments = []);
     /**
@@ -97,7 +97,7 @@ interface Gate
      *
      * @param  string  $ability
      * @param  array|mixed  $arguments
-     * @return Response
+     * @return \Illuminate\Auth\Access\Response
      */
     public function inspect($ability, $arguments = []);
     /**
@@ -107,7 +107,7 @@ interface Gate
      * @param  array|mixed  $arguments
      * @return mixed
      *
-     * @throws AuthorizationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function raw($ability, $arguments = []);
     /**
@@ -122,7 +122,7 @@ interface Gate
     /**
      * Get a guard instance for the given user.
      *
-     * @param  Authenticatable|mixed  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
      * @return static
      */
     public function forUser($user);

@@ -8,9 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
+
 /**
  * Casts DateTimeInterface related classes to array representation.
  *
@@ -18,11 +20,9 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class DateCaster
-{
+class DateCaster {
     private const PERIOD_LIMIT = 3;
-    public static function castDateTime(\DateTimeInterface $d, array $a, Stub $stub, bool $isNested, int $filter)
-    {
+    public static function castDateTime(\DateTimeInterface $d, array $a, Stub $stub, bool $isNested, int $filter) {
         $prefix = Caster::PREFIX_VIRTUAL;
         $location = $d->getTimezone()->getLocation();
         $fromNow = (new \DateTime())->diff($d);
@@ -32,16 +32,14 @@ class DateCaster
         $stub->class .= $d->format(' @U');
         return $a;
     }
-    public static function castInterval(\DateInterval $interval, array $a, Stub $stub, bool $isNested, int $filter)
-    {
+    public static function castInterval(\DateInterval $interval, array $a, Stub $stub, bool $isNested, int $filter) {
         $now = new \DateTimeImmutable();
         $numberOfSeconds = $now->add($interval)->getTimestamp() - $now->getTimestamp();
         $title = \number_format($numberOfSeconds, 0, '.', ' ') . 's';
         $i = [Caster::PREFIX_VIRTUAL . 'interval' => new ConstStub(self::formatInterval($interval), $title)];
         return $filter & Caster::EXCLUDE_VERBOSE ? $i : $i + $a;
     }
-    private static function formatInterval(\DateInterval $i) : string
-    {
+    private static function formatInterval(\DateInterval $i): string {
         $format = '%R ';
         if (0 === $i->y && 0 === $i->m && ($i->h >= 24 || $i->i >= 60 || $i->s >= 60)) {
             $i = \date_diff($d = new \DateTime(), \date_add(clone $d, $i));
@@ -54,16 +52,14 @@ class DateCaster
         $format = '%R ' === $format ? '0s' : $format;
         return $i->format(\rtrim($format));
     }
-    public static function castTimeZone(\DateTimeZone $timeZone, array $a, Stub $stub, bool $isNested, int $filter)
-    {
+    public static function castTimeZone(\DateTimeZone $timeZone, array $a, Stub $stub, bool $isNested, int $filter) {
         $location = $timeZone->getLocation();
         $formatted = (new \DateTime('now', $timeZone))->format($location ? 'e (P)' : 'P');
         $title = $location && \extension_loaded('intl') ? \Locale::getDisplayRegion('-' . $location['country_code']) : '';
         $z = [Caster::PREFIX_VIRTUAL . 'timezone' => new ConstStub($formatted, $title)];
         return $filter & Caster::EXCLUDE_VERBOSE ? $z : $z + $a;
     }
-    public static function castPeriod(\DatePeriod $p, array $a, Stub $stub, bool $isNested, int $filter)
-    {
+    public static function castPeriod(\DatePeriod $p, array $a, Stub $stub, bool $isNested, int $filter) {
         $dates = [];
         foreach (clone $p as $i => $d) {
             if (self::PERIOD_LIMIT === $i) {
@@ -77,12 +73,10 @@ class DateCaster
         $p = [Caster::PREFIX_VIRTUAL . 'period' => new ConstStub($period, \implode("\n", $dates))];
         return $filter & Caster::EXCLUDE_VERBOSE ? $p : $p + $a;
     }
-    private static function formatDateTime(\DateTimeInterface $d, string $extra = '') : string
-    {
+    private static function formatDateTime(\DateTimeInterface $d, string $extra = ''): string {
         return $d->format('Y-m-d H:i:' . self::formatSeconds($d->format('s'), $d->format('u')) . $extra);
     }
-    private static function formatSeconds(string $s, string $us) : string
-    {
+    private static function formatSeconds(string $s, string $us): string {
         return \sprintf('%02d.%s', $s, 0 === ($len = \strlen($t = \rtrim($us, '0'))) ? '0' : ($len <= 3 ? \str_pad($t, 3, '0') : $us));
     }
 }

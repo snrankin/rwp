@@ -10,7 +10,7 @@ interface Validator extends MessageProvider
      *
      * @return array
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function validate();
     /**
@@ -18,7 +18,7 @@ interface Validator extends MessageProvider
      *
      * @return array
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function validated();
     /**

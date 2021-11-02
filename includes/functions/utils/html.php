@@ -1,37 +1,40 @@
 <?php
 
-/** ============================================================================
+/**
+ * ============================================================================
  * RWP html
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== */
+ * ==========================================================================
+ */
 
 use RWP\Vendor\Illuminate\Support\Collection;
 use RWP\Components\Html;
 
 /**
  * Check if a string is an html string
- * @param mixed $string
+ *
+ * @param  mixed $string
  * @return bool
  */
-function rwp_string_is_html( $string ) {
-	if( ! is_string( $string ) ){
-		return false;
+function rwp_str_is_html( $string ) {
+	if ( ! is_string( $string ) ) {
+        return false;
 	}
-	return strip_tags( $string ) !== $string ? true : false;
+    return strip_tags( $string ) !== $string ? true : false;
 }
 
 /**
  * Check if a string is an html tag and if that tag is a specific html tag
  *
- * @param mixed $string
- * @param mixed $tag
+ * @param  mixed $string
+ * @param  mixed $tag
  * @return bool
  */
-function rwp_is_element( $string, $tag ) {
-	if ( rwp_string_is_html( $string ) ) {
-		return preg_match( '/\s*\<' . $tag . '/m', $string ) ? true : false;
+function rwp_str_is_element( $string, $tag ) {
+	if ( rwp_str_is_html( $string ) ) {
+        return preg_match( '/\s*\<' . $tag . '/m', $string ) ? true : false;
 	} else {
 		return false;
 	}
@@ -40,16 +43,16 @@ function rwp_is_element( $string, $tag ) {
 /**
  * Returns a sanitized and unique array of css classes
  *
- * @param mixed $classes The array|string|object of classes to parse
+ * @param mixed $classes            The array|string|object of classes to parse
  * @param mixed $additional_classes The second set of classes
- * @param bool  $filter  Whether to run the classes through the
- *                       `sanitize_html_class()` function
+ * @param bool  $filter             Whether to run the classes through the
+ *                                  `sanitize_html_class()` function
  *
  * @return string[]
  */
 function rwp_parse_classes( $classes, $additional_classes = '', $filter = false ) {
 	if ( empty( $classes ) ) {
-		return array();
+        return array();
 	}
 
 	if ( is_string( $classes ) ) {
@@ -67,21 +70,21 @@ function rwp_parse_classes( $classes, $additional_classes = '', $filter = false 
 		$classes = $classes->merge( $additional_classes );
 	}
 
-	$classes = $classes->unique();
+    $classes = $classes->unique();
 
 	if ( $filter ) {
 		$classes->transform( '\sanitize_html_class' );
 	}
 
-	$classes = rwp_collection_remove_empty_items( $classes );
+    $classes = rwp_collection_remove_empty_items( $classes );
 
-	$classes = $classes->all();
+    $classes = $classes->all();
 
 	if ( empty( $classes ) ) {
 		$classes = array();
 	}
 
-	return $classes;
+    return $classes;
 }
 
 /**
@@ -92,35 +95,34 @@ function rwp_parse_classes( $classes, $additional_classes = '', $filter = false 
  * @return array|mixed $styles_array The processed styles
  */
 function rwp_parse_styles( $styles ) {
+    if ( empty( $styles ) ) {
+        return $styles;
+    }
 
-	if ( empty( $styles ) ) {
-		return $styles;
-	}
+    if ( is_string( $styles ) ) {
+        $styles = explode( ';', $styles );
+    }
 
-	if ( is_string( $styles ) ) {
-		$styles = explode( ';', $styles );
-	}
+    $styles = new Collection( $styles );
 
-	$styles = new Collection( $styles );
+    $styles = rwp_collection_remove_empty_items( $styles );
 
-	$styles = rwp_collection_remove_empty_items( $styles );
+    if ( $styles->isNotEmpty() ) {
 
-	if ( $styles->isNotEmpty() ) {
-
-		foreach ( $styles->all() as $key => $style ) {
-			if ( is_numeric( $key ) && preg_match( '/[\w\-]\:\s*/', $style ) && rwp_has_value( $style ) ) {
-				$styles->forget( $key );
-				$style = explode( ':', $style );
-				$key   = trim( $style[0] );
-				$style = trim( $style[1] );
-				if ( 'background-image' === $key ) {
-					$style = "url('{$style}')";
-				}
-				$styles->put( $key, $style );
-			}
-		}
-	}
-	return $styles->all();
+        foreach ( $styles->all() as $key => $style ) {
+            if ( is_numeric( $key ) && preg_match( '/[\w\-]\:\s*/', $style ) && rwp_has_value( $style ) ) {
+                $styles->forget( $key );
+                $style = explode( ':', $style );
+                $key   = trim( $style[0] );
+                $style = trim( $style[1] );
+                if ( 'background-image' === $key ) {
+                    $style = "url('{$style}')";
+                }
+                $styles->put( $key, $style );
+            }
+        }
+    }
+    return $styles->all();
 }
 
 
@@ -131,25 +133,21 @@ function rwp_parse_styles( $styles ) {
  * `tel:` in front of phone numbers, adds `mailto:` in front of emails and also
  * hides emails from bots using `antispambot()'
  *
- *
  * @param string $link
  *
  * @return string The processed url
  */
 function rwp_output_href( $link = '' ) {
+    if ( rwp_is_phone_number( $link ) ) {
+        $link = rwp_add_prefix( $link, 'tel:' );
+    } elseif ( is_email( $link ) ) {
+        $link = antispambot( sanitize_email( $link ) );
+        $link = rwp_add_prefix( $link, 'mailto:' );
+    } elseif ( rwp_is_url( $link ) && ! rwp_is_outbound_link( $link ) ) {
+        $link = rwp_relative_url( $link );
+    }
 
-	if ( rwp_is_phone_number( $link ) ) {
-		$link = rwp_add_prefix( $link, 'tel:' );
-	} elseif ( is_email( $link ) ) {
-		$link = antispambot( sanitize_email( $link ) );
-		$link = rwp_add_prefix( $link, 'mailto:' );
-	} elseif ( rwp_is_url( $link ) && ! rwp_is_outbound_link( $link ) ) {
-		$link = rwp_relative_url( $link );
-	}
-
-	$link = esc_url( $link );
-
-	return $link;
+    return $link;
 }
 
 /**
@@ -162,46 +160,44 @@ function rwp_output_href( $link = '' ) {
  * @return array The modified array.
  */
 function rwp_parse_href( $atts = array() ) {
+    if ( rwp_array_has( 'href', $atts ) ) {
+        $atts['href'] = rwp_output_href( $atts['href'] );
+        if ( rwp_is_outbound_link( $atts['href'] ) ) {
+            if ( ! rwp_array_has( 'target', $atts ) ) {
+                $atts['target'] = '_blank';
+            }
+        }
 
-	if ( rwp_array_has( 'href', $atts ) ) {
-		$atts['href'] = rwp_output_href( $atts['href'] );
-		if ( rwp_is_outbound_link( $atts['href'] ) ) {
-			if ( ! rwp_array_has( 'target', $atts ) ) {
-				$atts['target'] = '_blank';
-			}
-		}
+        if ( rwp_array_has( 'target', $atts ) && '_blank' === $atts['target'] ) {
+            $atts['rel'] = 'noopener noreferrer';
+        }
+    }
 
-		if ( rwp_array_has( 'target', $atts ) && '_blank' === $atts['target'] ) {
-			$atts['rel'] = 'noopener noreferrer';
-		}
-	}
-
-	return $atts;
+    return $atts;
 }
 
 /**
  * Filter and output css classes for html
  *
  * @param mixed $classes
- * @param bool $filter
+ * @param bool  $filter
  *
  * @return string
  */
 
 function rwp_output_classes( $classes, $filter = false ) {
+    if ( rwp_is_collection( $classes ) ) {
+        $classes = $classes->all();
+    }
 
-	if ( rwp_is_collection( $classes ) ) {
-		$classes = $classes->all();
-	}
+    $classes = rwp_parse_classes( $classes, '', $filter );
+    if ( rwp_has_value( $classes ) && is_array( $classes ) ) {
+        $classes = implode( ' ', $classes );
+    } else {
+        $classes = '';
+    }
 
-	$classes = rwp_parse_classes( $classes, '', $filter );
-	if ( rwp_has_value( $classes ) && is_array( $classes ) ) {
-		$classes = implode( ' ', $classes );
-	} else {
-		$classes = '';
-	}
-
-	return $classes;
+    return $classes;
 }
 
 /**
@@ -214,7 +210,7 @@ function rwp_output_classes( $classes, $filter = false ) {
 
 function rwp_output_styles( $styles ) {
 	if ( rwp_is_collection( $styles ) ) {
-		$styles = $styles->all();
+        $styles = $styles->all();
 	}
 	if ( rwp_has_value( $styles ) && is_array( $styles ) ) {
 		foreach ( $styles as $prop => $style ) {
@@ -227,19 +223,19 @@ function rwp_output_styles( $styles ) {
 		$styles = '';
 	}
 
-	return $styles;
+    return $styles;
 }
 
 /**
  * Prepares html arguments
  *
- * @param mixed $args
+ * @param  mixed $args
  * @return array
  */
 
 function rwp_prepare_args( $args = array() ) {
 	if ( rwp_is_collection( $args ) ) {
-		$args = $args->all();
+        $args = $args->all();
 	}
 
 	if ( is_array( $args ) && ! wp_is_numeric_array( $args ) ) {
@@ -250,10 +246,10 @@ function rwp_prepare_args( $args = array() ) {
 				switch ( $key ) {
 					case 'style':
 						$value = rwp_parse_styles( $value );
-						break;
+                        break;
 					case 'class':
 						$value = rwp_parse_classes( $value );
-						break;
+                        break;
 
 					default:
 						if ( rwp_is_collection( $value ) ) {
@@ -262,14 +258,14 @@ function rwp_prepare_args( $args = array() ) {
 						if ( is_array( $value ) ) {
 							$value = rwp_prepare_args( $value );
 						}
-						break;
+                        break;
 				}
 				$args[ $key ] = $value;
 			}
 		}
 	}
 
-	return $args;
+    return $args;
 }
 
 /**
@@ -281,28 +277,27 @@ function rwp_prepare_args( $args = array() ) {
  * @return array The merged array
  */
 function rwp_merge_args( $defaults = array(), $args = array() ) {
+    $defaults = rwp_prepare_args( $defaults );
+    $args     = rwp_prepare_args( $args );
+    if ( empty( $args ) ) {
 
-	$defaults = rwp_prepare_args( $defaults );
-	$args     = rwp_prepare_args( $args );
-	if ( empty( $args ) ) {
+        return $defaults;
+    }
 
-		return $defaults;
-	}
-
-	if ( ! wp_is_numeric_array( $args ) && ! wp_is_numeric_array( $defaults ) ) {
-		foreach ( $args as $key => $value ) {
-			switch ( $key ) {
+    if ( ! wp_is_numeric_array( $args ) && ! wp_is_numeric_array( $defaults ) ) {
+        foreach ( $args as $key => $value ) {
+            switch ( $key ) {
 				case 'class':
 					if ( rwp_array_has( $key, $defaults ) ) {
-						$value = rwp_parse_classes( $defaults[ $key ], $value );
+                        $value = rwp_parse_classes( $defaults[ $key ], $value );
 					}
 
-					break;
+                    break;
 				case 'style':
 					if ( rwp_array_has( $key, $defaults ) ) {
 						$value = array_replace_recursive( $defaults[ $key ], $value );
 					}
-					break;
+                    break;
 				default:
 					if ( is_array( $value ) ) {
 						if ( rwp_array_has( $key, $defaults ) && is_array( $defaults[ $key ] ) ) {
@@ -313,25 +308,25 @@ function rwp_merge_args( $defaults = array(), $args = array() ) {
 							}
 						}
 					}
-					break;
-			}
-			$defaults[ $key ] = $value;
-		}
-	} else {
-		foreach ( $args as $key => $value ) {
-			if ( is_array( $value ) ) {
-				if ( rwp_array_has( $key, $defaults ) && is_array( $defaults[ $key ] ) ) {
-					if ( rwp_array_is_multi( $defaults[ $key ] ) || rwp_array_is_multi( $value ) ) {
-						$value = rwp_merge_args( $defaults[ $key ], $value );
-					}
-				}
-			}
-			$defaults[ $key ] = $value;
-		}
-		$defaults = $args;
-	}
+                    break;
+            }
+            $defaults[ $key ] = $value;
+        }
+    } else {
+        foreach ( $args as $key => $value ) {
+            if ( is_array( $value ) ) {
+                if ( rwp_array_has( $key, $defaults ) && is_array( $defaults[ $key ] ) ) {
+                    if ( rwp_array_is_multi( $defaults[ $key ] ) || rwp_array_is_multi( $value ) ) {
+                        $value = rwp_merge_args( $defaults[ $key ], $value );
+                    }
+                }
+            }
+            $defaults[ $key ] = $value;
+        }
+        $defaults = $args;
+    }
 
-	return $defaults;
+    return $defaults;
 }
 
 /**
@@ -340,28 +335,34 @@ function rwp_merge_args( $defaults = array(), $args = array() ) {
  * Sanitizes data attributes from an array and outputs them as a string (except
  * for the tag).
  *
- * @param array   $atts          An array of HTML attributes
- * @param string  $output        How to output the result
- * @param bool    $remove_empty  Remove empty (non-boolean) atrributes
+ * @param array  $atts         An array of HTML attributes
+ * @param string $output       How to output the result
+ * @param bool   $remove_empty Remove empty (non-boolean) atrributes
  *
  * @return string|array
  */
 
 function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empty = false ) {
-	$atts = rwp_prepare_args( $atts );
-	if ( ! empty( $atts ) ) {
+     $atts = rwp_prepare_args( $atts );
+    if ( ! empty( $atts ) ) {
 
-		foreach ( $atts as $attr => $value ) {
-			$is_json = false;
-			if ( is_string( $attr ) && 'tag' !== $attr ) {
-				switch ( $attr ) {
+        foreach ( $atts as $attr => $value ) {
+            $is_json = false;
+            if ( is_string( $attr ) && 'tag' !== $attr ) {
+                switch ( $attr ) {
 					case 'class':
 						$value = rwp_output_classes( $value );
-						break;
+                        break;
 
 					case 'style':
 						$value = rwp_output_styles( $value );
-						break;
+                        break;
+					case 'title':
+					case 'alt':
+					case 'label':
+					case 'aria-label':
+						$value = esc_attr( $value );
+                        break;
 					default:
 						if ( rwp_is_collection( $value ) ) {
 							$value   = $value->toJson( JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT | JSON_BIGINT_AS_STRING );
@@ -372,71 +373,69 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 						} elseif ( rwp_str_starts_with( $attr, 'on' ) ) {
 							$value = str_replace( '"', "'", $value );
 							$value = esc_js( $value );
-						} else {
-							$value = esc_attr( $value );
 						}
 
-						break;
-				}
-				if ( 'string' === $output ) {
-					if ( $is_json ) {
-						$value = esc_attr( $attr ) . '=\'' . $value . '\'';
-					} else {
-						if ( ( 'class' === $attr || 'style' === $attr ) && rwp_has_value( $value ) ) {
-							$value = esc_attr( $attr ) . '="' . $value . '"';
-						} else {
-							$value = esc_attr( $attr ) . '="' . $value . '"';
-						}
-					}
-				}
+                        break;
+                }
+                if ( 'string' === $output ) {
+                    if ( $is_json ) {
+                        $value = esc_attr( $attr ) . '=\'' . $value . '\'';
+                    } else {
+                        if ( ( 'class' === $attr || 'style' === $attr ) && rwp_has_value( $value ) ) {
+                            $value = esc_attr( $attr ) . '="' . $value . '"';
+                        } else {
+                            $value = esc_attr( $attr ) . '="' . $value . '"';
+                        }
+                    }
+                }
 
-				$atts[ $attr ] = $value;
-			}
-		}
+                $atts[ $attr ] = $value;
+            }
+        }
 
-		if ( rwp_array_has( 'tag', $atts ) ) {
-			unset( $atts['tag'] );
-		}
+        if ( rwp_array_has( 'tag', $atts ) ) {
+            unset( $atts['tag'] );
+        }
 
-		/**
-		 * Run attributes array through a filter before output
-		 *
-		 * @var array $atts
-		 */
-		$atts = apply_filters( 'rwp_html_attributes_filter', $atts, $remove_empty );
+        /**
+         * Run attributes array through a filter before output
+         *
+         * @var array $atts
+         */
+        $atts = apply_filters( 'rwp_html_attributes_filter', $atts, $remove_empty );
 
-		if ( 'string' === $output ) {
-			$html = implode( ' ', $atts );
-		} else {
-			$html = $atts;
-		}
+        if ( 'string' === $output ) {
+            $html = implode( ' ', $atts );
+        } else {
+            $html = $atts;
+        }
 
-		return $html;
-	} else {
-		if ( 'string' === $output ) {
-			return '';
-		} else {
-			return array();
-		}
-	}
+        return $html;
+    } else {
+        if ( 'string' === $output ) {
+            return '';
+        } else {
+            return array();
+        }
+    }
 }
 
 /**
  * Extract button arguments
  *
- * @param string $input
- * @param array $args
+ * @param  string $input
+ * @param  array  $args
  * @return RWP\Components\Button|string
  */
 
 function rwp_input_to_button( $input = '', $args = array() ) {
-	if ( ! rwp_is_element( $input, 'input' ) ) {
-		return $input;
+	if ( ! rwp_str_is_element( $input, 'input' ) ) {
+        return $input;
 	}
 
-	$args['html'] = $input;
+    $args['html'] = $input;
 
-	$button = rwp_button( $args );
+    $button = rwp_button( $args );
 
 	if ( $button->has_attr( 'value' ) ) {
 		$btn_text = $button->get_attr( 'value' );
@@ -445,29 +444,29 @@ function rwp_input_to_button( $input = '', $args = array() ) {
 		$button->remove_attr( 'value' );
 	}
 
-	return $button;
+    return $button;
 }
 
 /**
  * Extract all html attributes optionally by a specific tag
  *
- * @param mixed $html
+ * @param mixed  $html
  * @param string $tag
- * @param bool $include_tag
- * @param bool $include_content
+ * @param bool   $include_tag
+ * @param bool   $include_content
  *
  * @return array
  * @throws RuntimeException
  * @throws Exception
  */
 function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $include_content = false ) {
-	if ( ! rwp_string_is_html( $html ) ) {
-		return array();
+	if ( ! rwp_str_is_html( $html ) ) {
+        return array();
 	}
 
-	$html_atts = array();
+    $html_atts = array();
 
-	$html = rwp_html( $html );
+    $html = rwp_html( $html );
 
 	if ( ! empty( $tag ) ) {
 		$html = $html->filter( $tag );
@@ -476,6 +475,6 @@ function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $i
 		$html_atts = $html->extractAll( $include_tag, $include_content );
 	}
 
-	return $html_atts;
+    return $html_atts;
 
 }

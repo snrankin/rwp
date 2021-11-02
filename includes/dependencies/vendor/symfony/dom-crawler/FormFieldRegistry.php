@@ -8,34 +8,34 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\DomCrawler;
 
 use RWP\Vendor\Symfony\Component\DomCrawler\Field\FormField;
+
 /**
  * This is an internal class that must not be used directly.
  *
  * @internal
  */
-class FormFieldRegistry
-{
+class FormFieldRegistry {
     private $fields = [];
     private $base = '';
     /**
      * Adds a field to the registry.
      */
-    public function add(FormField $field)
-    {
+    public function add(FormField $field) {
         $segments = $this->getSegments($field->getName());
-        $target =& $this->fields;
+        $target = &$this->fields;
         while ($segments) {
             if (!\is_array($target)) {
                 $target = [];
             }
             $path = \array_shift($segments);
             if ('' === $path) {
-                $target =& $target[];
+                $target = &$target[];
             } else {
-                $target =& $target[$path];
+                $target = &$target[$path];
             }
         }
         $target = $field;
@@ -43,16 +43,15 @@ class FormFieldRegistry
     /**
      * Removes a field based on the fully qualifed name and its children from the registry.
      */
-    public function remove(string $name)
-    {
+    public function remove(string $name) {
         $segments = $this->getSegments($name);
-        $target =& $this->fields;
+        $target = &$this->fields;
         while (\count($segments) > 1) {
             $path = \array_shift($segments);
             if (!\is_array($target) || !\array_key_exists($path, $target)) {
                 return;
             }
-            $target =& $target[$path];
+            $target = &$target[$path];
         }
         unset($target[\array_shift($segments)]);
     }
@@ -63,16 +62,15 @@ class FormFieldRegistry
      *
      * @throws \InvalidArgumentException if the field does not exist
      */
-    public function &get(string $name)
-    {
+    public function &get(string $name) {
         $segments = $this->getSegments($name);
-        $target =& $this->fields;
+        $target = &$this->fields;
         while ($segments) {
             $path = \array_shift($segments);
             if (!\is_array($target) || !\array_key_exists($path, $target)) {
                 throw new \InvalidArgumentException(\sprintf('Unreachable field "%s".', $path));
             }
-            $target =& $target[$path];
+            $target = &$target[$path];
         }
         return $target;
     }
@@ -81,8 +79,7 @@ class FormFieldRegistry
      *
      * @return bool Whether the form has the given field
      */
-    public function has(string $name) : bool
-    {
+    public function has(string $name): bool {
         try {
             $this->get($name);
             return \true;
@@ -97,9 +94,8 @@ class FormFieldRegistry
      *
      * @throws \InvalidArgumentException if the field does not exist
      */
-    public function set(string $name, $value)
-    {
-        $target =& $this->get($name);
+    public function set(string $name, $value) {
+        $target = &$this->get($name);
         if (!\is_array($value) && $target instanceof FormField || $target instanceof ChoiceFormField) {
             $target->setValue($value);
         } elseif (\is_array($value)) {
@@ -118,15 +114,13 @@ class FormFieldRegistry
      *
      * @return FormField[] The list of fields as [string] Fully qualified name => (mixed) value)
      */
-    public function all() : array
-    {
+    public function all(): array {
         return $this->walk($this->fields, $this->base);
     }
     /**
      * Transforms a PHP array in a list of fully qualified name / value.
      */
-    private function walk(array $array, ?string $base = '', array &$output = []) : array
-    {
+    private function walk(array $array, ?string $base = '', array &$output = []): array {
         foreach ($array as $k => $v) {
             $path = empty($base) ? $k : \sprintf('%s[%s]', $base, $k);
             if (\is_array($v)) {
@@ -144,8 +138,7 @@ class FormFieldRegistry
      *
      * @return string[] The list of segments
      */
-    private function getSegments(string $name) : array
-    {
+    private function getSegments(string $name): array {
         if (\preg_match('/^(?P<base>[^[]+)(?P<extra>(\\[.*)|$)/', $name, $m)) {
             $segments = [$m['base']];
             while (!empty($m['extra'])) {

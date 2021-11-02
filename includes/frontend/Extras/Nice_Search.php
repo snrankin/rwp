@@ -29,7 +29,7 @@ class Nice_Search extends Singleton {
 		}
 
 		if ( rwp_get_option( 'modules.bootstrap.search', false ) ) {
-			\add_filter( 'get_search_form', array( $this, 'bootstrap_search' ), 10, 1 );
+			\add_filter( 'get_search_form', array( $this, 'bootstrap_search' ), 10, 2 );
 		}
 	}
 
@@ -65,15 +65,19 @@ class Nice_Search extends Singleton {
 	/**
 	 * Converts the default Wordpress Search Form to a Bootstrap 5 form
 	 *
-	 * @param string $form
+	 * @since 5.5.0 The `$args` parameter was added.
+	 *
+	 * @param string $form The search form HTML output.
+	 * @param array  $args The array of arguments for building the search form.
+	 *                     See get_search_form() for information on accepted arguments.
 	 *
 	 * @return string
 	 */
-	public function bootstrap_search( $form ) {
+	public function bootstrap_search( $form, $args ) {
 
-		$form = rwp_html( $form );
+		$form = rwp_html( $form )->addClass( 'form-inline' );
 
-		$label = '<label class="visually-hidden" for="s">' . $form->filter( 'label > span' )->text() . '</label>';
+		$label = '<label for="s">' . $form->filter( 'label > span' )->text() . '</label>';
 
 		$input = $form->filter( 'input.search-field' )->addClass( 'form-control' )->saveHTML();
 
@@ -83,9 +87,11 @@ class Nice_Search extends Singleton {
 
 		$btn = $btn->html();
 
+		$input = '<div class="form-floating">' . $input . $label . '</div>';
+
 		$form->makeEmpty();
 
-		$form->append( $label )->append( $input )->append( $btn );
+		$form->append( $input )->append( $btn );
 
 		/**
 		 * Filters the search form output

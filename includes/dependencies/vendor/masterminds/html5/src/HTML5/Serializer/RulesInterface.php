@@ -4,7 +4,6 @@
  * @file
  * The interface definition for Rules to generate output.
  */
-
 namespace RWP\Vendor\Masterminds\HTML5\Serializer;
 
 /**
@@ -13,7 +12,8 @@ namespace RWP\Vendor\Masterminds\HTML5\Serializer;
  *
  * For an example implementation see Serializer\OutputRules.
  */
-interface RulesInterface {
+interface RulesInterface
+{
     /**
      * The class constructor.
      *

@@ -35,6 +35,31 @@ class Body_Class extends Singleton {
 	 */
 	public static function add_plugin_class( array $classes ) {
 
-		return rwp_parse_classes( $classes, rwp()->get_slug() );
+		$classes = rwp_parse_classes( $classes, rwp()->get_slug() );
+
+		if ( is_plugin_active( 'elementor/elementor.php' ) && rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
+			$classes[] = 'rwp-elementor';
+		}
+
+		if ( is_single() || is_page() && ! is_front_page() ) {
+			$url = get_permalink();
+			if ( $url ) {
+				$basename = basename( $url );
+
+				if ( ! in_array( $basename, $classes, true ) ) {
+					$classes[] = $basename;
+				}
+			}
+		}
+
+		// Remove unnecessary classes
+		$home_id_class  = 'page-id-' . get_option( 'page_on_front' );
+		$remove_classes = array(
+			'page-template-default',
+			$home_id_class,
+		);
+		$classes        = array_diff( $classes, $remove_classes );
+
+		return $classes;
 	}
 }

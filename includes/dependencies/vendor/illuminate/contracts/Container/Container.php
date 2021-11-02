@@ -103,7 +103,7 @@ interface Container extends ContainerInterface
      * Define a contextual binding.
      *
      * @param  string|array  $concrete
-     * @return ContextualBindingBuilder
+     * @return \Illuminate\Contracts\Container\ContextualBindingBuilder
      */
     public function when($concrete);
     /**
@@ -126,7 +126,7 @@ interface Container extends ContainerInterface
      * @param  array  $parameters
      * @return mixed
      *
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function make($abstract, array $parameters = []);
     /**

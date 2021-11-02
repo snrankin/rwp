@@ -15,18 +15,18 @@ interface Factory
      * Get the evaluated view contents for the given path.
      *
      * @param  string  $path
-     * @param  Arrayable|array  $data
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
      * @param  array  $mergeData
-     * @return View
+     * @return \Illuminate\Contracts\View\View
      */
     public function file($path, $data = [], $mergeData = []);
     /**
      * Get the evaluated view contents for the given view.
      *
      * @param  string  $view
-     * @param  Arrayable|array  $data
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
      * @param  array  $mergeData
-     * @return View
+     * @return \Illuminate\Contracts\View\View
      */
     public function make($view, $data = [], $mergeData = []);
     /**

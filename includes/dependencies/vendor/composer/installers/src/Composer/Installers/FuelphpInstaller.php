@@ -1,7 +1,8 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class FuelphpInstaller extends \Composer\Installers\BaseInstaller {
+class FuelphpInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('component' => 'components/{$name}/');
 }

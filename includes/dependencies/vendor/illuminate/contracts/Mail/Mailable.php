@@ -8,14 +8,14 @@ interface Mailable
     /**
      * Send the message using the given mailer.
      *
-     * @param  Factory|\Illuminate\Contracts\Mail\Mailer  $mailer
+     * @param  \Illuminate\Contracts\Mail\Factory|\Illuminate\Contracts\Mail\Mailer  $mailer
      * @return void
      */
     public function send($mailer);
     /**
      * Queue the given message.
      *
-     * @param  Factory  $queue
+     * @param  \Illuminate\Contracts\Queue\Factory  $queue
      * @return mixed
      */
     public function queue(Factory $queue);
@@ -23,7 +23,7 @@ interface Mailable
      * Deliver the queued message after the given delay.
      *
      * @param  \DateTimeInterface|\DateInterval|int  $delay
-     * @param  Factory  $queue
+     * @param  \Illuminate\Contracts\Queue\Factory  $queue
      * @return mixed
      */
     public function later($delay, Factory $queue);

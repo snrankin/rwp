@@ -20,7 +20,7 @@ use RWP\Vendor\Exceptions\Collection\EmptyException;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use RWP\Vendor\Exceptions\Data\TypeException;
 use RWP\Vendor\Illuminate\Support\Collection;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 
 class Element {
 
@@ -106,6 +106,10 @@ class Element {
 			$args = $this->create_from_string( $args );
 		}
 
+		if ( rwp_is_collection( $args ) ) {
+			$args = rwp_object_to_array( $args );
+		}
+
 		if ( is_array( $args ) ) {
 			$tag = data_get( $args, 'tag', $this->tag );
 			$html = data_get( $args, 'html', $this->html );
@@ -172,11 +176,11 @@ class Element {
 		$args = array(
 			'tag' => 'div',
 			'atts' => array(),
-			'content' => array()
+			'content' => array(),
 		);
 
 		$string = \force_balance_tags( $string );
-		if ( ! rwp_string_is_html( $string ) ) {
+		if ( ! rwp_str_is_html( $string ) ) {
 			$args['content'][] = $string;
 		} else {
 			$html = new Html( $string );
@@ -185,6 +189,65 @@ class Element {
 		}
 
 		return $args;
+	}
+
+	/**
+	 * Merge arguments into the current object
+	 *
+	 * @param mixed $args
+	 * @param bool $overwrite
+	 *
+	 * @return void
+	 */
+	public function merge_args( $args, $overwrite = false ) {
+		$properties = get_object_vars( $this );
+
+		if ( $args instanceof self ) {
+			$args = get_object_vars( $args );
+		}
+
+		$properties = rwp_merge_args( $properties, $args );
+
+		foreach ( $properties as $key => $value ) {
+			$this->set( $key, $value, $overwrite );
+		}
+	}
+
+	/**
+	 * Add a content item key to the elements order
+	 *
+	 * @param mixed $key
+	 * @param mixed|null $position
+	 *
+	 * @return void
+	 */
+	public function set_order( $key, $position = null ) {
+		$order = $this->order;
+
+		if ( blank( $position ) ) {
+			$order[] = $key;
+		} else {
+			rwp_array_insert( $order, $position, $key );
+		}
+
+		$this->set( 'order', $order );
+	}
+
+	/**
+	 * Add a content item key to the elements order
+	 *
+	 * @param string|int $key
+	 *
+	 * @return void
+	 */
+	public function remove_order_item( $key ) {
+		$order = $this->order;
+
+		if ( array_search( $key, $order ) ) {
+			$order = rwp_array_remove( $order, $key );
+		}
+
+		$this->set( 'order', $order );
 	}
 
 
@@ -214,6 +277,47 @@ class Element {
 	}
 
 	/**
+	 * Get All Attributes
+	 *
+	 * @return Collection|array
+	 */
+
+	public function get_atts() {
+		return $this->get( 'atts' );
+	}
+
+	/**
+	 * Merge Attributes
+	 *
+	 * @param mixed $atts
+	 * @param bool $overwrite
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function merge_atts( $atts, $overwrite = false ) {
+		$defaults = $this->get_atts();
+		if ( is_string( $atts ) && rwp_str_is_html( $atts ) ) {
+			$html = new Html( $atts );
+			$atts = $html->extractAll();
+		}
+
+		if ( $atts instanceof self ) {
+			$atts = $atts->get_atts();
+		}
+
+		$atts = rwp_merge_args( $defaults, $atts );
+
+		foreach ( $atts as $key => $value ) {
+			if ( 'class' === $key || 'style' === $key ) {
+				$this->set_attr( $key, $value, true ); // Always update the merged classes/styles
+			} else {
+				$this->set_attr( $key, $value, $overwrite );
+			}
+		}
+	}
+
+	/**
 	 * Remove Attribute
 	 *
 	 * @param string|string[]  $key        The attribute(s) to remove
@@ -237,11 +341,7 @@ class Element {
 	 */
 
 	public function set_attr( $key, $value, $overwrite = false ) {
-		if ( 'class' === $key ) {
-			$this->add_class( $value );
-		} else {
-			$this->set( "atts.$key", $value, $overwrite );
-		}
+		$this->set( "atts.$key", $value, $overwrite );
 
 	}
 
@@ -339,11 +439,9 @@ class Element {
 			}
 			$classes = $this->get_attr( 'class', array() );
 
-			$index = array_search( $value, $classes, true );
-			if ( false !== $index ) {
-				unset( $classes[ $index ] );
-				$this->set_attr( 'class', $classes );
-			}
+			$classes = rwp_array_remove( $classes, $value );
+
+			$this->set_attr( 'class', $classes, true );
 		} elseif ( is_array( $value ) ) {
 			$values = $value;
 			foreach ( $values as $value ) {
@@ -446,7 +544,7 @@ class Element {
 						$parent_elem->set_style( 'background-image', $bg );
 					}
 				}
-            } else if ( $bg instanceof Element || rwp_string_is_html( $bg ) ) {
+            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) ) {
 				array_unshift( $parent_elem->order, 'background' );
 			}
 			$parent_elem->add_class( 'has-bg' );
@@ -494,6 +592,15 @@ class Element {
 
 	public function remove_content( $key ) {
 		$this->remove( "content.$key" );
+	}
+
+	/**
+	 * Reset the content property to an empty collection
+	 *
+	 * @return void
+	 */
+	public function make_empty() {
+		$this->content = new Collection();
 	}
 
 	/**
@@ -569,7 +676,7 @@ class Element {
 					})->transform( function( $node ) {
 						if ( ( $node instanceof Html ) || ( $node instanceof \DOMNode ) || ( $node instanceof \DOMNodeList ) || ( $node instanceof Element ) ) {
 							return $node->__toString();
-						} else {
+						} else if ( is_string( $node ) ) {
 							return $node;
 						}
 					} )->filter(function( $node, $i ) {
@@ -601,16 +708,18 @@ class Element {
 	 * @return void
 	 */
 
-	public function add_sub_elements( $elements = '' ) {
+	public function add_sub_elements( $elements = '', $target = '' ) {
 		if ( empty( $elements ) ) {
 			$elements = $this->order;
 		}
 		if ( ! empty( $elements ) ) {
-			if ( is_string( $elements ) && $this->has( $elements ) ) {
+			if ( is_string( $elements ) && ! is_numeric( $elements ) && $this->has( $elements ) ) {
 				$this->set_content( $this->$elements, $elements );
 			} else if ( is_array( $elements ) ) {
 				foreach ( $elements as $element ) {
-					$this->add_sub_elements( $element );
+					if ( is_string( $element ) ) {
+						$this->add_sub_elements( $element );
+					}
 				}
 			}
 		}
@@ -666,7 +775,7 @@ class Element {
 	}
 
 	/**
-	 * Generates the html string
+	 * Generates the html string and gets the inner content
 	 *
 	 * @return string
 	 */

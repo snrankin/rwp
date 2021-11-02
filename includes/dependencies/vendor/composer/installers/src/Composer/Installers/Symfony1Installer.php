@@ -1,18 +1,20 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  * Plugin installer for symfony 1.x
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
-class Symfony1Installer extends \Composer\Installers\BaseInstaller {
+class Symfony1Installer extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'plugins/{$name}/');
     /**
      * Format package name to CamelCase
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         $vars['name'] = \preg_replace_callback('/(-[a-z])/', function ($matches) {
             return \strtoupper($matches[0][1]);
         }, $vars['name']);

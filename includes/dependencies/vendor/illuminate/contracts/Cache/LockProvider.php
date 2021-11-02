@@ -10,7 +10,7 @@ interface LockProvider
      * @param  string  $name
      * @param  int  $seconds
      * @param  string|null  $owner
-     * @return Lock
+     * @return \Illuminate\Contracts\Cache\Lock
      */
     public function lock($name, $seconds = 0, $owner = null);
     /**
@@ -18,7 +18,7 @@ interface LockProvider
      *
      * @param  string  $name
      * @param  string  $owner
-     * @return Lock
+     * @return \Illuminate\Contracts\Cache\Lock
      */
     public function restoreLock($name, $owner);
 }

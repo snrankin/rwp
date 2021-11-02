@@ -3,7 +3,6 @@
 /**
  * Loads a string to be parsed.
  */
-
 namespace RWP\Vendor\Masterminds\HTML5\Parser;
 
 /*
@@ -37,7 +36,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /**
  * @deprecated since 2.4, to remove in 3.0. Use a string in the scanner instead.
  */
-class StringInputStream implements InputStream {
+class StringInputStream implements InputStream
+{
     /**
      * The string data we're parsing.
      */
@@ -61,7 +61,8 @@ class StringInputStream implements InputStream {
      * @param string $encoding The encoding to use for the data.
      * @param string $debug    A fprintf format to use to echo the data on stdout.
      */
-    public function __construct($data, $encoding = 'UTF-8', $debug = '') {
+    public function __construct($data, $encoding = 'UTF-8', $debug = '')
+    {
         $data = UTF8Utils::convertToUTF8($data, $encoding);
         if ($debug) {
             \fprintf(\STDOUT, $debug, $data, \strlen($data));
@@ -75,13 +76,15 @@ class StringInputStream implements InputStream {
         $this->char = 0;
         $this->EOF = \strlen($data);
     }
-    public function __toString() {
+    public function __toString()
+    {
         return $this->data;
     }
     /**
      * Replace linefeed characters according to the spec.
      */
-    protected function replaceLinefeeds($data) {
+    protected function replaceLinefeeds($data)
+    {
         /*
          * U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED (LF) characters are treated specially.
          * Any CR characters that are followed by LF characters must be removed, and any CR characters not
@@ -95,7 +98,8 @@ class StringInputStream implements InputStream {
     /**
      * Returns the current line that the tokenizer is at.
      */
-    public function currentLine() {
+    public function currentLine()
+    {
         if (empty($this->EOF) || 0 === $this->char) {
             return 1;
         }
@@ -106,7 +110,8 @@ class StringInputStream implements InputStream {
     /**
      * @deprecated
      */
-    public function getCurrentLine() {
+    public function getCurrentLine()
+    {
         return $this->currentLine();
     }
     /**
@@ -115,7 +120,8 @@ class StringInputStream implements InputStream {
      *
      * @return int The column number.
      */
-    public function columnOffset() {
+    public function columnOffset()
+    {
         // Short circuit for the first char.
         if (0 === $this->char) {
             return 0;
@@ -140,7 +146,8 @@ class StringInputStream implements InputStream {
     /**
      * @deprecated
      */
-    public function getColumnOffset() {
+    public function getColumnOffset()
+    {
         return $this->columnOffset();
     }
     /**
@@ -148,20 +155,23 @@ class StringInputStream implements InputStream {
      *
      * @return string The current character.
      */
-    public function current() {
+    public function current()
+    {
         return $this->data[$this->char];
     }
     /**
      * Advance the pointer.
      * This is part of the Iterator interface.
      */
-    public function next() {
+    public function next()
+    {
         ++$this->char;
     }
     /**
      * Rewind to the start of the string.
      */
-    public function rewind() {
+    public function rewind()
+    {
         $this->char = 0;
     }
     /**
@@ -169,7 +179,8 @@ class StringInputStream implements InputStream {
      *
      * @return bool Whether the current pointer location is valid.
      */
-    public function valid() {
+    public function valid()
+    {
         return $this->char < $this->EOF;
     }
     /**
@@ -183,7 +194,8 @@ class StringInputStream implements InputStream {
      * @return string Returns the remaining text. If called when the InputStream is
      *                already exhausted, it returns an empty string.
      */
-    public function remainingChars() {
+    public function remainingChars()
+    {
         if ($this->char < $this->EOF) {
             $data = \substr($this->data, $this->char);
             $this->char = $this->EOF;
@@ -206,7 +218,8 @@ class StringInputStream implements InputStream {
      * @return mixed Index or false if no match is found. You should use strong
      *               equality when checking the result, since index could be 0.
      */
-    public function charsUntil($bytes, $max = null) {
+    public function charsUntil($bytes, $max = null)
+    {
         if ($this->char >= $this->EOF) {
             return \false;
         }
@@ -232,7 +245,8 @@ class StringInputStream implements InputStream {
      *
      * @return string
      */
-    public function charsWhile($bytes, $max = null) {
+    public function charsWhile($bytes, $max = null)
+    {
         if ($this->char >= $this->EOF) {
             return \false;
         }
@@ -250,7 +264,8 @@ class StringInputStream implements InputStream {
      *
      * @param int $howMany The number of characters to unconsume.
      */
-    public function unconsume($howMany = 1) {
+    public function unconsume($howMany = 1)
+    {
         if ($this->char - $howMany >= 0) {
             $this->char -= $howMany;
         }
@@ -258,13 +273,15 @@ class StringInputStream implements InputStream {
     /**
      * Look ahead without moving cursor.
      */
-    public function peek() {
+    public function peek()
+    {
         if ($this->char + 1 <= $this->EOF) {
             return $this->data[$this->char + 1];
         }
         return \false;
     }
-    public function key() {
+    public function key()
+    {
         return $this->char;
     }
 }

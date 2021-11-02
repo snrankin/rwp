@@ -1,8 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class GravInstaller extends \Composer\Installers\BaseInstaller {
+class GravInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'user/plugins/{$name}/', 'theme' => 'user/themes/{$name}/');
     /**
      * Format package name
@@ -11,7 +12,8 @@ class GravInstaller extends \Composer\Installers\BaseInstaller {
      *
      * @return array
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         $restrictedWords = \implode('|', \array_keys($this->locations));
         $vars['name'] = \strtolower($vars['name']);
         $vars['name'] = \preg_replace('/^(?:grav-)?(?:(?:' . $restrictedWords . ')-)?(.*?)(?:-(?:' . $restrictedWords . '))?$/ui', '$1', $vars['name']);

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\Parser\Handler;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Exception\InternalErrorException;
@@ -17,6 +18,7 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\Token;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer\TokenizerEscaping;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer\TokenizerPatterns;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
+
 /**
  * CSS selector comment handler.
  *
@@ -27,20 +29,17 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
  *
  * @internal
  */
-class StringHandler implements HandlerInterface
-{
+class StringHandler implements HandlerInterface {
     private $patterns;
     private $escaping;
-    public function __construct(TokenizerPatterns $patterns, TokenizerEscaping $escaping)
-    {
+    public function __construct(TokenizerPatterns $patterns, TokenizerEscaping $escaping) {
         $this->patterns = $patterns;
         $this->escaping = $escaping;
     }
     /**
      * {@inheritdoc}
      */
-    public function handle(Reader $reader, TokenStream $stream) : bool
-    {
+    public function handle(Reader $reader, TokenStream $stream): bool {
         $quote = $reader->getSubstring(1);
         if (!\in_array($quote, ["'", '"'])) {
             return \false;

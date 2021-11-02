@@ -1,17 +1,16 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-use Composer\Util\Filesystem;
-
+use RWP\Vendor\Composer\Util\Filesystem;
 /**
  * Installer for Bitrix Framework. Supported types of extensions:
  * - `bitrix-d7-module` — copy the module to directory `bitrix/modules/<vendor>.<name>`.
  * - `bitrix-d7-component` — copy the component to directory `bitrix/components/<vendor>/<name>`.
  * - `bitrix-d7-template` — copy the template to directory `bitrix/templates/<vendor>_<name>`.
- *
+ * 
  * You can set custom path to directory with Bitrix kernel in `composer.json`:
- *
+ * 
  * ```json
  * {
  *      "extra": {
@@ -23,7 +22,8 @@ use Composer\Util\Filesystem;
  * @author Nik Samokhvalov <nik@samokhvalov.info>
  * @author Denis Kulichkin <onexhovia@gmail.com>
  */
-class BitrixInstaller extends \Composer\Installers\BaseInstaller {
+class BitrixInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array(
         'module' => '{$bitrix_dir}/modules/{$name}/',
         // deprecated, remove on the major release (Backward compatibility will be broken)
@@ -42,7 +42,8 @@ class BitrixInstaller extends \Composer\Installers\BaseInstaller {
     /**
      * {@inheritdoc}
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         if ($this->composer->getPackage()) {
             $extra = $this->composer->getPackage()->getExtra();
             if (isset($extra['bitrix-dir'])) {
@@ -57,7 +58,8 @@ class BitrixInstaller extends \Composer\Installers\BaseInstaller {
     /**
      * {@inheritdoc}
      */
-    protected function templatePath($path, array $vars = array()) {
+    protected function templatePath($path, array $vars = array())
+    {
         $templatePath = parent::templatePath($path, $vars);
         $this->checkDuplicates($templatePath, $vars);
         return $templatePath;
@@ -68,7 +70,8 @@ class BitrixInstaller extends \Composer\Installers\BaseInstaller {
      * @param string $path
      * @param array $vars
      */
-    protected function checkDuplicates($path, array $vars = array()) {
+    protected function checkDuplicates($path, array $vars = array())
+    {
         $packageType = \substr($vars['type'], \strlen('bitrix') + 1);
         $localDir = \explode('/', $vars['bitrix_dir']);
         \array_pop($localDir);
@@ -84,7 +87,7 @@ class BitrixInstaller extends \Composer\Installers\BaseInstaller {
             while (\true) {
                 switch ($this->io->ask('    <info>Delete ' . $oldPath . ' [y,n,?]?</info> ', '?')) {
                     case 'y':
-                        $fs = new \Composer\Util\Filesystem();
+                        $fs = new \RWP\Vendor\Composer\Util\Filesystem();
                         $fs->removeDirectory($oldPath);
                         break 2;
                     case 'n':

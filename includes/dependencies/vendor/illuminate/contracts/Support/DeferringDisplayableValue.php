@@ -7,7 +7,7 @@ interface DeferringDisplayableValue
     /**
      * Resolve the displayable value that the class is deferring.
      *
-     * @return Htmlable|string
+     * @return \Illuminate\Contracts\Support\Htmlable|string
      */
     public function resolveDisplayableValue();
 }

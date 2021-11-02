@@ -8,11 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\VarDumper\Command\Descriptor;
 
 use RWP\Vendor\Symfony\Component\Console\Output\OutputInterface;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
 use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
+
 /**
  * Describe collected data clones for html output.
  *
@@ -20,16 +22,13 @@ use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
  *
  * @final
  */
-class HtmlDescriptor implements DumpDescriptorInterface
-{
+class HtmlDescriptor implements DumpDescriptorInterface {
     private $dumper;
     private $initialized = \false;
-    public function __construct(HtmlDumper $dumper)
-    {
+    public function __construct(HtmlDumper $dumper) {
         $this->dumper = $dumper;
     }
-    public function describe(OutputInterface $output, Data $data, array $context, int $clientId) : void
-    {
+    public function describe(OutputInterface $output, Data $data, array $context, int $clientId): void {
         if (!$this->initialized) {
             $styles = \file_get_contents(__DIR__ . '/../../Resources/css/htmlDescriptor.css');
             $scripts = \file_get_contents(__DIR__ . '/../../Resources/js/htmlDescriptor.js');
@@ -59,7 +58,8 @@ class HtmlDescriptor implements DumpDescriptorInterface
         }
         $isoDate = $this->extractDate($context, 'c');
         $tags = \array_filter(['controller' => $controller ?? null, 'project dir' => $projectDir ?? null]);
-        $output->writeln(<<<HTML
+        $output->writeln(
+            <<<HTML
 <article data-dedup-id="{$dedupIdentifier}">
     <header>
         <div class="row">
@@ -78,14 +78,12 @@ class HtmlDescriptor implements DumpDescriptorInterface
     </section>
 </article>
 HTML
-);
+        );
     }
-    private function extractDate(array $context, string $format = 'r') : string
-    {
-        return \date($format, $context['timestamp']);
+    private function extractDate(array $context, string $format = 'r'): string {
+        return \date($format, (int) $context['timestamp']);
     }
-    private function renderTags(array $tags) : string
-    {
+    private function renderTags(array $tags): string {
         if (!$tags) {
             return '';
         }

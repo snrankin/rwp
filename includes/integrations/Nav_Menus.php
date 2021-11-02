@@ -18,18 +18,38 @@ use RWP\Engine\Abstracts\Singleton;
 class Nav_Menus extends Singleton {
 
 	/**
+	 * @var string The current page
+	 */
+
+	public $current = '';
+
+	/**
 	 * Initialize the class.
 	 *
 	 * @return void
 	 */
 	public function initialize() {
+		if ( ! rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
+			return;
+		}
 
-		if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
 			\add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_item_class' ), 10, 4 );
 			\add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes' ), 10, 4 );
 			\add_filter( 'nav_menu_submenu_css_class', array( $this, 'nav_menu_submenu_css_class' ), 10, 3 );
-			\add_filter( 'wp_nav_menu_args', array( $this, 'wp_nav_menu_args' ), 5 );
-		}
+			\add_filter( 'wp_nav_menu_args', 'rwp_menu_args', 5 );
+
+			\add_filter( 'wp_nav_menu_args', function( array $args ) {
+
+				if ( rwp_get_option( 'modules.bootstrap.nav.navwalker', false ) ) {
+					$args['walker'] = new \RWP\Integrations\Walkers\Nav( $args );
+
+					$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
+
+				}
+				return $args;
+			}, 20 );
+
+		$this->current = data_get( $_SERVER, 'REQUEST_URI' );
 	}
 
 	/**
@@ -47,22 +67,6 @@ class Nav_Menus extends Singleton {
 		$classes[] = 'level-' . ( $depth + 1 ) . '-menu';
 
 		return $classes;
-	}
-
-	/**
-	 * Updates nav classes
-	 *
-	 * @param mixed $args
-	 * @return mixed
-	 */
-
-	function wp_nav_menu_args( $args ) {
-		$classes = data_get( $args, 'menu_class', '' );
-		$classes .= ' nav';
-
-		$args['menu_class'] = rwp_output_classes( $classes );
-
-		return $args;
 	}
 
 	/**
@@ -85,32 +89,18 @@ class Nav_Menus extends Singleton {
 	 * @param int       $depth Depth of menu item. Used for padding.
 	 */
 
-	function nav_menu_link_attributes( $atts, $item, $args, $depth ) {
+	public function nav_menu_link_attributes( $atts, $item, $args, $depth ) {
 
 		$classes = data_get( $atts, 'class', '' );
 		$classes = rwp_parse_classes( $classes );
 		if ( 'nav_menu_item' === $item->post_type ) {
-
-			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
-			$ancestors = rwp_collection();
-			if ( ! empty( $_request_uri ) ) {
-				if ( '/' === $_request_uri ) {
-					$_current_page = rwp_home_page();
-				} else {
-					$_current_page = url_to_postid( $_request_uri );
-				}
-
-				if ( ! empty( $_current_page ) ) {
-					$ancestors = rwp_ancestors( $_current_page );
-				}
-			}
-			$title = data_get( $item, 'title', $item->post_title );
-			$slug = sanitize_title( $title );
+			$item_url = data_get( $item, 'url', '' );
+			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
 			$is_current = data_get( $item, 'current', false );
 			$is_current_parent = data_get( $item, 'current_item_parent', false );
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 
-			$is_active = false;
+			$is_active = rwp_str_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
@@ -121,16 +111,6 @@ class Nav_Menus extends Singleton {
 
 			if ( $is_current_ancestor ) {
 				$is_active = true;
-			}
-
-			if ( ! empty( $ancestors ) && rwp_is_collection( $ancestors ) ) {
-				$ancestors = $ancestors->filter(function ( $ancestor ) use ( $slug ) {
-					$object = data_get( $ancestor, 'slug' );
-					return $slug === $object;
-				});
-				if ( $ancestors->isNotEmpty() ) {
-					$is_active = true;
-				}
 			}
 
 			if ( is_search() || is_404() ) {
@@ -163,30 +143,22 @@ class Nav_Menus extends Singleton {
 	 * @param int      $depth   Depth of menu item. Used for padding.
 	 */
 
-	function nav_menu_item_class( $classes, $item, $args, $depth ) {
+	public function nav_menu_item_class( $classes, $item, $args, $depth ) {
 		if ( 'nav_menu_item' === $item->post_type ) {
 
-			$_request_uri = data_get( $_SERVER, 'REQUEST_URI' );
-			$ancestors = rwp_collection();
-			if ( ! empty( $_request_uri ) ) {
-				if ( '/' === $_request_uri ) {
-					$_current_page = rwp_home_page();
-				} else {
-					$_current_page = url_to_postid( $_request_uri );
-				}
-
-				if ( ! empty( $_current_page ) ) {
-					$ancestors = rwp_ancestors( $_current_page );
-				}
-			}
+			$item_url = data_get( $item, 'url', '' );
+			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
 			$title = data_get( $item, 'title', $item->post_title );
 			$slug = sanitize_title( $title );
 			$is_current = data_get( $item, 'current', false );
 			$is_current_parent = data_get( $item, 'current_item_parent', false );
 			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
-			$is_parent = data_get( $args, 'has_children', false );
+			$is_parent = false;
+			if ( ! empty( preg_grep( '/.*has-children.*/i', $classes ) ) ) {
+				$is_parent = true;
+			}
 
-			$is_active = false;
+			$is_active = rwp_str_has( $this->current, $item_url );
 
 			if ( $is_current ) {
 				$is_active = true;
@@ -197,17 +169,6 @@ class Nav_Menus extends Singleton {
 
 			if ( $is_current_ancestor ) {
 				$is_active = true;
-			}
-
-			if ( ! empty( $ancestors ) && rwp_is_collection( $ancestors ) ) {
-				$ancestors = $ancestors->filter(function ( $ancestor ) use ( $slug ) {
-					$object = data_get( $ancestor, 'slug' );
-					return $slug === $object;
-				});
-				if ( $ancestors->isNotEmpty() ) {
-
-					$is_active = true;
-				}
 			}
 
 			if ( is_search() || is_404() ) {
@@ -236,7 +197,6 @@ class Nav_Menus extends Singleton {
 			$classes[] = 'nav-item';
 
 			$classes[] = 'level-' . ( $depth ) . '-item';
-
 		}
 
 		$classes = rwp_parse_classes( $classes );

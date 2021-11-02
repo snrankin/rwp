@@ -10,8 +10,8 @@ namespace RWP\Vendor;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-class JsonException extends \Exception {
+class JsonException extends \Exception
+{
 }
 /*
  * This file is part of the Symfony package.
@@ -21,4 +21,4 @@ class JsonException extends \Exception {
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\class_alias(__NAMESPACE__ . '\\JsonException', 'JsonException', \false);
+\class_alias('RWP\\Vendor\\JsonException', 'JsonException', \false);

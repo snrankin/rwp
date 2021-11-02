@@ -1,13 +1,15 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
-class CroogoInstaller extends \Composer\Installers\BaseInstaller {
+class CroogoInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     protected $locations = array('plugin' => 'Plugin/{$name}/', 'theme' => 'View/Themed/{$name}/');
     /**
      * Format package name to CamelCase
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         $vars['name'] = \strtolower(\str_replace(array('-', '_'), ' ', $vars['name']));
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));
         return $vars;

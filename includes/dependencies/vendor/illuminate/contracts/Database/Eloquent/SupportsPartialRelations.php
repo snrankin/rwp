@@ -22,7 +22,7 @@ interface SupportsPartialRelations
     /**
      * Get the one of many inner join subselect query builder instance.
      *
-     * @return Builder|void
+     * @return \Illuminate\Database\Eloquent\Builder|void
      */
     public function getOneOfManySubQuery();
 }

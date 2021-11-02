@@ -1,13 +1,14 @@
 <?php
 
-namespace Composer\Installers;
+namespace RWP\Vendor\Composer\Installers;
 
 /**
  * Class PiwikInstaller
  *
  * @package Composer\Installers
  */
-class PiwikInstaller extends \Composer\Installers\BaseInstaller {
+class PiwikInstaller extends \RWP\Vendor\Composer\Installers\BaseInstaller
+{
     /**
      * @var array
      */
@@ -18,7 +19,8 @@ class PiwikInstaller extends \Composer\Installers\BaseInstaller {
      *
      * @return array
      */
-    public function inflectPackageVars($vars) {
+    public function inflectPackageVars($vars)
+    {
         $vars['name'] = \strtolower(\preg_replace('/(?<=\\w)([A-Z])/', 'RWP\\Vendor\\_\\1', $vars['name']));
         $vars['name'] = \str_replace(array('-', '_'), ' ', $vars['name']);
         $vars['name'] = \str_replace(' ', '', \ucwords($vars['name']));

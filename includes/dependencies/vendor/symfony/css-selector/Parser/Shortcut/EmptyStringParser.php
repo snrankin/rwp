@@ -8,11 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace RWP\Vendor\Symfony\Component\CssSelector\Parser\Shortcut;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Node\ElementNode;
 use RWP\Vendor\Symfony\Component\CssSelector\Node\SelectorNode;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\ParserInterface;
+
 /**
  * CSS selector class parser shortcut.
  *
@@ -27,13 +29,11 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\ParserInterface;
  *
  * @internal
  */
-class EmptyStringParser implements ParserInterface
-{
+class EmptyStringParser implements ParserInterface {
     /**
      * {@inheritdoc}
      */
-    public function parse(string $source) : array
-    {
+    public function parse(string $source): array {
         // Matches an empty string
         if ('' == $source) {
             return [new SelectorNode(new ElementNode(null, '*'))];

@@ -171,7 +171,7 @@ class Embed extends Element {
 
 		$src = $this->get( 'src' );
 		$html = $this->get( 'html' );
-		if ( rwp_string_is_html( $args ) ) {
+		if ( rwp_str_is_html( $args ) ) {
 			$html = $args;
 		}
 
@@ -189,9 +189,9 @@ class Embed extends Element {
 			$args = array();
 		}
 
-		if ( rwp_is_element( $html, 'div|figure' ) ) {
+		if ( rwp_str_is_element( $html, 'div|figure' ) ) {
 			$args['html'] = $html;
-		} else if ( rwp_is_element( $html, '[iframe|video]' ) ) {
+		} else if ( rwp_str_is_element( $html, '[iframe|video]' ) ) {
 			$args['embed']['html'] = $html;
 		}
 
@@ -229,7 +229,7 @@ class Embed extends Element {
 					'playbar=false',
 					'controlsVisibleOnLoad=false',
 				);
-				if ( $this->is_bg !== false ) {
+				if ( false !== $this->is_bg ) {
 					$wistia_classes = rwp_parse_classes($wistia_classes, array(
 						'autoPlay=true',
 						'muted=true',
@@ -267,7 +267,7 @@ class Embed extends Element {
 				$height = data_get( $meta, 'height', '' );
 				$mime = data_get( $meta, 'mime_type', '' );
 
-				if ( $this->is_bg !== false ) {
+				if ( false !== $this->is_bg ) {
 					$this->embed->set_attr( 'muted', '' );
 					$this->embed->set_attr( 'autoplay', '' );
 					$this->embed->set_attr( 'loop', '' );
@@ -310,15 +310,6 @@ class Embed extends Element {
 					$this->embed->add_class( 'lazyload' );
 				}
 				break;
-		}
-
-		if ( ! empty( $this->ratio ) ) {
-			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
-				$this->set_style( '--bs-aspect-ratio', $this->ratio );
-			} else {
-				$this->add_class( 'ratio-' . $this->ratio );
-			}
-			$this->add_class( 'ratio' );
 		}
 
 	}
@@ -388,6 +379,16 @@ class Embed extends Element {
 
 	public function setup_html() {
 		$this->setup_embed();
+
+		if ( ! empty( $this->ratio ) ) {
+			$this->inner->add_class( 'ratio' );
+			if ( rwp_str_ends_with( $this->ratio, '%' ) ) {
+				$this->set_style( '--bs-aspect-ratio', $this->ratio );
+			} else {
+				$this->inner->add_class( 'ratio-' . $this->ratio );
+			}
+		}
+
 		$this->inner->set_content( $this->embed, 'embed' );
 	}
 
@@ -404,13 +405,13 @@ class Embed extends Element {
 		$url = '';
 		$id = '';
 
-		if ( rwp_string_has( $string, array( 'youtube.com', 'youtu.be' ) ) ) {
+		if ( rwp_str_has( $string, array( 'youtube.com', 'youtu.be' ) ) ) {
 			$host = 'youtube';
-		} elseif ( rwp_string_has( $string, array( 'wistia', 'wi.st' ) ) ) {
+		} elseif ( rwp_str_has( $string, array( 'wistia', 'wi.st' ) ) ) {
 			$host = 'wistia';
-		} elseif ( rwp_string_has( $string, 'vimeo' ) ) {
+		} elseif ( rwp_str_has( $string, 'vimeo' ) ) {
 			$host = 'vimeo';
-		} elseif ( rwp_string_has( $string, 'wp-content' ) || is_int( $string ) || is_numeric( $string ) ) {
+		} elseif ( rwp_str_has( $string, 'wp-content' ) || is_int( $string ) || is_numeric( $string ) ) {
 			$host = 'self';
 			if ( is_int( $string ) || is_numeric( $string ) ) {
 				$url = wp_get_attachment_url( $string );
@@ -418,7 +419,7 @@ class Embed extends Element {
 			}
 		}
 
-		if ( rwp_string_is_html( $string ) ) {
+		if ( rwp_str_is_html( $string ) ) {
 			preg_match( '/(?<=src=\")([^\"]+)/', $string, $url_match );
 
 			if ( ! empty( $url_match ) ) {

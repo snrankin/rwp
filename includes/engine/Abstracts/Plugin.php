@@ -13,7 +13,7 @@ namespace RWP\Engine\Abstracts;
 
 use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Vendor\Illuminate\Support\Str;
+use RWP\Components\Str;
 
 abstract class Plugin extends Singleton implements Component {
 
@@ -469,7 +469,7 @@ abstract class Plugin extends Singleton implements Component {
 	 *                            details
 	 * @return string
 	 */
-    public function prefix( $string, $separator = '_', $case = '' ) {
+    public function prefix( $string, $separator = '_', $case = 'snake' ) {
 
 		if ( 'title' === $case ) {
 			$prefix = $this->get_setting( 'name' );
