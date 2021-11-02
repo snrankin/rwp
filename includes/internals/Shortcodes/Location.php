@@ -57,14 +57,14 @@ class Location extends Shortcode {
 
 		$add_label = data_get( $args, 'add_label' );
 
-		if ( ! empty( $add_label ) ) {
+		if ( filled( $add_label ) ) {
 			$args['schedule']['add_label'] = $add_label;
 		}
 		unset( $args ['add_label'] );
 
 		$combine = data_get( $args, 'combine' );
 
-		if ( ! empty( $combine ) ) {
+		if ( filled( $combine ) ) {
 			$args['schedule']['combine'] = $combine;
 		}
 		unset( $args ['combine'] );

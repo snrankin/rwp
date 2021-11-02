@@ -160,7 +160,12 @@ function rwp_process_shortcode( $atts, $defaults = array() ) {
 
 			default:
 				if ( is_string( $value ) && ( 'true' === $value || 'false' === $value ) ) {
-					$args[ $key ] = boolval( $value );
+					if ( 'true' === $value ) {
+						$value = true;
+					} else {
+						$value = false;
+					}
+					$args[ $key ] = $value;
 				} else if ( ! empty( $value ) ) {
 					$args[ $key ] = $value;
 				}
