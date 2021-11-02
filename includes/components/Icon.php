@@ -12,7 +12,7 @@
 
 namespace RWP\Components;
 
-use RWP\Vendor\Illuminate\Support\{Pluralizer, Str};
+use RWP\Components\Str;
 
 class Icon extends Element {
 	/**
