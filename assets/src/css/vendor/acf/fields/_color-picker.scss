@@ -1,0 +1,69 @@
+/// ======================================================================== ///
+/// @name   _color-picker
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+// Color Picker
+
+.acf-color-picker {
+	.iris-picker {
+		width: auto !important;
+		height: auto !important;
+		min-width: 317px;
+		display: grid;
+		gap: 10px;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr auto;
+		padding: 10px !important;
+		box-sizing: border-box;
+		* {
+			box-sizing: border-box;
+		}
+		.iris-picker-inner {
+			display: grid;
+			grid-template-columns: 1fr 1.5rem;
+			gap: 10px;
+		}
+		.iris-square,
+		.iris-slider,
+		.iris-picker-inner,
+		.iris-palette-container {
+			width: auto !important;
+			height: auto !important;
+			float: none !important;
+			position: relative !important;
+			left: auto !important;
+			bottom: auto !important;
+			top: auto !important;
+			right: auto !important;
+			margin: 0 !important;
+		}
+		.iris-square {
+			&::before {
+				content: '';
+				display: block;
+				padding-bottom: 100%;
+			}
+		}
+		.iris-palette-container {
+			display: grid;
+			gap: 5px;
+			grid-template-columns: repeat(auto-fill, 25px);
+			grid-template-rows: repeat(auto-fill, 25px);
+			.iris-palette {
+				width: 25px !important;
+				height: 25px !important;
+				float: none !important;
+				position: relative !important;
+				left: auto !important;
+				bottom: auto !important;
+				top: auto !important;
+				right: auto !important;
+				margin: 0 !important;
+			}
+		}
+	}
+}
