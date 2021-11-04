@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Helper for filtering out properties in casters.
  *
@@ -20,7 +18,8 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class Caster {
+class Caster
+{
     public const EXCLUDE_VERBOSE = 1;
     public const EXCLUDE_VIRTUAL = 2;
     public const EXCLUDE_DYNAMIC = 4;
@@ -41,7 +40,8 @@ class Caster {
      *
      * @return array The array-cast of the object, with prefixed dynamic properties
      */
-    public static function castObject(object $obj, string $class, bool $hasDebugInfo = \false, string $debugClass = null): array {
+    public static function castObject(object $obj, string $class, bool $hasDebugInfo = \false, string $debugClass = null) : array
+    {
         if ($hasDebugInfo) {
             try {
                 $debugInfo = $obj->__debugInfo();
@@ -109,7 +109,8 @@ class Caster {
      *
      * @return array The filtered array
      */
-    public static function filter(array $a, int $filter, array $listedProperties = [], ?int &$count = 0): array {
+    public static function filter(array $a, int $filter, array $listedProperties = [], ?int &$count = 0) : array
+    {
         $count = 0;
         foreach ($a as $k => $v) {
             $type = self::EXCLUDE_STRICT & $filter;
@@ -143,7 +144,8 @@ class Caster {
         }
         return $a;
     }
-    public static function castPhpIncompleteClass(\__PHP_Incomplete_Class $c, array $a, Stub $stub, bool $isNested): array {
+    public static function castPhpIncompleteClass(\__PHP_Incomplete_Class $c, array $a, Stub $stub, bool $isNested) : array
+    {
         if (isset($a['__PHP_Incomplete_Class_Name'])) {
             $stub->class .= '(' . $a['__PHP_Incomplete_Class_Name'] . ')';
             unset($a['__PHP_Incomplete_Class_Name']);

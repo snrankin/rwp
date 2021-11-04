@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
 
 /**
@@ -16,13 +15,15 @@ namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class TextareaFormField extends FormField {
+class TextareaFormField extends FormField
+{
     /**
      * Initializes the form field.
      *
      * @throws \LogicException When node type is incorrect
      */
-    protected function initialize() {
+    protected function initialize()
+    {
         if ('textarea' !== $this->node->nodeName) {
             throw new \LogicException(\sprintf('A TextareaFormField can only be created from a textarea tag (%s given).', $this->node->nodeName));
         }

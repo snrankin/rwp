@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector\XPath\Extension;
 
 use RWP\Vendor\Symfony\Component\CssSelector\XPath\XPathExpr;
-
 /**
  * XPath expression translator combination extension.
  *
@@ -23,29 +21,36 @@ use RWP\Vendor\Symfony\Component\CssSelector\XPath\XPathExpr;
  *
  * @internal
  */
-class CombinationExtension extends AbstractExtension {
+class CombinationExtension extends AbstractExtension
+{
     /**
      * {@inheritdoc}
      */
-    public function getCombinationTranslators(): array {
+    public function getCombinationTranslators() : array
+    {
         return [' ' => [$this, 'translateDescendant'], '>' => [$this, 'translateChild'], '+' => [$this, 'translateDirectAdjacent'], '~' => [$this, 'translateIndirectAdjacent']];
     }
-    public function translateDescendant(XPathExpr $xpath, XPathExpr $combinedXpath): XPathExpr {
+    public function translateDescendant(XPathExpr $xpath, XPathExpr $combinedXpath) : XPathExpr
+    {
         return $xpath->join('/descendant-or-self::*/', $combinedXpath);
     }
-    public function translateChild(XPathExpr $xpath, XPathExpr $combinedXpath): XPathExpr {
+    public function translateChild(XPathExpr $xpath, XPathExpr $combinedXpath) : XPathExpr
+    {
         return $xpath->join('/', $combinedXpath);
     }
-    public function translateDirectAdjacent(XPathExpr $xpath, XPathExpr $combinedXpath): XPathExpr {
+    public function translateDirectAdjacent(XPathExpr $xpath, XPathExpr $combinedXpath) : XPathExpr
+    {
         return $xpath->join('/following-sibling::', $combinedXpath)->addNameTest()->addCondition('position() = 1');
     }
-    public function translateIndirectAdjacent(XPathExpr $xpath, XPathExpr $combinedXpath): XPathExpr {
+    public function translateIndirectAdjacent(XPathExpr $xpath, XPathExpr $combinedXpath) : XPathExpr
+    {
         return $xpath->join('/following-sibling::', $combinedXpath);
     }
     /**
      * {@inheritdoc}
      */
-    public function getName(): string {
+    public function getName() : string
+    {
         return 'combination';
     }
 }

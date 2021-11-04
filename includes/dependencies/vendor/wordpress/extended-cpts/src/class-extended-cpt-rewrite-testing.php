@@ -1,21 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
 /**
  * @codeCoverageIgnore
  */
-class Extended_CPT_Rewrite_Testing extends Extended_Rewrite_Testing {
+class Extended_CPT_Rewrite_Testing extends Extended_Rewrite_Testing
+{
     /**
      * @var Extended_CPT
      */
     public $cpt;
-    public function __construct(Extended_CPT $cpt) {
+    public function __construct(Extended_CPT $cpt)
+    {
         $this->cpt = $cpt;
     }
-    public function get_tests(): array {
+    public function get_tests() : array
+    {
         global $wp_rewrite;
         /** @var \WP_Rewrite $wp_rewrite */
         if (!$wp_rewrite->using_permalinks()) {
@@ -52,4 +54,4 @@ class Extended_CPT_Rewrite_Testing extends Extended_Rewrite_Testing {
 /**
  * @codeCoverageIgnore
  */
-\class_alias(__NAMESPACE__ . '\\Extended_CPT_Rewrite_Testing', 'Extended_CPT_Rewrite_Testing', \false);
+\class_alias('RWP\\Vendor\\Extended_CPT_Rewrite_Testing', 'Extended_CPT_Rewrite_Testing', \false);

@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector\Parser\Handler;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Reader;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
-
 /**
  * CSS selector comment handler.
  *
@@ -24,11 +22,13 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
  *
  * @internal
  */
-class CommentHandler implements HandlerInterface {
+class CommentHandler implements HandlerInterface
+{
     /**
      * {@inheritdoc}
      */
-    public function handle(Reader $reader, TokenStream $stream): bool {
+    public function handle(Reader $reader, TokenStream $stream) : bool
+    {
         if ('/*' !== $reader->getSubstring(2)) {
             return \false;
         }

@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Finder;
 
 /**
@@ -17,7 +16,8 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class CallbackTemplateFinder implements TemplateFinderInterface {
+final class CallbackTemplateFinder implements  Finder\TemplateFinderInterface
+{
     use FindFirstTemplateTrait;
     /**
      * @var callable
@@ -26,13 +26,15 @@ final class CallbackTemplateFinder implements TemplateFinderInterface {
     /**
      * @param callable $finder
      */
-    public function __construct(callable $finder) {
+    public function __construct(callable $finder)
+    {
         $this->finder = $finder;
     }
     /**
      * {@inheritdoc}
      */
-    public function find($template, $type) {
+    public function find($template, $type)
+    {
         $callback = $this->finder;
         return $callback($template, $type);
     }

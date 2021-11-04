@@ -8,14 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Doctrine\Common\Proxy\Proxy as CommonProxy;
 use RWP\Vendor\Doctrine\ORM\PersistentCollection;
 use RWP\Vendor\Doctrine\ORM\Proxy\Proxy as OrmProxy;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Casts Doctrine related classes to array representation.
  *
@@ -23,8 +21,10 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class DoctrineCaster {
-    public static function castCommonProxy(Common\Proxy\Proxy $proxy, array $a, Stub $stub, bool $isNested) {
+class DoctrineCaster
+{
+    public static function castCommonProxy(Proxy $proxy, array $a, Stub $stub, bool $isNested)
+    {
         foreach (['__cloner__', '__initializer__'] as $k) {
             if (\array_key_exists($k, $a)) {
                 unset($a[$k]);
@@ -33,7 +33,8 @@ class DoctrineCaster {
         }
         return $a;
     }
-    public static function castOrmProxy(ORM\Proxy\Proxy $proxy, array $a, Stub $stub, bool $isNested) {
+    public static function castOrmProxy(Proxy $proxy, array $a, Stub $stub, bool $isNested)
+    {
         foreach (['_entityPersister', '_identifier'] as $k) {
             if (\array_key_exists($k = "\0Doctrine\\ORM\\Proxy\\Proxy\0" . $k, $a)) {
                 unset($a[$k]);
@@ -42,7 +43,8 @@ class DoctrineCaster {
         }
         return $a;
     }
-    public static function castPersistentCollection(ORM\PersistentCollection $coll, array $a, Stub $stub, bool $isNested) {
+    public static function castPersistentCollection(PersistentCollection $coll, array $a, Stub $stub, bool $isNested)
+    {
         foreach (['snapshot', 'association', 'typeClass'] as $k) {
             if (\array_key_exists($k = "\0Doctrine\\ORM\\PersistentCollection\0" . $k, $a)) {
                 $a[$k] = new CutStub($a[$k]);

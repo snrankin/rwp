@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
 /**
  * @codeCoverageIgnore
  */
-abstract class Extended_Rewrite_Testing {
-    public abstract function get_tests(): array;
-    public function get_rewrites(array $struct, array $additional): array {
+abstract class Extended_Rewrite_Testing
+{
+    public abstract function get_tests() : array;
+    public function get_rewrites(array $struct, array $additional) : array
+    {
         global $wp_rewrite;
         if (!$wp_rewrite->using_permalinks()) {
             return [];
@@ -36,4 +37,4 @@ abstract class Extended_Rewrite_Testing {
 /**
  * @codeCoverageIgnore
  */
-\class_alias(__NAMESPACE__ . '\\Extended_Rewrite_Testing', 'Extended_Rewrite_Testing', \false);
+\class_alias('RWP\\Vendor\\Extended_Rewrite_Testing', 'Extended_Rewrite_Testing', \false);

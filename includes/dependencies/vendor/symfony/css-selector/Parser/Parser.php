@@ -8,13 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector\Parser;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Exception\SyntaxErrorException;
 use RWP\Vendor\Symfony\Component\CssSelector\Node;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer\Tokenizer;
-
 /**
  * CSS selector parser.
  *
@@ -25,15 +23,18 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer\Tokenizer;
  *
  * @internal
  */
-class Parser implements ParserInterface {
+class Parser implements ParserInterface
+{
     private $tokenizer;
-    public function __construct(Tokenizer $tokenizer = null) {
+    public function __construct(Tokenizer $tokenizer = null)
+    {
         $this->tokenizer = $tokenizer ?? new Tokenizer();
     }
     /**
      * {@inheritdoc}
      */
-    public function parse(string $source): array {
+    public function parse(string $source) : array
+    {
         $reader = new Reader($source);
         $stream = $this->tokenizer->tokenize($reader);
         return $this->parseSelectorList($stream);
@@ -45,7 +46,8 @@ class Parser implements ParserInterface {
      *
      * @throws SyntaxErrorException
      */
-    public static function parseSeries(array $tokens): array {
+    public static function parseSeries(array $tokens) : array
+    {
         foreach ($tokens as $token) {
             if ($token->isString()) {
                 throw SyntaxErrorException::stringAsFunctionArgument();
@@ -74,7 +76,8 @@ class Parser implements ParserInterface {
         $first = $split[0] ?? null;
         return [$first ? '-' === $first || '+' === $first ? $int($first . '1') : $int($first) : 1, isset($split[1]) && $split[1] ? $int($split[1]) : 0];
     }
-    private function parseSelectorList(TokenStream $stream): array {
+    private function parseSelectorList(TokenStream $stream) : array
+    {
         $stream->skipWhitespace();
         $selectors = [];
         while (\true) {
@@ -88,7 +91,8 @@ class Parser implements ParserInterface {
         }
         return $selectors;
     }
-    private function parserSelectorNode(TokenStream $stream): Node\SelectorNode {
+    private function parserSelectorNode(TokenStream $stream) : Node\SelectorNode
+    {
         [$result, $pseudoElement] = $this->parseSimpleSelector($stream);
         while (\true) {
             $stream->skipWhitespace();
@@ -115,7 +119,8 @@ class Parser implements ParserInterface {
      *
      * @throws SyntaxErrorException
      */
-    private function parseSimpleSelector(TokenStream $stream, bool $insideNegation = \false): array {
+    private function parseSimpleSelector(TokenStream $stream, bool $insideNegation = \false) : array
+    {
         $stream->skipWhitespace();
         $selectorStart = \count($stream->getUsed());
         $result = $this->parseElementNode($stream);
@@ -197,7 +202,8 @@ class Parser implements ParserInterface {
         }
         return [$result, $pseudoElement];
     }
-    private function parseElementNode(TokenStream $stream): Node\ElementNode {
+    private function parseElementNode(TokenStream $stream) : Node\ElementNode
+    {
         $peek = $stream->getPeek();
         if ($peek->isIdentifier() || $peek->isDelimiter(['*'])) {
             if ($peek->isIdentifier()) {
@@ -218,7 +224,8 @@ class Parser implements ParserInterface {
         }
         return new Node\ElementNode($namespace, $element);
     }
-    private function parseAttributeNode(Node\NodeInterface $selector, TokenStream $stream): Node\AttributeNode {
+    private function parseAttributeNode(Node\NodeInterface $selector, TokenStream $stream) : Node\AttributeNode
+    {
         $stream->skipWhitespace();
         $attribute = $stream->getNextIdentifierOrStar();
         if (null === $attribute && !$stream->getPeek()->isDelimiter(['|'])) {

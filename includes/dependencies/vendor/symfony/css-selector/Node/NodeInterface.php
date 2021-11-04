@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector\Node;
 
 /**
@@ -21,8 +20,9 @@ namespace RWP\Vendor\Symfony\Component\CssSelector\Node;
  *
  * @internal
  */
-interface NodeInterface {
-    public function getNodeName(): string;
-    public function getSpecificity(): Specificity;
-    public function __toString(): string;
+interface NodeInterface
+{
+    public function getNodeName() : string;
+    public function getSpecificity() : Specificity;
+    public function __toString() : string;
 }

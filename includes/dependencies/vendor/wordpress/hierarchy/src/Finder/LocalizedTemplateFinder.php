@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Finder;
 
 /**
@@ -31,43 +30,46 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class LocalizedTemplateFinder implements TemplateFinderInterface {
-	use FindFirstTemplateTrait;
-	/**
-	 * @var array
-	 */
-	private $folders = [];
-	/**
-	 * @var FoldersTemplateFinder
-	 */
-	private $finder;
-	/**
-	 * @param TemplateFinderInterface $finder
-	 */
-	public function __construct(TemplateFinderInterface $finder = null) {
-		$this->finder = $finder ?: new FoldersTemplateFinder();
-		$locale = get_locale();
-		if (!$locale || !\is_string($locale)) {
-			return;
-		}
-		$this->folders = [\filter_var($locale, \FILTER_SANITIZE_URL)];
-		if (\strpos($locale, '_') !== \false) {
-			$parts = \explode('_', $locale, 2);
-			$part = \reset($parts);
-			$part and $this->folders[] = \filter_var($part, \FILTER_SANITIZE_URL);
-		}
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function find($template, $type) {
-		if (empty($this->folders)) {
-			return $this->finder->find($template, $type);
-		}
-		$templates = \array_map(function ($folder) use ($template) {
-			return $folder . '/' . $template;
-		}, $this->folders);
-		$templates[] = $template;
-		return $this->finder->findFirst($templates, $type);
-	}
+final class LocalizedTemplateFinder implements  Finder\TemplateFinderInterface
+{
+    use FindFirstTemplateTrait;
+    /**
+     * @var array
+     */
+    private $folders = [];
+    /**
+     * @var \Brain\Hierarchy\Finder\FoldersTemplateFinder
+     */
+    private $finder;
+    /**
+     * @param \Brain\Hierarchy\Finder\TemplateFinderInterface $finder
+     */
+    public function __construct( Finder\TemplateFinderInterface $finder = null)
+    {
+        $this->finder = $finder ?: new  Finder\FoldersTemplateFinder();
+        $locale = get_locale();
+        if (!$locale || !\is_string($locale)) {
+            return;
+        }
+        $this->folders = [\filter_var($locale, \FILTER_SANITIZE_URL)];
+        if (\strpos($locale, '_') !== \false) {
+            $parts = \explode('_', $locale, 2);
+            $part = \reset($parts);
+            $part and $this->folders[] = \filter_var($part, \FILTER_SANITIZE_URL);
+        }
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function find($template, $type)
+    {
+        if (empty($this->folders)) {
+            return $this->finder->find($template, $type);
+        }
+        $templates = \array_map(function ($folder) use($template) {
+            return $folder . '/' . $template;
+        }, $this->folders);
+        $templates[] = $template;
+        return $this->finder->findFirst($templates, $type);
+    }
 }

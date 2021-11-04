@@ -67,6 +67,7 @@ if (!function_exists('register_extended_post_type')) {
         return \RWP\Vendor\register_extended_post_type(...func_get_args());
     }
 }
+
 if (!function_exists('register_extended_taxonomy')) {
     function register_extended_taxonomy() {
         return \RWP\Vendor\register_extended_taxonomy(...func_get_args());
@@ -144,5 +145,42 @@ if (!function_exists('sendPage')) {
         return \RWP\Vendor\sendPage(...func_get_args());
     }
 }
+
+if (!\function_exists('fdiv')) {
+    function fdiv() {
+        return \RWP\Vendor\fdiv(...func_get_args());
+    }
+}
+if (!\function_exists('preg_last_error_msg')) {
+    function preg_last_error_msg() {
+        return \RWP\Vendor\preg_last_error_msg(...func_get_args());
+    }
+}
+if (!\function_exists('str_contains')) {
+    function str_contains() {
+        return \RWP\Vendor\str_contains(...func_get_args());
+    }
+}
+if (!\function_exists('str_starts_with')) {
+    function str_starts_with() {
+        return \RWP\Vendor\str_starts_with(...func_get_args());
+    }
+}
+if (!\function_exists('str_ends_with')) {
+    function str_ends_with() {
+        return \RWP\Vendor\str_ends_with(...func_get_args());
+    }
+}
+if (!\function_exists('get_debug_type')) {
+    function get_debug_type() {
+        return \RWP\Vendor\get_debug_type(...func_get_args());
+    }
+}
+if (!\function_exists('get_resource_id')) {
+    function get_resource_id() {
+        return \RWP\Vendor\get_resource_id(...func_get_args());
+    }
+}
+
 
 return $loader;

@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
 
 /**
@@ -16,7 +15,8 @@ namespace RWP\Vendor\Symfony\Component\DomCrawler\Field;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class FileFormField extends FormField {
+class FileFormField extends FormField
+{
     /**
      * Sets the PHP error code associated with the field.
      *
@@ -24,7 +24,8 @@ class FileFormField extends FormField {
      *
      * @throws \InvalidArgumentException When error code doesn't exist
      */
-    public function setErrorCode(int $error) {
+    public function setErrorCode(int $error)
+    {
         $codes = [\UPLOAD_ERR_INI_SIZE, \UPLOAD_ERR_FORM_SIZE, \UPLOAD_ERR_PARTIAL, \UPLOAD_ERR_NO_FILE, \UPLOAD_ERR_NO_TMP_DIR, \UPLOAD_ERR_CANT_WRITE, \UPLOAD_ERR_EXTENSION];
         if (!\in_array($error, $codes)) {
             throw new \InvalidArgumentException(\sprintf('The error code "%s" is not valid.', $error));
@@ -34,13 +35,15 @@ class FileFormField extends FormField {
     /**
      * Sets the value of the field.
      */
-    public function upload(?string $value) {
+    public function upload(?string $value)
+    {
         $this->setValue($value);
     }
     /**
      * Sets the value of the field.
      */
-    public function setValue(?string $value) {
+    public function setValue(?string $value)
+    {
         if (null !== $value && \is_readable($value)) {
             $error = \UPLOAD_ERR_OK;
             $size = \filesize($value);
@@ -67,7 +70,8 @@ class FileFormField extends FormField {
     /**
      * Sets path to the file as string for simulating HTTP request.
      */
-    public function setFilePath(string $path) {
+    public function setFilePath(string $path)
+    {
         parent::setValue($path);
     }
     /**
@@ -75,7 +79,8 @@ class FileFormField extends FormField {
      *
      * @throws \LogicException When node type is incorrect
      */
-    protected function initialize() {
+    protected function initialize()
+    {
         if ('input' !== $this->node->nodeName) {
             throw new \LogicException(\sprintf('A FileFormField can only be created from an input tag (%s given).', $this->node->nodeName));
         }

@@ -8,33 +8,36 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Branch;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchAttachment implements BranchInterface {
+final class BranchAttachment implements  Branch\BranchInterface
+{
     /**
      * {@inheritdoc}
      */
-    public function name() {
+    public function name()
+    {
         return 'attachment';
     }
     /**
      * {@inheritdoc}
      */
-    public function is(\WP_Query $query) {
+    public function is( \WP_Query $query)
+    {
         return $query->is_attachment();
     }
     /**
      * {@inheritdoc}
      */
-    public function leaves(\WP_Query $query) {
+    public function leaves( \WP_Query $query)
+    {
         /** @var \WP_Post $post */
         $post = $query->get_queried_object();
-        $post instanceof\WP_Post or $post = new\WP_Post((object) ['ID' => 0]);
+        $post instanceof  \WP_Post or $post = new  \WP_Post((object) ['ID' => 0]);
         $leaves = [];
         empty($post->post_mime_type) or $mimetype = \explode('/', $post->post_mime_type, 2);
         if (!empty($mimetype) && !empty($mimetype[0])) {

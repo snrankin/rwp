@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
-class Extended_CPT {
+class Extended_CPT
+{
     /**
      * Default arguments for custom post types.
      *
@@ -65,7 +65,8 @@ class Extended_CPT {
      * @param array    $args      Optional. The post type arguments.
      * @param string[] $names     Optional. The plural, singular, and slug names.
      */
-    public function __construct(string $post_type, array $args = [], array $names = []) {
+    public function __construct(string $post_type, array $args = [], array $names = [])
+    {
         /**
          * Filter the arguments for a post type.
          *
@@ -202,9 +203,10 @@ class Extended_CPT {
     /**
      * Set the relevant query vars for filtering posts by our front-end filters.
      *
-     * @param\WP_Query $wp_query The current\WP_Query object.
+     * @param WP_Query $wp_query The current WP_Query object.
      */
-    public function maybe_filter(\WP_Query $wp_query) {
+    public function maybe_filter(WP_Query $wp_query)
+    {
         if (empty($wp_query->query['post_type']) || !\in_array($this->post_type, (array) $wp_query->query['post_type'], \true)) {
             return;
         }
@@ -226,9 +228,10 @@ class Extended_CPT {
     /**
      * Set the relevant query vars for sorting posts by our front-end sortables.
      *
-     * @param\WP_Query $wp_query The current\WP_Query object.
+     * @param WP_Query $wp_query The current WP_Query object.
      */
-    public function maybe_sort_by_fields(\WP_Query $wp_query) {
+    public function maybe_sort_by_fields(WP_Query $wp_query)
+    {
         if (empty($wp_query->query['post_type']) || !\in_array($this->post_type, (array) $wp_query->query['post_type'], \true)) {
             return;
         }
@@ -256,10 +259,11 @@ class Extended_CPT {
      * Filter the query's SQL clauses so we can sort posts by taxonomy terms.
      *
      * @param string[] $clauses  Array of the current query's SQL clauses.
-     * @param\WP_Query $wp_query The current `WP_Query` object.
+     * @param WP_Query $wp_query The current `WP_Query` object.
      * @return string[] Array of SQL clauses.
      */
-    public function maybe_sort_by_taxonomy(array $clauses, \WP_Query $wp_query): array {
+    public function maybe_sort_by_taxonomy(array $clauses, WP_Query $wp_query) : array
+    {
         if (empty($wp_query->query['post_type']) || !\in_array($this->post_type, (array) $wp_query->query['post_type'], \true)) {
             return $clauses;
         }
@@ -279,7 +283,8 @@ class Extended_CPT {
      * @param string $post_type The post type name.
      * @return array The list of private query vars to apply to the query.
      */
-    public static function get_filter_vars(array $query, array $filters, string $post_type): array {
+    public static function get_filter_vars(array $query, array $filters, string $post_type) : array
+    {
         $return = [];
         foreach ($filters as $filter_key => $filter) {
             $meta_query = [];
@@ -341,7 +346,8 @@ class Extended_CPT {
      *                         `site_sortables` argument when registering an extended post type.
      * @return array The list of private and public query vars to apply to the query.
      */
-    public static function get_sort_field_vars(array $vars, array $sortables): array {
+    public static function get_sort_field_vars(array $vars, array $sortables) : array
+    {
         if (!isset($vars['orderby'])) {
             return [];
         }
@@ -382,7 +388,8 @@ class Extended_CPT {
      *                         `site_sortables` argument when registering an extended post type).
      * @return array The list of SQL clauses to apply to the query.
      */
-    public static function get_sort_taxonomy_clauses(array $clauses, array $vars, array $sortables): array {
+    public static function get_sort_taxonomy_clauses(array $clauses, array $vars, array $sortables) : array
+    {
         global $wpdb;
         if (!isset($vars['orderby'])) {
             return [];
@@ -417,7 +424,8 @@ class Extended_CPT {
      * @param string[] $vars Public query variables.
      * @return string[] Updated public query variables.
      */
-    public function add_query_vars(array $vars): array {
+    public function add_query_vars(array $vars) : array
+    {
         $filters = \array_keys($this->args['site_filters']);
         return \array_merge($vars, $filters);
     }
@@ -427,7 +435,8 @@ class Extended_CPT {
      * @param array $vars Request parameters.
      * @return array Updated request parameters.
      */
-    public function add_to_feed(array $vars): array {
+    public function add_to_feed(array $vars) : array
+    {
         # If it's not a feed, we're not interested:
         if (!isset($vars['feed'])) {
             return $vars;
@@ -442,10 +451,11 @@ class Extended_CPT {
     /**
      * Add to or override our post type archive's private query vars.
      *
-     * @param \WP $wp The WP request object.
-     * @return \WP Updated WP request object.
+     * @param WP $wp The WP request object.
+     * @return WP Updated WP request object.
      */
-    public function override_private_query_vars(\WP $wp): \WP {
+    public function override_private_query_vars(WP $wp) : WP
+    {
         # If it's not our post type, bail out:
         if (!isset($wp->query_vars['post_type']) || $this->post_type !== $wp->query_vars['post_type']) {
             return $wp;
@@ -464,9 +474,10 @@ class Extended_CPT {
      * Action fired after a CPT is registered in order to set up the custom permalink structure for the post type.
      *
      * @param string       $post_type        Post type name.
-     * @param\WP_Post_Type $post_type_object Post type object.
+     * @param WP_Post_Type $post_type_object Post type object.
      */
-    public function registered_post_type(string $post_type, \WP_Post_Type $post_type_object) {
+    public function registered_post_type(string $post_type, WP_Post_Type $post_type_object)
+    {
         if ($post_type !== $this->post_type) {
             return;
         }
@@ -478,12 +489,13 @@ class Extended_CPT {
      * Filter the post type permalink in order to populate its rewrite tags.
      *
      * @param string  $post_link The post's permalink.
-     * @param\WP_Post $post      The post in question.
+     * @param WP_Post $post      The post in question.
      * @param bool    $leavename Whether to keep the post name.
      * @param bool    $sample    Is it a sample permalink.
      * @return string The post's permalink.
      */
-    public function post_type_link(string $post_link, \WP_Post $post, bool $leavename, bool $sample): string {
+    public function post_type_link(string $post_link, WP_Post $post, bool $leavename, bool $sample) : string
+    {
         # If it's not our post type, bail out:
         if ($this->post_type !== $post->post_type) {
             return $post_link;
@@ -503,9 +515,9 @@ class Extended_CPT {
                  * Filter the term that gets used in the `$tax` permalink token.
                  * @TODO make this more betterer ^
                  *
-                 * @param\WP_Term   $term  The `$tax` term to use in the permalink.
-                 * @param\WP_Term[] $terms Array of all `$tax` terms associated with the post.
-                 * @param\WP_Post   $post  The post in question.
+                 * @param WP_Term   $term  The `$tax` term to use in the permalink.
+                 * @param WP_Term[] $terms Array of all `$tax` terms associated with the post.
+                 * @param WP_Post   $post  The post in question.
                  */
                 $term_object = apply_filters("post_link_{$tax}", \reset($terms), $terms, $post);
                 $term = get_term($term_object, $tax)->slug;
@@ -516,7 +528,7 @@ class Extended_CPT {
                  * @TODO make this more betterer ^
                  *
                  * @param string  $term The `$tax` term name to use in the permalink.
-                 * @param\WP_Post $post The post in question.
+                 * @param WP_Post $post The post in question.
                  */
                 $default_term_name = apply_filters("default_{$tax}", get_option("default_{$tax}", ''), $post);
                 if ($default_term_name) {
@@ -539,7 +551,8 @@ class Extended_CPT {
      * @param array $tests The existing rewrite rule tests.
      * @return array Updated rewrite rule tests.
      */
-    public function rewrite_testing_tests(array $tests): array {
+    public function rewrite_testing_tests(array $tests) : array
+    {
         require_once __DIR__ . '/class-extended-rewrite-testing.php';
         require_once __DIR__ . '/class-extended-cpt-rewrite-testing.php';
         $extended = new Extended_CPT_Rewrite_Testing($this);
@@ -552,7 +565,8 @@ class Extended_CPT {
      * `E_USER_ERROR` level if a `WP_Error` is returned.
      *
      */
-    public function register_post_type() {
+    public function register_post_type()
+    {
         if (!isset($this->args['query_var']) || \true === $this->args['query_var']) {
             $query_var = $this->post_type;
         } else {
@@ -586,9 +600,10 @@ class Extended_CPT {
     /**
      * Extends an existing post type object. Currently only handles labels.
      *
-     * @param\WP_Post_Type $pto A post type object.
+     * @param WP_Post_Type $pto A post type object.
      */
-    public function extend(\WP_Post_Type $pto) {
+    public function extend(WP_Post_Type $pto)
+    {
         # Merge core with overridden labels
         $this->args['labels'] = \array_merge((array) get_post_type_labels($pto), $this->args['labels']);
         $GLOBALS['wp_post_types'][$pto->name]->labels = (object) $this->args['labels'];
@@ -606,9 +621,10 @@ class Extended_CPT {
      * @param string $taxonomy The taxonomy name.
      * @param array  $args     Optional. The taxonomy arguments.
      * @param array  $names    Optional. An associative array of the plural, singular, and slug names.
-     * @return\WP_Taxonomy Taxonomy object.
+     * @return WP_Taxonomy Taxonomy object.
      */
-    public function add_taxonomy(string $taxonomy, array $args = [], array $names = []): \WP_Taxonomy {
+    public function add_taxonomy(string $taxonomy, array $args = [], array $names = []) : WP_Taxonomy
+    {
         if (taxonomy_exists($taxonomy)) {
             register_taxonomy_for_object_type($taxonomy, $this->post_type);
         } else {
@@ -617,4 +633,4 @@ class Extended_CPT {
         return get_taxonomy($taxonomy);
     }
 }
-\class_alias(__NAMESPACE__ . '\\Extended_CPT', 'Extended_CPT', \false);
+\class_alias('RWP\\Vendor\\Extended_CPT', 'Extended_CPT', \false);

@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 namespace RWP\Vendor;
 
 /*
@@ -11,13 +10,11 @@ namespace RWP\Vendor;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 /**
  * Starts a dump server to collect and output dumps on a single place with multiple formats support.
  *
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-
 use RWP\Vendor\Psr\Log\LoggerInterface;
 use RWP\Vendor\Symfony\Component\Console\Application;
 use RWP\Vendor\Symfony\Component\Console\Input\ArgvInput;
@@ -26,11 +23,11 @@ use RWP\Vendor\Symfony\Component\Console\Logger\ConsoleLogger;
 use RWP\Vendor\Symfony\Component\Console\Output\ConsoleOutput;
 use RWP\Vendor\Symfony\Component\VarDumper\Command\ServerDumpCommand;
 use RWP\Vendor\Symfony\Component\VarDumper\Server\DumpServer;
-
-function includeIfExists(string $file): bool {
+function includeIfExists(string $file) : bool
+{
     return \file_exists($file) && (include $file);
 }
-if (!\RWP\Vendor\includeIfExists(__DIR__ . '/../../../../autoload.php') && !\RWP\Vendor\includeIfExists(__DIR__ . '/../../vendor/autoload.php') && !\RWP\Vendor\includeIfExists(__DIR__ . '/../../../../../../vendor/autoload.php')) {
+if (!includeIfExists(__DIR__ . '/../../../../autoload.php') && !includeIfExists(__DIR__ . '/../../vendor/autoload.php') && !includeIfExists(__DIR__ . '/../../../../../../vendor/autoload.php')) {
     \fwrite(\STDERR, 'Install dependencies using Composer.' . \PHP_EOL);
     exit(1);
 }
@@ -42,7 +39,7 @@ $input = new ArgvInput();
 $output = new ConsoleOutput();
 $defaultHost = '127.0.0.1:9912';
 $host = $input->getParameterOption(['--host'], $_SERVER['VAR_DUMPER_SERVER'] ?? $defaultHost, \true);
-$logger = \interface_exists(Log\LoggerInterface::class) ? new ConsoleLogger($output->getErrorOutput()) : null;
+$logger = \interface_exists(LoggerInterface::class) ? new ConsoleLogger($output->getErrorOutput()) : null;
 $app = new Application();
 $app->getDefinition()->addOption(new InputOption('--host', null, InputOption::VALUE_REQUIRED, 'The address the server should listen to', $defaultHost));
 $app->add($command = new ServerDumpCommand(new DumpServer($host, $logger)))->getApplication()->setDefaultCommand($command->getName(), \true)->run($input, $output);

@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector;
 
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Shortcut\ClassParser;
@@ -17,14 +16,14 @@ use RWP\Vendor\Symfony\Component\CssSelector\Parser\Shortcut\EmptyStringParser;
 use RWP\Vendor\Symfony\Component\CssSelector\Parser\Shortcut\HashParser;
 use RWP\Vendor\Symfony\Component\CssSelector\XPath\Extension\HtmlExtension;
 use RWP\Vendor\Symfony\Component\CssSelector\XPath\Translator;
-
 /**
  * CssSelectorConverter is the main entry point of the component and can convert CSS
  * selectors to XPath expressions.
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class CssSelectorConverter {
+class CssSelectorConverter
+{
     private $translator;
     private $cache;
     private static $xmlCache = [];
@@ -32,13 +31,14 @@ class CssSelectorConverter {
     /**
      * @param bool $html Whether HTML support should be enabled. Disable it for XML documents
      */
-    public function __construct(bool $html = \true) {
+    public function __construct(bool $html = \true)
+    {
         $this->translator = new Translator();
         if ($html) {
             $this->translator->registerExtension(new HtmlExtension($this->translator));
-            $this->cache = &self::$htmlCache;
+            $this->cache =& self::$htmlCache;
         } else {
-            $this->cache = &self::$xmlCache;
+            $this->cache =& self::$xmlCache;
         }
         $this->translator->registerParserShortcut(new EmptyStringParser())->registerParserShortcut(new ElementParser())->registerParserShortcut(new ClassParser())->registerParserShortcut(new HashParser());
     }
@@ -50,7 +50,8 @@ class CssSelectorConverter {
      *
      * @return string
      */
-    public function toXPath(string $cssExpr, string $prefix = 'descendant-or-self::') {
+    public function toXPath(string $cssExpr, string $prefix = 'descendant-or-self::')
+    {
         return $this->cache[$prefix][$cssExpr] ?? ($this->cache[$prefix][$cssExpr] = $this->translator->cssToXPath($cssExpr, $prefix));
     }
 }

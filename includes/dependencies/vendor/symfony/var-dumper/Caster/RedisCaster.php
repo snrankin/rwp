@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Casts Redis class from ext-redis to array representation.
  *
@@ -20,7 +18,8 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class RedisCaster {
+class RedisCaster
+{
     private const SERIALIZERS = [\Redis::SERIALIZER_NONE => 'NONE', \Redis::SERIALIZER_PHP => 'PHP', 2 => 'IGBINARY'];
     private const MODES = [\Redis::ATOMIC => 'ATOMIC', \Redis::MULTI => 'MULTI', \Redis::PIPELINE => 'PIPELINE'];
     private const COMPRESSION_MODES = [
@@ -29,7 +28,8 @@ class RedisCaster {
         1 => 'LZF',
     ];
     private const FAILOVER_OPTIONS = [\RedisCluster::FAILOVER_NONE => 'NONE', \RedisCluster::FAILOVER_ERROR => 'ERROR', \RedisCluster::FAILOVER_DISTRIBUTE => 'DISTRIBUTE', \RedisCluster::FAILOVER_DISTRIBUTE_SLAVES => 'DISTRIBUTE_SLAVES'];
-    public static function castRedis(\Redis $c, array $a, Stub $stub, bool $isNested) {
+    public static function castRedis(\Redis $c, array $a, Stub $stub, bool $isNested)
+    {
         $prefix = Caster::PREFIX_VIRTUAL;
         if (!($connected = $c->isConnected())) {
             return $a + [$prefix . 'isConnected' => $connected];
@@ -37,11 +37,13 @@ class RedisCaster {
         $mode = $c->getMode();
         return $a + [$prefix . 'isConnected' => $connected, $prefix . 'host' => $c->getHost(), $prefix . 'port' => $c->getPort(), $prefix . 'auth' => $c->getAuth(), $prefix . 'mode' => isset(self::MODES[$mode]) ? new ConstStub(self::MODES[$mode], $mode) : $mode, $prefix . 'dbNum' => $c->getDbNum(), $prefix . 'timeout' => $c->getTimeout(), $prefix . 'lastError' => $c->getLastError(), $prefix . 'persistentId' => $c->getPersistentID(), $prefix . 'options' => self::getRedisOptions($c)];
     }
-    public static function castRedisArray(\RedisArray $c, array $a, Stub $stub, bool $isNested) {
+    public static function castRedisArray(\RedisArray $c, array $a, Stub $stub, bool $isNested)
+    {
         $prefix = Caster::PREFIX_VIRTUAL;
         return $a + [$prefix . 'hosts' => $c->_hosts(), $prefix . 'function' => ClassStub::wrapCallable($c->_function()), $prefix . 'lastError' => $c->getLastError(), $prefix . 'options' => self::getRedisOptions($c)];
     }
-    public static function castRedisCluster(\RedisCluster $c, array $a, Stub $stub, bool $isNested) {
+    public static function castRedisCluster(\RedisCluster $c, array $a, Stub $stub, bool $isNested)
+    {
         $prefix = Caster::PREFIX_VIRTUAL;
         $failover = $c->getOption(\RedisCluster::OPT_SLAVE_FAILOVER);
         $a += [$prefix . '_masters' => $c->_masters(), $prefix . '_redir' => $c->_redir(), $prefix . 'mode' => new ConstStub($c->getMode() ? 'MULTI' : 'ATOMIC', $c->getMode()), $prefix . 'lastError' => $c->getLastError(), $prefix . 'options' => self::getRedisOptions($c, ['SLAVE_FAILOVER' => isset(self::FAILOVER_OPTIONS[$failover]) ? new ConstStub(self::FAILOVER_OPTIONS[$failover], $failover) : $failover])];
@@ -50,7 +52,8 @@ class RedisCaster {
     /**
      * @param \Redis|\RedisArray|\RedisCluster $redis
      */
-    private static function getRedisOptions($redis, array $options = []): EnumStub {
+    private static function getRedisOptions($redis, array $options = []) : EnumStub
+    {
         $serializer = $redis->getOption(\Redis::OPT_SERIALIZER);
         if (\is_array($serializer)) {
             foreach ($serializer as &$v) {
