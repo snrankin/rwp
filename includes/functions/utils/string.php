@@ -70,6 +70,18 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 }
 
 /**
+ * Replace the given value in the given string.
+ *
+ * @param  string|string[]  $search
+ * @param  string|string[]  $replace
+ * @param  string|string[]  $subject
+ * @return string
+ */
+function rwp_str_replace( $search, $replace, $subject ) {
+	return Str::replace( $search, $replace, $subject );
+}
+
+/**
  * Determine if a given string contains a given substring.
  *
  * @param  string          $haystack

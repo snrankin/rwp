@@ -156,7 +156,9 @@ if ( ! wp_installing() ) {
 		'plugins_loaded',
 		static function () use ( $rwp_libraries ) {
 			if(!class_exists('\\RWP\\Engine\\Base')){
-				\RWP\Engine\Base::instance();
+				\RWP\Engine\Base::instance( array(
+					'autoloader' => $rwp_libraries
+				));
 			}
 			new \RWP\Engine\Initialize( $rwp_libraries );
 		}
