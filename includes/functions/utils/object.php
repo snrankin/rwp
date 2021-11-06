@@ -6,7 +6,7 @@
  *
  * @package RWP\functions\utils
  * @since   0.1.0
- * ========================================================================== 
+ * ==========================================================================
  */
 
 use RWP\Vendor\Illuminate\Support\Collection;
@@ -35,17 +35,19 @@ function rwp_collection( $args = array() ) {
  *
  * @return array The converted object
  */
-function rwp_object_to_array( $obj ) { 
-    if ( $obj instanceof Enumerable ) {
+function rwp_object_to_array( $obj ) {
+    if ( $obj instanceof Collection ) {
+		return json_decode( $obj->toJson(), true );
+	} elseif ( $obj instanceof Enumerable ) {
         return $obj->all();
     } elseif ( $obj instanceof Arrayable ) {
         return $obj->toArray();
     } elseif ( $obj instanceof Jsonable ) {
-        return \json_decode( $obj->toJson(), \true );
+        return json_decode( $obj->toJson(), true );
     } elseif ( $obj instanceof \JsonSerializable ) {
         return (array) $obj->jsonSerialize();
     } elseif ( $obj instanceof \Traversable ) {
-        return \iterator_to_array( $obj );
+        return iterator_to_array( $obj );
     } else {
         $obj = wp_json_encode( $obj );
         if ( $obj ) {

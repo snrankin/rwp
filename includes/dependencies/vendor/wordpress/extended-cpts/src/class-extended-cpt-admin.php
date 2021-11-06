@@ -454,9 +454,9 @@ class Extended_CPT_Admin
     /**
      * Filters posts by our custom admin filters.
      *
-     * @param WP_Query $wp_query A `WP_Query` object
+     * @param \WP_Query $wp_query A `\WP_Query` object
      */
-    public function maybe_filter(WP_Query $wp_query)
+    public function maybe_filter(\WP_Query $wp_query)
     {
         if (empty($wp_query->query['post_type']) || !\in_array($this->cpt->post_type, (array) $wp_query->query['post_type'], \true)) {
             return;
@@ -479,9 +479,9 @@ class Extended_CPT_Admin
     /**
      * Sets the relevant query vars for sorting posts by our admin sortables.
      *
-     * @param WP_Query $wp_query The current `WP_Query` object.
+     * @param \WP_Query $wp_query The current `\WP_Query` object.
      */
-    public function maybe_sort_by_fields(WP_Query $wp_query)
+    public function maybe_sort_by_fields(\WP_Query $wp_query)
     {
         if (empty($wp_query->query['post_type']) || !\in_array($this->cpt->post_type, (array) $wp_query->query['post_type'], \true)) {
             return;
@@ -498,10 +498,10 @@ class Extended_CPT_Admin
      * Filters the query's SQL clauses so we can sort posts by taxonomy terms.
      *
      * @param array    $clauses  The current query's SQL clauses.
-     * @param WP_Query $wp_query The current `WP_Query` object.
+     * @param \WP_Query $wp_query The current `\WP_Query` object.
      * @return array The updated SQL clauses.
      */
-    public function maybe_sort_by_taxonomy(array $clauses, WP_Query $wp_query) : array
+    public function maybe_sort_by_taxonomy(array $clauses, \WP_Query $wp_query) : array
     {
         if (empty($wp_query->query['post_type']) || !\in_array($this->cpt->post_type, (array) $wp_query->query['post_type'], \true)) {
             return $clauses;

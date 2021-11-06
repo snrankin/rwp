@@ -2,7 +2,7 @@
 /** ============================================================================
  * BugHerd
  *
- * @package   RWP\/includes/integrations/BugHerd.php
+ * @package   RWP\Integrations\BugHerd
  * @since     1.0.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
@@ -13,9 +13,6 @@ namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
 
-/**
- * Fake Pages inside WordPress
- */
 class BugHerd extends Singleton {
 
 	/**
