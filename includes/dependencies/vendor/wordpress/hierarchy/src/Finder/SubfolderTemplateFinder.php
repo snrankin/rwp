@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Finder;
 
 /**
@@ -19,32 +18,36 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class SubfolderTemplateFinder implements TemplateFinderInterface {
-	/**
-	 * @var FoldersTemplateFinder
-	 */
-	private $finder;
-	/**
-	 * @param string       $subfolder
-	 * @param string|array $extension
-	 */
-	public function __construct($subfolder, $extension = 'php') {
-		$stylesheet = \trailingslashit(\get_stylesheet_directory()) . $subfolder;
-		$template = \trailingslashit(\get_template_directory()) . $subfolder;
-		$folders = [$stylesheet];
-		$stylesheet !== $template and $folders[] = $template;
-		$this->finder = new FoldersTemplateFinder($folders, $extension);
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function find($template, $type) {
-		return $this->finder->find($template, $type);
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function findFirst(array $templates, $type) {
-		return $this->finder->findFirst($templates, $type);
-	}
+final class SubfolderTemplateFinder implements  Finder\TemplateFinderInterface
+{
+    /**
+     * @var \Brain\Hierarchy\Finder\FoldersTemplateFinder
+     */
+    private $finder;
+    /**
+     * @param string       $subfolder
+     * @param string|array $extension
+     */
+    public function __construct($subfolder, $extension = 'php')
+    {
+        $stylesheet = trailingslashit(get_stylesheet_directory()) . $subfolder;
+        $template = trailingslashit(get_template_directory()) . $subfolder;
+        $folders = [$stylesheet];
+        $stylesheet !== $template and $folders[] = $template;
+        $this->finder = new  Finder\FoldersTemplateFinder($folders, $extension);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function find($template, $type)
+    {
+        return $this->finder->find($template, $type);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function findFirst(array $templates, $type)
+    {
+        return $this->finder->findFirst($templates, $type);
+    }
 }

@@ -9,10 +9,11 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
+
 use RWP\Vendor\Illuminate\Support\Arr;
 use RWP\Vendor\Illuminate\Support\Collection;
-use RWP\Vendor\Illuminate\Support\HigherOrderTapProxy;
-use RWP\Vendor\Illuminate\Support\Optional;
+
+
 if (!\function_exists('append_config')) {
     /**
      * Assign high numeric IDs to a config item to force appending.
@@ -124,23 +125,7 @@ if (!\function_exists('object_get')) {
         return $object;
     }
 }
-if (!\function_exists('optional')) {
-    /**
-     * Provide access to optional objects.
-     *
-     * @param  mixed  $value
-     * @param  callable|null  $callback
-     * @return mixed
-     */
-    function optional($value = null, callable $callback = null)
-    {
-        if (\is_null($callback)) {
-            return new Optional($value);
-        } elseif (!\is_null($value)) {
-            return $callback($value);
-        }
-    }
-}
+
 if (!\function_exists('preg_replace_array')) {
     /**
      * Replace a given pattern with each value in the array in sequentially.
@@ -190,23 +175,7 @@ if (!\function_exists('retry')) {
         }
     }
 }
-if (!\function_exists('tap')) {
-    /**
-     * Call the given Closure with the given value then return the value.
-     *
-     * @param  mixed  $value
-     * @param  callable|null  $callback
-     * @return mixed
-     */
-    function tap($value, $callback = null)
-    {
-        if (\is_null($callback)) {
-            return new HigherOrderTapProxy($value);
-        }
-        $callback($value);
-        return $value;
-    }
-}
+
 if (!\function_exists('throw_if')) {
     /**
      * Throw the given exception if the given condition is true.

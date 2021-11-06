@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Loader;
 
 /**
@@ -17,45 +16,49 @@ namespace RWP\Vendor\Brain\Hierarchy\Loader;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class CascadeAggregateTemplateLoader implements AggregateTemplateLoaderInterface {
-	/**
-	 * @var array
-	 */
-	private $loaders = [];
-	/**
-	 * {@inheritdoc}
-	 */
-	public function addLoader(TemplateLoaderInterface $loader, callable $predicate) {
-		$this->loaders[] = [$loader, $predicate, \false];
-		return $this;
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function addLoaderFactory(callable $loaderFactory, callable $predicate) {
-		$this->loaders[] = [$loaderFactory, $predicate, \true];
-		return $this;
-	}
-	/**
-	 * {@inheritdoc}
-	 */
-	public function load($templatePath) {
-		$loaders = $this->loaders;
-		foreach ($loaders as $i => $loaderData) {
-			list($loader, $predicate, $isFactory) = $loaderData;
-			if (!$predicate($templatePath)) {
-				continue;
-			}
-			if (!$isFactory) {
-				/* @var TemplateLoaderInterface $loader */
-				return $loader->load($templatePath);
-			}
-			$loader = $loader();
-			if (!$loader instanceof TemplateLoaderInterface) {
-				continue;
-			}
-			return $loader->load($templatePath);
-		}
-		return '';
-	}
+final class CascadeAggregateTemplateLoader implements  Loader\AggregateTemplateLoaderInterface
+{
+    /**
+     * @var array
+     */
+    private $loaders = [];
+    /**
+     * {@inheritdoc}
+     */
+    public function addLoader( Loader\TemplateLoaderInterface $loader, callable $predicate)
+    {
+        $this->loaders[] = [$loader, $predicate, \false];
+        return $this;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function addLoaderFactory(callable $loaderFactory, callable $predicate)
+    {
+        $this->loaders[] = [$loaderFactory, $predicate, \true];
+        return $this;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function load($templatePath)
+    {
+        $loaders = $this->loaders;
+        foreach ($loaders as $i => $loaderData) {
+            list($loader, $predicate, $isFactory) = $loaderData;
+            if (!$predicate($templatePath)) {
+                continue;
+            }
+            if (!$isFactory) {
+                /* @var \Brain\Hierarchy\Loader\TemplateLoaderInterface $loader */
+                return $loader->load($templatePath);
+            }
+            $loader = $loader();
+            if (!$loader instanceof  Loader\TemplateLoaderInterface) {
+                continue;
+            }
+            return $loader->load($templatePath);
+        }
+        return '';
+    }
 }

@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\OptionsResolver;
 
 use RWP\Vendor\Symfony\Component\OptionsResolver\Exception\AccessException;
-
-final class OptionConfigurator {
+final class OptionConfigurator
+{
     private $name;
     private $resolver;
-    public function __construct(string $name, OptionsResolver $resolver) {
+    public function __construct(string $name, OptionsResolver $resolver)
+    {
         $this->name = $name;
         $this->resolver = $resolver;
         $this->resolver->setDefined($name);
@@ -28,7 +28,8 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function allowedTypes(string ...$types): self {
+    public function allowedTypes(string ...$types) : self
+    {
         $this->resolver->setAllowedTypes($this->name, $types);
         return $this;
     }
@@ -41,7 +42,8 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function allowedValues(...$values): self {
+    public function allowedValues(...$values) : self
+    {
         $this->resolver->setAllowedValues($this->name, $values);
         return $this;
     }
@@ -54,14 +56,16 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function default($value): self {
+    public function default($value) : self
+    {
         $this->resolver->setDefault($this->name, $value);
         return $this;
     }
     /**
      * Defines an option configurator with the given name.
      */
-    public function define(string $option): self {
+    public function define(string $option) : self
+    {
         return $this->resolver->define($option);
     }
     /**
@@ -73,7 +77,8 @@ final class OptionConfigurator {
      *
      * @return $this
      */
-    public function deprecated(string $package, string $version, $message = 'The option "%name%" is deprecated.'): self {
+    public function deprecated(string $package, string $version, $message = 'The option "%name%" is deprecated.') : self
+    {
         $this->resolver->setDeprecated($this->name, $package, $version, $message);
         return $this;
     }
@@ -84,7 +89,8 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function normalize(\Closure $normalizer): self {
+    public function normalize(\Closure $normalizer) : self
+    {
         $this->resolver->setNormalizer($this->name, $normalizer);
         return $this;
     }
@@ -95,7 +101,8 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function required(): self {
+    public function required() : self
+    {
         $this->resolver->setRequired($this->name);
         return $this;
     }
@@ -106,7 +113,8 @@ final class OptionConfigurator {
      *
      * @throws AccessException If called from a lazy option or normalizer
      */
-    public function info(string $info): self {
+    public function info(string $info) : self
+    {
         $this->resolver->setInfo($this->name, $info);
         return $this;
     }

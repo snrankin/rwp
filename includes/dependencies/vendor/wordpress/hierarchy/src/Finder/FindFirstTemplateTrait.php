@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Finder;
 
 /**
@@ -17,20 +16,22 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  *
  * @method string find(string $template, string $type)
  */
-trait FindFirstTemplateTrait {
-	/**
-	 * @param array  $templates
-	 * @param string $type
-	 *
-	 * @return string
-	 *
-	 * @see TemplateFinderInterface::findFirst()
-	 */
-	public function findFirst(array $templates, $type) {
-		$found = '';
-		while (!empty($templates) && $found === '') {
-			$found = $this->find(\array_shift($templates), $type) ?: '';
-		}
-		return $found;
-	}
+trait FindFirstTemplateTrait
+{
+    /**
+     * @param array  $templates
+     * @param string $type
+     *
+     * @return string
+     *
+     * @see \Brain\Hierarchy\Finder\TemplateFinderInterface::findFirst()
+     */
+    public function findFirst(array $templates, $type)
+    {
+        $found = '';
+        while (!empty($templates) && $found === '') {
+            $found = $this->find(\array_shift($templates), $type) ?: '';
+        }
+        return $found;
+    }
 }

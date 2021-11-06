@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\DomCrawler;
 
 /**
@@ -16,7 +15,8 @@ namespace RWP\Vendor\Symfony\Component\DomCrawler;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class AbstractUriElement {
+abstract class AbstractUriElement
+{
     /**
      * @var \DOMElement
      */
@@ -36,7 +36,8 @@ abstract class AbstractUriElement {
      *
      * @throws \InvalidArgumentException if the node is not a link
      */
-    public function __construct(\DOMElement $node, string $currentUri = null, ?string $method = 'GET') {
+    public function __construct(\DOMElement $node, string $currentUri = null, ?string $method = 'GET')
+    {
         $this->setNode($node);
         $this->method = $method ? \strtoupper($method) : null;
         $this->currentUri = $currentUri;
@@ -51,7 +52,8 @@ abstract class AbstractUriElement {
      *
      * @return \DOMElement A \DOMElement instance
      */
-    public function getNode() {
+    public function getNode()
+    {
         return $this->node;
     }
     /**
@@ -59,7 +61,8 @@ abstract class AbstractUriElement {
      *
      * @return string The method
      */
-    public function getMethod() {
+    public function getMethod()
+    {
         return $this->method ?? 'GET';
     }
     /**
@@ -67,7 +70,8 @@ abstract class AbstractUriElement {
      *
      * @return string The URI
      */
-    public function getUri() {
+    public function getUri()
+    {
         return UriResolver::resolve($this->getRawUri(), $this->currentUri);
     }
     /**
@@ -83,7 +87,8 @@ abstract class AbstractUriElement {
      *
      * @return string
      */
-    protected function canonicalizePath(string $path) {
+    protected function canonicalizePath(string $path)
+    {
         if ('' === $path || '/' === $path) {
             return $path;
         }

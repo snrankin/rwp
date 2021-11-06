@@ -10,14 +10,13 @@ namespace RWP\Vendor;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
-
 if (!\function_exists('RWP\\Vendor\\dump')) {
     /**
      * @author Nicolas Grekas <p@tchwork.com>
      */
-    function dump($var, ...$moreVars) {
+    function dump($var, ...$moreVars)
+    {
         VarDumper::dump($var);
         foreach ($moreVars as $v) {
             VarDumper::dump($v);
@@ -29,7 +28,8 @@ if (!\function_exists('RWP\\Vendor\\dump')) {
     }
 }
 if (!\function_exists('RWP\\Vendor\\dd')) {
-    function dd(...$vars) {
+    function dd(...$vars)
+    {
         foreach ($vars as $v) {
             VarDumper::dump($v);
         }

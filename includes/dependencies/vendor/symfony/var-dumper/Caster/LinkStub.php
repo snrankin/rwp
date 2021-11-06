@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 /**
@@ -16,11 +15,13 @@ namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class LinkStub extends ConstStub {
+class LinkStub extends ConstStub
+{
     public $inVendor = \false;
     private static $vendorRoots;
     private static $composerRoots;
-    public function __construct(string $label, int $line = 0, string $href = null) {
+    public function __construct(string $label, int $line = 0, string $href = null)
+    {
         $this->value = $label;
         if (null === $href) {
             $href = $label;
@@ -56,7 +57,8 @@ class LinkStub extends ConstStub {
             $this->attr['ellipsis-tail'] = 1;
         }
     }
-    private function getComposerRoot(string $file, bool &$inVendor) {
+    private function getComposerRoot(string $file, bool &$inVendor)
+    {
         if (null === self::$vendorRoots) {
             self::$vendorRoots = [];
             foreach (\get_declared_classes() as $class) {

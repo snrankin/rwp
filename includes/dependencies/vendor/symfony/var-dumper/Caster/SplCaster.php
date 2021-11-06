@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Casts SPL related classes to array representation.
  *
@@ -20,19 +18,24 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class SplCaster {
+class SplCaster
+{
     private const SPL_FILE_OBJECT_FLAGS = [\SplFileObject::DROP_NEW_LINE => 'DROP_NEW_LINE', \SplFileObject::READ_AHEAD => 'READ_AHEAD', \SplFileObject::SKIP_EMPTY => 'SKIP_EMPTY', \SplFileObject::READ_CSV => 'READ_CSV'];
-    public static function castArrayObject(\ArrayObject $c, array $a, Stub $stub, bool $isNested) {
+    public static function castArrayObject(\ArrayObject $c, array $a, Stub $stub, bool $isNested)
+    {
         return self::castSplArray($c, $a, $stub, $isNested);
     }
-    public static function castArrayIterator(\ArrayIterator $c, array $a, Stub $stub, bool $isNested) {
+    public static function castArrayIterator(\ArrayIterator $c, array $a, Stub $stub, bool $isNested)
+    {
         return self::castSplArray($c, $a, $stub, $isNested);
     }
-    public static function castHeap(\Iterator $c, array $a, Stub $stub, bool $isNested) {
-        $a += [Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'heap' => \iterator_to_array(clone $c)];
+    public static function castHeap(\Iterator $c, array $a, Stub $stub, bool $isNested)
+    {
+        $a += [Caster::PREFIX_VIRTUAL . 'heap' => \iterator_to_array(clone $c)];
         return $a;
     }
-    public static function castDoublyLinkedList(\SplDoublyLinkedList $c, array $a, Stub $stub, bool $isNested) {
+    public static function castDoublyLinkedList(\SplDoublyLinkedList $c, array $a, Stub $stub, bool $isNested)
+    {
         $prefix = Caster::PREFIX_VIRTUAL;
         $mode = $c->getIteratorMode();
         $c->setIteratorMode(\SplDoublyLinkedList::IT_MODE_KEEP | $mode & ~\SplDoublyLinkedList::IT_MODE_DELETE);
@@ -40,7 +43,8 @@ class SplCaster {
         $c->setIteratorMode($mode);
         return $a;
     }
-    public static function castFileInfo(\SplFileInfo $c, array $a, Stub $stub, bool $isNested) {
+    public static function castFileInfo(\SplFileInfo $c, array $a, Stub $stub, bool $isNested)
+    {
         static $map = ['path' => 'getPath', 'filename' => 'getFilename', 'basename' => 'getBasename', 'pathname' => 'getPathname', 'extension' => 'getExtension', 'realPath' => 'getRealPath', 'aTime' => 'getATime', 'mTime' => 'getMTime', 'cTime' => 'getCTime', 'inode' => 'getInode', 'size' => 'getSize', 'perms' => 'getPerms', 'owner' => 'getOwner', 'group' => 'getGroup', 'type' => 'getType', 'writable' => 'isWritable', 'readable' => 'isReadable', 'executable' => 'isExecutable', 'file' => 'isFile', 'dir' => 'isDir', 'link' => 'isLink', 'linkTarget' => 'getLinkTarget'];
         $prefix = Caster::PREFIX_VIRTUAL;
         unset($a["\0SplFileInfo\0fileName"]);
@@ -87,7 +91,8 @@ class SplCaster {
         }
         return $a;
     }
-    public static function castFileObject(\SplFileObject $c, array $a, Stub $stub, bool $isNested) {
+    public static function castFileObject(\SplFileObject $c, array $a, Stub $stub, bool $isNested)
+    {
         static $map = ['csvControl' => 'getCsvControl', 'flags' => 'getFlags', 'maxLineLen' => 'getMaxLineLen', 'fstat' => 'fstat', 'eof' => 'eof', 'key' => 'key'];
         $prefix = Caster::PREFIX_VIRTUAL;
         foreach ($map as $key => $accessor) {
@@ -110,27 +115,31 @@ class SplCaster {
         }
         return $a;
     }
-    public static function castObjectStorage(\SplObjectStorage $c, array $a, Stub $stub, bool $isNested) {
+    public static function castObjectStorage(\SplObjectStorage $c, array $a, Stub $stub, bool $isNested)
+    {
         $storage = [];
-        unset($a[Component\VarDumper\Caster\Caster::PREFIX_DYNAMIC . "\0gcdata"]);
+        unset($a[Caster::PREFIX_DYNAMIC . "\0gcdata"]);
         // Don't hit https://bugs.php.net/65967
         unset($a["\0SplObjectStorage\0storage"]);
         $clone = clone $c;
         foreach ($clone as $obj) {
             $storage[] = ['object' => $obj, 'info' => $clone->getInfo()];
         }
-        $a += [Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'storage' => $storage];
+        $a += [Caster::PREFIX_VIRTUAL . 'storage' => $storage];
         return $a;
     }
-    public static function castOuterIterator(\OuterIterator $c, array $a, Stub $stub, bool $isNested) {
-        $a[Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'innerIterator'] = $c->getInnerIterator();
+    public static function castOuterIterator(\OuterIterator $c, array $a, Stub $stub, bool $isNested)
+    {
+        $a[Caster::PREFIX_VIRTUAL . 'innerIterator'] = $c->getInnerIterator();
         return $a;
     }
-    public static function castWeakReference(\WeakReference $c, array $a, Stub $stub, bool $isNested) {
-        $a[Component\VarDumper\Caster\Caster::PREFIX_VIRTUAL . 'object'] = $c->get();
+    public static function castWeakReference(\WeakReference $c, array $a, Stub $stub, bool $isNested)
+    {
+        $a[Caster::PREFIX_VIRTUAL . 'object'] = $c->get();
         return $a;
     }
-    private static function castSplArray($c, array $a, Stub $stub, bool $isNested): array {
+    private static function castSplArray($c, array $a, Stub $stub, bool $isNested) : array
+    {
         $prefix = Caster::PREFIX_VIRTUAL;
         $flags = $c->getFlags();
         if (!($flags & \ArrayObject::STD_PROP_LIST)) {

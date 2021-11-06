@@ -24,6 +24,7 @@
         "illuminate\/container": "^8.68",
         "johnbillion\/extended-cpts": "^4.5",
         "masterminds\/html5": "^2.7",
+        "symfony\/http-kernel": "^5.3",
         "symfony\/var-dumper": "^5.2",
         "wa72\/html-pretty-min": "^0.2.0",
         "wa72\/htmlpagedom": "^2.0"
@@ -100,9 +101,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/",
-            "RWP\\Vendor\\Illuminate\\Container\\": "vendor/illuminate/container",
-            "RWP\\Vendor\\Illuminate\\Config\\": "vendor/illuminate/config"
+            "RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/"
         },
         "files": [
             "externals\/data.php",

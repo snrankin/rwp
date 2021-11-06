@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\CssSelector\Exception;
 
 /**
@@ -19,5 +18,6 @@ namespace RWP\Vendor\Symfony\Component\CssSelector\Exception;
  *
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
-class InternalErrorException extends ParseException {
+class InternalErrorException extends ParseException
+{
 }

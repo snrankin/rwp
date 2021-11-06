@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Brain\Hierarchy\Branch;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-interface BranchInterface {
+interface BranchInterface
+{
     /**
      * @return string
      */
@@ -25,11 +25,11 @@ interface BranchInterface {
      *
      * @return bool
      */
-    public function is(\WP_Query $query);
+    public function is( \WP_Query $query);
     /**
      * @param \WP_Query $query
      *
      * @return array
      */
-    public function leaves(\WP_Query $query);
+    public function leaves( \WP_Query $query);
 }

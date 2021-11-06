@@ -1,23 +1,20 @@
 <?php
 /** ============================================================================
- * Debug
+ * Plugn Info Collector
  *
- * @package   RWP\/includes/integrations/QM/Debug.php
+ * @package   RWP\Integrations\QM\Collectors
  * @since     1.0.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
 
-namespace RWP\Integrations\QM;
+namespace RWP\Integrations\QM\Collectors;
 
 if ( class_exists( '\\QM_Collector' ) ) {
 
-	class Debug extends \QM_Collector {
+	class Info extends \QM_Collector {
 
-		/**
-		 * Register with WordPress API on construct
-		 */
 		public function __construct( $title, $parent ) {
 			$this->title = $title;
 			$this->parent = $parent;
@@ -26,8 +23,9 @@ if ( class_exists( '\\QM_Collector' ) ) {
 		public function name() {
 			return $this->title;
 		}
+
 		public function process() {
-			if ( \is_array( $this->parent->output ) ) {
+			if ( is_array( $this->parent->output ) ) {
 				$this->data['log'] = $this->parent->output;
 			}
 		}

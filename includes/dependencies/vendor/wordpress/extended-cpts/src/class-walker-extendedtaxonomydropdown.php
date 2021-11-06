@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
 /**
@@ -9,7 +8,8 @@ namespace RWP\Vendor;
  *
  * @uses Walker
  */
-class Walker_ExtendedTaxonomyDropdown extends Walker {
+class Walker_ExtendedTaxonomyDropdown extends Walker
+{
     /**
      * @var string
      */
@@ -27,7 +27,8 @@ class Walker_ExtendedTaxonomyDropdown extends Walker {
      *
      * @param array $args Optional arguments.
      */
-    public function __construct($args = null) {
+    public function __construct($args = null)
+    {
         if ($args && isset($args['field'])) {
             $this->field = $args['field'];
         }
@@ -41,7 +42,8 @@ class Walker_ExtendedTaxonomyDropdown extends Walker {
      * @param array  $args              Optional arguments.
      * @param int    $current_object_id Current object ID.
      */
-    public function start_el(&$output, $object, $depth = 0, $args = [], $current_object_id = 0) {
+    public function start_el(&$output, $object, $depth = 0, $args = [], $current_object_id = 0)
+    {
         $pad = \str_repeat('&nbsp;', $depth * 3);
         $tax = get_taxonomy($args['taxonomy']);
         if ($this->field) {
@@ -72,4 +74,4 @@ class Walker_ExtendedTaxonomyDropdown extends Walker {
  *
  * @uses Walker
  */
-\class_alias(__NAMESPACE__ . '\\Walker_ExtendedTaxonomyDropdown', 'Walker_ExtendedTaxonomyDropdown', \false);
+\class_alias('RWP\\Vendor\\Walker_ExtendedTaxonomyDropdown', 'Walker_ExtendedTaxonomyDropdown', \false);

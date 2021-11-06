@@ -23,6 +23,8 @@ use Elementor\Controls_Manager as Controls_Manager;
 
 class Elementor extends Singleton {
 
+	public $widgets = array();
+
 	/**
 	 * Initialize the class.
 	 *
@@ -30,19 +32,33 @@ class Elementor extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( ! is_plugin_active( 'elementor/elementor.php' ) || ! rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
-			return;
+		if ( is_plugin_active( 'elementor/elementor.php' ) ) {
+			if ( rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
+				add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
+				add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
+
+				add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
+				add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
+				add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
+			}
 		}
 
-		//add_action( 'elementor/experiments/default-features-registered', array( $this, 'update_elementor_features' ) );
-		//add_action( 'elementor/init', array( $this, 'auto_add_bs_breakpoints' ) );
+		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
 
-		add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
-		add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
+	}
 
-		add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
-		add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
-		add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
+	public function init_widgets() {
+        $class = get_called_class();
+		$widgets = rwp()->get_component( $class );
+
+		if ( ! empty( $widgets ) ) {
+
+			foreach ( $widgets as $widget ) {
+				if ( $class !== $widget && ! empty( $widget ) ) {
+					Elementor_Instance::instance()->widgets_manager->register_widget_type( new $widget() );
+				}
+			}
+		}
 	}
 
 	/**

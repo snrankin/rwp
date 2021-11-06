@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
-class Extended_Taxonomy {
+class Extended_Taxonomy
+{
     /**
      * Default arguments for custom taxonomies.
      * Several of these differ from the defaults in WordPress' register_taxonomy() function.
@@ -62,7 +62,8 @@ class Extended_Taxonomy {
      * @param array        $args        Optional. The taxonomy arguments.
      * @param string[]     $names       Optional. An associative array of the plural, singular, and slug names.
      */
-    public function __construct(string $taxonomy, $object_type, array $args = [], array $names = []) {
+    public function __construct(string $taxonomy, $object_type, array $args = [], array $names = [])
+    {
         /**
          * Filter the arguments for a taxonomy.
          *
@@ -197,7 +198,8 @@ class Extended_Taxonomy {
      * @param array $tests The existing rewrite rule tests.
      * @return array Updated rewrite rule tests.
      */
-    public function rewrite_testing_tests(array $tests): array {
+    public function rewrite_testing_tests(array $tests) : array
+    {
         require_once __DIR__ . '/class-extended-rewrite-testing.php';
         require_once __DIR__ . '/class-extended-taxonomy-rewrite-testing.php';
         $extended = new Extended_Taxonomy_Rewrite_Testing($this);
@@ -206,7 +208,8 @@ class Extended_Taxonomy {
     /**
      * Registers our taxonomy.
      */
-    public function register_taxonomy() {
+    public function register_taxonomy()
+    {
         if (\true === $this->args['query_var']) {
             $query_var = $this->taxonomy;
         } else {
@@ -230,4 +233,4 @@ class Extended_Taxonomy {
         }
     }
 }
-\class_alias(__NAMESPACE__ . '\\Extended_Taxonomy', 'Extended_Taxonomy', \false);
+\class_alias('RWP\\Vendor\\Extended_Taxonomy', 'Extended_Taxonomy', \false);

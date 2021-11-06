@@ -8,19 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Represents a list of function arguments.
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class ArgsStub extends EnumStub {
+class ArgsStub extends EnumStub
+{
     private static $parameters = [];
-    public function __construct(array $args, string $function, ?string $class) {
+    public function __construct(array $args, string $function, ?string $class)
+    {
         [$variadic, $params] = self::getParameters($function, $class);
         $values = [];
         foreach ($args as $k => $v) {
@@ -43,7 +43,8 @@ class ArgsStub extends EnumStub {
             $this->value = \array_combine($params, $values);
         }
     }
-    private static function getParameters(string $function, ?string $class): array {
+    private static function getParameters(string $function, ?string $class) : array
+    {
         if (isset(self::$parameters[$k = $class . '::' . $function])) {
             return self::$parameters[$k];
         }

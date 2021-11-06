@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace RWP\Vendor;
 
 /**
@@ -9,7 +8,8 @@ namespace RWP\Vendor;
  *
  * @uses Walker
  */
-class Walker_ExtendedTaxonomyCheckboxes extends Walker {
+class Walker_ExtendedTaxonomyCheckboxes extends Walker
+{
     /**
      * @var string
      */
@@ -27,7 +27,8 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
      *
      * @param array $args Optional arguments.
      */
-    public function __construct($args = null) {
+    public function __construct($args = null)
+    {
         if ($args && isset($args['field'])) {
             $this->field = $args['field'];
         }
@@ -39,7 +40,8 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
      * @param int    $depth  Depth of term in reference to parents.
      * @param array  $args   Optional arguments.
      */
-    public function start_lvl(&$output, $depth = 0, $args = []) {
+    public function start_lvl(&$output, $depth = 0, $args = [])
+    {
         $indent = \str_repeat("\t", $depth);
         $output .= "{$indent}<ul class='children'>\n";
     }
@@ -50,7 +52,8 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
      * @param int    $depth  Depth of term in reference to parents.
      * @param array  $args   Optional arguments.
      */
-    public function end_lvl(&$output, $depth = 0, $args = []) {
+    public function end_lvl(&$output, $depth = 0, $args = [])
+    {
         $indent = \str_repeat("\t", $depth);
         $output .= "{$indent}</ul>\n";
     }
@@ -63,7 +66,8 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
      * @param array  $args              Optional arguments.
      * @param int    $current_object_id Current object ID.
      */
-    public function start_el(&$output, $object, $depth = 0, $args = [], $current_object_id = 0) {
+    public function start_el(&$output, $object, $depth = 0, $args = [], $current_object_id = 0)
+    {
         $tax = get_taxonomy($args['taxonomy']);
         if ($this->field) {
             $value = $object->{$this->field};
@@ -83,7 +87,8 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
      * @param int    $depth  Depth of term in reference to parents.
      * @param array $args Optional arguments.
      */
-    public function end_el(&$output, $object, $depth = 0, $args = []) {
+    public function end_el(&$output, $object, $depth = 0, $args = [])
+    {
         $output .= "</li>\n";
     }
 }
@@ -92,4 +97,4 @@ class Walker_ExtendedTaxonomyCheckboxes extends Walker {
  *
  * @uses Walker
  */
-\class_alias(__NAMESPACE__ . '\\Walker_ExtendedTaxonomyCheckboxes', 'Walker_ExtendedTaxonomyCheckboxes', \false);
+\class_alias('RWP\\Vendor\\Walker_ExtendedTaxonomyCheckboxes', 'Walker_ExtendedTaxonomyCheckboxes', \false);

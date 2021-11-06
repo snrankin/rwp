@@ -15,7 +15,12 @@ use RWP\Engine\Abstracts\Singleton;
 
 class QM extends Singleton {
 
-	public $output = array();
+	public $output;
+
+	public $panels = array(
+		'Info',
+		'Debug',
+	);
 
 	/**
 	 * Initialize the class.
@@ -32,8 +37,14 @@ class QM extends Singleton {
 
 		if ( class_exists( '\\QM_Collectors' ) ) {
 
-			\QM_Collectors::add( new QM\Debug( $this->title, $this ) );
-        }
+			foreach ( $this->panels as $panel ) {
+				$name = rwp()->prefix( $panel, ' ', 'title' );
+
+				$collector = __NAMESPACE__ . "\\QM\\Collectors\\$panel";
+
+				\QM_Collectors::add( new $collector( $name, $this ) );
+			}
+		}
 
 		/**
 		 * Register output. The filter won't run if Query Monitor is not
@@ -51,11 +62,18 @@ class QM extends Singleton {
 	 * @return array
 	 */
 	public function load( array $output, \QM_Collectors $collectors ) {
-		$id = rwp_change_case( $this->title );
-		$collector = $collectors::get( $id );
-		if ( $collector ) {
-			$output[ $id ] = new QM\Output( $collector, $this->output, $this->title );
+
+		foreach ( $this->panels as $panel ) {
+			$name = rwp()->prefix( $panel, ' ', 'title' );
+			$id = rwp_change_case( $name );
+
+			$collector = $collectors::get( $id );
+			if ( $collector ) {
+				$output_class = __NAMESPACE__ . "\\QM\\Output\\$panel";
+				$output[ $id ] = new $output_class( $collector, $this->output[ $id ], $name );
+			}
 		}
+
 		return $output;
 	}
 	/**
@@ -64,22 +82,24 @@ class QM extends Singleton {
 	 * Only visible to admins if \WP_DEBUG is on
 	 *
 	 * @param mixed  $var       The var to debug.
-	 * @param bool   $die       Whether to die after outputting.
-	 * @param string $function  The function to call, usually either print_r or
-	 *                          var_dump, but can be anything.
-	 * @return mixed
+	 *
+	 * @return void
 	 */
-	public function log( $var, $die = \false, $function = 'var_dump' ) {
-		\ob_start();
-		if ( \is_string( $var ) ) {
-			echo $var . "\n"; // phpcs:ignore
-		} else {
-			\call_user_func( $function, $var );
-		}
-		if ( $die ) {
-			die;
-		}
-		$this->output[] = \ob_get_clean();
+	public function log( $var ) {
+
+		$trace  = new \QM_Backtrace( array(
+			'ignore_current_filter' => true,
+			'ignore_frames' => 1,
+		) );
+		$caller = $trace->get_caller();
+
+		$file = data_get( $caller, 'file' );
+		$line = data_get( $caller, 'line' );
+		$this->output['rwp-debug'][] = array(
+			'variable' => $var,
+			'file'     => $file,
+			'line'     => $line,
+		);
 	}
 	/**
 	 * Print in Query Monitor Log panel

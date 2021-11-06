@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace RWP\Vendor\Symfony\Component\VarDumper\Caster;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
-
 /**
  * Casts a caster's Stub.
  *
@@ -20,8 +18,10 @@ use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
  *
  * @final
  */
-class StubCaster {
-    public static function castStub(Stub $c, array $a, Stub $stub, bool $isNested) {
+class StubCaster
+{
+    public static function castStub(Stub $c, array $a, Stub $stub, bool $isNested)
+    {
         if ($isNested) {
             $stub->type = $c->type;
             $stub->class = $c->class;
@@ -37,17 +37,20 @@ class StubCaster {
         }
         return $a;
     }
-    public static function castCutArray(CutArrayStub $c, array $a, Stub $stub, bool $isNested) {
+    public static function castCutArray(CutArrayStub $c, array $a, Stub $stub, bool $isNested)
+    {
         return $isNested ? $c->preservedSubset : $a;
     }
-    public static function cutInternals($obj, array $a, Stub $stub, bool $isNested) {
+    public static function cutInternals($obj, array $a, Stub $stub, bool $isNested)
+    {
         if ($isNested) {
             $stub->cut += \count($a);
             return [];
         }
         return $a;
     }
-    public static function castEnum(EnumStub $c, array $a, Stub $stub, bool $isNested) {
+    public static function castEnum(EnumStub $c, array $a, Stub $stub, bool $isNested)
+    {
         if ($isNested) {
             $stub->class = $c->dumpKeys ? '' : null;
             $stub->handle = 0;
