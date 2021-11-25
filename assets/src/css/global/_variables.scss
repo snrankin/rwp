@@ -15,7 +15,6 @@ $admin-gray-300: #ccd0d4;
 $admin-gray-200: #e1e1e1;
 $admin-gray-100: #f4f4f4;
 $acf-gutter: 12px;
-$font-family-code:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $hair-space      : 0.0417em; // 0.7px || Width varies, but narrower than thin space
 $fine-space      : 0.125em; // 2px || Bien ! For French punctuation
 $one-sixth-space : 0.1667em; // 2.7px || Might be suitable for grouping
@@ -27,6 +26,7 @@ $one-third-space : 0.3333em; // 5.3px || Width of space in a wide font
 $en-space        : 0.5em; // 8px || Recommended maximum width of space, width of en-dash
 $em-space        : 1em; // 16px || width of em-dash
 
+$font-family-monospace: 'FiraCode Nerd Font Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
 @import '~bootstrap/scss/variables';
 

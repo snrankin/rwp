@@ -61,6 +61,13 @@
 				}
 			}
 		},
+		"debug": {
+			"files": {
+				"debug": {
+					"debug": ["./js/debug.js", "./css/debug.scss"]
+				}
+			}
+		},
 		"main": {
 			"files": {
 				"admin": {

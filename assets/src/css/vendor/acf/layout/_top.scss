@@ -21,14 +21,40 @@ body:not(.post-type-acf-field-group) {
 		&::after {
 			display: none;
 		}
-		&:not(.-left) {
+		&.-top {
 			@include acf-row();
 			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
 			> .acf-field {
 				padding-top: 0;
 				padding-bottom: 0;
+				border-top-color: transparent;
 				&:first-child {
 					margin-top: var(--#{$variable-prefix}gutter-y);
+				}
+				&.label-inline {
+					display: flex;
+					&:not(.left-label) {
+						> .acf-label {
+							order: 99;
+							padding-left: 15px;
+						}
+					}
+					&.left-label {
+						> .acf-label {
+							padding-right: 15px;
+						}
+					}
+					> .acf-label {
+						display: flex;
+						flex-direction: column;
+						justify-content: start;
+						margin-bottom: 0;
+					}
+					> .acf-input {
+						display: flex;
+						flex-direction: column;
+						justify-content: start;
+					}
 				}
 			}
 		}

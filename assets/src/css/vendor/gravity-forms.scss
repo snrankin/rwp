@@ -68,6 +68,11 @@ textarea {
 }
 
 form {
+	&.has-inline-submit {
+		.gform_footer {
+			@include visually-hidden;
+		}
+	}
 	.row {
 		--bs-gutter-x: var(--rwp-form-gutter-x);
 		--bs-gutter-y: var(--rwp-form-gutter-y);
