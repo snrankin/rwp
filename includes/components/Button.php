@@ -27,6 +27,14 @@ class Button extends Element {
 	);
 
 	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array(
+		'text' => 'Element',
+		'icon' => 'Icon',
+	);
+
+	/**
 	 * @var bool $active Whether or not the item is currently active
 	 */
 	public $active = false;
@@ -110,19 +118,6 @@ class Button extends Element {
 
 	public function __construct( $args = [] ) {
 
-		$this->text = new Element( $this->text );
-		$this->icon = new Element( $this->icon );
-
-		if ( ! empty( $args['text'] ) ) {
-			$this->set_text( $args['text'] );
-			unset( $args['text'] );
-		}
-
-		if ( ! empty( $args['icon'] ) ) {
-			$this->set_icon( $args['icon'] );
-			unset( $args['icon'] );
-		}
-
 		parent::__construct( $args );
 
 		$href = $this->get_attr( 'href' );
@@ -198,13 +193,9 @@ class Button extends Element {
 	 * @param bool $overwrite
 	 * @return void
 	 */
-	public function set_icon( $args, $key = '', $overwrite = true ) {
+	public function set_icon( $args, $overwrite = true ) {
 
-		$icon = new Icon( $args );
-
-		$icon->add_class( 'btn-icon' );
-
-		$this->icon->set_content( $icon, $key, $overwrite );
+		$this->icon->merge_args( $args, $overwrite );
 	}
 
 	/**
@@ -213,17 +204,9 @@ class Button extends Element {
 	 * @param array|string $args
 	 * @return void
 	 */
-	public function set_text( $args, $key = '', $overwrite = true ) {
+	public function set_text( $args, $overwrite = true ) {
 
-		$text = $this->text->toArray();
-
-		if ( is_array( $args ) ) {
-			$text = rwp_merge_args( $text, $args );
-
-			$this->text = new Element( $text );
-		} else if ( is_string( $args ) ) {
-			$this->text->set_content( $args, $key, $overwrite );
-		}
+		$this->text->merge_args( $args, $overwrite );
 	}
 
 

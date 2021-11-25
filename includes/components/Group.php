@@ -59,8 +59,10 @@ class Group extends Element {
 	}
 
 	/**
+	 * Format an item before adding it to the group
 	 *
 	 * @param mixed $item
+	 *
 	 * @return object
 	 */
 
@@ -98,15 +100,101 @@ class Group extends Element {
 
 	}
 
-	public function add_item( $item, $key = '', $overwrite = false ) {
-		$item = $this->format_item( $item );
+	/**
+	 * Add an item to the group with specific formatting
+	 *
+	 * @param mixed       $item       The item
+	 * @param string|int  $key        The index key
+	 * @param bool        $overwrite  Overwrite if exists or add if it doesn't
+	 * @param bool        $format     Whether to format the item with class defaults
+	 *
+	 * @return mixed
+	 */
+	public function add_item( $item = '', $key = '', $overwrite = false, $format = true ) {
 
-		if ( empty( $key ) ) {
+		if ( $format ) {
+			$item = $this->format_item( $item );
+		}
+
+		if ( blank( $key ) ) {
 			$this->elements->push( $item );
+			$key = $this->elements->search( $item );
 		} else {
 			$this->set( "elements.$key", $item, $overwrite );
 		}
 
+		return $key;
+
+	}
+
+	/**
+	 * Overwrite an item in the group with specific formatting
+	 *
+	 * @param mixed       $item       The item
+	 * @param string|int  $key        The index key
+	 * @param bool        $format     Whether to format the item with class defaults
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function set_item( $item = '', $key = '', $format = true ) {
+		return $this->add_item( $item, $key, true, $format );
+	}
+
+	/**
+	 * Get an existing item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return bool
+	 */
+	public function has_item( $key ) {
+		return $this->has( "elements.$key" );
+	}
+
+	/**
+	 * Get an existing item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return Element|false
+	 */
+	public function get_item( $key, $default = false ) {
+		return $this->get( "elements.$key", $default );
+	}
+
+	/**
+	 * Update an existing item
+	 *
+	 * @param string|int  $key     The index key
+	 * @param string      $method  The class method to use
+	 * @param mixed       $args
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function update_item( $key, $method, ...$args ) {
+		$item = $this->get_item( $key );
+
+		if ( ! blank( $item ) && rwp_is_element( $item ) ) {
+			if ( rwp_str_has( $method, array( 'update_', 'set_', 'add_' ) ) ) {
+				$key = $item->__call( $method, $args );
+			} else {
+				$item->__call( $method, $args );
+			}
+
+			return $this->set_item( $item, $key, false );
+		}
+	}
+
+	/**
+	 * Remove an item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return void
+	 */
+
+	public function remove_item( $key ) {
+		$this->remove( "elements.$key" );
 	}
 
 	/**

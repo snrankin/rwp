@@ -44,6 +44,7 @@ class Icon extends Element {
 
 		if ( is_string( $args ) ) {
 			if ( rwp_str_is_element( $args, 'svg' ) ) {
+				$this->set_tag( 'svg' );
 				$args = new SVG( $args );
 			} else if ( ( is_file( $args ) && rwp_file_exists( $args ) ) || rwp_is_url( $args ) ) {
 				if ( rwp_str_ends_with( $args, 'svg' ) ) {
