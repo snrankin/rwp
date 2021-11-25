@@ -25,4 +25,36 @@ class TeamCategory extends Taxonomy {
 		'rwp_team_member',
 	);
 
+	/**
+	 * @var array $args An array of additional arguments for the taxonomy
+	 */
+	public $args = array(
+		'show_in_nav_menus' => false,
+		'show_in_rest'      => true,
+	);
+
+	/**
+	 * @var string $singular The taxonomy type
+	 */
+
+	public $singular = 'Category';
+
+	/**
+	 * @var string $plural The taxonomy type in plural form
+	 */
+
+	public $plural = 'Categories';
+
+	/**
+	 * @var string $menu The taxonomy menu title
+	 */
+
+	public $menu = 'Team Categories';
+
+	/**
+	 * @var string $slug The taxonomy url slug
+	 */
+
+	public $slug = 'team-categories';
+
 }

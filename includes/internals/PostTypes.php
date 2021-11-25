@@ -43,7 +43,7 @@ class PostTypes extends Singleton {
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
-		if ( rwp_get_option( 'modules.blog.update_urls', false ) && ! is_plugin_active( 'elementor/elementor.php' ) ) { // can't rewrite basic permalinks with ELementor :(
+		if ( rwp_get_option( 'modules.blog.update_urls', false ) ) { // can't rewrite basic permalinks with ELementor :(
 			\add_filter( 'register_post_type_args', array( $this, 'add_blog_page_to_post_url' ), 10, 2 );
 			\add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
 			\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
@@ -286,22 +286,22 @@ class PostTypes extends Singleton {
 
 		$labels = self::labels( $singular, $plural, $menu, $slug );
 
+		if ( empty( $slug ) ) {
+			$slug = data_get( $labels, 'names.slug', '' );
+		}
+
 		$defaults = array(
 			'label'               => $singular,
 			'labels'              => $labels['labels'],
 			'capability_type'     => 'page',
 			'show_in_rest'        => true,
-			'hierarchical'        => false,
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'menu_position'       => 5,
-			'show_in_admin_bar'   => true,
-			'show_in_nav_menus'   => true,
-			'can_export'          => true,
-			'has_archive'         => true,
-			'exclude_from_search' => false,
-			'publicly_queryable'  => true,
+			'rewrite'             => array(
+				'slug'       => $slug,
+				'with_front' => false,
+				'pages'      => false,
+			),
+			'query_var'           => $slug,
+			'rest_base'           => $slug,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
