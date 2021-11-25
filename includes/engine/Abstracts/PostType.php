@@ -141,6 +141,7 @@ abstract class PostType extends Singleton {
 		$updated_args = $this->args;
 		$updated_args['menu_icon'] = $this->menu_icon;
 		$updated_args['supports'] = $this->supports;
+		$updated_args['admin_cols'] = $this->admin_cols;
 
 		$args = rwp_merge_args( $args, $updated_args );
 

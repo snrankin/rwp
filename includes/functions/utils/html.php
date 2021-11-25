@@ -439,15 +439,17 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
  *
  * @param  string $input
  * @param  array  $args
- * @return RWP\Components\Button|string
+ * @return string
  */
 
-function rwp_input_to_button( $input = '', $args = array() ) {
+function rwp_input_to_button( $input = '', $tag = '', $args = array() ) {
 	if ( ! rwp_str_is_element( $input, 'input' ) ) {
         return $input;
 	}
 
-    $args['html'] = $input;
+	$input_args = rwp_extract_html_attributes( $input, $tag );
+
+	$args = rwp_merge_args( $input_args, $args );
 
     $button = rwp_button( $args );
 
@@ -458,7 +460,7 @@ function rwp_input_to_button( $input = '', $args = array() ) {
 		$button->remove_attr( 'value' );
 	}
 
-    return $button;
+    return $button->html();
 }
 
 /**
@@ -491,4 +493,30 @@ function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $i
 
     return $html_atts;
 
+}
+
+/**
+ * Easily convert DOMElements or DOMNodes to html string
+ *
+ * @param \DOMNode|\DOMElement $node
+ * @return string
+ */
+function rwp_dom_node_to_string( $node ) {
+	$html = '';
+	if ( $node instanceof \DOMElement ) {
+		$string = $node->ownerDocument->saveHTML( $node ); // phpcs:ignore
+
+		if ( ! empty( $string ) ) {
+			$html = $string;
+		}
+	} else {
+		$dom = new DOMDocument();
+		$dom->importNode( $node, true );
+		$string = $dom->saveHTML();
+		if ( ! empty( $string ) ) {
+			$html = $string;
+		}
+	}
+
+	return $html;
 }

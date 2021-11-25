@@ -10,6 +10,7 @@
  */
 
 use RWP\Components\Str;
+use RWP\Vendor\Exceptions\Http\Server\NotImplementedException;
 
 if ( ! defined( 'RWP_TITLE_CASE' ) ) {
 	define( 'RWP_TITLE_CASE', array() );
@@ -20,6 +21,30 @@ if ( ! function_exists( 'str_contains' ) ) {
 		return Str::contains( ...func_get_args() );
 	}
 }
+/**
+ * Wrapper to call any Str class function
+ *
+ * @param mixed $callback
+ * @param mixed $args
+ *
+ * @return mixed
+ */
+function rwp_str( $method, ...$args ) {
+	try {
+		if ( method_exists( 'RWP\\Components\\Str', $method ) ) {
+			$args = \func_get_args();
+			if ( count( $args ) > 1 ) {
+				array_shift( $args );
+			}
+			return Str::$method( ...$args );
+		} else {
+			throw new NotImplementedException( "The class RWP\\Components\\Str does not have a method called $method" );
+		}
+	} catch ( NotImplementedException $th ) {
+		return new \WP_Error( $th->getCode(), $th->getMessage() );
+	}
+}
+
 /**
  * Change Case
  *
@@ -79,6 +104,19 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
  */
 function rwp_str_replace( $search, $replace, $subject ) {
 	return Str::replace( $search, $replace, $subject );
+}
+
+/**
+ * Replace the given value in the given string.
+ *
+ * @param  string|string[]  $search
+ * @param  string           $subject
+ * @param  bool             $case_sensitive
+ *
+ * @return string
+ */
+function rwp_str_remove( $search, $subject, $case_sensitive = true ) {
+	return Str::remove( $search, $subject, $case_sensitive );
 }
 
 /**

@@ -393,6 +393,7 @@ class Nav extends \Walker_Nav_Menu {
 			$nav_link_content['after'] = $args->after;
 		}
 
+		$nav_link_args['order'] = $nav_link_order;
 		$nav_link_args['content'] = $nav_link_content;
 
 		$nav_link_args = rwp_add_acf_bg_color( $nav_link_args, $nav_item_options, $item );
@@ -472,6 +473,10 @@ class Nav extends \Walker_Nav_Menu {
 
 		$item_output = $this->nav_item->start_tag();
 		$item_output = apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
+		if ( $depth > 0 ) {
+			$test = true;
+		}
 		$item_output .= $this->nav_item->content();
 		// END appending the internal item contents to the output.
 		$output .= $item_output;

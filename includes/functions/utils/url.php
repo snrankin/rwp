@@ -23,12 +23,16 @@ function rwp_is_url( $url = '' ) {
 	if ( empty( $url ) ) {
         return false;
     }
-	$input = wp_parse_url( $url );
+	$is_url = false;
+	if ( rwp_str_starts_with( $url, array( '/' ) ) && wp_parse_url( $url ) ) {
+		$is_url = true;
+	} else if ( rwp_str_starts_with( $url, array( 'tel:', 'mailto:' ) ) ) {
+		$is_url = true;
+	} else if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+		$is_url = true;
+	}
 
-    if ( empty( $input ) ) {
-        return false;
-    }
-	return true;
+	return $is_url;
 }
 
 /**

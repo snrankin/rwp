@@ -130,9 +130,6 @@ function rwp_menu_args( $args = [] ) {
 		'type'       => $type,
 		'toggle_type' => data_get( $custom_args, 'toggle_type' ),
 		'list'       => array(
-			'direction'  => $direction,
-			'type'       => $type,
-			'toggle_type' => data_get( $custom_args, 'toggle_type' ),
 			'content' => array(
 				'%3$s',
 			),

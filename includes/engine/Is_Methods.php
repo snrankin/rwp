@@ -68,7 +68,8 @@ class Is_Methods {
 	 * @return bool
 	 */
 	public function is_ajax() {
-		return ( \function_exists( 'wp_doing_ajax' ) && \wp_doing_ajax() ) || \defined( 'DOING_AJAX' );
+		return ( \function_exists( 'wp_doing_ajax' ) && \wp_doing_ajax() ) || \defined( 'DOING_AJAX' ) || ! empty( $_GET['wc-ajax'] );
+
 	}
 
 	/**

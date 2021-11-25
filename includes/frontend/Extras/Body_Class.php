@@ -35,30 +35,69 @@ class Body_Class extends Singleton {
 	 */
 	public static function add_plugin_class( array $classes ) {
 
-		$classes = rwp_parse_classes( $classes, rwp()->get_slug() );
-
 		if ( is_plugin_active( 'elementor/elementor.php' ) && rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
 			$classes[] = 'rwp-elementor';
 		}
 
-		if ( is_single() || is_page() && ! is_front_page() ) {
-			$url = get_permalink();
-			if ( $url ) {
-				$basename = basename( $url );
+		if ( ! is_admin() ) {
+			if ( is_singular() && ! is_front_page() ) {
 
-				if ( ! in_array( $basename, $classes, true ) ) {
-					$classes[] = $basename;
+				/**
+				 * @var \WP_Post $post
+				 */
+				global $post;
+
+				$type = $post->post_type;
+				$id   = $post->ID;
+				$slug = $post->post_name;
+
+				$classes[] = $type . '-' . $id;
+				$classes[] = $slug;
+
+				$home = rwp_get_home_page();
+
+				$parents = rwp_post_ancestors( $post );
+
+				$parents = $parents->where( 'id', '!==', $home )->where( 'id', '!==', $id );
+
+				// $parent_id = data_get( $parent, 'id', 0 );
+
+				if ( $parents->isNotEmpty() ) {
+					foreach ( $parents->all() as $parent ) {
+						$classes[] = 'parent-' . $parent['id'];
+					}
+				}
+
+				$taxonomies = get_taxonomies( array( 'public' => true ) );
+				foreach ( (array) $taxonomies as $taxonomy ) {
+					if ( is_object_in_taxonomy( $type, $taxonomy ) ) {
+						foreach ( (array) get_the_terms( $id, $taxonomy ) as $term ) {
+							if ( empty( $term->slug ) ) {
+								continue;
+							}
+
+							$term_class = sanitize_html_class( $term->slug, $term->term_id );
+							if ( is_numeric( $term_class ) || ! trim( $term_class, '-' ) ) {
+								$term_class = $term->term_id;
+							}
+
+							// 'post_tag' uses the 'tag' prefix for backward compatibility.
+							if ( 'post_tag' === $taxonomy ) {
+								$taxonomy = rwp_str( 'remove', 'post_', $taxonomy );
+							} else if ( rwp_str_has( $taxonomy, [ 'rwp_', 'rwp-' ] ) ) {
+								$taxonomy = rwp_str( 'remove', [ 'rwp_', 'rwp-' ], $taxonomy );
+							}
+
+							$classes[] = sanitize_html_class( $taxonomy . '-' . $term_class, $taxonomy . '-' . $term->term_id );
+						}
+					}
 				}
 			}
 		}
 
-		// Remove unnecessary classes
-		$home_id_class  = 'page-id-' . get_option( 'page_on_front' );
-		$remove_classes = array(
-			'page-template-default',
-			$home_id_class,
-		);
-		$classes        = array_diff( $classes, $remove_classes );
+		$classes = rwp_array_remove( $classes, 'page-id-' . get_option( 'page_on_front' ) );
+
+		$classes = rwp_parse_classes( $classes, rwp()->get_slug() );
 
 		return $classes;
 	}

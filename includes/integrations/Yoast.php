@@ -90,7 +90,7 @@ class Yoast extends Singleton {
 
 	public function full_path( $links ) {
 
-		$ancestors = rwp_ancestors();
+		$ancestors = rwp_post_ancestors();
 
 		if ( $ancestors->isNotEmpty() ) {
 

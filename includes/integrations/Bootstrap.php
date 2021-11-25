@@ -30,6 +30,7 @@ class Bootstrap extends Singleton {
 
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
+			//add_action( 'admin_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
 			$this->bootstrap_in_tinymce();
 		}
 
