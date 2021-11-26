@@ -313,6 +313,7 @@ return array(
     'RWP\\Integrations\\Elementor\\OEmbed' => $baseDir . '/includes/integrations/Elementor/OEmbed.php',
     'RWP\\Integrations\\GravityForms' => $baseDir . '/includes/integrations/GravityForms.php',
     'RWP\\Integrations\\JS_Plugins' => $baseDir . '/includes/integrations/JS_Plugins.php',
+    'RWP\\Integrations\\KitchenSink' => $baseDir . '/includes/integrations/KitchenSink.php',
     'RWP\\Integrations\\Lazysizes' => $baseDir . '/includes/integrations/Lazysizes.php',
     'RWP\\Integrations\\Nav_Menus' => $baseDir . '/includes/integrations/Nav_Menus.php',
     'RWP\\Integrations\\QM' => $baseDir . '/includes/integrations/QM.php',
