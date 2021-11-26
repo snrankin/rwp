@@ -1,13 +1,12 @@
 /// ======================================================================== ///
-/// @name   ACF Admin Styles
+/// @name   _index
 ///
-/// @group  Riester
-/// @since  1.20.20
+/// @group  RWP
+/// @since  1.0.0
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-@import '../global/admin-index';
-@import '../global/mixins/acf';
-
-@import 'acf/layout/*.scss';
-@import 'acf/fields/*.scss';
+@import 'functions';
+@import 'admin-variables';
+@import 'mixins';
+@import 'utilities';

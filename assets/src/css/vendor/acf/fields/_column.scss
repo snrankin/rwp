@@ -18,7 +18,7 @@ body:not(.post-type-acf-field-group) {
 			}
 			> .acf-input {
 				> .acf-fields {
-					@include make-row-2();
+					@include acf-row('margin');
 				}
 			}
 		}

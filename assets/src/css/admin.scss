@@ -10,20 +10,18 @@
 // =========================== Import Admin Styles ========================== //
 // ========================================================================== //
 
-@import 'global/index';
-
-@import '~bootstrap/scss/root';
-@import '~bootstrap/scss/utilities';
+@import 'global/admin-index';
 
 @import 'admin/*.scss';
+
 .editor-styles-wrapper {
 	.rwp {
 		&.is-hovered,
 		&.is-selected {
-			outline: solid 1px $admin-blue;
+			outline: solid 1px $primary;
 		}
 		&.has-child-selected {
-			outline: solid 1px rgba($admin-blue, 0.5);
+			outline: solid 1px rgba($primary, 0.5);
 		}
 
 		.wp-block {

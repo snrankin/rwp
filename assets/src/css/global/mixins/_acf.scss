@@ -6,96 +6,58 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-@mixin acf-col($gutter: $acf-gutter) {
-	position: relative;
-	// Prevent columns from becoming too narrow when at smaller grid tiers by
-	// always setting `width: 100%;`. This works because we use `flex` values
-	// later on to override this initial width.
-	width: 100%;
-	padding: $gutter / 2;
-}
-
-@mixin acf-row($x-gutter: 12px, $y-gutter: 15px) {
+@mixin acf-row(
+	$type: 'padding',
+	$important: false,
+	$x-gutter: $acf-gutter-x,
+	$y-gutter: $acf-gutter-y
+) {
 	--#{$variable-prefix}gutter-x: #{$x-gutter};
 	--#{$variable-prefix}gutter-y: #{$y-gutter};
 
-	display: flex;
-	flex-wrap: wrap;
-	padding-right: calc(
-		var(--#{$variable-prefix}gutter-x) * 0.5
-	) !important; // stylelint-disable-line function-disallowed-list
-	padding-left: calc(
-		var(--#{$variable-prefix}gutter-x) * 0.5
-	) !important; // stylelint-disable-line function-disallowed-list
-	width: 100%;
-	padding-bottom: var(--#{$variable-prefix}gutter-y);
-}
+	@if $important == false {
+		display: flex;
+		flex-wrap: wrap;
 
-// Grid system
-//
-// Generate semantic grid columns with these mixins.
-
-@mixin make-row-2($x-gutter: 12px, $y-gutter: 15px) {
-	--#{$variable-prefix}gutter-x: #{$x-gutter};
-	--#{$variable-prefix}gutter-y: #{$y-gutter};
-
-	display: flex;
-	flex-wrap: wrap;
-	margin-top: calc(
-		var(--#{$variable-prefix}gutter-y) * -1
-	); // stylelint-disable-line function-disallowed-list
-	margin-right: calc(
-		var(--#{$variable-prefix}gutter-x) * -0.5
-	); // stylelint-disable-line function-disallowed-list
-	margin-left: calc(
-		var(--#{$variable-prefix}gutter-x) * -0.5
-	); // stylelint-disable-line function-disallowed-list
-	width: calc(100% + var(--#{$variable-prefix}gutter-x));
-	padding-left: 0 !important;
-	padding-right: 0 !important;
-}
-
-@mixin acf-table-row() {
-	border-bottom: 1px solid $admin-gray-200;
-	> .acf-label {
-		flex: 0 0 20%;
-		padding-top: $acf-gutter;
-		padding-bottom: $acf-gutter;
-		background: $admin-gray-100;
-		text-shadow: #fff 0 1px 0;
-		border-right: solid 1px $admin-gray-200;
-	}
-	> .acf-input {
-		flex-direction: row;
-		align-items: center;
-		flex: 0 0 80%;
-		float: none;
-		padding-top: $acf-gutter;
-		padding-bottom: $acf-gutter;
-		> .acf-input-wrap,
-		> .acf-field-list-wrap {
-			flex: 1 1 auto;
+		background-color: transparent;
+		@if $type == 'padding' {
+			width: 100%;
+			padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
+			padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
+			padding-bottom: var(--#{$variable-prefix}gutter-y);
+		} @else {
+			margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
+			margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
+			margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1);
+			width: calc(100% + var(--#{$variable-prefix}gutter-x));
+			padding: 0 !important;
 		}
-	}
-}
+	} @else {
+		display: flex !important;
+		flex-wrap: wrap !important;
 
-@mixin acf-group {
-	border: 1px solid $admin-gray-300 !important;
-	background: $admin-gray-100;
-	padding: $acf-gutter/2 $acf-gutter;
-	text-shadow: #fff 0 1px 0;
-	align-items: center;
-	> * {
-		@include acf-col();
-
-		padding: 0;
-		width: auto;
-	}
-	> label {
-		order: -1;
-		margin-right: auto;
-	}
-	> .acf-input {
-		border: 1px solid $admin-gray-300;
+		background-color: transparent !important;
+		@if $type == 'padding' {
+			width: 100% !important;
+			padding-right: calc(
+				var(--#{$variable-prefix}gutter-x) * 0.5
+			) !important;
+			padding-left: calc(
+				var(--#{$variable-prefix}gutter-x) * 0.5
+			) !important;
+			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
+		} @else {
+			margin-right: calc(
+				var(--#{$variable-prefix}gutter-x) * -0.5
+			) !important;
+			margin-top: calc(
+				var(--#{$variable-prefix}gutter-y) * -1
+			) !important;
+			margin-left: calc(
+				var(--#{$variable-prefix}gutter-x) * -0.5
+			) !important;
+			width: calc(100% + var(--#{$variable-prefix}gutter-x)) !important;
+			padding: 0 !important;
+		}
 	}
 }

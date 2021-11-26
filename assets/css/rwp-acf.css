@@ -2,14 +2,23 @@
   !*** css ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./css/vendor/acf.scss ***!
   \********************************************************************************************************************************************************************************************************************************************************/
 body:not(.post-type-acf-field-group) .acf-fields.-border {
+  border-color: transparent;
+  border-width: 0;
+  background: none;
   background-color: transparent;
+}
+body:not(.post-type-acf-field-group) .acf-fields.-border > .acf-field {
+  border-color: transparent;
 }
 body:not(.post-type-acf-field-group) .acf-fields > .acf-field {
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  margin-top: var(--rwp-gutter-y);
+  padding-top: 0;
+  padding-bottom: 0;
+  border-color: transparent;
 }
 body:not(.post-type-acf-field-group) .acf-field.col {
   flex: 1 0;
@@ -116,19 +125,22 @@ body:not(.post-type-acf-field-group) .acf-field.acfe-seamless-style > .acf-input
   margin: 0 !important;
 }
 body:not(.post-type-acf-field-group) .acf-field.acfe-seamless-style > .acf-input > .acf-fields.-top {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(var(--bs-gutter-y) * -1);
-  margin-right: calc(var(--bs-gutter-x) * -0.5);
-  margin-left: calc(var(--bs-gutter-x) * -0.5);
-  width: calc(100% + var(--bs-gutter-x));
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background-color: transparent !important;
+  margin-right: calc(var(--rwp-gutter-x) * -0.5) !important;
+  margin-top: calc(var(--rwp-gutter-y) * -1) !important;
+  margin-left: calc(var(--rwp-gutter-x) * -0.5) !important;
+  width: calc(100% + var(--rwp-gutter-x)) !important;
+  padding: 0 !important;
 }
 body:not(.post-type-acf-field-group) .acf-field.border-top {
   border-top: 1px solid #eee !important;
+}
+body:not(.post-type-acf-field-group) .acf-field.border-none {
+  border: none !important;
 }
 body:not(.post-type-acf-field-group) .acf-field.w-100 {
   width: 100% !important;
@@ -143,19 +155,23 @@ body:not(.post-type-acf-field-group) .acf-field.label-lg > .acf-label {
   margin: 1em 0;
   font-weight: 600 !important;
 }
+body:not(.post-type-acf-field-group) .acf-field .acf-label label {
+  margin: 0;
+}
 body:not(.post-type-acf-field-group) .acf-field select {
   padding-right: 27px;
 }
 
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar {
-  --bs-gutter-x: 0;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
-  width: 100%;
-  padding-bottom: var(--bs-gutter-y);
+  --rwp-gutter-x: 0;
+  --rwp-gutter-y: 0;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background-color: transparent !important;
+  width: 100% !important;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-left: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-bottom: var(--rwp-gutter-y) !important;
 }
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar:before {
   display: none;
@@ -163,17 +179,16 @@ body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sid
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar > .acf-tab-wrap.-left {
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  margin-top: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar > .acf-field:not(.acf-field-tab) {
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
-  padding: 12px 15px;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  margin-top: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-fields.-left:after,
 body:not(.post-type-acf-field-group) td.acf-fields.-left:after {
@@ -181,14 +196,15 @@ body:not(.post-type-acf-field-group) td.acf-fields.-left:after {
 }
 body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field,
 body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field {
-  --bs-gutter-x: 0;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
-  width: 100%;
-  padding-bottom: var(--bs-gutter-y);
+  --rwp-gutter-x: 0;
+  --rwp-gutter-y: 0;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background-color: transparent !important;
+  width: 100% !important;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-left: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-bottom: var(--rwp-gutter-y) !important;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -202,25 +218,26 @@ body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:after {
 }
 body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-label,
 body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-label {
-  padding: 12px 15px;
+  padding: 15px 12px;
 }
 body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-input,
 body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-input {
-  padding: 12px 15px !important;
+  padding: 15px 12px !important;
 }
 
 body:not(.post-type-acf-field-group) .acf-postbox * {
   box-sizing: border-box !important;
 }
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
-  width: 100%;
-  padding-bottom: var(--bs-gutter-y);
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background-color: transparent !important;
+  width: 100% !important;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-left: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-bottom: var(--rwp-gutter-y) !important;
 }
 body:not(.post-type-acf-field-group) .acf-fields:after,
 body:not(.post-type-acf-field-group) td.acf-fields:after {
@@ -228,15 +245,15 @@ body:not(.post-type-acf-field-group) td.acf-fields:after {
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top,
 body:not(.post-type-acf-field-group) td.acf-fields.-top {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
   display: flex;
   flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  background-color: transparent;
   width: 100%;
-  padding-bottom: var(--bs-gutter-y);
-  padding-bottom: var(--bs-gutter-y) !important;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  padding-bottom: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field {
@@ -246,7 +263,7 @@ body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field {
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field:first-child,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field:first-child {
-  margin-top: var(--bs-gutter-y);
+  margin-top: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field.label-inline,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inline {
@@ -255,24 +272,24 @@ body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inlin
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field.label-inline:not(.left-label) > .acf-label,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inline:not(.left-label) > .acf-label {
   order: 99;
-  padding-left: 15px;
+  padding-left: 12px;
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field.label-inline.left-label > .acf-label,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inline.left-label > .acf-label {
-  padding-right: 15px;
+  padding-right: 12px;
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field.label-inline > .acf-label,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inline > .acf-label {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   margin-bottom: 0;
 }
 body:not(.post-type-acf-field-group) .acf-fields.-top > .acf-field.label-inline > .acf-input,
 body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inline > .acf-input {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .acf-color-picker .iris-picker {
@@ -332,21 +349,22 @@ body:not(.post-type-acf-field-group) td.acf-fields.-top > .acf-field.label-inlin
 }
 
 body:not(.post-type-acf-field-group) .acf-fields.acfe-column-wrapper {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
   display: flex;
   flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  background-color: transparent;
   width: 100%;
-  padding-bottom: var(--bs-gutter-y);
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  padding-bottom: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-fields.acfe-column-wrapper > .acf-field.acf-field-acfe-column {
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
+  padding-right: calc(var(--rwp-gutter-x) * 0.5);
+  padding-left: calc(var(--rwp-gutter-x) * 0.5);
+  margin-top: var(--rwp-gutter-y);
 }
 body:not(.post-type-acf-field-group) .acf-fields.acfe-column-wrapper > .acf-field.acf-field-acfe-column[data-columns="1/12"] {
   flex: 0 0 auto;
@@ -393,27 +411,38 @@ body:not(.post-type-acf-field-group) .acf-fields.acfe-column-wrapper > .acf-fiel
   width: 91.66666667%;
 }
 body:not(.post-type-acf-field-group) .acf-fields.acfe-column-wrapper > .acf-field.acf-field-acfe-column > .acf-input > .acf-fields {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(var(--bs-gutter-y) * -1);
-  margin-right: calc(var(--bs-gutter-x) * -0.5);
-  margin-left: calc(var(--bs-gutter-x) * -0.5);
-  width: calc(100% + var(--bs-gutter-x));
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  background-color: transparent;
+  margin-right: calc(var(--rwp-gutter-x) * -0.5);
+  margin-left: calc(var(--rwp-gutter-x) * -0.5);
+  margin-top: calc(var(--rwp-gutter-y) * -1);
+  width: calc(100% + var(--rwp-gutter-x));
+  padding: 0 !important;
+}
+
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group.acfe-field-group-layout-row:not(.acfe-seamless-style) {
+  padding: 15px !important;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group.acfe-field-group-layout-row:not(.acfe-seamless-style) > .acf-input > .acf-fields {
+  border: solid 1px #e1e1e1 !important;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group.acfe-field-group-layout-row > .acf-input > .acf-fields.-left > .acf-field:not(:first-child) {
+  border-top: solid 1px #e1e1e1 !important;
 }
 
 body:not(.post-type-acf-field-group) .acf-repeater.-block > table > tbody > tr > .acf-fields {
-  --bs-gutter-x: 12px;
-  --bs-gutter-y: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
-  width: 100%;
-  padding-bottom: var(--bs-gutter-y);
+  --rwp-gutter-x: 12px;
+  --rwp-gutter-y: 15px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  background-color: transparent !important;
+  width: 100% !important;
+  padding-right: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-left: calc(var(--rwp-gutter-x) * 0.5) !important;
+  padding-bottom: var(--rwp-gutter-y) !important;
 }
 body:not(.post-type-acf-field-group) .acf-repeater.-block > table > tbody > tr > .acf-row-handle {
   padding: 6px;
@@ -427,7 +456,7 @@ body:not(.post-type-acf-field-group) .acf-repeater.-block > table > tbody > tr >
   transform: translate(-50%, -50%);
 }
 body:not(.post-type-acf-field-group) .acf-repeater.-block > table .acf-actions {
-  margin-top: var(--bs-gutter-y);
+  margin-top: var(--rwp-gutter-y);
 }
 
 body:not(.post-type-acf-field-group) .acf-field.acf-field-true-false {

@@ -9,10 +9,19 @@
 body:not(.post-type-acf-field-group) {
 	.acf-fields {
 		&.-border {
+			border-color: transparent;
+			border-width: 0;
+			background: none;
 			background-color: transparent;
+			> .acf-field {
+				border-color: transparent;
+			}
 		}
 		> .acf-field {
 			@include make-col-ready;
+			padding-top: 0;
+			padding-bottom: 0;
+			border-color: transparent;
 		}
 	}
 	.acf-field {
@@ -33,13 +42,16 @@ body:not(.post-type-acf-field-group) {
 				margin: 0 !important;
 				> .acf-fields {
 					&.-top {
-						@include make-row-2();
+						@include acf-row('margin', true);
 					}
 				}
 			}
 		}
 		&.border-top {
 			border-top: 1px solid #eee !important;
+		}
+		&.border-none {
+			border: none !important;
 		}
 		&.w-100 {
 			width: 100% !important;
@@ -56,6 +68,11 @@ body:not(.post-type-acf-field-group) {
 				font-size: 1.3em !important;
 				margin: 1em 0;
 				font-weight: 600 !important;
+			}
+		}
+		.acf-label {
+			label {
+				margin: 0;
 			}
 		}
 		select {

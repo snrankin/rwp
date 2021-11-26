@@ -8,7 +8,7 @@
 
 body:not(.post-type-acf-field-group) {
 	.acf-postbox > .inside.acf-fields.-top.-sidebar {
-		@include acf-row(0, 0);
+		@include acf-row('padding', true, 0, 0);
 		&::before {
 			display: none;
 		}
@@ -20,7 +20,6 @@ body:not(.post-type-acf-field-group) {
 		}
 		> .acf-field:not(.acf-field-tab) {
 			@include make-col-ready();
-			padding: 12px 15px;
 			@include media-breakpoint-up(md) {
 				width: 80%;
 			}
@@ -33,7 +32,7 @@ body:not(.post-type-acf-field-group) {
 				display: none;
 			}
 			> .acf-field {
-				@include acf-row(0, 0);
+				@include acf-row('padding', true, 0, 0);
 				padding-top: 0;
 				padding-bottom: 0;
 				&.label-none {
@@ -46,13 +45,13 @@ body:not(.post-type-acf-field-group) {
 				}
 
 				> .acf-label {
-					padding: 12px 15px;
+					padding: $acf-gutter-y $acf-gutter-x;
 					@include media-breakpoint-up(md) {
 						width: 20%;
 					}
 				}
 				> .acf-input {
-					padding: 12px 15px !important;
+					padding: $acf-gutter-y $acf-gutter-x !important;
 					@include media-breakpoint-up(md) {
 						width: 80%;
 					}
