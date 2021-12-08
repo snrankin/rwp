@@ -25,17 +25,15 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const { createConfig } = require('./config');
 
-const isProduction =
-	!_.isNil(argv.env) && 'production' === argv.env ? true : false;
+const isProduction = !_.isNil(argv.p) ? true : false;
 const groupName = !_.isNil(argv.name) ? argv.name : '';
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
 const config = createConfig(groupName, configName);
+exports.config = config;
 
 const manifestPath = path.join(config.paths.dist, 'manifest.json');
-const manifestSeed = fs.existsSync(manifestPath)
-	? JSON.parse(fs.readFileSync(manifestPath))
-	: {};
+const manifestSeed = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath)) : {};
 
 const cssLoaders = [
 	{
@@ -97,9 +95,7 @@ const cssLoaders = [
 
 exports.cssLoaders = cssLoaders;
 
-const startingPlugins = config.enabled.cachebusting
-	? [new RemovePlugin(config.clean)]
-	: [];
+const startingPlugins = config.enabled.cachebusting ? [new RemovePlugin(config.clean)] : [];
 
 exports.startingPlugins = startingPlugins;
 
@@ -144,9 +140,12 @@ let webpackConfig = {
 					{
 						loader: 'sass-loader',
 						options: {
+							implementation: require('sass'),
 							sassOptions: {
 								sourceMap: config.enabled.sourcemaps,
 								importer: magicImporter(),
+								indentWidth: 4,
+								fiber: false,
 							},
 						},
 					},

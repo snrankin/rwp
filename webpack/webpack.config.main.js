@@ -12,12 +12,8 @@
 const { mergeWithCustomize, customizeArray, merge } = require('webpack-merge');
 const webpack = require('webpack');
 const _ = require('lodash');
-
-const {
-	startingPlugins,
-	baseConfig,
-	endingPlugins,
-} = require('./webpack.config');
+const CopyPlugin = require('copy-webpack-plugin');
+const { startingPlugins, config, baseConfig, endingPlugins } = require('./webpack.config');
 // const { rwpDebug } = require('./utils');
 let webpackConfig = {
 	module: {
@@ -58,6 +54,23 @@ let webpackConfig = {
 		}),
 	],
 };
+
+if (!_.isNil(config.copy)) {
+	webpackConfig = mergeWithCustomize({
+		customizeArray: customizeArray({
+			plugins: 'append',
+		}),
+	})(webpackConfig, {
+		plugins: [
+			new CopyPlugin({
+				patterns: config.copy,
+				options: {
+					concurrency: 100,
+				},
+			}),
+		],
+	});
+}
 
 webpackConfig = merge(baseConfig, webpackConfig);
 

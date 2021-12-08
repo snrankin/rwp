@@ -16,7 +16,7 @@ const { argv } = require('yargs');
 
 const config = require('../config.json');
 
-const isProduction = config.enabled.production;
+const isProduction = !_.isNil(argv.p) ? true : false;
 const rootPath =
 	config.paths && config.paths.root ? config.paths.root : process.cwd();
 
@@ -192,7 +192,7 @@ const createConfig = (groupName = '', configName = '') => {
 							const pattern = new RegExp(
 								fileprefix +
 									itemName +
-									'(-[^-\\/]+)?.css(.map)?$',
+									'(-[^-\\/]+)?.css(.map)?(.min)?$',
 								'g'
 							);
 
@@ -226,7 +226,7 @@ const createConfig = (groupName = '', configName = '') => {
 							const pattern = new RegExp(
 								fileprefix +
 									itemName +
-									'(-[^-\\/]+)?.(js|php)(.map)?$',
+									'(-[^-\\/]+)?.(js|php)(.map)?(.min)?$',
 								'g'
 							);
 
