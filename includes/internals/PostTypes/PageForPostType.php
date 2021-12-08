@@ -21,19 +21,21 @@ class PageForPostType extends Singleton {
 	protected $original_slugs = array();
 
 	public function initialize() {
-		// admin init
-		\add_action( 'admin_init', array( $this, 'admin_init' ) );
-		// update post type objects
-		\add_action( 'registered_post_type', array( $this, 'update_post_type' ), 11, 2 );
-		// menu classes
-		\add_filter( 'wp_nav_menu_objects', array( $this, 'filter_wp_nav_menu_objects' ), 1, 2 );
-		// customiser
-		\add_action( 'customize_register', array( $this, 'action_customize_register' ) );
-		// edit.php view
-		\add_filter( 'display_post_states', array( $this, 'filter_display_post_states' ), 100, 2 );
-		// post status changes / deletion
-		\add_action( 'transition_post_status', array( $this, 'action_transition_post_status' ), 10, 3 );
-		\add_action( 'deleted_post', array( $this, 'action_deleted_post' ), 10 );
+		if ( rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+			// admin init
+			\add_action( 'admin_init', array( $this, 'admin_init' ) );
+			// update post type objects
+			\add_action( 'registered_post_type', array( $this, 'update_post_type' ), 11, 2 );
+			// menu classes
+			\add_filter( 'wp_nav_menu_objects', array( $this, 'filter_wp_nav_menu_objects' ), 1, 2 );
+			// customiser
+			\add_action( 'customize_register', array( $this, 'action_customize_register' ) );
+			// edit.php view
+			\add_filter( 'display_post_states', array( $this, 'filter_display_post_states' ), 100, 2 );
+			// post status changes / deletion
+			\add_action( 'transition_post_status', array( $this, 'action_transition_post_status' ), 10, 3 );
+			\add_action( 'deleted_post', array( $this, 'action_deleted_post' ), 10 );
+		}
 	}
 	public function admin_init() {
 		// add settings fields
