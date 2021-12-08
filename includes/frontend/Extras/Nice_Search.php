@@ -73,42 +73,15 @@ class Nice_Search extends Singleton {
 	 *
 	 * @return string
 	 */
-	public function bootstrap_search( $form, $args ) {
+	public function bootstrap_search( $form ) {
 
-		$content = $form;
+		$args = array();
 
-		$form = rwp_html( $form )->addClass( 'form-inline' );
+		$args = apply_filters( 'rwp_search_form_args', $args );
 
-		$label = '<label for="s">' . $form->filter( 'label > span' )->text() . '</label>';
+		$form = rwp_search_form( $form, $args );
 
-		$input = $form->filter( 'input.search-field' )->addClass( 'form-control' )->saveHTML();
-
-		$btn_args = apply_filters( 'rwp_search_form_btn_args', array(
-			'icon' => 'bi bi-search',
-		) );
-
-		$btn = rwp_input_to_button( $content, 'input.search-submit', $btn_args );
-
-		$input = '<div class="form-floating">' . $input . $label . '</div>';
-
-		$form->makeEmpty();
-
-		$form->append( $input )->append( $btn );
-
-		/**
-		 * Filters the search form output
-		 *
-		 * Should return an Html class
-		 *
-		 * @var Html $form
-		 */
-		$form = apply_filters( 'rwp_search_form_html', $form );
-
-		/**
-		 * @var Html $form
-		 */
-
-		return $form->saveHTML();
+		return $form;
 	}
 
 }
