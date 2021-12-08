@@ -13,7 +13,7 @@
  * ========================================================================== */
 namespace RWP\Components;
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 class Group extends Element {
 

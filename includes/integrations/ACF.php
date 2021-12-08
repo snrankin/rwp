@@ -15,6 +15,7 @@ use RWP\Engine\Abstracts\Singleton;
 use RWP\Integrations\Bootstrap;
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
 use RWP\Components\Str;
+use RWP\Components\Collection;
 class ACF extends Singleton {
 
 	/**

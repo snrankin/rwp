@@ -9,7 +9,7 @@
  * ==========================================================================
  */
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Support\Enumerable;
@@ -95,6 +95,31 @@ function rwp_object_get( $obj, $key, $default = null ) {
 	}
 }
 
+/**
+ * Check if variable is an instance of a Component class
+ *
+ * @param mixed   $var    The variable to check
+ * @param string  $class  The name of the class
+ *
+ * @return bool
+ */
+function rwp_is_class( $var, $class ) {
+    return ( $var instanceof $class );
+}
+
+/**
+ * Check if variable is an instance of a Component class
+ *
+ * @param mixed   $var        The variable to check
+ * @param string  $component  The name of the component
+ *
+ * @return bool
+ */
+function rwp_is_component( $var, $component = 'Element' ) {
+	$class = '\\RWP\\Components\\' . $component;
+    return rwp_is_class( $var, $class );
+}
+
 
 // ========================================================================== //
 // ====================== SECTION: Collection Functions ===================== //
@@ -108,7 +133,7 @@ function rwp_object_get( $obj, $key, $default = null ) {
  * @return bool
  */
 function rwp_is_collection( $var ) {
-     return ( $var instanceof Collection );
+    return rwp_is_class( $var, '\\RWP\\Vendor\\Illuminate\\Support\\Collection' );
 }
 
 /**

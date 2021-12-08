@@ -15,7 +15,7 @@
 namespace RWP\Integrations;
 
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 class JS_Plugins extends Singleton {
 
 	/**

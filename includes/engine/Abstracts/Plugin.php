@@ -13,7 +13,7 @@ namespace RWP\Engine\Abstracts;
 
 use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Components\Str;
 
 abstract class Plugin extends Singleton implements Component {

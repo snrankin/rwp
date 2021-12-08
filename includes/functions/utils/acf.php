@@ -7,8 +7,7 @@
  * @since   0.1.0
  * ========================================================================== */
 
-use RWP\Components\{Element, Html};
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 /**
  *

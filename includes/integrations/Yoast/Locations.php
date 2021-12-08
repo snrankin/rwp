@@ -12,7 +12,7 @@
 namespace RWP\Integrations\Yoast;
 
 use Yoast\WP\SEO\Generators\Schema\Organization;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 class Locations extends Organization {
 
     /**

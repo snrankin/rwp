@@ -16,7 +16,7 @@ namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Str;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 /**
  * Post Types and Taxonomies

@@ -9,7 +9,7 @@
  * ==========================================================================
  */
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Components\Html;
 use RWP\Components\Str;
 /**
