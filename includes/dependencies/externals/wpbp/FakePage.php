@@ -15,31 +15,32 @@ if ( !class_exists( 'RWP\\Vendor\\WPBP\\FakePage' ) ) {
 
 	class FakePage {
 
-            /**
-             *
-             * @var string
-             */
+		/**
+		 *
+		 * @var string
+		 */
 		public $slug = '';
 
-            /**
-             *
-             * @var array
-             */
+		/**
+		 *
+		 * @var array
+		 */
 		public $args = array();
 
-            /**
-             *
-             * @var integer
-             */
+		/**
+		 *
+		 * @var integer
+		 */
 		public $id;
 
+		public $footer;
+
 		/**
-		 * __construct<br>
 		 * initialize the Fake Page
 		 * @param array $args
 		 * @author Ohad Raz
-             *
-             * @param array $args
+		 *
+		 * @param array $args
 		 *
 		 */
 		function __construct( $args ) {
@@ -47,24 +48,36 @@ if ( !class_exists( 'RWP\\Vendor\\WPBP\\FakePage' ) ) {
 			$this->args = $args;
 			$this->slug = $args[ 'slug' ];
 			$this->id = '-1';
+
+			if ($this->is_fake_page()){
+				add_action( 'wp_footer', function () {
+					echo $this->footer;
+				}, 100 );
+			}
+
+		}
+
+		public function is_fake_page(){
+			global $wp;
+			return ('404' === $wp->query_vars[ 'error' ] ) &&
+				(strtolower( $wp->request ) === $this->slug ||
+				isset( $wp->query_vars[ 'page_id' ] ) && $wp->query_vars[ 'page_id' ] === $this->slug );
 		}
 
 		/**
-		 * fake_page_filter<br>
-		 * Catches the request and returns the page as if it was retrieved from the database
+		 * Catches the request and returns the page as if it was retrieved from
+		 * the database
+		 *
 		 * @param  array $posts
 		 * @return array
 		 * @author Ohad Raz & Mte90
 		 */
 		public function fake_page_filter( $posts ) {
-			global $wp, $wp_query;
+			global $wp_query;
 
 			// Check if user is requesting our fake page
-			if (
-				count( $posts ) === 0 &&
-				(strtolower( $wp->request ) === $this->slug ||
-				isset( $wp->query_vars[ 'page_id' ] ) && $wp->query_vars[ 'page_id' ] === $this->slug )
-			) {
+
+			if ($this->is_fake_page()) {
 				// Create a fake post
 				$post = new \stdClass;
 				$post->ID = $this->id;
