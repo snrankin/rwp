@@ -109,7 +109,7 @@ class Element {
 
 		try {
 			if ( empty( $this->tag ) ) {
-				$class = get_called_class( $this );
+				$class = get_called_class();
 				throw new EmptyException( __( 'There is no html tag set and there were no arguments passed, cannot initialize ', 'rwp' ) . $class );
 			}
 		} catch ( EmptyException $th ) {
@@ -164,7 +164,13 @@ class Element {
 		}
 
 		if ( is_object( $args ) ) {
-			$args = rwp_object_to_array( $args );
+			if ( $args instanceof Html ) {
+				$args = $args->__toString();
+				$args = $this->create_from_string( $args );
+
+			} elseif ( $args instanceof Element || $args instanceof Collection ) {
+				$args = rwp_object_to_array( $args );
+			}
 		}
 
 		if ( is_array( $args ) ) {
@@ -195,8 +201,10 @@ class Element {
 					$element_class = __NAMESPACE__ . '\\' . $element;
 					if ( class_exists( $element_class ) ) {
 						if ( $this->has( $item ) ) {
-							$value = new $element_class( $this->$item );
-							$this->set( $item, $value, true );
+							if ( ! ( $this->$item instanceof $element_class ) ) {
+								$value = new $element_class( $this->$item );
+								$this->set( $item, $value, true );
+							}
 						}
 					} else {
 						throw new \LogicException( "Unable to load class: $element_class" );
@@ -254,7 +262,7 @@ class Element {
 	public function remove_order_item( $key ) {
 		$order = $this->order;
 
-		if ( array_search( $key, $order ) ) {
+		if ( false !== array_search( $key, $order ) ) {
 			$order = rwp_array_remove( $order, $key );
 		}
 
@@ -642,6 +650,7 @@ class Element {
 
 	public function remove_content( $key ) {
 		$this->remove( "content.$key", true, false );
+		$this->remove_order_item( $key );
 	}
 
 	/**
@@ -926,17 +935,8 @@ class Element {
 	 *
 	 * @return void
 	 */
-	public function remove( $key, $remove_order = true, $remove_content = true ) {
+	public function remove( $key ) {
 		\data_remove( $this, $key );
-
-		if ( $remove_order ) {
-			$this->remove_order_item( $key );
-		}
-
-		if ( $remove_content ) {
-			$this->remove( "content.$key" );
-		}
-
 	}
 
 	/**

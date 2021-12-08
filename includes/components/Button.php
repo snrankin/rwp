@@ -23,7 +23,9 @@ class Button extends Element {
 	 * @var array
 	 */
 	public $atts = array(
-		'class' => 'btn',
+		'class' => array(
+			'btn',
+		),
 	);
 
 	/**
@@ -68,9 +70,9 @@ class Button extends Element {
 	 */
 
 	public $text = array(
-		'tag' => 'span',
+		'tag'  => 'span',
 		'atts' => array(
-			'class'     => array(
+			'class' => array(
 				'btn-text',
 			),
 		),
@@ -81,9 +83,9 @@ class Button extends Element {
 	 */
 
 	public $icon = array(
-		'tag' => 'span',
+		'tag'  => 'span',
 		'atts' => array(
-			'class'     => array(
+			'class' => array(
 				'btn-icon',
 			),
 		),
@@ -95,8 +97,9 @@ class Button extends Element {
 
 	public $icon_opened = array(
 		'content' => '−',
-		'atts' => array(
-			'class'     => array(
+		'tag'     => 'span',
+		'atts'    => array(
+			'class' => array(
 				'icon-opened',
 			),
 		),
@@ -109,14 +112,23 @@ class Button extends Element {
 
 	public $icon_closed = array(
 		'content' => '+',
-		'atts' => array(
-			'class'     => array(
+		'tag'     => 'span',
+		'atts'    => array(
+			'class' => array(
 				'icon-closed',
 			),
 		),
 	);
 
 	public function __construct( $args = [] ) {
+
+		$text = data_get( $args, 'text', '' );
+
+		if ( is_string( $text ) && ! rwp_str_is_html( $text ) && filled( $text ) ) {
+			$args['text'] = array(
+				'content' => $text,
+			);
+		}
 
 		parent::__construct( $args );
 
@@ -128,14 +140,44 @@ class Button extends Element {
 			$this->set_attr( 'href', $this->link, false );
 		}
 
-		if ( ! blank( $this->toggle ) ) {
+		if ( $this->content->isNotEmpty() ) {
+			$this->content->reject( function ( $item ) {
+				if ( is_string( $item ) ) {
+					if ( rwp_str_is_html( $item ) ) {
+						if ( rwp_str_is_element( $item, 'i|svg|img' ) ) {
+							$this->set_icon( $item );
+							return true;
+						}
+					} else {
+						$this->set_text( $item );
+						return true;
+					}
+				}
+				if ( $item instanceof Icon ) {
+					$this->set_icon( $item );
+					return true;
+				}
 
-			if ( ! blank( $this->icon_opened ) ) {
-				$this->icon_opened = new Icon( $this->icon_opened );
+				return false;
+			});
+		}
+
+		if ( filled( $this->toggle ) ) {
+
+			if ( ! empty( $this->icon_opened ) ) {
+				if ( ! ( $this->icon_opened instanceof Icon ) ) {
+					$this->icon_opened = new Icon( $this->icon_opened );
+
+				}
+				$this->icon_opened->add_class( 'icon-opened' );
 			}
 
-			if ( ! blank( $this->icon_closed ) ) {
-				$this->icon_closed = new Icon( $this->icon_closed );
+			if ( ! empty( $this->icon_closed ) ) {
+				if ( ! ( $this->icon_closed instanceof Icon ) ) {
+					$this->icon_closed = new Icon( $this->icon_closed );
+
+				}
+				$this->icon_closed->add_class( 'icon-closed' );
 			}
 		}
 	}
@@ -159,6 +201,7 @@ class Button extends Element {
 				$this->set_attr( 'data-bs-toggle', $toggle );
 				$this->set_attr( 'aria-haspopup', 'true' );
 				$this->set_attr( 'aria-expanded', 'false' );
+				$this->set_toggle_icons();
 				break;
 			case 'tab':
 			case 'pill':
@@ -166,13 +209,14 @@ class Button extends Element {
 				$this->set_attr( 'aria-controls', $target );
 				$this->set_attr( 'role', 'tab' );
 				$this->set_attr( 'aria-selected', 'false' );
-
+				$this->set_toggle_icons();
 				break;
 			case 'collapse':
 				$this->set_attr( 'data-bs-toggle', $toggle );
 				$this->set_attr( 'data-bs-target', $link );
 				$this->set_attr( 'aria-controls', $target );
 				$this->set_attr( 'aria-expanded', 'false' );
+				$this->set_toggle_icons();
 				break;
 			case 'modal':
 				$this->set_attr( 'data-bs-toggle', $toggle );
@@ -180,9 +224,19 @@ class Button extends Element {
 				break;
 			case 'close':
 				$this->set_attr( 'data-bs-dismiss', 'modal' );
-				$this->add_class( 'close' );
+				$this->add_class( 'btn-close' );
 				$this->set_attr( 'aria-label', __( 'Close', 'rwp' ) );
 				break;
+		}
+	}
+
+	public function set_toggle_icons() {
+        if ( $this->icon_opened instanceof Icon ) {
+			$this->icon->set_content( $this->icon_opened, 'opened', true );
+		}
+
+		if ( $this->icon_closed instanceof Icon ) {
+			$this->icon->set_content( $this->icon_closed, 'closed', true );
 		}
 	}
 
@@ -205,7 +259,6 @@ class Button extends Element {
 	 * @return void
 	 */
 	public function set_text( $args, $overwrite = true ) {
-
 		$this->text->merge_args( $args, $overwrite );
 	}
 
@@ -241,28 +294,37 @@ class Button extends Element {
 			$this->set_attr( 'type', 'button' );
 		}
 
-		if ( $this->icon_opened instanceof Icon ) {
-			$this->icon->set_content( $this->icon_opened, 'opened', true );
-		}
-
-		if ( $this->icon_closed instanceof Icon ) {
-			$this->icon->set_content( $this->icon_closed, 'closed', true );
-		}
-
-		if ( $this->icon->has_content() ) {
-			if ( ! in_array( 'icon', $this->order ) ) {
-				$this->set_order( 'icon', 1 );
+		if ( in_array( 'icon', $this->order ) ) {
+			if ( ! $this->icon->has_content() ) {
+				$this->remove_content( 'icon' );
+			}
+		} else {
+			if ( $this->icon->has_content() ) {
+				$this->set_order( 'icon', 'last' );
 			}
 		}
 
-		$icon_order = array_search( 'icon', $this->order );
-
-		$text_order = array_search( 'text', $this->order );
-
-		if ( $icon_order < $text_order ) {
-			$this->icon->add_class( 'icon-left' );
+		if ( in_array( 'text', $this->order ) ) {
+			if ( ! $this->text->has_content() ) {
+				$this->remove_content( 'text' );
+			}
 		} else {
-			$this->icon->add_class( 'icon-right' );
+			if ( $this->text->has_content() ) {
+				$this->set_order( 'text', 'first' );
+			}
+		}
+
+		if ( in_array( 'text', $this->order, true ) && in_array( 'icon', $this->order, true ) ) {
+
+			$icon_order = array_search( 'icon', $this->order );
+
+			$text_order = array_search( 'text', $this->order );
+
+			if ( $icon_order < $text_order ) {
+				$this->icon->add_class( 'icon-left' );
+			} else {
+				$this->icon->add_class( 'icon-right' );
+			}
 		}
 	}
 }

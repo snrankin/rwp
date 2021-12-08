@@ -42,7 +42,7 @@ class PostCard extends Card {
 
 		$title = rwp_post_title( $post );
 
-		$image = rwp_get_featured_image($post, 'small', array(
+		$image = rwp_get_featured_image($post, 'thumbnail', array(
 			'inner' => array(
 				'tag' => 'a',
 				'atts' => array(

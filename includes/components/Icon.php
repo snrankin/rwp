@@ -13,7 +13,7 @@
 namespace RWP\Components;
 
 use RWP\Components\Str;
-
+use RWP\Components\Collection;
 class Icon extends Element {
 	/**
 	 * @var string
@@ -27,9 +27,6 @@ class Icon extends Element {
 	public $atts = array(
 		'aria-hidden' => 'true',
 		'role'        => 'presentation',
-		'class'       => array(
-			'rwp-icon',
-		),
 	);
 
 	/**
@@ -42,42 +39,57 @@ class Icon extends Element {
 
 	public function __construct( $args = array() ) {
 
+		$src = '';
+		$html = '';
+		$class = '';
+
+		if ( is_numeric( $args ) && intval( $args ) !== 0 ) {
+			$src = wp_get_attachment_image_url( $args, 'thumbnail', true );
+		}
+
 		if ( is_string( $args ) ) {
-			if ( rwp_str_is_element( $args, 'svg' ) ) {
-				$this->set_tag( 'svg' );
-				$args = new SVG( $args );
-			} else if ( ( is_file( $args ) && rwp_file_exists( $args ) ) || rwp_is_url( $args ) ) {
-				if ( rwp_str_ends_with( $args, 'svg' ) ) {
-					if ( rwp_is_url( $args ) && ! rwp_is_outbound_link( $args ) && rwp_str_has( $args, 'wp-content' ) ) {
-						$dir = rwp_filesystem()->wp_content_dir();
-						$args = Str::after( $args, 'wp-content/' );
-						$args = $dir . DIRECTORY_SEPARATOR . $args;
+
+			if ( rwp_is_url( $args ) ) {
+				if ( rwp_str_has( $args, 'wp-content' ) ) {
+					$src = attachment_url_to_postid( $args );
+					if ( is_numeric( $args ) && intval( $args ) !== 0 ) {
+						$src = wp_get_attachment_image_url( $src, 'thumbnail', true );
 					}
-					$args = new SVG( array( 'src' => $args ) );
-					$args->build();
-					$args = $args->toArray();
-				} else if ( rwp_str_ends_with( $args, array( 'jpg', 'jpeg', 'png', 'gif', 'ico' ) ) ) {
-					$args = new Image( array( 'src' => $args ) );
-					$args->build();
-					$args = $args->image->toArray();
 				}
-			} else {
+			} else if ( rwp_str_is_element( $args, 'svg' ) ) {
+				$this->set_tag( 'svg' );
+				$html = $args;
+			} else if ( ! rwp_str_is_html( $args ) && ! rwp_is_url( $args ) ) {
 				/**
 				 * Assuming the arguments are class names (ex: fas fa-facebook)
 				 */
-				$args = array(
-					'atts' => array(
-						'class' => rwp_parse_classes( $args ),
-					),
-				);
+				$class = rwp_parse_classes( $args );
 			}
-		} elseif ( rwp_array_has( 'src', $args ) ) {
 
-			$src = $args['src'];
+			$args = array(
+				'src'  => $src,
+				'html' => $html,
+				'atts' => array(
+					'class' => $class,
+				),
+			);
+		} else if ( is_object( $args ) ) {
+			if ( $args instanceof Html ) {
+				$args = $args->__toString();
+				$html = rwp_element( $args );
+				$html->build();
+				$args = $html->toArray();
 
-			if ( ( is_file( $src ) && rwp_file_exists( $src ) ) || rwp_is_url( $src ) ) {
+			} elseif ( $args instanceof Element || $args instanceof Collection ) {
+				$args = rwp_object_to_array( $args );
+			}
+		}
+
+		if ( ! empty( $src ) ) {
+			if ( rwp_is_url( $src ) ) {
+				$src = wp_parse_url( $src, 6 );
 				if ( rwp_str_ends_with( $src, 'svg' ) ) {
-					if ( rwp_is_url( $src ) && ! rwp_is_outbound_link( $src ) && rwp_str_has( $src, 'wp-content' ) ) {
+					if ( rwp_str_has( $src, 'wp-content' ) ) {
 						$dir = rwp_filesystem()->wp_content_dir();
 						$src = Str::after( $src, 'wp-content/' );
 						$src = $dir . DIRECTORY_SEPARATOR . $src;

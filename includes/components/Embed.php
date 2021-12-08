@@ -61,7 +61,7 @@ class Embed extends Element {
 	/**
 	 * @var mixed $icon The play button icon
 	 */
-	public $icon = '<i class="bi bi-play-circle"></i>';
+	public $icon = 'bi bi-play-circle';
 
 	/**
 	 * @var string|array|Element $inner Inner wrapper options
