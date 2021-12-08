@@ -25,15 +25,21 @@
 	display: flex;
 	align-items: center;
 	grid-row: 1/2;
+	white-space: nowrap;
+	position: relative;
+	z-index: 2;
 }
 
 .nav-toggle {
 	grid-row: 1/2;
+	position: relative;
+	z-index: 2;
 }
 
 .subnav {
 	grid-column: 1/3;
 	grid-row: 2/3;
+	z-index: 2;
 }
 .navbar {
 	@each $color, $value in $theme-colors {

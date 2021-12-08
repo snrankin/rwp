@@ -167,6 +167,16 @@ class NavItem extends Element {
 
 	public function setup_toggle() {
 		if ( $this->is_parent && false !== $this->toggle_type && is_array( $this->toggle ) ) {
+			switch ( $this->toggle_type ) {
+				case 'dropdown':
+					$this->add_class( 'dropdown' );
+				    break;
+				case 'tab':
+				case 'pill':
+				    break;
+				case 'collapse':
+				    break;
+			}
 			$this->set( 'toggle.toggle', $this->toggle_type );
 
 			$this->toggle = new Button( $this->toggle );

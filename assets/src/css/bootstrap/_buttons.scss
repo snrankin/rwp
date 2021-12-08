@@ -7,6 +7,7 @@
 /// ======================================================================== ///
 
 @import '~bootstrap/scss/buttons';
+
 .btn {
 	display: inline-flex;
 	justify-content: center;
@@ -62,7 +63,7 @@
 		width: 100%;
 		padding-bottom: 100%;
 	}
-	.btn-icon-opened {
+	.icon-opened {
 		opacity: 0;
 	}
 	i,
