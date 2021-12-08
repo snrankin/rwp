@@ -69,6 +69,12 @@ abstract class PostType extends Singleton {
 	public $post_type = array();
 
 	/**
+	 * @var array|bool $rewrite The post type rewrite rules
+	 */
+
+	public $rewrite = true;
+
+	/**
 	 * @var string $plural The taxonomy type in plural form
 	 */
 
@@ -139,9 +145,19 @@ abstract class PostType extends Singleton {
 	public function cpt_filter( $args = array() ) {
 
 		$updated_args = $this->args;
-		$updated_args['menu_icon'] = $this->menu_icon;
-		$updated_args['supports'] = $this->supports;
+		$has_archive = data_get( $updated_args, 'has_archive', false );
+
+		if ( $has_archive ) {
+			$updated_args['has_archive'] = $this->slug;
+		}
+
+		$updated_args['menu_icon']  = $this->menu_icon;
+		$updated_args['supports']   = $this->supports;
 		$updated_args['admin_cols'] = $this->admin_cols;
+
+		if ( true !== $this->rewrite ) {
+			$updated_args['rewrite'] = $this->rewrite;
+		}
 
 		$args = rwp_merge_args( $args, $updated_args );
 

@@ -247,7 +247,7 @@ function rwp_remove_suffix( $string = '', $suffix = '' ) {
 	if ( empty( $suffix ) || empty( $string ) ) {
 		return $string;
 	}
-	if ( rwp_str_starts_with( $string, $suffix ) ) {
+	if ( rwp_str_ends_with( $string, $suffix ) ) {
 		$string = Str::before( $string, $suffix );
 	}
 	return $string;

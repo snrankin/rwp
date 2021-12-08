@@ -73,6 +73,12 @@ class Yoast extends Singleton {
 			return $pieces;
 		}, 11, 2 );
 
+		add_action( 'admin_init', function() {
+			if ( post_type_exists( 'rwp_team_member' ) ) {
+				\WPSEO_Options::set( 'schema-page-type-rwp_team_member', 'ProfilePage' );
+			}
+		}, 20 );
+
 	}
 
 	public function init_seo() {
@@ -82,11 +88,11 @@ class Yoast extends Singleton {
 
 	}
 
-		/**
-		 * Updating Yoast breadcrumbs to include full path
-		 * @link http://plugins.svn.wordpress.org/wordpress-seo/trunk/frontend/class-breadcrumbs.php
-		 * @see http://wordpress.stackexchange.com/questions/100012/how-to-add-a-page-to-the-yoast-breadcrumbs
-		 */
+	/**
+	 * Updating Yoast breadcrumbs to include full path
+	 * @link http://plugins.svn.wordpress.org/wordpress-seo/trunk/frontend/class-breadcrumbs.php
+	 * @see http://wordpress.stackexchange.com/questions/100012/how-to-add-a-page-to-the-yoast-breadcrumbs
+	 */
 
 	public function full_path( $links ) {
 
@@ -161,6 +167,8 @@ class Yoast extends Singleton {
 				$schema_type = 'BlogPosting';
 			} else if ( is_singular( 'press' ) ) {
 				$schema_type = 'NewsArticle';
+			} else if ( is_singular( 'rwp_team_member' ) ) {
+				$schema_type = 'ProfilePage';
 			} else {
 				$schema_type = 'ItemPage';
 			}
