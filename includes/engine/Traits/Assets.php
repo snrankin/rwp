@@ -11,7 +11,7 @@
 namespace RWP\Engine\Traits;
 
 use RWP\Vendor\Exceptions\IO\IOException;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Vendor\Exceptions\Data\NotFoundException;
 use RWP\Vendor\Exceptions\Collection\EmptyException;
 use RWP\Vendor\Exceptions\Collection\KeyNotFoundException;

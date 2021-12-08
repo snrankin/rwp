@@ -5,3 +5,65 @@
 /// @since  1.0.1
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-postbox > .inside.acf-fields.-top.-sidebar {
+		@include acf-row('padding', true, 0, 0);
+		&::before {
+			display: none;
+		}
+		> .acf-tab-wrap.-left {
+			@include make-col-ready();
+			@include media-breakpoint-up(md) {
+				width: 20%;
+			}
+		}
+		> .acf-field:not(.acf-field-tab) {
+			@include make-col-ready();
+			@include media-breakpoint-up(md) {
+				width: 80%;
+			}
+		}
+	}
+	.acf-fields,
+	td.acf-fields {
+		&.-left {
+			&::after {
+				display: none;
+			}
+			> .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal='1']),
+			> .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal='1']),
+			> .acf-field {
+				@include acf-row('padding', true, 0, 0);
+				padding-top: 0;
+				padding-bottom: 0;
+				&.label-none {
+					> .acf-input {
+						width: 100%;
+					}
+				}
+				&::after {
+					display: none;
+				}
+
+				> .acf-label {
+					padding: $acf-gutter-y $acf-gutter-x;
+					@include media-breakpoint-up(md) {
+						width: 20%;
+					}
+				}
+				> .acf-input {
+					padding: $acf-gutter-y $acf-gutter-x;
+					@include media-breakpoint-up(md) {
+						width: 80%;
+					}
+					> .acf-fields {
+						&.-top {
+							@include acf-row('margin', true);
+						}
+					}
+				}
+			}
+		}
+	}
+}

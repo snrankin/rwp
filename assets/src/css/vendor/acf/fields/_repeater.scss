@@ -13,10 +13,10 @@ body:not(.post-type-acf-field-group) {
 				> tbody {
 					> tr {
 						> .acf-fields {
-							@include acf-row();
+							@include acf-row('padding', true);
 						}
 						> .acf-row-handle {
-							padding: $acf-gutter/2;
+							padding: $acf-gutter-x * 0.5;
 							width: auto;
 							width: 32px;
 							.acf-icon {

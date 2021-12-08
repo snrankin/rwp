@@ -6,7 +6,6 @@
 		"url": "https://www.riester.com"
 	},
 	"cachebusting": "[name]-[contenthash]",
-	"copy": [],
 	"enabled": {
 		"cache": false,
 		"cachebusting": false,
@@ -52,12 +51,20 @@
 			}
 		},
 		"fonts": {
+			"copy": ["/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/bootstrap-icons/bootstrap-icons.svg", "/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/@fortawesome/fontawesome-free/sprites/*"],
 			"files": {
 				"bootstrap-icons": {
 					"bootstrap-icons": ["./css/vendor/bootstrap-icons.scss"]
 				},
 				"font-awesome": {
 					"font-awesome": ["./css/vendor/font-awesome.scss"]
+				}
+			}
+		},
+		"debug": {
+			"files": {
+				"debug": {
+					"debug": ["./js/debug.js", "./css/debug.scss"]
 				}
 			}
 		},

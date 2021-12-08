@@ -25,6 +25,7 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
             'RWP\\Vendor\\tubalmartin\\CssMin\\' => 30,
             'RWP\\Vendor\\Wa72\\HtmlPrettymin\\' => 30,
             'RWP\\Vendor\\Wa72\\HtmlPageDom\\' => 28,
+            'RWP\\Vendor\\WPBP\\' => 16,
             'RWP\\Vendor\\Symfony\\Polyfill\\Php80\\' => 34,
             'RWP\\Vendor\\Symfony\\Polyfill\\Php73\\' => 34,
             'RWP\\Vendor\\Symfony\\Polyfill\\Mbstring\\' => 37,
@@ -39,7 +40,6 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
             'RWP\\Vendor\\Symfony\\Component\\ErrorHandler\\' => 42,
             'RWP\\Vendor\\Symfony\\Component\\DomCrawler\\' => 40,
             'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => 41,
-            'RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\' => 38,
             'RWP\\Vendor\\Psr\\SimpleCache\\' => 27,
             'RWP\\Vendor\\Psr\\Container\\' => 25,
             'RWP\\Vendor\\Masterminds\\' => 23,
@@ -51,6 +51,7 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
             'RWP\\Vendor\\Exceptions\\Helpers\\' => 30,
             'RWP\\Vendor\\Exceptions\\' => 22,
             'RWP\\Vendor\\Doctrine\\Inflector\\' => 30,
+            'RWP\\Vendor\\Brain\\Hierarchy\\' => 27,
         ),
     );
 
@@ -66,6 +67,10 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         'RWP\\Vendor\\Wa72\\HtmlPageDom\\' => 
         array (
             0 => __DIR__ . '/..' . '/wa72/htmlpagedom/src',
+        ),
+        'RWP\\Vendor\\WPBP\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/externals/wpbp',
         ),
         'RWP\\Vendor\\Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -123,10 +128,6 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/wordpress/hierarchy/src',
-        ),
         'RWP\\Vendor\\Psr\\SimpleCache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
@@ -172,11 +173,50 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
         ),
+        'RWP\\Vendor\\Brain\\Hierarchy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wordpress/hierarchy/src',
+        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'RWP\\Vendor\\Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\Branch404' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/Branch404.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchArchive' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchArchive.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchAttachment' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchAttachment.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchAuthor' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchAuthor.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchCategory' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchCategory.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchDate' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchDate.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchEmbed' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchEmbed.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchFrontPage' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchFrontPage.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchHome' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchHome.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchInterface' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchInterface.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchPage' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchPage.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchPaged' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchPaged.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchPostTypeArchive' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchPostTypeArchive.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchSearch' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchSearch.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchSingle' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchSingle.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchSingular' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchSingular.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchTag' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchTag.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Branch\\BranchTaxonomy' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Branch/BranchTaxonomy.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\FileExtensionPredicate' => __DIR__ . '/..' . '/wordpress/hierarchy/src/FileExtensionPredicate.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\CallbackTemplateFinder' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/CallbackTemplateFinder.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\FindFirstTemplateTrait' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/FindFirstTemplateTrait.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\FoldersTemplateFinder' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/FoldersTemplateFinder.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\LocalizedTemplateFinder' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/LocalizedTemplateFinder.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\SubfolderTemplateFinder' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/SubfolderTemplateFinder.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\SymfonyFinderAdapter' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/SymfonyFinderAdapter.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Finder\\TemplateFinderInterface' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Finder/TemplateFinderInterface.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Hierarchy' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Hierarchy.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Loader\\AggregateTemplateLoaderInterface' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Loader/AggregateTemplateLoaderInterface.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Loader\\CascadeAggregateTemplateLoader' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Loader/CascadeAggregateTemplateLoader.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Loader\\ExtensionMapTemplateLoader' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Loader/ExtensionMapTemplateLoader.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Loader\\FileRequireLoader' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Loader/FileRequireLoader.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\Loader\\TemplateLoaderInterface' => __DIR__ . '/..' . '/wordpress/hierarchy/src/Loader/TemplateLoaderInterface.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\PostTemplates' => __DIR__ . '/..' . '/wordpress/hierarchy/src/PostTemplates.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\QueryTemplate' => __DIR__ . '/..' . '/wordpress/hierarchy/src/QueryTemplate.php',
+        'RWP\\Vendor\\Brain\\Hierarchy\\QueryTemplateInterface' => __DIR__ . '/..' . '/wordpress/hierarchy/src/QueryTemplateInterface.php',
         'RWP\\Vendor\\Doctrine\\Inflector\\CachedWordInflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
         'RWP\\Vendor\\Doctrine\\Inflector\\GenericLanguageInflectorFactory' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/GenericLanguageInflectorFactory.php',
         'RWP\\Vendor\\Doctrine\\Inflector\\Inflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/Inflector.php',
@@ -903,6 +943,7 @@ class ComposerStaticInit5ab0c780e7760cbac96137825efefa78
         'RWP\\Vendor\\Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
         'RWP\\Vendor\\UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'RWP\\Vendor\\ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+        'RWP\\Vendor\\WPBP\\FakePage' => __DIR__ . '/../..' . '/externals/wpbp/FakePage.php',
         'RWP\\Vendor\\Wa72\\HtmlPageDom\\Helpers' => __DIR__ . '/..' . '/wa72/htmlpagedom/src/Helpers.php',
         'RWP\\Vendor\\Wa72\\HtmlPageDom\\HtmlPage' => __DIR__ . '/..' . '/wa72/htmlpagedom/src/HtmlPage.php',
         'RWP\\Vendor\\Wa72\\HtmlPageDom\\HtmlPageCrawler' => __DIR__ . '/..' . '/wa72/htmlpagedom/src/HtmlPageCrawler.php',

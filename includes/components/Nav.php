@@ -16,8 +16,6 @@ class Nav extends Element {
 
 	public $order = array( 'list' );
 
-	public $direction = 'vertical';
-
 	/**
 	 * @var array $atts
 	 */
@@ -28,10 +26,35 @@ class Nav extends Element {
 	);
 
 	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array(
+		'list'   => 'NavList',
+		'toggle' => 'Button',
+	);
+
+	/**
 	 * @var int $depth If the depth is greater than 0 then it is a subnav
 	 */
 
 	public $depth = 0;
+
+	/**
+	 * @var string $type The type of navigation. One of `nav|navbar|tabs|pills`
+	 * @link https://getbootstrap.com/docs/5.0/components/navs-tabs/#base-nav
+	 */
+	public $type;
+
+	/**
+	 * @var string $direction The direction of the navigation (either horizontal or vertical)
+	 */
+	public $direction = 'vertical';
+
+	/**
+	 * @var string $toggle_type  The type of dropdown. Can be one of `
+	 *                          collapse|dropdown|tabs|indented`
+	 */
+	public $toggle_type = 'collapse';
 
 	/**
 	 * @var mixed $list
@@ -50,12 +73,6 @@ class Nav extends Element {
 	public $parent;
 
 	/**
-	 * @var string $toggle_type The type of dropdown.
-	 *                         Can be one of `collapse|dropdown|tabs|indented`
-	 */
-	public $toggle_type = 'collapse';
-
-	/**
 	 * @var string $nested_type The type of dropdown. Can be one of `collapse|indented`
 	 */
 	public $nested_type = 'collapse';
@@ -64,6 +81,11 @@ class Nav extends Element {
 	 * @var int $nested_type_depth What depth to start the nested type
 	 */
 	public $nested_type_depth = 1;
+
+	/**
+	 * @var mixed The Toggle Button Element
+	 */
+	public $toggle;
 
 	/**
 	 * Initialize the class
@@ -75,14 +97,16 @@ class Nav extends Element {
 
 	public function __construct( $args = array() ) {
 
+		$direction = data_get( $args, 'direction', $this->direction );
+
+		$args = data_set( $args, 'list.direction', $direction );
+
+		$type = data_get( $args, 'type', $this->type );
+
+		$args = data_set( $args, 'list.type', $type );
+
 		parent::__construct( $args );
 
-		$navlist_args = $this->get( 'list', array() );
-
-		$navlist_args = data_set( $navlist_args, 'direction', $this->direction );
-		$navlist_args = data_set( $navlist_args, 'toggle_type', $this->toggle_type );
-
-		$this->list = new NavList( $navlist_args );
 	}
 
 	public function setup_html() {

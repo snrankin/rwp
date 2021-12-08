@@ -81,10 +81,10 @@ $rwp_plugin_assets = [
             'handle'   => 'admin',
             'location' => 'admin',
         ],
-        // 'acf' => [
-        //     'handle'   => 'acf',
-        //     'location' => 'acf',
-        // ],
+        'acf' => [
+            'handle'   => 'acf',
+            'location' => 'acf',
+        ],
         'modal' => [
             'handle'   => 'modal',
             'location' => 'modal',
@@ -111,6 +111,18 @@ $rwp_plugin_assets = [
         ],
     ],
 ];
+
+if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monitor/query-monitor.php' ) ){
+	$rwp_plugin_assets['scripts'][ 'debug'] = array(
+		'location' => 'public',
+		'footer'   => true,
+		'handle'   => 'debug'
+	);
+	$rwp_plugin_assets['styles'][ 'debug'] = array(
+		'location' => 'public',
+		'handle'   => 'debug'
+    );
+}
 
 
 if (rwp_get_option('modules.lazysizes.lazyload', false) ) {

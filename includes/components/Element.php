@@ -19,7 +19,7 @@ use RuntimeException;
 use RWP\Vendor\Exceptions\Collection\EmptyException;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
 use RWP\Vendor\Exceptions\Data\TypeException;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Components\Str;
 
 class Element {
@@ -45,19 +45,26 @@ class Element {
 	public $order = array();
 
 	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array();
+
+	/**
 	 * @var Html $html The html object class
 	 */
 	public $html;
 
 	/**
      * @var array $html_methods The array of methods for manipulating the html
+	 * @access private
      */
-    private $html_methods = [];
+    private static $html_methods = [];
 
 	/**
      * @var array $methods The current class' methods
+	 * @access private
      */
-    private $methods = [];
+    private static $methods = [];
 
 	/**
 	 * @var array $selfClosing An array of html elements that don't need an end tag
@@ -90,74 +97,19 @@ class Element {
 	 */
 	public function __construct( $args = array() ) {
 
-		$class = get_class( $this );
+		self::mapApiMethods();
 
-		$this->mapApiMethods();
-
-		if ( ! empty( $this->tag ) ) {
-			if ( empty( $this->html ) ) {
-				// create an empty element from the tag just to initialize the Html class
-				$tag = \force_balance_tags( '<' . \esc_attr( $this->tag ) . '>' );
-				$this->html = new Html( $tag );
-			}
-		}
-
-		if ( is_string( $args ) ) {
-			$args = $this->create_from_string( $args );
-		}
-
-		if ( rwp_is_collection( $args ) ) {
-			$args = rwp_object_to_array( $args );
-		}
-
-		if ( is_array( $args ) ) {
-			$tag = data_get( $args, 'tag', $this->tag );
-			$html = data_get( $args, 'html', $this->html );
-			$atts = data_get( $args, 'atts', array() );
-			$content = data_get( $args, 'content', $this->content );
-
-			if ( ! empty( $html ) && is_string( $html ) ) {
-				// Get the atts from the starting element
-				$html_atts = $this->create_from_string( $html );
-				// Merge those atts into the incoming atts array
-				$atts = rwp_merge_args( $html_atts['atts'], $atts );
-				$html = new Html( $html );
-			}
-
-			$defaults = $this->atts;
-			$atts = rwp_merge_args( $defaults, $atts );
-
-			$args['html'] = $html;
-			$args['atts'] = rwp_collection( $atts );
-
-			if ( is_string( $content ) ) {
-				$content = array( $content );
-			}
-
-			$args['content'] = $content;
-
-			$properties = get_object_vars( $this );
-			$properties = rwp_merge_args( $properties, $args );
-
-			if ( rwp_array_has( 'order', $args ) ) {
-				$properties['order'] = $args['order'];
-			}
-
-			foreach ( $properties as $key => $value ) {
-				$this->$key = $value;
-			}
-
-			if ( empty( $this->html ) ) {
-				// create an empty element from the tag just to initialize the Html class
-				$tag = \force_balance_tags( '<' . \esc_attr( $this->tag ) . '>' );
-				$this->html = new Html( $tag );
-			}
-		}
+		$this->merge_args( $args );
 
 		$this->content = new Collection( $this->content );
 
+		$this->set_tag( $this->tag );
+
+		$this->map_elements();
+
 		try {
 			if ( empty( $this->tag ) ) {
+				$class = get_called_class();
 				throw new EmptyException( __( 'There is no html tag set and there were no arguments passed, cannot initialize ', 'rwp' ) . $class );
 			}
 		} catch ( EmptyException $th ) {
@@ -177,9 +129,10 @@ class Element {
 	 */
 
 	public function create_from_string( $string ) {
+
 		$args = array(
-			'tag' => 'div',
-			'atts' => array(),
+			'tag'     => $this->tag,
+			'atts'    => $this->get_atts(),
 			'content' => array(),
 		);
 
@@ -203,17 +156,63 @@ class Element {
 	 *
 	 * @return void
 	 */
-	public function merge_args( $args, $overwrite = false ) {
+	public function merge_args( $args, $overwrite = true ) {
 		$properties = get_object_vars( $this );
 
-		if ( $args instanceof self ) {
-			$args = get_object_vars( $args );
+		if ( is_string( $args ) ) {
+			$args = $this->create_from_string( $args );
 		}
 
-		$properties = rwp_merge_args( $properties, $args );
+		if ( is_object( $args ) ) {
+			if ( $args instanceof Html ) {
+				$args = $args->__toString();
+				$args = $this->create_from_string( $args );
 
-		foreach ( $properties as $key => $value ) {
-			$this->set( $key, $value, $overwrite );
+			} elseif ( $args instanceof Element || $args instanceof Collection ) {
+				$args = rwp_object_to_array( $args );
+			}
+		}
+
+		if ( is_array( $args ) ) {
+
+			$properties = rwp_merge_args( $properties, $args );
+
+			if ( rwp_array_has( 'order', $args ) ) {
+				$properties['order'] = $args['order'];
+			}
+
+			foreach ( $properties as $key => $value ) {
+				$this->set( $key, $value, $overwrite );
+			}
+		}
+	}
+
+	/**
+	 * Map items into their respective classes
+	 *
+	 * @return void
+	 */
+	public function map_elements() {
+		$elements_map = $this->get( 'elements_map', array() );
+
+		if ( ! empty( $elements_map ) ) {
+			foreach ( $elements_map as $item => $element ) {
+				try {
+					$element_class = __NAMESPACE__ . '\\' . $element;
+					if ( class_exists( $element_class ) ) {
+						if ( $this->has( $item ) ) {
+							if ( ! ( $this->$item instanceof $element_class ) ) {
+								$value = new $element_class( $this->$item );
+								$this->set( $item, $value, true );
+							}
+						}
+					} else {
+						throw new \LogicException( "Unable to load class: $element_class" );
+					}
+				} catch ( \Throwable $th ) {
+					rwp_error( $th );
+				}
+			}
 		}
 	}
 
@@ -228,10 +227,26 @@ class Element {
 	public function set_order( $key, $position = null ) {
 		$order = $this->order;
 
-		if ( blank( $position ) ) {
+		if ( blank( $position ) || 'last' === $position ) {
 			$order[] = $key;
+		} else if ( 'first' === $position ) {
+			array_unshift( $order, $key );
 		} else {
-			rwp_array_insert( $order, $position, $key );
+
+			$current_order = array_search( $key, $order );
+
+			if ( false !== $current_order ) {
+				if ( $current_order !== $position ) {
+					$order = rwp_array_remove( $order, $key );
+					$order = array_merge(
+						array_slice( $order, 0, $position ),
+						$key,
+						array_slice( $order, $position )
+					);
+				}
+			} else {
+				rwp_array_insert( $order, $position, $key );
+			}
 		}
 
 		$this->set( 'order', $order );
@@ -247,7 +262,7 @@ class Element {
 	public function remove_order_item( $key ) {
 		$order = $this->order;
 
-		if ( array_search( $key, $order ) ) {
+		if ( false !== array_search( $key, $order ) ) {
 			$order = rwp_array_remove( $order, $key );
 		}
 
@@ -283,11 +298,15 @@ class Element {
 	/**
 	 * Get All Attributes
 	 *
-	 * @return Collection|array
+	 * @return array
 	 */
 
 	public function get_atts() {
-		return $this->get( 'atts' );
+		$atts = $this->get( 'atts' );
+		if ( rwp_is_collection( $atts ) ) {
+			$atts = rwp_object_to_array( $atts );
+		}
+		return $atts;
 	}
 
 	/**
@@ -304,6 +323,14 @@ class Element {
 		if ( is_string( $atts ) && rwp_str_is_html( $atts ) ) {
 			$html = new Html( $atts );
 			$atts = $html->extractAll();
+		}
+
+		if ( is_object( $atts ) ) {
+			$args = rwp_object_to_array( $atts );
+
+			if ( rwp_array_has( 'atts', $args ) ) {
+				$atts = $args['atts'];
+			}
 		}
 
 		if ( $atts instanceof self ) {
@@ -330,7 +357,7 @@ class Element {
 	 */
 
 	public function remove_attr( $key ) {
-		$this->remove( "atts.$key" );
+		$this->remove( "atts.$key", false, false );
 	}
 
 	/**
@@ -366,7 +393,7 @@ class Element {
 		}
 
 		if ( is_string( $value ) ) {
-			$classes = $this->get_attr( 'class', array() );
+			$classes = $this->get_classes();
 
 			if ( ! empty( preg_grep( '/' . preg_quote( $value, '/' ) . '/i', $classes ) ) ) {
 				return true;
@@ -414,7 +441,7 @@ class Element {
 				$value = \sanitize_html_class( $value );
 			}
 			$classes = $this->get_attr( 'class', array() );
-			$classes[] = $value;
+			$classes = rwp_parse_classes( $classes, $value, $filter );
 			$this->set( 'atts.class', $classes, true );
 		} elseif ( is_array( $value ) ) {
 			$values = $value;
@@ -441,7 +468,7 @@ class Element {
 			if ( ! $this->has_class( $value ) ) {
 				return;
 			}
-			$classes = $this->get_attr( 'class', array() );
+			$classes = $this->get_classes();
 
 			$classes = rwp_array_remove( $classes, $value );
 
@@ -452,6 +479,16 @@ class Element {
 				$this->remove_class( $value );
 			}
 		}
+	}
+
+	/**
+	 * Get all element classes
+	 *
+	 * @return string[]
+	 */
+	public function get_classes() {
+         $classes = $this->get_attr( 'class', array() );
+		return rwp_parse_classes( $classes );
 	}
 
 	/**
@@ -498,17 +535,32 @@ class Element {
 	 */
 
 	public function remove_style( $key ) {
-		$this->remove( "attr.style.$key" );
+		$this->remove( "attr.style.$key", false, false );
 	}
 
+	/**
+	 * Add a background to a specific element
+	 *
+	 * @param mixed $bg
+	 * @param Element $parent_elem
+	 * @param string $inner_elem
+	 * @return void
+	 */
 
-	public static function add_background( $bg, $parent_elem, $inner_elem = '' ) {
-
-		$lazysizes = rwp_get_option( 'modules.lazysizes.lazyload', false );
-
-		$srcset = false;
+	public static function add_background( $bg, $parent_elem ) {
 
 		if ( ! blank( $bg ) ) {
+			$bg_elem = new self(array(
+				'tag' => 'div',
+				'atts' => array(
+					'class' => array(
+						'bg-wrapper',
+					),
+				),
+			));
+			$lazysizes = rwp_get_option( 'modules.lazysizes.lazyload', false );
+
+			$srcset = false;
 			if ( is_numeric( $bg ) && wp_attachment_is_image( $bg ) ) {
 				if ( $lazysizes ) {
 					$srcset = wp_get_attachment_image_srcset( $bg, 'full' );
@@ -523,36 +575,38 @@ class Element {
 			}
 			if ( is_string( $bg ) ) {
 				if ( preg_match( '/\#(?<=#)[a-zA-Z0-9]{3,8}|rgba?\((?:(?:\d{1,3}|\.)\,?\s*)+\)|hsla?\((?:(?:\d{1,3}|\%|\.)\,?\s*)+\)|var\(--[^\)|\s]+\)/', $bg ) ) {
-					if ( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
-						$parent_elem->$inner_elem->set_style( 'background-color', $bg );
-					} else {
-						$parent_elem->set_style( 'background-color', $bg );
-					}
+					$bg_elem->set_style( 'background-color', $bg );
 				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
-					if ( ! empty( $inner_elem ) && rwp_object_has( $inner_elem, $parent_elem ) && $parent_elem->$inner_elem instanceof Element ) {
-						$parent_elem->$inner_elem->add_class( $bg );
-					} else {
-						$parent_elem->add_class( $bg );
-					}
+					$bg_elem->add_class( $bg );
 				} else if ( rwp_is_url( $bg ) || rwp_is_relative_url( $bg ) ) {
 					if ( $lazysizes ) {
 						if ( $srcset ) {
-							$parent_elem->set_attr( 'data-bgset', $srcset );
+							$bg_elem->set_attr( 'data-bgset', $srcset );
 
 						} else {
-							$parent_elem->set_attr( 'data-bgset', $bg );
+							$bg_elem->set_attr( 'data-bgset', $bg );
 						}
-						$parent_elem->set_attr( 'data-sizes', 'auto' );
-						$parent_elem->add_class( 'lazyload' );
+						$bg_elem->set_attr( 'data-sizes', 'auto' );
+						$bg_elem->add_class( 'lazyload' );
 					} else {
-						$parent_elem->set_style( 'background-image', $bg );
+						$bg_elem->set_style( 'background-image', $bg );
 					}
 				}
-            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) ) {
-				array_unshift( $parent_elem->order, 'background' );
+            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) && $bg !== $bg_elem ) {
+				$bg_elem = $bg;
 			}
+			$parent_elem->background = $bg_elem;
+			$parent_elem->set_order( 'background', 'first' );
 			$parent_elem->add_class( 'has-bg' );
 		}
+	}
+
+	public function set_background( $bg = null, $target = '' ) {
+		if ( empty( $bg ) && $this->has( 'background' ) ) {
+			$bg = $this->background;
+		}
+
+		return $this::add_background( $bg, $this, $target );
 	}
 
 	/**
@@ -595,7 +649,8 @@ class Element {
 	 */
 
 	public function remove_content( $key ) {
-		$this->remove( "content.$key" );
+		$this->remove( "content.$key", true, false );
+		$this->remove_order_item( $key );
 	}
 
 	/**
@@ -626,11 +681,7 @@ class Element {
 		if ( '' === $key || is_null( $key ) ) {
 			$this->content->push( $value );
 		} else {
-			if ( $this->content->has( $key ) && true === $overwrite ) {
-				$this->content->put( $key, $value );
-			} else if ( ! $this->content->has( $key ) ) {
-				$this->content->put( $key, $value );
-			}
+			$this->set( "content.$key", $value, $overwrite );
 		}
 
 	}
@@ -664,37 +715,32 @@ class Element {
 
 	public function setup_content() {
 		if ( ! $this->is_self_closing() ) {
-			$this->add_sub_elements();
+
 			if ( ! blank( $this->content ) ) {
 				$content = $this->content;
 				if ( is_array( $this->content ) ) {
 					$content = rwp_collection( $content );
 				}
 				if ( rwp_is_collection( $content ) ) {
-					if ( ! empty( $this->order ) ) {
 
-						$content = rwp_collection_sort_by_keys( $content, $this->order );
-					}
-					$content = $content->reject(function( $item ) {
-						return blank( $item );
-					})->transform( function( $node ) {
-						if ( ( $node instanceof Html ) || ( $node instanceof \DOMNode ) || ( $node instanceof \DOMNodeList ) || ( $node instanceof Element ) ) {
+					$content = $content->transform( function( $node, $key ) {
+						if ( is_object( $node ) && method_exists( $node, '__toString' ) ) {
 							return $node->__toString();
 						} else if ( is_string( $node ) ) {
 							return $node;
+						} else {
+							return '';
 						}
-					} )->filter(function( $node, $i ) {
-						$is_valid = true;
-						try {
-							if ( ! is_string( $node ) ) {
-								$is_valid = false;
-								throw new TypeException( "Content node {$i} in Element ({$this->tag}) is not a string" );
-							}
-						} catch ( TypeException $th ) {
-							rwp_error( $th );
-						}
-						return $is_valid;
+					} )->reject( function( $item ) {
+						return blank( $item );
 					});
+					if ( ! empty( $this->order ) ) {
+						$content = rwp_collection_sort_by_keys( $content, $this->order );
+					}
+					if ( $content->has( 'background' ) ) { // make sure background element is first item
+						$bg = $content->pull( 'background' );
+						$content->prepend( $bg );
+					}
 					$content = $content->join( '' );
 				}
 
@@ -713,16 +759,27 @@ class Element {
 	 */
 
 	public function add_sub_elements( $elements = '', $target = '' ) {
-		if ( empty( $elements ) ) {
-			$elements = $this->order;
+		if ( empty( $target ) ) {
+			$target = $this;
 		}
-		if ( ! empty( $elements ) ) {
-			if ( is_string( $elements ) && ! is_numeric( $elements ) && $this->has( $elements ) ) {
-				$this->set_content( $this->$elements, $elements );
+
+		if ( empty( $elements ) ) {
+			$elements = $target->order;
+		}
+		if ( ! blank( $elements ) ) {
+			if ( is_string( $elements ) && $target->has( $elements ) ) {
+				$key = $elements;
+				$value = $target->get( $key );
+				if ( is_object( $value ) && method_exists( $value, '__toString' ) ) {
+					$value = $value->__toString();
+				}
+				if ( is_string( $value ) ) {
+					$target->set_content( $value, $key, true );
+				}
 			} else if ( is_array( $elements ) ) {
 				foreach ( $elements as $element ) {
 					if ( is_string( $element ) ) {
-						$this->add_sub_elements( $element );
+						$target->add_sub_elements( $element );
 					}
 				}
 			}
@@ -755,6 +812,8 @@ class Element {
 		if ( ! empty( $this->tag ) ) {
 			$this->set_tag( $this->tag );
 			$this->setup_html();
+			$this->add_sub_elements();
+			$this->set_background();
 			$this->setup_content();
 
 			if ( ! blank( $this->atts ) ) {
@@ -881,24 +940,21 @@ class Element {
 	}
 
 	/**
-	 * Map all the methods from Html class to this class
-	 *
-	 * @return void
-	 */
+     * Getting a singleton.
+     *
+     * @return self single instance of Core
+     */
+    final public static function mapApiMethods() {
 
-	private function mapApiMethods() {
+        $class = \get_called_class();
+		$html_class_methods = get_class_methods( Html::class );
 
-        $html_class = new ReflectionClass( Html::class );
+		if ( empty( self::$html_methods ) ) {
+			self::$html_methods = $html_class_methods;
+		}
 
-        foreach ( $html_class->getMethods() as $m ) {
-            $this->html_methods[] = $m->name;
-        }
+		self::$methods = get_class_methods( $class );
 
-		$current_class = new ReflectionClass( $this );
-
-		foreach ( $current_class->getMethods() as $m ) {
-            $this->methods[] = $m->name;
-        }
     }
 
 	/**
@@ -936,9 +992,9 @@ class Element {
 	public function __call( $method, $parameters ) {
 
 		try {
-			if ( in_array( $method, $this->html_methods ) ) {
+			if ( in_array( $method, self::$html_methods ) ) {
 				return $this->html->$method( ...$parameters );
-			} else if ( in_array( $method, $this->methods ) ) {
+			} else if ( in_array( $method, self::$methods ) ) {
 				return $this->$method( ...$parameters );
 			} else {
 				throw new \Exception( 'Endpoint "' . $method . '" does not exist' );

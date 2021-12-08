@@ -9,6 +9,7 @@ return array(
     'RWP\\Vendor\\tubalmartin\\CssMin\\' => array($vendorDir . '/tubalmartin/cssmin/src'),
     'RWP\\Vendor\\Wa72\\HtmlPrettymin\\' => array($vendorDir . '/wa72/html-pretty-min'),
     'RWP\\Vendor\\Wa72\\HtmlPageDom\\' => array($vendorDir . '/wa72/htmlpagedom/src'),
+    'RWP\\Vendor\\WPBP\\' => array($baseDir . '/externals/wpbp'),
     'RWP\\Vendor\\Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'RWP\\Vendor\\Symfony\\Polyfill\\Php73\\' => array($vendorDir . '/symfony/polyfill-php73'),
     'RWP\\Vendor\\Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
@@ -23,7 +24,6 @@ return array(
     'RWP\\Vendor\\Symfony\\Component\\ErrorHandler\\' => array($vendorDir . '/symfony/error-handler'),
     'RWP\\Vendor\\Symfony\\Component\\DomCrawler\\' => array($vendorDir . '/symfony/dom-crawler'),
     'RWP\\Vendor\\Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
-    'RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\' => array($vendorDir . '/wordpress/hierarchy/src'),
     'RWP\\Vendor\\Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'RWP\\Vendor\\Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'RWP\\Vendor\\Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
@@ -35,4 +35,5 @@ return array(
     'RWP\\Vendor\\Exceptions\\Helpers\\' => array($vendorDir . '/crazycodr/standard-exceptions/Helpers'),
     'RWP\\Vendor\\Exceptions\\' => array($vendorDir . '/crazycodr/standard-exceptions/Exceptions'),
     'RWP\\Vendor\\Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
+    'RWP\\Vendor\\Brain\\Hierarchy\\' => array($vendorDir . '/wordpress/hierarchy/src'),
 );

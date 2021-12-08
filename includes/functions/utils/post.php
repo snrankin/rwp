@@ -600,7 +600,7 @@ function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = 
  * @param  mixed|null $post
  * @return Collection
  */
-function rwp_ancestors( $post = null ) {
+function rwp_post_ancestors( $post = null ) {
 
 	$obj = rwp_post( $post );
 
@@ -650,7 +650,7 @@ function rwp_ancestors( $post = null ) {
 			}
 		}
 
-		$ancestors = apply_filters( 'rwp_ancestors_pre_filter', $ancestors, $id, $subtype );
+		$ancestors = apply_filters( 'rwp_post_ancestors_pre_filter', $ancestors, $id, $subtype );
 
 		$ancestors->transform(
 			function ( $item ) {
@@ -660,7 +660,7 @@ function rwp_ancestors( $post = null ) {
 
 		$ancestors->push( $obj );
 	}
-	$ancestors = apply_filters( 'rwp_ancestors_post_filter', $ancestors, $obj, $subtype );
+	$ancestors = apply_filters( 'rwp_post_ancestors_post_filter', $ancestors, $obj, $subtype );
 
 	return $ancestors;
 }
@@ -674,7 +674,7 @@ function rwp_ancestors( $post = null ) {
 
 function rwp_root_page( $post = null ) {
 	$post_id = rwp_post_id( $post );
-	$ancestors = rwp_ancestors( $post );
+	$ancestors = rwp_post_ancestors( $post );
 
 	$home_page = rwp_get_home_page();
 
@@ -709,7 +709,7 @@ function rwp_post_parent( $post = null ) {
 
 	$post_id = rwp_post_id( $post );
 
-	$ancestors = rwp_ancestors( $post );
+	$ancestors = rwp_post_ancestors( $post );
 
 	$home_page = rwp_get_home_page();
 
@@ -808,7 +808,7 @@ function rwp_post_class( $post, $classes = '' ) {
  */
 function rwp_post_has_children( $post = null ) {
 
-	$ancestors = rwp_ancestors( $post );
+	$ancestors = rwp_post_ancestors( $post );
 
 	$post_id = rwp_post_id( $post );
 

@@ -24,9 +24,9 @@ class LandingPage extends PostType {
 	public $menu_icon = 'dashicons-welcome-widgets-menus';
 
 	public $args = array(
+		'has_archive' => false,
 		'rewrite'     => array(
 			'slug'       => '/',
-			'with_front' => false,
 		),
 	);
 

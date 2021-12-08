@@ -9,7 +9,7 @@
  * ==========================================================================
  */
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Components\Html;
 use RWP\Components\Str;
 /**
@@ -52,7 +52,7 @@ function rwp_str_is_element( $string, $tag ) {
  */
 function rwp_parse_classes( $classes, $additional_classes = '', $filter = false ) {
 	if ( empty( $classes ) ) {
-        return array();
+        $classes = array();
 	}
 
 	if ( is_string( $classes ) ) {
@@ -60,7 +60,7 @@ function rwp_parse_classes( $classes, $additional_classes = '', $filter = false 
 	}
 
 	if ( ! ( $classes instanceof Collection ) ) {
-		$classes = new Collection( $classes );
+		$classes = rwp_collection( $classes );
 	}
 
 	if ( ! empty( $additional_classes ) ) {
@@ -357,7 +357,7 @@ function rwp_merge_args( $defaults = array(), $args = array() ) {
  * @return string|array
  */
 
-function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empty = false ) {
+function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empty = true ) {
      $atts = rwp_prepare_args( $atts );
     if ( ! empty( $atts ) ) {
 
@@ -372,6 +372,10 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 					case 'style':
 						$value = rwp_output_styles( $value );
                         break;
+					case 'src':
+					case 'href':
+						$value = esc_url( $value );
+                        break;
 					case 'title':
 					case 'alt':
 					case 'label':
@@ -385,6 +389,8 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 						} elseif ( is_array( $value ) || is_object( $value ) ) {
 							$value   = wp_json_encode( $value, JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT | JSON_BIGINT_AS_STRING );
 							$is_json = true;
+						} elseif ( is_bool( $value ) ) {
+							$value = $value ? 'true' : 'false';
 						} elseif ( rwp_str_starts_with( $attr, 'on' ) ) {
 							$value = str_replace( '"', "'", $value );
 							$value = esc_js( $value );
@@ -396,11 +402,11 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
                     if ( $is_json ) {
                         $value = esc_attr( $attr ) . '=\'' . $value . '\'';
                     } else {
-                        if ( ( 'class' === $attr || 'style' === $attr ) && rwp_has_value( $value ) ) {
-                            $value = esc_attr( $attr ) . '="' . $value . '"';
-                        } else {
-                            $value = esc_attr( $attr ) . '="' . $value . '"';
-                        }
+                        if ( ! empty( $value ) ) {
+							$value = esc_attr( $attr ) . '="' . $value . '"';
+						} else {
+							$value = esc_attr( $attr );
+						}
                     }
                 }
 
@@ -439,26 +445,28 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
  *
  * @param  string $input
  * @param  array  $args
- * @return RWP\Components\Button|string
+ * @return string
  */
 
-function rwp_input_to_button( $input = '', $args = array() ) {
+function rwp_input_to_button( $input = '', $tag = '', $args = array() ) {
 	if ( ! rwp_str_is_element( $input, 'input' ) ) {
         return $input;
 	}
 
-    $args['html'] = $input;
+	$input_args = rwp_extract_html_attributes( $input, $tag );
+
+	$args = rwp_merge_args( $input_args, $args );
 
     $button = rwp_button( $args );
 
 	if ( $button->has_attr( 'value' ) ) {
 		$btn_text = $button->get_attr( 'value' );
 
-		$button->text->set_content( $btn_text );
+		$button->set_text( $btn_text );
 		$button->remove_attr( 'value' );
 	}
 
-    return $button;
+    return $button->html();
 }
 
 /**
@@ -491,4 +499,72 @@ function rwp_extract_html_attributes( $html, $tag = '', $include_tag = false, $i
 
     return $html_atts;
 
+}
+
+/**
+ * Extract elements based on a css selector
+ *
+ * @see RWP\Vendor\Symfony\Component\DomCrawler::filter
+ *
+ * @param string|Html $html    The html to extract from (passed by reference)
+ * @param string      $tag     The selector to use for filtering
+ * @param bool        $remove  Bool. Whether or not to remove the elements from
+ *                             the original HTML
+ *
+ * @return string[]
+ */
+
+function rwp_extract_html_elements( &$html, $tag, $remove = false ) {
+	$html_type = 'class'; // Used to keep the html variable the same type
+
+	if ( is_string( $html ) ) {
+		$html = rwp_html( $html );
+		$html_type = 'string';
+	}
+
+	if ( $remove ) {
+		$elements = $html->filter( $tag )->remove();
+	} else {
+		$elements = $html->filter( $tag );
+	}
+
+	if ( 'string' === $html_type ) {
+		$html = $html->saveHTML();
+	}
+
+	$elements = rwp_collection( $elements->getIterator() );
+
+	if ( $elements->isNotEmpty() ) {
+		$elements->transform(function ( \DOMElement $node ) {
+			return rwp_dom_node_to_string( $node );
+		});
+	}
+
+	return $elements->all();
+}
+
+/**
+ * Easily convert DOMElements or DOMNodes to html string
+ *
+ * @param \DOMNode|\DOMElement $node
+ * @return string
+ */
+function rwp_dom_node_to_string( $node ) {
+	$html = '';
+	if ( $node instanceof \DOMElement ) {
+		$string = $node->ownerDocument->saveHTML( $node ); // phpcs:ignore
+
+		if ( ! empty( $string ) ) {
+			$html = $string;
+		}
+	} else {
+		$dom = new DOMDocument();
+		$dom->importNode( $node, true );
+		$string = $dom->saveHTML();
+		if ( ! empty( $string ) ) {
+			$html = $string;
+		}
+	}
+
+	return $html;
 }

@@ -15,6 +15,7 @@ use RWP\Engine\Abstracts\Singleton;
 use RWP\Integrations\Bootstrap;
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
 use RWP\Components\Str;
+use RWP\Components\Collection;
 class ACF extends Singleton {
 
 	/**
@@ -42,6 +43,10 @@ class ACF extends Singleton {
 		\add_filter( 'acf/load_field/name=bs_text_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_border_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_btn_style', array( $this, 'add_color_choices' ) );
+
+		\add_filter( 'acf/fields/svg_icon/file_path', function() {
+			return rwp_plugin_asset_path( 'bootstrap-icons.svg', 'imgs' );
+		} );
 
 		$this->include_acf_extras();
 	}
@@ -96,8 +101,10 @@ class ACF extends Singleton {
 		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
+		rwp_get_dependency_file( 'acf-svg-icon.php', 'externals/acf/acf-svg-icon-field', true, true );
+		rwp_get_dependency_file( 'acf-background.php', 'externals/acf/acf-background-field', true, true );
+		rwp_get_dependency_file( 'acf-admin-divider.php', 'externals/acf/acf-admin-divider', true, true );
 
-		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 	}
 
 	/**
@@ -206,13 +213,26 @@ class ACF extends Singleton {
 	 */
 
 	public static function sanitize_acf_array( $fields, $key = '', $post_id = 'options' ) {
-		$acf_fields = rwp_collection( $fields );
+		$acf_fields = rwp_prepare_args( $fields );
+
+		$acf_fields = rwp_collection( $acf_fields );
 
 		$acf_fields = $acf_fields->reject( function ( $item ) {
             return blank( $item );
 		});
 
 		if ( $acf_fields->isNotEmpty() ) {
+
+			if ( $acf_fields->containsOneItem() ) {
+				$first_item_key = $acf_fields->keys()->first();
+				if ( $first_item_key === $key ) {
+					$acf_fields = $acf_fields->first();
+
+					if ( is_array( $acf_fields ) ) {
+						$acf_fields = rwp_collection( $acf_fields );
+					}
+				}
+			}
 
 			if ( wp_is_numeric_array( $fields ) && rwp_array_is_multi( $fields ) ) {
 				$acf_fields = $acf_fields->mapWithKeys(function ( $item, $key ) {
@@ -232,21 +252,48 @@ class ACF extends Singleton {
 				return $value;
 			} );
 
-			if ( 'locations' === $key ) {
-				$acf_fields->transform( function( $value ) {
-					if ( $value->has( 'unit' ) ) {
-						$unit = $value->pull( 'unit' );
-						$value = data_set( $value, 'address.unit', $unit );
-						$address = data_get( $value, 'address.address' );
-						$street = data_get( $value, 'address.name' );
-						$street_with_unit = $street . ' ' . $unit;
-						$address = Str::replace( $street, $street_with_unit, $address );
-						$value = data_set( $value, 'address.address', $address );
-						$value = data_set( $value, 'address.name', $street_with_unit );
-					}
-					return $value;
-				} );
+			switch ( $key ) {
+				case 'locations':
+					$acf_fields->transform( function( $value ) {
+						if ( rwp_is_collection( $value ) ) {
+							if ( $value->has( 'unit' ) ) {
+								$unit = $value->pull( 'unit' );
+								$value = data_set( $value, 'address.unit', $unit );
+								$address = data_get( $value, 'address.address' );
+								$street = data_get( $value, 'address.name' );
+								$street_with_unit = $street . ' ' . $unit;
+								$address = Str::replace( $street, $street_with_unit, $address );
+								$value = data_set( $value, 'address.address', $address );
+								$value = data_set( $value, 'address.name', $street_with_unit );
+							}
+						}
 
+						return $value;
+					} );
+					break;
+
+				case 'icon':
+					$type = data_get( $acf_fields, 'type', '' );
+					if ( empty( $type ) ) {
+						$acf_fields = false;
+					}
+					break;
+				case 'button':
+					/**
+					 * @var Collection $acf_fields
+					 */
+					$style = data_get( $acf_fields, 'bs_btn_style', '' );
+					if ( filled( $style ) ) {
+						$classes = data_get( $acf_fields, 'atts.class', array() );
+						$classes[] = $style;
+
+						$atts = $acf_fields->get( 'atts', array() );
+
+						$atts['class'] = $classes;
+
+						$acf_fields->put( 'atts', $atts );
+					}
+					break;
 			}
 
 			$fields = $acf_fields;
@@ -284,7 +331,7 @@ class ACF extends Singleton {
 
 	public function add_color_choices( $field ) {
 
-		if ( isset( $field['choices'] ) && empty( $field['choices'] ) ) {
+		if ( isset( $field['choices'] ) ) {
 
 			if ( rwp_str_has( $field['name'], 'bs_bg_' ) ) {
 				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'bg-' ) );
@@ -293,8 +340,12 @@ class ACF extends Singleton {
 			} else if ( rwp_str_has( $field['name'], 'bs_text_' ) ) {
 				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'text-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_btn_style' ) ) {
-				$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
-				$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' ) );
+				$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-' ) )->mapWithKeys( function( $item ) {
+					return array( $item['value'] => $item );
+				});
+				$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
+					return array( $item['value'] => $item );
+				});
 
 				$colors = $btn_options_solid->merge( $btn_options_outline );
 

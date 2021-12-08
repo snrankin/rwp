@@ -7,8 +7,8 @@
  * @since   0.1.0
  * ========================================================================== */
 
-use RWP\Components\{Element, Html};
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\{Element, Html, Icon};
+use RWP\Components\Collection;
 
 /**
  *
@@ -90,16 +90,17 @@ function rwp_get_star_rating( $post = null ) {
 }
 
 /**
- * Extract background color from acf fields and adjust the attributes
+ * Extract color from acf fields and adjust the attributes
  *
- * @param array|Collection|Element|Html $args
- * @param array|Collection $fields
- * @param mixed $post
+ * @param array|Collection|Element|Html  $args
+ * @param string                         $type    One of `(background|text|border)`
+ * @param array|Collection               $fields
+ * @param mixed                          $post
  *
  * @return mixed|void
  */
 
-function rwp_add_acf_bg_color( $args, $fields = array(), $post = null ) {
+function rwp_add_acf_color( $args, $type = 'background', $fields = array(), $post = null ) {
 
 	if ( empty( $fields ) ) {
 		$fields = rwp_get_fields( $post );
@@ -113,17 +114,23 @@ function rwp_add_acf_bg_color( $args, $fields = array(), $post = null ) {
 		}
 	}
 
-	$bg_color = data_get( $fields, 'bg_color.bs_bg_color', '' );
-	$custom_bg_color = data_get( $fields, 'bg_color.custom_bg_color', '' );
+	$css_style = 'color';
+
+	if ( 'text' !== $type ) {
+		$css_style = $type . '-color';
+	}
+
+	$color_class  = data_get( $fields, $type . '_color.bs_class', '' );
+	$custom_color = data_get( $fields, $type . '_color.custom', '' );
 
 	if ( is_array( $args ) || rwp_is_collection( $args ) ) {
 		$atts = array();
 
-		if ( ! empty( $bg_color ) ) {
-			if ( 'custom' === $bg_color && ! empty( $custom_bg_color ) ) {
-				$atts['atts']['style']['background-color'] = $custom_bg_color;
+		if ( ! empty( $color_class ) ) {
+			if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
+				$atts['atts']['style'][ $css_style ] = $custom_color;
 			} else {
-				$atts['atts']['class'][] = rwp_add_prefix( $bg_color, 'bg-' );
+				$atts['atts']['class'][] = rwp_add_prefix( $color_class, $type . '-' );
 			}
 		}
 
@@ -131,20 +138,129 @@ function rwp_add_acf_bg_color( $args, $fields = array(), $post = null ) {
 
 		return $args;
 	} else if ( rwp_is_element( $args ) ) {
-		if ( ! empty( $bg_color ) ) {
-			if ( 'custom' === $bg_color && ! empty( $custom_bg_color ) ) {
-				$args->set_style( 'background-color', $custom_bg_color );
+		if ( ! empty( $color_class ) ) {
+			if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
+				$args->set_style( $css_style, $custom_color );
 			} else {
-				$args->add_class( rwp_add_prefix( $bg_color, 'bg-' ) );
+				$args->add_class( rwp_add_prefix( $color_class, $type . '-' ) );
 			}
 		}
 	} else if ( $args instanceof Html ) {
-		if ( ! empty( $bg_color ) ) {
-			if ( 'custom' === $bg_color && ! empty( $custom_bg_color ) ) {
-				$args->setStyle( 'background-color', $custom_bg_color );
+		if ( ! empty( $color_class ) ) {
+			if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
+				$args->setStyle( $css_style, $custom_color );
 			} else {
-				$args->addClass( rwp_add_prefix( $bg_color, 'bg-' ) );
+				$args->addClass( rwp_add_prefix( $color_class, $type . '-' ) );
 			}
 		}
 	}
+}
+
+/**
+ * Extract color from acf fields and adjust the attributes
+ *
+ * @param array|Collection $args
+ * @param string           $type    One of `(background|text|border)`
+ * @param array|Collection $fields
+ * @param mixed            $post
+ *
+ * @return mixed|void
+ */
+
+function rwp_get_acf_color_style( &$styles, $type = 'background', $fields = array(), $post = null ) {
+
+	if ( empty( $fields ) ) {
+		$fields = rwp_get_fields( $post );
+	}
+
+	if ( empty( $fields ) ) {
+		if ( is_array( $styles ) || rwp_is_collection( $styles ) ) {
+			return $styles;
+		} else {
+			return;
+		}
+	}
+
+	$css_style = 'color';
+
+	if ( 'text' !== $type ) {
+		$css_style = $type . '-color';
+	}
+
+	$prefix = $type . '-';
+
+	if ( 'background' === $type ) {
+		$prefix = 'bg-';
+	}
+
+	$color_class  = data_get( $fields, $type . '_color.bs_class', '' );
+	$color_class = rwp_remove_prefix( $color_class, $prefix );
+	$custom_color = data_get( $fields, $type . '_color.custom', '' );
+
+	$atts = array();
+
+	if ( ! empty( $color_class ) ) {
+		if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
+			$atts[ $css_style ] = $custom_color;
+		} else {
+			$atts[ $css_style ] = "var(--bs-$color_class)";
+		}
+	}
+
+	$styles = rwp_merge_args( $styles, $atts );
+}
+
+
+/**
+ * Extract/generate an icon from ACF Fields
+ *
+ * @param Collection|array $fields
+ * @param mixed|null $post
+ * @return false|Icon
+ */
+function rwp_get_icon_from_acf( $fields, $post = null ) {
+	if ( empty( $fields ) ) {
+		$fields = rwp_get_fields( $post );
+	}
+
+	if ( ! empty( $fields ) ) {
+		$fields = rwp_collection( $fields );
+	} else {
+		return false;
+	}
+
+	// if ( $fields->has( 'icon' ) ) {
+	// 	$fields = data_get( $fields, 'icon', rwp_collection() );
+	// }
+
+	$type = data_get( $fields, 'type', 'none' );
+
+	if ( 'none' === $type ) {
+		return false;
+	}
+
+	$icon = '';
+
+	switch ( $type ) {
+		case 'class':
+			$icon = rwp_output_classes( data_get( $fields, 'class', '' ) );
+			break;
+		case 'svg':
+		case 'image':
+			$icon = data_get( $fields, 'src', '' );
+			break;
+		case 'html':
+			$icon = array(
+				'tag' => 'span',
+				'content' => data_get( $fields, 'content', '' ),
+			);
+			break;
+	}
+
+	if ( empty( $icon ) ) {
+		return false;
+	}
+
+	return rwp_icon( $icon );
+
 }

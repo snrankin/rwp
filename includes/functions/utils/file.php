@@ -30,8 +30,8 @@ function rwp_trailingslashit( $string ) {
 	if ( empty( $string ) ) {
         return $string;
 	}
-	if ( ! Str::endsWith( $string, '/' ) ) {
-		$string = Str::finish( $string, '/' );
+	if ( ! Str::endsWith( $string, DIRECTORY_SEPARATOR ) ) {
+		$string = Str::finish( $string, DIRECTORY_SEPARATOR );
 	}
 
     return wp_normalize_path( $string );

@@ -101,7 +101,8 @@
     },
     "autoload": {
         "psr-4": {
-            "RWP\\Vendor\\RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/"
+            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/",
+            "RWP\\Vendor\\WPBP\\": "externals/wpbp/"
         },
         "files": [
             "externals\/data.php",

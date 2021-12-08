@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array(
-	'key' => 'group_61772c8846d4b',
+	'key' => 'group_reusable_fields',
 	'title' => 'Reusable Fields',
 	'fields' => array(
 		array(
@@ -39,7 +39,6 @@ acf_add_local_field_group(array(
 					'acfe_permissions' => '',
 					'acfe_save_meta' => 0,
 					'choices' => array(
-						': Default' => ': Default',
 						'bg-primary' => 'Primary',
 						'bg-secondary' => 'Secondary',
 						'bg-success' => 'Success',
@@ -116,6 +115,96 @@ acf_add_local_field_group(array(
 				),
 			),
 		),
+		array(
+			'key' => 'field_61940d5ca41f6',
+			'label' => 'Icon',
+			'name' => 'icon',
+			'type' => 'group',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'acfe_permissions' => '',
+			'layout' => 'block',
+			'acfe_seamless_style' => 0,
+			'acfe_group_modal' => 0,
+			'acfe_settings' => '',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_61940d6ea41f7',
+					'label' => 'Type',
+					'name' => 'type',
+					'type' => 'button_group',
+					'instructions' => '',
+					'required' => 1,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'acfe_permissions' => '',
+					'acfe_save_meta' => 0,
+					'choices' => array(
+						'image' => 'Image',
+						'svg' => 'SVG',
+						'class' => 'Icon Class',
+						'html' => 'Custom HTML',
+					),
+					'allow_null' => 0,
+					'default_value' => '',
+					'layout' => 'horizontal',
+					'return_format' => 'value',
+					'show_column' => 0,
+					'show_column_sortable' => 0,
+					'show_column_weight' => 1000,
+					'allow_quickedit' => 0,
+					'allow_bulkedit' => 0,
+					'acfe_settings' => '',
+					'acfe_validate' => '',
+				),
+				array(
+					'key' => 'field_61940dbda41f8',
+					'label' => 'Image',
+					'name' => 'src',
+					'type' => 'image',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => array(
+						array(
+							array(
+								'field' => 'field_61940d6ea41f7',
+								'operator' => '==',
+								'value' => '',
+							),
+						),
+					),
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'uploader' => '',
+					'acfe_thumbnail' => 0,
+					'return_format' => 'url',
+					'preview_size' => 'thumbnail',
+					'min_width' => '',
+					'min_height' => '',
+					'min_size' => '',
+					'max_width' => '',
+					'max_height' => '',
+					'max_size' => '',
+					'mime_types' => '',
+					'acfe_settings' => '',
+					'acfe_validate' => '',
+					'library' => 'all',
+				),
+			),
+		),
 	),
 	'location' => array(
 		array(
@@ -134,6 +223,7 @@ acf_add_local_field_group(array(
 	'hide_on_screen' => '',
 	'active' => false,
 	'description' => '',
+	'show_in_rest' => 0,
 	'acfe_display_title' => '',
 	'acfe_autosync' => array(
 		0 => 'php',
@@ -145,7 +235,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1635202371,
+	'modified' => 1637092988,
 ));
 
 endif;

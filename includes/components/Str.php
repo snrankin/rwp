@@ -13,7 +13,7 @@ namespace RWP\Components;
 
 use RWP\Vendor\Illuminate\Support\Traits\Macroable;
 use RWP\Vendor\Illuminate\Support\Arr;
-
+use RWP\Vendor\Exceptions\Http\Server\NotImplementedException;
 class Str {
 
     use Macroable;
@@ -559,7 +559,11 @@ class Str {
 		$leave_alone = "/$leave_alone/";
 
 		foreach ( $value as $index => $item ) {
-			if ( ( 0 === $index && in_array( $item, $prepositions ) ) || ! preg_match( $leave_alone, $item ) ) {
+			if ( 0 !== $index ) {
+				if ( ! in_array( $item, $prepositions ) && ! preg_match( $leave_alone, $item ) ) {
+					$item = \mb_convert_case( $item, \MB_CASE_TITLE, 'UTF-8' );
+				}
+			} else {
 				$item = \mb_convert_case( $item, \MB_CASE_TITLE, 'UTF-8' );
 			}
 
@@ -694,4 +698,5 @@ class Str {
     public static function wordCount( $string ) {
         return \str_word_count( $string );
     }
+
 }

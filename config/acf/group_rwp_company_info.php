@@ -16,12 +16,12 @@ acf_add_local_field_group(array(
 			'conditional_logic' => 0,
 			'wrapper' => array(
 				'width' => '',
-				'class' => 'acfe-seamless-style',
+				'class' => 'label-none',
 				'id' => '',
 			),
 			'acfe_save_meta' => 0,
 			'layout' => 'block',
-			'acfe_seamless_style' => 0,
+			'acfe_seamless_style' => 1,
 			'acfe_group_modal' => 0,
 			'sub_fields' => array(
 				array(
@@ -312,7 +312,7 @@ acf_add_local_field_group(array(
 							'conditional_logic' => 0,
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'col-md auto flex-fill',
+								'class' => 'col-md-auto flex-fill',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -382,7 +382,7 @@ acf_add_local_field_group(array(
 									'required' => 0,
 									'conditional_logic' => 0,
 									'wrapper' => array(
-										'width' => '20',
+										'width' => '',
 										'class' => 'col-md-auto',
 										'id' => '',
 									),
@@ -410,7 +410,7 @@ acf_add_local_field_group(array(
 									'required' => 0,
 									'conditional_logic' => 0,
 									'wrapper' => array(
-										'width' => '80',
+										'width' => '',
 										'class' => 'col-md-auto flex-fill',
 										'id' => '',
 									),
@@ -437,6 +437,23 @@ acf_add_local_field_group(array(
 									'save_custom' => 0,
 								),
 								array(
+									'key' => 'field_61a02cbb86ca0',
+									'label' => 'Divider',
+									'name' => '',
+									'type' => 'message',
+									'instructions' => '',
+									'required' => 0,
+									'conditional_logic' => 0,
+									'wrapper' => array(
+										'width' => '',
+										'class' => 'w-100 border-none label-none',
+										'id' => '',
+									),
+									'message' => '',
+									'new_lines' => 'wpautop',
+									'esc_html' => 0,
+								),
+								array(
 									'key' => 'field_617f041307b9a',
 									'label' => 'All Day',
 									'name' => 'all_day',
@@ -445,7 +462,7 @@ acf_add_local_field_group(array(
 									'required' => 0,
 									'conditional_logic' => 0,
 									'wrapper' => array(
-										'width' => '20',
+										'width' => '',
 										'class' => 'col-md-auto',
 										'id' => '',
 									),
@@ -478,7 +495,7 @@ acf_add_local_field_group(array(
 										),
 									),
 									'wrapper' => array(
-										'width' => '80',
+										'width' => '',
 										'class' => 'label-none col-md-auto flex-fill',
 										'id' => '',
 									),
@@ -557,6 +574,7 @@ acf_add_local_field_group(array(
 	'hide_on_screen' => '',
 	'active' => true,
 	'description' => '',
+	'show_in_rest' => 0,
 	'acfe_display_title' => '',
 	'acfe_autosync' => array(
 		0 => 'php',
@@ -567,7 +585,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1635831309,
+	'modified' => 1637887481,
 ));
 
 endif;

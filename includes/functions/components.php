@@ -10,9 +10,9 @@
  * ========================================================================== */
 
 use RWP\Vendor\Illuminate\Config\Repository;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 use RWP\Vendor\Brain\Hierarchy\Hierarchy;
-use RWP\Components\Html;
+
 
 // ============================ Vendor Components =========================== //
 
@@ -45,10 +45,10 @@ function rwp_hierarchy( $query = null ) {
  * @link https://github.com/wasinger/htmlpagedom
  *
  * @param mixed $html
- * @return Html
+ * @return RWP\Components\Html
  */
 function rwp_html( $html ) {
-	return new Html( $html );
+	return new RWP\Components\Html( $html );
 }
 
 /**
@@ -118,6 +118,10 @@ function rwp_card( $args = array() ) {
 
 function rwp_post_card( $post = null, $args = [] ) {
 	return new RWP\Components\PostCard( $post, $args );
+}
+
+function rwp_modal( $args = array() ) {
+	return new RWP\Components\Modal( $args );
 }
 
 function rwp_location( $location, $args = [] ) {

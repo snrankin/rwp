@@ -42,7 +42,7 @@ class Html extends HtmlPageCrawler {
 			}
 
 			if ( $include_content ) {
-				$atts['content'] = $node->nodeValue; //phpcs:ignore
+				$atts['content'] = $this->getInnerHtml(); //phpcs:ignore
 			}
 
 			if ( $include_tag ) {

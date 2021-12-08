@@ -31,6 +31,14 @@ class NavItem extends Element {
 	);
 
 	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array(
+		'link'   => 'Element',
+		'toggle' => 'Button',
+	);
+
+	/**
 	 * @var mixed $link
 	 */
 
@@ -109,9 +117,19 @@ class NavItem extends Element {
 
 	public function __construct( $args = array() ) {
 
-		parent::__construct( $args );
+		$depth = data_get( $args, 'depth', $this->depth );
 
-		$this->link = new Element( $this->link );
+		$toggle_type = data_get( $args, 'toggle_type', $this->toggle_type );
+
+		if ( rwp_array_has( 'toggle', $args ) ) {
+			$args = data_set( $args, 'toggle.toggle', $toggle_type );
+		}
+
+		if ( $depth > 0 ) {
+			$test = true;
+		}
+
+		parent::__construct( $args );
 
 		$url = $this->link->get_attr( 'href' );
 
@@ -126,7 +144,7 @@ class NavItem extends Element {
 
 		if ( $this->has_link ) {
 			if ( false === array_search( 'link', $this->order ) ) {
-				$this->set_order( 'link', 1 );
+				$this->set_order( 'link', 0 );
 			}
 		}
 
@@ -149,6 +167,16 @@ class NavItem extends Element {
 
 	public function setup_toggle() {
 		if ( $this->is_parent && false !== $this->toggle_type && is_array( $this->toggle ) ) {
+			switch ( $this->toggle_type ) {
+				case 'dropdown':
+					$this->add_class( 'dropdown' );
+				    break;
+				case 'tab':
+				case 'pill':
+				    break;
+				case 'collapse':
+				    break;
+			}
 			$this->set( 'toggle.toggle', $this->toggle_type );
 
 			$this->toggle = new Button( $this->toggle );

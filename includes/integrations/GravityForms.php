@@ -50,11 +50,14 @@ class GravityForms extends Singleton {
 			'gform_submit_button',
 		), array( $this, 'input_to_button' ), 30, 2);
 
-		add_filter( 'gform_field_content', array( $this, 'field_content' ), 20, 5 );
-		add_filter( 'gform_field_container', array( $this, 'field_container' ), 30, 6 );
-		add_filter( 'gform_progress_bar', array( $this, 'progress_bar' ), 30, 3 );
-		add_filter( 'gform_validation_message', array( $this, 'validation_message' ), 20, 2 );
-		add_filter( 'gform_us_states', array( $this, 'use_state_abbreviations' ) );
+		if ( ! is_admin() ) {
+			add_filter( 'gform_field_content', array( $this, 'field_content' ), 20, 5 );
+			add_filter( 'gform_field_container', array( $this, 'field_container' ), 30, 6 );
+			add_filter( 'gform_progress_bar', array( $this, 'progress_bar' ), 30, 3 );
+			add_filter( 'gform_validation_message', array( $this, 'validation_message' ), 20, 2 );
+			add_filter( 'gform_us_states', array( $this, 'use_state_abbreviations' ) );
+		}
+
 	}
 
 	/**
@@ -114,7 +117,7 @@ class GravityForms extends Singleton {
 	 * Replaces the forms <input> buttons with <button> while maintaining attributes
 	 * from original <input>.
 	 *
-	 * @param string $button Contains the <input> tag to be filtered.
+	 * @param mixed $button Contains the <input> tag to be filtered.
 	 * @param array  $form Contains all the properties of the current form.
 	 *
 	 * @see https://docs.gravityforms.com/gform_submit_button/
@@ -124,32 +127,42 @@ class GravityForms extends Singleton {
 
 	public function input_to_button( $button, $form ) {
 
-		$button = rwp_input_to_button( $button );
+		if ( is_string( $button ) ) {
+			$button = rwp_input_to_button( $button );
+		}
 
 		if ( $button instanceof Button ) {
-			$onclick = $button->get_attr( 'onclick' );
 
-			$pattern = '/(.*(?=return false\;))(return false\;)(.*(?=\=true\;)\=true\;)(.*)/m';
-			$add_class = 'jQuery(this).addClass(\'submitting\');';
-			$remove_class = 'jQuery(this).removeClass(\'submitting\');';
+			$type = $button->get_attr( 'type', '' );
 
-			if ( ! empty( $onclick ) ) {
+			if ( 'submit' === $type ) {
 
-				$onclick = preg_replace( $pattern, "$1$2$remove_class$3$add_class$4", $onclick );
+				$onclick = $button->get_attr( 'onclick', '' );
 
-				$button->set_attr( 'onclick', $onclick, true );
+				$pattern = '/(.*(?=return false\;))(return false\;)(.*(?=\=true\;)\=true\;)(.*)/m';
+
+				$add_class = 'jQuery(this).addClass(\'submitting\');';
+				$remove_class = 'jQuery(this).removeClass(\'submitting\');';
+
+				if ( ! empty( $onclick ) ) {
+
+					$onclick = preg_replace( $pattern, "$1$2$remove_class$3$add_class$4", $onclick );
+
+					$button->set_attr( 'onclick', $onclick, true );
+				}
+				$onkeypress = $button->get_attr( 'onkeypress' );
+				if ( ! empty( $onkeypress ) ) {
+
+					$onkeypress = preg_replace( $pattern, "$1$2$remove_class$3$add_class$4", $onkeypress );
+
+					$button->set_attr( 'onkeypress', $onkeypress, true );
+				}
+
+				$button->order[] = 'spinner';
+
+				$button->set_content( '<span class="btn-icon icon-right has-spinner"><span class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></span></span>', 'spinner' );
+
 			}
-			$onkeypress = $button->get_attr( 'onkeypress' );
-			if ( ! empty( $onkeypress ) ) {
-
-				$onkeypress = preg_replace( $pattern, "$1$2$remove_class$3$add_class$4", $onkeypress );
-
-				$button->set_attr( 'onkeypress', $onkeypress, true );
-			}
-
-			$button->order[] = 'spinner';
-
-			$button->set_content( '<span class="btn-icon icon-right has-spinner"><span class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></span></span>', 'spinner' );
 
 			/**
 			 * Allow filtering of Gravity Form Buttons
@@ -205,10 +218,20 @@ class GravityForms extends Singleton {
 	 */
 	public function field_container( $field_container, $field, $form, $css_class, $style, $field_content ) {
 
+		$css_class = rwp_parse_classes( $css_class );
+
 		$field_container_html = rwp_html( $field_container );
 
 		if ( $field_container_html->hasClass( 'gfield_error' ) ) {
 			$field_container_html->addClass( 'is-invalid' );
+		}
+
+		$button_classes = preg_grep( '/btn-*/', $css_class );
+
+		if ( ! empty( $button_classes ) ) {
+			foreach ( $button_classes as $button_class ) {
+				$field_container_html->removeClass( $button_class );
+			}
 		}
 
 		$field_container = $field_container_html->__toString();
@@ -492,7 +515,7 @@ class GravityForms extends Singleton {
 				$field_input->filter( '.name_suffix select' )->setAttribute( 'autocomplete', 'honorific-suffix' );
 				break;
 			case 'textarea':
-				$field_content = str_replace( "class='textarea", "class='form-control textarea$is_error", $field_content );
+				$field_input->filter( 'textarea' )->addClass( 'form-control' );
 				break;
 			case 'fileupload':
 				$field_input->filter( 'input[type="file"]' )->addClass( 'form-control' );
@@ -520,6 +543,63 @@ class GravityForms extends Singleton {
 				break;
 			case 'date':
 				$field_input->filter( '.datepicker' )->addClass( 'form-control' );
+				break;
+			case 'html':
+				if ( in_array( 'inline-submit', $css_class ) ) {
+					$field_input = rwp_html( '<div class="ginput_container ginput_container_html"></div>' );
+					$button = '';
+					$button_text = data_get( $form, 'button.text', '' );
+					$button_classes = preg_grep( '/btn-*/', $css_class );
+					$button_icon = '';
+					if ( ! empty( $field_content ) ) {
+						$button_text = $field_content;
+						if ( rwp_str_is_html( $field_content ) && rwp_str_is_element( $field_content, 'button' ) ) {
+							$button = $field_input->filter( 'button' )->makeClone();
+							$button = $button->getNode( 0 );
+							$field_input->filter( 'button' )->remove();
+							if ( ! empty( $button ) ) {
+								$button = rwp_dom_node_to_string( $button );
+								if ( ! empty( $button ) ) {
+									$button = rwp_button( $button );
+								} else {
+									$button_text = $field_content;
+								}
+							} else {
+								$button_text = $field_content;
+							}
+						} else if ( count( $field_input->getIterator() ) >= 2 ) {
+							$icon = $field_input->filter( 'i,svg,img' );
+							$icon = $icon->getNode( 0 );
+							$button_icon = rwp_dom_node_to_string( $icon );
+							$button_text = $field_input->text();
+
+						}
+						if ( ! ( $button instanceof Button ) ) {
+							$button = rwp_button( array(
+								'content' => $button_text,
+							));
+						}
+					} else if ( ! ( $button instanceof Button ) ) {
+						$button = rwp_button( array(
+							'content' => $button_text,
+						));
+					}
+
+					if ( $button instanceof Button ) {
+						$button->set_attr( 'onclick', 'document.getElementById("gform_submit_button_' . $form_id . '").click();' );
+
+						$button->add_class( $button_classes );
+
+						if ( ! empty( $button_icon ) ) {
+							$button->set_icon( $button_icon, 0 );
+							$button->set_order( 'icon' );
+						}
+
+						$button = $button->html();
+					}
+
+					$field_input->filter( '.ginput_container' )->append( $button );
+				}
 				break;
 			case 'list':
 				$field_input->filter( '.gfield_list_group' )->addClass( 'input-group' );

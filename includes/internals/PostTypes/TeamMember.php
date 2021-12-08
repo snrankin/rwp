@@ -25,22 +25,58 @@ class TeamMember extends PostType {
 
 	public $menu_icon = 'dashicons-groups';
 
-	public $args = array(
-		'admin_cols' => array(
-			// A featured image column:
-			'featured_image' => array(
-				'title'          => 'Profile Image',
-				'featured_image' => 'thumbnail',
-				'width'          => 80,
-				'height'         => 80,
-			),
-			// The default Title column:
-			'title',
-			// A taxonomy terms column:
-			'rwp_team_category' => array(
-				'title'    => 'Category',
-				'taxonomy' => 'rwp_team_category',
-			),
+	public $admin_cols = array(
+		// A featured image column:
+		'featured_image' => array(
+			'title'          => 'Profile Image',
+			'featured_image' => 'thumbnail',
+			'width'          => 80,
+			'height'         => 80,
+		),
+		// The default Title column:
+		'title',
+		// A taxonomy terms column:
+		'rwp_team_category' => array(
+			'title'    => 'Category',
+			'taxonomy' => 'rwp_team_category',
 		),
 	);
+
+	public $args = array(
+		'show_in_nav_menus' => false,
+		'hierarchical'      => false,
+	);
+
+	public function initialize() {
+
+		parent::initialize();
+
+		add_filter( 'the_title', function( $title, $id = null ) {
+			$type = get_post_type( $id );
+
+			if ( $type === $this->type ) {
+				$prefix = rwp_get_field( 'prefix', $id, '' );
+				$suffix = rwp_get_field( 'suffix', $id, '' );
+
+				$title = rwp_add_prefix( $title, $prefix );
+				$title = rwp_add_suffix( $title, $suffix );
+			}
+
+			return $title;
+		}, 10, 2 );
+
+		add_filter( "rwp_{$this->type}_card_defaults", function( array $defaults, \WP_Post $post ) {
+			$job_title = rwp_get_field( 'job_title', $post, '' );
+
+			if ( ! empty( $job_title ) ) {
+				$defaults['subtitle'] = array(
+					'content' => $job_title,
+				);
+			}
+
+			return $defaults;
+
+		}, 10, 2 );
+
+	}
 }

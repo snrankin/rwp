@@ -11,7 +11,7 @@
 
  namespace RWP\Components;
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 class Section extends Element {
 
@@ -36,42 +36,188 @@ class Section extends Element {
     public $order = array( 'inner' );
 
 	/**
-	 * @var array|Element $inner The inner content wrapper
+	 * @var array|Container $inner The inner content wrapper
 	 */
-    public $inner = array(
-		'tag' => 'div',
-        'atts' => array(
-            'class' => array(
-                'section-inner',
-			),
-		),
-	);
-
-	/**
-	 * @var mixed  $background  A background class, a css color, or an Image
-	 *                          element
-	 */
-    public $background;
+    public $inner;
 
 
     public function __construct( $args = [] ) {
 
         parent::__construct( $args );
 
-        $this->inner = new Element( $this->inner );
-
-		if ( $this->content->isNotEmpty() ) {
-            $this->inner->content = $this->content;
-            $this->content = new Collection();
-        }
-
+        $this->inner = new Container( $this->inner );
     }
 
-	public function add_content( $value, $key = '', $overwrite = false ) {
-        $this->inner->set_content( $value, $key, $overwrite );
-    }
 
-	public function setup_html() {
-		self::add_background( $this->background, $this, 'inner' );
+	/**
+	 * Add an row to the group with specific formatting
+	 *
+	 * @see Group::add_item
+	 *
+	 * @param mixed       $row        The row
+	 * @param string|int  $key        The index key
+	 * @param bool        $overwrite  Overwrite if exists or add if it doesn't
+	 * @param bool        $format     Whether to format the row with class defaults
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function add_row( $row = '', $key = '', $overwrite = false, $format = true ) {
+		return $this->inner->add_row( $row, $key, $overwrite, $format );
+	}
+
+	/**
+	 * Overwrite an row in the group with specific formatting
+	 *
+	 * @see Group::set_item
+	 *
+	 * @param mixed       $row        The row
+	 * @param string|int  $key        The index key
+	 * @param bool        $format     Whether to format the row with class defaults
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function set_row( $row = '', $key = '', $format = true ) {
+		return $this->add_row( $row, $key, true, $format );
+	}
+
+	/**
+	 * Get an existing row
+	 *
+	 * @see Group::has_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return bool
+	 */
+	public function has_row( $key ) {
+		return $this->inner->has_row( $key );
+	}
+
+	/**
+	 * Get an existing row
+	 *
+	 * @see Group::get_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return Row
+	 */
+	public function get_row( $key ) {
+		return $this->inner->get_row( $key );
+	}
+
+	/**
+	 * Update an existing row
+	 *
+	 * @see Group::update_item
+	 *
+	 * @param string|int  $key     The index key
+	 * @param string      $method  The class method to use
+	 * @param mixed       $args
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function update_row( $key, $method, ...$args ) {
+		return $this->inner->update_row( $key, $method, ...$args );
+	}
+
+	/**
+	 * Remove an row
+	 *
+	 * @see Group::remove_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return void
+	 */
+
+	public function remove_row( $key ) {
+		$this->inner->remove_row( $key );
+	}
+
+	/**
+	 * Add an col to the group with specific formatting
+	 *
+	 * @see Group::add_item
+	 *
+	 * @param mixed       $col        The col
+	 * @param string|int  $key        The index key
+	 * @param bool        $overwrite  Overwrite if exists or add if it doesn't
+	 * @param bool        $format     Whether to format the col with class defaults
+	 *
+	 * @return mixed      The updated key
+	 */
+	public function add_col( $col = '', $key = '', $row = 0, $overwrite = false, $format = true ) {
+		return $this->inner->add_col( $col, $key, $row, $overwrite, $format );
+	}
+
+	/**
+	 * Overwrite an col in the group with specific formatting
+	 *
+	 * @see Group::set_item
+	 *
+	 * @param mixed       $col        The col
+	 * @param string|int  $key        The index key
+	 * @param bool        $format     Whether to format the col with class defaults
+	 *
+	 * @return void
+	 */
+	public function set_col( $col = '', $key = '', $row = 0, $format = true ) {
+		$this->inner->set_col( $col, $key, $row, $format );
+	}
+
+	/**
+	 * Get an existing col
+	 *
+	 * @see Group::has_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return bool
+	 */
+	public function has_col( $key, $row = 0 ) {
+		$this->inner->has_col( $key, $row );
+	}
+
+	/**
+	 * Get an existing col
+	 *
+	 * @see Group::get_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return Column|false
+	 */
+	public function get_col( $key, $row = 0 ) {
+		return $this->inner->get_col( $key, $row );
+	}
+
+	/**
+	 * Update an existing col
+	 *
+	 * @see Group::update_item
+	 *
+	 * @param string|int  $key     The index key
+	 * @param string      $method  The class method to use
+	 * @param mixed       $args
+	 *
+	 * @return void
+	 */
+	public function update_col( $key, $row = 0, $method, ...$args ) {
+		$this->inner->update_col( $key, $row, $method, ...$args );
+	}
+
+	/**
+	 * Remove an col
+	 *
+	 * @see Group::remove_item
+	 *
+	 * @param string|int  $key        The index key
+	 *
+	 * @return void
+	 */
+
+	public function remove_col( $key, $row = 0 ) {
+		$this->inner->remove_col( $key, $row );
 	}
 }

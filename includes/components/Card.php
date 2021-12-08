@@ -12,7 +12,7 @@
 
 namespace RWP\Components;
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 class Card extends Element {
 
@@ -34,7 +34,23 @@ class Card extends Element {
 	 * @var array $order Array that sets the order of the child nodes
 	 */
 
-	public $order = array( 'header', 'image', 'body', 'footer' );
+	public $order = array( 'header', 'image', 'body', 'list', 'footer' );
+
+	/**
+	 * @var string  $style  A card style. One of `vertical (default) | overlay | horizontal`
+	 */
+	public $style = 'vertical';
+
+	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array(
+		'header' => 'Element',
+		'image'  => 'Image',
+		'body'   => 'Element',
+		'list'   => 'HtmlList',
+		'footer' => 'Element',
+	);
 
 	/**
 	 * @var array|string|Element $header The header content wrapper
@@ -73,6 +89,27 @@ class Card extends Element {
 	);
 
 	/**
+	 * @var array|string|HtmlList $list The list content wrapper
+	 */
+	public $list = array(
+		'tag' => 'ul',
+		'atts' => array(
+			'class' => array(
+				'card-list',
+				'list-group',
+				'list-group-flush',
+			),
+		),
+		'item_atts' => array(
+			'atts' => array(
+				'class' => array(
+					'list-group-item',
+				),
+			),
+		),
+	);
+
+	/**
 	 * @var array|string|Element $footer The footer content wrapper
 	 */
 	public $footer = array(
@@ -85,75 +122,122 @@ class Card extends Element {
 	);
 
 	/**
-	 * @var mixed  $background  A background class, a css color, or an Image
-	 *                          element
+	 * @var array $text_args The footer content wrapper
 	 */
-	public $background;
+	public $text_args = array(
+		'content' => array(),
+		'location' => 'body',
+		'key' => null,
+		'tag' => 'p',
+		'atts' => array(
+			'class' => array(
+				'card-text',
+			),
+		),
+	);
 
 	/**
-	 * @var string  $style  A card style. One of `vertical (default) | overlay | horizontal`
+	 * @var array $title_args The footer content wrapper
 	 */
-	public $style = 'vertical';
+	public $title_args = array(
+		'content' => array(),
+		'location' => 'body',
+		'key' => null,
+		'tag' => 'h3',
+		'atts' => array(
+			'class' => array(
+				'card-title',
+			),
+		),
+	);
+
+	/**
+	 * @var array $subtitle_args The footer content wrapper
+	 */
+	public $subtitle_args = array(
+		'content' => array(),
+		'location' => 'body',
+		'key' => null,
+		'tag' => 'h4',
+		'atts' => array(
+			'class' => array(
+				'card-subtitle',
+			),
+		),
+	);
+
+	/**
+	 * @var array $link_args The footer content wrapper
+	 */
+	public $link_args = array(
+		'content'  => array(),
+		'location' => 'body',
+		'key'      => null,
+		'tag'      => 'a',
+		'is_btn'   => false,
+	);
 
 
 	public function __construct( $args = [] ) {
 
-		$image = data_get( $args, 'image' );
-
-		if ( $image ) {
-			if ( is_string( $image ) || is_numeric( $image ) ) {
-				$image_args = (array) $this->image;
-				$image_args['src'] = $image;
-				$args['image'] = $image_args;
-			}
-		}
-
 		parent::__construct( $args );
 
-		$elements = array(
-			'header',
-			'image',
-			'body',
-			'footer',
-		);
-
-		foreach ( $elements as $element ) {
-			switch ( $element ) {
-				case 'image':
-					$this->$element = new Image( $this->$element );
-					break;
-				default:
-					$this->$element = new Element( $this->$element );
-					break;
-			}
-		}
-
 		if ( $this->content->isNotEmpty() ) {
-			$content = $this->content;
-			$content->transform(function ( $item ) {
+			$this->content->reject( function ( $item ) {
 				if ( is_string( $item ) ) {
 					$item = rwp_html( $item );
-				}
-				if ( is_array( $item ) ) {
+				} else if ( is_array( $item ) ) {
 					$item = new Element( $item );
-				}
-				if ( $item instanceof Element ) {
+					$item = $item->html;
+				} else if ( $item instanceof Element ) {
+					$item = $item->html;
+				} else if ( $item instanceof Html ) {
 					$item = $item->html;
 				}
 
-				/**
-				 * @var Html $html
-				 */
-				$html = $item;
+				if ( rwp_is_component( $item, 'Html' ) ) {
+					/**
+					 * @var Html $html
+					 */
+					$html = $item;
 
-				$html->filter( 'p' )->addClass( 'card-text' );
-				$html->filter( 'h1,h2,h3,h4,h5,h6' )->addClass( 'card-title' );
-				$html->filter( 'a:not(.btn)' )->addClass( 'card-link' );
+					$text = rwp_extract_html_elements( $html, 'p', true );
 
-				return $html->saveHtml();
+					if ( ! empty( $text ) ) {
+						foreach ( $text as $node ) {
+							$this->add_text( $node );
+						}
+					}
+
+					$title = rwp_extract_html_elements( $html, 'h1,h2,h3', true );
+
+					if ( ! empty( $title ) ) {
+						foreach ( $title as $node ) {
+							$this->add_title( $node );
+						}
+					}
+
+					$subtitle = rwp_extract_html_elements( $html, 'h4,h5,h6', true );
+
+					if ( ! empty( $subtitle ) ) {
+						foreach ( $subtitle as $node ) {
+							$this->add_subtitle( $node );
+						}
+					}
+
+					$link = rwp_extract_html_elements( $html, 'a:not(.btn)', true );
+
+					if ( ! empty( $link ) ) {
+						foreach ( $link as $node ) {
+							$this->add_link( $node );
+						}
+					}
+
+					return true;
+				} else {
+					return false;
+				}
 			});
-			$this->body->content = $content;
-			$this->content = new Collection();
 		}
 
 		if ( $this->has( 'title' ) && ! empty( $this->get( 'title' ) ) ) {
@@ -204,41 +288,9 @@ class Card extends Element {
 	 */
 	public function add_text( $text ) {
 
-		$defaults = array(
-			'content' => array(),
-			'location' => 'body',
-			'key' => null,
-			'tag' => 'p',
-			'atts' => array(
-				'class' => array(
-					'card-text',
-				),
-			),
-		);
+		$text = new Element( $this->text_args );
 
-		if ( $text instanceof Html ) {
-			$text = $text->saveHTML();
-		}
-
-		if ( is_string( $text ) ) {
-			if ( rwp_str_is_html( $text ) ) {
-				$text = rwp_extract_html_attributes( $text, '', true, true );
-			} else {
-				$text = array(
-					'content' => $text,
-				);
-			}
-		}
-
-		if ( is_array( $text ) ) {
-			$text = rwp_merge_args( $defaults, $text );
-		}
-
-		$text = new Element( $text );
-
-		if ( $text instanceof Element ) {
-			$text->add_class( 'card-text' );
-		}
+		$text->merge_args( $text, true );
 
 		$location = data_get( $text, 'location', 'body' );
 
@@ -258,45 +310,14 @@ class Card extends Element {
 	/**
 	 * Set the card title
 	 *
-	 * @param Html|string|array|Element  $title  The title value
+	 * @param Html|string|array|Element  $title_args  The title value
 	 *
 	 */
-	public function add_title( $title ) {
-		$defaults = array(
-			'content' => array(),
-			'location' => 'body',
-			'key' => null,
-			'tag' => 'h3',
-			'atts' => array(
-				'class' => array(
-					'card-title',
-				),
-			),
-		);
+	public function add_title( $title_args ) {
 
-		if ( $title instanceof Html ) {
-			$title = $title->saveHTML();
-		}
+		$title = new Element( $this->title_args );
 
-		if ( is_string( $title ) ) {
-			if ( rwp_str_is_html( $title ) ) {
-				$title = rwp_extract_html_attributes( $title, '', true, true );
-			} else {
-				$title = array(
-					'content' => $title,
-				);
-			}
-		}
-
-		if ( is_array( $title ) ) {
-			$title = rwp_merge_args( $defaults, $title );
-		}
-
-		$title = new Element( $title );
-
-		if ( $title instanceof Element ) {
-			$title->add_class( 'card-title' );
-		}
+		$title->merge_args( $title_args, true );
 
 		$location = data_get( $title, 'location', 'body' );
 
@@ -308,47 +329,15 @@ class Card extends Element {
 	}
 
 	/**
-	 * Set the card title
+	 * Set the card subtitle
 	 *
-	 * @param Html|string|array|Element  $title  The title value
+	 * @param Html|string|array|Element  $title_args  The subtitle value
 	 *
 	 */
-	public function add_subtitle( $title ) {
-		$defaults = array(
-			'content' => array(),
-			'location' => 'body',
-			'key' => null,
-			'tag' => 'h4',
-			'atts' => array(
-				'class' => array(
-					'card-subtitle',
-				),
-			),
-		);
+	public function add_subtitle( $title_args ) {
+		$title = new Element( $this->title_args );
 
-		if ( $title instanceof Html ) {
-			$title = $title->saveHTML();
-		}
-
-		if ( is_string( $title ) ) {
-			if ( rwp_str_is_html( $title ) ) {
-				$title = rwp_extract_html_attributes( $title, '', true, true );
-			} else {
-				$title = array(
-					'content' => $title,
-				);
-			}
-		}
-
-		if ( is_array( $title ) ) {
-			$title = rwp_merge_args( $defaults, $title );
-		}
-
-		$title = new Element( $title );
-
-		if ( $title instanceof Element ) {
-			$title->add_class( 'card-title' );
-		}
+		$title->merge_args( $title_args, true );
 
 		$location = data_get( $title, 'location', 'body' );
 
@@ -368,13 +357,7 @@ class Card extends Element {
 	 */
 	public function add_link( $link ) {
 
-		$defaults = array(
-			'content' => array(),
-			'location' => 'body',
-			'key' => null,
-			'tag' => 'a',
-			'is_btn' => false,
-		);
+		$defaults = $this->link_args;
 
 		if ( is_array( $link ) ) {
 			if ( wp_is_numeric_array( $link ) ) {
@@ -388,11 +371,11 @@ class Card extends Element {
 			}
 		}
 
-		$is_btn = data_get( $defaults, 'is_btn', false );
-		$href = data_get( $defaults, 'link', '' );
-		$text = data_get( $defaults, 'text', '' );
+		$is_btn   = data_get( $defaults, 'is_btn', false );
+		$href     = data_get( $defaults, 'link', '' );
+		$text     = data_get( $defaults, 'text', '' );
 		$location = data_get( $defaults, 'location', 'body' );
-		$order = data_get( $defaults, 'key', 4 );
+		$order    = data_get( $defaults, 'key', 4 );
 
 		if ( $link instanceof Html ) {
 			if ( $link->filter( 'a' )->hasClass( 'btn' ) ) {
@@ -488,6 +471,19 @@ class Card extends Element {
 	}
 
 	/**
+	 * Setup card list (or remove if empty)
+	 *
+	 * @return void
+	 */
+	public function setup_list() {
+		if ( in_array( 'list', $this->order, true ) ) {
+			if ( ! $this->list->elements->isEmpty() ) {
+				$this->remove_order_item( 'list' );
+			}
+		}
+	}
+
+	/**
 	 * Setup card footer (or remove if empty)
 	 *
 	 * @return void
@@ -507,12 +503,10 @@ class Card extends Element {
 	}
 
 	public function setup_html() {
-
 		$this->setup_header();
 		$this->setup_image();
 		$this->setup_body();
+		$this->setup_list();
 		$this->setup_footer();
-
-		self::add_background( $this->background, $this );
 	}
 }

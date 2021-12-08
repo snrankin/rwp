@@ -16,7 +16,7 @@ namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Str;
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 /**
  * Post Types and Taxonomies
@@ -39,16 +39,20 @@ class PostTypes extends Singleton {
 			return [ $item['value'] => $item['label'] ];
 		});
 
+		rwp_get_plugin_file( 'PageForPostType.php', 'includes/internals/PostTypes', true, true );
+
 		\add_action( 'init', array( $this, 'load_cpts' ) );
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
-		if ( rwp_get_option( 'modules.blog.update_urls', false ) && ! is_plugin_active( 'elementor/elementor.php' ) ) { // can't rewrite basic permalinks with ELementor :(
-			\add_filter( 'register_post_type_args', array( $this, 'add_blog_page_to_post_url' ), 10, 2 );
-			\add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
-			\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
+		if ( rwp_get_option( 'modules.blog.update_urls', false ) ) { // can't rewrite basic permalinks with ELementor :(
+
+			// \add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
+			//\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
 			//\add_action( 'init', array( $this, 'update_post_permalinks' ) );
 		}
+
+		\add_action( 'pre_get_posts', array( $this, 'update_permalinks' ) );
 
 	}
 
@@ -137,36 +141,6 @@ class PostTypes extends Singleton {
 	}
 
 	/**
-	 *
-	 * @param mixed $args
-	 * @param mixed $post_type
-	 * @return mixed
-	 */
-
-	public function add_blog_page_to_post_url( $args, $post_type ) {
-		$blog_page = rwp_get_blog_page();
-		if ( ! $blog_page ) {
-			return $args;
-		}
-
-		$blog_page = get_post( $blog_page );
-
-		if ( 'post' !== $post_type && ! ( $blog_page instanceof \WP_Post ) ) {
-			return $args;
-		}
-
-		$blog_page = untrailingslashit( wp_make_link_relative( get_permalink( $blog_page ) ) );
-
-		$args['rewrite'] = array(
-			'slug' => $blog_page,
-			'with_front' => true,
-		);
-
-		return $args;
-
-	}
-
-	/**
 	 * Update post links if there is a custom blog page set
 	 *
 	 * @return void
@@ -182,7 +156,7 @@ class PostTypes extends Singleton {
 		if ( ! ( $blog_page instanceof \WP_Post ) ) {
 			return;
 		}
-		$blog_slug = $blog_page->post_name;
+		$blog_slug = rwp_post_slug( $blog_page );
 		$permalink_structure = get_option( 'permalink_structure', '/%postname%/' );
 
 		$updated_permalink_structure = rwp_add_prefix( $permalink_structure, '/' . $blog_slug );
@@ -193,6 +167,82 @@ class PostTypes extends Singleton {
 
 		flush_rewrite_rules( true );
 
+	}
+
+	/**
+	 *
+	 * @param \WP_Query $query
+	 * @return void
+	 */
+	public function update_permalinks( $query ) {
+
+			// Bail if this is not the main query.
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+			// Bail if this query doesn't match our very specific rewrite rule.
+		if ( ! isset( $query->query['page'] ) ) {
+			return;
+		}
+
+			// Bail if we're not querying based on the post name.
+		if ( empty( $query->query['name'] ) && ! $query->is_single ) {
+			return;
+		}
+
+		$post_types = array_keys( get_post_types( array(
+			'public' => true,
+			'publicly_queryable' => true,
+		) ) );
+
+		$post_types[] = 'page';
+
+		$name = data_get( $query, 'query.name', '' );
+
+		if ( ! empty( $name ) ) {
+			$query->set( 'post_type', $post_types );
+		}
+
+		$blog_page = rwp_get_blog_page();
+		$blog_slug = rwp_post_slug( $blog_page );
+
+		if ( $blog_page && $name === $blog_slug ) {
+			$post_types = '';
+			$query->query = array(
+				'page' => '',
+				'pagename' => $name,
+			);
+			$query->set( 'pagename', $name );
+			$query->set( 'name', '' );
+			$query->queried_object = get_post( $blog_page );
+			$query->queried_object_id = $blog_page;
+			$query->is_home = true;
+			$query->is_posts_page = true;
+			$query->is_singular = false;
+			$query->is_single = false;
+		} else {
+			$query->set( 'pagename', $name );
+			$query->set( 'landing-pages', $name );
+			$postname = $name;
+			$permalink_structure = get_option( 'permalink_structure', '/%postname%/' );
+			if ( '/%postname%/' !== $permalink_structure ) {
+				$permalink_structure = rwp_str( 'replace', '%postname%/', '', $permalink_structure );
+				$permalink_structure = rwp_str( 'after', $permalink_structure, '/' );
+				if ( rwp_str_has( $name, $permalink_structure ) ) {
+					$name = rwp_str_remove( $permalink_structure, $name );
+					$query->set( 'name', $name );
+				}
+			}
+
+			$query->query = array(
+				'landing-pages' => $name,
+				'pagename'      => $name,
+				'name'          => $postname,
+			);
+		}
+
+		// $query->set( 'post_type', $post_types );
 	}
 
 	/**
@@ -286,22 +336,21 @@ class PostTypes extends Singleton {
 
 		$labels = self::labels( $singular, $plural, $menu, $slug );
 
+		if ( empty( $slug ) ) {
+			$slug = data_get( $labels, 'names.slug', '' );
+		}
+
 		$defaults = array(
-			'label'               => $singular,
-			'labels'              => $labels['labels'],
-			'capability_type'     => 'page',
-			'show_in_rest'        => true,
-			'hierarchical'        => false,
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'menu_position'       => 5,
-			'show_in_admin_bar'   => true,
-			'show_in_nav_menus'   => true,
-			'can_export'          => true,
-			'has_archive'         => true,
-			'exclude_from_search' => false,
-			'publicly_queryable'  => true,
+			'label'           => $singular,
+			'labels'          => $labels['labels'],
+			'rest_base'       => $slug,
+			'capability_type' => 'page',
+			'show_in_rest'    => true,
+			'has_archive'     => false,
+			'rewrite'         => array(
+				'slug'       => $slug,
+				'with_front' => false,
+			),
 		);
 
 		$args = wp_parse_args( $args, $defaults );

@@ -126,7 +126,7 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 					}
 				} else {
 					echo '<td>';
-					echo nl2br( esc_html( $variable ) );
+					$dumper->dump( $cloner->cloneVar( $variable ) );
 					echo '</td>';
 				}
 

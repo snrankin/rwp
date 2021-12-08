@@ -11,7 +11,7 @@
 
 namespace RWP\Components;
 
-use RWP\Vendor\Illuminate\Support\Collection;
+use RWP\Components\Collection;
 
 class Column extends Element {
 
@@ -70,8 +70,4 @@ class Column extends Element {
 	public function add_content( $value, $key = '', $overwrite = false ) {
         $this->inner->set_content( $value, $key, $overwrite );
     }
-
-	public function setup_html() {
-		self::add_background( $this->background, $this, 'inner' );
-	}
 }

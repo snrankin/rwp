@@ -63,7 +63,6 @@ class Nav_Menus extends Singleton {
 	 */
 
 	public function nav_menu_submenu_css_class( $classes, $args, $depth ) {
-		$classes[] = 'nav';
 		$classes[] = 'level-' . ( $depth + 1 ) . '-menu';
 
 		return $classes;

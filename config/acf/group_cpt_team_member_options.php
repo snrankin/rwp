@@ -25,7 +25,7 @@ acf_add_local_field_group(array(
 			'conditional_logic' => 0,
 			'wrapper' => array(
 				'width' => '',
-				'class' => '',
+				'class' => ' col-md-3',
 				'id' => '',
 			),
 			'acfe_save_meta' => 0,
@@ -50,7 +50,7 @@ acf_add_local_field_group(array(
 			'conditional_logic' => 0,
 			'wrapper' => array(
 				'width' => '',
-				'class' => '',
+				'class' => 'col-md-3',
 				'id' => '',
 			),
 			'acfe_save_meta' => 0,
@@ -75,7 +75,7 @@ acf_add_local_field_group(array(
 			'conditional_logic' => 0,
 			'wrapper' => array(
 				'width' => '',
-				'class' => '',
+				'class' => 'col-md-6',
 				'id' => '',
 			),
 			'acfe_save_meta' => 0,
@@ -104,7 +104,7 @@ acf_add_local_field_group(array(
 				'id' => '',
 			),
 			'layout' => 'block',
-			'acfe_seamless_style' => 0,
+			'acfe_seamless_style' => 1,
 			'acfe_group_modal' => 0,
 			'sub_fields' => array(
 				array(
@@ -117,7 +117,7 @@ acf_add_local_field_group(array(
 					'conditional_logic' => 0,
 					'wrapper' => array(
 						'width' => '',
-						'class' => '',
+						'class' => 'col-md-6',
 						'id' => '',
 					),
 					'acfe_save_meta' => 0,
@@ -137,7 +137,7 @@ acf_add_local_field_group(array(
 					'conditional_logic' => 0,
 					'wrapper' => array(
 						'width' => '',
-						'class' => '',
+						'class' => 'col-md-6',
 						'id' => '',
 					),
 					'default_value' => '',
@@ -305,7 +305,7 @@ acf_add_local_field_group(array(
 	'menu_order' => 0,
 	'position' => 'normal',
 	'style' => 'default',
-	'label_placement' => 'left',
+	'label_placement' => 'top',
 	'instruction_placement' => 'label',
 	'hide_on_screen' => '',
 	'active' => true,
