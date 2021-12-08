@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -460,7 +460,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 1,
+					'acfe_seamless_style' => 0,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -630,7 +630,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 1,
+					'acfe_seamless_style' => 0,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -750,7 +750,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 1,
+					'acfe_seamless_style' => 0,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(

@@ -23,6 +23,17 @@ body:not(.post-type-acf-field-group) {
 			padding-bottom: 0;
 			border-color: transparent;
 		}
+		&.acf-block-fields {
+			@include acf-row('padding', true);
+		}
+	}
+	.acf-hl {
+		@include acf-row('margin', true);
+		> * {
+			@include col-gutters(true);
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
 	}
 	.acf-field {
 		@include make-grid-columns-2;
@@ -47,8 +58,62 @@ body:not(.post-type-acf-field-group) {
 				}
 			}
 		}
+		&.border {
+			padding-top: var(--#{$variable-prefix}gutter-y) !important;
+			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
+			margin-left: calc(
+				var(--#{$variable-prefix}gutter-x) * 0.5
+			) !important;
+			margin-right: calc(
+				var(--#{$variable-prefix}gutter-x) * 0.5
+			) !important;
+			> .acf-label {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+				margin-top: 0 !important;
+			}
+			> .acf-input {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+		}
 		&.border-top {
-			border-top: 1px solid #eee !important;
+			padding-top: var(--#{$variable-prefix}gutter-y) !important;
+		}
+		&.border-bottom {
+			padding-top: var(--#{$variable-prefix}gutter-y) !important;
+		}
+		&.border-start {
+			> .acf-label {
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+			> .acf-input {
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+		}
+		&.border-end {
+			> .acf-label {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+			> .acf-input {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
 		}
 		&.border-none {
 			border: none !important;
@@ -70,13 +135,63 @@ body:not(.post-type-acf-field-group) {
 				font-weight: 600 !important;
 			}
 		}
+		&.label-md {
+			> .acf-label {
+				color: #1d2327;
+				font-size: 1.15em !important;
+				font-weight: 600 !important;
+			}
+		}
+
+		&[class*=' bg-'] {
+			padding-top: var(--#{$variable-prefix}gutter-y) !important;
+			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
+			> .acf-label {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+			> .acf-input {
+				padding-right: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+				padding-left: calc(
+					var(--#{$variable-prefix}gutter-x) * 0.5
+				) !important;
+			}
+		}
 		.acf-label {
 			label {
 				margin: 0;
 			}
 		}
-		select {
-			padding-right: 27px;
+		.acf-input {
+			.acf-editor-wrap {
+				.wp-editor-tools {
+					display: flex;
+					.wp-media-buttons {
+						float: none;
+					}
+					.wp-editor-tabs {
+						margin-left: auto;
+						float: none;
+					}
+					.wp-switch-editor {
+						float: none;
+						height: auto !important;
+					}
+				}
+			}
 		}
+	}
+}
+
+.acf-menu-settings {
+	box-sizing: border-box !important;
+	* {
+		box-sizing: border-box !important;
 	}
 }

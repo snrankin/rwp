@@ -233,23 +233,23 @@
 	}
 }
 
-@mixin col-gutters($x-gutter: null, $y-gutter: null, $important: false) {
+@mixin col-gutters($important: false) {
 	@if $important {
 		padding-right: calc(
-			#{$x-gutter} * 0.5
+			var(--#{$variable-prefix}gutter-x) * 0.5
 		) !important; // stylelint-disable-line function-disallowed-list
 		padding-left: calc(
-			#{$x-gutter} * 0.5
+			var(--#{$variable-prefix}gutter-x) * 0.5
 		) !important; // stylelint-disable-line function-disallowed-list
-		margin-top: $y-gutter !important;
+		margin-top: var(--#{$variable-prefix}gutter-y) !important;
 	} @else {
 		padding-right: calc(
-			#{$x-gutter} * 0.5
+			var(--#{$variable-prefix}gutter-x) * 0.5
 		); // stylelint-disable-line function-disallowed-list
 		padding-left: calc(
-			#{$x-gutter} * 0.5
+			var(--#{$variable-prefix}gutter-x) * 0.5
 		); // stylelint-disable-line function-disallowed-list
-		margin-top: $y-gutter;
+		margin-top: var(--#{$variable-prefix}gutter-y);
 	}
 }
 

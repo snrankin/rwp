@@ -31,12 +31,14 @@ body:not(.post-type-acf-field-group) {
 			&::after {
 				display: none;
 			}
+			> .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal='1']),
+			> .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal='1']),
 			> .acf-field {
 				@include acf-row('padding', true, 0, 0);
 				padding-top: 0;
 				padding-bottom: 0;
 				&.label-none {
-					> .acf-field {
+					> .acf-input {
 						width: 100%;
 					}
 				}
@@ -51,9 +53,14 @@ body:not(.post-type-acf-field-group) {
 					}
 				}
 				> .acf-input {
-					padding: $acf-gutter-y $acf-gutter-x !important;
+					padding: $acf-gutter-y $acf-gutter-x;
 					@include media-breakpoint-up(md) {
 						width: 80%;
+					}
+					> .acf-fields {
+						&.-top {
+							@include acf-row('margin', true);
+						}
 					}
 				}
 			}
