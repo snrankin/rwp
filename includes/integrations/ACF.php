@@ -44,10 +44,6 @@ class ACF extends Singleton {
 		\add_filter( 'acf/load_field/name=bs_border_color', array( $this, 'add_color_choices' ) );
 		\add_filter( 'acf/load_field/name=bs_btn_style', array( $this, 'add_color_choices' ) );
 
-		\add_filter( 'acf/fields/svg_icon/file_path', function() {
-			return rwp_plugin_asset_path( 'bootstrap-icons.svg', 'imgs' );
-		} );
-
 		$this->include_acf_extras();
 	}
 
