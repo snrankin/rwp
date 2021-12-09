@@ -1,0 +1,40 @@
+/// ======================================================================== ///
+/// @name   lazysizes
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.no-js img.lazyload {
+	display: none;
+}
+.lazyload,
+.ls-blur-up-is-loading,
+.lazyloading {
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 1000ms, filter 1500ms;
+}
+
+.ls-blur-up-is-loading {
+	font-family: 'blur-up: auto', 'object-fit: cover';
+	filter: blur(10px);
+	opacity: 1;
+}
+
+.ls-blur-up-img.ls-inview.ls-original-loaded {
+	opacity: 0;
+	filter: blur(5px);
+}
+
+.lazyloaded {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 300ms;
+}
+
+img.lazyload:not([src]) {
+	visibility: hidden;
+	opacity: 0;
+}

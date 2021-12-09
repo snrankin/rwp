@@ -1,0 +1,192 @@
+/// ======================================================================== ///
+/// @name   _reboot
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@import '~bootstrap/scss/reboot';
+
+@viewport {
+	width: device-width;
+}
+
+html {
+	line-height: 1.15;
+	text-size-adjust: 100%;
+	tab-size: 4;
+	box-sizing: border-box;
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	-ms-overflow-style: scrollbar;
+	-webkit-tap-highlight-color: transparent;
+	text-rendering: optimizeLegibility !important;
+	font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased !important;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	overflow-x: hidden;
+	min-height: 100%;
+	@media screen {
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+}
+
+::selection {
+	text-shadow: none;
+	color: var(--bs-primary-contrast);
+	background-color: var(--bs-primary);
+	text-fill-color: var(--bs-primary-contrast);
+	-webkit-text-fill-color: var(--bs-primary-contrast);
+	-moz-text-fill-color: var(--bs-primary-contrast);
+}
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+	margin: 1rem 0;
+	color: inherit;
+	background-color: currentColor;
+	border: 0;
+
+	&:not([size]) {
+		height: 1px;
+	}
+}
+
+sub {
+	bottom: -0.5ex;
+	height: 0;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sup {
+	height: 0;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+	bottom: 1ex;
+}
+
+::-moz-focus-inner {
+	padding: 0;
+	border-style: none;
+}
+
+// Remove the inner border and padding in Firefox.
+
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+
+// Restore the focus styles unset by the previous rule.
+
+button:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
+	outline: 1px dotted ButtonText;
+}
+
+// Restore the focus styles unset by the previous rule.
+
+:-moz-focusring {
+	outline: 1px dotted ButtonText;
+}
+
+// Remove the additional ':invalid' styles in Firefox.
+// @link https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
+
+:-moz-ui-invalid {
+	box-shadow: none;
+}
+
+// Remove the inner padding in Chrome and Safari on macOS.
+::-webkit-search-decoration {
+	appearance: none;
+}
+
+::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+::file-selector-button {
+	font: inherit;
+}
+
+::-webkit-file-upload-button {
+	font: inherit;
+	appearance: button;
+}
+
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+	padding: 0;
+}
+
+// Correct the cursor style of increment and decrement buttons in Safari.
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+	height: auto;
+}
+
+// 1. Correct the odd appearance in Chrome and Safari.
+// 2. Correct the outline style in Safari.
+
+[type='search'] {
+	appearance: textfield; // 1
+	outline-offset: -2px; // 2
+}
+
+img,
+svg {
+	vertical-align: middle;
+}
+
+// Remove the border on images inside links in IE 10-.
+img {
+	border-style: none;
+}
+
+// Hide the overflow in IE.
+
+svg:not(:root) {
+	overflow: hidden;
+}
+
+ol,
+ul {
+	&:not([class]) {
+		margin-top: 0;
+		margin-bottom: $paragraph-margin-bottom;
+		padding-left: 0;
+		list-style-position: outside;
+		padding-inline-start: 0.8em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		li {
+			&:not([class]):not(:last-child) {
+				margin-bottom: $paragraph-margin-bottom * 0.5;
+			}
+		}
+	}
+}

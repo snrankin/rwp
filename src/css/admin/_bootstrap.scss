@@ -1,0 +1,24 @@
+/// ======================================================================== ///
+/// @name   _bootstrap
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+// Configuration
+@import '../global/admin-index';
+
+// Layout & components
+@import '../bootstrap/root';
+@import '../bootstrap/images';
+@import '../bootstrap/buttons';
+@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/spinners';
+@import '~bootstrap/scss/placeholders';
+
+// Helpers
+@import '~bootstrap/scss/helpers';
+
+// Utilities
+@import '~bootstrap/scss/utilities/api';

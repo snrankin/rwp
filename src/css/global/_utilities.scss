@@ -1,0 +1,27 @@
+/// ======================================================================== ///
+/// @name   _utilities
+///
+/// @group  RIESTER RX
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@use 'sass:map';
+@use '~bootstrap/scss/utilities';
+
+$utilities: map-merge(
+	$utilities,
+	(
+		'shadow-filter': (
+			property: filter,
+			class: filter-shadow,
+			responsive: true,
+			values: (
+				null: drop-shadow($box-shadow),
+				sm: drop-shadow($box-shadow-sm),
+				lg: drop-shadow($box-shadow-lg),
+				none: none,
+			),
+		),
+	)
+);

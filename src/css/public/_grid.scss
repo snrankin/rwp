@@ -1,0 +1,67 @@
+/// ======================================================================== ///
+/// @name   _grid
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.has-bg {
+	position: relative;
+	overflow: hidden;
+
+	> .bg-wrapper {
+		@include cover-absolute;
+
+		z-index: -1;
+	}
+}
+
+.page-section {
+	--section-y-gutter: var(--rwp-section-y-padding);
+
+	@media only screen {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	+ .page-section {
+		margin-top: var(--section-y-gutter);
+	}
+
+	&:not(.has-bg) + .page-section.has-bg {
+		margin-top: var(--section-y-gutter);
+	}
+
+	&.has-bg {
+		padding-top: var(--rwp-section-y-padding);
+		padding-bottom: var(--rwp-section-y-padding);
+
+		+ .page-section.has-bg {
+			margin-top: 0;
+		}
+
+		+ .page-section:not(.has-bg) {
+			margin-top: var(--section-y-gutter);
+		}
+	}
+
+	&:first-child:not(.has-bg) {
+		margin-top: var(--section-y-gutter);
+	}
+
+	&:last-child:not(.has-bg) {
+		margin-bottom: var(--section-y-gutter);
+	}
+}
+
+.screen-full {
+	width: 100%;
+	height: 100vh;
+	@media only print {
+		width: 100%;
+		height: 100%;
+	}
+}

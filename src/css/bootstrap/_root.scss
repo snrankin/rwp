@@ -1,0 +1,16 @@
+/// ======================================================================== ///
+/// @name   _root
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@import '~bootstrap/scss/root';
+
+:root {
+	// stylelint-disable-next-line
+	--#{$variable-prefix}gutter-x: #{$grid-gutter-width};
+	// stylelint-disable-next-line
+	--#{$variable-prefix}gutter-y: #{$grid-gutter-width};
+}

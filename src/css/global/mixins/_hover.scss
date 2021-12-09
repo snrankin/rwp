@@ -1,0 +1,37 @@
+/// ======================================================================== ///
+/// @name   _hover
+///
+/// @group  RIESTER RX
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@mixin hover() {
+	&:hover {
+		@content;
+	}
+}
+
+@mixin hover-focus() {
+	&:hover,
+	&:focus {
+		@content;
+	}
+}
+
+@mixin plain-hover-focus() {
+	&,
+	&:hover,
+	&:focus {
+		@content;
+	}
+}
+
+@mixin hover-focus-active() {
+	&:hover,
+	&:focus,
+	&:active,
+	&.active {
+		@content;
+	}
+}

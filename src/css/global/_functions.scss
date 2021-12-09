@@ -1,0 +1,138 @@
+@use 'sass:string';
+@use 'sass:math';
+@use 'sass:map';
+@import '~bootstrap/scss/functions';
+
+@function is-number($value) {
+	@return type-of($value) == 'number';
+}
+
+@function is-time($value) {
+	@return is-number($value) and index('ms' 's', unit($value)) != null;
+}
+
+@function is-duration($value) {
+	@return is-time($value);
+}
+
+@function is-angle($value) {
+	@return is-number($value) and index('deg' 'rad' 'grad' 'turn', unit($value)) != null;
+}
+
+@function is-frequency($value) {
+	@return is-number($value) and index('Hz' 'kHz', unit($value)) != null;
+}
+
+@function is-integer($value) {
+	@return is-number($value) and round($value) == $value;
+}
+
+@function is-relative-length($value) {
+	@return is-number($value) and index('em' 'ex' 'ch' 'rem' 'vw' 'vh' 'vmin' 'vmax', unit($value)) != null;
+}
+
+@function is-absolute-length($value) {
+	@return is-number($value) and index('cm' 'mm' 'in' 'px' 'pt' 'pc', unit($value)) != null;
+}
+
+@function is-percentage($value) {
+	@return is-number($value) and unit($value) == '%';
+}
+
+@function is-length($value) {
+	@return is-relative-length($value) or is-absolute-length($value);
+}
+
+@function is-resolution($value) {
+	@return is-number($value) and index('dpi' 'dpcm' 'dppx', unit($value)) != null;
+}
+
+@function is-position($value) {
+	@return is-length($value) or is-percentage($value) or index('top' 'right' 'bottom' 'left' 'center', $value) != null;
+}
+
+/// Map deep get
+/// @author Hugo Giraudel
+/// @link https://css-tricks.com/snippets/sass/deep-getset-maps/
+/// @access public
+/// @param {Map} $map - Map
+/// @param {Arglist} $keys - Key chain
+/// @return {*} - Desired value
+@function map-deep-get($map, $keys...) {
+	@each $key in $keys {
+		$map: map.get($map, $key);
+	}
+	@return $map;
+}
+
+@function strip-units($number) {
+	@return math.div($number, $number * 0 + 1);
+}
+
+@function get-unit($number) {
+	@return unit($number);
+}
+
+/// Replace `$search` with `$replace` in `$string`
+/// @author Kitty Giraudel
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: '') {
+	$index: string.index($string, $search);
+
+	@if $index {
+		@return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+	}
+
+	@return $string;
+}
+
+@function str-remove-whitespace($str) {
+	@while string.index($str, ' ') != null {
+		$index: string.index($str, ' ');
+		$str: '#{str-slice($str, 0, $index - 1)}#{str-slice($str, $index + 1)}';
+	}
+	@return $str;
+}
+
+@function str-remove-dashes($str) {
+	@while string.index($str, '-') != null {
+		$index: string.index($str, '-');
+		$str: '#{str-slice($str, 0, $index - 1)}#{str-slice($str, $index + 1)}';
+	}
+	@return $str;
+}
+
+@function rem($size) {
+	$rem-size: math.div(strip-units($size), 16) * 1rem;
+	@return $rem-size;
+}
+
+@function remtopx($size) {
+	$px-size: (strip-units($size) * 16) * 1px;
+	@return $px-size;
+}
+
+@function remtopt($size) {
+	$px-size: (strip-units($size) * 16) * 0.75pt;
+	@return $px-size;
+}
+
+@function pxtopt($size) {
+	$px-size: strip-units($size) * 0.75pt;
+	@return $px-size;
+}
+
+@function lineheightex($size) {
+	$unit: math.unit($size);
+	$number: strip-units($size);
+	@if $unit == '%' {
+		$number: math.div($number, 100);
+	} @else if $unit == 'px' {
+		$number: rem($size);
+		$number: strip-units($number);
+	}
+	@return $number * 2ex;
+}
