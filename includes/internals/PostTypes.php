@@ -45,12 +45,12 @@ class PostTypes extends Singleton {
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
-		if ( rwp_get_option( 'modules.blog.update_urls', false ) ) { // can't rewrite basic permalinks with ELementor :(
+		// if ( rwp_get_option( 'modules.blog.update_urls', false ) ) { // can't rewrite basic permalinks with ELementor :(
 
-			// \add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
-			//\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
-			//\add_action( 'init', array( $this, 'update_post_permalinks' ) );
-		}
+		// 	\add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
+		// 	\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
+		// 	\add_action( 'init', array( $this, 'update_post_permalinks' ) );
+		// }
 
 		\add_action( 'pre_get_posts', array( $this, 'update_permalinks' ) );
 
