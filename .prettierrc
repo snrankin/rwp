@@ -4,6 +4,10 @@
 	"semi": true,
 	"singleQuote": true,
 	"trailingComma": "es5",
+	"proseWrap": "never",
+	"quoteProps": "as-needed",
+	"bracketSpacing": true,
+	"printWidth": 9999,
 	"overrides": [
 		{
 			"files": ["*.yml", "*.neon"],
@@ -14,13 +18,7 @@
 			}
 		},
 		{
-			"files": [
-				".prettierrc",
-				".jsbeautifyrc",
-				".stylelintrc",
-				"package.json",
-				"package.lock"
-			],
+			"files": [".*rc"],
 			"options": {
 				"tabWidth": 4,
 				"tabs": true,
