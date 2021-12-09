@@ -10,10 +10,10 @@ body:not(.post-type-acf-field-group) {
 	.acf-fields {
 		> .acf-tab-wrap {
 			&.-top {
-				width: 100%;
 				@include acf-row('margin', true);
 				margin-top: 0 !important;
-				.acf-tab-group.acf-hl {
+				width: 100%;
+				> .acf-tab-group.acf-hl {
 					@include acf-row('padding', true);
 					padding-bottom: 0 !important;
 					margin: 0 !important;
@@ -24,6 +24,14 @@ body:not(.post-type-acf-field-group) {
 			}
 			&.-left {
 				width: 20%;
+				> .acf-tab-group.acf-hl {
+					@include acf-row('margin', true, 0, 0);
+					position: relative;
+					left: auto;
+					> li {
+						width: 100%;
+					}
+				}
 				+ .acf-field-tab {
 					width: 80%;
 				}
