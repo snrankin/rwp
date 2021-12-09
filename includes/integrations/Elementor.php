@@ -153,26 +153,19 @@ class Elementor extends Singleton {
 		}
 
 		$breakpoints = array(
-			'desktop' => 'lg',
-			'tablet'  => 'md',
-			'mobile'  => '',
+			'widescreen'   => 'xxl',
+			'desktop'      => 'xl',
+			'laptop'       => 'lg',
+			'tablet_extra' => 'ml',
+			'tablet'       => 'md',
+			'mobile_extra' => 'sm',
+			'mobile'       => '',
 		);
 
-		if ( in_array( 'mobile_extra', $devices, true ) ) {
-			$breakpoints['mobile_extra'] = 'sm';
-		}
-
-		if ( in_array( 'tablet_extra', $devices, true ) ) {
-			$breakpoints['tablet_extra'] = 'lg';
-		}
-
-		if ( in_array( 'laptop', $devices, true ) ) {
-			$breakpoints['laptop']  = 'lg';
-			$breakpoints['desktop'] = 'xl';
-		}
-
-		if ( in_array( 'widescreen', $devices, true ) ) {
-			$breakpoints['widescreen'] = 'xxl';
+		foreach ( array_keys( $breakpoints ) as $device ) {
+			if ( ! in_array( $device, $devices, true ) ) {
+				unset( $breakpiints[ $device ] );
+			}
 		}
 
 		$responsive_duplication_mode   = self::plugin()->breakpoints->get_responsive_control_duplication_mode();
@@ -256,15 +249,14 @@ class Elementor extends Singleton {
 
 				$section->update_control( $control_args['parent'], array( 'inheritors' => array( $control_name ) ) );
 
+				$current_controls = $section->get_data( 'settings' );
+
 				if ( ! empty( $options['overwrite'] ) ) {
-					$section->update_control($control_name, $control_args, array(
-						'recursive' => ! empty( $options['recursive'] ),
-					));
+
+					$section->update_control( $control_name, $control_args, $options );
 				} else {
-					if ( rwp_array_has( $control_name, $controls ) ) {
-						$section->update_control($control_name, $control_args, array(
-							'recursive' => ! empty( $options['recursive'] ),
-						));
+					if ( rwp_array_has( $control_name, $current_controls ) ) {
+						$section->update_control( $control_name, $control_args, $options );
 					} else {
 						$section->add_control( $control_name, $control_args, $options );
 					}
@@ -330,7 +322,7 @@ class Elementor extends Singleton {
 						'column' => esc_html__( 'Vertical', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-align%s-',
-				)
+				),
 			);
 
 			self::add_responsive_control_to_elementor(
@@ -350,7 +342,7 @@ class Elementor extends Singleton {
 						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-h-align%s-',
-				)
+				),
 			);
 			self::add_responsive_control_to_elementor(
 				$section,
@@ -367,7 +359,7 @@ class Elementor extends Singleton {
 						'stretch' => esc_html__( 'Full Width', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-v-align%s-',
-				)
+				),
 			);
 
 			self::add_responsive_control_to_elementor(
@@ -387,7 +379,7 @@ class Elementor extends Singleton {
 						'stretch'       => esc_html__( 'Fill Rows', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-column-v-wrap%s-',
-				)
+				),
 			);
 		}
 	}
@@ -403,8 +395,6 @@ class Elementor extends Singleton {
 	 */
 	public function remove_section_options( $section, $section_id, $args ) {
 		if ( 'section' === $section->get_name() ) {
-			// $section->remove_control('gap');
-			// $section->remove_responsive_control('gap_columns_custom',);
 			$section->remove_control( 'column_position' );
 			$section->remove_control( 'content_position' );
 		}
@@ -438,7 +428,7 @@ class Elementor extends Singleton {
 						'space-evenly'  => esc_html__( 'Space Evenly', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-row-h-align%s-',
-				)
+				),
 			);
 			self::add_responsive_control_to_elementor(
 				$section,
@@ -456,7 +446,7 @@ class Elementor extends Singleton {
 						'stretch'  => esc_html__( 'Stretch', 'rwp' ),
 					),
 					'prefix_class' => 'elementor-row-v-align%s-',
-				)
+				),
 			);
 
 			self::add_responsive_control_to_elementor(
@@ -477,9 +467,6 @@ class Elementor extends Singleton {
 					],
 					'prefix_class' => 'elementor-row-gap-x%s-',
 				),
-				array(
-					'overwrite' => true,
-				)
 			);
 
 			self::add_responsive_control_to_elementor(
@@ -512,7 +499,7 @@ class Elementor extends Singleton {
 						'custom' => esc_html__( 'Custom', 'rwp' ),
 					],
 					'prefix_class' => 'elementor-row-gap-x%s-',
-				)
+				),
 			);
 
 			self::add_responsive_control_to_elementor(
@@ -532,7 +519,7 @@ class Elementor extends Singleton {
 						'custom' => esc_html__( 'Custom', 'rwp' ),
 					],
 					'prefix_class' => 'elementor-row-gap-y%s-',
-				)
+				),
 			);
 		}
 	}
