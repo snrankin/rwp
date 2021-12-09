@@ -394,8 +394,10 @@ class GravityForms extends Singleton {
 
 		$label_tag = $field_input->filter( '.gfield_label' );
 
-		if ( 'legend' === $label_tag->getNode( 0 )->nodeName ) {
-			$is_complex = true;
+		if ( ! empty( $label_tag->getNode( 0 ) ) ) {
+			if ( 'legend' === $label_tag->getNode( 0 )->nodeName ) {
+				$is_complex = true;
+			}
 		}
 
 		if ( in_array( 'use-select2', $css_class ) ) {
