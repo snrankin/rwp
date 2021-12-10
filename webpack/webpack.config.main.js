@@ -90,6 +90,6 @@ if (_.has(webpackConfig, 'name')) {
 	webpackConfig = [webpackConfig];
 }
 
-//rwpDebug(webpackConfig);
+// rwpDebug(webpackConfig);
 
 module.exports = webpackConfig;

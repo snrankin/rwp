@@ -29,13 +29,16 @@
 	padding: 1rem;
 	display: block;
 	position: relative;
+
 	&.is-hovered {
 		z-index: 5;
+
 		&::before {
 			z-index: initial;
 			opacity: 1;
 		}
 	}
+
 	&::before {
 		content: '';
 		position: absolute;
@@ -43,32 +46,39 @@
 		transform: translate(-50%, -50%);
 		top: 50%;
 		left: 50%;
-		background: rgba($primary, 0.1);
+		background: rgb($primary 0.1);
 		opacity: 0;
 		width: 100%;
 		height: 100%;
 		z-index: -2;
 	}
+
 	&.is-hovered,
 	&.is-selected {
 		outline: solid 1px $primary;
 	}
+
 	&.has-child-selected {
-		outline: solid 1px rgba($primary, 0.5);
+		outline: solid 1px rgb($primary 0.5);
+
 		> .rwp {
-			outline: solid 1px rgba($primary, 0.5);
+			outline: solid 1px rgb($primary 0.5);
+
 			&.is-hovered,
 			&.is-selected {
 				outline: solid 1px $primary;
 			}
 		}
 	}
+
 	.block-editor-inner-blocks {
 		width: 100%;
 	}
+
 	> .rwp {
 		width: 100%;
 	}
+
 	.wp-block {
 		margin-top: 0 !important;
 	}

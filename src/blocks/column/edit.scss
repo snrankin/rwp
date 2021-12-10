@@ -6,9 +6,11 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 @import '../../css/global/index';
+
 .wp-block.block-editor-block-list__block.col {
     .content-wrapper {
         min-height: 42px;
+
         > .block-list-appender.wp-block {
         margin: 0;
     }

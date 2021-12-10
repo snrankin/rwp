@@ -15,6 +15,7 @@ indent_style = tab
 block_comment_start = /*
 block_comment = *
 block_comment_end = */
+indent_size = 4
 
 [{*.yml,*.neon}]
 indent_style = space

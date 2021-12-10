@@ -26,14 +26,14 @@ $one-third-space: 0.3333em; // 5.3px || Width of space in a wide font
 $en-space: 0.5em; // 8px || Recommended maximum width of space, width of en-dash
 $em-space: 1em; // 16px || width of em-dash
 
+$primary: $blue;
 $font-family-monospace: 'FiraCode Nerd Font Mono', ui-monospace, sfmono-regular, menlo, monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 $acf-gutter-x: 12px;
 $acf-gutter-y: 15px;
 $border-color: $gray-300;
 $variable-prefix: rwp-;
 
-@use 'sass:map';
-@use '~bootstrap/scss/variables';
+@import '~bootstrap/scss/variables';
 
-$colors: map.merge($grays, $colors);
-$theme-colors: map.merge($colors, $theme-colors);
+$colors: map-merge($grays, $colors);
+$theme-colors: map-merge($colors, $theme-colors);

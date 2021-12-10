@@ -20,9 +20,8 @@ $em-space        : 1em; // 16px || width of em-dash
 
 $font-family-monospace: 'FiraCode Nerd Font Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-@use 'sass:map';
-@use '~bootstrap/scss/variables';
+@import '~bootstrap/scss/variables';
 
-$colors: map.merge($grays, $colors);
+$colors: map-merge($grays, $colors);
 
-$theme-colors: map.merge($colors, $theme-colors);
+$theme-colors: map-merge($colors, $theme-colors);

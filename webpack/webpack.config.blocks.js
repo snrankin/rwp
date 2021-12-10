@@ -10,27 +10,13 @@
  * ==========================================================================
  */
 
-const assert = require('assert');
-const {
-	mergeWithCustomize,
-	customizeArray,
-	customizeObject,
-	unique,
-	merge,
-	mergeWithRules,
-} = require('webpack-merge');
+const _ = require('lodash');
+const { mergeWithCustomize, customizeArray, merge, mergeWithRules } = require('webpack-merge');
 
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const wordPressConfig = require('@wordpress/scripts/config/webpack.config');
 
-const { createConfig } = require('./config');
-const {
-	startingPlugins,
-	baseConfig,
-	endingPlugins,
-} = require('./webpack.config');
+const { startingPlugins, baseConfig, endingPlugins } = require('./webpack.config');
 
 let webpackConfig = {
 	...wordPressConfig,
@@ -44,18 +30,12 @@ let webpackConfig = {
 
 webpackConfig = merge(baseConfig, webpackConfig);
 
-webpackConfig.output = merge(webpackConfig.output, baseConfig.output);
-
 const modules1 = {
 	module: baseConfig.module,
 };
 
 const wordPressConfigRules = wordPressConfig.module.rules.filter((rule) => {
-	if (
-		rule.test.constructor == RegExp &&
-		rule.test.source !== '\\.css$' &&
-		rule.test.source !== '\\.(sc|sa)ss$'
-	) {
+	if (rule.test.constructor == RegExp && rule.test.source !== '\\.css$' && rule.test.source !== '\\.(sc|sa)ss$') {
 		return rule;
 	}
 	return false;
@@ -84,12 +64,7 @@ modules = modules.module;
 // //webpackConfig = merge(baseConfig, wordPressConfig, webpackConfig);
 
 webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
-	if (
-		plugin.constructor.name !== 'CleanWebpackPlugin' &&
-		plugin.constructor.name !== 'Plugin' &&
-		plugin.constructor.name !== 'MiniCssExtractPlugin' &&
-		plugin.constructor.name !== 'FixStyleWebpackPlugin'
-	) {
+	if (plugin.constructor.name !== 'CleanWebpackPlugin' && plugin.constructor.name !== 'Plugin' && plugin.constructor.name !== 'MiniCssExtractPlugin' && plugin.constructor.name !== 'FixStyleWebpackPlugin') {
 		return plugin;
 	}
 	return false;
@@ -104,9 +79,15 @@ webpackConfig = mergeWithCustomize({
 		plugins: 'prepend',
 	}),
 })(webpackConfig, { plugins: startingPlugins });
+
 webpackConfig = mergeWithCustomize({
 	customizeArray: customizeArray({
 		plugins: 'append',
 	}),
 })(webpackConfig, { plugins: endingPlugins });
+
+if (_.has(webpackConfig, 'name')) {
+	webpackConfig = [webpackConfig];
+}
+
 module.exports = webpackConfig;

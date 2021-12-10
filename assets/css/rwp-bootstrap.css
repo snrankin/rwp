@@ -1,7 +1,8 @@
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./css/bootstrap.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./css/bootstrap.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
+/* stylelint-disable scss/no-global-function-names */
 html {
     --bs-100: #f8f9fa;
     --bs-200: #e9ecef;
@@ -508,10 +509,19 @@ progress {
 @-ms-viewport {
     width: device-width;
 }
+
+@-o-viewport {
+    width: device-width;
+}
+
+@viewport {
+    width: device-width;
+}
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+       -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
     -moz-tab-size: 4;
       -o-tab-size: 4;
          tab-size: 4;
@@ -527,6 +537,7 @@ html {
 
 body {
     overflow-x: hidden;
+    min-height: 100%;
 }
 
 ::selection {
@@ -598,6 +609,7 @@ button:-moz-focusring,
 
 ::-webkit-search-decoration {
     -webkit-appearance: none;
+            appearance: none;
 }
 
 ::-webkit-color-swatch-wrapper {
@@ -615,6 +627,7 @@ button:-moz-focusring,
 ::-webkit-file-upload-button {
     font: inherit;
     -webkit-appearance: button;
+            appearance: button;
 }
 
 ::-webkit-datetime-edit-fields-wrapper,
@@ -634,6 +647,7 @@ button:-moz-focusring,
 
 [type=search] {
     -webkit-appearance: textfield;
+            appearance: textfield;
     outline-offset: -2px;
 }
 
@@ -925,30 +939,6 @@ ul:not([class]) li:not([class]):not(:last-child) {
 ul.gallery-slider,
 ul.tns-slider {
     margin-bottom: 0;
-}
-
-.no-js .lazyload {
-    display: none;
-}
-
-.lazyload,
-.lazyloading {
-    visibility: hidden;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    opacity: 0;
-    transition: opacity 1000ms, filter 1500ms;
-}
-
-.lazyloaded {
-    visibility: visible;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    opacity: 1;
-}
-
-img.lazyload:not([src]) {
-    visibility: hidden;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    opacity: 0;
 }
 
 svg,
@@ -4808,13 +4798,6 @@ textarea.form-control-lg {
     display: grid;
     grid-template-columns: 1fr var(--bs--icon-size);
     position: relative;
-}
-.nav-item:before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
 }
 
 .sub-nav {
@@ -14804,6 +14787,14 @@ textarea.form-control-lg {
     }
 }
 
+@media screen{
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+}
+
 @media print{
     .d-print-inline {
         display: inline !important;
@@ -14845,3 +14836,5 @@ textarea.form-control-lg {
         display: none !important;
     }
 }
+
+/*# sourceMappingURL=rwp-bootstrap.css.map*/

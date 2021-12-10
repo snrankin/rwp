@@ -11,6 +11,7 @@
 .rwp.card {
     margin: 0;
     padding: 0;
+
     &:not(.card-row) {
         .card-body,
         .card-header,
@@ -19,6 +20,7 @@
             width: 100%;
         }
     }
+
     &.text-left {
         .card-body,
         .card-footer,
@@ -26,10 +28,12 @@
             align-items: flex-start;
             text-align: left;
         }
+
         .list-inline {
             justify-content: flex-start;
         }
     }
+
     &.text-center {
         .card-body,
         .card-footer,
@@ -37,10 +41,12 @@
             align-items: center;
             text-align: center;
         }
+
         .list-inline {
             justify-content: center;
         }
     }
+
     &.text-right {
         .card-body,
         .card-footer,
@@ -48,10 +54,12 @@
             align-items: flex-end;
             text-align: right;
         }
+
         .list-inline {
             justify-content: flex-end;
         }
     }
+
     .card-body,
     .card-footer,
     .card-header {

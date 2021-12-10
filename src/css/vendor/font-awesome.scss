@@ -7,4 +7,49 @@
 /// @license https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
 /// ======================================================================= ////
 
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@font-face {
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('#{$fa-font-path}/fa-regular-400.eot');
+	src: url('#{$fa-font-path}/fa-regular-400.eot?#iefix') format('embedded-opentype'), url('#{$fa-font-path}/fa-regular-400.woff2') format('woff2'), url('#{$fa-font-path}/fa-regular-400.woff') format('woff'), url('#{$fa-font-path}/fa-regular-400.ttf') format('truetype'), url('#{$fa-font-path}/fa-regular-400.svg#fontawesome') format('svg');
+}
+
+@font-face {
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url('#{$fa-font-path}/fa-solid-900.eot');
+	src: url('#{$fa-font-path}/fa-solid-900.eot?#iefix') format('embedded-opentype'), url('#{$fa-font-path}/fa-solid-900.woff2') format('woff2'), url('#{$fa-font-path}/fa-solid-900.woff') format('woff'), url('#{$fa-font-path}/fa-solid-900.ttf') format('truetype'), url('#{$fa-font-path}/fa-solid-900.svg#fontawesome') format('svg');
+}
+
+@font-face {
+	font-family: 'Font Awesome 5 Brands';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('#{$fa-font-path}/fa-brands-400.eot');
+	src: url('#{$fa-font-path}/fa-brands-400.eot?#iefix') format('embedded-opentype'), url('#{$fa-font-path}/fa-brands-400.woff2') format('woff2'), url('#{$fa-font-path}/fa-brands-400.woff') format('woff'), url('#{$fa-font-path}/fa-brands-400.ttf') format('truetype'), url('#{$fa-font-path}/fa-brands-400.svg#fontawesome') format('svg');
+}
+
+.fa,
+.fas {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+}
+
+.far {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
+}
+
+.fab {
+	font-family: 'Font Awesome 5 Brands';
+	font-weight: 400;
+}
+
 @import '~@fortawesome/fontawesome-free/css/fontawesome.css';

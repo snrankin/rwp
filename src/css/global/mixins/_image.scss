@@ -3,12 +3,13 @@
 // - Retina image
 
 // Responsive image
-//
+
 // Keep images from scaling beyond the width of their parents.
 
 @mixin img-fluid() {
 	// Part 1: Set a maximum relative to the parent
 	max-width: 100%;
+
 	// Part 2: Override the height to auto, otherwise images will be stretched
 	// when setting a width and height attribute on the img element.
 
@@ -69,6 +70,7 @@
 @mixin cover-relative() {
 	display: flex;
 	flex-direction: column;
+
 	> * {
 		flex: 1 1 auto;
 	}
@@ -82,15 +84,15 @@
 		$property: --media-#{$name};
 		$value: '';
 
-		@if $min !=null and $max !=null {
+		@if $min != null and $max != null {
 			@if $name != 'full' {
 				$value: '(min-width: #{$min}) and (max-width: #{$max})';
 			} @else {
 				$value: '(min-width: #{$min})';
 			}
-		} @else if $max==null {
+		} @else if $max == null {
 			$value: '(min-width: #{$min})';
-		} @else if $min==null {
+		} @else if $min == null {
 			$value: '(max-width: #{$max})';
 		}
 
@@ -98,6 +100,7 @@
 			@if $description != '' {
 				$description: $description + ' | ';
 			}
+
 			$description: $description + $property + ': ' + inspect($value);
 		}
 	}

@@ -1,452 +1,3853 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/plugins/slider.js":
-/*!******************************!*\
-  !*** ./js/plugins/slider.js ***!
-  \******************************/
+/***/ "../node_modules/tiny-slider/src/helpers/addCSSRule.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/addCSSRule.js ***!
+  \*************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"../../node_modules/@babel/runtime/helpers/esm/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"../../node_modules/@babel/runtime/helpers/esm/createClass.js\");\n/* harmony import */ var tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tiny-slider/src/tiny-slider */ \"../../node_modules/tiny-slider/src/tiny-slider.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ \"lodash\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);\n/* provided dependency */ var $ = __webpack_require__(/*! jquery */ \"jquery\");\n\n\n\n/**\n * ============================================================================\n * slider\n *\n * @package\n * @since     1.0.0\n * @version   1.0.0\n * @author    RIESTER <wordpress@riester.com>\n * @copyright 2021 RIESTER\n * ==========================================================================\n */\n\n\n\nvar RWPSlider = /*#__PURE__*/function () {\n  function RWPSlider() {\n    var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n\n    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(this, RWPSlider);\n\n    var defaults = {\n      navPosition: 'bottom',\n      loop: false,\n      controlsText: ['<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon\">' + '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-chevron-left\" viewBox=\"0 0 16 16\"><path fill-rule=\"evenodd\" d=\"M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z\"/></svg>' + '</span>' + '<span class=\"btn-text sr-only\">Previous</span>', '<span class=\"btn-text sr-only\">Next</span>' + '<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon\">' + '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-chevron-right\" viewBox=\"0 0 16 16\"><path fill-rule=\"evenodd\" d=\"M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z\"/></svg>' + '</span>'],\n      lazyloadSelector: '.lazyload',\n      lazyload: true,\n      onInit: function onInit(elem) {\n        var sliderID = '#' + elem.container.getAttribute('id');\n        var wrapperID = sliderID + '-ow';\n\n        if (elem.hasControls) {\n          elem.prevButton.classList.add('btn', 'prev');\n          elem.nextButton.classList.add('btn', 'next');\n          var sliderheight = $(sliderID).outerHeight(true);\n          $(wrapperID).find('.tns-controls').css({\n            height: sliderheight\n          });\n        }\n\n        if ((0,lodash__WEBPACK_IMPORTED_MODULE_3__.has)(elem, 'navItems') && !(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isUndefined)(elem.navItems)) {\n          var navItems = elem.navItems;\n\n          if (navItems.length) {\n            for (var i = 0; i < navItems.length; i++) {\n              navItems[i].classList.add('btn');\n              navItems[i].classList.add('btn-toggle');\n              navItems[i].innerHTML = '<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon\">' + '<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon-opened\">' + '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-circle-fill\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"8\"/></svg>' + '</span>' + '<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon-closed\">' + '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-circle\" viewBox=\"0 0 16 16\"><path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/></svg>' + '</span>' + '</span>';\n\n              if (i === elem.index) {\n                navItems[i].classList.add('active');\n              }\n            }\n          }\n        }\n      }\n    };\n    this.sliderOpts = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.defaultsDeep)(args, defaults);\n  }\n\n  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(RWPSlider, [{\n    key: \"init\",\n    value: function init() {\n      var containerClass = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.gallery-slider';\n\n      if ((0,lodash__WEBPACK_IMPORTED_MODULE_3__.isUndefined)(containerClass)) {\n        containerClass = '.gallery-slider';\n      }\n\n      var container = document.querySelector(containerClass);\n\n      if (!(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isNil)(container)) {\n        var options = this.sliderOpts;\n        options.container = containerClass;\n        var tnsSlider = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__.tns)(options);\n        tnsSlider.events.on('indexChanged', function (info) {\n          var indexPrev = info.indexCached,\n              indexCurrent = info.index;\n          info.navItems[indexPrev].classList.remove('active');\n          info.navItems[indexCurrent].classList.add('active');\n        });\n        window.addEventListener('resize', function () {\n          $('.tns-outer').each(function (el) {\n            var sliderheight = $(el).find('.tns-inner').outerHeight(true);\n            $(el).find('.tns-controls').css({\n              height: sliderheight\n            });\n          });\n        });\n        return tnsSlider;\n      }\n    }\n  }]);\n\n  return RWPSlider;\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (RWPSlider);\n\n//# sourceURL=webpack:///./js/plugins/slider.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addCSSRule": function() { return /* binding */ addCSSRule; }
+/* harmony export */ });
+/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
+// cross browsers addRule method
+
+function addCSSRule(sheet, selector, rules, index) {
+  // return raf(function() {
+    'insertRule' in sheet ?
+      sheet.insertRule(selector + '{' + rules + '}', index) :
+      sheet.addRule(selector, rules, index);
+  // });
+}
 
 /***/ }),
 
-/***/ "./css/plugins/slider.scss":
-/*!*********************************!*\
-  !*** ./css/plugins/slider.scss ***!
-  \*********************************/
+/***/ "../node_modules/tiny-slider/src/helpers/addClass.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/addClass.js ***!
+  \***********************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./css/plugins/slider.scss?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addClass": function() { return /* binding */ addClass; }
+/* harmony export */ });
+/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
+
+var addClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
+    function (el, str) {
+      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.add(str); }
+    } :
+    function (el, str) {
+      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.className += ' ' + str; }
+    };
+
+
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/addCSSRule.js":
-/*!****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/addCSSRule.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addCSSRule\": function() { return /* binding */ addCSSRule; }\n/* harmony export */ });\n/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ \"../../node_modules/tiny-slider/src/helpers/raf.js\");\n// cross browsers addRule method\n\nfunction addCSSRule(sheet, selector, rules, index) {\n  // return raf(function() {\n    'insertRule' in sheet ?\n      sheet.insertRule(selector + '{' + rules + '}', index) :\n      sheet.addRule(selector, rules, index);\n  // });\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/addCSSRule.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/addClass.js":
-/*!**************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/addClass.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addClass\": function() { return /* binding */ addClass; }\n/* harmony export */ });\n/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ \"../../node_modules/tiny-slider/src/helpers/hasClass.js\");\n\nvar addClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?\n    function (el, str) {\n      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.add(str); }\n    } :\n    function (el, str) {\n      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.className += ' ' + str; }\n    };\n\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/addClass.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/addEvents.js":
-/*!***************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/addEvents.js ***!
-  \***************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"addEvents\": function() { return /* binding */ addEvents; }\n/* harmony export */ });\n/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ \"../../node_modules/tiny-slider/src/helpers/passiveOption.js\");\n\n\nfunction addEvents(el, obj, preventScrolling) {\n  for (var prop in obj) {\n    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 && !preventScrolling ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;\n    el.addEventListener(prop, obj[prop], option);\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/addEvents.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"arrayFromNodeList\": function() { return /* binding */ arrayFromNodeList; }\n/* harmony export */ });\nfunction arrayFromNodeList (nl) {\n  var arr = [];\n  for (var i = 0, l = nl.length; i < l; i++) {\n    arr.push(nl[i]);\n  }\n  return arr;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/caf.js":
-/*!*********************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/caf.js ***!
-  \*********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"caf\": function() { return /* binding */ caf; }\n/* harmony export */ });\nvar win = window;\n\nvar caf = win.cancelAnimationFrame\n  || win.mozCancelAnimationFrame\n  || function(id){ clearTimeout(id); };\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/caf.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/calc.js":
-/*!**********************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/calc.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"calc\": function() { return /* binding */ calc; }\n/* harmony export */ });\n/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ \"../../node_modules/tiny-slider/src/helpers/getBody.js\");\n/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/setFakeBody.js\");\n/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/resetFakeBody.js\");\n// get css-calc \n// @return - false | calc | -webkit-calc | -moz-calc\n// @usage - var calc = getCalc(); \n\n\n\n\nfunction calc() {\n  var doc = document, \n      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),\n      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),\n      div = doc.createElement('div'), \n      result = false;\n\n  body.appendChild(div);\n  try {\n    var str = '(10px * 10)',\n        vals = ['calc' + str, '-moz-calc' + str, '-webkit-calc' + str],\n        val;\n    for (var i = 0; i < 3; i++) {\n      val = vals[i];\n      div.style.width = val;\n      if (div.offsetWidth === 100) { \n        result = val.replace(str, ''); \n        break;\n      }\n    }\n  } catch (e) {}\n  \n  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();\n\n  return result;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/calc.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/checkStorageValue.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/checkStorageValue.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"checkStorageValue\": function() { return /* binding */ checkStorageValue; }\n/* harmony export */ });\nfunction checkStorageValue (value) {\n  return ['true', 'false'].indexOf(value) >= 0 ? JSON.parse(value) : value;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/checkStorageValue.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/classListSupport.js":
-/*!**********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/classListSupport.js ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"classListSupport\": function() { return /* binding */ classListSupport; }\n/* harmony export */ });\nvar classListSupport = 'classList' in document.createElement('_');\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/classListSupport.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/createStyleSheet.js":
-/*!**********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/createStyleSheet.js ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createStyleSheet\": function() { return /* binding */ createStyleSheet; }\n/* harmony export */ });\n// create and append style sheet\nfunction createStyleSheet (media, nonce) {\n  // Create the <style> tag\n  var style = document.createElement(\"style\");\n  // style.setAttribute(\"type\", \"text/css\");\n\n  // Add a media (and/or media query) here if you'd like!\n  // style.setAttribute(\"media\", \"screen\")\n  // style.setAttribute(\"media\", \"only screen and (max-width : 1024px)\")\n  if (media) { style.setAttribute(\"media\", media); }\n\n  // Add nonce attribute for Content Security Policy\n  if (nonce) { style.setAttribute(\"nonce\", nonce); }\n\n  // WebKit hack :(\n  // style.appendChild(document.createTextNode(\"\"));\n\n  // Add the <style> element to the page\n  document.querySelector('head').appendChild(style);\n\n  return style.sheet ? style.sheet : style.styleSheet;\n};\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/createStyleSheet.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/docElement.js":
-/*!****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/docElement.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"docElement\": function() { return /* binding */ docElement; }\n/* harmony export */ });\nvar docElement = document.documentElement;\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/docElement.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/events.js":
+/***/ "../node_modules/tiny-slider/src/helpers/addEvents.js":
 /*!************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/events.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/addEvents.js ***!
   \************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Events\": function() { return /* binding */ Events; }\n/* harmony export */ });\nfunction Events() {\n  return {\n    topics: {},\n    on: function (eventName, fn) {\n      this.topics[eventName] = this.topics[eventName] || [];\n      this.topics[eventName].push(fn);\n    },\n    off: function(eventName, fn) {\n      if (this.topics[eventName]) {\n        for (var i = 0; i < this.topics[eventName].length; i++) {\n          if (this.topics[eventName][i] === fn) {\n            this.topics[eventName].splice(i, 1);\n            break;\n          }\n        }\n      }\n    },\n    emit: function (eventName, data) {\n      data.type = eventName;\n      if (this.topics[eventName]) {\n        this.topics[eventName].forEach(function(fn) {\n          fn(data, eventName);\n        });\n      }\n    }\n  };\n};\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/events.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addEvents": function() { return /* binding */ addEvents; }
+/* harmony export */ });
+/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ "../node_modules/tiny-slider/src/helpers/passiveOption.js");
+
+
+function addEvents(el, obj, preventScrolling) {
+  for (var prop in obj) {
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 && !preventScrolling ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;
+    el.addEventListener(prop, obj[prop], option);
+  }
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/extend.js":
-/*!************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/extend.js ***!
-  \************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"extend\": function() { return /* binding */ extend; }\n/* harmony export */ });\nfunction extend() {\n  var obj, name, copy,\n      target = arguments[0] || {},\n      i = 1,\n      length = arguments.length;\n\n  for (; i < length; i++) {\n    if ((obj = arguments[i]) !== null) {\n      for (name in obj) {\n        copy = obj[name];\n\n        if (target === copy) {\n          continue;\n        } else if (copy !== undefined) {\n          target[name] = copy;\n        }\n      }\n    }\n  }\n  return target;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/extend.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/forEach.js":
-/*!*************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/forEach.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"forEach\": function() { return /* binding */ forEach; }\n/* harmony export */ });\n// https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/\nfunction forEach (arr, callback, scope) {\n  for (var i = 0, l = arr.length; i < l; i++) {\n    callback.call(scope, arr[i], i);\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/forEach.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/getAttr.js":
-/*!*************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getAttr.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getAttr\": function() { return /* binding */ getAttr; }\n/* harmony export */ });\nfunction getAttr(el, attr) {\n  return el.getAttribute(attr);\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getAttr.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/getBody.js":
-/*!*************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getBody.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getBody\": function() { return /* binding */ getBody; }\n/* harmony export */ });\nfunction getBody () {\n  var doc = document,\n      body = doc.body;\n\n  if (!body) {\n    body = doc.createElement('body');\n    body.fake = true;\n  }\n\n  return body;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getBody.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/getCssRulesLength.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getCssRulesLength.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getCssRulesLength\": function() { return /* binding */ getCssRulesLength; }\n/* harmony export */ });\nfunction getCssRulesLength(sheet) {\n  var rule = ('insertRule' in sheet) ? sheet.cssRules : sheet.rules;\n  return rule.length;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getCssRulesLength.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/getEndProperty.js":
+/***/ "../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js":
 /*!********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getEndProperty.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js ***!
   \********************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getEndProperty\": function() { return /* binding */ getEndProperty; }\n/* harmony export */ });\n// get transitionend, animationend based on transitionDuration\n// @propin: string\n// @propOut: string, first-letter uppercase\n// Usage: getEndProperty('WebkitTransitionDuration', 'Transition') => webkitTransitionEnd\nfunction getEndProperty(propIn, propOut) {\n  var endProp = false;\n  if (/^Webkit/.test(propIn)) {\n    endProp = 'webkit' + propOut + 'End';\n  } else if (/^O/.test(propIn)) {\n    endProp = 'o' + propOut + 'End';\n  } else if (propIn) {\n    endProp = propOut.toLowerCase() + 'end';\n  }\n  return endProp;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getEndProperty.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrayFromNodeList": function() { return /* binding */ arrayFromNodeList; }
+/* harmony export */ });
+function arrayFromNodeList (nl) {
+  var arr = [];
+  for (var i = 0, l = nl.length; i < l; i++) {
+    arr.push(nl[i]);
+  }
+  return arr;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/getSlideId.js":
-/*!****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getSlideId.js ***!
-  \****************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/caf.js":
+/*!******************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/caf.js ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getSlideId\": function() { return /* binding */ getSlideId; }\n/* harmony export */ });\nfunction getSlideId() {\n  var id = window.tnsId;\n  window.tnsId = !id ? 1 : id + 1;\n  \n  return 'tns' + window.tnsId;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getSlideId.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "caf": function() { return /* binding */ caf; }
+/* harmony export */ });
+var win = window;
+
+var caf = win.cancelAnimationFrame
+  || win.mozCancelAnimationFrame
+  || function(id){ clearTimeout(id); };
+
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/getTouchDirection.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/getTouchDirection.js ***!
-  \***********************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/calc.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/calc.js ***!
+  \*******************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getTouchDirection\": function() { return /* binding */ getTouchDirection; }\n/* harmony export */ });\nfunction getTouchDirection(angle, range) {\n  var direction = false,\n      gap = Math.abs(90 - Math.abs(angle));\n      \n  if (gap >= 90 - range) {\n    direction = 'horizontal';\n  } else if (gap <= range) {\n    direction = 'vertical';\n  }\n\n  return direction;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/getTouchDirection.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "calc": function() { return /* binding */ calc; }
+/* harmony export */ });
+/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
+/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
+/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+// get css-calc 
+// @return - false | calc | -webkit-calc | -moz-calc
+// @usage - var calc = getCalc(); 
+
+
+
+
+function calc() {
+  var doc = document, 
+      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
+      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      div = doc.createElement('div'), 
+      result = false;
+
+  body.appendChild(div);
+  try {
+    var str = '(10px * 10)',
+        vals = ['calc' + str, '-moz-calc' + str, '-webkit-calc' + str],
+        val;
+    for (var i = 0; i < 3; i++) {
+      val = vals[i];
+      div.style.width = val;
+      if (div.offsetWidth === 100) { 
+        result = val.replace(str, ''); 
+        break;
+      }
+    }
+  } catch (e) {}
+  
+  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();
+
+  return result;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/has3DTransforms.js":
-/*!*********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/has3DTransforms.js ***!
-  \*********************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/checkStorageValue.js":
+/*!********************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/checkStorageValue.js ***!
+  \********************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"has3DTransforms\": function() { return /* binding */ has3DTransforms; }\n/* harmony export */ });\n/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ \"../../node_modules/tiny-slider/src/helpers/getBody.js\");\n/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/setFakeBody.js\");\n/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/resetFakeBody.js\");\n\n\n\n\nfunction has3DTransforms(tf){\n  if (!tf) { return false; }\n  if (!window.getComputedStyle) { return false; }\n  \n  var doc = document,\n      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),\n      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),\n      el = doc.createElement('p'),\n      has3d,\n      cssTF = tf.length > 9 ? '-' + tf.slice(0, -9).toLowerCase() + '-' : '';\n\n  cssTF += 'transform';\n\n  // Add it to the body to get the computed style\n  body.insertBefore(el, null);\n\n  el.style[tf] = 'translate3d(1px,1px,1px)';\n  has3d = window.getComputedStyle(el).getPropertyValue(cssTF);\n\n  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : el.remove();\n\n  return (has3d !== undefined && has3d.length > 0 && has3d !== \"none\");\n}\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/has3DTransforms.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "checkStorageValue": function() { return /* binding */ checkStorageValue; }
+/* harmony export */ });
+function checkStorageValue (value) {
+  return ['true', 'false'].indexOf(value) >= 0 ? JSON.parse(value) : value;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/hasAttr.js":
+/***/ "../node_modules/tiny-slider/src/helpers/classListSupport.js":
+/*!*******************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/classListSupport.js ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "classListSupport": function() { return /* binding */ classListSupport; }
+/* harmony export */ });
+var classListSupport = 'classList' in document.createElement('_');
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/createStyleSheet.js":
+/*!*******************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/createStyleSheet.js ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createStyleSheet": function() { return /* binding */ createStyleSheet; }
+/* harmony export */ });
+// create and append style sheet
+function createStyleSheet (media, nonce) {
+  // Create the <style> tag
+  var style = document.createElement("style");
+  // style.setAttribute("type", "text/css");
+
+  // Add a media (and/or media query) here if you'd like!
+  // style.setAttribute("media", "screen")
+  // style.setAttribute("media", "only screen and (max-width : 1024px)")
+  if (media) { style.setAttribute("media", media); }
+
+  // Add nonce attribute for Content Security Policy
+  if (nonce) { style.setAttribute("nonce", nonce); }
+
+  // WebKit hack :(
+  // style.appendChild(document.createTextNode(""));
+
+  // Add the <style> element to the page
+  document.querySelector('head').appendChild(style);
+
+  return style.sheet ? style.sheet : style.styleSheet;
+};
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/docElement.js":
 /*!*************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/hasAttr.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/docElement.js ***!
   \*************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"hasAttr\": function() { return /* binding */ hasAttr; }\n/* harmony export */ });\nfunction hasAttr(el, attr) {\n  return el.hasAttribute(attr);\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/hasAttr.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "docElement": function() { return /* binding */ docElement; }
+/* harmony export */ });
+var docElement = document.documentElement;
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/hasClass.js":
-/*!**************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/hasClass.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"classListSupport\": function() { return /* reexport safe */ _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport; },\n/* harmony export */   \"hasClass\": function() { return /* binding */ hasClass; }\n/* harmony export */ });\n/* harmony import */ var _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classListSupport.js */ \"../../node_modules/tiny-slider/src/helpers/classListSupport.js\");\n\n\nvar hasClass = _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?\n    function (el, str) { return el.classList.contains(str); } :\n    function (el, str) { return el.className.indexOf(str) >= 0; };\n\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/hasClass.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/hideElement.js":
-/*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/hideElement.js ***!
-  \*****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"hideElement\": function() { return /* binding */ hideElement; }\n/* harmony export */ });\nfunction hideElement(el, forceHide) {\n  if (el.style.display !== 'none') { el.style.display = 'none'; }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/hideElement.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/isNodeList.js":
-/*!****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/isNodeList.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"isNodeList\": function() { return /* binding */ isNodeList; }\n/* harmony export */ });\nfunction isNodeList(el) {\n  // Only NodeList has the \"item()\" function\n  return typeof el.item !== \"undefined\"; \n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/isNodeList.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/isVisible.js":
-/*!***************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/isVisible.js ***!
-  \***************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"isVisible\": function() { return /* binding */ isVisible; }\n/* harmony export */ });\nfunction isVisible(el) {\n  return window.getComputedStyle(el).display !== 'none';\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/isVisible.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/jsTransform.js":
-/*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/jsTransform.js ***!
-  \*****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"jsTransform\": function() { return /* binding */ jsTransform; }\n/* harmony export */ });\nfunction jsTransform(element, attr, prefix, postfix, to, duration, callback) {\n  var tick = Math.min(duration, 10),\n      unit = (to.indexOf('%') >= 0) ? '%' : 'px',\n      to = to.replace(unit, ''),\n      from = Number(element.style[attr].replace(prefix, '').replace(postfix, '').replace(unit, '')),\n      positionTick = (to - from) / duration * tick,\n      running;\n\n  setTimeout(moveElement, tick);\n  function moveElement() {\n    duration -= tick;\n    from += positionTick;\n    element.style[attr] = prefix + from + unit + postfix;\n    if (duration > 0) { \n      setTimeout(moveElement, tick); \n    } else {\n      callback();\n    }\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/jsTransform.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/mediaquerySupport.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/mediaquerySupport.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"mediaquerySupport\": function() { return /* binding */ mediaquerySupport; }\n/* harmony export */ });\n/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ \"../../node_modules/tiny-slider/src/helpers/getBody.js\");\n/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/setFakeBody.js\");\n/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/resetFakeBody.js\");\n\n\n\n\nfunction mediaquerySupport () {\n  if (window.matchMedia || window.msMatchMedia) {\n    return true;\n  }\n  \n  var doc = document,\n      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),\n      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),\n      div = doc.createElement('div'),\n      style = doc.createElement('style'),\n      rule = '@media all and (min-width:1px){.tns-mq-test{position:absolute}}',\n      position;\n\n  style.type = 'text/css';\n  div.className = 'tns-mq-test';\n\n  body.appendChild(style);\n  body.appendChild(div);\n\n  if (style.styleSheet) {\n    style.styleSheet.cssText = rule;\n  } else {\n    style.appendChild(doc.createTextNode(rule));\n  }\n\n  position = window.getComputedStyle ? window.getComputedStyle(div).position : div.currentStyle['position'];\n\n  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();\n\n  return position === \"absolute\";\n}\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/mediaquerySupport.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/passiveOption.js":
-/*!*******************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/passiveOption.js ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"passiveOption\": function() { return /* binding */ passiveOption; }\n/* harmony export */ });\n// Test via a getter in the options object to see if the passive property is accessed\nvar supportsPassive = false;\ntry {\n  var opts = Object.defineProperty({}, 'passive', {\n    get: function() {\n      supportsPassive = true;\n    }\n  });\n  window.addEventListener(\"test\", null, opts);\n} catch (e) {}\nvar passiveOption = supportsPassive ? { passive: true } : false;\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/passiveOption.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/percentageLayout.js":
-/*!**********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/percentageLayout.js ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"percentageLayout\": function() { return /* binding */ percentageLayout; }\n/* harmony export */ });\n/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ \"../../node_modules/tiny-slider/src/helpers/getBody.js\");\n/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/setFakeBody.js\");\n/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ \"../../node_modules/tiny-slider/src/helpers/resetFakeBody.js\");\n// get subpixel support value\n// @return - boolean\n\n\n\n\nfunction percentageLayout() {\n  // check subpixel layout supporting\n  var doc = document,\n      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),\n      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),\n      wrapper = doc.createElement('div'),\n      outer = doc.createElement('div'),\n      str = '',\n      count = 70,\n      perPage = 3,\n      supported = false;\n\n  wrapper.className = \"tns-t-subp2\";\n  outer.className = \"tns-t-ct\";\n\n  for (var i = 0; i < count; i++) {\n    str += '<div></div>';\n  }\n\n  outer.innerHTML = str;\n  wrapper.appendChild(outer);\n  body.appendChild(wrapper);\n\n  supported = Math.abs(wrapper.getBoundingClientRect().left - outer.children[count - perPage].getBoundingClientRect().left) < 2;\n\n  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : wrapper.remove();\n\n  return supported;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/percentageLayout.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/raf.js":
+/***/ "../node_modules/tiny-slider/src/helpers/events.js":
 /*!*********************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/raf.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/events.js ***!
   \*********************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"raf\": function() { return /* binding */ raf; }\n/* harmony export */ });\nvar win = window;\n\nvar raf = win.requestAnimationFrame\n  || win.webkitRequestAnimationFrame\n  || win.mozRequestAnimationFrame\n  || win.msRequestAnimationFrame\n  || function(cb) { return setTimeout(cb, 16); };\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/raf.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Events": function() { return /* binding */ Events; }
+/* harmony export */ });
+function Events() {
+  return {
+    topics: {},
+    on: function (eventName, fn) {
+      this.topics[eventName] = this.topics[eventName] || [];
+      this.topics[eventName].push(fn);
+    },
+    off: function(eventName, fn) {
+      if (this.topics[eventName]) {
+        for (var i = 0; i < this.topics[eventName].length; i++) {
+          if (this.topics[eventName][i] === fn) {
+            this.topics[eventName].splice(i, 1);
+            break;
+          }
+        }
+      }
+    },
+    emit: function (eventName, data) {
+      data.type = eventName;
+      if (this.topics[eventName]) {
+        this.topics[eventName].forEach(function(fn) {
+          fn(data, eventName);
+        });
+      }
+    }
+  };
+};
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/removeAttrs.js":
+/***/ "../node_modules/tiny-slider/src/helpers/extend.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/extend.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "extend": function() { return /* binding */ extend; }
+/* harmony export */ });
+function extend() {
+  var obj, name, copy,
+      target = arguments[0] || {},
+      i = 1,
+      length = arguments.length;
+
+  for (; i < length; i++) {
+    if ((obj = arguments[i]) !== null) {
+      for (name in obj) {
+        copy = obj[name];
+
+        if (target === copy) {
+          continue;
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+  return target;
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/forEach.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/forEach.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "forEach": function() { return /* binding */ forEach; }
+/* harmony export */ });
+// https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
+function forEach (arr, callback, scope) {
+  for (var i = 0, l = arr.length; i < l; i++) {
+    callback.call(scope, arr[i], i);
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/getAttr.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/getAttr.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getAttr": function() { return /* binding */ getAttr; }
+/* harmony export */ });
+function getAttr(el, attr) {
+  return el.getAttribute(attr);
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/getBody.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/getBody.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getBody": function() { return /* binding */ getBody; }
+/* harmony export */ });
+function getBody () {
+  var doc = document,
+      body = doc.body;
+
+  if (!body) {
+    body = doc.createElement('body');
+    body.fake = true;
+  }
+
+  return body;
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/getCssRulesLength.js":
+/*!********************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/getCssRulesLength.js ***!
+  \********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getCssRulesLength": function() { return /* binding */ getCssRulesLength; }
+/* harmony export */ });
+function getCssRulesLength(sheet) {
+  var rule = ('insertRule' in sheet) ? sheet.cssRules : sheet.rules;
+  return rule.length;
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/getEndProperty.js":
 /*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/removeAttrs.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/getEndProperty.js ***!
   \*****************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"removeAttrs\": function() { return /* binding */ removeAttrs; }\n/* harmony export */ });\n/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ \"../../node_modules/tiny-slider/src/helpers/isNodeList.js\");\n\n\nfunction removeAttrs(els, attrs) {\n  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];\n  attrs = (attrs instanceof Array) ? attrs : [attrs];\n\n  var attrLength = attrs.length;\n  for (var i = els.length; i--;) {\n    for (var j = attrLength; j--;) {\n      els[i].removeAttribute(attrs[j]);\n    }\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/removeAttrs.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getEndProperty": function() { return /* binding */ getEndProperty; }
+/* harmony export */ });
+// get transitionend, animationend based on transitionDuration
+// @propin: string
+// @propOut: string, first-letter uppercase
+// Usage: getEndProperty('WebkitTransitionDuration', 'Transition') => webkitTransitionEnd
+function getEndProperty(propIn, propOut) {
+  var endProp = false;
+  if (/^Webkit/.test(propIn)) {
+    endProp = 'webkit' + propOut + 'End';
+  } else if (/^O/.test(propIn)) {
+    endProp = 'o' + propOut + 'End';
+  } else if (propIn) {
+    endProp = propOut.toLowerCase() + 'end';
+  }
+  return endProp;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/removeCSSRule.js":
-/*!*******************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/removeCSSRule.js ***!
-  \*******************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/getSlideId.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/getSlideId.js ***!
+  \*************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"removeCSSRule\": function() { return /* binding */ removeCSSRule; }\n/* harmony export */ });\n/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ \"../../node_modules/tiny-slider/src/helpers/raf.js\");\n// cross browsers addRule method\n\nfunction removeCSSRule(sheet, index) {\n  // return raf(function() {\n    'deleteRule' in sheet ?\n      sheet.deleteRule(index) :\n      sheet.removeRule(index);\n  // });\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/removeCSSRule.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSlideId": function() { return /* binding */ getSlideId; }
+/* harmony export */ });
+function getSlideId() {
+  var id = window.tnsId;
+  window.tnsId = !id ? 1 : id + 1;
+  
+  return 'tns' + window.tnsId;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/removeClass.js":
-/*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/removeClass.js ***!
-  \*****************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/getTouchDirection.js":
+/*!********************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/getTouchDirection.js ***!
+  \********************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"removeClass\": function() { return /* binding */ removeClass; }\n/* harmony export */ });\n/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ \"../../node_modules/tiny-slider/src/helpers/hasClass.js\");\n\nvar removeClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?\n    function (el, str) {\n      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.remove(str); }\n    } :\n    function (el, str) {\n      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el, str)) { el.className = el.className.replace(str, ''); }\n    };\n\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/removeClass.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getTouchDirection": function() { return /* binding */ getTouchDirection; }
+/* harmony export */ });
+function getTouchDirection(angle, range) {
+  var direction = false,
+      gap = Math.abs(90 - Math.abs(angle));
+      
+  if (gap >= 90 - range) {
+    direction = 'horizontal';
+  } else if (gap <= range) {
+    direction = 'vertical';
+  }
+
+  return direction;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/removeEvents.js":
+/***/ "../node_modules/tiny-slider/src/helpers/has3DTransforms.js":
 /*!******************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/removeEvents.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/has3DTransforms.js ***!
   \******************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"removeEvents\": function() { return /* binding */ removeEvents; }\n/* harmony export */ });\n/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ \"../../node_modules/tiny-slider/src/helpers/passiveOption.js\");\n\n\nfunction removeEvents(el, obj) {\n  for (var prop in obj) {\n    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;\n    el.removeEventListener(prop, obj[prop], option);\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/removeEvents.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "has3DTransforms": function() { return /* binding */ has3DTransforms; }
+/* harmony export */ });
+/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
+/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
+/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+
+
+
+
+function has3DTransforms(tf){
+  if (!tf) { return false; }
+  if (!window.getComputedStyle) { return false; }
+  
+  var doc = document,
+      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
+      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      el = doc.createElement('p'),
+      has3d,
+      cssTF = tf.length > 9 ? '-' + tf.slice(0, -9).toLowerCase() + '-' : '';
+
+  cssTF += 'transform';
+
+  // Add it to the body to get the computed style
+  body.insertBefore(el, null);
+
+  el.style[tf] = 'translate3d(1px,1px,1px)';
+  has3d = window.getComputedStyle(el).getPropertyValue(cssTF);
+
+  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : el.remove();
+
+  return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+}
+
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/resetFakeBody.js":
-/*!*******************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/resetFakeBody.js ***!
-  \*******************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/hasAttr.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/hasAttr.js ***!
+  \**********************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"resetFakeBody\": function() { return /* binding */ resetFakeBody; }\n/* harmony export */ });\n/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ \"../../node_modules/tiny-slider/src/helpers/docElement.js\");\n\n\nfunction resetFakeBody (body, docOverflow) {\n  if (body.fake) {\n    body.remove();\n    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = docOverflow;\n    // Trigger layout so kinetic scrolling isn't disabled in iOS6+\n    // eslint-disable-next-line\n    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.offsetHeight;\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/resetFakeBody.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hasAttr": function() { return /* binding */ hasAttr; }
+/* harmony export */ });
+function hasAttr(el, attr) {
+  return el.hasAttribute(attr);
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/setAttrs.js":
+/***/ "../node_modules/tiny-slider/src/helpers/hasClass.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/hasClass.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "classListSupport": function() { return /* reexport safe */ _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport; },
+/* harmony export */   "hasClass": function() { return /* binding */ hasClass; }
+/* harmony export */ });
+/* harmony import */ var _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classListSupport.js */ "../node_modules/tiny-slider/src/helpers/classListSupport.js");
+
+
+var hasClass = _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
+    function (el, str) { return el.classList.contains(str); } :
+    function (el, str) { return el.className.indexOf(str) >= 0; };
+
+
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/hideElement.js":
 /*!**************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/setAttrs.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/hideElement.js ***!
   \**************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"setAttrs\": function() { return /* binding */ setAttrs; }\n/* harmony export */ });\n/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ \"../../node_modules/tiny-slider/src/helpers/isNodeList.js\");\n\n\nfunction setAttrs(els, attrs) {\n  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];\n  if (Object.prototype.toString.call(attrs) !== '[object Object]') { return; }\n\n  for (var i = els.length; i--;) {\n    for(var key in attrs) {\n      els[i].setAttribute(key, attrs[key]);\n    }\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/setAttrs.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hideElement": function() { return /* binding */ hideElement; }
+/* harmony export */ });
+function hideElement(el, forceHide) {
+  if (el.style.display !== 'none') { el.style.display = 'none'; }
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/setFakeBody.js":
-/*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/setFakeBody.js ***!
-  \*****************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/isNodeList.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/isNodeList.js ***!
+  \*************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"setFakeBody\": function() { return /* binding */ setFakeBody; }\n/* harmony export */ });\n/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ \"../../node_modules/tiny-slider/src/helpers/docElement.js\");\n\n\nfunction setFakeBody (body) {\n  var docOverflow = '';\n  if (body.fake) {\n    docOverflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow;\n    //avoid crashing IE8, if background image is used\n    body.style.background = '';\n    //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible\n    body.style.overflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = 'hidden';\n    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.appendChild(body);\n  }\n\n  return docOverflow;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/setFakeBody.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isNodeList": function() { return /* binding */ isNodeList; }
+/* harmony export */ });
+function isNodeList(el) {
+  // Only NodeList has the "item()" function
+  return typeof el.item !== "undefined"; 
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/setLocalStorage.js":
-/*!*********************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/setLocalStorage.js ***!
-  \*********************************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/isVisible.js":
+/*!************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/isVisible.js ***!
+  \************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"setLocalStorage\": function() { return /* binding */ setLocalStorage; }\n/* harmony export */ });\nfunction setLocalStorage(storage, key, value, access) {\n  if (access) {\n    try { storage.setItem(key, value); } catch (e) {}\n  }\n  return value;\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/setLocalStorage.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isVisible": function() { return /* binding */ isVisible; }
+/* harmony export */ });
+function isVisible(el) {
+  return window.getComputedStyle(el).display !== 'none';
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/showElement.js":
-/*!*****************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/showElement.js ***!
-  \*****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"showElement\": function() { return /* binding */ showElement; }\n/* harmony export */ });\nfunction showElement(el, forceHide) {\n  if (el.style.display === 'none') { el.style.display = ''; }\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/showElement.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/tiny-slider/src/helpers/toDegree.js":
+/***/ "../node_modules/tiny-slider/src/helpers/jsTransform.js":
 /*!**************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/toDegree.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/jsTransform.js ***!
   \**************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"toDegree\": function() { return /* binding */ toDegree; }\n/* harmony export */ });\nfunction toDegree (y, x) {\n  return Math.atan2(y, x) * (180 / Math.PI);\n}\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/toDegree.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "jsTransform": function() { return /* binding */ jsTransform; }
+/* harmony export */ });
+function jsTransform(element, attr, prefix, postfix, to, duration, callback) {
+  var tick = Math.min(duration, 10),
+      unit = (to.indexOf('%') >= 0) ? '%' : 'px',
+      to = to.replace(unit, ''),
+      from = Number(element.style[attr].replace(prefix, '').replace(postfix, '').replace(unit, '')),
+      positionTick = (to - from) / duration * tick,
+      running;
+
+  setTimeout(moveElement, tick);
+  function moveElement() {
+    duration -= tick;
+    from += positionTick;
+    element.style[attr] = prefix + from + unit + postfix;
+    if (duration > 0) { 
+      setTimeout(moveElement, tick); 
+    } else {
+      callback();
+    }
+  }
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/helpers/whichProperty.js":
+/***/ "../node_modules/tiny-slider/src/helpers/mediaquerySupport.js":
+/*!********************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/mediaquerySupport.js ***!
+  \********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "mediaquerySupport": function() { return /* binding */ mediaquerySupport; }
+/* harmony export */ });
+/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
+/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
+/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+
+
+
+
+function mediaquerySupport () {
+  if (window.matchMedia || window.msMatchMedia) {
+    return true;
+  }
+  
+  var doc = document,
+      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
+      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      div = doc.createElement('div'),
+      style = doc.createElement('style'),
+      rule = '@media all and (min-width:1px){.tns-mq-test{position:absolute}}',
+      position;
+
+  style.type = 'text/css';
+  div.className = 'tns-mq-test';
+
+  body.appendChild(style);
+  body.appendChild(div);
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = rule;
+  } else {
+    style.appendChild(doc.createTextNode(rule));
+  }
+
+  position = window.getComputedStyle ? window.getComputedStyle(div).position : div.currentStyle['position'];
+
+  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();
+
+  return position === "absolute";
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/passiveOption.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/passiveOption.js ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "passiveOption": function() { return /* binding */ passiveOption; }
+/* harmony export */ });
+// Test via a getter in the options object to see if the passive property is accessed
+var supportsPassive = false;
+try {
+  var opts = Object.defineProperty({}, 'passive', {
+    get: function() {
+      supportsPassive = true;
+    }
+  });
+  window.addEventListener("test", null, opts);
+} catch (e) {}
+var passiveOption = supportsPassive ? { passive: true } : false;
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/percentageLayout.js":
 /*!*******************************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/helpers/whichProperty.js ***!
+  !*** ../node_modules/tiny-slider/src/helpers/percentageLayout.js ***!
   \*******************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"whichProperty\": function() { return /* binding */ whichProperty; }\n/* harmony export */ });\nfunction whichProperty(props){\n  if (typeof props === 'string') {\n    var arr = [props],\n        Props = props.charAt(0).toUpperCase() + props.substr(1),\n        prefixes = ['Webkit', 'Moz', 'ms', 'O'];\n        \n    prefixes.forEach(function(prefix) {\n      if (prefix !== 'ms' || props === 'transform') {\n        arr.push(prefix + Props);\n      }\n    });\n\n    props = arr;\n  }\n\n  var el = document.createElement('fakeelement'),\n      len = props.length;\n  for(var i = 0; i < props.length; i++){\n    var prop = props[i];\n    if( el.style[prop] !== undefined ){ return prop; }\n  }\n\n  return false; // explicit for ie9-\n}\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/helpers/whichProperty.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "percentageLayout": function() { return /* binding */ percentageLayout; }
+/* harmony export */ });
+/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
+/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
+/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+// get subpixel support value
+// @return - boolean
+
+
+
+
+function percentageLayout() {
+  // check subpixel layout supporting
+  var doc = document,
+      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
+      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      wrapper = doc.createElement('div'),
+      outer = doc.createElement('div'),
+      str = '',
+      count = 70,
+      perPage = 3,
+      supported = false;
+
+  wrapper.className = "tns-t-subp2";
+  outer.className = "tns-t-ct";
+
+  for (var i = 0; i < count; i++) {
+    str += '<div></div>';
+  }
+
+  outer.innerHTML = str;
+  wrapper.appendChild(outer);
+  body.appendChild(wrapper);
+
+  supported = Math.abs(wrapper.getBoundingClientRect().left - outer.children[count - perPage].getBoundingClientRect().left) < 2;
+
+  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : wrapper.remove();
+
+  return supported;
+}
 
 /***/ }),
 
-/***/ "../../node_modules/tiny-slider/src/tiny-slider.js":
-/*!*********************************************************!*\
-  !*** ../../node_modules/tiny-slider/src/tiny-slider.js ***!
-  \*********************************************************/
+/***/ "../node_modules/tiny-slider/src/helpers/raf.js":
+/*!******************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/raf.js ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"tns\": function() { return /* binding */ tns; }\n/* harmony export */ });\n/* harmony import */ var _helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/raf.js */ \"../../node_modules/tiny-slider/src/helpers/raf.js\");\n/* harmony import */ var _helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/caf.js */ \"../../node_modules/tiny-slider/src/helpers/caf.js\");\n/* harmony import */ var _helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/extend.js */ \"../../node_modules/tiny-slider/src/helpers/extend.js\");\n/* harmony import */ var _helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/checkStorageValue.js */ \"../../node_modules/tiny-slider/src/helpers/checkStorageValue.js\");\n/* harmony import */ var _helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers/setLocalStorage.js */ \"../../node_modules/tiny-slider/src/helpers/setLocalStorage.js\");\n/* harmony import */ var _helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/getSlideId.js */ \"../../node_modules/tiny-slider/src/helpers/getSlideId.js\");\n/* harmony import */ var _helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers/calc.js */ \"../../node_modules/tiny-slider/src/helpers/calc.js\");\n/* harmony import */ var _helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers/percentageLayout.js */ \"../../node_modules/tiny-slider/src/helpers/percentageLayout.js\");\n/* harmony import */ var _helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers/mediaquerySupport.js */ \"../../node_modules/tiny-slider/src/helpers/mediaquerySupport.js\");\n/* harmony import */ var _helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./helpers/createStyleSheet.js */ \"../../node_modules/tiny-slider/src/helpers/createStyleSheet.js\");\n/* harmony import */ var _helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helpers/addCSSRule.js */ \"../../node_modules/tiny-slider/src/helpers/addCSSRule.js\");\n/* harmony import */ var _helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./helpers/removeCSSRule.js */ \"../../node_modules/tiny-slider/src/helpers/removeCSSRule.js\");\n/* harmony import */ var _helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helpers/getCssRulesLength.js */ \"../../node_modules/tiny-slider/src/helpers/getCssRulesLength.js\");\n/* harmony import */ var _helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./helpers/toDegree.js */ \"../../node_modules/tiny-slider/src/helpers/toDegree.js\");\n/* harmony import */ var _helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helpers/getTouchDirection.js */ \"../../node_modules/tiny-slider/src/helpers/getTouchDirection.js\");\n/* harmony import */ var _helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./helpers/forEach.js */ \"../../node_modules/tiny-slider/src/helpers/forEach.js\");\n/* harmony import */ var _helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./helpers/hasClass.js */ \"../../node_modules/tiny-slider/src/helpers/hasClass.js\");\n/* harmony import */ var _helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./helpers/addClass.js */ \"../../node_modules/tiny-slider/src/helpers/addClass.js\");\n/* harmony import */ var _helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./helpers/removeClass.js */ \"../../node_modules/tiny-slider/src/helpers/removeClass.js\");\n/* harmony import */ var _helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./helpers/hasAttr.js */ \"../../node_modules/tiny-slider/src/helpers/hasAttr.js\");\n/* harmony import */ var _helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./helpers/getAttr.js */ \"../../node_modules/tiny-slider/src/helpers/getAttr.js\");\n/* harmony import */ var _helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./helpers/setAttrs.js */ \"../../node_modules/tiny-slider/src/helpers/setAttrs.js\");\n/* harmony import */ var _helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./helpers/removeAttrs.js */ \"../../node_modules/tiny-slider/src/helpers/removeAttrs.js\");\n/* harmony import */ var _helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./helpers/arrayFromNodeList.js */ \"../../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js\");\n/* harmony import */ var _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./helpers/hideElement.js */ \"../../node_modules/tiny-slider/src/helpers/hideElement.js\");\n/* harmony import */ var _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./helpers/showElement.js */ \"../../node_modules/tiny-slider/src/helpers/showElement.js\");\n/* harmony import */ var _helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./helpers/isVisible.js */ \"../../node_modules/tiny-slider/src/helpers/isVisible.js\");\n/* harmony import */ var _helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./helpers/whichProperty.js */ \"../../node_modules/tiny-slider/src/helpers/whichProperty.js\");\n/* harmony import */ var _helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./helpers/has3DTransforms.js */ \"../../node_modules/tiny-slider/src/helpers/has3DTransforms.js\");\n/* harmony import */ var _helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./helpers/getEndProperty.js */ \"../../node_modules/tiny-slider/src/helpers/getEndProperty.js\");\n/* harmony import */ var _helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./helpers/addEvents.js */ \"../../node_modules/tiny-slider/src/helpers/addEvents.js\");\n/* harmony import */ var _helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./helpers/removeEvents.js */ \"../../node_modules/tiny-slider/src/helpers/removeEvents.js\");\n/* harmony import */ var _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./helpers/events.js */ \"../../node_modules/tiny-slider/src/helpers/events.js\");\n/* harmony import */ var _helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./helpers/jsTransform.js */ \"../../node_modules/tiny-slider/src/helpers/jsTransform.js\");\n// Object.keys\nif (!Object.keys) {\n  Object.keys = function(object) {\n    var keys = [];\n    for (var name in object) {\n      if (Object.prototype.hasOwnProperty.call(object, name)) {\n        keys.push(name);\n      }\n    }\n    return keys;\n  };\n}\n\n// ChildNode.remove\nif(!(\"remove\" in Element.prototype)){\n  Element.prototype.remove = function(){\n    if(this.parentNode) {\n      this.parentNode.removeChild(this);\n    }\n  };\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar tns = function(options) {\n  options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)({\n    container: '.slider',\n    mode: 'carousel',\n    axis: 'horizontal',\n    items: 1,\n    gutter: 0,\n    edgePadding: 0,\n    fixedWidth: false,\n    autoWidth: false,\n    viewportMax: false,\n    slideBy: 1,\n    center: false,\n    controls: true,\n    controlsPosition: 'top',\n    controlsText: ['prev', 'next'],\n    controlsContainer: false,\n    prevButton: false,\n    nextButton: false,\n    nav: true,\n    navPosition: 'top',\n    navContainer: false,\n    navAsThumbnails: false,\n    arrowKeys: false,\n    speed: 300,\n    autoplay: false,\n    autoplayPosition: 'top',\n    autoplayTimeout: 5000,\n    autoplayDirection: 'forward',\n    autoplayText: ['start', 'stop'],\n    autoplayHoverPause: false,\n    autoplayButton: false,\n    autoplayButtonOutput: true,\n    autoplayResetOnVisibility: true,\n    animateIn: 'tns-fadeIn',\n    animateOut: 'tns-fadeOut',\n    animateNormal: 'tns-normal',\n    animateDelay: false,\n    loop: true,\n    rewind: false,\n    autoHeight: false,\n    responsive: false,\n    lazyload: false,\n    lazyloadSelector: '.tns-lazy-img',\n    touch: true,\n    mouseDrag: false,\n    swipeAngle: 15,\n    nested: false,\n    preventActionWhenRunning: false,\n    preventScrollOnTouch: false,\n    freezable: true,\n    onInit: false,\n    useLocalStorage: true,\n    nonce: false\n  }, options || {});\n\n  var doc = document,\n      win = window,\n      KEYS = {\n        ENTER: 13,\n        SPACE: 32,\n        LEFT: 37,\n        RIGHT: 39\n      },\n      tnsStorage = {},\n      localStorageAccess = options.useLocalStorage;\n\n  if (localStorageAccess) {\n    // check browser version and local storage access\n    var browserInfo = navigator.userAgent;\n    var uid = new Date;\n\n    try {\n      tnsStorage = win.localStorage;\n      if (tnsStorage) {\n        tnsStorage.setItem(uid, uid);\n        localStorageAccess = tnsStorage.getItem(uid) == uid;\n        tnsStorage.removeItem(uid);\n      } else {\n        localStorageAccess = false;\n      }\n      if (!localStorageAccess) { tnsStorage = {}; }\n    } catch(e) {\n      localStorageAccess = false;\n    }\n\n    if (localStorageAccess) {\n      // remove storage when browser version changes\n      if (tnsStorage['tnsApp'] && tnsStorage['tnsApp'] !== browserInfo) {\n        ['tC', 'tPL', 'tMQ', 'tTf', 't3D', 'tTDu', 'tTDe', 'tADu', 'tADe', 'tTE', 'tAE'].forEach(function(item) { tnsStorage.removeItem(item); });\n      }\n      // update browserInfo\n      localStorage['tnsApp'] = browserInfo;\n    }\n  }\n\n  var CALC = tnsStorage['tC'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tC']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tC', (0,_helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__.calc)(), localStorageAccess),\n      PERCENTAGELAYOUT = tnsStorage['tPL'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tPL']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tPL', (0,_helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__.percentageLayout)(), localStorageAccess),\n      CSSMQ = tnsStorage['tMQ'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tMQ']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tMQ', (0,_helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__.mediaquerySupport)(), localStorageAccess),\n      TRANSFORM = tnsStorage['tTf'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTf']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTf', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transform'), localStorageAccess),\n      HAS3DTRANSFORMS = tnsStorage['t3D'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['t3D']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 't3D', (0,_helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__.has3DTransforms)(TRANSFORM), localStorageAccess),\n      TRANSITIONDURATION = tnsStorage['tTDu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDuration'), localStorageAccess),\n      TRANSITIONDELAY = tnsStorage['tTDe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDelay'), localStorageAccess),\n      ANIMATIONDURATION = tnsStorage['tADu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDuration'), localStorageAccess),\n      ANIMATIONDELAY = tnsStorage['tADe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDelay'), localStorageAccess),\n      TRANSITIONEND = tnsStorage['tTE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(TRANSITIONDURATION, 'Transition'), localStorageAccess),\n      ANIMATIONEND = tnsStorage['tAE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tAE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tAE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(ANIMATIONDURATION, 'Animation'), localStorageAccess);\n\n  // get element nodes from selectors\n  var supportConsoleWarn = win.console && typeof win.console.warn === \"function\",\n      tnsList = ['container', 'controlsContainer', 'prevButton', 'nextButton', 'navContainer', 'autoplayButton'],\n      optionsElements = {};\n\n  tnsList.forEach(function(item) {\n    if (typeof options[item] === 'string') {\n      var str = options[item],\n          el = doc.querySelector(str);\n      optionsElements[item] = str;\n\n      if (el && el.nodeName) {\n        options[item] = el;\n      } else {\n        if (supportConsoleWarn) { console.warn('Can\\'t find', options[item]); }\n        return;\n      }\n    }\n  });\n\n  // make sure at least 1 slide\n  if (options.container.children.length < 1) {\n    if (supportConsoleWarn) { console.warn('No slides found in', options.container); }\n    return;\n   }\n\n  // update options\n  var responsive = options.responsive,\n      nested = options.nested,\n      carousel = options.mode === 'carousel' ? true : false;\n\n  if (responsive) {\n    // apply responsive[0] to options and remove it\n    if (0 in responsive) {\n      options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, responsive[0]);\n      delete responsive[0];\n    }\n\n    var responsiveTem = {};\n    for (var key in responsive) {\n      var val = responsive[key];\n      // update responsive\n      // from: 300: 2\n      // to:\n      //   300: {\n      //     items: 2\n      //   }\n      val = typeof val === 'number' ? {items: val} : val;\n      responsiveTem[key] = val;\n    }\n    responsive = responsiveTem;\n    responsiveTem = null;\n  }\n\n  // update options\n  function updateOptions (obj) {\n    for (var key in obj) {\n      if (!carousel) {\n        if (key === 'slideBy') { obj[key] = 'page'; }\n        if (key === 'edgePadding') { obj[key] = false; }\n        if (key === 'autoHeight') { obj[key] = false; }\n      }\n\n      // update responsive options\n      if (key === 'responsive') { updateOptions(obj[key]); }\n    }\n  }\n  if (!carousel) { updateOptions(options); }\n\n\n  // === define and set variables ===\n  if (!carousel) {\n    options.axis = 'horizontal';\n    options.slideBy = 'page';\n    options.edgePadding = false;\n\n    var animateIn = options.animateIn,\n        animateOut = options.animateOut,\n        animateDelay = options.animateDelay,\n        animateNormal = options.animateNormal;\n  }\n\n  var horizontal = options.axis === 'horizontal' ? true : false,\n      outerWrapper = doc.createElement('div'),\n      innerWrapper = doc.createElement('div'),\n      middleWrapper,\n      container = options.container,\n      containerParent = container.parentNode,\n      containerHTML = container.outerHTML,\n      slideItems = container.children,\n      slideCount = slideItems.length,\n      breakpointZone,\n      windowWidth = getWindowWidth(),\n      isOn = false;\n  if (responsive) { setBreakpointZone(); }\n  if (carousel) { container.className += ' tns-vpfix'; }\n\n  // fixedWidth: viewport > rightBoundary > indexMax\n  var autoWidth = options.autoWidth,\n      fixedWidth = getOption('fixedWidth'),\n      edgePadding = getOption('edgePadding'),\n      gutter = getOption('gutter'),\n      viewport = getViewportWidth(),\n      center = getOption('center'),\n      items = !autoWidth ? Math.floor(getOption('items')) : 1,\n      slideBy = getOption('slideBy'),\n      viewportMax = options.viewportMax || options.fixedWidthViewportWidth,\n      arrowKeys = getOption('arrowKeys'),\n      speed = getOption('speed'),\n      rewind = options.rewind,\n      loop = rewind ? false : options.loop,\n      autoHeight = getOption('autoHeight'),\n      controls = getOption('controls'),\n      controlsText = getOption('controlsText'),\n      nav = getOption('nav'),\n      touch = getOption('touch'),\n      mouseDrag = getOption('mouseDrag'),\n      autoplay = getOption('autoplay'),\n      autoplayTimeout = getOption('autoplayTimeout'),\n      autoplayText = getOption('autoplayText'),\n      autoplayHoverPause = getOption('autoplayHoverPause'),\n      autoplayResetOnVisibility = getOption('autoplayResetOnVisibility'),\n      sheet = (0,_helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__.createStyleSheet)(null, getOption('nonce')),\n      lazyload = options.lazyload,\n      lazyloadSelector = options.lazyloadSelector,\n      slidePositions, // collection of slide positions\n      slideItemsOut = [],\n      cloneCount = loop ? getCloneCountForLoop() : 0,\n      slideCountNew = !carousel ? slideCount + cloneCount : slideCount + cloneCount * 2,\n      hasRightDeadZone = (fixedWidth || autoWidth) && !loop ? true : false,\n      rightBoundary = fixedWidth ? getRightBoundary() : null,\n      updateIndexBeforeTransform = (!carousel || !loop) ? true : false,\n      // transform\n      transformAttr = horizontal ? 'left' : 'top',\n      transformPrefix = '',\n      transformPostfix = '',\n      // index\n      getIndexMax = (function () {\n        if (fixedWidth) {\n          return function() { return center && !loop ? slideCount - 1 : Math.ceil(- rightBoundary / (fixedWidth + gutter)); };\n        } else if (autoWidth) {\n          return function() {\n            for (var i = 0; i < slideCountNew; i++) {\n              if (slidePositions[i] >= - rightBoundary) { return i; }\n            }\n          };\n        } else {\n          return function() {\n            if (center && carousel && !loop) {\n              return slideCount - 1;\n            } else {\n              return loop || carousel ? Math.max(0, slideCountNew - Math.ceil(items)) : slideCountNew - 1;\n            }\n          };\n        }\n      })(),\n      index = getStartIndex(getOption('startIndex')),\n      indexCached = index,\n      displayIndex = getCurrentSlide(),\n      indexMin = 0,\n      indexMax = !autoWidth ? getIndexMax() : null,\n      // resize\n      resizeTimer,\n      preventActionWhenRunning = options.preventActionWhenRunning,\n      swipeAngle = options.swipeAngle,\n      moveDirectionExpected = swipeAngle ? '?' : true,\n      running = false,\n      onInit = options.onInit,\n      events = new _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__.Events(),\n      // id, class\n      newContainerClasses = ' tns-slider tns-' + options.mode,\n      slideId = container.id || (0,_helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__.getSlideId)(),\n      disable = getOption('disable'),\n      disabled = false,\n      freezable = options.freezable,\n      freeze = freezable && !autoWidth ? getFreeze() : false,\n      frozen = false,\n      controlsEvents = {\n        'click': onControlsClick,\n        'keydown': onControlsKeydown\n      },\n      navEvents = {\n        'click': onNavClick,\n        'keydown': onNavKeydown\n      },\n      hoverEvents = {\n        'mouseover': mouseoverPause,\n        'mouseout': mouseoutRestart\n      },\n      visibilityEvent = {'visibilitychange': onVisibilityChange},\n      docmentKeydownEvent = {'keydown': onDocumentKeydown},\n      touchEvents = {\n        'touchstart': onPanStart,\n        'touchmove': onPanMove,\n        'touchend': onPanEnd,\n        'touchcancel': onPanEnd\n      }, dragEvents = {\n        'mousedown': onPanStart,\n        'mousemove': onPanMove,\n        'mouseup': onPanEnd,\n        'mouseleave': onPanEnd\n      },\n      hasControls = hasOption('controls'),\n      hasNav = hasOption('nav'),\n      navAsThumbnails = autoWidth ? true : options.navAsThumbnails,\n      hasAutoplay = hasOption('autoplay'),\n      hasTouch = hasOption('touch'),\n      hasMouseDrag = hasOption('mouseDrag'),\n      slideActiveClass = 'tns-slide-active',\n      slideClonedClass = 'tns-slide-cloned',\n      imgCompleteClass = 'tns-complete',\n      imgEvents = {\n        'load': onImgLoaded,\n        'error': onImgFailed\n      },\n      imgsComplete,\n      liveregionCurrent,\n      preventScroll = options.preventScrollOnTouch === 'force' ? true : false;\n\n  // controls\n  if (hasControls) {\n    var controlsContainer = options.controlsContainer,\n        controlsContainerHTML = options.controlsContainer ? options.controlsContainer.outerHTML : '',\n        prevButton = options.prevButton,\n        nextButton = options.nextButton,\n        prevButtonHTML = options.prevButton ? options.prevButton.outerHTML : '',\n        nextButtonHTML = options.nextButton ? options.nextButton.outerHTML : '',\n        prevIsButton,\n        nextIsButton;\n  }\n\n  // nav\n  if (hasNav) {\n    var navContainer = options.navContainer,\n        navContainerHTML = options.navContainer ? options.navContainer.outerHTML : '',\n        navItems,\n        pages = autoWidth ? slideCount : getPages(),\n        pagesCached = 0,\n        navClicked = -1,\n        navCurrentIndex = getCurrentNavIndex(),\n        navCurrentIndexCached = navCurrentIndex,\n        navActiveClass = 'tns-nav-active',\n        navStr = 'Carousel Page ',\n        navStrCurrent = ' (Current Slide)';\n  }\n\n  // autoplay\n  if (hasAutoplay) {\n    var autoplayDirection = options.autoplayDirection === 'forward' ? 1 : -1,\n        autoplayButton = options.autoplayButton,\n        autoplayButtonHTML = options.autoplayButton ? options.autoplayButton.outerHTML : '',\n        autoplayHtmlStrings = ['<span class=\\'tns-visually-hidden\\'>', ' animation</span>'],\n        autoplayTimer,\n        animating,\n        autoplayHoverPaused,\n        autoplayUserPaused,\n        autoplayVisibilityPaused;\n  }\n\n  if (hasTouch || hasMouseDrag) {\n    var initPosition = {},\n        lastPosition = {},\n        translateInit,\n        disX,\n        disY,\n        panStart = false,\n        rafIndex,\n        getDist = horizontal ?\n          function(a, b) { return a.x - b.x; } :\n          function(a, b) { return a.y - b.y; };\n  }\n\n  // disable slider when slidecount <= items\n  if (!autoWidth) { resetVariblesWhenDisable(disable || freeze); }\n\n  if (TRANSFORM) {\n    transformAttr = TRANSFORM;\n    transformPrefix = 'translate';\n\n    if (HAS3DTRANSFORMS) {\n      transformPrefix += horizontal ? '3d(' : '3d(0px, ';\n      transformPostfix = horizontal ? ', 0px, 0px)' : ', 0px)';\n    } else {\n      transformPrefix += horizontal ? 'X(' : 'Y(';\n      transformPostfix = ')';\n    }\n\n  }\n\n  if (carousel) { container.className = container.className.replace('tns-vpfix', ''); }\n  initStructure();\n  initSheet();\n  initSliderTransform();\n\n  // === COMMON FUNCTIONS === //\n  function resetVariblesWhenDisable (condition) {\n    if (condition) {\n      controls = nav = touch = mouseDrag = arrowKeys = autoplay = autoplayHoverPause = autoplayResetOnVisibility = false;\n    }\n  }\n\n  function getCurrentSlide () {\n    var tem = carousel ? index - cloneCount : index;\n    while (tem < 0) { tem += slideCount; }\n    return tem%slideCount + 1;\n  }\n\n  function getStartIndex (ind) {\n    ind = ind ? Math.max(0, Math.min(loop ? slideCount - 1 : slideCount - items, ind)) : 0;\n    return carousel ? ind + cloneCount : ind;\n  }\n\n  function getAbsIndex (i) {\n    if (i == null) { i = index; }\n\n    if (carousel) { i -= cloneCount; }\n    while (i < 0) { i += slideCount; }\n\n    return Math.floor(i%slideCount);\n  }\n\n  function getCurrentNavIndex () {\n    var absIndex = getAbsIndex(),\n        result;\n\n    result = navAsThumbnails ? absIndex :\n      fixedWidth || autoWidth ? Math.ceil((absIndex + 1) * pages / slideCount - 1) :\n          Math.floor(absIndex / items);\n\n    // set active nav to the last one when reaches the right edge\n    if (!loop && carousel && index === indexMax) { result = pages - 1; }\n\n    return result;\n  }\n\n  function getItemsMax () {\n    // fixedWidth or autoWidth while viewportMax is not available\n    if (autoWidth || (fixedWidth && !viewportMax)) {\n      return slideCount - 1;\n    // most cases\n    } else {\n      var str = fixedWidth ? 'fixedWidth' : 'items',\n          arr = [];\n\n      if (fixedWidth || options[str] < slideCount) { arr.push(options[str]); }\n\n      if (responsive) {\n        for (var bp in responsive) {\n          var tem = responsive[bp][str];\n          if (tem && (fixedWidth || tem < slideCount)) { arr.push(tem); }\n        }\n      }\n\n      if (!arr.length) { arr.push(0); }\n\n      return Math.ceil(fixedWidth ? viewportMax / Math.min.apply(null, arr) : Math.max.apply(null, arr));\n    }\n  }\n\n  function getCloneCountForLoop () {\n    var itemsMax = getItemsMax(),\n        result = carousel ? Math.ceil((itemsMax * 5 - slideCount)/2) : (itemsMax * 4 - slideCount);\n    result = Math.max(itemsMax, result);\n\n    return hasOption('edgePadding') ? result + 1 : result;\n  }\n\n  function getWindowWidth () {\n    return win.innerWidth || doc.documentElement.clientWidth || doc.body.clientWidth;\n  }\n\n  function getInsertPosition (pos) {\n    return pos === 'top' ? 'afterbegin' : 'beforeend';\n  }\n\n  function getClientWidth (el) {\n    if (el == null) { return; }\n    var div = doc.createElement('div'), rect, width;\n    el.appendChild(div);\n    rect = div.getBoundingClientRect();\n    width = rect.right - rect.left;\n    div.remove();\n    return width || getClientWidth(el.parentNode);\n  }\n\n  function getViewportWidth () {\n    var gap = edgePadding ? edgePadding * 2 - gutter : 0;\n    return getClientWidth(containerParent) - gap;\n  }\n\n  function hasOption (item) {\n    if (options[item]) {\n      return true;\n    } else {\n      if (responsive) {\n        for (var bp in responsive) {\n          if (responsive[bp][item]) { return true; }\n        }\n      }\n      return false;\n    }\n  }\n\n  // get option:\n  // fixed width: viewport, fixedWidth, gutter => items\n  // others: window width => all variables\n  // all: items => slideBy\n  function getOption (item, ww) {\n    if (ww == null) { ww = windowWidth; }\n\n    if (item === 'items' && fixedWidth) {\n      return Math.floor((viewport + gutter) / (fixedWidth + gutter)) || 1;\n\n    } else {\n      var result = options[item];\n\n      if (responsive) {\n        for (var bp in responsive) {\n          // bp: convert string to number\n          if (ww >= parseInt(bp)) {\n            if (item in responsive[bp]) { result = responsive[bp][item]; }\n          }\n        }\n      }\n\n      if (item === 'slideBy' && result === 'page') { result = getOption('items'); }\n      if (!carousel && (item === 'slideBy' || item === 'items')) { result = Math.floor(result); }\n\n      return result;\n    }\n  }\n\n  function getSlideMarginLeft (i) {\n    return CALC ?\n      CALC + '(' + i * 100 + '% / ' + slideCountNew + ')' :\n      i * 100 / slideCountNew + '%';\n  }\n\n  function getInnerWrapperStyles (edgePaddingTem, gutterTem, fixedWidthTem, speedTem, autoHeightBP) {\n    var str = '';\n\n    if (edgePaddingTem !== undefined) {\n      var gap = edgePaddingTem;\n      if (gutterTem) { gap -= gutterTem; }\n      str = horizontal ?\n        'margin: 0 ' + gap + 'px 0 ' + edgePaddingTem + 'px;' :\n        'margin: ' + edgePaddingTem + 'px 0 ' + gap + 'px 0;';\n    } else if (gutterTem && !fixedWidthTem) {\n      var gutterTemUnit = '-' + gutterTem + 'px',\n          dir = horizontal ? gutterTemUnit + ' 0 0' : '0 ' + gutterTemUnit + ' 0';\n      str = 'margin: 0 ' + dir + ';'\n    }\n\n    if (!carousel && autoHeightBP && TRANSITIONDURATION && speedTem) { str += getTransitionDurationStyle(speedTem); }\n    return str;\n  }\n\n  function getContainerWidth (fixedWidthTem, gutterTem, itemsTem) {\n    if (fixedWidthTem) {\n      return (fixedWidthTem + gutterTem) * slideCountNew + 'px';\n    } else {\n      return CALC ?\n        CALC + '(' + slideCountNew * 100 + '% / ' + itemsTem + ')' :\n        slideCountNew * 100 / itemsTem + '%';\n    }\n  }\n\n  function getSlideWidthStyle (fixedWidthTem, gutterTem, itemsTem) {\n    var width;\n\n    if (fixedWidthTem) {\n      width = (fixedWidthTem + gutterTem) + 'px';\n    } else {\n      if (!carousel) { itemsTem = Math.floor(itemsTem); }\n      var dividend = carousel ? slideCountNew : itemsTem;\n      width = CALC ?\n        CALC + '(100% / ' + dividend + ')' :\n        100 / dividend + '%';\n    }\n\n    width = 'width:' + width;\n\n    // inner slider: overwrite outer slider styles\n    return nested !== 'inner' ? width + ';' : width + ' !important;';\n  }\n\n  function getSlideGutterStyle (gutterTem) {\n    var str = '';\n\n    // gutter maybe interger || 0\n    // so can't use 'if (gutter)'\n    if (gutterTem !== false) {\n      var prop = horizontal ? 'padding-' : 'margin-',\n          dir = horizontal ? 'right' : 'bottom';\n      str = prop +  dir + ': ' + gutterTem + 'px;';\n    }\n\n    return str;\n  }\n\n  function getCSSPrefix (name, num) {\n    var prefix = name.substring(0, name.length - num).toLowerCase();\n    if (prefix) { prefix = '-' + prefix + '-'; }\n\n    return prefix;\n  }\n\n  function getTransitionDurationStyle (speed) {\n    return getCSSPrefix(TRANSITIONDURATION, 18) + 'transition-duration:' + speed / 1000 + 's;';\n  }\n\n  function getAnimationDurationStyle (speed) {\n    return getCSSPrefix(ANIMATIONDURATION, 17) + 'animation-duration:' + speed / 1000 + 's;';\n  }\n\n  function initStructure () {\n    var classOuter = 'tns-outer',\n        classInner = 'tns-inner',\n        hasGutter = hasOption('gutter');\n\n    outerWrapper.className = classOuter;\n    innerWrapper.className = classInner;\n    outerWrapper.id = slideId + '-ow';\n    innerWrapper.id = slideId + '-iw';\n\n    // set container properties\n    if (container.id === '') { container.id = slideId; }\n    newContainerClasses += PERCENTAGELAYOUT || autoWidth ? ' tns-subpixel' : ' tns-no-subpixel';\n    newContainerClasses += CALC ? ' tns-calc' : ' tns-no-calc';\n    if (autoWidth) { newContainerClasses += ' tns-autowidth'; }\n    newContainerClasses += ' tns-' + options.axis;\n    container.className += newContainerClasses;\n\n    // add constrain layer for carousel\n    if (carousel) {\n      middleWrapper = doc.createElement('div');\n      middleWrapper.id = slideId + '-mw';\n      middleWrapper.className = 'tns-ovh';\n\n      outerWrapper.appendChild(middleWrapper);\n      middleWrapper.appendChild(innerWrapper);\n    } else {\n      outerWrapper.appendChild(innerWrapper);\n    }\n\n    if (autoHeight) {\n      var wp = middleWrapper ? middleWrapper : innerWrapper;\n      wp.className += ' tns-ah';\n    }\n\n    containerParent.insertBefore(outerWrapper, container);\n    innerWrapper.appendChild(container);\n\n    // add id, class, aria attributes\n    // before clone slides\n    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {\n      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-item');\n      if (!item.id) { item.id = slideId + '-item' + i; }\n      if (!carousel && animateNormal) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal); }\n      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {\n        'aria-hidden': 'true',\n        'tabindex': '-1'\n      });\n    });\n\n    // ## clone slides\n    // carousel: n + slides + n\n    // gallery:      slides + n\n    if (cloneCount) {\n      var fragmentBefore = doc.createDocumentFragment(),\n          fragmentAfter = doc.createDocumentFragment();\n\n      for (var j = cloneCount; j--;) {\n        var num = j%slideCount,\n            cloneFirst = slideItems[num].cloneNode(true);\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneFirst, slideClonedClass);\n        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneFirst, 'id');\n        fragmentAfter.insertBefore(cloneFirst, fragmentAfter.firstChild);\n\n        if (carousel) {\n          var cloneLast = slideItems[slideCount - 1 - num].cloneNode(true);\n          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneLast, slideClonedClass);\n          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneLast, 'id');\n          fragmentBefore.appendChild(cloneLast);\n        }\n      }\n\n      container.insertBefore(fragmentBefore, container.firstChild);\n      container.appendChild(fragmentAfter);\n      slideItems = container.children;\n    }\n\n  }\n\n  function initSliderTransform () {\n    // ## images loaded/failed\n    if (hasOption('autoHeight') || autoWidth || !horizontal) {\n      var imgs = container.querySelectorAll('img');\n\n      // add img load event listener\n      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(imgs, function(img) {\n        var src = img.src;\n\n        if (!lazyload) {\n          // not data img\n          if (src && src.indexOf('data:image') < 0) {\n            img.src = '';\n            (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);\n            (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');\n\n            img.src = src;\n          // data img\n          } else {\n            imgLoaded(img);\n          }\n        }\n      });\n\n      // set imgsComplete\n      (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), function() { imgsComplete = true; }); });\n\n      // reset imgs for auto height: check visible imgs only\n      if (hasOption('autoHeight')) { imgs = getImageArray(index, Math.min(index + items - 1, slideCountNew - 1)); }\n\n      lazyload ? initSliderTransformStyleCheck() : (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), initSliderTransformStyleCheck); });\n\n    } else {\n      // set container transform property\n      if (carousel) { doContainerTransformSilent(); }\n\n      // update slider tools and events\n      initTools();\n      initEvents();\n    }\n  }\n\n  function initSliderTransformStyleCheck () {\n    if (autoWidth && slideCount > 1) {\n      // check styles application\n      var num = loop ? index : slideCount - 1;\n\n      (function stylesApplicationCheck() {\n        var left = slideItems[num].getBoundingClientRect().left;\n        var right = slideItems[num - 1].getBoundingClientRect().right;\n\n        (Math.abs(left - right) <= 1) ?\n          initSliderTransformCore() :\n          setTimeout(function(){ stylesApplicationCheck() }, 16);\n      })();\n\n    } else {\n      initSliderTransformCore();\n    }\n  }\n\n\n  function initSliderTransformCore () {\n    // run Fn()s which are rely on image loading\n    if (!horizontal || autoWidth) {\n      setSlidePositions();\n\n      if (autoWidth) {\n        rightBoundary = getRightBoundary();\n        if (freezable) { freeze = getFreeze(); }\n        indexMax = getIndexMax(); // <= slidePositions, rightBoundary <=\n        resetVariblesWhenDisable(disable || freeze);\n      } else {\n        updateContentWrapperHeight();\n      }\n    }\n\n    // set container transform property\n    if (carousel) { doContainerTransformSilent(); }\n\n    // update slider tools and events\n    initTools();\n    initEvents();\n  }\n\n  function initSheet () {\n    // gallery:\n    // set animation classes and left value for gallery slider\n    if (!carousel) {\n      for (var i = index, l = index + Math.min(slideCount, items); i < l; i++) {\n        var item = slideItems[i];\n        item.style.left = (i - index) * 100 / items + '%';\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);\n      }\n    }\n\n    // #### LAYOUT\n\n    // ## INLINE-BLOCK VS FLOAT\n\n    // ## PercentageLayout:\n    // slides: inline-block\n    // remove blank space between slides by set font-size: 0\n\n    // ## Non PercentageLayout:\n    // slides: float\n    //         margin-right: -100%\n    //         margin-left: ~\n\n    // Resource: https://docs.google.com/spreadsheets/d/147up245wwTXeQYve3BRSAD4oVcvQmuGsFteJOeA5xNQ/edit?usp=sharing\n    if (horizontal) {\n      if (PERCENTAGELAYOUT || autoWidth) {\n        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', 'font-size:' + win.getComputedStyle(slideItems[0]).fontSize + ';', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, 'font-size:0;', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n      } else if (carousel) {\n        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function (slide, i) {\n          slide.style.marginLeft = getSlideMarginLeft(i);\n        });\n      }\n    }\n\n\n    // ## BASIC STYLES\n    if (CSSMQ) {\n      // middle wrapper style\n      if (TRANSITIONDURATION) {\n        var str = middleWrapper && options.autoHeight ? getTransitionDurationStyle(options.speed) : '';\n        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-mw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n      }\n\n      // inner wrapper styles\n      str = getInnerWrapperStyles(options.edgePadding, options.gutter, options.fixedWidth, options.speed, options.autoHeight);\n      (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-iw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n\n      // container styles\n      if (carousel) {\n        str = horizontal && !autoWidth ? 'width:' + getContainerWidth(options.fixedWidth, options.gutter, options.items) + ';' : '';\n        if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }\n        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n      }\n\n      // slide styles\n      str = horizontal && !autoWidth ? getSlideWidthStyle(options.fixedWidth, options.gutter, options.items) : '';\n      if (options.gutter) { str += getSlideGutterStyle(options.gutter); }\n      // set gallery items transition-duration\n      if (!carousel) {\n        if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }\n        if (ANIMATIONDURATION) { str += getAnimationDurationStyle(speed); }\n      }\n      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }\n\n    // non CSS mediaqueries: IE8\n    // ## update inner wrapper, container, slides if needed\n    // set inline styles for inner wrapper & container\n    // insert stylesheet (one line) for slides only (since slides are many)\n    } else {\n      // middle wrapper styles\n      update_carousel_transition_duration();\n\n      // inner wrapper styles\n      innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, autoHeight);\n\n      // container styles\n      if (carousel && horizontal && !autoWidth) {\n        container.style.width = getContainerWidth(fixedWidth, gutter, items);\n      }\n\n      // slide styles\n      var str = horizontal && !autoWidth ? getSlideWidthStyle(fixedWidth, gutter, items) : '';\n      if (gutter) { str += getSlideGutterStyle(gutter); }\n\n      // append to the last line\n      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }\n    }\n\n    // ## MEDIAQUERIES\n    if (responsive && CSSMQ) {\n      for (var bp in responsive) {\n        // bp: convert string to number\n        bp = parseInt(bp);\n\n        var opts = responsive[bp],\n            str = '',\n            middleWrapperStr = '',\n            innerWrapperStr = '',\n            containerStr = '',\n            slideStr = '',\n            itemsBP = !autoWidth ? getOption('items', bp) : null,\n            fixedWidthBP = getOption('fixedWidth', bp),\n            speedBP = getOption('speed', bp),\n            edgePaddingBP = getOption('edgePadding', bp),\n            autoHeightBP = getOption('autoHeight', bp),\n            gutterBP = getOption('gutter', bp);\n\n        // middle wrapper string\n        if (TRANSITIONDURATION && middleWrapper && getOption('autoHeight', bp) && 'speed' in opts) {\n          middleWrapperStr = '#' + slideId + '-mw{' + getTransitionDurationStyle(speedBP) + '}';\n        }\n\n        // inner wrapper string\n        if ('edgePadding' in opts || 'gutter' in opts) {\n          innerWrapperStr = '#' + slideId + '-iw{' + getInnerWrapperStyles(edgePaddingBP, gutterBP, fixedWidthBP, speedBP, autoHeightBP) + '}';\n        }\n\n        // container string\n        if (carousel && horizontal && !autoWidth && ('fixedWidth' in opts || 'items' in opts || (fixedWidth && 'gutter' in opts))) {\n          containerStr = 'width:' + getContainerWidth(fixedWidthBP, gutterBP, itemsBP) + ';';\n        }\n        if (TRANSITIONDURATION && 'speed' in opts) {\n          containerStr += getTransitionDurationStyle(speedBP);\n        }\n        if (containerStr) {\n          containerStr = '#' + slideId + '{' + containerStr + '}';\n        }\n\n        // slide string\n        if ('fixedWidth' in opts || (fixedWidth && 'gutter' in opts) || !carousel && 'items' in opts) {\n          slideStr += getSlideWidthStyle(fixedWidthBP, gutterBP, itemsBP);\n        }\n        if ('gutter' in opts) {\n          slideStr += getSlideGutterStyle(gutterBP);\n        }\n        // set gallery items transition-duration\n        if (!carousel && 'speed' in opts) {\n          if (TRANSITIONDURATION) { slideStr += getTransitionDurationStyle(speedBP); }\n          if (ANIMATIONDURATION) { slideStr += getAnimationDurationStyle(speedBP); }\n        }\n        if (slideStr) { slideStr = '#' + slideId + ' > .tns-item{' + slideStr + '}'; }\n\n        // add up\n        str = middleWrapperStr + innerWrapperStr + containerStr + slideStr;\n\n        if (str) {\n          sheet.insertRule('@media (min-width: ' + bp / 16 + 'em) {' + str + '}', sheet.cssRules.length);\n        }\n      }\n    }\n  }\n\n  function initTools () {\n    // == slides ==\n    updateSlideStatus();\n\n    // == live region ==\n    outerWrapper.insertAdjacentHTML('afterbegin', '<div class=\"tns-liveregion tns-visually-hidden\" aria-live=\"polite\" aria-atomic=\"true\">slide <span class=\"current\">' + getLiveRegionStr() + '</span>  of ' + slideCount + '</div>');\n    liveregionCurrent = outerWrapper.querySelector('.tns-liveregion .current');\n\n    // == autoplayInit ==\n    if (hasAutoplay) {\n      var txt = autoplay ? 'stop' : 'start';\n      if (autoplayButton) {\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': txt});\n      } else if (options.autoplayButtonOutput) {\n        outerWrapper.insertAdjacentHTML(getInsertPosition(options.autoplayPosition), '<button type=\"button\" data-action=\"' + txt + '\">' + autoplayHtmlStrings[0] + txt + autoplayHtmlStrings[1] + autoplayText[0] + '</button>');\n        autoplayButton = outerWrapper.querySelector('[data-action]');\n      }\n\n      // add event\n      if (autoplayButton) {\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(autoplayButton, {'click': toggleAutoplay});\n      }\n\n      if (autoplay) {\n        startAutoplay();\n        if (autoplayHoverPause) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents); }\n        if (autoplayResetOnVisibility) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, visibilityEvent); }\n      }\n    }\n\n    // == navInit ==\n    if (hasNav) {\n      var initIndex = !carousel ? 0 : cloneCount;\n      // customized nav\n      // will not hide the navs in case they're thumbnails\n      if (navContainer) {\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navContainer, {'aria-label': 'Carousel Pagination'});\n        navItems = navContainer.children;\n        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(navItems, function(item, i) {\n          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {\n            'data-nav': i,\n            'tabindex': '-1',\n            'aria-label': navStr + (i + 1),\n            'aria-controls': slideId,\n          });\n        });\n\n      // generated nav\n      } else {\n        var navHtml = '',\n            hiddenStr = navAsThumbnails ? '' : 'style=\"display:none\"';\n        for (var i = 0; i < slideCount; i++) {\n          // hide nav items by default\n          navHtml += '<button type=\"button\" data-nav=\"' + i +'\" tabindex=\"-1\" aria-controls=\"' + slideId + '\" ' + hiddenStr + ' aria-label=\"' + navStr + (i + 1) +'\"></button>';\n        }\n        navHtml = '<div class=\"tns-nav\" aria-label=\"Carousel Pagination\">' + navHtml + '</div>';\n        outerWrapper.insertAdjacentHTML(getInsertPosition(options.navPosition), navHtml);\n\n        navContainer = outerWrapper.querySelector('.tns-nav');\n        navItems = navContainer.children;\n      }\n\n      updateNavVisibility();\n\n      // add transition\n      if (TRANSITIONDURATION) {\n        var prefix = TRANSITIONDURATION.substring(0, TRANSITIONDURATION.length - 18).toLowerCase(),\n            str = 'transition: all ' + speed / 1000 + 's';\n\n        if (prefix) {\n          str = '-' + prefix + '-' + str;\n        }\n\n        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '[aria-controls^=' + slideId + '-item]', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n      }\n\n      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navItems[navCurrentIndex], {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});\n      (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navItems[navCurrentIndex], 'tabindex');\n      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navItems[navCurrentIndex], navActiveClass);\n\n      // add events\n      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(navContainer, navEvents);\n    }\n\n\n\n    // == controlsInit ==\n    if (hasControls) {\n      if (!controlsContainer && (!prevButton || !nextButton)) {\n        outerWrapper.insertAdjacentHTML(getInsertPosition(options.controlsPosition), '<div class=\"tns-controls\" aria-label=\"Carousel Navigation\" tabindex=\"0\"><button type=\"button\" data-controls=\"prev\" tabindex=\"-1\" aria-controls=\"' + slideId +'\">' + controlsText[0] + '</button><button type=\"button\" data-controls=\"next\" tabindex=\"-1\" aria-controls=\"' + slideId +'\">' + controlsText[1] + '</button></div>');\n\n        controlsContainer = outerWrapper.querySelector('.tns-controls');\n      }\n\n      if (!prevButton || !nextButton) {\n        prevButton = controlsContainer.children[0];\n        nextButton = controlsContainer.children[1];\n      }\n\n      if (options.controlsContainer) {\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(controlsContainer, {\n          'aria-label': 'Carousel Navigation',\n          'tabindex': '0'\n        });\n      }\n\n      if (options.controlsContainer || (options.prevButton && options.nextButton)) {\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)([prevButton, nextButton], {\n          'aria-controls': slideId,\n          'tabindex': '-1',\n        });\n      }\n\n      if (options.controlsContainer || (options.prevButton && options.nextButton)) {\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(prevButton, {'data-controls' : 'prev'});\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(nextButton, {'data-controls' : 'next'});\n      }\n\n      prevIsButton = isButton(prevButton);\n      nextIsButton = isButton(nextButton);\n\n      updateControlsStatus();\n\n      // add events\n      if (controlsContainer) {\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(controlsContainer, controlsEvents);\n      } else {\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(prevButton, controlsEvents);\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(nextButton, controlsEvents);\n      }\n    }\n\n    // hide tools if needed\n    disableUI();\n  }\n\n  function initEvents () {\n    // add events\n    if (carousel && TRANSITIONEND) {\n      var eve = {};\n      eve[TRANSITIONEND] = onTransitionEnd;\n      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, eve);\n    }\n\n    if (touch) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch); }\n    if (mouseDrag) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents); }\n    if (arrowKeys) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent); }\n\n    if (nested === 'inner') {\n      events.on('outerResized', function () {\n        resizeTasks();\n        events.emit('innerLoaded', info());\n      });\n    } else if (responsive || fixedWidth || autoWidth || autoHeight || !horizontal) {\n      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(win, {'resize': onResize});\n    }\n\n    if (autoHeight) {\n      if (nested === 'outer') {\n        events.on('innerLoaded', doAutoHeight);\n      } else if (!disable) { doAutoHeight(); }\n    }\n\n    doLazyLoad();\n    if (disable) { disableSlider(); } else if (freeze) { freezeSlider(); }\n\n    events.on('indexChanged', additionalUpdates);\n    if (nested === 'inner') { events.emit('innerLoaded', info()); }\n    if (typeof onInit === 'function') { onInit(info()); }\n    isOn = true;\n  }\n\n  function destroy () {\n    // sheet\n    sheet.disabled = true;\n    if (sheet.ownerNode) { sheet.ownerNode.remove(); }\n\n    // remove win event listeners\n    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(win, {'resize': onResize});\n\n    // arrowKeys, controls, nav\n    if (arrowKeys) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent); }\n    if (controlsContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(controlsContainer, controlsEvents); }\n    if (navContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(navContainer, navEvents); }\n\n    // autoplay\n    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);\n    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, visibilityEvent);\n    if (autoplayButton) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(autoplayButton, {'click': toggleAutoplay}); }\n    if (autoplay) { clearInterval(autoplayTimer); }\n\n    // container\n    if (carousel && TRANSITIONEND) {\n      var eve = {};\n      eve[TRANSITIONEND] = onTransitionEnd;\n      (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, eve);\n    }\n    if (touch) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents); }\n    if (mouseDrag) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents); }\n\n    // cache Object values in options && reset HTML\n    var htmlList = [containerHTML, controlsContainerHTML, prevButtonHTML, nextButtonHTML, navContainerHTML, autoplayButtonHTML];\n\n    tnsList.forEach(function(item, i) {\n      var el = item === 'container' ? outerWrapper : options[item];\n\n      if (typeof el === 'object' && el) {\n        var prevEl = el.previousElementSibling ? el.previousElementSibling : false,\n            parentEl = el.parentNode;\n        el.outerHTML = htmlList[i];\n        options[item] = prevEl ? prevEl.nextElementSibling : parentEl.firstElementChild;\n      }\n    });\n\n\n    // reset variables\n    tnsList = animateIn = animateOut = animateDelay = animateNormal = horizontal = outerWrapper = innerWrapper = container = containerParent = containerHTML = slideItems = slideCount = breakpointZone = windowWidth = autoWidth = fixedWidth = edgePadding = gutter = viewport = items = slideBy = viewportMax = arrowKeys = speed = rewind = loop = autoHeight = sheet = lazyload = slidePositions = slideItemsOut = cloneCount = slideCountNew = hasRightDeadZone = rightBoundary = updateIndexBeforeTransform = transformAttr = transformPrefix = transformPostfix = getIndexMax = index = indexCached = indexMin = indexMax = resizeTimer = swipeAngle = moveDirectionExpected = running = onInit = events = newContainerClasses = slideId = disable = disabled = freezable = freeze = frozen = controlsEvents = navEvents = hoverEvents = visibilityEvent = docmentKeydownEvent = touchEvents = dragEvents = hasControls = hasNav = navAsThumbnails = hasAutoplay = hasTouch = hasMouseDrag = slideActiveClass = imgCompleteClass = imgEvents = imgsComplete = controls = controlsText = controlsContainer = controlsContainerHTML = prevButton = nextButton = prevIsButton = nextIsButton = nav = navContainer = navContainerHTML = navItems = pages = pagesCached = navClicked = navCurrentIndex = navCurrentIndexCached = navActiveClass = navStr = navStrCurrent = autoplay = autoplayTimeout = autoplayDirection = autoplayText = autoplayHoverPause = autoplayButton = autoplayButtonHTML = autoplayResetOnVisibility = autoplayHtmlStrings = autoplayTimer = animating = autoplayHoverPaused = autoplayUserPaused = autoplayVisibilityPaused = initPosition = lastPosition = translateInit = disX = disY = panStart = rafIndex = getDist = touch = mouseDrag = null;\n    // check variables\n    // [animateIn, animateOut, animateDelay, animateNormal, horizontal, outerWrapper, innerWrapper, container, containerParent, containerHTML, slideItems, slideCount, breakpointZone, windowWidth, autoWidth, fixedWidth, edgePadding, gutter, viewport, items, slideBy, viewportMax, arrowKeys, speed, rewind, loop, autoHeight, sheet, lazyload, slidePositions, slideItemsOut, cloneCount, slideCountNew, hasRightDeadZone, rightBoundary, updateIndexBeforeTransform, transformAttr, transformPrefix, transformPostfix, getIndexMax, index, indexCached, indexMin, indexMax, resizeTimer, swipeAngle, moveDirectionExpected, running, onInit, events, newContainerClasses, slideId, disable, disabled, freezable, freeze, frozen, controlsEvents, navEvents, hoverEvents, visibilityEvent, docmentKeydownEvent, touchEvents, dragEvents, hasControls, hasNav, navAsThumbnails, hasAutoplay, hasTouch, hasMouseDrag, slideActiveClass, imgCompleteClass, imgEvents, imgsComplete, controls, controlsText, controlsContainer, controlsContainerHTML, prevButton, nextButton, prevIsButton, nextIsButton, nav, navContainer, navContainerHTML, navItems, pages, pagesCached, navClicked, navCurrentIndex, navCurrentIndexCached, navActiveClass, navStr, navStrCurrent, autoplay, autoplayTimeout, autoplayDirection, autoplayText, autoplayHoverPause, autoplayButton, autoplayButtonHTML, autoplayResetOnVisibility, autoplayHtmlStrings, autoplayTimer, animating, autoplayHoverPaused, autoplayUserPaused, autoplayVisibilityPaused, initPosition, lastPosition, translateInit, disX, disY, panStart, rafIndex, getDist, touch, mouseDrag ].forEach(function(item) { if (item !== null) { console.log(item); } });\n\n    for (var a in this) {\n      if (a !== 'rebuild') { this[a] = null; }\n    }\n    isOn = false;\n  }\n\n// === ON RESIZE ===\n  // responsive || fixedWidth || autoWidth || !horizontal\n  function onResize (e) {\n    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ resizeTasks(getEvent(e)); });\n  }\n\n  function resizeTasks (e) {\n    if (!isOn) { return; }\n    if (nested === 'outer') { events.emit('outerResized', info(e)); }\n    windowWidth = getWindowWidth();\n    var bpChanged,\n        breakpointZoneTem = breakpointZone,\n        needContainerTransform = false;\n\n    if (responsive) {\n      setBreakpointZone();\n      bpChanged = breakpointZoneTem !== breakpointZone;\n      // if (hasRightDeadZone) { needContainerTransform = true; } // *?\n      if (bpChanged) { events.emit('newBreakpointStart', info(e)); }\n    }\n\n    var indChanged,\n        itemsChanged,\n        itemsTem = items,\n        disableTem = disable,\n        freezeTem = freeze,\n        arrowKeysTem = arrowKeys,\n        controlsTem = controls,\n        navTem = nav,\n        touchTem = touch,\n        mouseDragTem = mouseDrag,\n        autoplayTem = autoplay,\n        autoplayHoverPauseTem = autoplayHoverPause,\n        autoplayResetOnVisibilityTem = autoplayResetOnVisibility,\n        indexTem = index;\n\n    if (bpChanged) {\n      var fixedWidthTem = fixedWidth,\n          autoHeightTem = autoHeight,\n          controlsTextTem = controlsText,\n          centerTem = center,\n          autoplayTextTem = autoplayText;\n\n      if (!CSSMQ) {\n        var gutterTem = gutter,\n            edgePaddingTem = edgePadding;\n      }\n    }\n\n    // get option:\n    // fixed width: viewport, fixedWidth, gutter => items\n    // others: window width => all variables\n    // all: items => slideBy\n    arrowKeys = getOption('arrowKeys');\n    controls = getOption('controls');\n    nav = getOption('nav');\n    touch = getOption('touch');\n    center = getOption('center');\n    mouseDrag = getOption('mouseDrag');\n    autoplay = getOption('autoplay');\n    autoplayHoverPause = getOption('autoplayHoverPause');\n    autoplayResetOnVisibility = getOption('autoplayResetOnVisibility');\n\n    if (bpChanged) {\n      disable = getOption('disable');\n      fixedWidth = getOption('fixedWidth');\n      speed = getOption('speed');\n      autoHeight = getOption('autoHeight');\n      controlsText = getOption('controlsText');\n      autoplayText = getOption('autoplayText');\n      autoplayTimeout = getOption('autoplayTimeout');\n\n      if (!CSSMQ) {\n        edgePadding = getOption('edgePadding');\n        gutter = getOption('gutter');\n      }\n    }\n    // update options\n    resetVariblesWhenDisable(disable);\n\n    viewport = getViewportWidth(); // <= edgePadding, gutter\n    if ((!horizontal || autoWidth) && !disable) {\n      setSlidePositions();\n      if (!horizontal) {\n        updateContentWrapperHeight(); // <= setSlidePositions\n        needContainerTransform = true;\n      }\n    }\n    if (fixedWidth || autoWidth) {\n      rightBoundary = getRightBoundary(); // autoWidth: <= viewport, slidePositions, gutter\n                                          // fixedWidth: <= viewport, fixedWidth, gutter\n      indexMax = getIndexMax(); // autoWidth: <= rightBoundary, slidePositions\n                                // fixedWidth: <= rightBoundary, fixedWidth, gutter\n    }\n\n    if (bpChanged || fixedWidth) {\n      items = getOption('items');\n      slideBy = getOption('slideBy');\n      itemsChanged = items !== itemsTem;\n\n      if (itemsChanged) {\n        if (!fixedWidth && !autoWidth) { indexMax = getIndexMax(); } // <= items\n        // check index before transform in case\n        // slider reach the right edge then items become bigger\n        updateIndex();\n      }\n    }\n\n    if (bpChanged) {\n      if (disable !== disableTem) {\n        if (disable) {\n          disableSlider();\n        } else {\n          enableSlider(); // <= slidePositions, rightBoundary, indexMax\n        }\n      }\n    }\n\n    if (freezable && (bpChanged || fixedWidth || autoWidth)) {\n      freeze = getFreeze(); // <= autoWidth: slidePositions, gutter, viewport, rightBoundary\n                            // <= fixedWidth: fixedWidth, gutter, rightBoundary\n                            // <= others: items\n\n      if (freeze !== freezeTem) {\n        if (freeze) {\n          doContainerTransform(getContainerTransformValue(getStartIndex(0)));\n          freezeSlider();\n        } else {\n          unfreezeSlider();\n          needContainerTransform = true;\n        }\n      }\n    }\n\n    resetVariblesWhenDisable(disable || freeze); // controls, nav, touch, mouseDrag, arrowKeys, autoplay, autoplayHoverPause, autoplayResetOnVisibility\n    if (!autoplay) { autoplayHoverPause = autoplayResetOnVisibility = false; }\n\n    if (arrowKeys !== arrowKeysTem) {\n      arrowKeys ?\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent) :\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent);\n    }\n    if (controls !== controlsTem) {\n      if (controls) {\n        if (controlsContainer) {\n          (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);\n        } else {\n          if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }\n          if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }\n        }\n      } else {\n        if (controlsContainer) {\n          (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);\n        } else {\n          if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }\n          if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }\n        }\n      }\n    }\n    if (nav !== navTem) {\n      if (nav) {\n        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer);\n        updateNavVisibility();\n      } else {\n        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer)\n      }\n    }\n    if (touch !== touchTem) {\n      touch ?\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch) :\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents);\n    }\n    if (mouseDrag !== mouseDragTem) {\n      mouseDrag ?\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents) :\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents);\n    }\n    if (autoplay !== autoplayTem) {\n      if (autoplay) {\n        if (autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }\n        if (!animating && !autoplayUserPaused) { startAutoplay(); }\n      } else {\n        if (autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }\n        if (animating) { stopAutoplay(); }\n      }\n    }\n    if (autoplayHoverPause !== autoplayHoverPauseTem) {\n      autoplayHoverPause ?\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents) :\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);\n    }\n    if (autoplayResetOnVisibility !== autoplayResetOnVisibilityTem) {\n      autoplayResetOnVisibility ?\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, visibilityEvent) :\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, visibilityEvent);\n    }\n\n    if (bpChanged) {\n      if (fixedWidth !== fixedWidthTem || center !== centerTem) { needContainerTransform = true; }\n\n      if (autoHeight !== autoHeightTem) {\n        if (!autoHeight) { innerWrapper.style.height = ''; }\n      }\n\n      if (controls && controlsText !== controlsTextTem) {\n        prevButton.innerHTML = controlsText[0];\n        nextButton.innerHTML = controlsText[1];\n      }\n\n      if (autoplayButton && autoplayText !== autoplayTextTem) {\n        var i = autoplay ? 1 : 0,\n            html = autoplayButton.innerHTML,\n            len = html.length - autoplayTextTem[i].length;\n        if (html.substring(len) === autoplayTextTem[i]) {\n          autoplayButton.innerHTML = html.substring(0, len) + autoplayText[i];\n        }\n      }\n    } else {\n      if (center && (fixedWidth || autoWidth)) { needContainerTransform = true; }\n    }\n\n    if (itemsChanged || fixedWidth && !autoWidth) {\n      pages = getPages();\n      updateNavVisibility();\n    }\n\n    indChanged = index !== indexTem;\n    if (indChanged) {\n      events.emit('indexChanged', info());\n      needContainerTransform = true;\n    } else if (itemsChanged) {\n      if (!indChanged) { additionalUpdates(); }\n    } else if (fixedWidth || autoWidth) {\n      doLazyLoad();\n      updateSlideStatus();\n      updateLiveRegion();\n    }\n\n    if (itemsChanged && !carousel) { updateGallerySlidePositions(); }\n\n    if (!disable && !freeze) {\n      // non-mediaqueries: IE8\n      if (bpChanged && !CSSMQ) {\n        // middle wrapper styles\n\n        // inner wrapper styles\n        if (edgePadding !== edgePaddingTem || gutter !== gutterTem) {\n          innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, speed, autoHeight);\n        }\n\n        if (horizontal) {\n          // container styles\n          if (carousel) {\n            container.style.width = getContainerWidth(fixedWidth, gutter, items);\n          }\n\n          // slide styles\n          var str = getSlideWidthStyle(fixedWidth, gutter, items) +\n                    getSlideGutterStyle(gutter);\n\n          // remove the last line and\n          // add new styles\n          (0,_helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__.removeCSSRule)(sheet, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet) - 1);\n          (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));\n        }\n      }\n\n      // auto height\n      if (autoHeight) { doAutoHeight(); }\n\n      if (needContainerTransform) {\n        doContainerTransformSilent();\n        indexCached = index;\n      }\n    }\n\n    if (bpChanged) { events.emit('newBreakpointEnd', info(e)); }\n  }\n\n\n\n\n\n  // === INITIALIZATION FUNCTIONS === //\n  function getFreeze () {\n    if (!fixedWidth && !autoWidth) {\n      var a = center ? items - (items - 1) / 2 : items;\n      return  slideCount <= a;\n    }\n\n    var width = fixedWidth ? (fixedWidth + gutter) * slideCount : slidePositions[slideCount],\n        vp = edgePadding ? viewport + edgePadding * 2 : viewport + gutter;\n\n    if (center) {\n      vp -= fixedWidth ? (viewport - fixedWidth) / 2 : (viewport - (slidePositions[index + 1] - slidePositions[index] - gutter)) / 2;\n    }\n\n    return width <= vp;\n  }\n\n  function setBreakpointZone () {\n    breakpointZone = 0;\n    for (var bp in responsive) {\n      bp = parseInt(bp); // convert string to number\n      if (windowWidth >= bp) { breakpointZone = bp; }\n    }\n  }\n\n  // (slideBy, indexMin, indexMax) => index\n  var updateIndex = (function () {\n    return loop ?\n      carousel ?\n        // loop + carousel\n        function () {\n          var leftEdge = indexMin,\n              rightEdge = indexMax;\n\n          leftEdge += slideBy;\n          rightEdge -= slideBy;\n\n          // adjust edges when has edge paddings\n          // or fixed-width slider with extra space on the right side\n          if (edgePadding) {\n            leftEdge += 1;\n            rightEdge -= 1;\n          } else if (fixedWidth) {\n            if ((viewport + gutter)%(fixedWidth + gutter)) { rightEdge -= 1; }\n          }\n\n          if (cloneCount) {\n            if (index > rightEdge) {\n              index -= slideCount;\n            } else if (index < leftEdge) {\n              index += slideCount;\n            }\n          }\n        } :\n        // loop + gallery\n        function() {\n          if (index > indexMax) {\n            while (index >= indexMin + slideCount) { index -= slideCount; }\n          } else if (index < indexMin) {\n            while (index <= indexMax - slideCount) { index += slideCount; }\n          }\n        } :\n      // non-loop\n      function() {\n        index = Math.max(indexMin, Math.min(indexMax, index));\n      };\n  })();\n\n  function disableUI () {\n    if (!autoplay && autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }\n    if (!nav && navContainer) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer); }\n    if (!controls) {\n      if (controlsContainer) {\n        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);\n      } else {\n        if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }\n        if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }\n      }\n    }\n  }\n\n  function enableUI () {\n    if (autoplay && autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }\n    if (nav && navContainer) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer); }\n    if (controls) {\n      if (controlsContainer) {\n        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);\n      } else {\n        if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }\n        if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }\n      }\n    }\n  }\n\n  function freezeSlider () {\n    if (frozen) { return; }\n\n    // remove edge padding from inner wrapper\n    if (edgePadding) { innerWrapper.style.margin = '0px'; }\n\n    // add class tns-transparent to cloned slides\n    if (cloneCount) {\n      var str = 'tns-transparent';\n      for (var i = cloneCount; i--;) {\n        if (carousel) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[i], str); }\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[slideCountNew - i - 1], str);\n      }\n    }\n\n    // update tools\n    disableUI();\n\n    frozen = true;\n  }\n\n  function unfreezeSlider () {\n    if (!frozen) { return; }\n\n    // restore edge padding for inner wrapper\n    // for mordern browsers\n    if (edgePadding && CSSMQ) { innerWrapper.style.margin = ''; }\n\n    // remove class tns-transparent to cloned slides\n    if (cloneCount) {\n      var str = 'tns-transparent';\n      for (var i = cloneCount; i--;) {\n        if (carousel) { (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[i], str); }\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[slideCountNew - i - 1], str);\n      }\n    }\n\n    // update tools\n    enableUI();\n\n    frozen = false;\n  }\n\n  function disableSlider () {\n    if (disabled) { return; }\n\n    sheet.disabled = true;\n    container.className = container.className.replace(newContainerClasses.substring(1), '');\n    (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(container, ['style']);\n    if (loop) {\n      for (var j = cloneCount; j--;) {\n        if (carousel) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[j]); }\n        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[slideCountNew - j - 1]);\n      }\n    }\n\n    // vertical slider\n    if (!horizontal || !carousel) { (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(innerWrapper, ['style']); }\n\n    // gallery\n    if (!carousel) {\n      for (var i = index, l = index + slideCount; i < l; i++) {\n        var item = slideItems[i];\n        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['style']);\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);\n      }\n    }\n\n    // update tools\n    disableUI();\n\n    disabled = true;\n  }\n\n  function enableSlider () {\n    if (!disabled) { return; }\n\n    sheet.disabled = false;\n    container.className += newContainerClasses;\n    doContainerTransformSilent();\n\n    if (loop) {\n      for (var j = cloneCount; j--;) {\n        if (carousel) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[j]); }\n        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[slideCountNew - j - 1]);\n      }\n    }\n\n    // gallery\n    if (!carousel) {\n      for (var i = index, l = index + slideCount; i < l; i++) {\n        var item = slideItems[i],\n            classN = i < index + items ? animateIn : animateNormal;\n        item.style.left = (i - index) * 100 / items + '%';\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classN);\n      }\n    }\n\n    // update tools\n    enableUI();\n\n    disabled = false;\n  }\n\n  function updateLiveRegion () {\n    var str = getLiveRegionStr();\n    if (liveregionCurrent.innerHTML !== str) { liveregionCurrent.innerHTML = str; }\n  }\n\n  function getLiveRegionStr () {\n    var arr = getVisibleSlideRange(),\n        start = arr[0] + 1,\n        end = arr[1] + 1;\n    return start === end ? start + '' : start + ' to ' + end;\n  }\n\n  function getVisibleSlideRange (val) {\n    if (val == null) { val = getContainerTransformValue(); }\n    var start = index, end, rangestart, rangeend;\n\n    // get range start, range end for autoWidth and fixedWidth\n    if (center || edgePadding) {\n      if (autoWidth || fixedWidth) {\n        rangestart = - (parseFloat(val) + edgePadding);\n        rangeend = rangestart + viewport + edgePadding * 2;\n      }\n    } else {\n      if (autoWidth) {\n        rangestart = slidePositions[index];\n        rangeend = rangestart + viewport;\n      }\n    }\n\n    // get start, end\n    // - check auto width\n    if (autoWidth) {\n      slidePositions.forEach(function(point, i) {\n        if (i < slideCountNew) {\n          if ((center || edgePadding) && point <= rangestart + 0.5) { start = i; }\n          if (rangeend - point >= 0.5) { end = i; }\n        }\n      });\n\n    // - check percentage width, fixed width\n    } else {\n\n      if (fixedWidth) {\n        var cell = fixedWidth + gutter;\n        if (center || edgePadding) {\n          start = Math.floor(rangestart/cell);\n          end = Math.ceil(rangeend/cell - 1);\n        } else {\n          end = start + Math.ceil(viewport/cell) - 1;\n        }\n\n      } else {\n        if (center || edgePadding) {\n          var a = items - 1;\n          if (center) {\n            start -= a / 2;\n            end = index + a / 2;\n          } else {\n            end = index + a;\n          }\n\n          if (edgePadding) {\n            var b = edgePadding * items / viewport;\n            start -= b;\n            end += b;\n          }\n\n          start = Math.floor(start);\n          end = Math.ceil(end);\n        } else {\n          end = start + items - 1;\n        }\n      }\n\n      start = Math.max(start, 0);\n      end = Math.min(end, slideCountNew - 1);\n    }\n\n    return [start, end];\n  }\n\n  function doLazyLoad () {\n    if (lazyload && !disable) {\n      var arg = getVisibleSlideRange();\n      arg.push(lazyloadSelector);\n\n      getImageArray.apply(null, arg).forEach(function (img) {\n        if (!(0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) {\n          // stop propagation transitionend event to container\n          var eve = {};\n          eve[TRANSITIONEND] = function (e) { e.stopPropagation(); };\n          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, eve);\n\n          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);\n\n          // update src\n          img.src = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-src');\n\n          // update srcset\n          var srcset = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-srcset');\n          if (srcset) { img.srcset = srcset; }\n\n          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');\n        }\n      });\n    }\n  }\n\n  function onImgLoaded (e) {\n    imgLoaded(getTarget(e));\n  }\n\n  function onImgFailed (e) {\n    imgFailed(getTarget(e));\n  }\n\n  function imgLoaded (img) {\n    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loaded');\n    imgCompleted(img);\n  }\n\n  function imgFailed (img) {\n    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'failed');\n    imgCompleted(img);\n  }\n\n  function imgCompleted (img) {\n    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, imgCompleteClass);\n    (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(img, 'loading');\n    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(img, imgEvents);\n  }\n\n  function getImageArray (start, end, imgSelector) {\n    var imgs = [];\n    if (!imgSelector) { imgSelector = 'img'; }\n\n    while (start <= end) {\n      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems[start].querySelectorAll(imgSelector), function (img) { imgs.push(img); });\n      start++;\n    }\n\n    return imgs;\n  }\n\n  // check if all visible images are loaded\n  // and update container height if it's done\n  function doAutoHeight () {\n    var imgs = getImageArray.apply(null, getVisibleSlideRange());\n    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, updateInnerWrapperHeight); });\n  }\n\n  function imgsLoadedCheck (imgs, cb) {\n    // execute callback function if all images are complete\n    if (imgsComplete) { return cb(); }\n\n    // check image classes\n    imgs.forEach(function (img, index) {\n      if (!lazyload && img.complete) { imgCompleted(img); } // Check image.complete\n      if ((0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) { imgs.splice(index, 1); }\n    });\n\n    // execute callback function if selected images are all complete\n    if (!imgs.length) { return cb(); }\n\n    // otherwise execute this functiona again\n    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, cb); });\n  }\n\n  function additionalUpdates () {\n    doLazyLoad();\n    updateSlideStatus();\n    updateLiveRegion();\n    updateControlsStatus();\n    updateNavStatus();\n  }\n\n\n  function update_carousel_transition_duration () {\n    if (carousel && autoHeight) {\n      middleWrapper.style[TRANSITIONDURATION] = speed / 1000 + 's';\n    }\n  }\n\n  function getMaxSlideHeight (slideStart, slideRange) {\n    var heights = [];\n    for (var i = slideStart, l = Math.min(slideStart + slideRange, slideCountNew); i < l; i++) {\n      heights.push(slideItems[i].offsetHeight);\n    }\n\n    return Math.max.apply(null, heights);\n  }\n\n  // update inner wrapper height\n  // 1. get the max-height of the visible slides\n  // 2. set transitionDuration to speed\n  // 3. update inner wrapper height to max-height\n  // 4. set transitionDuration to 0s after transition done\n  function updateInnerWrapperHeight () {\n    var maxHeight = autoHeight ? getMaxSlideHeight(index, items) : getMaxSlideHeight(cloneCount, slideCount),\n        wp = middleWrapper ? middleWrapper : innerWrapper;\n\n    if (wp.style.height !== maxHeight) { wp.style.height = maxHeight + 'px'; }\n  }\n\n  // get the distance from the top edge of the first slide to each slide\n  // (init) => slidePositions\n  function setSlidePositions () {\n    slidePositions = [0];\n    var attr = horizontal ? 'left' : 'top',\n        attr2 = horizontal ? 'right' : 'bottom',\n        base = slideItems[0].getBoundingClientRect()[attr];\n\n    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {\n      // skip the first slide\n      if (i) { slidePositions.push(item.getBoundingClientRect()[attr] - base); }\n      // add the end edge\n      if (i === slideCountNew - 1) { slidePositions.push(item.getBoundingClientRect()[attr2] - base); }\n    });\n  }\n\n  // update slide\n  function updateSlideStatus () {\n    var range = getVisibleSlideRange(),\n        start = range[0],\n        end = range[1];\n\n    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {\n      // show slides\n      if (i >= start && i <= end) {\n        if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {\n          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['aria-hidden', 'tabindex']);\n          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, slideActiveClass);\n        }\n      // hide slides\n      } else {\n        if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {\n          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {\n            'aria-hidden': 'true',\n            'tabindex': '-1'\n          });\n          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, slideActiveClass);\n        }\n      }\n    });\n  }\n\n  // gallery: update slide position\n  function updateGallerySlidePositions () {\n    var l = index + Math.min(slideCount, items);\n    for (var i = slideCountNew; i--;) {\n      var item = slideItems[i];\n\n      if (i >= index && i < l) {\n        // add transitions to visible slides when adjusting their positions\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-moving');\n\n        item.style.left = (i - index) * 100 / items + '%';\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);\n      } else if (item.style.left) {\n        item.style.left = '';\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);\n      }\n\n      // remove outlet animation\n      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);\n    }\n\n    // removing '.tns-moving'\n    setTimeout(function() {\n      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(el) {\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(el, 'tns-moving');\n      });\n    }, 300);\n  }\n\n  // set tabindex on Nav\n  function updateNavStatus () {\n    // get current nav\n    if (nav) {\n      navCurrentIndex = navClicked >= 0 ? navClicked : getCurrentNavIndex();\n      navClicked = -1;\n\n      if (navCurrentIndex !== navCurrentIndexCached) {\n        var navPrev = navItems[navCurrentIndexCached],\n            navCurrent = navItems[navCurrentIndex];\n\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navPrev, {\n          'tabindex': '-1',\n          'aria-label': navStr + (navCurrentIndexCached + 1)\n        });\n        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(navPrev, navActiveClass);\n\n        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navCurrent, {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});\n        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navCurrent, 'tabindex');\n        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navCurrent, navActiveClass);\n\n        navCurrentIndexCached = navCurrentIndex;\n      }\n    }\n  }\n\n  function getLowerCaseNodeName (el) {\n    return el.nodeName.toLowerCase();\n  }\n\n  function isButton (el) {\n    return getLowerCaseNodeName(el) === 'button';\n  }\n\n  function isAriaDisabled (el) {\n    return el.getAttribute('aria-disabled') === 'true';\n  }\n\n  function disEnableElement (isButton, el, val) {\n    if (isButton) {\n      el.disabled = val;\n    } else {\n      el.setAttribute('aria-disabled', val.toString());\n    }\n  }\n\n  // set 'disabled' to true on controls when reach the edges\n  function updateControlsStatus () {\n    if (!controls || rewind || loop) { return; }\n\n    var prevDisabled = (prevIsButton) ? prevButton.disabled : isAriaDisabled(prevButton),\n        nextDisabled = (nextIsButton) ? nextButton.disabled : isAriaDisabled(nextButton),\n        disablePrev = (index <= indexMin) ? true : false,\n        disableNext = (!rewind && index >= indexMax) ? true : false;\n\n    if (disablePrev && !prevDisabled) {\n      disEnableElement(prevIsButton, prevButton, true);\n    }\n    if (!disablePrev && prevDisabled) {\n      disEnableElement(prevIsButton, prevButton, false);\n    }\n    if (disableNext && !nextDisabled) {\n      disEnableElement(nextIsButton, nextButton, true);\n    }\n    if (!disableNext && nextDisabled) {\n      disEnableElement(nextIsButton, nextButton, false);\n    }\n  }\n\n  // set duration\n  function resetDuration (el, str) {\n    if (TRANSITIONDURATION) { el.style[TRANSITIONDURATION] = str; }\n  }\n\n  function getSliderWidth () {\n    return fixedWidth ? (fixedWidth + gutter) * slideCountNew : slidePositions[slideCountNew];\n  }\n\n  function getCenterGap (num) {\n    if (num == null) { num = index; }\n\n    var gap = edgePadding ? gutter : 0;\n    return autoWidth ? ((viewport - gap) - (slidePositions[num + 1] - slidePositions[num] - gutter))/2 :\n      fixedWidth ? (viewport - fixedWidth) / 2 :\n        (items - 1) / 2;\n  }\n\n  function getRightBoundary () {\n    var gap = edgePadding ? gutter : 0,\n        result = (viewport + gap) - getSliderWidth();\n\n    if (center && !loop) {\n      result = fixedWidth ? - (fixedWidth + gutter) * (slideCountNew - 1) - getCenterGap() :\n        getCenterGap(slideCountNew - 1) - slidePositions[slideCountNew - 1];\n    }\n    if (result > 0) { result = 0; }\n\n    return result;\n  }\n\n  function getContainerTransformValue (num) {\n    if (num == null) { num = index; }\n\n    var val;\n    if (horizontal && !autoWidth) {\n      if (fixedWidth) {\n        val = - (fixedWidth + gutter) * num;\n        if (center) { val += getCenterGap(); }\n      } else {\n        var denominator = TRANSFORM ? slideCountNew : items;\n        if (center) { num -= getCenterGap(); }\n        val = - num * 100 / denominator;\n      }\n    } else {\n      val = - slidePositions[num];\n      if (center && autoWidth) {\n        val += getCenterGap();\n      }\n    }\n\n    if (hasRightDeadZone) { val = Math.max(val, rightBoundary); }\n\n    val += (horizontal && !autoWidth && !fixedWidth) ? '%' : 'px';\n\n    return val;\n  }\n\n  function doContainerTransformSilent (val) {\n    resetDuration(container, '0s');\n    doContainerTransform(val);\n  }\n\n  function doContainerTransform (val) {\n    if (val == null) { val = getContainerTransformValue(); }\n    container.style[transformAttr] = transformPrefix + val + transformPostfix;\n  }\n\n  function animateSlide (number, classOut, classIn, isOut) {\n    var l = number + items;\n    if (!loop) { l = Math.min(l, slideCountNew); }\n\n    for (var i = number; i < l; i++) {\n        var item = slideItems[i];\n\n      // set item positions\n      if (!isOut) { item.style.left = (i - index) * 100 / items + '%'; }\n\n      if (animateDelay && TRANSITIONDELAY) {\n        item.style[TRANSITIONDELAY] = item.style[ANIMATIONDELAY] = animateDelay * (i - number) / 1000 + 's';\n      }\n      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, classOut);\n      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classIn);\n\n      if (isOut) { slideItemsOut.push(item); }\n    }\n  }\n\n  // make transfer after click/drag:\n  // 1. change 'transform' property for mordern browsers\n  // 2. change 'left' property for legacy browsers\n  var transformCore = (function () {\n    return carousel ?\n      function () {\n        resetDuration(container, '');\n        if (TRANSITIONDURATION || !speed) {\n          // for morden browsers with non-zero duration or\n          // zero duration for all browsers\n          doContainerTransform();\n          // run fallback function manually\n          // when duration is 0 / container is hidden\n          if (!speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }\n\n        } else {\n          // for old browser with non-zero duration\n          (0,_helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__.jsTransform)(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);\n        }\n\n        if (!horizontal) { updateContentWrapperHeight(); }\n      } :\n      function () {\n        slideItemsOut = [];\n\n        var eve = {};\n        eve[TRANSITIONEND] = eve[ANIMATIONEND] = onTransitionEnd;\n        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(slideItems[indexCached], eve);\n        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(slideItems[index], eve);\n\n        animateSlide(indexCached, animateIn, animateOut, true);\n        animateSlide(index, animateNormal, animateIn);\n\n        // run fallback function manually\n        // when transition or animation not supported / duration is 0\n        if (!TRANSITIONEND || !ANIMATIONEND || !speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }\n      };\n  })();\n\n  function render (e, sliderMoved) {\n    if (updateIndexBeforeTransform) { updateIndex(); }\n\n    // render when slider was moved (touch or drag) even though index may not change\n    if (index !== indexCached || sliderMoved) {\n      // events\n      events.emit('indexChanged', info());\n      events.emit('transitionStart', info());\n      if (autoHeight) { doAutoHeight(); }\n\n      // pause autoplay when click or keydown from user\n      if (animating && e && ['click', 'keydown'].indexOf(e.type) >= 0) { stopAutoplay(); }\n\n      running = true;\n      transformCore();\n    }\n  }\n\n  /*\n   * Transfer prefixed properties to the same format\n   * CSS: -Webkit-Transform => webkittransform\n   * JS: WebkitTransform => webkittransform\n   * @param {string} str - property\n   *\n   */\n  function strTrans (str) {\n    return str.toLowerCase().replace(/-/g, '');\n  }\n\n  // AFTER TRANSFORM\n  // Things need to be done after a transfer:\n  // 1. check index\n  // 2. add classes to visible slide\n  // 3. disable controls buttons when reach the first/last slide in non-loop slider\n  // 4. update nav status\n  // 5. lazyload images\n  // 6. update container height\n  function onTransitionEnd (event) {\n    // check running on gallery mode\n    // make sure trantionend/animationend events run only once\n    if (carousel || running) {\n      events.emit('transitionEnd', info(event));\n\n      if (!carousel && slideItemsOut.length > 0) {\n        for (var i = 0; i < slideItemsOut.length; i++) {\n          var item = slideItemsOut[i];\n          // set item positions\n          item.style.left = '';\n\n          if (ANIMATIONDELAY && TRANSITIONDELAY) {\n            item.style[ANIMATIONDELAY] = '';\n            item.style[TRANSITIONDELAY] = '';\n          }\n          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);\n          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);\n        }\n      }\n\n      /* update slides, nav, controls after checking ...\n       * => legacy browsers who don't support 'event'\n       *    have to check event first, otherwise event.target will cause an error\n       * => or 'gallery' mode:\n       *   + event target is slide item\n       * => or 'carousel' mode:\n       *   + event target is container,\n       *   + event.property is the same with transform attribute\n       */\n      if (!event ||\n          !carousel && event.target.parentNode === container ||\n          event.target === container && strTrans(event.propertyName) === strTrans(transformAttr)) {\n\n        if (!updateIndexBeforeTransform) {\n          var indexTem = index;\n          updateIndex();\n          if (index !== indexTem) {\n            events.emit('indexChanged', info());\n\n            doContainerTransformSilent();\n          }\n        }\n\n        if (nested === 'inner') { events.emit('innerLoaded', info()); }\n        running = false;\n        indexCached = index;\n      }\n    }\n\n  }\n\n  // # ACTIONS\n  function goTo (targetIndex, e) {\n    if (freeze) { return; }\n\n    // prev slideBy\n    if (targetIndex === 'prev') {\n      onControlsClick(e, -1);\n\n    // next slideBy\n    } else if (targetIndex === 'next') {\n      onControlsClick(e, 1);\n\n    // go to exact slide\n    } else {\n      if (running) {\n        if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }\n      }\n\n      var absIndex = getAbsIndex(),\n          indexGap = 0;\n\n      if (targetIndex === 'first') {\n        indexGap = - absIndex;\n      } else if (targetIndex === 'last') {\n        indexGap = carousel ? slideCount - items - absIndex : slideCount - 1 - absIndex;\n      } else {\n        if (typeof targetIndex !== 'number') { targetIndex = parseInt(targetIndex); }\n\n        if (!isNaN(targetIndex)) {\n          // from directly called goTo function\n          if (!e) { targetIndex = Math.max(0, Math.min(slideCount - 1, targetIndex)); }\n\n          indexGap = targetIndex - absIndex;\n        }\n      }\n\n      // gallery: make sure new page won't overlap with current page\n      if (!carousel && indexGap && Math.abs(indexGap) < items) {\n        var factor = indexGap > 0 ? 1 : -1;\n        indexGap += (index + indexGap - slideCount) >= indexMin ? slideCount * factor : slideCount * 2 * factor * -1;\n      }\n\n      index += indexGap;\n\n      // make sure index is in range\n      if (carousel && loop) {\n        if (index < indexMin) { index += slideCount; }\n        if (index > indexMax) { index -= slideCount; }\n      }\n\n      // if index is changed, start rendering\n      if (getAbsIndex(index) !== getAbsIndex(indexCached)) {\n        render(e);\n      }\n\n    }\n  }\n\n  // on controls click\n  function onControlsClick (e, dir) {\n    if (running) {\n      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }\n    }\n    var passEventObject;\n\n    if (!dir) {\n      e = getEvent(e);\n      var target = getTarget(e);\n\n      while (target !== controlsContainer && [prevButton, nextButton].indexOf(target) < 0) { target = target.parentNode; }\n\n      var targetIn = [prevButton, nextButton].indexOf(target);\n      if (targetIn >= 0) {\n        passEventObject = true;\n        dir = targetIn === 0 ? -1 : 1;\n      }\n    }\n\n    if (rewind) {\n      if (index === indexMin && dir === -1) {\n        goTo('last', e);\n        return;\n      } else if (index === indexMax && dir === 1) {\n        goTo('first', e);\n        return;\n      }\n    }\n\n    if (dir) {\n      index += slideBy * dir;\n      if (autoWidth) { index = Math.floor(index); }\n      // pass e when click control buttons or keydown\n      render((passEventObject || (e && e.type === 'keydown')) ? e : null);\n    }\n  }\n\n  // on nav click\n  function onNavClick (e) {\n    if (running) {\n      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }\n    }\n\n    e = getEvent(e);\n    var target = getTarget(e), navIndex;\n\n    // find the clicked nav item\n    while (target !== navContainer && !(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) { target = target.parentNode; }\n    if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) {\n      var navIndex = navClicked = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(target, 'data-nav')),\n          targetIndexBase = fixedWidth || autoWidth ? navIndex * slideCount / pages : navIndex * items,\n          targetIndex = navAsThumbnails ? navIndex : Math.min(Math.ceil(targetIndexBase), slideCount - 1);\n      goTo(targetIndex, e);\n\n      if (navCurrentIndex === navIndex) {\n        if (animating) { stopAutoplay(); }\n        navClicked = -1; // reset navClicked\n      }\n    }\n  }\n\n  // autoplay functions\n  function setAutoplayTimer () {\n    autoplayTimer = setInterval(function () {\n      onControlsClick(null, autoplayDirection);\n    }, autoplayTimeout);\n\n    animating = true;\n  }\n\n  function stopAutoplayTimer () {\n    clearInterval(autoplayTimer);\n    animating = false;\n  }\n\n  function updateAutoplayButton (action, txt) {\n    (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': action});\n    autoplayButton.innerHTML = autoplayHtmlStrings[0] + action + autoplayHtmlStrings[1] + txt;\n  }\n\n  function startAutoplay () {\n    setAutoplayTimer();\n    if (autoplayButton) { updateAutoplayButton('stop', autoplayText[1]); }\n  }\n\n  function stopAutoplay () {\n    stopAutoplayTimer();\n    if (autoplayButton) { updateAutoplayButton('start', autoplayText[0]); }\n  }\n\n  // programaitcally play/pause the slider\n  function play () {\n    if (autoplay && !animating) {\n      startAutoplay();\n      autoplayUserPaused = false;\n    }\n  }\n  function pause () {\n    if (animating) {\n      stopAutoplay();\n      autoplayUserPaused = true;\n    }\n  }\n\n  function toggleAutoplay () {\n    if (animating) {\n      stopAutoplay();\n      autoplayUserPaused = true;\n    } else {\n      startAutoplay();\n      autoplayUserPaused = false;\n    }\n  }\n\n  function onVisibilityChange () {\n    if (doc.hidden) {\n      if (animating) {\n        stopAutoplayTimer();\n        autoplayVisibilityPaused = true;\n      }\n    } else if (autoplayVisibilityPaused) {\n      setAutoplayTimer();\n      autoplayVisibilityPaused = false;\n    }\n  }\n\n  function mouseoverPause () {\n    if (animating) {\n      stopAutoplayTimer();\n      autoplayHoverPaused = true;\n    }\n  }\n\n  function mouseoutRestart () {\n    if (autoplayHoverPaused) {\n      setAutoplayTimer();\n      autoplayHoverPaused = false;\n    }\n  }\n\n  // keydown events on document\n  function onDocumentKeydown (e) {\n    e = getEvent(e);\n    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);\n\n    if (keyIndex >= 0) {\n      onControlsClick(e, keyIndex === 0 ? -1 : 1);\n    }\n  }\n\n  // on key control\n  function onControlsKeydown (e) {\n    e = getEvent(e);\n    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);\n\n    if (keyIndex >= 0) {\n      if (keyIndex === 0) {\n        if (!prevButton.disabled) { onControlsClick(e, -1); }\n      } else if (!nextButton.disabled) {\n        onControlsClick(e, 1);\n      }\n    }\n  }\n\n  // set focus\n  function setFocus (el) {\n    el.focus();\n  }\n\n  // on key nav\n  function onNavKeydown (e) {\n    e = getEvent(e);\n    var curElement = doc.activeElement;\n    if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(curElement, 'data-nav')) { return; }\n\n    // var code = e.keyCode,\n    var keyIndex = [KEYS.LEFT, KEYS.RIGHT, KEYS.ENTER, KEYS.SPACE].indexOf(e.keyCode),\n        navIndex = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(curElement, 'data-nav'));\n\n    if (keyIndex >= 0) {\n      if (keyIndex === 0) {\n        if (navIndex > 0) { setFocus(navItems[navIndex - 1]); }\n      } else if (keyIndex === 1) {\n        if (navIndex < pages - 1) { setFocus(navItems[navIndex + 1]); }\n      } else {\n        navClicked = navIndex;\n        goTo(navIndex, e);\n      }\n    }\n  }\n\n  function getEvent (e) {\n    e = e || win.event;\n    return isTouchEvent(e) ? e.changedTouches[0] : e;\n  }\n  function getTarget (e) {\n    return e.target || win.event.srcElement;\n  }\n\n  function isTouchEvent (e) {\n    return e.type.indexOf('touch') >= 0;\n  }\n\n  function preventDefaultBehavior (e) {\n    e.preventDefault ? e.preventDefault() : e.returnValue = false;\n  }\n\n  function getMoveDirectionExpected () {\n    return (0,_helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__.getTouchDirection)((0,_helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__.toDegree)(lastPosition.y - initPosition.y, lastPosition.x - initPosition.x), swipeAngle) === options.axis;\n  }\n\n  function onPanStart (e) {\n    if (running) {\n      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }\n    }\n\n    if (autoplay && animating) { stopAutoplayTimer(); }\n\n    panStart = true;\n    if (rafIndex) {\n      (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);\n      rafIndex = null;\n    }\n\n    var $ = getEvent(e);\n    events.emit(isTouchEvent(e) ? 'touchStart' : 'dragStart', info(e));\n\n    if (!isTouchEvent(e) && ['img', 'a'].indexOf(getLowerCaseNodeName(getTarget(e))) >= 0) {\n      preventDefaultBehavior(e);\n    }\n\n    lastPosition.x = initPosition.x = $.clientX;\n    lastPosition.y = initPosition.y = $.clientY;\n    if (carousel) {\n      translateInit = parseFloat(container.style[transformAttr].replace(transformPrefix, ''));\n      resetDuration(container, '0s');\n    }\n  }\n\n  function onPanMove (e) {\n    if (panStart) {\n      var $ = getEvent(e);\n      lastPosition.x = $.clientX;\n      lastPosition.y = $.clientY;\n\n      if (carousel) {\n        if (!rafIndex) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }\n      } else {\n        if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }\n        if (moveDirectionExpected) { preventScroll = true; }\n      }\n\n      if ((typeof e.cancelable !== 'boolean' || e.cancelable) && preventScroll) {\n        e.preventDefault();\n      }\n    }\n  }\n\n  function panUpdate (e) {\n    if (!moveDirectionExpected) {\n      panStart = false;\n      return;\n    }\n    (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);\n    if (panStart) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }\n\n    if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }\n    if (moveDirectionExpected) {\n      if (!preventScroll && isTouchEvent(e)) { preventScroll = true; }\n\n      try {\n        if (e.type) { events.emit(isTouchEvent(e) ? 'touchMove' : 'dragMove', info(e)); }\n      } catch(err) {}\n\n      var x = translateInit,\n          dist = getDist(lastPosition, initPosition);\n      if (!horizontal || fixedWidth || autoWidth) {\n        x += dist;\n        x += 'px';\n      } else {\n        var percentageX = TRANSFORM ? dist * items * 100 / ((viewport + gutter) * slideCountNew): dist * 100 / (viewport + gutter);\n        x += percentageX;\n        x += '%';\n      }\n\n      container.style[transformAttr] = transformPrefix + x + transformPostfix;\n    }\n  }\n\n  function onPanEnd (e) {\n    if (panStart) {\n      if (rafIndex) {\n        (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);\n        rafIndex = null;\n      }\n      if (carousel) { resetDuration(container, ''); }\n      panStart = false;\n\n      var $ = getEvent(e);\n      lastPosition.x = $.clientX;\n      lastPosition.y = $.clientY;\n      var dist = getDist(lastPosition, initPosition);\n\n      if (Math.abs(dist)) {\n        // drag vs click\n        if (!isTouchEvent(e)) {\n          // prevent \"click\"\n          var target = getTarget(e);\n          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(target, {'click': function preventClick (e) {\n            preventDefaultBehavior(e);\n            (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(target, {'click': preventClick});\n          }});\n        }\n\n        if (carousel) {\n          rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function() {\n            if (horizontal && !autoWidth) {\n              var indexMoved = - dist * items / (viewport + gutter);\n              indexMoved = dist > 0 ? Math.floor(indexMoved) : Math.ceil(indexMoved);\n              index += indexMoved;\n            } else {\n              var moved = - (translateInit + dist);\n              if (moved <= 0) {\n                index = indexMin;\n              } else if (moved >= slidePositions[slideCountNew - 1]) {\n                index = indexMax;\n              } else {\n                var i = 0;\n                while (i < slideCountNew && moved >= slidePositions[i]) {\n                  index = i;\n                  if (moved > slidePositions[i] && dist < 0) { index += 1; }\n                  i++;\n                }\n              }\n            }\n\n            render(e, dist);\n            events.emit(isTouchEvent(e) ? 'touchEnd' : 'dragEnd', info(e));\n          });\n        } else {\n          if (moveDirectionExpected) {\n            onControlsClick(e, dist > 0 ? -1 : 1);\n          }\n        }\n      }\n    }\n\n    // reset\n    if (options.preventScrollOnTouch === 'auto') { preventScroll = false; }\n    if (swipeAngle) { moveDirectionExpected = '?'; }\n    if (autoplay && !animating) { setAutoplayTimer(); }\n  }\n\n  // === RESIZE FUNCTIONS === //\n  // (slidePositions, index, items) => vertical_conentWrapper.height\n  function updateContentWrapperHeight () {\n    var wp = middleWrapper ? middleWrapper : innerWrapper;\n    wp.style.height = slidePositions[index + items] - slidePositions[index] + 'px';\n  }\n\n  function getPages () {\n    var rough = fixedWidth ? (fixedWidth + gutter) * slideCount / viewport : slideCount / items;\n    return Math.min(Math.ceil(rough), slideCount);\n  }\n\n  /*\n   * 1. update visible nav items list\n   * 2. add \"hidden\" attributes to previous visible nav items\n   * 3. remove \"hidden\" attrubutes to new visible nav items\n   */\n  function updateNavVisibility () {\n    if (!nav || navAsThumbnails) { return; }\n\n    if (pages !== pagesCached) {\n      var min = pagesCached,\n          max = pages,\n          fn = _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement;\n\n      if (pagesCached > pages) {\n        min = pages;\n        max = pagesCached;\n        fn = _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement;\n      }\n\n      while (min < max) {\n        fn(navItems[min]);\n        min++;\n      }\n\n      // cache pages\n      pagesCached = pages;\n    }\n  }\n\n  function info (e) {\n    return {\n      container: container,\n      slideItems: slideItems,\n      navContainer: navContainer,\n      navItems: navItems,\n      controlsContainer: controlsContainer,\n      hasControls: hasControls,\n      prevButton: prevButton,\n      nextButton: nextButton,\n      items: items,\n      slideBy: slideBy,\n      cloneCount: cloneCount,\n      slideCount: slideCount,\n      slideCountNew: slideCountNew,\n      index: index,\n      indexCached: indexCached,\n      displayIndex: getCurrentSlide(),\n      navCurrentIndex: navCurrentIndex,\n      navCurrentIndexCached: navCurrentIndexCached,\n      pages: pages,\n      pagesCached: pagesCached,\n      sheet: sheet,\n      isOn: isOn,\n      event: e || {},\n    };\n  }\n\n  return {\n    version: '2.9.3',\n    getInfo: info,\n    events: events,\n    goTo: goTo,\n    play: play,\n    pause: pause,\n    isOn: isOn,\n    updateSliderHeight: updateInnerWrapperHeight,\n    refresh: initSliderTransform,\n    destroy: destroy,\n    rebuild: function() {\n      return tns((0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, optionsElements));\n    }\n  };\n};\n\n\n//# sourceURL=webpack:///../../node_modules/tiny-slider/src/tiny-slider.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "raf": function() { return /* binding */ raf; }
+/* harmony export */ });
+var win = window;
+
+var raf = win.requestAnimationFrame
+  || win.webkitRequestAnimationFrame
+  || win.mozRequestAnimationFrame
+  || win.msRequestAnimationFrame
+  || function(cb) { return setTimeout(cb, 16); };
+
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/removeAttrs.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/removeAttrs.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "removeAttrs": function() { return /* binding */ removeAttrs; }
+/* harmony export */ });
+/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ "../node_modules/tiny-slider/src/helpers/isNodeList.js");
+
+
+function removeAttrs(els, attrs) {
+  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];
+  attrs = (attrs instanceof Array) ? attrs : [attrs];
+
+  var attrLength = attrs.length;
+  for (var i = els.length; i--;) {
+    for (var j = attrLength; j--;) {
+      els[i].removeAttribute(attrs[j]);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/removeCSSRule.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/removeCSSRule.js ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "removeCSSRule": function() { return /* binding */ removeCSSRule; }
+/* harmony export */ });
+/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
+// cross browsers addRule method
+
+function removeCSSRule(sheet, index) {
+  // return raf(function() {
+    'deleteRule' in sheet ?
+      sheet.deleteRule(index) :
+      sheet.removeRule(index);
+  // });
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/removeClass.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/removeClass.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "removeClass": function() { return /* binding */ removeClass; }
+/* harmony export */ });
+/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
+
+var removeClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
+    function (el, str) {
+      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.remove(str); }
+    } :
+    function (el, str) {
+      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el, str)) { el.className = el.className.replace(str, ''); }
+    };
+
+
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/removeEvents.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/removeEvents.js ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "removeEvents": function() { return /* binding */ removeEvents; }
+/* harmony export */ });
+/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ "../node_modules/tiny-slider/src/helpers/passiveOption.js");
+
+
+function removeEvents(el, obj) {
+  for (var prop in obj) {
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;
+    el.removeEventListener(prop, obj[prop], option);
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/resetFakeBody.js ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "resetFakeBody": function() { return /* binding */ resetFakeBody; }
+/* harmony export */ });
+/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ "../node_modules/tiny-slider/src/helpers/docElement.js");
+
+
+function resetFakeBody (body, docOverflow) {
+  if (body.fake) {
+    body.remove();
+    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = docOverflow;
+    // Trigger layout so kinetic scrolling isn't disabled in iOS6+
+    // eslint-disable-next-line
+    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.offsetHeight;
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/setAttrs.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/setAttrs.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setAttrs": function() { return /* binding */ setAttrs; }
+/* harmony export */ });
+/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ "../node_modules/tiny-slider/src/helpers/isNodeList.js");
+
+
+function setAttrs(els, attrs) {
+  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];
+  if (Object.prototype.toString.call(attrs) !== '[object Object]') { return; }
+
+  for (var i = els.length; i--;) {
+    for(var key in attrs) {
+      els[i].setAttribute(key, attrs[key]);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/setFakeBody.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/setFakeBody.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setFakeBody": function() { return /* binding */ setFakeBody; }
+/* harmony export */ });
+/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ "../node_modules/tiny-slider/src/helpers/docElement.js");
+
+
+function setFakeBody (body) {
+  var docOverflow = '';
+  if (body.fake) {
+    docOverflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow;
+    //avoid crashing IE8, if background image is used
+    body.style.background = '';
+    //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+    body.style.overflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = 'hidden';
+    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.appendChild(body);
+  }
+
+  return docOverflow;
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/setLocalStorage.js":
+/*!******************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/setLocalStorage.js ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setLocalStorage": function() { return /* binding */ setLocalStorage; }
+/* harmony export */ });
+function setLocalStorage(storage, key, value, access) {
+  if (access) {
+    try { storage.setItem(key, value); } catch (e) {}
+  }
+  return value;
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/showElement.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/showElement.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showElement": function() { return /* binding */ showElement; }
+/* harmony export */ });
+function showElement(el, forceHide) {
+  if (el.style.display === 'none') { el.style.display = ''; }
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/toDegree.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/toDegree.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "toDegree": function() { return /* binding */ toDegree; }
+/* harmony export */ });
+function toDegree (y, x) {
+  return Math.atan2(y, x) * (180 / Math.PI);
+}
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/helpers/whichProperty.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/tiny-slider/src/helpers/whichProperty.js ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "whichProperty": function() { return /* binding */ whichProperty; }
+/* harmony export */ });
+function whichProperty(props){
+  if (typeof props === 'string') {
+    var arr = [props],
+        Props = props.charAt(0).toUpperCase() + props.substr(1),
+        prefixes = ['Webkit', 'Moz', 'ms', 'O'];
+        
+    prefixes.forEach(function(prefix) {
+      if (prefix !== 'ms' || props === 'transform') {
+        arr.push(prefix + Props);
+      }
+    });
+
+    props = arr;
+  }
+
+  var el = document.createElement('fakeelement'),
+      len = props.length;
+  for(var i = 0; i < props.length; i++){
+    var prop = props[i];
+    if( el.style[prop] !== undefined ){ return prop; }
+  }
+
+  return false; // explicit for ie9-
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/tiny-slider/src/tiny-slider.js":
+/*!******************************************************!*\
+  !*** ../node_modules/tiny-slider/src/tiny-slider.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "tns": function() { return /* binding */ tns; }
+/* harmony export */ });
+/* harmony import */ var _helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
+/* harmony import */ var _helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/caf.js */ "../node_modules/tiny-slider/src/helpers/caf.js");
+/* harmony import */ var _helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/extend.js */ "../node_modules/tiny-slider/src/helpers/extend.js");
+/* harmony import */ var _helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/checkStorageValue.js */ "../node_modules/tiny-slider/src/helpers/checkStorageValue.js");
+/* harmony import */ var _helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers/setLocalStorage.js */ "../node_modules/tiny-slider/src/helpers/setLocalStorage.js");
+/* harmony import */ var _helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/getSlideId.js */ "../node_modules/tiny-slider/src/helpers/getSlideId.js");
+/* harmony import */ var _helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers/calc.js */ "../node_modules/tiny-slider/src/helpers/calc.js");
+/* harmony import */ var _helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers/percentageLayout.js */ "../node_modules/tiny-slider/src/helpers/percentageLayout.js");
+/* harmony import */ var _helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers/mediaquerySupport.js */ "../node_modules/tiny-slider/src/helpers/mediaquerySupport.js");
+/* harmony import */ var _helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./helpers/createStyleSheet.js */ "../node_modules/tiny-slider/src/helpers/createStyleSheet.js");
+/* harmony import */ var _helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helpers/addCSSRule.js */ "../node_modules/tiny-slider/src/helpers/addCSSRule.js");
+/* harmony import */ var _helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./helpers/removeCSSRule.js */ "../node_modules/tiny-slider/src/helpers/removeCSSRule.js");
+/* harmony import */ var _helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helpers/getCssRulesLength.js */ "../node_modules/tiny-slider/src/helpers/getCssRulesLength.js");
+/* harmony import */ var _helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./helpers/toDegree.js */ "../node_modules/tiny-slider/src/helpers/toDegree.js");
+/* harmony import */ var _helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helpers/getTouchDirection.js */ "../node_modules/tiny-slider/src/helpers/getTouchDirection.js");
+/* harmony import */ var _helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./helpers/forEach.js */ "../node_modules/tiny-slider/src/helpers/forEach.js");
+/* harmony import */ var _helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./helpers/hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
+/* harmony import */ var _helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./helpers/addClass.js */ "../node_modules/tiny-slider/src/helpers/addClass.js");
+/* harmony import */ var _helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./helpers/removeClass.js */ "../node_modules/tiny-slider/src/helpers/removeClass.js");
+/* harmony import */ var _helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./helpers/hasAttr.js */ "../node_modules/tiny-slider/src/helpers/hasAttr.js");
+/* harmony import */ var _helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./helpers/getAttr.js */ "../node_modules/tiny-slider/src/helpers/getAttr.js");
+/* harmony import */ var _helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./helpers/setAttrs.js */ "../node_modules/tiny-slider/src/helpers/setAttrs.js");
+/* harmony import */ var _helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./helpers/removeAttrs.js */ "../node_modules/tiny-slider/src/helpers/removeAttrs.js");
+/* harmony import */ var _helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./helpers/arrayFromNodeList.js */ "../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js");
+/* harmony import */ var _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./helpers/hideElement.js */ "../node_modules/tiny-slider/src/helpers/hideElement.js");
+/* harmony import */ var _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./helpers/showElement.js */ "../node_modules/tiny-slider/src/helpers/showElement.js");
+/* harmony import */ var _helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./helpers/isVisible.js */ "../node_modules/tiny-slider/src/helpers/isVisible.js");
+/* harmony import */ var _helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./helpers/whichProperty.js */ "../node_modules/tiny-slider/src/helpers/whichProperty.js");
+/* harmony import */ var _helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./helpers/has3DTransforms.js */ "../node_modules/tiny-slider/src/helpers/has3DTransforms.js");
+/* harmony import */ var _helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./helpers/getEndProperty.js */ "../node_modules/tiny-slider/src/helpers/getEndProperty.js");
+/* harmony import */ var _helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./helpers/addEvents.js */ "../node_modules/tiny-slider/src/helpers/addEvents.js");
+/* harmony import */ var _helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./helpers/removeEvents.js */ "../node_modules/tiny-slider/src/helpers/removeEvents.js");
+/* harmony import */ var _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./helpers/events.js */ "../node_modules/tiny-slider/src/helpers/events.js");
+/* harmony import */ var _helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./helpers/jsTransform.js */ "../node_modules/tiny-slider/src/helpers/jsTransform.js");
+// Object.keys
+if (!Object.keys) {
+  Object.keys = function(object) {
+    var keys = [];
+    for (var name in object) {
+      if (Object.prototype.hasOwnProperty.call(object, name)) {
+        keys.push(name);
+      }
+    }
+    return keys;
+  };
+}
+
+// ChildNode.remove
+if(!("remove" in Element.prototype)){
+  Element.prototype.remove = function(){
+    if(this.parentNode) {
+      this.parentNode.removeChild(this);
+    }
+  };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var tns = function(options) {
+  options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)({
+    container: '.slider',
+    mode: 'carousel',
+    axis: 'horizontal',
+    items: 1,
+    gutter: 0,
+    edgePadding: 0,
+    fixedWidth: false,
+    autoWidth: false,
+    viewportMax: false,
+    slideBy: 1,
+    center: false,
+    controls: true,
+    controlsPosition: 'top',
+    controlsText: ['prev', 'next'],
+    controlsContainer: false,
+    prevButton: false,
+    nextButton: false,
+    nav: true,
+    navPosition: 'top',
+    navContainer: false,
+    navAsThumbnails: false,
+    arrowKeys: false,
+    speed: 300,
+    autoplay: false,
+    autoplayPosition: 'top',
+    autoplayTimeout: 5000,
+    autoplayDirection: 'forward',
+    autoplayText: ['start', 'stop'],
+    autoplayHoverPause: false,
+    autoplayButton: false,
+    autoplayButtonOutput: true,
+    autoplayResetOnVisibility: true,
+    animateIn: 'tns-fadeIn',
+    animateOut: 'tns-fadeOut',
+    animateNormal: 'tns-normal',
+    animateDelay: false,
+    loop: true,
+    rewind: false,
+    autoHeight: false,
+    responsive: false,
+    lazyload: false,
+    lazyloadSelector: '.tns-lazy-img',
+    touch: true,
+    mouseDrag: false,
+    swipeAngle: 15,
+    nested: false,
+    preventActionWhenRunning: false,
+    preventScrollOnTouch: false,
+    freezable: true,
+    onInit: false,
+    useLocalStorage: true,
+    nonce: false
+  }, options || {});
+
+  var doc = document,
+      win = window,
+      KEYS = {
+        ENTER: 13,
+        SPACE: 32,
+        LEFT: 37,
+        RIGHT: 39
+      },
+      tnsStorage = {},
+      localStorageAccess = options.useLocalStorage;
+
+  if (localStorageAccess) {
+    // check browser version and local storage access
+    var browserInfo = navigator.userAgent;
+    var uid = new Date;
+
+    try {
+      tnsStorage = win.localStorage;
+      if (tnsStorage) {
+        tnsStorage.setItem(uid, uid);
+        localStorageAccess = tnsStorage.getItem(uid) == uid;
+        tnsStorage.removeItem(uid);
+      } else {
+        localStorageAccess = false;
+      }
+      if (!localStorageAccess) { tnsStorage = {}; }
+    } catch(e) {
+      localStorageAccess = false;
+    }
+
+    if (localStorageAccess) {
+      // remove storage when browser version changes
+      if (tnsStorage['tnsApp'] && tnsStorage['tnsApp'] !== browserInfo) {
+        ['tC', 'tPL', 'tMQ', 'tTf', 't3D', 'tTDu', 'tTDe', 'tADu', 'tADe', 'tTE', 'tAE'].forEach(function(item) { tnsStorage.removeItem(item); });
+      }
+      // update browserInfo
+      localStorage['tnsApp'] = browserInfo;
+    }
+  }
+
+  var CALC = tnsStorage['tC'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tC']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tC', (0,_helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__.calc)(), localStorageAccess),
+      PERCENTAGELAYOUT = tnsStorage['tPL'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tPL']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tPL', (0,_helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__.percentageLayout)(), localStorageAccess),
+      CSSMQ = tnsStorage['tMQ'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tMQ']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tMQ', (0,_helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__.mediaquerySupport)(), localStorageAccess),
+      TRANSFORM = tnsStorage['tTf'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTf']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTf', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transform'), localStorageAccess),
+      HAS3DTRANSFORMS = tnsStorage['t3D'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['t3D']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 't3D', (0,_helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__.has3DTransforms)(TRANSFORM), localStorageAccess),
+      TRANSITIONDURATION = tnsStorage['tTDu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDuration'), localStorageAccess),
+      TRANSITIONDELAY = tnsStorage['tTDe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDelay'), localStorageAccess),
+      ANIMATIONDURATION = tnsStorage['tADu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDuration'), localStorageAccess),
+      ANIMATIONDELAY = tnsStorage['tADe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDelay'), localStorageAccess),
+      TRANSITIONEND = tnsStorage['tTE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(TRANSITIONDURATION, 'Transition'), localStorageAccess),
+      ANIMATIONEND = tnsStorage['tAE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tAE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tAE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(ANIMATIONDURATION, 'Animation'), localStorageAccess);
+
+  // get element nodes from selectors
+  var supportConsoleWarn = win.console && typeof win.console.warn === "function",
+      tnsList = ['container', 'controlsContainer', 'prevButton', 'nextButton', 'navContainer', 'autoplayButton'],
+      optionsElements = {};
+
+  tnsList.forEach(function(item) {
+    if (typeof options[item] === 'string') {
+      var str = options[item],
+          el = doc.querySelector(str);
+      optionsElements[item] = str;
+
+      if (el && el.nodeName) {
+        options[item] = el;
+      } else {
+        if (supportConsoleWarn) { console.warn('Can\'t find', options[item]); }
+        return;
+      }
+    }
+  });
+
+  // make sure at least 1 slide
+  if (options.container.children.length < 1) {
+    if (supportConsoleWarn) { console.warn('No slides found in', options.container); }
+    return;
+   }
+
+  // update options
+  var responsive = options.responsive,
+      nested = options.nested,
+      carousel = options.mode === 'carousel' ? true : false;
+
+  if (responsive) {
+    // apply responsive[0] to options and remove it
+    if (0 in responsive) {
+      options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, responsive[0]);
+      delete responsive[0];
+    }
+
+    var responsiveTem = {};
+    for (var key in responsive) {
+      var val = responsive[key];
+      // update responsive
+      // from: 300: 2
+      // to:
+      //   300: {
+      //     items: 2
+      //   }
+      val = typeof val === 'number' ? {items: val} : val;
+      responsiveTem[key] = val;
+    }
+    responsive = responsiveTem;
+    responsiveTem = null;
+  }
+
+  // update options
+  function updateOptions (obj) {
+    for (var key in obj) {
+      if (!carousel) {
+        if (key === 'slideBy') { obj[key] = 'page'; }
+        if (key === 'edgePadding') { obj[key] = false; }
+        if (key === 'autoHeight') { obj[key] = false; }
+      }
+
+      // update responsive options
+      if (key === 'responsive') { updateOptions(obj[key]); }
+    }
+  }
+  if (!carousel) { updateOptions(options); }
+
+
+  // === define and set variables ===
+  if (!carousel) {
+    options.axis = 'horizontal';
+    options.slideBy = 'page';
+    options.edgePadding = false;
+
+    var animateIn = options.animateIn,
+        animateOut = options.animateOut,
+        animateDelay = options.animateDelay,
+        animateNormal = options.animateNormal;
+  }
+
+  var horizontal = options.axis === 'horizontal' ? true : false,
+      outerWrapper = doc.createElement('div'),
+      innerWrapper = doc.createElement('div'),
+      middleWrapper,
+      container = options.container,
+      containerParent = container.parentNode,
+      containerHTML = container.outerHTML,
+      slideItems = container.children,
+      slideCount = slideItems.length,
+      breakpointZone,
+      windowWidth = getWindowWidth(),
+      isOn = false;
+  if (responsive) { setBreakpointZone(); }
+  if (carousel) { container.className += ' tns-vpfix'; }
+
+  // fixedWidth: viewport > rightBoundary > indexMax
+  var autoWidth = options.autoWidth,
+      fixedWidth = getOption('fixedWidth'),
+      edgePadding = getOption('edgePadding'),
+      gutter = getOption('gutter'),
+      viewport = getViewportWidth(),
+      center = getOption('center'),
+      items = !autoWidth ? Math.floor(getOption('items')) : 1,
+      slideBy = getOption('slideBy'),
+      viewportMax = options.viewportMax || options.fixedWidthViewportWidth,
+      arrowKeys = getOption('arrowKeys'),
+      speed = getOption('speed'),
+      rewind = options.rewind,
+      loop = rewind ? false : options.loop,
+      autoHeight = getOption('autoHeight'),
+      controls = getOption('controls'),
+      controlsText = getOption('controlsText'),
+      nav = getOption('nav'),
+      touch = getOption('touch'),
+      mouseDrag = getOption('mouseDrag'),
+      autoplay = getOption('autoplay'),
+      autoplayTimeout = getOption('autoplayTimeout'),
+      autoplayText = getOption('autoplayText'),
+      autoplayHoverPause = getOption('autoplayHoverPause'),
+      autoplayResetOnVisibility = getOption('autoplayResetOnVisibility'),
+      sheet = (0,_helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__.createStyleSheet)(null, getOption('nonce')),
+      lazyload = options.lazyload,
+      lazyloadSelector = options.lazyloadSelector,
+      slidePositions, // collection of slide positions
+      slideItemsOut = [],
+      cloneCount = loop ? getCloneCountForLoop() : 0,
+      slideCountNew = !carousel ? slideCount + cloneCount : slideCount + cloneCount * 2,
+      hasRightDeadZone = (fixedWidth || autoWidth) && !loop ? true : false,
+      rightBoundary = fixedWidth ? getRightBoundary() : null,
+      updateIndexBeforeTransform = (!carousel || !loop) ? true : false,
+      // transform
+      transformAttr = horizontal ? 'left' : 'top',
+      transformPrefix = '',
+      transformPostfix = '',
+      // index
+      getIndexMax = (function () {
+        if (fixedWidth) {
+          return function() { return center && !loop ? slideCount - 1 : Math.ceil(- rightBoundary / (fixedWidth + gutter)); };
+        } else if (autoWidth) {
+          return function() {
+            for (var i = 0; i < slideCountNew; i++) {
+              if (slidePositions[i] >= - rightBoundary) { return i; }
+            }
+          };
+        } else {
+          return function() {
+            if (center && carousel && !loop) {
+              return slideCount - 1;
+            } else {
+              return loop || carousel ? Math.max(0, slideCountNew - Math.ceil(items)) : slideCountNew - 1;
+            }
+          };
+        }
+      })(),
+      index = getStartIndex(getOption('startIndex')),
+      indexCached = index,
+      displayIndex = getCurrentSlide(),
+      indexMin = 0,
+      indexMax = !autoWidth ? getIndexMax() : null,
+      // resize
+      resizeTimer,
+      preventActionWhenRunning = options.preventActionWhenRunning,
+      swipeAngle = options.swipeAngle,
+      moveDirectionExpected = swipeAngle ? '?' : true,
+      running = false,
+      onInit = options.onInit,
+      events = new _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__.Events(),
+      // id, class
+      newContainerClasses = ' tns-slider tns-' + options.mode,
+      slideId = container.id || (0,_helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__.getSlideId)(),
+      disable = getOption('disable'),
+      disabled = false,
+      freezable = options.freezable,
+      freeze = freezable && !autoWidth ? getFreeze() : false,
+      frozen = false,
+      controlsEvents = {
+        'click': onControlsClick,
+        'keydown': onControlsKeydown
+      },
+      navEvents = {
+        'click': onNavClick,
+        'keydown': onNavKeydown
+      },
+      hoverEvents = {
+        'mouseover': mouseoverPause,
+        'mouseout': mouseoutRestart
+      },
+      visibilityEvent = {'visibilitychange': onVisibilityChange},
+      docmentKeydownEvent = {'keydown': onDocumentKeydown},
+      touchEvents = {
+        'touchstart': onPanStart,
+        'touchmove': onPanMove,
+        'touchend': onPanEnd,
+        'touchcancel': onPanEnd
+      }, dragEvents = {
+        'mousedown': onPanStart,
+        'mousemove': onPanMove,
+        'mouseup': onPanEnd,
+        'mouseleave': onPanEnd
+      },
+      hasControls = hasOption('controls'),
+      hasNav = hasOption('nav'),
+      navAsThumbnails = autoWidth ? true : options.navAsThumbnails,
+      hasAutoplay = hasOption('autoplay'),
+      hasTouch = hasOption('touch'),
+      hasMouseDrag = hasOption('mouseDrag'),
+      slideActiveClass = 'tns-slide-active',
+      slideClonedClass = 'tns-slide-cloned',
+      imgCompleteClass = 'tns-complete',
+      imgEvents = {
+        'load': onImgLoaded,
+        'error': onImgFailed
+      },
+      imgsComplete,
+      liveregionCurrent,
+      preventScroll = options.preventScrollOnTouch === 'force' ? true : false;
+
+  // controls
+  if (hasControls) {
+    var controlsContainer = options.controlsContainer,
+        controlsContainerHTML = options.controlsContainer ? options.controlsContainer.outerHTML : '',
+        prevButton = options.prevButton,
+        nextButton = options.nextButton,
+        prevButtonHTML = options.prevButton ? options.prevButton.outerHTML : '',
+        nextButtonHTML = options.nextButton ? options.nextButton.outerHTML : '',
+        prevIsButton,
+        nextIsButton;
+  }
+
+  // nav
+  if (hasNav) {
+    var navContainer = options.navContainer,
+        navContainerHTML = options.navContainer ? options.navContainer.outerHTML : '',
+        navItems,
+        pages = autoWidth ? slideCount : getPages(),
+        pagesCached = 0,
+        navClicked = -1,
+        navCurrentIndex = getCurrentNavIndex(),
+        navCurrentIndexCached = navCurrentIndex,
+        navActiveClass = 'tns-nav-active',
+        navStr = 'Carousel Page ',
+        navStrCurrent = ' (Current Slide)';
+  }
+
+  // autoplay
+  if (hasAutoplay) {
+    var autoplayDirection = options.autoplayDirection === 'forward' ? 1 : -1,
+        autoplayButton = options.autoplayButton,
+        autoplayButtonHTML = options.autoplayButton ? options.autoplayButton.outerHTML : '',
+        autoplayHtmlStrings = ['<span class=\'tns-visually-hidden\'>', ' animation</span>'],
+        autoplayTimer,
+        animating,
+        autoplayHoverPaused,
+        autoplayUserPaused,
+        autoplayVisibilityPaused;
+  }
+
+  if (hasTouch || hasMouseDrag) {
+    var initPosition = {},
+        lastPosition = {},
+        translateInit,
+        disX,
+        disY,
+        panStart = false,
+        rafIndex,
+        getDist = horizontal ?
+          function(a, b) { return a.x - b.x; } :
+          function(a, b) { return a.y - b.y; };
+  }
+
+  // disable slider when slidecount <= items
+  if (!autoWidth) { resetVariblesWhenDisable(disable || freeze); }
+
+  if (TRANSFORM) {
+    transformAttr = TRANSFORM;
+    transformPrefix = 'translate';
+
+    if (HAS3DTRANSFORMS) {
+      transformPrefix += horizontal ? '3d(' : '3d(0px, ';
+      transformPostfix = horizontal ? ', 0px, 0px)' : ', 0px)';
+    } else {
+      transformPrefix += horizontal ? 'X(' : 'Y(';
+      transformPostfix = ')';
+    }
+
+  }
+
+  if (carousel) { container.className = container.className.replace('tns-vpfix', ''); }
+  initStructure();
+  initSheet();
+  initSliderTransform();
+
+  // === COMMON FUNCTIONS === //
+  function resetVariblesWhenDisable (condition) {
+    if (condition) {
+      controls = nav = touch = mouseDrag = arrowKeys = autoplay = autoplayHoverPause = autoplayResetOnVisibility = false;
+    }
+  }
+
+  function getCurrentSlide () {
+    var tem = carousel ? index - cloneCount : index;
+    while (tem < 0) { tem += slideCount; }
+    return tem%slideCount + 1;
+  }
+
+  function getStartIndex (ind) {
+    ind = ind ? Math.max(0, Math.min(loop ? slideCount - 1 : slideCount - items, ind)) : 0;
+    return carousel ? ind + cloneCount : ind;
+  }
+
+  function getAbsIndex (i) {
+    if (i == null) { i = index; }
+
+    if (carousel) { i -= cloneCount; }
+    while (i < 0) { i += slideCount; }
+
+    return Math.floor(i%slideCount);
+  }
+
+  function getCurrentNavIndex () {
+    var absIndex = getAbsIndex(),
+        result;
+
+    result = navAsThumbnails ? absIndex :
+      fixedWidth || autoWidth ? Math.ceil((absIndex + 1) * pages / slideCount - 1) :
+          Math.floor(absIndex / items);
+
+    // set active nav to the last one when reaches the right edge
+    if (!loop && carousel && index === indexMax) { result = pages - 1; }
+
+    return result;
+  }
+
+  function getItemsMax () {
+    // fixedWidth or autoWidth while viewportMax is not available
+    if (autoWidth || (fixedWidth && !viewportMax)) {
+      return slideCount - 1;
+    // most cases
+    } else {
+      var str = fixedWidth ? 'fixedWidth' : 'items',
+          arr = [];
+
+      if (fixedWidth || options[str] < slideCount) { arr.push(options[str]); }
+
+      if (responsive) {
+        for (var bp in responsive) {
+          var tem = responsive[bp][str];
+          if (tem && (fixedWidth || tem < slideCount)) { arr.push(tem); }
+        }
+      }
+
+      if (!arr.length) { arr.push(0); }
+
+      return Math.ceil(fixedWidth ? viewportMax / Math.min.apply(null, arr) : Math.max.apply(null, arr));
+    }
+  }
+
+  function getCloneCountForLoop () {
+    var itemsMax = getItemsMax(),
+        result = carousel ? Math.ceil((itemsMax * 5 - slideCount)/2) : (itemsMax * 4 - slideCount);
+    result = Math.max(itemsMax, result);
+
+    return hasOption('edgePadding') ? result + 1 : result;
+  }
+
+  function getWindowWidth () {
+    return win.innerWidth || doc.documentElement.clientWidth || doc.body.clientWidth;
+  }
+
+  function getInsertPosition (pos) {
+    return pos === 'top' ? 'afterbegin' : 'beforeend';
+  }
+
+  function getClientWidth (el) {
+    if (el == null) { return; }
+    var div = doc.createElement('div'), rect, width;
+    el.appendChild(div);
+    rect = div.getBoundingClientRect();
+    width = rect.right - rect.left;
+    div.remove();
+    return width || getClientWidth(el.parentNode);
+  }
+
+  function getViewportWidth () {
+    var gap = edgePadding ? edgePadding * 2 - gutter : 0;
+    return getClientWidth(containerParent) - gap;
+  }
+
+  function hasOption (item) {
+    if (options[item]) {
+      return true;
+    } else {
+      if (responsive) {
+        for (var bp in responsive) {
+          if (responsive[bp][item]) { return true; }
+        }
+      }
+      return false;
+    }
+  }
+
+  // get option:
+  // fixed width: viewport, fixedWidth, gutter => items
+  // others: window width => all variables
+  // all: items => slideBy
+  function getOption (item, ww) {
+    if (ww == null) { ww = windowWidth; }
+
+    if (item === 'items' && fixedWidth) {
+      return Math.floor((viewport + gutter) / (fixedWidth + gutter)) || 1;
+
+    } else {
+      var result = options[item];
+
+      if (responsive) {
+        for (var bp in responsive) {
+          // bp: convert string to number
+          if (ww >= parseInt(bp)) {
+            if (item in responsive[bp]) { result = responsive[bp][item]; }
+          }
+        }
+      }
+
+      if (item === 'slideBy' && result === 'page') { result = getOption('items'); }
+      if (!carousel && (item === 'slideBy' || item === 'items')) { result = Math.floor(result); }
+
+      return result;
+    }
+  }
+
+  function getSlideMarginLeft (i) {
+    return CALC ?
+      CALC + '(' + i * 100 + '% / ' + slideCountNew + ')' :
+      i * 100 / slideCountNew + '%';
+  }
+
+  function getInnerWrapperStyles (edgePaddingTem, gutterTem, fixedWidthTem, speedTem, autoHeightBP) {
+    var str = '';
+
+    if (edgePaddingTem !== undefined) {
+      var gap = edgePaddingTem;
+      if (gutterTem) { gap -= gutterTem; }
+      str = horizontal ?
+        'margin: 0 ' + gap + 'px 0 ' + edgePaddingTem + 'px;' :
+        'margin: ' + edgePaddingTem + 'px 0 ' + gap + 'px 0;';
+    } else if (gutterTem && !fixedWidthTem) {
+      var gutterTemUnit = '-' + gutterTem + 'px',
+          dir = horizontal ? gutterTemUnit + ' 0 0' : '0 ' + gutterTemUnit + ' 0';
+      str = 'margin: 0 ' + dir + ';'
+    }
+
+    if (!carousel && autoHeightBP && TRANSITIONDURATION && speedTem) { str += getTransitionDurationStyle(speedTem); }
+    return str;
+  }
+
+  function getContainerWidth (fixedWidthTem, gutterTem, itemsTem) {
+    if (fixedWidthTem) {
+      return (fixedWidthTem + gutterTem) * slideCountNew + 'px';
+    } else {
+      return CALC ?
+        CALC + '(' + slideCountNew * 100 + '% / ' + itemsTem + ')' :
+        slideCountNew * 100 / itemsTem + '%';
+    }
+  }
+
+  function getSlideWidthStyle (fixedWidthTem, gutterTem, itemsTem) {
+    var width;
+
+    if (fixedWidthTem) {
+      width = (fixedWidthTem + gutterTem) + 'px';
+    } else {
+      if (!carousel) { itemsTem = Math.floor(itemsTem); }
+      var dividend = carousel ? slideCountNew : itemsTem;
+      width = CALC ?
+        CALC + '(100% / ' + dividend + ')' :
+        100 / dividend + '%';
+    }
+
+    width = 'width:' + width;
+
+    // inner slider: overwrite outer slider styles
+    return nested !== 'inner' ? width + ';' : width + ' !important;';
+  }
+
+  function getSlideGutterStyle (gutterTem) {
+    var str = '';
+
+    // gutter maybe interger || 0
+    // so can't use 'if (gutter)'
+    if (gutterTem !== false) {
+      var prop = horizontal ? 'padding-' : 'margin-',
+          dir = horizontal ? 'right' : 'bottom';
+      str = prop +  dir + ': ' + gutterTem + 'px;';
+    }
+
+    return str;
+  }
+
+  function getCSSPrefix (name, num) {
+    var prefix = name.substring(0, name.length - num).toLowerCase();
+    if (prefix) { prefix = '-' + prefix + '-'; }
+
+    return prefix;
+  }
+
+  function getTransitionDurationStyle (speed) {
+    return getCSSPrefix(TRANSITIONDURATION, 18) + 'transition-duration:' + speed / 1000 + 's;';
+  }
+
+  function getAnimationDurationStyle (speed) {
+    return getCSSPrefix(ANIMATIONDURATION, 17) + 'animation-duration:' + speed / 1000 + 's;';
+  }
+
+  function initStructure () {
+    var classOuter = 'tns-outer',
+        classInner = 'tns-inner',
+        hasGutter = hasOption('gutter');
+
+    outerWrapper.className = classOuter;
+    innerWrapper.className = classInner;
+    outerWrapper.id = slideId + '-ow';
+    innerWrapper.id = slideId + '-iw';
+
+    // set container properties
+    if (container.id === '') { container.id = slideId; }
+    newContainerClasses += PERCENTAGELAYOUT || autoWidth ? ' tns-subpixel' : ' tns-no-subpixel';
+    newContainerClasses += CALC ? ' tns-calc' : ' tns-no-calc';
+    if (autoWidth) { newContainerClasses += ' tns-autowidth'; }
+    newContainerClasses += ' tns-' + options.axis;
+    container.className += newContainerClasses;
+
+    // add constrain layer for carousel
+    if (carousel) {
+      middleWrapper = doc.createElement('div');
+      middleWrapper.id = slideId + '-mw';
+      middleWrapper.className = 'tns-ovh';
+
+      outerWrapper.appendChild(middleWrapper);
+      middleWrapper.appendChild(innerWrapper);
+    } else {
+      outerWrapper.appendChild(innerWrapper);
+    }
+
+    if (autoHeight) {
+      var wp = middleWrapper ? middleWrapper : innerWrapper;
+      wp.className += ' tns-ah';
+    }
+
+    containerParent.insertBefore(outerWrapper, container);
+    innerWrapper.appendChild(container);
+
+    // add id, class, aria attributes
+    // before clone slides
+    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
+      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-item');
+      if (!item.id) { item.id = slideId + '-item' + i; }
+      if (!carousel && animateNormal) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal); }
+      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+        'aria-hidden': 'true',
+        'tabindex': '-1'
+      });
+    });
+
+    // ## clone slides
+    // carousel: n + slides + n
+    // gallery:      slides + n
+    if (cloneCount) {
+      var fragmentBefore = doc.createDocumentFragment(),
+          fragmentAfter = doc.createDocumentFragment();
+
+      for (var j = cloneCount; j--;) {
+        var num = j%slideCount,
+            cloneFirst = slideItems[num].cloneNode(true);
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneFirst, slideClonedClass);
+        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneFirst, 'id');
+        fragmentAfter.insertBefore(cloneFirst, fragmentAfter.firstChild);
+
+        if (carousel) {
+          var cloneLast = slideItems[slideCount - 1 - num].cloneNode(true);
+          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneLast, slideClonedClass);
+          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneLast, 'id');
+          fragmentBefore.appendChild(cloneLast);
+        }
+      }
+
+      container.insertBefore(fragmentBefore, container.firstChild);
+      container.appendChild(fragmentAfter);
+      slideItems = container.children;
+    }
+
+  }
+
+  function initSliderTransform () {
+    // ## images loaded/failed
+    if (hasOption('autoHeight') || autoWidth || !horizontal) {
+      var imgs = container.querySelectorAll('img');
+
+      // add img load event listener
+      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(imgs, function(img) {
+        var src = img.src;
+
+        if (!lazyload) {
+          // not data img
+          if (src && src.indexOf('data:image') < 0) {
+            img.src = '';
+            (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);
+            (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');
+
+            img.src = src;
+          // data img
+          } else {
+            imgLoaded(img);
+          }
+        }
+      });
+
+      // set imgsComplete
+      (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), function() { imgsComplete = true; }); });
+
+      // reset imgs for auto height: check visible imgs only
+      if (hasOption('autoHeight')) { imgs = getImageArray(index, Math.min(index + items - 1, slideCountNew - 1)); }
+
+      lazyload ? initSliderTransformStyleCheck() : (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), initSliderTransformStyleCheck); });
+
+    } else {
+      // set container transform property
+      if (carousel) { doContainerTransformSilent(); }
+
+      // update slider tools and events
+      initTools();
+      initEvents();
+    }
+  }
+
+  function initSliderTransformStyleCheck () {
+    if (autoWidth && slideCount > 1) {
+      // check styles application
+      var num = loop ? index : slideCount - 1;
+
+      (function stylesApplicationCheck() {
+        var left = slideItems[num].getBoundingClientRect().left;
+        var right = slideItems[num - 1].getBoundingClientRect().right;
+
+        (Math.abs(left - right) <= 1) ?
+          initSliderTransformCore() :
+          setTimeout(function(){ stylesApplicationCheck() }, 16);
+      })();
+
+    } else {
+      initSliderTransformCore();
+    }
+  }
+
+
+  function initSliderTransformCore () {
+    // run Fn()s which are rely on image loading
+    if (!horizontal || autoWidth) {
+      setSlidePositions();
+
+      if (autoWidth) {
+        rightBoundary = getRightBoundary();
+        if (freezable) { freeze = getFreeze(); }
+        indexMax = getIndexMax(); // <= slidePositions, rightBoundary <=
+        resetVariblesWhenDisable(disable || freeze);
+      } else {
+        updateContentWrapperHeight();
+      }
+    }
+
+    // set container transform property
+    if (carousel) { doContainerTransformSilent(); }
+
+    // update slider tools and events
+    initTools();
+    initEvents();
+  }
+
+  function initSheet () {
+    // gallery:
+    // set animation classes and left value for gallery slider
+    if (!carousel) {
+      for (var i = index, l = index + Math.min(slideCount, items); i < l; i++) {
+        var item = slideItems[i];
+        item.style.left = (i - index) * 100 / items + '%';
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+      }
+    }
+
+    // #### LAYOUT
+
+    // ## INLINE-BLOCK VS FLOAT
+
+    // ## PercentageLayout:
+    // slides: inline-block
+    // remove blank space between slides by set font-size: 0
+
+    // ## Non PercentageLayout:
+    // slides: float
+    //         margin-right: -100%
+    //         margin-left: ~
+
+    // Resource: https://docs.google.com/spreadsheets/d/147up245wwTXeQYve3BRSAD4oVcvQmuGsFteJOeA5xNQ/edit?usp=sharing
+    if (horizontal) {
+      if (PERCENTAGELAYOUT || autoWidth) {
+        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', 'font-size:' + win.getComputedStyle(slideItems[0]).fontSize + ';', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, 'font-size:0;', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+      } else if (carousel) {
+        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function (slide, i) {
+          slide.style.marginLeft = getSlideMarginLeft(i);
+        });
+      }
+    }
+
+
+    // ## BASIC STYLES
+    if (CSSMQ) {
+      // middle wrapper style
+      if (TRANSITIONDURATION) {
+        var str = middleWrapper && options.autoHeight ? getTransitionDurationStyle(options.speed) : '';
+        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-mw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+      }
+
+      // inner wrapper styles
+      str = getInnerWrapperStyles(options.edgePadding, options.gutter, options.fixedWidth, options.speed, options.autoHeight);
+      (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-iw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+
+      // container styles
+      if (carousel) {
+        str = horizontal && !autoWidth ? 'width:' + getContainerWidth(options.fixedWidth, options.gutter, options.items) + ';' : '';
+        if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }
+        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+      }
+
+      // slide styles
+      str = horizontal && !autoWidth ? getSlideWidthStyle(options.fixedWidth, options.gutter, options.items) : '';
+      if (options.gutter) { str += getSlideGutterStyle(options.gutter); }
+      // set gallery items transition-duration
+      if (!carousel) {
+        if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }
+        if (ANIMATIONDURATION) { str += getAnimationDurationStyle(speed); }
+      }
+      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }
+
+    // non CSS mediaqueries: IE8
+    // ## update inner wrapper, container, slides if needed
+    // set inline styles for inner wrapper & container
+    // insert stylesheet (one line) for slides only (since slides are many)
+    } else {
+      // middle wrapper styles
+      update_carousel_transition_duration();
+
+      // inner wrapper styles
+      innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, autoHeight);
+
+      // container styles
+      if (carousel && horizontal && !autoWidth) {
+        container.style.width = getContainerWidth(fixedWidth, gutter, items);
+      }
+
+      // slide styles
+      var str = horizontal && !autoWidth ? getSlideWidthStyle(fixedWidth, gutter, items) : '';
+      if (gutter) { str += getSlideGutterStyle(gutter); }
+
+      // append to the last line
+      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }
+    }
+
+    // ## MEDIAQUERIES
+    if (responsive && CSSMQ) {
+      for (var bp in responsive) {
+        // bp: convert string to number
+        bp = parseInt(bp);
+
+        var opts = responsive[bp],
+            str = '',
+            middleWrapperStr = '',
+            innerWrapperStr = '',
+            containerStr = '',
+            slideStr = '',
+            itemsBP = !autoWidth ? getOption('items', bp) : null,
+            fixedWidthBP = getOption('fixedWidth', bp),
+            speedBP = getOption('speed', bp),
+            edgePaddingBP = getOption('edgePadding', bp),
+            autoHeightBP = getOption('autoHeight', bp),
+            gutterBP = getOption('gutter', bp);
+
+        // middle wrapper string
+        if (TRANSITIONDURATION && middleWrapper && getOption('autoHeight', bp) && 'speed' in opts) {
+          middleWrapperStr = '#' + slideId + '-mw{' + getTransitionDurationStyle(speedBP) + '}';
+        }
+
+        // inner wrapper string
+        if ('edgePadding' in opts || 'gutter' in opts) {
+          innerWrapperStr = '#' + slideId + '-iw{' + getInnerWrapperStyles(edgePaddingBP, gutterBP, fixedWidthBP, speedBP, autoHeightBP) + '}';
+        }
+
+        // container string
+        if (carousel && horizontal && !autoWidth && ('fixedWidth' in opts || 'items' in opts || (fixedWidth && 'gutter' in opts))) {
+          containerStr = 'width:' + getContainerWidth(fixedWidthBP, gutterBP, itemsBP) + ';';
+        }
+        if (TRANSITIONDURATION && 'speed' in opts) {
+          containerStr += getTransitionDurationStyle(speedBP);
+        }
+        if (containerStr) {
+          containerStr = '#' + slideId + '{' + containerStr + '}';
+        }
+
+        // slide string
+        if ('fixedWidth' in opts || (fixedWidth && 'gutter' in opts) || !carousel && 'items' in opts) {
+          slideStr += getSlideWidthStyle(fixedWidthBP, gutterBP, itemsBP);
+        }
+        if ('gutter' in opts) {
+          slideStr += getSlideGutterStyle(gutterBP);
+        }
+        // set gallery items transition-duration
+        if (!carousel && 'speed' in opts) {
+          if (TRANSITIONDURATION) { slideStr += getTransitionDurationStyle(speedBP); }
+          if (ANIMATIONDURATION) { slideStr += getAnimationDurationStyle(speedBP); }
+        }
+        if (slideStr) { slideStr = '#' + slideId + ' > .tns-item{' + slideStr + '}'; }
+
+        // add up
+        str = middleWrapperStr + innerWrapperStr + containerStr + slideStr;
+
+        if (str) {
+          sheet.insertRule('@media (min-width: ' + bp / 16 + 'em) {' + str + '}', sheet.cssRules.length);
+        }
+      }
+    }
+  }
+
+  function initTools () {
+    // == slides ==
+    updateSlideStatus();
+
+    // == live region ==
+    outerWrapper.insertAdjacentHTML('afterbegin', '<div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span class="current">' + getLiveRegionStr() + '</span>  of ' + slideCount + '</div>');
+    liveregionCurrent = outerWrapper.querySelector('.tns-liveregion .current');
+
+    // == autoplayInit ==
+    if (hasAutoplay) {
+      var txt = autoplay ? 'stop' : 'start';
+      if (autoplayButton) {
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': txt});
+      } else if (options.autoplayButtonOutput) {
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.autoplayPosition), '<button type="button" data-action="' + txt + '">' + autoplayHtmlStrings[0] + txt + autoplayHtmlStrings[1] + autoplayText[0] + '</button>');
+        autoplayButton = outerWrapper.querySelector('[data-action]');
+      }
+
+      // add event
+      if (autoplayButton) {
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(autoplayButton, {'click': toggleAutoplay});
+      }
+
+      if (autoplay) {
+        startAutoplay();
+        if (autoplayHoverPause) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents); }
+        if (autoplayResetOnVisibility) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, visibilityEvent); }
+      }
+    }
+
+    // == navInit ==
+    if (hasNav) {
+      var initIndex = !carousel ? 0 : cloneCount;
+      // customized nav
+      // will not hide the navs in case they're thumbnails
+      if (navContainer) {
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navContainer, {'aria-label': 'Carousel Pagination'});
+        navItems = navContainer.children;
+        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(navItems, function(item, i) {
+          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+            'data-nav': i,
+            'tabindex': '-1',
+            'aria-label': navStr + (i + 1),
+            'aria-controls': slideId,
+          });
+        });
+
+      // generated nav
+      } else {
+        var navHtml = '',
+            hiddenStr = navAsThumbnails ? '' : 'style="display:none"';
+        for (var i = 0; i < slideCount; i++) {
+          // hide nav items by default
+          navHtml += '<button type="button" data-nav="' + i +'" tabindex="-1" aria-controls="' + slideId + '" ' + hiddenStr + ' aria-label="' + navStr + (i + 1) +'"></button>';
+        }
+        navHtml = '<div class="tns-nav" aria-label="Carousel Pagination">' + navHtml + '</div>';
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.navPosition), navHtml);
+
+        navContainer = outerWrapper.querySelector('.tns-nav');
+        navItems = navContainer.children;
+      }
+
+      updateNavVisibility();
+
+      // add transition
+      if (TRANSITIONDURATION) {
+        var prefix = TRANSITIONDURATION.substring(0, TRANSITIONDURATION.length - 18).toLowerCase(),
+            str = 'transition: all ' + speed / 1000 + 's';
+
+        if (prefix) {
+          str = '-' + prefix + '-' + str;
+        }
+
+        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '[aria-controls^=' + slideId + '-item]', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+      }
+
+      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navItems[navCurrentIndex], {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
+      (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navItems[navCurrentIndex], 'tabindex');
+      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navItems[navCurrentIndex], navActiveClass);
+
+      // add events
+      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(navContainer, navEvents);
+    }
+
+
+
+    // == controlsInit ==
+    if (hasControls) {
+      if (!controlsContainer && (!prevButton || !nextButton)) {
+        outerWrapper.insertAdjacentHTML(getInsertPosition(options.controlsPosition), '<div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button type="button" data-controls="prev" tabindex="-1" aria-controls="' + slideId +'">' + controlsText[0] + '</button><button type="button" data-controls="next" tabindex="-1" aria-controls="' + slideId +'">' + controlsText[1] + '</button></div>');
+
+        controlsContainer = outerWrapper.querySelector('.tns-controls');
+      }
+
+      if (!prevButton || !nextButton) {
+        prevButton = controlsContainer.children[0];
+        nextButton = controlsContainer.children[1];
+      }
+
+      if (options.controlsContainer) {
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(controlsContainer, {
+          'aria-label': 'Carousel Navigation',
+          'tabindex': '0'
+        });
+      }
+
+      if (options.controlsContainer || (options.prevButton && options.nextButton)) {
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)([prevButton, nextButton], {
+          'aria-controls': slideId,
+          'tabindex': '-1',
+        });
+      }
+
+      if (options.controlsContainer || (options.prevButton && options.nextButton)) {
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(prevButton, {'data-controls' : 'prev'});
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(nextButton, {'data-controls' : 'next'});
+      }
+
+      prevIsButton = isButton(prevButton);
+      nextIsButton = isButton(nextButton);
+
+      updateControlsStatus();
+
+      // add events
+      if (controlsContainer) {
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(controlsContainer, controlsEvents);
+      } else {
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(prevButton, controlsEvents);
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(nextButton, controlsEvents);
+      }
+    }
+
+    // hide tools if needed
+    disableUI();
+  }
+
+  function initEvents () {
+    // add events
+    if (carousel && TRANSITIONEND) {
+      var eve = {};
+      eve[TRANSITIONEND] = onTransitionEnd;
+      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, eve);
+    }
+
+    if (touch) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch); }
+    if (mouseDrag) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents); }
+    if (arrowKeys) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent); }
+
+    if (nested === 'inner') {
+      events.on('outerResized', function () {
+        resizeTasks();
+        events.emit('innerLoaded', info());
+      });
+    } else if (responsive || fixedWidth || autoWidth || autoHeight || !horizontal) {
+      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(win, {'resize': onResize});
+    }
+
+    if (autoHeight) {
+      if (nested === 'outer') {
+        events.on('innerLoaded', doAutoHeight);
+      } else if (!disable) { doAutoHeight(); }
+    }
+
+    doLazyLoad();
+    if (disable) { disableSlider(); } else if (freeze) { freezeSlider(); }
+
+    events.on('indexChanged', additionalUpdates);
+    if (nested === 'inner') { events.emit('innerLoaded', info()); }
+    if (typeof onInit === 'function') { onInit(info()); }
+    isOn = true;
+  }
+
+  function destroy () {
+    // sheet
+    sheet.disabled = true;
+    if (sheet.ownerNode) { sheet.ownerNode.remove(); }
+
+    // remove win event listeners
+    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(win, {'resize': onResize});
+
+    // arrowKeys, controls, nav
+    if (arrowKeys) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent); }
+    if (controlsContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(controlsContainer, controlsEvents); }
+    if (navContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(navContainer, navEvents); }
+
+    // autoplay
+    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);
+    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, visibilityEvent);
+    if (autoplayButton) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(autoplayButton, {'click': toggleAutoplay}); }
+    if (autoplay) { clearInterval(autoplayTimer); }
+
+    // container
+    if (carousel && TRANSITIONEND) {
+      var eve = {};
+      eve[TRANSITIONEND] = onTransitionEnd;
+      (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, eve);
+    }
+    if (touch) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents); }
+    if (mouseDrag) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents); }
+
+    // cache Object values in options && reset HTML
+    var htmlList = [containerHTML, controlsContainerHTML, prevButtonHTML, nextButtonHTML, navContainerHTML, autoplayButtonHTML];
+
+    tnsList.forEach(function(item, i) {
+      var el = item === 'container' ? outerWrapper : options[item];
+
+      if (typeof el === 'object' && el) {
+        var prevEl = el.previousElementSibling ? el.previousElementSibling : false,
+            parentEl = el.parentNode;
+        el.outerHTML = htmlList[i];
+        options[item] = prevEl ? prevEl.nextElementSibling : parentEl.firstElementChild;
+      }
+    });
+
+
+    // reset variables
+    tnsList = animateIn = animateOut = animateDelay = animateNormal = horizontal = outerWrapper = innerWrapper = container = containerParent = containerHTML = slideItems = slideCount = breakpointZone = windowWidth = autoWidth = fixedWidth = edgePadding = gutter = viewport = items = slideBy = viewportMax = arrowKeys = speed = rewind = loop = autoHeight = sheet = lazyload = slidePositions = slideItemsOut = cloneCount = slideCountNew = hasRightDeadZone = rightBoundary = updateIndexBeforeTransform = transformAttr = transformPrefix = transformPostfix = getIndexMax = index = indexCached = indexMin = indexMax = resizeTimer = swipeAngle = moveDirectionExpected = running = onInit = events = newContainerClasses = slideId = disable = disabled = freezable = freeze = frozen = controlsEvents = navEvents = hoverEvents = visibilityEvent = docmentKeydownEvent = touchEvents = dragEvents = hasControls = hasNav = navAsThumbnails = hasAutoplay = hasTouch = hasMouseDrag = slideActiveClass = imgCompleteClass = imgEvents = imgsComplete = controls = controlsText = controlsContainer = controlsContainerHTML = prevButton = nextButton = prevIsButton = nextIsButton = nav = navContainer = navContainerHTML = navItems = pages = pagesCached = navClicked = navCurrentIndex = navCurrentIndexCached = navActiveClass = navStr = navStrCurrent = autoplay = autoplayTimeout = autoplayDirection = autoplayText = autoplayHoverPause = autoplayButton = autoplayButtonHTML = autoplayResetOnVisibility = autoplayHtmlStrings = autoplayTimer = animating = autoplayHoverPaused = autoplayUserPaused = autoplayVisibilityPaused = initPosition = lastPosition = translateInit = disX = disY = panStart = rafIndex = getDist = touch = mouseDrag = null;
+    // check variables
+    // [animateIn, animateOut, animateDelay, animateNormal, horizontal, outerWrapper, innerWrapper, container, containerParent, containerHTML, slideItems, slideCount, breakpointZone, windowWidth, autoWidth, fixedWidth, edgePadding, gutter, viewport, items, slideBy, viewportMax, arrowKeys, speed, rewind, loop, autoHeight, sheet, lazyload, slidePositions, slideItemsOut, cloneCount, slideCountNew, hasRightDeadZone, rightBoundary, updateIndexBeforeTransform, transformAttr, transformPrefix, transformPostfix, getIndexMax, index, indexCached, indexMin, indexMax, resizeTimer, swipeAngle, moveDirectionExpected, running, onInit, events, newContainerClasses, slideId, disable, disabled, freezable, freeze, frozen, controlsEvents, navEvents, hoverEvents, visibilityEvent, docmentKeydownEvent, touchEvents, dragEvents, hasControls, hasNav, navAsThumbnails, hasAutoplay, hasTouch, hasMouseDrag, slideActiveClass, imgCompleteClass, imgEvents, imgsComplete, controls, controlsText, controlsContainer, controlsContainerHTML, prevButton, nextButton, prevIsButton, nextIsButton, nav, navContainer, navContainerHTML, navItems, pages, pagesCached, navClicked, navCurrentIndex, navCurrentIndexCached, navActiveClass, navStr, navStrCurrent, autoplay, autoplayTimeout, autoplayDirection, autoplayText, autoplayHoverPause, autoplayButton, autoplayButtonHTML, autoplayResetOnVisibility, autoplayHtmlStrings, autoplayTimer, animating, autoplayHoverPaused, autoplayUserPaused, autoplayVisibilityPaused, initPosition, lastPosition, translateInit, disX, disY, panStart, rafIndex, getDist, touch, mouseDrag ].forEach(function(item) { if (item !== null) { console.log(item); } });
+
+    for (var a in this) {
+      if (a !== 'rebuild') { this[a] = null; }
+    }
+    isOn = false;
+  }
+
+// === ON RESIZE ===
+  // responsive || fixedWidth || autoWidth || !horizontal
+  function onResize (e) {
+    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ resizeTasks(getEvent(e)); });
+  }
+
+  function resizeTasks (e) {
+    if (!isOn) { return; }
+    if (nested === 'outer') { events.emit('outerResized', info(e)); }
+    windowWidth = getWindowWidth();
+    var bpChanged,
+        breakpointZoneTem = breakpointZone,
+        needContainerTransform = false;
+
+    if (responsive) {
+      setBreakpointZone();
+      bpChanged = breakpointZoneTem !== breakpointZone;
+      // if (hasRightDeadZone) { needContainerTransform = true; } // *?
+      if (bpChanged) { events.emit('newBreakpointStart', info(e)); }
+    }
+
+    var indChanged,
+        itemsChanged,
+        itemsTem = items,
+        disableTem = disable,
+        freezeTem = freeze,
+        arrowKeysTem = arrowKeys,
+        controlsTem = controls,
+        navTem = nav,
+        touchTem = touch,
+        mouseDragTem = mouseDrag,
+        autoplayTem = autoplay,
+        autoplayHoverPauseTem = autoplayHoverPause,
+        autoplayResetOnVisibilityTem = autoplayResetOnVisibility,
+        indexTem = index;
+
+    if (bpChanged) {
+      var fixedWidthTem = fixedWidth,
+          autoHeightTem = autoHeight,
+          controlsTextTem = controlsText,
+          centerTem = center,
+          autoplayTextTem = autoplayText;
+
+      if (!CSSMQ) {
+        var gutterTem = gutter,
+            edgePaddingTem = edgePadding;
+      }
+    }
+
+    // get option:
+    // fixed width: viewport, fixedWidth, gutter => items
+    // others: window width => all variables
+    // all: items => slideBy
+    arrowKeys = getOption('arrowKeys');
+    controls = getOption('controls');
+    nav = getOption('nav');
+    touch = getOption('touch');
+    center = getOption('center');
+    mouseDrag = getOption('mouseDrag');
+    autoplay = getOption('autoplay');
+    autoplayHoverPause = getOption('autoplayHoverPause');
+    autoplayResetOnVisibility = getOption('autoplayResetOnVisibility');
+
+    if (bpChanged) {
+      disable = getOption('disable');
+      fixedWidth = getOption('fixedWidth');
+      speed = getOption('speed');
+      autoHeight = getOption('autoHeight');
+      controlsText = getOption('controlsText');
+      autoplayText = getOption('autoplayText');
+      autoplayTimeout = getOption('autoplayTimeout');
+
+      if (!CSSMQ) {
+        edgePadding = getOption('edgePadding');
+        gutter = getOption('gutter');
+      }
+    }
+    // update options
+    resetVariblesWhenDisable(disable);
+
+    viewport = getViewportWidth(); // <= edgePadding, gutter
+    if ((!horizontal || autoWidth) && !disable) {
+      setSlidePositions();
+      if (!horizontal) {
+        updateContentWrapperHeight(); // <= setSlidePositions
+        needContainerTransform = true;
+      }
+    }
+    if (fixedWidth || autoWidth) {
+      rightBoundary = getRightBoundary(); // autoWidth: <= viewport, slidePositions, gutter
+                                          // fixedWidth: <= viewport, fixedWidth, gutter
+      indexMax = getIndexMax(); // autoWidth: <= rightBoundary, slidePositions
+                                // fixedWidth: <= rightBoundary, fixedWidth, gutter
+    }
+
+    if (bpChanged || fixedWidth) {
+      items = getOption('items');
+      slideBy = getOption('slideBy');
+      itemsChanged = items !== itemsTem;
+
+      if (itemsChanged) {
+        if (!fixedWidth && !autoWidth) { indexMax = getIndexMax(); } // <= items
+        // check index before transform in case
+        // slider reach the right edge then items become bigger
+        updateIndex();
+      }
+    }
+
+    if (bpChanged) {
+      if (disable !== disableTem) {
+        if (disable) {
+          disableSlider();
+        } else {
+          enableSlider(); // <= slidePositions, rightBoundary, indexMax
+        }
+      }
+    }
+
+    if (freezable && (bpChanged || fixedWidth || autoWidth)) {
+      freeze = getFreeze(); // <= autoWidth: slidePositions, gutter, viewport, rightBoundary
+                            // <= fixedWidth: fixedWidth, gutter, rightBoundary
+                            // <= others: items
+
+      if (freeze !== freezeTem) {
+        if (freeze) {
+          doContainerTransform(getContainerTransformValue(getStartIndex(0)));
+          freezeSlider();
+        } else {
+          unfreezeSlider();
+          needContainerTransform = true;
+        }
+      }
+    }
+
+    resetVariblesWhenDisable(disable || freeze); // controls, nav, touch, mouseDrag, arrowKeys, autoplay, autoplayHoverPause, autoplayResetOnVisibility
+    if (!autoplay) { autoplayHoverPause = autoplayResetOnVisibility = false; }
+
+    if (arrowKeys !== arrowKeysTem) {
+      arrowKeys ?
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent) :
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent);
+    }
+    if (controls !== controlsTem) {
+      if (controls) {
+        if (controlsContainer) {
+          (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);
+        } else {
+          if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }
+          if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }
+        }
+      } else {
+        if (controlsContainer) {
+          (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);
+        } else {
+          if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }
+          if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }
+        }
+      }
+    }
+    if (nav !== navTem) {
+      if (nav) {
+        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer);
+        updateNavVisibility();
+      } else {
+        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer)
+      }
+    }
+    if (touch !== touchTem) {
+      touch ?
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch) :
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents);
+    }
+    if (mouseDrag !== mouseDragTem) {
+      mouseDrag ?
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents) :
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents);
+    }
+    if (autoplay !== autoplayTem) {
+      if (autoplay) {
+        if (autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }
+        if (!animating && !autoplayUserPaused) { startAutoplay(); }
+      } else {
+        if (autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }
+        if (animating) { stopAutoplay(); }
+      }
+    }
+    if (autoplayHoverPause !== autoplayHoverPauseTem) {
+      autoplayHoverPause ?
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents) :
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);
+    }
+    if (autoplayResetOnVisibility !== autoplayResetOnVisibilityTem) {
+      autoplayResetOnVisibility ?
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, visibilityEvent) :
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, visibilityEvent);
+    }
+
+    if (bpChanged) {
+      if (fixedWidth !== fixedWidthTem || center !== centerTem) { needContainerTransform = true; }
+
+      if (autoHeight !== autoHeightTem) {
+        if (!autoHeight) { innerWrapper.style.height = ''; }
+      }
+
+      if (controls && controlsText !== controlsTextTem) {
+        prevButton.innerHTML = controlsText[0];
+        nextButton.innerHTML = controlsText[1];
+      }
+
+      if (autoplayButton && autoplayText !== autoplayTextTem) {
+        var i = autoplay ? 1 : 0,
+            html = autoplayButton.innerHTML,
+            len = html.length - autoplayTextTem[i].length;
+        if (html.substring(len) === autoplayTextTem[i]) {
+          autoplayButton.innerHTML = html.substring(0, len) + autoplayText[i];
+        }
+      }
+    } else {
+      if (center && (fixedWidth || autoWidth)) { needContainerTransform = true; }
+    }
+
+    if (itemsChanged || fixedWidth && !autoWidth) {
+      pages = getPages();
+      updateNavVisibility();
+    }
+
+    indChanged = index !== indexTem;
+    if (indChanged) {
+      events.emit('indexChanged', info());
+      needContainerTransform = true;
+    } else if (itemsChanged) {
+      if (!indChanged) { additionalUpdates(); }
+    } else if (fixedWidth || autoWidth) {
+      doLazyLoad();
+      updateSlideStatus();
+      updateLiveRegion();
+    }
+
+    if (itemsChanged && !carousel) { updateGallerySlidePositions(); }
+
+    if (!disable && !freeze) {
+      // non-mediaqueries: IE8
+      if (bpChanged && !CSSMQ) {
+        // middle wrapper styles
+
+        // inner wrapper styles
+        if (edgePadding !== edgePaddingTem || gutter !== gutterTem) {
+          innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, speed, autoHeight);
+        }
+
+        if (horizontal) {
+          // container styles
+          if (carousel) {
+            container.style.width = getContainerWidth(fixedWidth, gutter, items);
+          }
+
+          // slide styles
+          var str = getSlideWidthStyle(fixedWidth, gutter, items) +
+                    getSlideGutterStyle(gutter);
+
+          // remove the last line and
+          // add new styles
+          (0,_helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__.removeCSSRule)(sheet, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet) - 1);
+          (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        }
+      }
+
+      // auto height
+      if (autoHeight) { doAutoHeight(); }
+
+      if (needContainerTransform) {
+        doContainerTransformSilent();
+        indexCached = index;
+      }
+    }
+
+    if (bpChanged) { events.emit('newBreakpointEnd', info(e)); }
+  }
+
+
+
+
+
+  // === INITIALIZATION FUNCTIONS === //
+  function getFreeze () {
+    if (!fixedWidth && !autoWidth) {
+      var a = center ? items - (items - 1) / 2 : items;
+      return  slideCount <= a;
+    }
+
+    var width = fixedWidth ? (fixedWidth + gutter) * slideCount : slidePositions[slideCount],
+        vp = edgePadding ? viewport + edgePadding * 2 : viewport + gutter;
+
+    if (center) {
+      vp -= fixedWidth ? (viewport - fixedWidth) / 2 : (viewport - (slidePositions[index + 1] - slidePositions[index] - gutter)) / 2;
+    }
+
+    return width <= vp;
+  }
+
+  function setBreakpointZone () {
+    breakpointZone = 0;
+    for (var bp in responsive) {
+      bp = parseInt(bp); // convert string to number
+      if (windowWidth >= bp) { breakpointZone = bp; }
+    }
+  }
+
+  // (slideBy, indexMin, indexMax) => index
+  var updateIndex = (function () {
+    return loop ?
+      carousel ?
+        // loop + carousel
+        function () {
+          var leftEdge = indexMin,
+              rightEdge = indexMax;
+
+          leftEdge += slideBy;
+          rightEdge -= slideBy;
+
+          // adjust edges when has edge paddings
+          // or fixed-width slider with extra space on the right side
+          if (edgePadding) {
+            leftEdge += 1;
+            rightEdge -= 1;
+          } else if (fixedWidth) {
+            if ((viewport + gutter)%(fixedWidth + gutter)) { rightEdge -= 1; }
+          }
+
+          if (cloneCount) {
+            if (index > rightEdge) {
+              index -= slideCount;
+            } else if (index < leftEdge) {
+              index += slideCount;
+            }
+          }
+        } :
+        // loop + gallery
+        function() {
+          if (index > indexMax) {
+            while (index >= indexMin + slideCount) { index -= slideCount; }
+          } else if (index < indexMin) {
+            while (index <= indexMax - slideCount) { index += slideCount; }
+          }
+        } :
+      // non-loop
+      function() {
+        index = Math.max(indexMin, Math.min(indexMax, index));
+      };
+  })();
+
+  function disableUI () {
+    if (!autoplay && autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }
+    if (!nav && navContainer) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer); }
+    if (!controls) {
+      if (controlsContainer) {
+        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);
+      } else {
+        if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }
+        if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }
+      }
+    }
+  }
+
+  function enableUI () {
+    if (autoplay && autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }
+    if (nav && navContainer) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer); }
+    if (controls) {
+      if (controlsContainer) {
+        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);
+      } else {
+        if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }
+        if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }
+      }
+    }
+  }
+
+  function freezeSlider () {
+    if (frozen) { return; }
+
+    // remove edge padding from inner wrapper
+    if (edgePadding) { innerWrapper.style.margin = '0px'; }
+
+    // add class tns-transparent to cloned slides
+    if (cloneCount) {
+      var str = 'tns-transparent';
+      for (var i = cloneCount; i--;) {
+        if (carousel) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[i], str); }
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[slideCountNew - i - 1], str);
+      }
+    }
+
+    // update tools
+    disableUI();
+
+    frozen = true;
+  }
+
+  function unfreezeSlider () {
+    if (!frozen) { return; }
+
+    // restore edge padding for inner wrapper
+    // for mordern browsers
+    if (edgePadding && CSSMQ) { innerWrapper.style.margin = ''; }
+
+    // remove class tns-transparent to cloned slides
+    if (cloneCount) {
+      var str = 'tns-transparent';
+      for (var i = cloneCount; i--;) {
+        if (carousel) { (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[i], str); }
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[slideCountNew - i - 1], str);
+      }
+    }
+
+    // update tools
+    enableUI();
+
+    frozen = false;
+  }
+
+  function disableSlider () {
+    if (disabled) { return; }
+
+    sheet.disabled = true;
+    container.className = container.className.replace(newContainerClasses.substring(1), '');
+    (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(container, ['style']);
+    if (loop) {
+      for (var j = cloneCount; j--;) {
+        if (carousel) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[j]); }
+        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[slideCountNew - j - 1]);
+      }
+    }
+
+    // vertical slider
+    if (!horizontal || !carousel) { (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(innerWrapper, ['style']); }
+
+    // gallery
+    if (!carousel) {
+      for (var i = index, l = index + slideCount; i < l; i++) {
+        var item = slideItems[i];
+        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['style']);
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+      }
+    }
+
+    // update tools
+    disableUI();
+
+    disabled = true;
+  }
+
+  function enableSlider () {
+    if (!disabled) { return; }
+
+    sheet.disabled = false;
+    container.className += newContainerClasses;
+    doContainerTransformSilent();
+
+    if (loop) {
+      for (var j = cloneCount; j--;) {
+        if (carousel) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[j]); }
+        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[slideCountNew - j - 1]);
+      }
+    }
+
+    // gallery
+    if (!carousel) {
+      for (var i = index, l = index + slideCount; i < l; i++) {
+        var item = slideItems[i],
+            classN = i < index + items ? animateIn : animateNormal;
+        item.style.left = (i - index) * 100 / items + '%';
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classN);
+      }
+    }
+
+    // update tools
+    enableUI();
+
+    disabled = false;
+  }
+
+  function updateLiveRegion () {
+    var str = getLiveRegionStr();
+    if (liveregionCurrent.innerHTML !== str) { liveregionCurrent.innerHTML = str; }
+  }
+
+  function getLiveRegionStr () {
+    var arr = getVisibleSlideRange(),
+        start = arr[0] + 1,
+        end = arr[1] + 1;
+    return start === end ? start + '' : start + ' to ' + end;
+  }
+
+  function getVisibleSlideRange (val) {
+    if (val == null) { val = getContainerTransformValue(); }
+    var start = index, end, rangestart, rangeend;
+
+    // get range start, range end for autoWidth and fixedWidth
+    if (center || edgePadding) {
+      if (autoWidth || fixedWidth) {
+        rangestart = - (parseFloat(val) + edgePadding);
+        rangeend = rangestart + viewport + edgePadding * 2;
+      }
+    } else {
+      if (autoWidth) {
+        rangestart = slidePositions[index];
+        rangeend = rangestart + viewport;
+      }
+    }
+
+    // get start, end
+    // - check auto width
+    if (autoWidth) {
+      slidePositions.forEach(function(point, i) {
+        if (i < slideCountNew) {
+          if ((center || edgePadding) && point <= rangestart + 0.5) { start = i; }
+          if (rangeend - point >= 0.5) { end = i; }
+        }
+      });
+
+    // - check percentage width, fixed width
+    } else {
+
+      if (fixedWidth) {
+        var cell = fixedWidth + gutter;
+        if (center || edgePadding) {
+          start = Math.floor(rangestart/cell);
+          end = Math.ceil(rangeend/cell - 1);
+        } else {
+          end = start + Math.ceil(viewport/cell) - 1;
+        }
+
+      } else {
+        if (center || edgePadding) {
+          var a = items - 1;
+          if (center) {
+            start -= a / 2;
+            end = index + a / 2;
+          } else {
+            end = index + a;
+          }
+
+          if (edgePadding) {
+            var b = edgePadding * items / viewport;
+            start -= b;
+            end += b;
+          }
+
+          start = Math.floor(start);
+          end = Math.ceil(end);
+        } else {
+          end = start + items - 1;
+        }
+      }
+
+      start = Math.max(start, 0);
+      end = Math.min(end, slideCountNew - 1);
+    }
+
+    return [start, end];
+  }
+
+  function doLazyLoad () {
+    if (lazyload && !disable) {
+      var arg = getVisibleSlideRange();
+      arg.push(lazyloadSelector);
+
+      getImageArray.apply(null, arg).forEach(function (img) {
+        if (!(0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) {
+          // stop propagation transitionend event to container
+          var eve = {};
+          eve[TRANSITIONEND] = function (e) { e.stopPropagation(); };
+          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, eve);
+
+          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);
+
+          // update src
+          img.src = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-src');
+
+          // update srcset
+          var srcset = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-srcset');
+          if (srcset) { img.srcset = srcset; }
+
+          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');
+        }
+      });
+    }
+  }
+
+  function onImgLoaded (e) {
+    imgLoaded(getTarget(e));
+  }
+
+  function onImgFailed (e) {
+    imgFailed(getTarget(e));
+  }
+
+  function imgLoaded (img) {
+    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loaded');
+    imgCompleted(img);
+  }
+
+  function imgFailed (img) {
+    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'failed');
+    imgCompleted(img);
+  }
+
+  function imgCompleted (img) {
+    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, imgCompleteClass);
+    (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(img, 'loading');
+    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(img, imgEvents);
+  }
+
+  function getImageArray (start, end, imgSelector) {
+    var imgs = [];
+    if (!imgSelector) { imgSelector = 'img'; }
+
+    while (start <= end) {
+      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems[start].querySelectorAll(imgSelector), function (img) { imgs.push(img); });
+      start++;
+    }
+
+    return imgs;
+  }
+
+  // check if all visible images are loaded
+  // and update container height if it's done
+  function doAutoHeight () {
+    var imgs = getImageArray.apply(null, getVisibleSlideRange());
+    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, updateInnerWrapperHeight); });
+  }
+
+  function imgsLoadedCheck (imgs, cb) {
+    // execute callback function if all images are complete
+    if (imgsComplete) { return cb(); }
+
+    // check image classes
+    imgs.forEach(function (img, index) {
+      if (!lazyload && img.complete) { imgCompleted(img); } // Check image.complete
+      if ((0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) { imgs.splice(index, 1); }
+    });
+
+    // execute callback function if selected images are all complete
+    if (!imgs.length) { return cb(); }
+
+    // otherwise execute this functiona again
+    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, cb); });
+  }
+
+  function additionalUpdates () {
+    doLazyLoad();
+    updateSlideStatus();
+    updateLiveRegion();
+    updateControlsStatus();
+    updateNavStatus();
+  }
+
+
+  function update_carousel_transition_duration () {
+    if (carousel && autoHeight) {
+      middleWrapper.style[TRANSITIONDURATION] = speed / 1000 + 's';
+    }
+  }
+
+  function getMaxSlideHeight (slideStart, slideRange) {
+    var heights = [];
+    for (var i = slideStart, l = Math.min(slideStart + slideRange, slideCountNew); i < l; i++) {
+      heights.push(slideItems[i].offsetHeight);
+    }
+
+    return Math.max.apply(null, heights);
+  }
+
+  // update inner wrapper height
+  // 1. get the max-height of the visible slides
+  // 2. set transitionDuration to speed
+  // 3. update inner wrapper height to max-height
+  // 4. set transitionDuration to 0s after transition done
+  function updateInnerWrapperHeight () {
+    var maxHeight = autoHeight ? getMaxSlideHeight(index, items) : getMaxSlideHeight(cloneCount, slideCount),
+        wp = middleWrapper ? middleWrapper : innerWrapper;
+
+    if (wp.style.height !== maxHeight) { wp.style.height = maxHeight + 'px'; }
+  }
+
+  // get the distance from the top edge of the first slide to each slide
+  // (init) => slidePositions
+  function setSlidePositions () {
+    slidePositions = [0];
+    var attr = horizontal ? 'left' : 'top',
+        attr2 = horizontal ? 'right' : 'bottom',
+        base = slideItems[0].getBoundingClientRect()[attr];
+
+    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
+      // skip the first slide
+      if (i) { slidePositions.push(item.getBoundingClientRect()[attr] - base); }
+      // add the end edge
+      if (i === slideCountNew - 1) { slidePositions.push(item.getBoundingClientRect()[attr2] - base); }
+    });
+  }
+
+  // update slide
+  function updateSlideStatus () {
+    var range = getVisibleSlideRange(),
+        start = range[0],
+        end = range[1];
+
+    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
+      // show slides
+      if (i >= start && i <= end) {
+        if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {
+          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['aria-hidden', 'tabindex']);
+          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, slideActiveClass);
+        }
+      // hide slides
+      } else {
+        if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {
+          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+            'aria-hidden': 'true',
+            'tabindex': '-1'
+          });
+          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, slideActiveClass);
+        }
+      }
+    });
+  }
+
+  // gallery: update slide position
+  function updateGallerySlidePositions () {
+    var l = index + Math.min(slideCount, items);
+    for (var i = slideCountNew; i--;) {
+      var item = slideItems[i];
+
+      if (i >= index && i < l) {
+        // add transitions to visible slides when adjusting their positions
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-moving');
+
+        item.style.left = (i - index) * 100 / items + '%';
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+      } else if (item.style.left) {
+        item.style.left = '';
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);
+      }
+
+      // remove outlet animation
+      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);
+    }
+
+    // removing '.tns-moving'
+    setTimeout(function() {
+      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(el) {
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(el, 'tns-moving');
+      });
+    }, 300);
+  }
+
+  // set tabindex on Nav
+  function updateNavStatus () {
+    // get current nav
+    if (nav) {
+      navCurrentIndex = navClicked >= 0 ? navClicked : getCurrentNavIndex();
+      navClicked = -1;
+
+      if (navCurrentIndex !== navCurrentIndexCached) {
+        var navPrev = navItems[navCurrentIndexCached],
+            navCurrent = navItems[navCurrentIndex];
+
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navPrev, {
+          'tabindex': '-1',
+          'aria-label': navStr + (navCurrentIndexCached + 1)
+        });
+        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(navPrev, navActiveClass);
+
+        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navCurrent, {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
+        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navCurrent, 'tabindex');
+        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navCurrent, navActiveClass);
+
+        navCurrentIndexCached = navCurrentIndex;
+      }
+    }
+  }
+
+  function getLowerCaseNodeName (el) {
+    return el.nodeName.toLowerCase();
+  }
+
+  function isButton (el) {
+    return getLowerCaseNodeName(el) === 'button';
+  }
+
+  function isAriaDisabled (el) {
+    return el.getAttribute('aria-disabled') === 'true';
+  }
+
+  function disEnableElement (isButton, el, val) {
+    if (isButton) {
+      el.disabled = val;
+    } else {
+      el.setAttribute('aria-disabled', val.toString());
+    }
+  }
+
+  // set 'disabled' to true on controls when reach the edges
+  function updateControlsStatus () {
+    if (!controls || rewind || loop) { return; }
+
+    var prevDisabled = (prevIsButton) ? prevButton.disabled : isAriaDisabled(prevButton),
+        nextDisabled = (nextIsButton) ? nextButton.disabled : isAriaDisabled(nextButton),
+        disablePrev = (index <= indexMin) ? true : false,
+        disableNext = (!rewind && index >= indexMax) ? true : false;
+
+    if (disablePrev && !prevDisabled) {
+      disEnableElement(prevIsButton, prevButton, true);
+    }
+    if (!disablePrev && prevDisabled) {
+      disEnableElement(prevIsButton, prevButton, false);
+    }
+    if (disableNext && !nextDisabled) {
+      disEnableElement(nextIsButton, nextButton, true);
+    }
+    if (!disableNext && nextDisabled) {
+      disEnableElement(nextIsButton, nextButton, false);
+    }
+  }
+
+  // set duration
+  function resetDuration (el, str) {
+    if (TRANSITIONDURATION) { el.style[TRANSITIONDURATION] = str; }
+  }
+
+  function getSliderWidth () {
+    return fixedWidth ? (fixedWidth + gutter) * slideCountNew : slidePositions[slideCountNew];
+  }
+
+  function getCenterGap (num) {
+    if (num == null) { num = index; }
+
+    var gap = edgePadding ? gutter : 0;
+    return autoWidth ? ((viewport - gap) - (slidePositions[num + 1] - slidePositions[num] - gutter))/2 :
+      fixedWidth ? (viewport - fixedWidth) / 2 :
+        (items - 1) / 2;
+  }
+
+  function getRightBoundary () {
+    var gap = edgePadding ? gutter : 0,
+        result = (viewport + gap) - getSliderWidth();
+
+    if (center && !loop) {
+      result = fixedWidth ? - (fixedWidth + gutter) * (slideCountNew - 1) - getCenterGap() :
+        getCenterGap(slideCountNew - 1) - slidePositions[slideCountNew - 1];
+    }
+    if (result > 0) { result = 0; }
+
+    return result;
+  }
+
+  function getContainerTransformValue (num) {
+    if (num == null) { num = index; }
+
+    var val;
+    if (horizontal && !autoWidth) {
+      if (fixedWidth) {
+        val = - (fixedWidth + gutter) * num;
+        if (center) { val += getCenterGap(); }
+      } else {
+        var denominator = TRANSFORM ? slideCountNew : items;
+        if (center) { num -= getCenterGap(); }
+        val = - num * 100 / denominator;
+      }
+    } else {
+      val = - slidePositions[num];
+      if (center && autoWidth) {
+        val += getCenterGap();
+      }
+    }
+
+    if (hasRightDeadZone) { val = Math.max(val, rightBoundary); }
+
+    val += (horizontal && !autoWidth && !fixedWidth) ? '%' : 'px';
+
+    return val;
+  }
+
+  function doContainerTransformSilent (val) {
+    resetDuration(container, '0s');
+    doContainerTransform(val);
+  }
+
+  function doContainerTransform (val) {
+    if (val == null) { val = getContainerTransformValue(); }
+    container.style[transformAttr] = transformPrefix + val + transformPostfix;
+  }
+
+  function animateSlide (number, classOut, classIn, isOut) {
+    var l = number + items;
+    if (!loop) { l = Math.min(l, slideCountNew); }
+
+    for (var i = number; i < l; i++) {
+        var item = slideItems[i];
+
+      // set item positions
+      if (!isOut) { item.style.left = (i - index) * 100 / items + '%'; }
+
+      if (animateDelay && TRANSITIONDELAY) {
+        item.style[TRANSITIONDELAY] = item.style[ANIMATIONDELAY] = animateDelay * (i - number) / 1000 + 's';
+      }
+      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, classOut);
+      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classIn);
+
+      if (isOut) { slideItemsOut.push(item); }
+    }
+  }
+
+  // make transfer after click/drag:
+  // 1. change 'transform' property for mordern browsers
+  // 2. change 'left' property for legacy browsers
+  var transformCore = (function () {
+    return carousel ?
+      function () {
+        resetDuration(container, '');
+        if (TRANSITIONDURATION || !speed) {
+          // for morden browsers with non-zero duration or
+          // zero duration for all browsers
+          doContainerTransform();
+          // run fallback function manually
+          // when duration is 0 / container is hidden
+          if (!speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }
+
+        } else {
+          // for old browser with non-zero duration
+          (0,_helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__.jsTransform)(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
+        }
+
+        if (!horizontal) { updateContentWrapperHeight(); }
+      } :
+      function () {
+        slideItemsOut = [];
+
+        var eve = {};
+        eve[TRANSITIONEND] = eve[ANIMATIONEND] = onTransitionEnd;
+        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(slideItems[indexCached], eve);
+        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(slideItems[index], eve);
+
+        animateSlide(indexCached, animateIn, animateOut, true);
+        animateSlide(index, animateNormal, animateIn);
+
+        // run fallback function manually
+        // when transition or animation not supported / duration is 0
+        if (!TRANSITIONEND || !ANIMATIONEND || !speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }
+      };
+  })();
+
+  function render (e, sliderMoved) {
+    if (updateIndexBeforeTransform) { updateIndex(); }
+
+    // render when slider was moved (touch or drag) even though index may not change
+    if (index !== indexCached || sliderMoved) {
+      // events
+      events.emit('indexChanged', info());
+      events.emit('transitionStart', info());
+      if (autoHeight) { doAutoHeight(); }
+
+      // pause autoplay when click or keydown from user
+      if (animating && e && ['click', 'keydown'].indexOf(e.type) >= 0) { stopAutoplay(); }
+
+      running = true;
+      transformCore();
+    }
+  }
+
+  /*
+   * Transfer prefixed properties to the same format
+   * CSS: -Webkit-Transform => webkittransform
+   * JS: WebkitTransform => webkittransform
+   * @param {string} str - property
+   *
+   */
+  function strTrans (str) {
+    return str.toLowerCase().replace(/-/g, '');
+  }
+
+  // AFTER TRANSFORM
+  // Things need to be done after a transfer:
+  // 1. check index
+  // 2. add classes to visible slide
+  // 3. disable controls buttons when reach the first/last slide in non-loop slider
+  // 4. update nav status
+  // 5. lazyload images
+  // 6. update container height
+  function onTransitionEnd (event) {
+    // check running on gallery mode
+    // make sure trantionend/animationend events run only once
+    if (carousel || running) {
+      events.emit('transitionEnd', info(event));
+
+      if (!carousel && slideItemsOut.length > 0) {
+        for (var i = 0; i < slideItemsOut.length; i++) {
+          var item = slideItemsOut[i];
+          // set item positions
+          item.style.left = '';
+
+          if (ANIMATIONDELAY && TRANSITIONDELAY) {
+            item.style[ANIMATIONDELAY] = '';
+            item.style[TRANSITIONDELAY] = '';
+          }
+          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);
+          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);
+        }
+      }
+
+      /* update slides, nav, controls after checking ...
+       * => legacy browsers who don't support 'event'
+       *    have to check event first, otherwise event.target will cause an error
+       * => or 'gallery' mode:
+       *   + event target is slide item
+       * => or 'carousel' mode:
+       *   + event target is container,
+       *   + event.property is the same with transform attribute
+       */
+      if (!event ||
+          !carousel && event.target.parentNode === container ||
+          event.target === container && strTrans(event.propertyName) === strTrans(transformAttr)) {
+
+        if (!updateIndexBeforeTransform) {
+          var indexTem = index;
+          updateIndex();
+          if (index !== indexTem) {
+            events.emit('indexChanged', info());
+
+            doContainerTransformSilent();
+          }
+        }
+
+        if (nested === 'inner') { events.emit('innerLoaded', info()); }
+        running = false;
+        indexCached = index;
+      }
+    }
+
+  }
+
+  // # ACTIONS
+  function goTo (targetIndex, e) {
+    if (freeze) { return; }
+
+    // prev slideBy
+    if (targetIndex === 'prev') {
+      onControlsClick(e, -1);
+
+    // next slideBy
+    } else if (targetIndex === 'next') {
+      onControlsClick(e, 1);
+
+    // go to exact slide
+    } else {
+      if (running) {
+        if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }
+      }
+
+      var absIndex = getAbsIndex(),
+          indexGap = 0;
+
+      if (targetIndex === 'first') {
+        indexGap = - absIndex;
+      } else if (targetIndex === 'last') {
+        indexGap = carousel ? slideCount - items - absIndex : slideCount - 1 - absIndex;
+      } else {
+        if (typeof targetIndex !== 'number') { targetIndex = parseInt(targetIndex); }
+
+        if (!isNaN(targetIndex)) {
+          // from directly called goTo function
+          if (!e) { targetIndex = Math.max(0, Math.min(slideCount - 1, targetIndex)); }
+
+          indexGap = targetIndex - absIndex;
+        }
+      }
+
+      // gallery: make sure new page won't overlap with current page
+      if (!carousel && indexGap && Math.abs(indexGap) < items) {
+        var factor = indexGap > 0 ? 1 : -1;
+        indexGap += (index + indexGap - slideCount) >= indexMin ? slideCount * factor : slideCount * 2 * factor * -1;
+      }
+
+      index += indexGap;
+
+      // make sure index is in range
+      if (carousel && loop) {
+        if (index < indexMin) { index += slideCount; }
+        if (index > indexMax) { index -= slideCount; }
+      }
+
+      // if index is changed, start rendering
+      if (getAbsIndex(index) !== getAbsIndex(indexCached)) {
+        render(e);
+      }
+
+    }
+  }
+
+  // on controls click
+  function onControlsClick (e, dir) {
+    if (running) {
+      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }
+    }
+    var passEventObject;
+
+    if (!dir) {
+      e = getEvent(e);
+      var target = getTarget(e);
+
+      while (target !== controlsContainer && [prevButton, nextButton].indexOf(target) < 0) { target = target.parentNode; }
+
+      var targetIn = [prevButton, nextButton].indexOf(target);
+      if (targetIn >= 0) {
+        passEventObject = true;
+        dir = targetIn === 0 ? -1 : 1;
+      }
+    }
+
+    if (rewind) {
+      if (index === indexMin && dir === -1) {
+        goTo('last', e);
+        return;
+      } else if (index === indexMax && dir === 1) {
+        goTo('first', e);
+        return;
+      }
+    }
+
+    if (dir) {
+      index += slideBy * dir;
+      if (autoWidth) { index = Math.floor(index); }
+      // pass e when click control buttons or keydown
+      render((passEventObject || (e && e.type === 'keydown')) ? e : null);
+    }
+  }
+
+  // on nav click
+  function onNavClick (e) {
+    if (running) {
+      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }
+    }
+
+    e = getEvent(e);
+    var target = getTarget(e), navIndex;
+
+    // find the clicked nav item
+    while (target !== navContainer && !(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) { target = target.parentNode; }
+    if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) {
+      var navIndex = navClicked = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(target, 'data-nav')),
+          targetIndexBase = fixedWidth || autoWidth ? navIndex * slideCount / pages : navIndex * items,
+          targetIndex = navAsThumbnails ? navIndex : Math.min(Math.ceil(targetIndexBase), slideCount - 1);
+      goTo(targetIndex, e);
+
+      if (navCurrentIndex === navIndex) {
+        if (animating) { stopAutoplay(); }
+        navClicked = -1; // reset navClicked
+      }
+    }
+  }
+
+  // autoplay functions
+  function setAutoplayTimer () {
+    autoplayTimer = setInterval(function () {
+      onControlsClick(null, autoplayDirection);
+    }, autoplayTimeout);
+
+    animating = true;
+  }
+
+  function stopAutoplayTimer () {
+    clearInterval(autoplayTimer);
+    animating = false;
+  }
+
+  function updateAutoplayButton (action, txt) {
+    (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': action});
+    autoplayButton.innerHTML = autoplayHtmlStrings[0] + action + autoplayHtmlStrings[1] + txt;
+  }
+
+  function startAutoplay () {
+    setAutoplayTimer();
+    if (autoplayButton) { updateAutoplayButton('stop', autoplayText[1]); }
+  }
+
+  function stopAutoplay () {
+    stopAutoplayTimer();
+    if (autoplayButton) { updateAutoplayButton('start', autoplayText[0]); }
+  }
+
+  // programaitcally play/pause the slider
+  function play () {
+    if (autoplay && !animating) {
+      startAutoplay();
+      autoplayUserPaused = false;
+    }
+  }
+  function pause () {
+    if (animating) {
+      stopAutoplay();
+      autoplayUserPaused = true;
+    }
+  }
+
+  function toggleAutoplay () {
+    if (animating) {
+      stopAutoplay();
+      autoplayUserPaused = true;
+    } else {
+      startAutoplay();
+      autoplayUserPaused = false;
+    }
+  }
+
+  function onVisibilityChange () {
+    if (doc.hidden) {
+      if (animating) {
+        stopAutoplayTimer();
+        autoplayVisibilityPaused = true;
+      }
+    } else if (autoplayVisibilityPaused) {
+      setAutoplayTimer();
+      autoplayVisibilityPaused = false;
+    }
+  }
+
+  function mouseoverPause () {
+    if (animating) {
+      stopAutoplayTimer();
+      autoplayHoverPaused = true;
+    }
+  }
+
+  function mouseoutRestart () {
+    if (autoplayHoverPaused) {
+      setAutoplayTimer();
+      autoplayHoverPaused = false;
+    }
+  }
+
+  // keydown events on document
+  function onDocumentKeydown (e) {
+    e = getEvent(e);
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);
+
+    if (keyIndex >= 0) {
+      onControlsClick(e, keyIndex === 0 ? -1 : 1);
+    }
+  }
+
+  // on key control
+  function onControlsKeydown (e) {
+    e = getEvent(e);
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT].indexOf(e.keyCode);
+
+    if (keyIndex >= 0) {
+      if (keyIndex === 0) {
+        if (!prevButton.disabled) { onControlsClick(e, -1); }
+      } else if (!nextButton.disabled) {
+        onControlsClick(e, 1);
+      }
+    }
+  }
+
+  // set focus
+  function setFocus (el) {
+    el.focus();
+  }
+
+  // on key nav
+  function onNavKeydown (e) {
+    e = getEvent(e);
+    var curElement = doc.activeElement;
+    if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(curElement, 'data-nav')) { return; }
+
+    // var code = e.keyCode,
+    var keyIndex = [KEYS.LEFT, KEYS.RIGHT, KEYS.ENTER, KEYS.SPACE].indexOf(e.keyCode),
+        navIndex = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(curElement, 'data-nav'));
+
+    if (keyIndex >= 0) {
+      if (keyIndex === 0) {
+        if (navIndex > 0) { setFocus(navItems[navIndex - 1]); }
+      } else if (keyIndex === 1) {
+        if (navIndex < pages - 1) { setFocus(navItems[navIndex + 1]); }
+      } else {
+        navClicked = navIndex;
+        goTo(navIndex, e);
+      }
+    }
+  }
+
+  function getEvent (e) {
+    e = e || win.event;
+    return isTouchEvent(e) ? e.changedTouches[0] : e;
+  }
+  function getTarget (e) {
+    return e.target || win.event.srcElement;
+  }
+
+  function isTouchEvent (e) {
+    return e.type.indexOf('touch') >= 0;
+  }
+
+  function preventDefaultBehavior (e) {
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+  }
+
+  function getMoveDirectionExpected () {
+    return (0,_helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__.getTouchDirection)((0,_helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__.toDegree)(lastPosition.y - initPosition.y, lastPosition.x - initPosition.x), swipeAngle) === options.axis;
+  }
+
+  function onPanStart (e) {
+    if (running) {
+      if (preventActionWhenRunning) { return; } else { onTransitionEnd(); }
+    }
+
+    if (autoplay && animating) { stopAutoplayTimer(); }
+
+    panStart = true;
+    if (rafIndex) {
+      (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
+      rafIndex = null;
+    }
+
+    var $ = getEvent(e);
+    events.emit(isTouchEvent(e) ? 'touchStart' : 'dragStart', info(e));
+
+    if (!isTouchEvent(e) && ['img', 'a'].indexOf(getLowerCaseNodeName(getTarget(e))) >= 0) {
+      preventDefaultBehavior(e);
+    }
+
+    lastPosition.x = initPosition.x = $.clientX;
+    lastPosition.y = initPosition.y = $.clientY;
+    if (carousel) {
+      translateInit = parseFloat(container.style[transformAttr].replace(transformPrefix, ''));
+      resetDuration(container, '0s');
+    }
+  }
+
+  function onPanMove (e) {
+    if (panStart) {
+      var $ = getEvent(e);
+      lastPosition.x = $.clientX;
+      lastPosition.y = $.clientY;
+
+      if (carousel) {
+        if (!rafIndex) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }
+      } else {
+        if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }
+        if (moveDirectionExpected) { preventScroll = true; }
+      }
+
+      if ((typeof e.cancelable !== 'boolean' || e.cancelable) && preventScroll) {
+        e.preventDefault();
+      }
+    }
+  }
+
+  function panUpdate (e) {
+    if (!moveDirectionExpected) {
+      panStart = false;
+      return;
+    }
+    (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
+    if (panStart) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }
+
+    if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }
+    if (moveDirectionExpected) {
+      if (!preventScroll && isTouchEvent(e)) { preventScroll = true; }
+
+      try {
+        if (e.type) { events.emit(isTouchEvent(e) ? 'touchMove' : 'dragMove', info(e)); }
+      } catch(err) {}
+
+      var x = translateInit,
+          dist = getDist(lastPosition, initPosition);
+      if (!horizontal || fixedWidth || autoWidth) {
+        x += dist;
+        x += 'px';
+      } else {
+        var percentageX = TRANSFORM ? dist * items * 100 / ((viewport + gutter) * slideCountNew): dist * 100 / (viewport + gutter);
+        x += percentageX;
+        x += '%';
+      }
+
+      container.style[transformAttr] = transformPrefix + x + transformPostfix;
+    }
+  }
+
+  function onPanEnd (e) {
+    if (panStart) {
+      if (rafIndex) {
+        (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
+        rafIndex = null;
+      }
+      if (carousel) { resetDuration(container, ''); }
+      panStart = false;
+
+      var $ = getEvent(e);
+      lastPosition.x = $.clientX;
+      lastPosition.y = $.clientY;
+      var dist = getDist(lastPosition, initPosition);
+
+      if (Math.abs(dist)) {
+        // drag vs click
+        if (!isTouchEvent(e)) {
+          // prevent "click"
+          var target = getTarget(e);
+          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(target, {'click': function preventClick (e) {
+            preventDefaultBehavior(e);
+            (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(target, {'click': preventClick});
+          }});
+        }
+
+        if (carousel) {
+          rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function() {
+            if (horizontal && !autoWidth) {
+              var indexMoved = - dist * items / (viewport + gutter);
+              indexMoved = dist > 0 ? Math.floor(indexMoved) : Math.ceil(indexMoved);
+              index += indexMoved;
+            } else {
+              var moved = - (translateInit + dist);
+              if (moved <= 0) {
+                index = indexMin;
+              } else if (moved >= slidePositions[slideCountNew - 1]) {
+                index = indexMax;
+              } else {
+                var i = 0;
+                while (i < slideCountNew && moved >= slidePositions[i]) {
+                  index = i;
+                  if (moved > slidePositions[i] && dist < 0) { index += 1; }
+                  i++;
+                }
+              }
+            }
+
+            render(e, dist);
+            events.emit(isTouchEvent(e) ? 'touchEnd' : 'dragEnd', info(e));
+          });
+        } else {
+          if (moveDirectionExpected) {
+            onControlsClick(e, dist > 0 ? -1 : 1);
+          }
+        }
+      }
+    }
+
+    // reset
+    if (options.preventScrollOnTouch === 'auto') { preventScroll = false; }
+    if (swipeAngle) { moveDirectionExpected = '?'; }
+    if (autoplay && !animating) { setAutoplayTimer(); }
+  }
+
+  // === RESIZE FUNCTIONS === //
+  // (slidePositions, index, items) => vertical_conentWrapper.height
+  function updateContentWrapperHeight () {
+    var wp = middleWrapper ? middleWrapper : innerWrapper;
+    wp.style.height = slidePositions[index + items] - slidePositions[index] + 'px';
+  }
+
+  function getPages () {
+    var rough = fixedWidth ? (fixedWidth + gutter) * slideCount / viewport : slideCount / items;
+    return Math.min(Math.ceil(rough), slideCount);
+  }
+
+  /*
+   * 1. update visible nav items list
+   * 2. add "hidden" attributes to previous visible nav items
+   * 3. remove "hidden" attrubutes to new visible nav items
+   */
+  function updateNavVisibility () {
+    if (!nav || navAsThumbnails) { return; }
+
+    if (pages !== pagesCached) {
+      var min = pagesCached,
+          max = pages,
+          fn = _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement;
+
+      if (pagesCached > pages) {
+        min = pages;
+        max = pagesCached;
+        fn = _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement;
+      }
+
+      while (min < max) {
+        fn(navItems[min]);
+        min++;
+      }
+
+      // cache pages
+      pagesCached = pages;
+    }
+  }
+
+  function info (e) {
+    return {
+      container: container,
+      slideItems: slideItems,
+      navContainer: navContainer,
+      navItems: navItems,
+      controlsContainer: controlsContainer,
+      hasControls: hasControls,
+      prevButton: prevButton,
+      nextButton: nextButton,
+      items: items,
+      slideBy: slideBy,
+      cloneCount: cloneCount,
+      slideCount: slideCount,
+      slideCountNew: slideCountNew,
+      index: index,
+      indexCached: indexCached,
+      displayIndex: getCurrentSlide(),
+      navCurrentIndex: navCurrentIndex,
+      navCurrentIndexCached: navCurrentIndexCached,
+      pages: pages,
+      pagesCached: pagesCached,
+      sheet: sheet,
+      isOn: isOn,
+      event: e || {},
+    };
+  }
+
+  return {
+    version: '2.9.4',
+    getInfo: info,
+    events: events,
+    goTo: goTo,
+    play: play,
+    pause: pause,
+    isOn: isOn,
+    updateSliderHeight: updateInnerWrapperHeight,
+    refresh: initSliderTransform,
+    destroy: destroy,
+    rebuild: function() {
+      return tns((0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, optionsElements));
+    }
+  };
+};
+
 
 /***/ }),
 
@@ -470,23 +3871,49 @@ module.exports = undefined;
 
 /***/ }),
 
-/***/ "../../node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
-/*!***********************************************************************!*\
-  !*** ../../node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* binding */ _classCallCheck; }\n/* harmony export */ });\nfunction _classCallCheck(instance, Constructor) {\n  if (!(instance instanceof Constructor)) {\n    throw new TypeError(\"Cannot call a class as a function\");\n  }\n}\n\n//# sourceURL=webpack:///../../node_modules/@babel/runtime/helpers/esm/classCallCheck.js?");
-
-/***/ }),
-
-/***/ "../../node_modules/@babel/runtime/helpers/esm/createClass.js":
+/***/ "../node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
 /*!********************************************************************!*\
-  !*** ../../node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  !*** ../node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
   \********************************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* binding */ _createClass; }\n/* harmony export */ });\nfunction _defineProperties(target, props) {\n  for (var i = 0; i < props.length; i++) {\n    var descriptor = props[i];\n    descriptor.enumerable = descriptor.enumerable || false;\n    descriptor.configurable = true;\n    if (\"value\" in descriptor) descriptor.writable = true;\n    Object.defineProperty(target, descriptor.key, descriptor);\n  }\n}\n\nfunction _createClass(Constructor, protoProps, staticProps) {\n  if (protoProps) _defineProperties(Constructor.prototype, protoProps);\n  if (staticProps) _defineProperties(Constructor, staticProps);\n  return Constructor;\n}\n\n//# sourceURL=webpack:///../../node_modules/@babel/runtime/helpers/esm/createClass.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ _classCallCheck; }
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+/***/ }),
+
+/***/ "../node_modules/@babel/runtime/helpers/esm/createClass.js":
+/*!*****************************************************************!*\
+  !*** ../node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ _createClass; }
+/* harmony export */ });
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
 
 /***/ })
 
@@ -558,12 +3985,130 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	}();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	__webpack_require__("./js/plugins/slider.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./css/plugins/slider.scss");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+!function() {
+var __webpack_exports__ = {};
+/*!******************************!*\
+  !*** ./js/plugins/slider.js ***!
+  \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "../node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "../node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tiny-slider/src/tiny-slider */ "../node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+
+
+
+/**
+ * ============================================================================
+ * slider
+ *
+ * @package
+ * @since     1.0.0
+ * @version   1.0.0
+ * @author    RIESTER <wordpress@riester.com>
+ * @copyright 2021 RIESTER
+ * ==========================================================================
+ */
+
+
+
+var RWPSlider = /*#__PURE__*/function () {
+  function RWPSlider() {
+    var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, RWPSlider);
+
+    var defaults = {
+      navPosition: 'bottom',
+      loop: false,
+      controlsText: ['<span aria-hidden="true" role="presentation" class="btn-icon">' + '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>' + '</span>' + '<span class="btn-text sr-only">Previous</span>', '<span class="btn-text sr-only">Next</span>' + '<span aria-hidden="true" role="presentation" class="btn-icon">' + '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>' + '</span>'],
+      lazyloadSelector: '.lazyload',
+      lazyload: true,
+      onInit: function onInit(elem) {
+        var sliderID = '#' + elem.container.getAttribute('id');
+        var wrapperID = sliderID + '-ow';
+
+        if (elem.hasControls) {
+          elem.prevButton.classList.add('btn', 'prev');
+          elem.nextButton.classList.add('btn', 'next');
+          var sliderheight = $(sliderID).outerHeight(true);
+          $(wrapperID).find('.tns-controls').css({
+            height: sliderheight
+          });
+        }
+
+        if ((0,lodash__WEBPACK_IMPORTED_MODULE_3__.has)(elem, 'navItems') && !(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isUndefined)(elem.navItems)) {
+          var navItems = elem.navItems;
+
+          if (navItems.length) {
+            for (var i = 0; i < navItems.length; i++) {
+              navItems[i].classList.add('btn');
+              navItems[i].classList.add('btn-toggle');
+              navItems[i].innerHTML = '<span aria-hidden="true" role="presentation" class="btn-icon">' + '<span aria-hidden="true" role="presentation" class="btn-icon-opened">' + '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>' + '</span>' + '<span aria-hidden="true" role="presentation" class="btn-icon-closed">' + '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/></svg>' + '</span>' + '</span>';
+
+              if (i === elem.index) {
+                navItems[i].classList.add('active');
+              }
+            }
+          }
+        }
+      }
+    };
+    this.sliderOpts = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.defaultsDeep)(args, defaults);
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(RWPSlider, [{
+    key: "init",
+    value: function init() {
+      var containerClass = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.gallery-slider';
+
+      if ((0,lodash__WEBPACK_IMPORTED_MODULE_3__.isUndefined)(containerClass)) {
+        containerClass = '.gallery-slider';
+      }
+
+      var container = document.querySelector(containerClass);
+
+      if (!(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isNil)(container)) {
+        var options = this.sliderOpts;
+        options.container = containerClass;
+        var tnsSlider = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__.tns)(options);
+        tnsSlider.events.on('indexChanged', function (info) {
+          var indexPrev = info.indexCached,
+              indexCurrent = info.index;
+          info.navItems[indexPrev].classList.remove('active');
+          info.navItems[indexCurrent].classList.add('active');
+        });
+        window.addEventListener('resize', function () {
+          $('.tns-outer').each(function (el) {
+            var sliderheight = $(el).find('.tns-inner').outerHeight(true);
+            $(el).find('.tns-controls').css({
+              height: sliderheight
+            });
+          });
+        });
+        return tnsSlider;
+      }
+    }
+  }]);
+
+  return RWPSlider;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (RWPSlider);
+}();
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+!function() {
+/*!*********************************!*\
+  !*** ./css/plugins/slider.scss ***!
+  \*********************************/
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+}();
 /******/ })()
 ;
+//# sourceMappingURL=rwp-slider.js.map

@@ -15,10 +15,10 @@ const _ = require('lodash');
 const { argv } = require('yargs');
 const { merge, mergeWithCustomize, customizeArray } = require('webpack-merge');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const magicImporter = require('node-sass-magic-importer');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const ExtractCssChunks = require('mini-css-extract-plugin');
+const magicImporter = require('node-sass-magic-importer');
 const RemovePlugin = require('remove-files-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@xpamamadeus/friendly-errors-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
@@ -58,16 +58,7 @@ const cssLoaders = [
 					[
 						'postcss-inline-svg',
 						{
-							paths: [
-								path.resolve(
-									config.paths.src,
-									config.folders.images
-								),
-								path.resolve(
-									config.paths.root,
-									'node_modules/bootstrap-icons/icons'
-								),
-							],
+							paths: [path.resolve(config.paths.src, config.folders.images), path.resolve(config.paths.root, 'node_modules/bootstrap-icons/icons')],
 						},
 					],
 					'postcss-sort-media-queries',
@@ -140,48 +131,29 @@ let webpackConfig = {
 					{
 						loader: 'sass-loader',
 						options: {
-							implementation: require('sass'),
 							sassOptions: {
 								sourceMap: config.enabled.sourcemaps,
-								importer: magicImporter(),
 								indentWidth: 4,
 								fiber: false,
+								importer: magicImporter(),
 							},
 						},
 					},
 				],
 			},
 			{
-				test: /\.(ttf|otf|eot|woff2?)$/,
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
 				type: 'asset',
-				dependency: { not: ['url'] },
 				generator: {
 					filename: `${config.folders.fonts}/${config.assetname}`,
 				},
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 8192,
-						},
-					},
-				],
 			},
 			{
-				test: /\.(png|jpe?g|gif|svg|ico)$/,
+				test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
 				type: 'asset',
-				dependency: { not: ['url'] },
 				generator: {
 					filename: `${config.folders.images}/${config.assetname}`,
 				},
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 8192,
-						},
-					},
-				],
 			},
 		],
 	},

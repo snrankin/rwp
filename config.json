@@ -14,17 +14,22 @@
 		"production": false
 	},
 	"entry": {
+		"app": {
+			"files": {
+				"app": {
+					"app": ["./js/app.js"]
+				}
+			}
+		},
 		"blocks": {
 			"enabled": {
 				"cache": false,
-				"cachebusting": true,
+				"cachebusting": false,
 				"debug": false,
-				"favicons": false,
-				"googleFonts": false,
 				"manifest": true,
-				"optimize": true,
-				"production": true,
-				"sourcemaps": false
+				"optimize": false,
+				"production": false,
+				"sourcemaps": true
 			},
 			"files": {
 				"card": {
@@ -50,8 +55,24 @@
 				}
 			}
 		},
+		"debug": {
+			"files": {
+				"debug": {
+					"debug": ["./js/debug.js", "./css/debug.scss"]
+				}
+			}
+		},
 		"fonts": {
-			"copy": ["/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/bootstrap-icons/bootstrap-icons.svg", "/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/@fortawesome/fontawesome-free/sprites/*"],
+			"copy": [
+				{
+					"from": "../node_modules/bootstrap-icons/bootstrap-icons.svg",
+					"to": "imgs/"
+				},
+				{
+					"from": "../node_modules/@fortawesome/fontawesome-free/sprites/*",
+					"to": "imgs/[name][ext]"
+				}
+			],
 			"files": {
 				"bootstrap-icons": {
 					"bootstrap-icons": ["./css/vendor/bootstrap-icons.scss"]
@@ -61,50 +82,26 @@
 				}
 			}
 		},
-		"debug": {
-			"files": {
-				"debug": {
-					"debug": ["./js/debug.js", "./css/debug.scss"]
-				}
-			}
-		},
 		"main": {
 			"files": {
 				"admin": {
 					"admin": ["./js/admin.js", "./css/admin.scss"]
 				},
-
 				"bootstrap": {
-					"bootstrap": [
-						"./css/bootstrap.scss",
-						"./js/vendor/bootstrap.js"
-					]
+					"bootstrap": ["./css/bootstrap.scss", "./js/vendor/bootstrap.js"]
 				},
 				"public": {
 					"public": ["./js/public.js", "./css/public.scss"]
 				}
 			}
 		},
-		"app": {
-			"files": {
-				"app": {
-					"app": ["./js/app.js"]
-				}
-			}
-		},
 		"plugins": {
 			"files": {
 				"modal": {
-					"modal": [
-						"./js/plugins/modal.js",
-						"./css/plugins/modal.scss"
-					]
+					"modal": ["./js/plugins/modal.js", "./css/plugins/modal.scss"]
 				},
 				"slider": {
-					"slider": [
-						"./js/plugins/slider.js",
-						"./css/plugins/slider.scss"
-					]
+					"slider": ["./js/plugins/slider.js", "./css/plugins/slider.scss"]
 				}
 			}
 		},
@@ -116,6 +113,9 @@
 				"gravity-forms": {
 					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
 				},
+				"lazysizes": {
+					"lazysizes": ["./css/vendor/lazysizes.scss"]
+				},
 				"modernizr": {
 					"modernizr": ["./js/vendor/modernizr.js"]
 				},
@@ -123,10 +123,7 @@
 					"qm": ["./css/vendor/qm.scss"]
 				},
 				"select2": {
-					"select2": [
-						"./js/vendor/select2.js",
-						"./css/vendor/select2.scss"
-					]
+					"select2": ["./js/vendor/select2.js", "./css/vendor/select2.scss"]
 				},
 				"wordpress": {
 					"wordpress": ["./css/vendor/wordpress.scss"]
@@ -142,11 +139,11 @@
 		"fonts": "fonts",
 		"images": "imgs",
 		"js": "js",
-		"src": "assets/src"
+		"src": "src"
 	},
 	"paths": {
 		"dist": "./assets",
 		"public": "/wp-content/plugins/rwp/assets/",
-		"src": "./assets/src"
+		"src": "./src"
 	}
 }

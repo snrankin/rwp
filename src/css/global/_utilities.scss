@@ -6,8 +6,7 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-@use 'sass:map';
-@use '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/utilities';
 
 $utilities: map-merge(
 	$utilities,

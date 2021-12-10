@@ -17,8 +17,7 @@ const { argv } = require('yargs');
 const config = require('../config.json');
 
 const isProduction = !_.isNil(argv.p) ? true : false;
-const rootPath =
-	config.paths && config.paths.root ? config.paths.root : process.cwd();
+const rootPath = config.paths && config.paths.root ? config.paths.root : process.cwd();
 
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 
@@ -49,11 +48,7 @@ const fileNames = (groupName = 'main', configName = '') => {
 	if (_.isString(groupName) && groupName !== '' && _.has(entry, groupName)) {
 		entry = entry[groupName].files;
 
-		if (
-			_.isString(configName) &&
-			configName !== '' &&
-			_.has(entry, configName)
-		) {
+		if (_.isString(configName) && configName !== '' && _.has(entry, configName)) {
 			entry = entry[configName];
 		} else {
 			entry = _.reduce(
@@ -76,19 +71,13 @@ const createConfig = (groupName = '', configName = '') => {
 	const subName = configName || argv.name;
 	const entryFiles = fileNames(groupName, configName);
 	let customConfig = {};
-	if (
-		_.isString(groupName) &&
-		groupName !== '' &&
-		_.has(config.entry, groupName)
-	) {
+	if (_.isString(groupName) && groupName !== '' && _.has(config.entry, groupName)) {
 		customConfig = config.entry[groupName];
 		customConfig = _.omit(customConfig, 'files');
 	}
 
 	customConfig = _.defaultsDeep(customConfig, config);
-	const fileprefix = !_.isUndefined(customConfig.fileprefix)
-		? customConfig.fileprefix
-		: `${pkg.name}-`;
+	const fileprefix = !_.isUndefined(customConfig.fileprefix) ? customConfig.fileprefix : `${pkg.name}-`;
 	const distRel = path.relative(rootPath, customConfig.paths.dist);
 
 	customConfig.paths.root = rootPath;
@@ -115,17 +104,62 @@ const createConfig = (groupName = '', configName = '') => {
 		customConfig.paths.public += '/';
 	}
 
-	let filenameTemplate = customConfig.enabled.cachebusting
-		? `${fileprefix}${customConfig.cachebusting}`
-		: `${fileprefix}[name]`;
+	let filenameTemplate = customConfig.enabled.cachebusting ? `${fileprefix}${customConfig.cachebusting}` : `${fileprefix}[name]`;
 
 	if (isProduction) {
 		filenameTemplate = filenameTemplate + '.min';
 	}
 
-	const assetnameTemplate = customConfig.enabled.cachebusting
-		? `${customConfig.cachebusting}[ext][query]`
-		: '[hash][ext][query]';
+	const assetnameTemplate = customConfig.enabled.cachebusting ? `${customConfig.cachebusting}[ext][query]` : '[name][ext][query]';
+
+	// let copyPaths = customConfig.copy;
+
+	// if (!_.isNil(copyPaths)) {
+	// 	customConfig.copy = _.transform(
+	// 		copyPaths,
+	// 		function (result, value, key) {
+	// 			const pathExt = path.extname(value);
+
+	// 			const isImage = new RegExp('.(png|jpe?g|gif|svg|ico)$');
+	// 			const isFont = new RegExp('.(png|jpe?g|gif|svg|ico)$');
+	// 			if (isImage.test(pathExt)) {
+	// 				let distFolder = path.join(customConfig.folders.dist, customConfig.folders.images);
+	// 				result[key] = {
+	// 					from: value,
+	// 					to: distFolder + '/',
+	// 				};
+	// 			} else if (isFont.test(pathExt)) {
+	// 				let distFolder = path.join(customConfig.folders.dist, customConfig.folders.fonts);
+	// 				result[key] = {
+	// 					from: value,
+	// 					to: distFolder + '/',
+	// 				};
+	// 			}
+	// 		},
+	// 		[]
+	// 	);
+	// }
+
+	const formatCleanPattern = (absoluteItemPath) => {
+		const absoluteItem = absoluteItemPath;
+		const files = _.keys(entryFiles);
+		let itemName = '';
+		if (_.isString(subName) && subName !== '' && _.includes(files, subName)) {
+			itemName = files[_.indexOf(files, subName)];
+		} else {
+			const filesNames = _.filter(files, (file) => {
+				return _.includes(absoluteItem, file);
+			});
+
+			if (!_.isEmpty(filesNames)) {
+				itemName = _.head(filesNames);
+			}
+		}
+
+		const pattern = new RegExp(fileprefix + itemName + '(-|_)([a-zA-Z0-9]{8})(.(min|asset))?.(css|js|php)(.map)?$', 'g');
+
+		return pattern.test(absoluteItemPath);
+	};
 
 	let newConfig = {
 		webpack: {
@@ -135,103 +169,30 @@ const createConfig = (groupName = '', configName = '') => {
 			output: {
 				path: customConfig.paths.dist,
 				publicPath: customConfig.paths.public,
-				filename: path.join(
-					customConfig.folders.js,
-					`${filenameTemplate}.js`
-				),
-				assetModuleFilename: path.join(
-					customConfig.folders.images,
-					assetnameTemplate
-				),
+				filename: path.join(customConfig.folders.js, `${filenameTemplate}.js`),
+				assetModuleFilename: path.join(customConfig.folders.images, assetnameTemplate),
 			},
 			stats: buildStats,
 			watchOptions: {
-				ignored: [
-					'**/*.php',
-					'**/*.json',
-					'node_modules/**',
-					config.paths.dist,
-					path.join(distRel, '**'),
-					path.join(rootPath, 'node_modules'),
-				],
+				ignored: ['**/*.php', '**/*.json', 'node_modules/**', config.paths.dist, path.join(distRel, '**'), path.join(rootPath, 'node_modules')],
 			},
 		},
 		filename: filenameTemplate,
 		assetname: assetnameTemplate,
 		prefix: fileprefix,
-		env: Object.assign(
-			{ production: isProduction, development: !isProduction },
-			argv.env
-		),
 		clean: {
 			before: {
 				root: customConfig.paths.dist,
 				test: [
 					{
 						folder: customConfig.folders.css,
-						method: (absoluteItemPath) => {
-							const absoluteItem = absoluteItemPath;
-							const files = _.keys(entryFiles);
-							let itemName = '';
-							if (
-								_.isString(subName) &&
-								subName !== '' &&
-								_.includes(files, subName)
-							) {
-								itemName = files[_.indexOf(files, subName)];
-							} else {
-								const filesNames = _.filter(files, (file) => {
-									return _.includes(absoluteItem, file);
-								});
-
-								if (!_.isEmpty(filesNames)) {
-									itemName = _.head(filesNames);
-								}
-							}
-
-							const pattern = new RegExp(
-								fileprefix +
-									itemName +
-									'(-[^-\\/]+)?.css(.map)?(.min)?$',
-								'g'
-							);
-
-							return pattern.test(absoluteItemPath);
-						},
+						method: formatCleanPattern,
 						readWebpackConfiguration: true,
 						recursive: true,
 					},
 					{
 						folder: customConfig.folders.js,
-						method: (absoluteItemPath) => {
-							const absoluteItem = absoluteItemPath;
-							const files = _.keys(entryFiles);
-							let itemName = '';
-							if (
-								_.isString(subName) &&
-								subName !== '' &&
-								_.includes(files, subName)
-							) {
-								itemName = files[_.indexOf(files, subName)];
-							} else {
-								const filesNames = _.filter(files, (file) => {
-									return _.includes(absoluteItem, file);
-								});
-
-								if (!_.isEmpty(filesNames)) {
-									itemName = _.head(filesNames);
-								}
-							}
-
-							const pattern = new RegExp(
-								fileprefix +
-									itemName +
-									'(-[^-\\/]+)?.(js|php)(.map)?(.min)?$',
-								'g'
-							);
-
-							return pattern.test(absoluteItemPath);
-						},
+						method: formatCleanPattern,
 						recursive: true,
 					},
 				],
@@ -239,7 +200,7 @@ const createConfig = (groupName = '', configName = '') => {
 		},
 	};
 
-	if (config.enabled.sourcemaps) {
+	if (!isProduction) {
 		newConfig.webpack.devtool = 'source-map';
 	}
 

@@ -6,6 +6,8 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
+@import '../global/admin-index';
+
 // ============================== Admin Sidebar ============================= //
 
 // stylelint-disable-next-line
@@ -36,15 +38,6 @@
 
 .editor-styles-wrapper {
 	.rwp {
-		&.is-hovered,
-		&.is-selected {
-			outline: solid 1px $primary;
-		}
-
-		&.has-child-selected {
-			outline: solid 1px rgb($primary 0.5);
-		}
-
 		.wp-block {
 			margin-top: 0 !important;
 

@@ -6,9 +6,8 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-@use '../global';
-@use '~bootstrap/scss/forms/form-control';
-@use '~bootstrap/scss/forms/forms/form-select';
+@import '../global';
+@import '~bootstrap/scss/forms';
 :root {
 	--rwp-form-gutter-x: #{$grid-gutter-width};
 	--rwp-form-gutter-y: #{$grid-gutter-width};
