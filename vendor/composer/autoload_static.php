@@ -505,6 +505,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Integrations\\Elementor' => __DIR__ . '/../..' . '/includes/integrations/Elementor.php',
         'RWP\\Integrations\\Elementor\\OEmbed' => __DIR__ . '/../..' . '/includes/integrations/Elementor/OEmbed.php',
         'RWP\\Integrations\\GravityForms' => __DIR__ . '/../..' . '/includes/integrations/GravityForms.php',
+        'RWP\\Integrations\\Gutenberg' => __DIR__ . '/../..' . '/includes/integrations/Gutenberg.php',
         'RWP\\Integrations\\JS_Plugins' => __DIR__ . '/../..' . '/includes/integrations/JS_Plugins.php',
         'RWP\\Integrations\\Lazysizes' => __DIR__ . '/../..' . '/includes/integrations/Lazysizes.php',
         'RWP\\Integrations\\Nav_Menus' => __DIR__ . '/../..' . '/includes/integrations/Nav_Menus.php',

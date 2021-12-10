@@ -314,6 +314,7 @@ return array(
     'RWP\\Integrations\\Elementor' => $baseDir . '/includes/integrations/Elementor.php',
     'RWP\\Integrations\\Elementor\\OEmbed' => $baseDir . '/includes/integrations/Elementor/OEmbed.php',
     'RWP\\Integrations\\GravityForms' => $baseDir . '/includes/integrations/GravityForms.php',
+    'RWP\\Integrations\\Gutenberg' => $baseDir . '/includes/integrations/Gutenberg.php',
     'RWP\\Integrations\\JS_Plugins' => $baseDir . '/includes/integrations/JS_Plugins.php',
     'RWP\\Integrations\\Lazysizes' => $baseDir . '/includes/integrations/Lazysizes.php',
     'RWP\\Integrations\\Nav_Menus' => $baseDir . '/includes/integrations/Nav_Menus.php',
