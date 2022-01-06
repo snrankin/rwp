@@ -150,11 +150,7 @@ function skipLink() {
 				const element = document.getElementById(id);
 
 				if (element) {
-					if (
-						!/^(?:a|select|input|button|textarea)$/i.test(
-							element.tagName
-						)
-					) {
+					if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
 						element.tabIndex = -1;
 					}
 
@@ -251,7 +247,7 @@ function getTallest(el) {
 function matchHeights(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
-		const minHeight = this.getTallest(el);
+		const minHeight = getTallest(el);
 
 		if (false !== minHeight) {
 			_.map(matches, function (elem) {
@@ -260,7 +256,7 @@ function matchHeights(el) {
 		}
 
 		window.resize = () => {
-			this.matchHeights(el);
+			matchHeights(el);
 		};
 	}
 }
@@ -336,23 +332,14 @@ function logCustomProperties() {
 			(finalArr, sheet) =>
 				finalArr.concat(
 					// cssRules is array-like, so we convert it to an array
-					[...sheet.cssRules]
-						.filter(isStyleRule)
-						.reduce((propValArr, rule) => {
-							const props = [...rule.style]
-								.map((propName) => [
-									propName.trim(),
-									rule.style
-										.getPropertyValue(propName)
-										.trim(),
-								])
-								// Discard any props that don't start with "--". Custom props are required to.
-								.filter(
-									([propName]) => propName.indexOf('--') === 0
-								);
+					[...sheet.cssRules].filter(isStyleRule).reduce((propValArr, rule) => {
+						const props = [...rule.style]
+							.map((propName) => [propName.trim(), rule.style.getPropertyValue(propName).trim()])
+							// Discard any props that don't start with "--". Custom props are required to.
+							.filter(([propName]) => propName.indexOf('--') === 0);
 
-							return [...propValArr, ...props];
-						}, [])
+						return [...propValArr, ...props];
+					}, [])
 				),
 			[]
 		);
@@ -362,18 +349,4 @@ function logCustomProperties() {
 	return cssCustomPropIndex;
 }
 
-export {
-	camelCase,
-	changeTag,
-	toggleFocus,
-	screenSize,
-	skipLink,
-	isEmpty,
-	toggleNav,
-	getTallest,
-	matchHeights,
-	bsAtts,
-	logCustomProperties,
-	actual,
-	verge,
-};
+export { camelCase, changeTag, toggleFocus, screenSize, skipLink, isEmpty, toggleNav, getTallest, matchHeights, bsAtts, logCustomProperties, actual, verge };
