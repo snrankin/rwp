@@ -434,9 +434,10 @@ function rwp_filtered_content( $content = '' ) {
 	}
 
 	$content = apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-	$content = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
-	$content = preg_replace( "/\r|\n|\h{2,}|\t/", '', $content );
-	$content = force_balance_tags( $content );
+
+	$content = str_replace( ']]>', ']]&gt;', $content );
+
+	$content = rwp_beautify_html( $content );
 
 	return $content;
 }
