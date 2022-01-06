@@ -13,7 +13,7 @@ const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
 const { argv } = require('yargs');
-const { merge, mergeWithCustomize, customizeArray } = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
@@ -25,7 +25,7 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const { createConfig } = require('./config');
 
-const isProduction = !_.isNil(argv.p) ? true : false;
+const isProduction = argv.env === 'production' ? true : false;
 const groupName = !_.isNil(argv.name) ? argv.name : '';
 const buildWatch = !_.isNil(argv.watch) ? true : false;
 const configName = !_.isNil(argv['config-name']) ? argv['config-name'] : '';
@@ -100,9 +100,14 @@ const endingPlugins = [
 			file.name = fileName;
 			return file;
 		},
+		filter: (file) => {
+			let fileName = !_.isNil(file.name) ? file.name : file.path;
+			fileName = path.basename(fileName.replace(/\?.*/gm, ''));
+			let pattern = /\.map$/i;
+			return pattern.test(fileName) != true;
+		},
 		seed: manifestSeed,
 		removeKeyHash: true,
-		writeToFileEmit: true,
 	}),
 	new FriendlyErrorsWebpackPlugin({
 		logLevel: buildWatch ? 'SILENT' : 'WARNING',
@@ -200,19 +205,17 @@ if ('app' === configName) {
 
 if (isProduction) {
 	const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-	webpackConfig = mergeWithCustomize({
-		customizeArray: customizeArray({
-			plugins: 'append',
-		}),
-	})(webpackConfig, {
-		plugins: [
-			new ImageMinimizerPlugin({
-				minimizerOptions: {
-					plugins: ['gifsicle', 'jpegtran', 'optipng', 'svgo'],
-				},
-				loader: false,
-			}),
-		],
+	webpackConfig = merge(webpackConfig, {
+		optimization: {
+			minimize: true,
+			minimizer: [
+				new ImageMinimizerPlugin({
+					minimizer: {
+						implementation: ImageMinimizerPlugin.squooshMinify,
+					},
+				}),
+			],
+		},
 	});
 }
 

@@ -1870,6 +1870,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _global_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../global/helpers */ "./blocks/global/helpers.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
 
 
 /**
@@ -1886,13 +1888,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
+
 function Save(props) {
   var attributes = props.attributes;
   var classes = (0,_global_helpers__WEBPACK_IMPORTED_MODULE_2__.classNames)('collapse', attributes.className);
   var toggleBodyIsOpen = attributes.toggleBodyIsOpen,
       toggleBodyId = attributes.toggleBodyId;
 
-  if (!_.isUndefined(toggleBodyIsOpen)) {
+  if (!(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isNil)(toggleBodyIsOpen)) {
     if (!toggleBodyIsOpen) {
       if (classes.match('show')) {
         classes = classes.replace('show', '');
@@ -2590,17 +2593,11 @@ __webpack_require__.r(__webpack_exports__);
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
 }
 
 /***/ }),

@@ -101,6 +101,11 @@ input[type=url]::-webkit-date-and-time-value,
 textarea::-webkit-date-and-time-value {
     height: 1.5em;
 }
+.form-control::-webkit-input-placeholder, input[type=text]::-webkit-input-placeholder, input[type=date]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder, input[type=number]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=search]::-webkit-input-placeholder, input[type=tel]::-webkit-input-placeholder, input[type=file]::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #6c757d;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    opacity: 1;
+}
 .form-control:-ms-input-placeholder, input[type=text]:-ms-input-placeholder, input[type=date]:-ms-input-placeholder, input[type=email]:-ms-input-placeholder, input[type=number]:-ms-input-placeholder, input[type=password]:-ms-input-placeholder, input[type=search]:-ms-input-placeholder, input[type=tel]:-ms-input-placeholder, input[type=file]:-ms-input-placeholder, input[type=url]:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color: #6c757d;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -473,7 +478,8 @@ textarea.form-control-lg {
     border-radius: 50%;
 }
 .form-check-input:active {
-    filter: brightness(90%);
+    -webkit-filter: brightness(90%);
+            filter: brightness(90%);
 }
 .form-check-input:focus {
     border-color: #86b7fe;
@@ -497,7 +503,8 @@ textarea.form-control-lg {
 }
 .form-check-input:disabled {
     pointer-events: none;
-    filter: none;
+    -webkit-filter: none;
+            filter: none;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     opacity: 0.5;
 }
@@ -538,7 +545,8 @@ textarea.form-control-lg {
 }
 .btn-check[disabled] + .btn, .btn-check:disabled + .btn {
     pointer-events: none;
-    filter: none;
+    -webkit-filter: none;
+            filter: none;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
     opacity: 0.65;
 }
@@ -654,8 +662,11 @@ textarea.form-control-lg {
     padding: 1rem 0.75rem;
     pointer-events: none;
     border: 1px solid transparent;
-    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;
     transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;
 }
 .form-floating > .form-control, .form-floating > input[type=text],
 .form-floating > input[type=date],
@@ -669,6 +680,9 @@ textarea.form-control-lg {
 .form-floating > textarea {
     padding: 16px 12px;
     padding: 1rem 0.75rem;
+}
+.form-floating > .form-control::-webkit-input-placeholder, .form-floating > input[type=text]::-webkit-input-placeholder, .form-floating > input[type=date]::-webkit-input-placeholder, .form-floating > input[type=email]::-webkit-input-placeholder, .form-floating > input[type=number]::-webkit-input-placeholder, .form-floating > input[type=password]::-webkit-input-placeholder, .form-floating > input[type=search]::-webkit-input-placeholder, .form-floating > input[type=tel]::-webkit-input-placeholder, .form-floating > input[type=file]::-webkit-input-placeholder, .form-floating > input[type=url]::-webkit-input-placeholder, .form-floating > textarea::-webkit-input-placeholder {
+    color: transparent;
 }
 .form-floating > .form-control:-ms-input-placeholder, .form-floating > input[type=text]:-ms-input-placeholder, .form-floating > input[type=date]:-ms-input-placeholder, .form-floating > input[type=email]:-ms-input-placeholder, .form-floating > input[type=number]:-ms-input-placeholder, .form-floating > input[type=password]:-ms-input-placeholder, .form-floating > input[type=search]:-ms-input-placeholder, .form-floating > input[type=tel]:-ms-input-placeholder, .form-floating > input[type=file]:-ms-input-placeholder, .form-floating > input[type=url]:-ms-input-placeholder, .form-floating > textarea:-ms-input-placeholder {
     color: transparent;
@@ -766,7 +780,8 @@ textarea.form-control-lg {
 .form-floating > select ~ label {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
     opacity: 0.65;
-    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+    -webkit-transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+            transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
 .form-floating > .form-control:-webkit-autofill ~ label, .form-floating > input[type=text]:-webkit-autofill ~ label,
 .form-floating > input[type=date]:-webkit-autofill ~ label,
@@ -780,7 +795,8 @@ textarea.form-control-lg {
 .form-floating > textarea:-webkit-autofill ~ label {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
     opacity: 0.65;
-    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+    -webkit-transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+            transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
 
 .input-group {

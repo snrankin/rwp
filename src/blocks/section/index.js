@@ -12,7 +12,6 @@
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps } from '@wordpress/block-editor';
 
 import { sectionIcon as icon } from '../global/icons';
 
@@ -20,8 +19,6 @@ import edit from './edit';
 import metadata from './block.json';
 import save from './save';
 import variations from './variations';
-
-//import './index.scss';
 
 const { name } = metadata;
 

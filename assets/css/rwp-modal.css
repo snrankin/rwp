@@ -91,7 +91,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     background-color: currentColor;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
     opacity: 0.25;
@@ -121,7 +122,8 @@
 .carousel__button.is-prev, .carousel__button.is-next {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 .carousel__button.is-prev {
     left: 10px;
@@ -142,7 +144,8 @@
     stroke-width: var(--carousel-button-svg-stroke-width, 1.5);
     stroke-linejoin: bevel;
     stroke-linecap: round;
-    filter: var(--carousel-button-svg-filter, none);
+    -webkit-filter: var(--carousel-button-svg-filter, none);
+            filter: var(--carousel-button-svg-filter, none);
     pointer-events: none;
 }
 
@@ -182,7 +185,8 @@ body.compensate-for-scrollbar {
     overflow: hidden;
     z-index: 1050;
     outline: none;
-    transform-origin: top left;
+    -webkit-transform-origin: top left;
+            transform-origin: top left;
     --carousel-button-width: 48px;
     --carousel-button-height: 48px;
     --carousel-button-svg-width: 24px;
@@ -334,7 +338,8 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
     color: var(--fancybox-color, currentColor);
@@ -344,8 +349,10 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     z-index: 1053;
 }
 .fancybox__spinner svg {
-    animation: fancybox-rotate 2s linear infinite;
-    transform-origin: center center;
+    -webkit-animation: fancybox-rotate 2s linear infinite;
+            animation: fancybox-rotate 2s linear infinite;
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
     position: absolute;
     top: 0;
     right: 0;
@@ -361,14 +368,37 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     stroke-miterlimit: 10;
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
-    animation: fancybox-dash 1.5s ease-in-out infinite;
+    -webkit-animation: fancybox-dash 1.5s ease-in-out infinite;
+            animation: fancybox-dash 1.5s ease-in-out infinite;
     stroke-linecap: round;
     stroke: currentColor;
 }
 
+@-webkit-keyframes fancybox-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
 @keyframes fancybox-rotate {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes fancybox-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
     }
 }
 @keyframes fancybox-dash {
@@ -396,37 +426,56 @@ body:not(.is-using-mouse) .fancybox__container :focus {
 
 /* Opening */
 .fancybox__container.is-animated[aria-hidden=false] .fancybox__backdrop, .fancybox__container.is-animated[aria-hidden=false] .fancybox__caption, .fancybox__container.is-animated[aria-hidden=false] .fancybox__nav, .fancybox__container.is-animated[aria-hidden=false] .carousel__dots, .fancybox__container.is-animated[aria-hidden=false] .carousel__button.is-close {
-    animation: 0.15s ease backwards fancybox-fadeIn;
+    -webkit-animation: 0.15s ease backwards fancybox-fadeIn;
+            animation: 0.15s ease backwards fancybox-fadeIn;
 }
 
 /* Closing */
 .fancybox__container.is-animated.is-closing .fancybox__backdrop, .fancybox__container.is-animated.is-closing .fancybox__caption, .fancybox__container.is-animated.is-closing .fancybox__nav, .fancybox__container.is-animated.is-closing .carousel__dots, .fancybox__container.is-animated.is-closing .carousel__button.is-close {
-    animation: 0.15s ease both fancybox-fadeOut;
+    -webkit-animation: 0.15s ease both fancybox-fadeOut;
+            animation: 0.15s ease both fancybox-fadeOut;
 }
 
 .fancybox-fadeIn {
-    animation: 0.15s ease both fancybox-fadeIn;
+    -webkit-animation: 0.15s ease both fancybox-fadeIn;
+            animation: 0.15s ease both fancybox-fadeIn;
 }
 
 .fancybox-fadeOut {
-    animation: 0.1s ease both fancybox-fadeOut;
+    -webkit-animation: 0.1s ease both fancybox-fadeOut;
+            animation: 0.1s ease both fancybox-fadeOut;
 }
 
 .fancybox-zoomInUp {
-    animation: 0.2s ease both fancybox-zoomInUp;
+    -webkit-animation: 0.2s ease both fancybox-zoomInUp;
+            animation: 0.2s ease both fancybox-zoomInUp;
 }
 
 .fancybox-zoomOutDown {
-    animation: 0.15s ease both fancybox-zoomOutDown;
+    -webkit-animation: 0.15s ease both fancybox-zoomOutDown;
+            animation: 0.15s ease both fancybox-zoomOutDown;
 }
 
 /* Both `throwOut` classes are for closing animation after dragging up/down */
 .fancybox-throwOutUp {
-    animation: 0.15s ease both fancybox-throwOutUp;
+    -webkit-animation: 0.15s ease both fancybox-throwOutUp;
+            animation: 0.15s ease both fancybox-throwOutUp;
 }
 
 .fancybox-throwOutDown {
-    animation: 0.15s ease both fancybox-throwOutDown;
+    -webkit-animation: 0.15s ease both fancybox-throwOutDown;
+            animation: 0.15s ease both fancybox-throwOutDown;
+}
+
+@-webkit-keyframes fancybox-fadeIn {
+    from {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+    to {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        opacity: 1;
+    }
 }
 
 @keyframes fancybox-fadeIn {
@@ -439,41 +488,90 @@ body:not(.is-using-mouse) .fancybox__container :focus {
         opacity: 1;
     }
 }
+@-webkit-keyframes fancybox-fadeOut {
+    to {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+}
 @keyframes fancybox-fadeOut {
     to {
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         opacity: 0;
     }
 }
-@keyframes fancybox-zoomInUp {
+@-webkit-keyframes fancybox-zoomInUp {
     from {
-        transform: scale(0.97) translate3d(0, 16px, 0);
+        -webkit-transform: scale(0.97) translate3d(0, 16px, 0);
+                transform: scale(0.97) translate3d(0, 16px, 0);
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         opacity: 0;
     }
     to {
-        transform: scale(1) translate3d(0, 0, 0);
+        -webkit-transform: scale(1) translate3d(0, 0, 0);
+                transform: scale(1) translate3d(0, 0, 0);
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
         opacity: 1;
     }
 }
+@keyframes fancybox-zoomInUp {
+    from {
+        -webkit-transform: scale(0.97) translate3d(0, 16px, 0);
+                transform: scale(0.97) translate3d(0, 16px, 0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+    to {
+        -webkit-transform: scale(1) translate3d(0, 0, 0);
+                transform: scale(1) translate3d(0, 0, 0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fancybox-zoomOutDown {
+    to {
+        -webkit-transform: scale(0.97) translate3d(0, 16px, 0);
+                transform: scale(0.97) translate3d(0, 16px, 0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+}
 @keyframes fancybox-zoomOutDown {
     to {
-        transform: scale(0.97) translate3d(0, 16px, 0);
+        -webkit-transform: scale(0.97) translate3d(0, 16px, 0);
+                transform: scale(0.97) translate3d(0, 16px, 0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+}
+@-webkit-keyframes fancybox-throwOutUp {
+    to {
+        -webkit-transform: translate3d(0, -30%, 0);
+                transform: translate3d(0, -30%, 0);
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         opacity: 0;
     }
 }
 @keyframes fancybox-throwOutUp {
     to {
-        transform: translate3d(0, -30%, 0);
+        -webkit-transform: translate3d(0, -30%, 0);
+                transform: translate3d(0, -30%, 0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity: 0;
+    }
+}
+@-webkit-keyframes fancybox-throwOutDown {
+    to {
+        -webkit-transform: translate3d(0, 30%, 0);
+                transform: translate3d(0, 30%, 0);
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         opacity: 0;
     }
 }
 @keyframes fancybox-throwOutDown {
     to {
-        transform: translate3d(0, 30%, 0);
+        -webkit-transform: translate3d(0, 30%, 0);
+                transform: translate3d(0, 30%, 0);
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         opacity: 0;
     }
@@ -525,7 +623,8 @@ body:not(.is-using-mouse) .fancybox__container :focus {
 }
 
 .fancybox__image {
-    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
     touch-action: none;
     -webkit-user-select: none;
         -ms-user-select: none;
@@ -635,7 +734,8 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     opacity: var(--fancybox-opacity, 1);
 }
 .fancybox__container.is-animated[aria-hidden=false] .fancybox__thumbs {
-    animation: 0.15s ease-in backwards fancybox-fadeIn;
+    -webkit-animation: 0.15s ease-in backwards fancybox-fadeIn;
+            animation: 0.15s ease-in backwards fancybox-fadeIn;
 }
 .fancybox__container.is-animated.is-closing .fancybox__thumbs {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -709,7 +809,8 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     text-shadow: var(--fancybox-toolbar-text-shadow, 1px 1px 1px rgba(0, 0, 0, 0.4));
 }
 .fancybox__container.is-animated[aria-hidden=false] .fancybox__toolbar {
-    animation: 0.15s ease-in backwards fancybox-fadeIn;
+    -webkit-animation: 0.15s ease-in backwards fancybox-fadeIn;
+            animation: 0.15s ease-in backwards fancybox-fadeIn;
 }
 .fancybox__container.is-animated.is-closing .fancybox__toolbar {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -724,7 +825,8 @@ body:not(.is-using-mouse) .fancybox__container :focus {
 .fancybox__toolbar__items--center {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
 }
 .fancybox__toolbar__items--right {
     margin-left: auto;
@@ -747,9 +849,13 @@ body:not(.is-using-mouse) .fancybox__container :focus {
     position: absolute;
     right: 0;
     top: 0;
-    transform: scaleX(0);
-    transform-origin: 0;
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+    -webkit-transform-origin: 0;
+            transform-origin: 0;
+    transition-property: -webkit-transform;
     transition-property: transform;
+    transition-property: transform, -webkit-transform;
     transition-timing-function: linear;
     z-index: 30;
     -webkit-user-select: none;

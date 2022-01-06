@@ -14,13 +14,6 @@
 		"production": false
 	},
 	"entry": {
-		"app": {
-			"files": {
-				"app": {
-					"app": ["./js/app.js"]
-				}
-			}
-		},
 		"blocks": {
 			"enabled": {
 				"cache": false,
@@ -55,13 +48,6 @@
 				}
 			}
 		},
-		"debug": {
-			"files": {
-				"debug": {
-					"debug": ["./js/debug.js", "./css/debug.scss"]
-				}
-			}
-		},
 		"fonts": {
 			"copy": [
 				{
@@ -87,8 +73,14 @@
 				"admin": {
 					"admin": ["./js/admin.js", "./css/admin.scss"]
 				},
+				"app": {
+					"app": ["./js/app.js"]
+				},
 				"bootstrap": {
 					"bootstrap": ["./css/bootstrap.scss", "./js/vendor/bootstrap.js"]
+				},
+				"debug": {
+					"debug": ["./js/debug.js", "./css/debug.scss"]
 				},
 				"public": {
 					"public": ["./js/public.js", "./css/public.scss"]

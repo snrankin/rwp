@@ -6,17 +6,50 @@
 }
 
 .lazyload,
-.ls-blur-up-is-loading,
 .lazyloading {
     visibility: hidden;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity: 0;
+    transition: opacity 1000ms, -webkit-filter 1500ms;
     transition: opacity 1000ms, filter 1500ms;
+    transition: opacity 1000ms, filter 1500ms, -webkit-filter 1500ms;
+}
+.lazyload.blur-up,
+.lazyloading.blur-up {
+    -webkit-filter: blur(10px);
+            filter: blur(10px);
+}
+.parent-fit-cover .lazyload, .lazyload[data-parent-fit=cover],
+.parent-fit-cover .lazyloading,
+.lazyloading[data-parent-fit=cover] {
+    -o-object-fit: cover;
+       object-fit: cover;
+    font-family: "object-fit: cover";
+}
+.parent-fit-contain .lazyload, .lazyload[data-parent-fit=contain],
+.parent-fit-contain .lazyloading,
+.lazyloading[data-parent-fit=contain] {
+    font-family: "object-fit: contain";
+    -o-object-fit: contain;
+       object-fit: contain;
+}
+
+.lazyloaded {
+    visibility: visible;
+}
+.lazyloaded.blur-up {
+    -webkit-filter: blur(0);
+            filter: blur(0);
+}
+.lazyloaded.fade-in {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    opacity: 1;
 }
 
 .ls-blur-up-is-loading {
     font-family: "blur-up: auto", "object-fit: cover";
-    filter: blur(10px);
+    -webkit-filter: blur(10px);
+            filter: blur(10px);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     opacity: 1;
 }
@@ -24,7 +57,8 @@
 .ls-blur-up-img.ls-inview.ls-original-loaded {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity: 0;
-    filter: blur(5px);
+    -webkit-filter: blur(5px);
+            filter: blur(5px);
 }
 
 .lazyloaded {
@@ -34,7 +68,7 @@
     transition: opacity 300ms;
 }
 
-img.lazyload:not([src]) {
+.lazyload:not([src]) {
     visibility: hidden;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity: 0;

@@ -16,7 +16,7 @@ const { argv } = require('yargs');
 
 const config = require('../config.json');
 
-const isProduction = !_.isNil(argv.p) ? true : false;
+const isProduction = argv.env === 'production' ? true : false;
 const rootPath = config.paths && config.paths.root ? config.paths.root : process.cwd();
 
 const buildWatch = !_.isNil(argv.watch) ? true : false;
@@ -111,34 +111,6 @@ const createConfig = (groupName = '', configName = '') => {
 	}
 
 	const assetnameTemplate = customConfig.enabled.cachebusting ? `${customConfig.cachebusting}[ext][query]` : '[name][ext][query]';
-
-	// let copyPaths = customConfig.copy;
-
-	// if (!_.isNil(copyPaths)) {
-	// 	customConfig.copy = _.transform(
-	// 		copyPaths,
-	// 		function (result, value, key) {
-	// 			const pathExt = path.extname(value);
-
-	// 			const isImage = new RegExp('.(png|jpe?g|gif|svg|ico)$');
-	// 			const isFont = new RegExp('.(png|jpe?g|gif|svg|ico)$');
-	// 			if (isImage.test(pathExt)) {
-	// 				let distFolder = path.join(customConfig.folders.dist, customConfig.folders.images);
-	// 				result[key] = {
-	// 					from: value,
-	// 					to: distFolder + '/',
-	// 				};
-	// 			} else if (isFont.test(pathExt)) {
-	// 				let distFolder = path.join(customConfig.folders.dist, customConfig.folders.fonts);
-	// 				result[key] = {
-	// 					from: value,
-	// 					to: distFolder + '/',
-	// 				};
-	// 			}
-	// 		},
-	// 		[]
-	// 	);
-	// }
 
 	const formatCleanPattern = (absoluteItemPath) => {
 		const absoluteItem = absoluteItemPath;

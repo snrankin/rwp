@@ -11,33 +11,18 @@
  * ==========================================================================
  */
 
-import {
-	InnerBlocks,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
-import {
-	classNames,
-	uniqueClasses,
-	updateClassesFromAtts,
-	hasBackgroundClass,
-} from '../global/helpers';
+import { classNames, uniqueClasses, hasBackgroundClass } from '../global/helpers';
 
 export default function Save({ attributes }) {
-	const classes = hasBackgroundClass(
-		attributes.bgImageId,
-		attributes.backgroundColor,
-		attributes.className
-	);
+	const classes = hasBackgroundClass(attributes.bgImageId, attributes.backgroundColor, attributes.className);
 	const blockProps = useBlockProps.save({
 		className: classes,
 	});
 
 	const innerBlocksProps = {
-		className: uniqueClasses(
-			classNames('section-inner', attributes.innerClasses)
-		),
+		className: uniqueClasses(classNames('section-inner', attributes.innerClasses)),
 	};
 	return (
 		<section {...blockProps}>

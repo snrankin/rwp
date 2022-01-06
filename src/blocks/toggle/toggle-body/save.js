@@ -12,13 +12,14 @@
  */
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { classNames, hasValue, parentAtts } from '../../global/helpers';
+import { isNil } from 'lodash';
 export default function Save(props) {
 	const { attributes } = props;
 	let classes = classNames('collapse', attributes.className);
 
 	const { toggleBodyIsOpen, toggleBodyId } = attributes;
 
-	if (!_.isUndefined(toggleBodyIsOpen)) {
+	if (!isNil(toggleBodyIsOpen)) {
 		if (!toggleBodyIsOpen) {
 			if (classes.match('show')) {
 				classes = classes.replace('show', '');
