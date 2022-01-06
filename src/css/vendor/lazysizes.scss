@@ -9,12 +9,36 @@
 .no-js img.lazyload {
 	display: none;
 }
+
 .lazyload,
-.ls-blur-up-is-loading,
 .lazyloading {
 	visibility: hidden;
 	opacity: 0;
 	transition: opacity 1000ms, filter 1500ms;
+	&.blur-up {
+		filter: blur(10px);
+	}
+
+	.parent-fit-cover &,
+	&[data-parent-fit='cover'] {
+		object-fit: cover;
+		font-family: 'object-fit: cover';
+	}
+	.parent-fit-contain &,
+	&[data-parent-fit='contain'] {
+		font-family: 'object-fit: contain';
+		object-fit: contain;
+	}
+}
+
+.lazyloaded {
+	visibility: visible;
+	&.blur-up {
+		filter: blur(0);
+	}
+	&.fade-in {
+		opacity: 1;
+	}
 }
 
 .ls-blur-up-is-loading {
@@ -34,7 +58,7 @@
 	transition: opacity 300ms;
 }
 
-img.lazyload:not([src]) {
+.lazyload:not([src]) {
 	visibility: hidden;
 	opacity: 0;
 }
