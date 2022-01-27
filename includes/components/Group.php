@@ -175,13 +175,9 @@ class Group extends Element {
 		$item = $this->get_item( $key );
 
 		if ( ! blank( $item ) && rwp_is_element( $item ) ) {
-			if ( rwp_str_has( $method, array( 'update_', 'set_', 'add_' ) ) ) {
-				$key = $item->__call( $method, $args );
-			} else {
-				$item->__call( $method, $args );
-			}
+			$item->__call( $method, $args );
 
-			return $this->set_item( $item, $key, false );
+			$this->set_item( $item, $key, false );
 		}
 	}
 

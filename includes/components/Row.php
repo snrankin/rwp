@@ -34,6 +34,7 @@ class Row extends Group {
 
 		parent::__construct( $args );
 	}
+
 	/**
 	 * Add an col to the group with specific formatting
 	 *
