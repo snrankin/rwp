@@ -55,14 +55,22 @@ const cssLoaders = [
 			postcssOptions: {
 				plugins: [
 					'postcss-fixes',
+					'postcss-momentum-scrolling',
+					'autoprefixer',
 					[
 						'postcss-inline-svg',
 						{
 							paths: [path.resolve(config.paths.src, config.folders.images), path.resolve(config.paths.root, 'node_modules/bootstrap-icons/icons')],
 						},
 					],
+					'at-rule-packer',
 					'postcss-sort-media-queries',
-					'autoprefixer',
+					[
+						'postcss-combine-duplicated-selectors',
+						{
+							removeDuplicatedValues: true,
+						},
+					],
 					isProduction
 						? [
 								'cssnano',
@@ -77,7 +85,24 @@ const cssLoaders = [
 									],
 								},
 						  ]
-						: '',
+						: [
+								'cssnano',
+								{
+									preset: [
+										'lite',
+										{
+											cssDeclarationSorter: true,
+											discardDuplicates: true,
+											discardOverridden: true,
+											mergeRules: true,
+											normalizeWhitespace: false,
+											discardComments: {
+												removeAll: true,
+											},
+										},
+									],
+								},
+						  ],
 				],
 			},
 		},
@@ -86,7 +111,7 @@ const cssLoaders = [
 
 exports.cssLoaders = cssLoaders;
 
-const startingPlugins = config.enabled.cachebusting ? [new RemovePlugin(config.clean)] : [];
+const startingPlugins = [new RemovePlugin(config.clean)];
 
 exports.startingPlugins = startingPlugins;
 
@@ -96,7 +121,12 @@ const endingPlugins = [
 		publicPath: '',
 		map: (file) => {
 			let fileName = !_.isNil(file.name) ? file.name : file.path;
-			fileName = path.basename(fileName.replace(/\?.*/gm, ''));
+			let ext = path.extname(fileName);
+			fileName = path.basename(fileName.replace(/\?.*/gm, ''), ext);
+			if (isProduction) {
+				fileName = fileName + '.min';
+			}
+			fileName = fileName + ext;
 			file.name = fileName;
 			return file;
 		},
@@ -199,7 +229,7 @@ webpackConfig = merge(config.webpack, webpackConfig);
 if ('app' === configName) {
 	webpackConfig.output.library = {
 		name: 'rwp',
-		type: 'umd',
+		type: 'assign-properties',
 	};
 }
 

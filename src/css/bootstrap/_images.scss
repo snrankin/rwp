@@ -136,18 +136,6 @@
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-
-	&.rounded-circle,
-	.rounded-circle & {
-		&:not(.embed-responsive) {
-			border-radius: 100%;
-			padding-top: 100% !important;
-		}
-	}
-
-	br {
-		display: none !important;
-	}
 }
 
 .media-spacer {

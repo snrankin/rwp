@@ -4,6 +4,10 @@
 	padding-left: calc(var(--#{$variable-prefix}gutter-x, #{$gutter}) * 0.5);
 	margin-right: auto;
 	margin-left: auto;
+
+	&:not(:first-child) {
+		margin-top: var(--#{$variable-prefix}row-gutter-y, #{$gutter});
+	}
 }
 
 // For each breakpoint, define the maximum width of the container in a media query
@@ -32,6 +36,10 @@
 	margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
 	margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
 	width: calc(100% + var(--#{$variable-prefix}gutter-x));
+
+	&:not(:last-child) {
+		margin-bottom: var(--#{$variable-prefix}row-gutter-y, #{$y-gutter});
+	}
 }
 
 @mixin make-col-ready() {
@@ -248,6 +256,45 @@
 			$size: strip-units($size);
 			.#{$name}#{$infix}-#{$size} {
 				@include make-col($i, $columns);
+			}
+		}
+	}
+}
+
+@function page-gutter($breakpoint, $gutter: var(--#{$variable-prefix}gutter-x)) {
+	$container-gutter: '0px';
+	@if $gutter != 0 {
+		$container-gutter: '(#{$container-gutter} * 0.5)';
+	}
+
+	$container-width: var(--#{$variable-prefix}container-#{$breakpoint}-width);
+	$page-gutter: '((100vw - #{$container-width}) * 0.5) + #{$container-gutter}';
+	@return calc(((100vw - #{$container-width}) * 0.5) + #{$container-gutter});
+}
+
+@function stretched-col-content($breakpoint, $container-gutter: $grid-gutter-width) {
+	$gutter: page-gutter($breakpoint, $container-gutter);
+	$page-gutter: str-replace(#{$gutter}, 'calc', '');
+	@return calc(#{$page-gutter} + 100%);
+}
+
+@mixin stretch-col-content($side: left, $gutter: $grid-gutter-width, $content-in-grid: true, $breakpoints: map-keys($grid-breakpoints)) {
+	@each $breakpoint in $breakpoints {
+		@include media-breakpoint-up($breakpoint) {
+			width: stretched-col-content($breakpoint, $gutter);
+
+			$gutter: page-gutter($breakpoint, $gutter);
+			$page-gutter: str-replace(#{$gutter}, 'calc', '');
+			@if $side == left {
+				margin-left: calc((#{$page-gutter}) * -1) !important;
+				@if $content-in-grid {
+					padding-left: $page-gutter !important;
+				}
+			} @else {
+				margin-right: calc((#{$page-gutter}) * -1) !important;
+				@if $content-in-grid {
+					padding-right: $page-gutter !important;
+				}
 			}
 		}
 	}

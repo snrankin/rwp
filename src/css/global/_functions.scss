@@ -62,6 +62,14 @@
 	@return $map;
 }
 
+// a map-set function (not included with Sass)
+@function map-set($map, $key, $value) {
+	$new: (
+		$key: $value,
+	);
+	@return map-merge($map, $new);
+}
+
 @function strip-units($number) {
 	@return divide($number, $number * 0 + 1);
 }
@@ -123,7 +131,7 @@
 }
 
 @function lineheightex($size) {
-	$unit: math.unit($size);
+	$unit: get-unit($size);
 	$number: strip-units($size);
 	@if $unit == '%' {
 		$number: divide($number, 100);
@@ -132,4 +140,22 @@
 		$number: strip-units($number);
 	}
 	@return $number * 2ex;
+}
+
+@function em($pixels, $context: $font-size-base) {
+	@if unitless($pixels) {
+		$pixels: $pixels * 1px;
+	}
+
+	@if unitless($context) {
+		$context: $context * 1px;
+	}
+
+	@return divide($pixels, $context) * 1em;
+}
+
+@function line-height($size) {
+	$size: lineheightex($size);
+
+	@return calc(0.5em + #{$size});
 }

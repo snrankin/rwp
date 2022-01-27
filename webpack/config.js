@@ -128,7 +128,13 @@ const createConfig = (groupName = '', configName = '') => {
 			}
 		}
 
-		const pattern = new RegExp(fileprefix + itemName + '(-|_)([a-zA-Z0-9]{8})(.(min|asset))?.(css|js|php)(.map)?$', 'g');
+		let patternString = '((-|_)([a-zA-Z0-9]{8}))?(.asset)?.(css|js|php)(.map)?$';
+
+		if (isProduction) {
+			patternString = '((-|_)([a-zA-Z0-9]{8}))?.min(.asset)?.(css|js|php)(.map)?$';
+		}
+
+		const pattern = new RegExp(fileprefix + itemName + patternString, 'g');
 
 		return pattern.test(absoluteItemPath);
 	};

@@ -234,17 +234,6 @@
 
 /***/ }),
 
-/***/ "jquery":
-/*!*************************!*\
-  !*** external "jQuery" ***!
-  \*************************/
-/***/ (function(module) {
-
-"use strict";
-module.exports = jQuery;
-
-/***/ }),
-
 /***/ "lodash":
 /*!*************************************************************************************!*\
   !*** external {"commonjs":"lodash","commonjs2":"lodash","amd":"lodash","root":"_"} ***!
@@ -562,9 +551,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
 /* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
+/* harmony export */   "getHash": function() { return /* binding */ getHash; },
 /* harmony export */   "toggleFocus": function() { return /* binding */ toggleFocus; },
 /* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
-/* harmony export */   "skipLink": function() { return /* binding */ skipLink; },
 /* harmony export */   "isEmpty": function() { return /* binding */ isEmpty; },
 /* harmony export */   "toggleNav": function() { return /* binding */ toggleNav; },
 /* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
@@ -572,7 +561,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
 /* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
 /* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_2__.actual; },
-/* harmony export */   "verge": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.verge; }
+/* harmony export */   "viewportW": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.viewportW; },
+/* harmony export */   "viewportH": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.viewportH; },
+/* harmony export */   "viewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.viewport; },
+/* harmony export */   "inViewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.inViewport; },
+/* harmony export */   "inX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.inX; },
+/* harmony export */   "inY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.inY; },
+/* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.scrollX; },
+/* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.scrollY; },
+/* harmony export */   "mq": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.mq; },
+/* harmony export */   "rectangle": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.rectangle; },
+/* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_3__.aspect; }
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
@@ -580,7 +579,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(actual__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! verge */ "../node_modules/verge/verge.js");
 /* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(verge__WEBPACK_IMPORTED_MODULE_3__);
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
 
 
 
@@ -649,7 +647,7 @@ function changeTag(original, tag) {
  */
 
 
-function toggleFocus() {
+function toggleFocus(el) {
   if (event.type === 'focus' || event.type === 'blur') {
     var self = this;
 
@@ -707,56 +705,42 @@ function screenSize(prop) {
     width: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('width', 'px'),
     height: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('height', 'px')
   };
-
-  window.resize = function () {
+  window.addEventListener('resize', function () {
     _.assign({
       width: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('width', 'px'),
       height: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('height', 'px')
     }, size);
-  };
+  });
 
   if (!_.isNil(prop)) {
     return size[prop];
   }
 
-  _.assign({
-    width: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('width', 'px'),
-    height: actual__WEBPACK_IMPORTED_MODULE_2__.actual.actual('height', 'px')
-  }, rwp.screen);
-
   return size;
+} // URL updates and the element focus is maintained
+// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
+// filter handling for a /dir/ OR /indexordefault.page
+
+
+function filterPath(string) {
+  return string.replace(/^\//, '').replace(/(index|default).[a-zA-Z]{3,4}$/, '').replace(/\/$/, '');
 }
 /**
- * Better Skip link
+ * Get hash value for any string
  *
+ * @param {*} string the string to extract from
+ * @return {*} the hash or false
  */
 
 
-function skipLink() {
-  var isIe = /(trident|msie)/i.test(navigator.userAgent);
+function getHash(string) {
+  var index = string.indexOf('#');
 
-  if (isIe && document.getElementById && window.addEventListener) {
-    window.addEventListener('hashchange', function () {
-      var id = location.hash.substring(1);
-
-      if (!/^[A-z0-9_-]+$/.test(id)) {
-        return;
-      }
-
-      var element = document.getElementById(id);
-
-      if (element) {
-        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-          element.tabIndex = -1;
-        }
-
-        element.scrollIntoView({
-          behavior: 'smooth'
-        });
-        element.focus();
-      }
-    }, false);
+  if (index !== -1) {
+    return string.substring(index + 1);
   }
+
+  return false;
 }
 /**
  * Check if a variable is empty
@@ -767,13 +751,15 @@ function skipLink() {
 
 
 function isEmpty(el) {
-  if (typeof el === 'undefined') {
+  if (_.isNil(el)) {
     return true;
   } else if (el === '') {
     return true;
   } else if (el === null) {
     return true;
   } else if (el === false) {
+    return true;
+  } else if (_.isEmpty(el)) {
     return true;
   }
 
@@ -783,29 +769,28 @@ function isEmpty(el) {
 function toggleNav(buttonId) {
   var button = document.querySelector(buttonId); // Return early if the button don't exist.
 
-  if ('undefined' === typeof button) {
+  if (isEmpty(button)) {
     return;
   }
 
   var buttonTarget = button.getAttribute('data-target');
-  buttonTarget = buttonTarget.replace('#', '');
-  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
 
-  if (!siteNavigation) {
+  if (isEmpty(buttonTarget)) {
+    buttonTarget = button.getAttribute('href');
+  }
+
+  if (isEmpty(buttonTarget)) {
     return;
   }
 
-  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Toggle the .toggled class and the aria-expanded value each time the button is clicked.
-  // Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
+  buttonTarget = getHash(buttonTarget);
+  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
 
-  document.addEventListener('click', function (event) {
-    var isClickInside = siteNavigation.contains(event.target);
+  if (isEmpty(siteNavigation)) {
+    return;
+  }
 
-    if (!isClickInside) {
-      siteNavigation.classList.remove('toggled');
-      $('#' + buttonTarget).collapse('hide');
-    }
-  }); // Get all the link elements within the menu.
+  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Get all the link elements within the menu.
 
   var links = menu.getElementsByTagName('a'); // Get all the link elements with children within the menu.
   // eslint-disable-next-line
@@ -843,13 +828,20 @@ function toggleNav(buttonId) {
     _iterator3.f();
   }
 }
+/**
+ * Get tallest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
+
 
 function getTallest(el) {
   var matches = document.querySelectorAll(el);
 
   if (matches.length > 1) {
     var heights = _.map(matches, function (elem) {
-      return this.rectangle(elem).height;
+      return (0,verge__WEBPACK_IMPORTED_MODULE_3__.rectangle)(elem).height;
     });
 
     return Math.max.apply(null, heights);
@@ -857,12 +849,21 @@ function getTallest(el) {
 
   return false;
 }
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
 
-function matchHeights(el) {
-  var matches = document.querySelectorAll(el);
+
+function matchHeights() {
+  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
+  var matches = container.querySelectorAll(elem);
 
   if (matches.length > 1) {
-    var minHeight = getTallest(el);
+    var minHeight = getTallest(elem);
 
     if (false !== minHeight) {
       _.map(matches, function (elem) {
@@ -870,9 +871,9 @@ function matchHeights(el) {
       });
     }
 
-    window.resize = function () {
-      matchHeights(el);
-    };
+    window.addEventListener('resize', function () {
+      matchHeights(elem, container);
+    });
   }
 }
 
@@ -975,6 +976,9 @@ function logCustomProperties() {
 
 
 }();
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-app.js.map

@@ -13,7 +13,7 @@
 const _ = require('lodash');
 
 import { actual } from 'actual';
-import { verge } from 'verge'; // eslint-disable-line
+import { viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect } from 'verge'; // eslint-disable-line
 
 /**
  * Function for making strings camelCase
@@ -62,7 +62,7 @@ function changeTag(original, tag) {
  * Adds focus class for better accessibility
  *
  */
-function toggleFocus() {
+function toggleFocus(el) {
 	if (event.type === 'focus' || event.type === 'blur') {
 		let self = this;
 
@@ -106,7 +106,7 @@ function screenSize(prop) {
 		height: actual.actual('height', 'px'),
 	};
 
-	window.resize = () => {
+	window.addEventListener('resize', function () {
 		_.assign(
 			{
 				width: actual.actual('width', 'px'),
@@ -114,57 +114,40 @@ function screenSize(prop) {
 			},
 			size
 		);
-	};
+	});
 
 	if (!_.isNil(prop)) {
 		return size[prop];
 	}
 
-	_.assign(
-		{
-			width: actual.actual('width', 'px'),
-			height: actual.actual('height', 'px'),
-		},
-		rwp.screen
-	);
-
 	return size;
 }
 
-/**
- * Better Skip link
- *
- */
-function skipLink() {
-	const isIe = /(trident|msie)/i.test(navigator.userAgent);
-	if (isIe && document.getElementById && window.addEventListener) {
-		window.addEventListener(
-			'hashchange',
-			function () {
-				const id = location.hash.substring(1);
+// URL updates and the element focus is maintained
+// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
 
-				if (!/^[A-z0-9_-]+$/.test(id)) {
-					return;
-				}
-
-				const element = document.getElementById(id);
-
-				if (element) {
-					if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-						element.tabIndex = -1;
-					}
-
-					element.scrollIntoView({
-						behavior: 'smooth',
-					});
-
-					element.focus();
-				}
-			},
-			false
-		);
-	}
+// filter handling for a /dir/ OR /indexordefault.page
+function filterPath(string) {
+	return string
+		.replace(/^\//, '')
+		.replace(/(index|default).[a-zA-Z]{3,4}$/, '')
+		.replace(/\/$/, '');
 }
+
+/**
+ * Get hash value for any string
+ *
+ * @param {*} string the string to extract from
+ * @return {*} the hash or false
+ */
+function getHash(string) {
+	var index = string.indexOf('#');
+	if (index !== -1) {
+		return string.substring(index + 1);
+	}
+	return false;
+}
+
 /**
  * Check if a variable is empty
  *
@@ -172,7 +155,7 @@ function skipLink() {
  * @return {boolean} True if empty, false if not
  */
 function isEmpty(el) {
-	if (typeof el === 'undefined') {
+	if (_.isNil(el)) {
 		return true;
 	} else if (el === '') {
 		return true;
@@ -180,40 +163,39 @@ function isEmpty(el) {
 		return true;
 	} else if (el === false) {
 		return true;
+	} else if (_.isEmpty(el)) {
+		return true;
 	}
 	return false;
 }
+
 function toggleNav(buttonId) {
 	const button = document.querySelector(buttonId);
 
 	// Return early if the button don't exist.
-	if ('undefined' === typeof button) {
+	if (isEmpty(button)) {
 		return;
 	}
 	let buttonTarget = button.getAttribute('data-target');
 
-	buttonTarget = buttonTarget.replace('#', '');
+	if (isEmpty(buttonTarget)) {
+		buttonTarget = button.getAttribute('href');
+	}
+
+	if (isEmpty(buttonTarget)) {
+		return;
+	}
+
+	buttonTarget = getHash(buttonTarget);
 
 	const siteNavigation = document.getElementById(buttonTarget);
 
 	// Return early if the navigation don't exist.
-	if (!siteNavigation) {
+	if (isEmpty(siteNavigation)) {
 		return;
 	}
 
 	const menu = siteNavigation.getElementsByTagName('ul')[0];
-
-	// Toggle the .toggled class and the aria-expanded value each time the button is clicked.
-
-	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
-	document.addEventListener('click', function (event) {
-		const isClickInside = siteNavigation.contains(event.target);
-
-		if (!isClickInside) {
-			siteNavigation.classList.remove('toggled');
-			$('#' + buttonTarget).collapse('hide');
-		}
-	});
 
 	// Get all the link elements within the menu.
 	const links = menu.getElementsByTagName('a');
@@ -233,21 +215,35 @@ function toggleNav(buttonId) {
 		link.addEventListener('touchstart', toggleFocus, false);
 	}
 }
+
+/**
+ * Get tallest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
 function getTallest(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
 		const heights = _.map(matches, function (elem) {
-			return this.rectangle(elem).height;
+			return rectangle(elem).height;
 		});
 
 		return Math.max.apply(null, heights);
 	}
 	return false;
 }
-function matchHeights(el) {
-	const matches = document.querySelectorAll(el);
+
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+function matchHeights(elem = '', container = Document) {
+	const matches = container.querySelectorAll(elem);
 	if (matches.length > 1) {
-		const minHeight = getTallest(el);
+		const minHeight = getTallest(elem);
 
 		if (false !== minHeight) {
 			_.map(matches, function (elem) {
@@ -255,11 +251,12 @@ function matchHeights(el) {
 			});
 		}
 
-		window.resize = () => {
-			matchHeights(el);
-		};
+		window.addEventListener('resize', function () {
+			matchHeights(elem, container);
+		});
 	}
 }
+
 function bsAtts() {
 	const bsColors = {
 		primary: '',
@@ -349,4 +346,4 @@ function logCustomProperties() {
 	return cssCustomPropIndex;
 }
 
-export { camelCase, changeTag, toggleFocus, screenSize, skipLink, isEmpty, toggleNav, getTallest, matchHeights, bsAtts, logCustomProperties, actual, verge };
+export { camelCase, changeTag, getHash, toggleFocus, screenSize, isEmpty, toggleNav, getTallest, matchHeights, bsAtts, logCustomProperties, actual, viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect };

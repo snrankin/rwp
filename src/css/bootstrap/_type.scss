@@ -1,0 +1,84 @@
+/// ======================================================================== ///
+/// @name   _type
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+//
+// Headings
+//
+@for $i from 1 through 6 {
+	h#{$i} {
+		@extend %h#{$i};
+	}
+}
+
+// Type display classes
+@each $display in map-keys($display-font-sizes) {
+	.display-#{$display} {
+		@extend %display-#{$display};
+	}
+}
+
+p {
+	&:empty {
+		display: none;
+	}
+}
+
+//
+// Emphasis
+//
+
+.lead {
+	@extend %lead;
+}
+
+.small-text,
+small,
+.small {
+	@extend %small;
+}
+
+.mark {
+	@extend %mark;
+}
+
+//
+// Lists
+//
+
+.list-unstyled {
+	@extend %list-unstyled;
+}
+
+// Inline turns list items into inline-block
+.list-inline {
+	@extend %list-inline;
+}
+
+.list-inline-item {
+	@extend %list-inline-item;
+}
+
+//
+// Misc
+//
+
+// Builds on `abbr`
+.initialism {
+	@include font-size($initialism-font-size);
+
+	text-transform: uppercase;
+}
+
+// Blockquotes
+.blockquote {
+	@extend %blockquote;
+}
+
+.blockquote-footer {
+	@extend %blockquote-footer;
+}

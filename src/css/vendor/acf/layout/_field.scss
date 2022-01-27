@@ -64,28 +64,16 @@ body:not(.post-type-acf-field-group) {
 		&.border {
 			padding-top: var(--#{$variable-prefix}gutter-y) !important;
 			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
-			margin-left: calc(
-				var(--#{$variable-prefix}gutter-x) * 0.5
-			) !important;
-			margin-right: calc(
-				var(--#{$variable-prefix}gutter-x) * 0.5
-			) !important;
+			margin-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+			margin-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			> .acf-label {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 				margin-top: 0 !important;
 			}
 			> .acf-input {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 		}
 		&.border-top {
@@ -96,26 +84,18 @@ body:not(.post-type-acf-field-group) {
 		}
 		&.border-start {
 			> .acf-label {
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 			> .acf-input {
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 		}
 		&.border-end {
 			> .acf-label {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 			> .acf-input {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 		}
 		&.border-none {
@@ -150,20 +130,12 @@ body:not(.post-type-acf-field-group) {
 			padding-top: var(--#{$variable-prefix}gutter-y) !important;
 			padding-bottom: var(--#{$variable-prefix}gutter-y) !important;
 			> .acf-label {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 			> .acf-input {
-				padding-right: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
-				padding-left: calc(
-					var(--#{$variable-prefix}gutter-x) * 0.5
-				) !important;
+				padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+				padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			}
 		}
 		.acf-label {

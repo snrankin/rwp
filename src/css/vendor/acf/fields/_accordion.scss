@@ -27,12 +27,8 @@ body:not(.post-type-acf-field-group) {
 	}
 	.acf-field {
 		&.acf-field-accordion {
-			padding-right: calc(
-				var(--#{$variable-prefix}gutter-x) * 0.5
-			) !important;
-			padding-left: calc(
-				var(--#{$variable-prefix}gutter-x) * 0.5
-			) !important;
+			padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+			padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 			> .acf-label.acf-accordion-title {
 				background-color: $gray-100;
 				padding: $acf-gutter-y $acf-gutter-x;

@@ -3,6 +3,8 @@
 // Shorthand helper mixins
 @mixin font-size($value) {
 	@include rfs($value);
+
+	line-height: calc(4px + 2ex);
 }
 
 @mixin padding($value) {

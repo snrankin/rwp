@@ -6,11 +6,96 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-@import '~bootstrap/scss/root';
+//@import '~bootstrap/scss/root';
+
+$container-widths: (
+	sm: 100vw,
+	md: 90vw,
+	lg: 85vw,
+	xl: 75vw,
+	xxl: 1050px,
+);
 
 :root {
+	// Note: Custom variable values only support SassScript inside `#{}`.
+
+	// Colors
+	//
+	// Generate palettes for full colors, grays, and theme colors.
+
+	@each $number, $value in $spacers {
+		--#{$variable-prefix}spacer-#{$number}: #{$value};
+	}
+
+	@each $color, $value in $theme-colors {
+		--#{$variable-prefix}#{$color}: #{$value};
+	}
+
+	@each $color, $value in $theme-colors {
+		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
+	}
+
+	@each $color, $value in $theme-colors-rgb {
+		--#{$variable-prefix}#{$color}-rgb: #{$value};
+	}
+
+	@each $size, $value in $font-sizes {
+		@include rfs($value, --#{$variable-prefix}h#{$size}-font-size);
+	}
+
+	@each $size, $value in $display-font-sizes {
+		@include rfs($value, --#{$variable-prefix}display#{$size}-font-size);
+	}
+
+	--#{$variable-prefix}white-rgb: #{to-rgb($white)};
+	--#{$variable-prefix}black-rgb: #{to-rgb($black)};
+	--#{$variable-prefix}body-color-rgb: #{to-rgb($body-color)};
+	--#{$variable-prefix}body-bg-rgb: #{to-rgb($body-bg)};
+
+	// Fonts
+
+	// Note: Use `inspect` for lists so that quoted items keep the quotes.
+	// See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+	--#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+	--#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
+	--#{$variable-prefix}gradient: #{$gradient};
+
+	// Root and body
+	// stylelint-disable custom-property-empty-line-before
+	// scss-docs-start root-body-variables
+	@if $font-size-root != null {
+		--#{$variable-prefix}root-font-size: #{$font-size-root};
+	}
+	--#{$variable-prefix}body-font-family: #{$font-family-base};
+	--#{$variable-prefix}body-font-size: #{$font-size-base};
+	--#{$variable-prefix}body-font-weight: #{$font-weight-base};
+	--#{$variable-prefix}body-line-height: #{$line-height-base};
+	--#{$variable-prefix}body-color: #{$body-color};
+	@if $body-text-align != null {
+		--#{$variable-prefix}body-text-align: #{$body-text-align};
+	}
+	--#{$variable-prefix}body-bg: #{$body-bg};
+
+	--#{$variable-prefix}link-color: var(--#{$variable-prefix}primary);
+	--#{$variable-prefix}link-decoration: underline;
+	--#{$variable-prefix}link-hover-color: var(--#{$variable-prefix}secondary);
+	--#{$variable-prefix}link-hover-decoration: null;
+
+	--#{$variable-prefix}paragraph-spacing: #{$paragraph-margin-bottom};
+
+	// stylelint-enable custom-property-empty-line-before
 	// stylelint-disable-next-line
 	--#{$variable-prefix}gutter-x: #{$grid-gutter-width};
 	// stylelint-disable-next-line
 	--#{$variable-prefix}gutter-y: #{$grid-gutter-width};
+	--#{$variable-prefix}row-gutter-y: calc(var(--#{$variable-prefix}gutter-y) * 2);
+	--#{$variable-prefix}section-gutter-y: calc(var(--#{$variable-prefix}gutter-y) * 3);
+	@each $breakpoint, $value in $container-widths {
+		$infix: breakpoint-infix($breakpoint);
+
+		--#{$variable-prefix}container#{$infix}-width: #{$value};
+		@include media-breakpoint-up($breakpoint) {
+			--#{$variable-prefix}container-width: #{$value};
+		}
+	}
 }
