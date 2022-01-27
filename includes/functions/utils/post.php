@@ -840,3 +840,31 @@ function rwp_post_has_children( $post = null ) {
 	}
 	return false;
 }
+
+/**
+ * Quick function to get a list of all posts of a certain type (cached).
+ *
+ * @param string $post_type  The post type to retrieve
+ * @param string $orderby    The order of the posts
+ * @param string $order      Ascending or Descending
+ * @param array  $args       Additional arguments to merge with the defaults
+ *
+ * @return WP_Query
+ */
+function rwp_post_type_query( $post_type, $orderby = 'menu_order', $order = 'ASC', $args = array() ) {
+	$query_args = array(
+		'post_type'      => array( $post_type ),
+		'post_status'    => array( 'publish' ),
+		'has_password'   => false,
+		'posts_per_page' => '-1',
+		'order'          => $order,
+		'orderby'        => $orderby,
+	);
+
+	$query_args = wp_parse_args( $args, $query_args );
+	$post_query = wp_cache_remember($post_type, function () use ( $query_args ) {
+		return new \WP_Query( $query_args );
+	}, 'post-types');
+
+	return $post_query;
+}
