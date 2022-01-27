@@ -665,6 +665,7 @@ function rwp_post_ancestors( $post = null ) {
 
 	return $ancestors;
 }
+
 /**
  * Find Root Page for deeply nested posts (That is not home page);
  *
