@@ -134,9 +134,14 @@ function rwp_get_page_for_post_type( $post_type = false ) {
 	if ( ! $post_type && in_the_loop() ) {
 		$post_type = get_post_type();
 	}
-	if ( $post_type && in_array( $post_type, get_post_types() ) ) {
-		return get_option( "page_for_{$post_type}", false );
+	if ( $post_type ) {
+		if ( 'post' === $post_type ) {
+				return rwp_get_blog_page();
+		} else if ( in_array( $post_type, get_post_types() ) ) {
+			return get_option( "page_for_{$post_type}", false );
+		}
 	}
+
 	return false;
 }
 
@@ -614,34 +619,42 @@ function rwp_post_ancestors( $post = null ) {
 	}
 
 	if ( is_array( $obj ) ) {
-		$subtype      = data_get( $obj, 'subtype', 'post' );
-		$post         = data_get( $obj, 'object', $post );
-		$id           = data_get( $obj, 'id', 0 );
-		$type         = data_get( $obj, 'type', 0 );
+		$subtype   = data_get( $obj, 'subtype', 'post' );
+		$post      = data_get( $obj, 'object', $post );
+		$id        = data_get( $obj, 'id', 0 );
+		$type      = data_get( $obj, 'type', 0 );
+		$post_type = $subtype;
 
-		if ( 'post' === $type ) {
-			if ( ! empty( $post ) ) {
+		if ( ! empty( $post ) ) {
+			if ( 'post' === $type ) {
 
-				$parents = get_ancestors( $id, $subtype );
+				if ( 'page' === $post_type ) {
+					$parents = get_ancestors( $id, $post_type );
 
-				if ( ! empty( $parents ) ) {
-					$ancestors = $ancestors->concat( array_reverse( $parents ) );
-				}
-
-				if ( 'post' === $subtype ) {
-					$parent = rwp_get_blog_page();
-					if ( $parent ) {
-						$ancestors->push( $parent );
+					if ( ! empty( $parents ) ) {
+						$ancestors = $ancestors->concat( array_reverse( $parents ) );
 					}
-				} elseif ( rwp_post_is_cpt( $id ) && rwp_get_option( 'cpt_options.page_for_cpt', false ) ) {
+				} else {
 					$parent = rwp_get_page_for_post_type( $subtype );
 					if ( $parent ) {
+						$parent = rwp_post_id( $parent );
+						$grandparents = get_ancestors( $parent );
+						$ancestors = $ancestors->concat( array_reverse( $grandparents ) );
 						$ancestors->push( $parent );
 					}
 				}
-			}
-		} else if ( 'taxonomy' === $type ) {
-			if ( ! empty( $post ) ) {
+			} else if ( 'term' === $type ) {
+				$taxonomy = get_taxonomy( $subtype );
+				$post_type = reset( $taxonomy->object_type );
+
+				$grandparent = rwp_get_page_for_post_type( $post_type ); // Associate the term beneath the cpt archive page
+
+				if ( $grandparent ) {
+					$grandparent = rwp_post_id( $grandparent );
+					$grandparents = get_ancestors( $grandparent );
+					$ancestors = $ancestors->concat( array_reverse( $grandparents ) );
+					$ancestors->push( $grandparent );
+				}
 
 				$parents = get_ancestors( $id, $subtype, $type );
 
