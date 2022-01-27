@@ -127,19 +127,21 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monito
 
 if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
     $rwp_lazysizes_version = '5.3.2';
-    $rwp_lazysizes_plugins = array(
-    'aspectratio' => true,
-    'print'       => true,
-    'video-embed' => true,
-    'progressive' => true,
-    'unload'      => true,
-    'object-fit'  => true,
-    'bgset'       => true,
-    'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
-    'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
-    'parent-fit'  => rwp_get_option('modules.lazysizes.parentfit', false),
-    'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false)
-    );
+	$rwp_lazysizes_plugins = array(
+		'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
+		'aspectratio' => true,
+		'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
+		'bgset'       => true,
+		'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
+		'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
+		'object-fit'  => true,
+		'parent-fit'  => rwp_get_option('modules.lazysizes.parentfit', false),
+		'print'       => true,
+		'progressive' => true,
+		'respimg'     => true,
+		'unload'      => true,
+		'video-embed' => true,
+	);
 
     $rwp_lazysizes_deps = array();
 

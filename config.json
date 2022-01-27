@@ -89,11 +89,29 @@
 		},
 		"plugins": {
 			"files": {
+				"alert": {
+					"alert": ["./js/plugins/alert.js", "./css/plugins/alert.scss"]
+				},
 				"modal": {
 					"modal": ["./js/plugins/modal.js", "./css/plugins/modal.scss"]
 				},
+				"offcanvas": {
+					"offcanvas": ["./js/plugins/offcanvas.js", "./css/plugins/offcanvas.scss"]
+				},
+				"popover": {
+					"popover": ["./js/plugins/popover.js", "./css/plugins/popover.scss"]
+				},
+				"scrollspy": {
+					"scrollspy": ["./js/plugins/scrollspy.js"]
+				},
 				"slider": {
 					"slider": ["./js/plugins/slider.js", "./css/plugins/slider.scss"]
+				},
+				"toast": {
+					"toast": ["./js/plugins/toast.js", "./css/plugins/toast.scss"]
+				},
+				"tooltip": {
+					"tooltip": ["./js/plugins/tooltip.js", "./css/plugins/tooltip.scss"]
 				}
 			}
 		},
@@ -113,6 +131,9 @@
 				},
 				"qm": {
 					"qm": ["./css/vendor/qm.scss"]
+				},
+				"reset": {
+					"reset": ["./css/reset.scss"]
 				},
 				"select2": {
 					"select2": ["./js/vendor/select2.js", "./css/vendor/select2.scss"]
