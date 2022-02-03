@@ -81,7 +81,7 @@ body {
 	text-size-adjust: 100%; // 3
 	-webkit-tap-highlight-color: rgba($black, 0); // 4
 	overflow-x: hidden;
-	text-rendering: optimizeLegibility !important;
+	text-rendering: optimizelegibility !important;
 	font-smoothing: antialiased;
 	-webkit-font-smoothing: antialiased !important;
 	-moz-osx-font-smoothing: grayscale;
@@ -116,8 +116,8 @@ hr {
 	height: 0; // 3
 	overflow: visible; // 4
 	margin: var(--#{$variable-prefix}paragraph-spacing) 0;
-	color: currentColor; // 1
-	background-color: currentColor;
+	color: currentcolor; // 1
+	background-color: currentcolor;
 	border: 0;
 
 	&:not([size]) {

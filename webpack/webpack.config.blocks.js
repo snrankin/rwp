@@ -64,7 +64,7 @@ modules = modules.module;
 // //webpackConfig = merge(baseConfig, wordPressConfig, webpackConfig);
 
 webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
-	if (plugin.constructor.name !== 'CleanWebpackPlugin' && plugin.constructor.name !== 'Plugin' && plugin.constructor.name !== 'MiniCssExtractPlugin' && plugin.constructor.name !== 'FixStyleWebpackPlugin') {
+	if (plugin.constructor.name !== 'CleanWebpackPlugin' && plugin.constructor.name !== 'Plugin' && plugin.constructor.name !== 'FixStyleWebpackPlugin') {
 		return plugin;
 	}
 	return false;

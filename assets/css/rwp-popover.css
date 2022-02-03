@@ -24,6 +24,7 @@
     line-break:auto;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     word-wrap:break-word;
     background-color:#fff;
     background-clip:padding-box;
@@ -136,6 +137,7 @@
     margin-bottom:0;
     font-size:18px;
     font-size:1.125rem;
+    line-height:calc(4px + 2ex);
     background-color:#f0f0f0;
     border-bottom:1px solid rgba(0, 0, 0, 0.2);
     border-top-left-radius:calc(0.3rem - 1px);

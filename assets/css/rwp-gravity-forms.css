@@ -4,6 +4,7 @@
 .form-label{
     margin-bottom:8px;
     margin-bottom:0.5rem;
+    line-height:calc(4px + 2ex);
 }
 
 .col-form-label{
@@ -11,14 +12,15 @@
     padding-bottom:calc(0.375rem + 1px);
     margin-bottom:0;
     font-size:inherit;
+    line-height:calc(4px + 2ex);
     line-height:1.5;
 }
 
 .col-form-label-lg{
     padding-top:calc(0.5rem + 1px);
     padding-bottom:calc(0.5rem + 1px);
-    font-size:14.22222px;
-    font-size:0.8888888889rem;
+    font-size:calc(1.25156rem + 0.01875vw);
+    line-height:calc(4px + 2ex);
 }
 
 .col-form-label-sm{
@@ -26,12 +28,14 @@
     padding-bottom:calc(0.25rem + 1px);
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
 }
 
 .form-text{
     margin-top:4px;
     margin-top:0.25rem;
     font-size:0.875em;
+    line-height:calc(4px + 2ex);
     color:#515155;
 }
 
@@ -51,6 +55,7 @@ textarea{
     padding:0.375rem 0.75rem;
     font-size:18px;
     font-size:1.125rem;
+    line-height:calc(4px + 2ex);
     font-weight:400;
     line-height:1.5;
     color:#161616;
@@ -276,6 +281,7 @@ textarea:hover:not(:disabled):not([readonly])::-webkit-file-upload-button{
     padding:0.25rem 0.5rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.2rem;
 }
 .form-control-sm::-webkit-file-upload-button{
@@ -313,8 +319,8 @@ textarea:hover:not(:disabled):not([readonly])::-webkit-file-upload-button{
     min-height:calc(1.5em + 1rem + 2px);
     padding:8px 16px;
     padding:0.5rem 1rem;
-    font-size:14.22222px;
-    font-size:0.8888888889rem;
+    font-size:calc(1.25156rem + 0.01875vw);
+    line-height:calc(4px + 2ex);
     border-radius:0.3rem;
 }
 .form-control-lg::-webkit-file-upload-button{
@@ -386,6 +392,7 @@ textarea.form-control-lg{
     -moz-padding-start:calc(0.75rem - 3px);
     font-size:18px;
     font-size:1.125rem;
+    line-height:calc(4px + 2ex);
     font-weight:400;
     line-height:1.5;
     color:#161616;
@@ -428,6 +435,7 @@ textarea.form-control-lg{
     padding-left:0.5rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.2rem;
 }
 
@@ -438,8 +446,8 @@ textarea.form-control-lg{
     padding-bottom:0.5rem;
     padding-left:16px;
     padding-left:1rem;
-    font-size:14.22222px;
-    font-size:0.8888888889rem;
+    font-size:calc(1.25156rem + 0.01875vw);
+    line-height:calc(4px + 2ex);
     border-radius:0.3rem;
 }
 
@@ -852,6 +860,7 @@ textarea.form-control-lg{
     padding:0.375rem 0.75rem;
     font-size:18px;
     font-size:1.125rem;
+    line-height:calc(4px + 2ex);
     font-weight:400;
     line-height:1.5;
     color:#161616;
@@ -878,8 +887,8 @@ textarea.form-control-lg{
 .input-group-lg > .btn{
     padding:8px 16px;
     padding:0.5rem 1rem;
-    font-size:14.22222px;
-    font-size:0.8888888889rem;
+    font-size:calc(1.25156rem + 0.01875vw);
+    line-height:calc(4px + 2ex);
     border-radius:0.3rem;
 }
 
@@ -901,6 +910,7 @@ textarea.form-control-lg{
     padding:0.25rem 0.5rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.2rem;
 }
 
@@ -933,6 +943,7 @@ textarea.form-control-lg{
     margin-top:4px;
     margin-top:0.25rem;
     font-size:0.875em;
+    line-height:calc(4px + 2ex);
     color:#198754;
 }
 
@@ -948,6 +959,7 @@ textarea.form-control-lg{
     margin-top:0.1rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     color:#fff;
     background-color:rgba(25, 135, 84, 0.9);
     border-radius:0.25rem;
@@ -1106,6 +1118,7 @@ textarea.is-valid{
     margin-top:4px;
     margin-top:0.25rem;
     font-size:0.875em;
+    line-height:calc(4px + 2ex);
     color:#800000;
 }
 
@@ -1121,6 +1134,7 @@ textarea.is-valid{
     margin-top:0.1rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     color:#fff;
     background-color:rgba(128, 0, 0, 0.9);
     border-radius:0.25rem;
@@ -1516,6 +1530,29 @@ textarea.gfield_list_group_item > textarea{
     border-radius:0 !important;
     background-color:transparent !important;
 }
+@media (min-width: 1200px){
+    .col-form-label-lg{
+        font-size:1.265625rem;
+    }
+    .form-control-lg{
+        font-size:1.265625rem;
+    }
+    .input-group-lg > .form-control, .input-group-lg > input[type=text],
+.input-group-lg > input[type=date],
+.input-group-lg > input[type=email],
+.input-group-lg > input[type=number],
+.input-group-lg > input[type=password],
+.input-group-lg > input[type=search],
+.input-group-lg > input[type=tel],
+.input-group-lg > input[type=file],
+.input-group-lg > input[type=url],
+.input-group-lg > textarea,
+.input-group-lg > .form-select,
+.input-group-lg > select,
+.input-group-lg > .input-group-text,
+.input-group-lg > .btn{
+        font-size:1.265625rem;
+    }}
 @media (prefers-reduced-motion: reduce){
     .form-range::-moz-range-thumb{
         -moz-transition:none;

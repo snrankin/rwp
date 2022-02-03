@@ -18,7 +18,7 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 
 	class Info extends \QM_Output_Html {
 
-		public function __construct( \QM_Collector $collector, $output, $title ) {
+		public function __construct( \QM_Collector $collector, $output = array(), $title = '' ) {
 			parent::__construct( $collector );
 
 			$this->title = $title;

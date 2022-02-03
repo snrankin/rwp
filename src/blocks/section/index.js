@@ -18,13 +18,11 @@ import { sectionIcon as icon } from '../global/icons';
 import edit from './edit';
 import metadata from './block.json';
 import save from './save';
-import variations from './variations';
 
 const { name } = metadata;
 
 const settings = Object.assign(metadata, {
 	icon,
-	variations,
 	edit,
 	save,
 });

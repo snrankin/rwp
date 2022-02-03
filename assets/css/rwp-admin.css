@@ -153,6 +153,7 @@ html{
 
 .figure-caption{
     font-size:0.875em;
+    line-height:calc(4px + 2ex);
     color:#6c757d;
 }
 
@@ -201,6 +202,7 @@ html{
 
 .media-caption{
     font-size:0.875em;
+    line-height:calc(4px + 2ex);
 }
 
 .is-bg{
@@ -265,13 +267,6 @@ html{
     background-repeat:no-repeat;
     background-position:center center;
     -webkit-overflow-scrolling:touch;
-}
-.media-content.rounded-circle:not(.embed-responsive), .rounded-circle .media-content:not(.embed-responsive){
-    border-radius:100%;
-    padding-top:100% !important;
-}
-.media-content br{
-    display:none !important;
 }
 
 .media-spacer{
@@ -371,6 +366,7 @@ img{
     padding:0.375rem 0.75rem;
     font-size:16px;
     font-size:1rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.25rem;
     transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     display:inline-flex;
@@ -2061,6 +2057,7 @@ img{
     padding:0.5rem 1rem;
     font-size:20px;
     font-size:1.25rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.3rem;
 }
 
@@ -2069,6 +2066,7 @@ img{
     padding:0.25rem 0.5rem;
     font-size:14px;
     font-size:0.875rem;
+    line-height:calc(4px + 2ex);
     border-radius:0.2rem;
 }
 .btn[aria-expanded=true] > .btn-icon .icon-opened, .btn[aria-selected=true] > .btn-icon .icon-opened, .btn.active > .btn-icon .icon-opened{

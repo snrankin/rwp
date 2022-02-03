@@ -70,7 +70,7 @@ class QM extends Singleton {
 			$collector = $collectors::get( $id );
 			if ( $collector ) {
 				$output_class = __NAMESPACE__ . "\\QM\\Output\\$panel";
-				$output[ $id ] = new $output_class( $collector, $this->output[ $id ], $name );
+				$output[ $id ] = new $output_class( $collector, $output[ $id ], $name );
 			}
 		}
 

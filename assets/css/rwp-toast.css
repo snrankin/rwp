@@ -6,6 +6,7 @@
     max-width:100%;
     font-size:14px;
     font-size:0.875rem;
+    line-height:calc(4px + 2ex);
     pointer-events:auto;
     background-color:rgba(255, 255, 255, 0.85);
     background-clip:padding-box;

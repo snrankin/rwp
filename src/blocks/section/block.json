@@ -1,50 +1,45 @@
 {
 	"apiVersion": 2,
-	"name": "rwp/section",
-	"title": "Page Section",
-	"category": "design",
 	"attributes": {
-		"innerClasses": {
-			"type": "string",
-			"default": ""
-		},
 		"backgroundColor": {
 			"type": "string"
 		},
+		"bgImage": {
+			"type": "object"
+		},
 		"bgImageId": {
-			"type": "number",
-			"default": 0
+			"type": "number"
 		},
 		"bgImageUrl": {
-			"type": "string",
-			"default": ""
+			"type": "string"
 		},
-		"bgImageSrcset": {
-			"type": "string",
-			"default": ""
+		"innerClasses": {
+			"attribute": "class"
 		},
-		"bgImageWidth": {
-			"type": "number",
-			"default": 0
+		"videoHost": {
+			"type": "string"
 		},
-		"bgImageHeight": {
-			"type": "number",
-			"default": 0
+		"videoId": {
+			"type": "string"
 		},
-		"mediaId": {
-			"type": "number",
-			"default": 0
-		},
-		"mediaUrl": {
-			"type": "string",
-			"default": ""
+		"videoUrl": {
+			"type": "string"
 		}
 	},
+	"category": "design",
+	"name": "rwp/section",
 	"supports": {
 		"anchor": true,
 		"color": {
 			"background": true,
-			"gradient": true
+			"gradient": true,
+			"link": true,
+			"text": false
+		},
+		"spacing": {
+			"margin": ["top", "bottom"],
+			"padding": ["top", "bottom"]
 		}
-	}
+	},
+	"title": "Page Section"
 }

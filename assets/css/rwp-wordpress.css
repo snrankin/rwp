@@ -70,7 +70,7 @@ body.rwp:not(.wp-admin).admin-bar #wpadminbar .quicklinks #wp-admin-bar-top-seco
 
 hr.wp-block-separator{
     border-color:currentColor;
-    margin-top:3.375ex;
+    margin-top:1em;
 }
 
 .wp-block-image.is-style-rounded > div,

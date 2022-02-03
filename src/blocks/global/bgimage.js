@@ -13,12 +13,7 @@
 // Load dependencies
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const {
-	InspectorControls,
-	InnerBlocks,
-	MediaUpload,
-	MediaUploadCheck,
-} = wp.editor;
+const { InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck } = wp.editor;
 const { PanelBody, Button, ResponsiveWrapper, Spinner } = wp.components;
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
@@ -29,14 +24,7 @@ class ImageSelectorEdit extends Component {
 	render() {
 		const { attributes, setAttributes, bgImage, className } = this.props;
 		const { bgImageId } = attributes;
-		const instructions = (
-			<p>
-				{__(
-					'To edit the background image, you need permission to upload media.',
-					'image-selector-example'
-				)}
-			</p>
-		);
+		const instructions = <p>{__('To edit the background image, you need permission to upload media.', 'image-selector-example')}</p>;
 
 		let styles = {};
 		if (bgImage && bgImage.source_url) {
@@ -58,58 +46,21 @@ class ImageSelectorEdit extends Component {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<PanelBody
-						title={__(
-							'Background settings',
-							'image-selector-example'
-						)}
-						initialOpen={true}
-					>
+					<PanelBody title={__('Background settings', 'image-selector-example')} initialOpen={true}>
 						<div className="wp-block-image-selector-example-image">
 							<MediaUploadCheck fallback={instructions}>
 								<MediaUpload
-									title={__(
-										'Background image',
-										'image-selector-example'
-									)}
+									title={__('Background image', 'image-selector-example')}
 									onSelect={onUpdateImage}
 									allowedTypes={ALLOWED_MEDIA_TYPES}
 									value={bgImageId}
 									render={({ open }) => (
-										<Button
-											className={
-												!bgImageId
-													? 'editor-post-featured-image__toggle'
-													: 'editor-post-featured-image__preview'
-											}
-											onClick={open}
-										>
-											{!bgImageId &&
-												__(
-													'Set background image',
-													'image-selector-example'
-												)}
-											{!!bgImageId && !bgImage && (
-												<Spinner />
-											)}
+										<Button className={!bgImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview'} onClick={open}>
+											{!bgImageId && __('Set background image', 'image-selector-example')}
+											{!!bgImageId && !bgImage && <Spinner />}
 											{!!bgImageId && bgImage && (
-												<ResponsiveWrapper
-													naturalWidth={
-														bgImage.media_details
-															.width
-													}
-													naturalHeight={
-														bgImage.media_details
-															.height
-													}
-												>
-													<img
-														src={bgImage.source_url}
-														alt={__(
-															'Background image',
-															'image-selector-example'
-														)}
-													/>
+												<ResponsiveWrapper naturalWidth={bgImage.media_details.width} naturalHeight={bgImage.media_details.height}>
+													<img src={bgImage.source_url} alt={__('Background image', 'image-selector-example')} />
 												</ResponsiveWrapper>
 											)}
 										</Button>
@@ -119,23 +70,13 @@ class ImageSelectorEdit extends Component {
 							{!!bgImageId && bgImage && (
 								<MediaUploadCheck>
 									<MediaUpload
-										title={__(
-											'Background image',
-											'image-selector-example'
-										)}
+										title={__('Background image', 'image-selector-example')}
 										onSelect={onUpdateImage}
 										allowedTypes={ALLOWED_MEDIA_TYPES}
 										value={bgImageId}
 										render={({ open }) => (
-											<Button
-												onClick={open}
-												isDefault
-												isLarge
-											>
-												{__(
-													'Replace background image',
-													'image-selector-example'
-												)}
+											<Button onClick={open} isDefault isLarge>
+												{__('Replace background image', 'image-selector-example')}
 											</Button>
 										)}
 									/>
@@ -143,15 +84,8 @@ class ImageSelectorEdit extends Component {
 							)}
 							{!!bgImageId && (
 								<MediaUploadCheck>
-									<Button
-										onClick={onRemoveImage}
-										isLink
-										isDestructive
-									>
-										{__(
-											'Remove background image',
-											'image-selector-example'
-										)}
+									<Button onClick={onRemoveImage} isLink isDestructive>
+										{__('Remove background image', 'image-selector-example')}
 									</Button>
 								</MediaUploadCheck>
 							)}
@@ -166,13 +100,4 @@ class ImageSelectorEdit extends Component {
 	}
 }
 
-export default compose(
-	withSelect((select, props) => {
-		const { getMedia } = select('core');
-		const { bgImageId } = props.attributes;
-
-		return {
-			bgImage: bgImageId ? getMedia(bgImageId) : null,
-		};
-	})
-)(ImageSelectorEdit);
+export default ImageSelectorEdit;

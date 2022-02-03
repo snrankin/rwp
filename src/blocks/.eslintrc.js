@@ -1,14 +1,20 @@
+/**
+ * ============================================================================
+ * .eslintrc
+ *
+ * @package
+ * @since     1.0.1
+ * @version   1.0.1
+ * @author    RIESTER <wordpress@riester.com>
+ * @copyright 2022 RIESTER
+ * ==========================================================================
+ */
+
 module.exports = {
-	root: true,
-	extends: ['eslint:recommended', 'prettier'],
-	ignorePatterns: ['assets/js/*.js', 'assets/src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
+	extends: ['plugin:@wordpress/eslint-plugin/recommended', 'prettier'],
 	parser: '@babel/eslint-parser',
+	ignorePatterns: ['global/*'],
 	globals: {
-		rwp: true,
-		document: true,
-		fancybox: true,
-		tns: true,
-		select2: true,
 		wp: true,
 		wpApiSettings: true,
 	},

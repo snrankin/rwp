@@ -4,275 +4,184 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================
  */
 
+/* WordPress Dependencies */
+
 import { __ } from '@wordpress/i18n';
-import TokenList from '@wordpress/token-list';
-import { get, omit, pick, isEmpty, isUndefined, isNil } from 'lodash';
-const metadata = require('./block.json');
-const styles = metadata.styles;
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	Button,
-	ResponsiveWrapper,
-	Spinner,
-	Icon,
-	withNotices,
-} from '@wordpress/components';
-import {
-	compose,
-	createHigherOrderComponent,
-	withState,
-} from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
+import { PanelBody, PanelRow, TextControl, Button, ResponsiveWrapper, Spinner } from '@wordpress/components';
+import { InnerBlocks, InspectorControls, useBlockProps, MediaUpload, withColors, MediaUploadCheck } from '@wordpress/block-editor';
+import { useSelect, withSelect } from '@wordpress/data';
 
-import {
-	InnerBlocks,
-	InspectorControls,
-	BlockControls,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-	withColors,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-} from '@wordpress/block-editor';
+/* Other External Dependencies */
 
-import { useSelect, getSelectedBlock, withSelect } from '@wordpress/data';
+import { isNil } from 'lodash';
 
+/* Internal Dependencies */
+
+import { classNames, hasBackgroundClass } from '../global/helpers';
 import './edit.scss';
 
-import {
-	classNames,
-	uniqueClasses,
-	updateClassesFromAtts,
-	hasBackgroundClass,
-} from '../global/helpers';
-import { RWPBGImage } from '../global/images';
+/* Block Constants */
+
 const ALLOWED_MEDIA_TYPES = ['image'];
-const BLOCK_TEMPLATE = [['rwp/container', {}, [['rwp/row', {}]]]];
-const ALLOWED_BLOCKS = ['rwp/container'];
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/section',
-	(className, blockName) => {
-		if (blockName !== 'rwp/section') {
-			return className;
-		}
+/* Block Filters */
 
-		className = classNames('rwp', 'section-wrapper');
-
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/section', (className, blockName) => {
+	if (blockName !== 'rwp/section') {
 		return className;
 	}
-);
+
+	className = classNames('rwp', 'section-wrapper');
+
+	return className;
+});
+
+/* Compose Function */
 
 function sectionEdit(props) {
-	const {
-		attributes,
-		setAttributes,
-		clientId,
-		isSelected,
-		hasInnerBlocks,
-		blockType,
-		defaultVariation,
-		variations,
-		name,
-		backgroundColor,
-		setBackgroundColor,
-		type,
-		media,
-		bgImage,
-	} = props;
-	const {
-		innerClasses,
-		bgImageId,
-		bgImageUrl,
-		bgImageWidth,
-		bgImageHeight,
-		className,
-	} = attributes;
-
-	const innerBlocksProps = useInnerBlocksProps(
-		{
-			className: classNames('section-inner', innerClasses),
-		},
-		{
-			templateLock: false,
-			allowedBlocks: ALLOWED_BLOCKS,
-			template: BLOCK_TEMPLATE,
-			renderAppender: hasInnerBlocks
-				? undefined
-				: InnerBlocks.ButtonBlockAppender,
-		}
-	);
+	const { attributes, setAttributes, backgroundColor } = props;
+	const { innerClasses, bgImageId, bgImage, className, videoUrl } = attributes;
 
 	let classes = classNames(className);
 	classes = hasBackgroundClass(bgImageId, backgroundColor, className);
 
-	const bgImageObj = useSelect(
-		(select) => {
-			return select('core').getMedia(bgImageId);
-		},
-		[bgImageId]
-	);
-
-	const removeMedia = () => {
+	const onRemoveMedia = () => {
 		props.setAttributes({
-			mediaId: 0,
-			mediaUrl: '',
+			bgImage: null,
+			bgImageId: 0,
+			bgImageUrl: '',
 		});
 	};
 
 	const onSelectMedia = (media) => {
 		props.setAttributes({
-			mediaId: media.id,
-			mediaUrl: media.url,
+			bgImage: media,
+			bgImageId: media.id,
+			bgImageUrl: media.url,
 		});
 	};
 
+	const onVideoInput = (val) => {
+		let vidID = ''; // eslint-disable-line
+		let host = ''; // eslint-disable-line
+		if (!isNil(val)) {
+			const videoIdRE = new RegExp(/(?:\.(?:net|com|org)\/(?:[^/]+\/.+\/|(?:v(?:ideo)?|e(?:mbed)?|media(?:s)?)\/|.*[?&]v=)|youtu\.be\/)(?<videoID>[^."&?/\s\n\r\t\0]{9,11})/);
+			const videoMatches = val.match(videoIdRE);
+			if (!isNil(videoMatches[1])) {
+				vidID = videoMatches[1];
+			}
+			const videoHostRE = new RegExp(/(youtu(.?be)?|vimeo|wistia|wi\.st)/);
+			const hostMatches = val.match(videoHostRE);
+			if (!isNil(hostMatches[0])) {
+				host = hostMatches[0];
+				if (host === 'youtu.be') {
+					host = 'youtube';
+				}
+			}
+		}
+
+		props.setAttributes({
+			videoUrl: val,
+			videoHost: host,
+			videoId: vidID,
+		});
+	};
+
+	// eslint-disable-next-line
 	const blockProps = useBlockProps({
 		className: classes,
-		style: {
-			backgroundImage:
-				attributes.mediaUrl != ''
-					? 'url("' + attributes.mediaUrl + '")'
-					: 'none',
-		},
 	});
-
-	console.log(bgImageObj);
 
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody
-					title={__('Section Settings', 'rwp')}
-					initialOpen={true}
-				>
+				<PanelBody title={__('Section Settings', 'rwp')} initialOpen={true}>
 					<PanelRow>
 						<div className="editor-post-featured-image">
 							<MediaUploadCheck>
 								<MediaUpload
 									onSelect={onSelectMedia}
-									value={attributes.mediaId}
+									value={bgImageId}
 									allowedTypes={['image']}
 									render={({ open }) => (
-										<Button
-											className={
-												attributes.mediaId == 0
-													? 'editor-post-featured-image__toggle'
-													: 'editor-post-featured-image__preview'
-											}
-											onClick={open}
-										>
-											{attributes.mediaId == 0 &&
-												__('Choose an image', 'awp')}
-											{props.media != undefined && (
-												<ResponsiveWrapper
-													naturalWidth={
-														props.media
-															.media_details.width
-													}
-													naturalHeight={
-														props.media
-															.media_details
-															.height
-													}
-												>
-													<img
-														src={
-															props.media
-																.source_url
-														}
-													/>
+										<Button className={!bgImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview'} onClick={open}>
+											{!bgImageId && __('Set background image', 'image-selector-example')}
+											{!!bgImageId && !bgImage && <Spinner />}
+											{!!bgImageId && bgImage && (
+												<ResponsiveWrapper naturalWidth={bgImage.media_details.width} naturalHeight={bgImage.media_details.height}>
+													<img src={bgImage.source_url} alt={__('Background image', 'image-selector-example')} />
 												</ResponsiveWrapper>
 											)}
 										</Button>
 									)}
 								/>
 							</MediaUploadCheck>
-							{attributes.mediaId != 0 && (
+							{!!bgImageId && bgImage && (
 								<MediaUploadCheck>
 									<MediaUpload
-										title={__('Replace image', 'awp')}
-										value={attributes.mediaId}
+										title={__('Background image', 'image-selector-example')}
 										onSelect={onSelectMedia}
-										allowedTypes={['image']}
+										allowedTypes={ALLOWED_MEDIA_TYPES}
+										value={bgImageId}
 										render={({ open }) => (
-											<Button onClick={open} isDefault>
-												{__('Replace image', 'awp')}
+											<Button onClick={open} isDefault isLarge>
+												{__('Replace background image', 'image-selector-example')}
 											</Button>
 										)}
 									/>
 								</MediaUploadCheck>
 							)}
-							{attributes.mediaId != 0 && (
+							{!!bgImageId && (
 								<MediaUploadCheck>
-									<Button
-										onClick={removeMedia}
-										isLink
-										isDestructive
-									>
-										{__('Remove image', 'awp')}
+									<Button onClick={onRemoveMedia} isLink isDestructive>
+										{__('Remove background image', 'image-selector-example')}
 									</Button>
 								</MediaUploadCheck>
 							)}
 						</div>
 					</PanelRow>
 					<PanelRow>
-						<TextControl
-							label={__('Inner Classes', 'rwp')}
-							value={innerClasses}
-							onChange={(val) =>
-								setAttributes({ innerClasses: val })
-							}
-						/>
+						<TextControl label={__('Video Url', 'rwp')} value={videoUrl} onChange={onVideoInput} />
+					</PanelRow>
+					<PanelRow>
+						<TextControl label={__('Inner Classes', 'rwp')} value={innerClasses} onChange={(val) => setAttributes({ innerClasses: val })} />
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div {...innerBlocksProps} />
+			<InnerBlocks />
 		</div>
 	);
 }
 
 export default compose(
 	withSelect((select, ownProps) => {
-		const { clientId, name, setAttributes } = ownProps;
-		const { getBlockOrder, getBlock } =
-			select('core/block-editor') || select('core/editor');
-		const { getBlockVariations, getBlockType, getDefaultBlockVariation } =
-			select('core/blocks');
+		const { clientId, name } = ownProps;
+		const { getBlock } = select('core/block-editor') || select('core/editor');
+		const { getBlockVariations, getBlockType, getDefaultBlockVariation } = select('core/blocks');
 		const { bgImageId } = ownProps.attributes;
 
 		const block = getBlock(clientId);
 
-		const hasInnerBlocks = useSelect(
-			(select) => {
-				return !!(block && block.innerBlocks.length);
-			},
-			[block]
-		);
+		const hasInnerBlocks = useSelect(() => {
+			return !!(block && block.innerBlocks.length);
+		}, [block]);
 
-		const bgImage = useSelect(
-			(select) => {
-				return select('core').getMedia(bgImageId);
-			},
-			[bgImageId]
-		);
+		const bgImage = useSelect(() => {
+			return select('core').getMedia(bgImageId);
+		}, [bgImageId]);
 
 		return {
 			blockType: getBlockType(name),
 			bgImage,
-			media: ownProps.attributes.mediaId
-				? select('core').getMedia(ownProps.attributes.mediaId)
-				: undefined,
+			media: ownProps.attributes.bgImageId ? select('core').getMedia(ownProps.attributes.bgImageId) : undefined,
 			defaultVariation: getDefaultBlockVariation(name, 'block'),
 			variations: getBlockVariations(name, 'block'),
 			hasInnerBlocks,

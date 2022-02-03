@@ -4587,44 +4587,41 @@ readers do not read off random characters that represent icons */
 /*!********************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./css/vendor/font-awesome.scss ***!
   \********************************************************************************************************************************************************************************************************************************************************/
-@font-face {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.eot);
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-regular-400.svg#fontawesome) format("svg");
+@font-face{
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.eot);
+    font-weight:400;
+    font-family:"Font Awesome 5 Free";
+    font-family:"Font Awesome 5 Free";
+    font-style:normal;
+    font-weight:900;
+    font-display:block;
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.eot);
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-solid-900.svg#fontawesome) format("svg");
 }
-@font-face {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    font-display: block;
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.eot);
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-solid-900.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-solid-900.svg#fontawesome) format("svg");
-}
-@font-face {
-    font-family: "Font Awesome 5 Brands";
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.eot);
-    src: url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-brands-400.svg#fontawesome) format("svg");
+@font-face{
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-regular-400.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-regular-400.svg#fontawesome) format("svg");
+    font-style:normal;
+    font-family:"Font Awesome 5 Brands";
+    font-style:normal;
+    font-weight:400;
+    font-display:block;
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.eot);
+    src:url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.woff2) format("woff2"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.woff) format("woff"), url(/wp-content/plugins/rwp/assets/fonts/fa-brands-400.ttf) format("truetype"), url(/wp-content/plugins/rwp/assets/imgs/fa-brands-400.svg#fontawesome) format("svg");
 }
 .fa,
-.fas {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
+.fas{
+    font-family:"Font Awesome 5 Free";
+    font-weight:900;
 }
 
-.far {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
+.far{
+    font-family:"Font Awesome 5 Free";
+    font-weight:400;
 }
 
-.fab {
-    font-family: "Font Awesome 5 Brands";
-    font-weight: 400;
+.fab{
+    font-family:"Font Awesome 5 Brands";
+    font-weight:400;
 }
 
 /*# sourceMappingURL=rwp-font-awesome.css.map*/
