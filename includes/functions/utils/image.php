@@ -14,6 +14,9 @@
 use RWP\Components\Element;
 use RWP\Components\Html;
 use RWP\Components\Image;
+use RWP\Components\SVG;
+use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
+
 /**
  * Get all the registered image sizes along with their dimensions
  *
@@ -24,7 +27,7 @@ use RWP\Components\Image;
  * @return array $image_sizes The image sizes
  */
 function rwp_registered_image_sizes() {
-     $wp_additional_image_sizes = wp_get_additional_image_sizes();
+    $wp_additional_image_sizes = wp_get_additional_image_sizes();
 
     $sizes = array();
     $registered_sizes = get_intermediate_image_sizes();
@@ -259,11 +262,18 @@ function rwp_get_srcset( $id, $size = 'full' ) {
 	return false;
 }
 
-// @ Has Dimensions
+/**
+ * Check if an image has a width and a height
+ * @param mixed $width
+ * @param mixed $height
+ * @return bool
+ */
 function rwp_image_has_dimensions( $width = null, $height = null ) {
 	if ( ( ! empty( $width ) && intval( $width ) != 0 ) && ( ! empty( $height ) && intval( $height ) != 0 ) ) {
 		return true;
-    }
+    } else {
+		return false;
+	}
 }
 
 /**
@@ -713,4 +723,50 @@ function rwp_image_attrs( $attr = array(), $attachment = 0, $size = 'full' ) {
 	}
 
 	return $attr;
+}
+
+/**
+ * Base64 encode an image
+ *
+ * @param mixed $image
+ * @return string
+ * @throws DOMException
+ * @throws InvalidArgumentException
+ * @throws FileNotFoundException
+ */
+
+function rwp_encode_img( $image ) {
+	$mime = '';
+	if ( rwp_is_component( $image, 'SVG' ) ) {
+		/**
+		 * @var SVG $image
+		 */
+		$image = $image->html();
+		$mime = 'svg';
+	} else if ( rwp_is_component( $image, 'Image' ) ) {
+		/**
+		 * @var Image $image
+		 */
+		$image = $image->html();
+		$mime = rwp_extract_img_src( $image );
+		$mime = mime_content_type( $mime );
+	} else {
+		if ( is_string( $image ) ) {
+			$mime = mime_content_type( $image );
+			if ( rwp_file_exists( $image ) ) {
+				$image = rwp_filesystem()->get_contents( $image );
+			}
+		}
+	}
+
+	if ( is_string( $image ) ) {
+
+		// Read image path, convert to base64 encoding
+		$image_data = base64_encode( $image );
+		$src = 'data:' . $mime . ';base64,' . $image_data;
+		return $src;
+    }
+
+	return '';
+
 }
