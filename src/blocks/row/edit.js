@@ -4,33 +4,27 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================
  */
 
 import { __ } from '@wordpress/i18n';
-import { get, times } from 'lodash';
+import { isNil, get } from 'lodash';
 import {
 	RangeControl,
 	PanelBody,
 	PanelRow,
 	ToggleControl,
 } from '@wordpress/components';
-import {
-	compose,
-	createHigherOrderComponent,
-	withState,
-} from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
 
 import {
 	InnerBlocks,
 	BlockControls,
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
-	BlockVerticalAlignmentToolbar,
 	InspectorControls,
 	useBlockProps,
 	__experimentalBlockVariationPicker as VariationPicker,
@@ -43,22 +37,7 @@ import { withSelect, useSelect } from '@wordpress/data';
 
 //import './edit.scss';
 
-import {
-	vAlignStart,
-	vAlignCenter,
-	vAlignEnd,
-	vStretch,
-	hStretch,
-	hAlignStart,
-	hAlignCenter,
-	hAlignEnd,
-	vDist,
-	desktopIcon,
-	laptopIcon,
-	tabletLandscapeIcon,
-	tabletPortraitIcon,
-	mobileIcon,
-} from '../global/icons';
+import { vStretch, hAlignStart } from '../global/icons';
 
 import {
 	classNames,
@@ -144,7 +123,7 @@ export function rowClasses(attributes) {
 		classes = updateClassesFromAtts('', classes, /row-cols-xl-[\d|\w]+/);
 	}
 
-	if (hAlign != undefined && hAlign !== 'none' && hAlign !== '') {
+	if (!isNil(hAlign) && hAlign !== 'none' && hAlign !== '') {
 		classes = updateClassesFromAtts(
 			hAlign,
 			classes,
@@ -158,7 +137,7 @@ export function rowClasses(attributes) {
 		);
 	}
 
-	if (vAlign != undefined && vAlign !== 'none' && vAlign !== '') {
+	if (!isNil(vAlign) && vAlign !== 'none' && vAlign !== '') {
 		classes = updateClassesFromAtts(
 			vAlign,
 			classes,
@@ -219,12 +198,10 @@ function Edit(props) {
 		attributes,
 		setAttributes,
 		clientId,
-		isSelected,
 		hasInnerBlocks,
 		blockType,
 		defaultVariation,
 		variations,
-		name,
 	} = props;
 	const {
 		noGutters,
@@ -235,7 +212,6 @@ function Edit(props) {
 		rowColsMl,
 		rowColsMd,
 		rowColsMs,
-		className,
 	} = attributes;
 
 	const classes = rowClasses(attributes);

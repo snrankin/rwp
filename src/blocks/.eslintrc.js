@@ -3,8 +3,8 @@
  * .eslintrc
  *
  * @package
- * @since     1.0.1
- * @version   1.0.1
+ * @since     1.0.0
+ * @version   1.0.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2022 RIESTER
  * ==========================================================================

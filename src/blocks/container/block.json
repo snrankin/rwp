@@ -1,39 +1,35 @@
 {
-    "apiVersion": 2,
-    "name": "rwp/container",
-    "title": "Container",
-    "category": "design",
-    "attributes": {
-        "fluidSm": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluidMs": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluidMd": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluidMl": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluidLg": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluidXl": {
-            "type": "boolean",
-            "default": false
-        },
-        "fluid": {
-            "type": "boolean",
-            "default": false
-        }
-    },
-    "supports": {
-        "anchor": true
-    }
+	"apiVersion": 2,
+	"attributes": {
+		"fluid": {
+			"default": false,
+			"type": "boolean"
+		},
+		"fluidLg": {
+			"default": false,
+			"type": "boolean"
+		},
+		"fluidMd": {
+			"default": false,
+			"type": "boolean"
+		},
+		"fluidSm": {
+			"default": false,
+			"type": "boolean"
+		},
+		"fluidXXl": {
+			"default": false,
+			"type": "boolean"
+		},
+		"fluidXl": {
+			"default": false,
+			"type": "boolean"
+		}
+	},
+	"category": "design",
+	"name": "rwp/container",
+	"supports": {
+		"anchor": true
+	},
+	"title": "Container"
 }

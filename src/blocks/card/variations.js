@@ -4,8 +4,8 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    Sam Rankin <srankin@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================

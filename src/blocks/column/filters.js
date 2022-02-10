@@ -4,8 +4,8 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================
@@ -480,10 +480,11 @@ wp.hooks.addFilter(
 				const colWidth = getColWidth(attributes, 'number');
 				props.attributes.width = colWidth;
 				props.attributes.sizeXl = getColWidth(attributes);
-				if (props.style !== undefined) {
-					props.style.flexBasis = colWidth;
+
+				if (props.attributes.style !== undefined) {
+					props.attributes.style.flexBasis = colWidth;
 				} else {
-					props.style = {
+					props.attributes.style = {
 						flexBasis: colWidth,
 					};
 				}

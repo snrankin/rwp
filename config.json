@@ -57,6 +57,10 @@
 				{
 					"from": "../node_modules/@fortawesome/fontawesome-free/sprites/*",
 					"to": "imgs/[name][ext]"
+				},
+				{
+					"from": "./imgs/*",
+					"to": "imgs/[name][ext]"
 				}
 			],
 			"files": {

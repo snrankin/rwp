@@ -11,28 +11,25 @@
  * ==========================================================================
  */
 
-/* WordPress Dependencies */
-
 import { __ } from '@wordpress/i18n';
-import { compose } from '@wordpress/compose';
-import { PanelBody, PanelRow, TextControl, Button, ResponsiveWrapper, Spinner } from '@wordpress/components';
-import { InnerBlocks, InspectorControls, useBlockProps, MediaUpload, withColors, MediaUploadCheck } from '@wordpress/block-editor';
-import { useSelect, withSelect } from '@wordpress/data';
-
-/* Other External Dependencies */
-
 import { isNil } from 'lodash';
 
-/* Internal Dependencies */
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { compose } from '@wordpress/compose';
 
-import { classNames, hasBackgroundClass } from '../global/helpers';
+// eslint-disable-next-line
+import { InnerBlocks, InspectorControls, useBlockProps, useInnerBlocksProps, withColors } from '@wordpress/block-editor';
+
+import { useSelect, withSelect } from '@wordpress/data';
+
 import './edit.scss';
 
-/* Block Constants */
+import ImageSelectorEdit from '../global/bgimage';
 
-const ALLOWED_MEDIA_TYPES = ['image'];
+import { classNames } from '../global/helpers';
 
-/* Block Filters */
+//const BLOCK_TEMPLATE = [['rwp/container', {}, [['rwp/row', {}]]]];
+const ALLOWED_BLOCKS = ['rwp/container'];
 
 wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/section', (className, blockName) => {
 	if (blockName !== 'rwp/section') {
@@ -44,30 +41,30 @@ wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/section', (className,
 	return className;
 });
 
-/* Compose Function */
+function Edit(props) {
+	const { attributes, setAttributes } = props;
+	// eslint-disable-next-line
+	const { innerClasses, bgImageId, bgImageUrl, videoUrl, videoHost, videoId } = attributes;
 
-function sectionEdit(props) {
-	const { attributes, setAttributes, backgroundColor } = props;
-	const { innerClasses, bgImageId, bgImage, className, videoUrl } = attributes;
+	const innerBlocksProps = useInnerBlocksProps(
+		{
+			className: classNames('section-inner', innerClasses),
+		},
+		{
+			templateLock: false,
+			allowedBlocks: ALLOWED_BLOCKS,
+			//template: BLOCK_TEMPLATE,
+		}
+	);
 
-	let classes = classNames(className);
-	classes = hasBackgroundClass(bgImageId, backgroundColor, className);
-
-	const onRemoveMedia = () => {
-		props.setAttributes({
-			bgImage: null,
-			bgImageId: 0,
-			bgImageUrl: '',
-		});
-	};
-
-	const onSelectMedia = (media) => {
-		props.setAttributes({
-			bgImage: media,
-			bgImageId: media.id,
-			bgImageUrl: media.url,
-		});
-	};
+	let styles = {};
+	if (!isNil(bgImageUrl)) {
+		styles = {
+			backgroundImage: `url(${bgImageUrl})`,
+			backgroundSize: 'cover',
+			backgroundRepeat: 'none',
+		};
+	}
 
 	const onVideoInput = (val) => {
 		let vidID = ''; // eslint-disable-line
@@ -94,60 +91,61 @@ function sectionEdit(props) {
 			videoId: vidID,
 		});
 	};
+	let videoElem = '';
 
-	// eslint-disable-next-line
+	if (!isNil(videoId) && !isNil(videoHost)) {
+		let videoParams = 'loop=1&autoplay=1';
+		let videoClasses = 'media-src media-video embed-responsive-item';
+
+		switch (videoHost) {
+			case 'youtube':
+				videoParams += '&controls=0&modestbranding=1&playsinline=1';
+
+				videoElem = (
+					<figure className="media-wrapper is-bg video-wrapper">
+						<div className="media-content embed-responsive embed-responsive-16by9">
+							<div className={videoClasses} data-youtube={videoId} data-ytparams={videoParams}></div>
+						</div>
+					</figure>
+				);
+
+				break;
+			case 'vimeo':
+				videoParams += '&muted=1&background=1';
+
+				videoElem = (
+					<figure className="media-wrapper is-bg video-wrapper">
+						<div className="media-content embed-responsive embed-responsive-16by9">
+							<div className={videoClasses} data-vimeo={videoId} data-vimeoparams={videoParams}></div>
+						</div>
+					</figure>
+				);
+
+				break;
+
+			case 'wistia':
+				videoClasses += ` wistia_embed wistia_async_${videoId} wistia-video playbar=false controlsVisibleOnLoad=false autoPlay=true muted=true silentAutoPlay=true videoFoam=false endVideoBehavior=loop no-video-foam`;
+
+				videoElem = (
+					<figure className="media-wrapper is-bg video-wrapper">
+						<div className="media-content embed-responsive embed-responsive-16by9">
+							<div className={videoClasses}></div>
+						</div>
+					</figure>
+				);
+				break;
+		}
+	}
+
 	const blockProps = useBlockProps({
-		className: classes,
+		style: styles,
 	});
 
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Section Settings', 'rwp')} initialOpen={true}>
-					<PanelRow>
-						<div className="editor-post-featured-image">
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={onSelectMedia}
-									value={bgImageId}
-									allowedTypes={['image']}
-									render={({ open }) => (
-										<Button className={!bgImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview'} onClick={open}>
-											{!bgImageId && __('Set background image', 'image-selector-example')}
-											{!!bgImageId && !bgImage && <Spinner />}
-											{!!bgImageId && bgImage && (
-												<ResponsiveWrapper naturalWidth={bgImage.media_details.width} naturalHeight={bgImage.media_details.height}>
-													<img src={bgImage.source_url} alt={__('Background image', 'image-selector-example')} />
-												</ResponsiveWrapper>
-											)}
-										</Button>
-									)}
-								/>
-							</MediaUploadCheck>
-							{!!bgImageId && bgImage && (
-								<MediaUploadCheck>
-									<MediaUpload
-										title={__('Background image', 'image-selector-example')}
-										onSelect={onSelectMedia}
-										allowedTypes={ALLOWED_MEDIA_TYPES}
-										value={bgImageId}
-										render={({ open }) => (
-											<Button onClick={open} isDefault isLarge>
-												{__('Replace background image', 'image-selector-example')}
-											</Button>
-										)}
-									/>
-								</MediaUploadCheck>
-							)}
-							{!!bgImageId && (
-								<MediaUploadCheck>
-									<Button onClick={onRemoveMedia} isLink isDestructive>
-										{__('Remove background image', 'image-selector-example')}
-									</Button>
-								</MediaUploadCheck>
-							)}
-						</div>
-					</PanelRow>
+					<ImageSelectorEdit></ImageSelectorEdit>
 					<PanelRow>
 						<TextControl label={__('Video Url', 'rwp')} value={videoUrl} onChange={onVideoInput} />
 					</PanelRow>
@@ -156,38 +154,31 @@ function sectionEdit(props) {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<InnerBlocks />
+			{videoElem}
+			<div {...innerBlocksProps} />
 		</div>
 	);
 }
 
 export default compose(
-	withSelect((select, ownProps) => {
-		const { clientId, name } = ownProps;
+	withSelect((select, props) => {
+		const { clientId, name } = props;
 		const { getBlock } = select('core/block-editor') || select('core/editor');
 		const { getBlockVariations, getBlockType, getDefaultBlockVariation } = select('core/blocks');
-		const { bgImageId } = ownProps.attributes;
 
 		const block = getBlock(clientId);
 
-		const hasInnerBlocks = useSelect(() => {
-			return !!(block && block.innerBlocks.length);
-		}, [block]);
-
-		const bgImage = useSelect(() => {
-			return select('core').getMedia(bgImageId);
-		}, [bgImageId]);
-
 		return {
 			blockType: getBlockType(name),
-			bgImage,
-			media: ownProps.attributes.bgImageId ? select('core').getMedia(ownProps.attributes.bgImageId) : undefined,
+			media: props.attributes.bgImageId ? select('core').getMedia(props.attributes.bgImageId) : undefined,
 			defaultVariation: getDefaultBlockVariation(name, 'block'),
 			variations: getBlockVariations(name, 'block'),
-			hasInnerBlocks,
+			hasInnerBlocks: useSelect(() => {
+				return !!(block && block.innerBlocks.length);
+			}, [block]),
 		};
 	}),
 	withColors({
 		backgroundColor: 'background-color',
 	})
-)(sectionEdit);
+)(Edit);

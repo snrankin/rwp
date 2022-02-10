@@ -4,8 +4,8 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================
@@ -33,76 +33,44 @@ const BLOCK_TEMPLATE = [
 		],
 	],
 ];
-const ALLOWED_BLOCKS = [
-	'core/button',
-	'core/buttons',
-	'core/paragraph',
-	'core/list',
-	'rwp/icon',
-];
+const ALLOWED_BLOCKS = ['core/button', 'core/buttons', 'core/paragraph', 'core/list', 'rwp/icon'];
 const TEMPLATE_LOCK = false;
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/card-footer',
-	(className, blockName) => {
-		if (blockName !== 'rwp/card-footer') {
-			return className;
-		}
-
-		className = classNames('rwp', 'card-footer');
-
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/card-footer', (className, blockName) => {
+	if (blockName !== 'rwp/card-footer') {
 		return className;
 	}
-);
+
+	className = classNames('rwp', 'card-footer');
+
+	return className;
+});
 
 function Edit(props) {
-	const {
-		attributes,
-		setAttributes,
-		clientId,
-		isSelected,
-		hasInnerBlocks,
-		name,
-	} = props;
+	const { attributes, hasInnerBlocks } = props;
 	const { className } = attributes;
 
 	const blockProps = useBlockProps();
 
-	blockProps.className = uniqueClasses(
-		classNames(blockProps.className, className)
-	);
+	blockProps.className = uniqueClasses(classNames(blockProps.className, className));
 
 	return (
 		<div {...blockProps}>
-			<InnerBlocks
-				templateLock={TEMPLATE_LOCK}
-				allowedBlocks={ALLOWED_BLOCKS}
-				template={BLOCK_TEMPLATE}
-				renderAppender={
-					hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender
-				}
-			/>
+			<InnerBlocks templateLock={TEMPLATE_LOCK} allowedBlocks={ALLOWED_BLOCKS} template={BLOCK_TEMPLATE} renderAppender={hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender} />
 		</div>
 	);
 }
 export default compose(
 	withSelect((select, ownProps) => {
-		const { clientId, name, setAttributes } = ownProps;
-		const { getBlockOrder } =
-			select('core/block-editor') || select('core/editor');
+		const { clientId, name } = ownProps;
 
-		const hasInnerBlocks = useSelect(
-			(select) => {
-				const { getBlock } = select('core/block-editor');
-				const block = getBlock(clientId);
-				return !!(block && block.innerBlocks.length);
-			},
-			[clientId]
-		);
+		const hasInnerBlocks = useSelect(() => {
+			const { getBlock } = select('core/block-editor');
+			const block = getBlock(clientId);
+			return !!(block && block.innerBlocks.length);
+		}, [clientId]);
 
-		const { getBlockVariations, getBlockType, getDefaultBlockVariation } =
-			select('core/blocks');
+		const { getBlockVariations, getBlockType, getDefaultBlockVariation } = select('core/blocks');
 
 		return {
 			clientId,

@@ -2,7 +2,7 @@
 /// @name   blocks
 ///
 /// @group  RIESTERWP Plugin
-/// @since  0.1.0
+/// @since  0.1.1
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
@@ -46,7 +46,7 @@
 		transform: translate(-50%, -50%);
 		top: 50%;
 		left: 50%;
-		background: rgb($primary 0.1);
+		background: rgba($admin-blue, 0.1);
 		opacity: 0;
 		width: 100%;
 		height: 100%;
@@ -55,18 +55,18 @@
 
 	&.is-hovered,
 	&.is-selected {
-		outline: solid 1px $primary;
+		outline: solid 1px $admin-blue;
 	}
 
 	&.has-child-selected {
-		outline: solid 1px rgb($primary 0.5);
+		outline: solid 1px rgba($admin-blue, 0.5);
 
 		> .rwp {
-			outline: solid 1px rgb($primary 0.5);
+			outline: solid 1px rgba($admin-blue, 0.5);
 
 			&.is-hovered,
 			&.is-selected {
-				outline: solid 1px $primary;
+				outline: solid 1px $admin-blue;
 			}
 		}
 	}

@@ -1,38 +1,42 @@
 {
-    "apiVersion": 2,
-    "name": "rwp/card",
-    "title": "Card",
-    "category": "design",
-    "attributes": {
-        "layout": {
-            "type": "string",
-            "default": "vertical"
-        },
-        "borderColor": {
-            "type": "string",
-            "default": ""
-        },
-        "backgroundColor": {
-            "type": "string",
-            "default": ""
-        },
-        "textColor": {
-            "type": "string",
-            "default": ""
-        },
-        "textAlignment": {
-            "type": "string",
-            "default": ""
-        }
-    },
-    "supports": {
-        "anchor": true,
-        "align": true,
-        "color": {
-            "background": true,
-            "gradient": true,
-            "text": true,
-            "border": true
-        }
-    }
+	"apiVersion": 2,
+	"attributes": {
+		"backgroundColor": {
+			"default": "",
+			"type": "string"
+		},
+		"borderColor": {
+			"default": "",
+			"type": "string"
+		},
+		"layout": {
+			"default": "vertical",
+			"type": "string"
+		},
+		"linkColor": {
+			"default": "",
+			"type": "string"
+		},
+		"textAlignment": {
+			"default": "",
+			"type": "string"
+		},
+		"textColor": {
+			"default": "",
+			"type": "string"
+		}
+	},
+	"category": "design",
+	"name": "rwp/card",
+	"supports": {
+		"anchor": true,
+		"color": {
+			"background": true,
+			"border": true,
+			"gradient": true,
+			"link": true,
+			"text": true
+		}
+	},
+	"title": "Card"
 }

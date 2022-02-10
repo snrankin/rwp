@@ -4,66 +4,28 @@
  *
  * @file
  * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @since     0.1.1
+ * @version   0.1.1
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 RIESTER
  * ==========================================================================
  */
 import { __ } from '@wordpress/i18n';
 import { get, omit, pick, isEmpty, isUndefined, isNil } from 'lodash';
-import {
-	sectionClasses,
-	sectionInnerClasses,
-	classNames,
-	generateClasses,
-} from './helpers';
+import { sectionClasses, sectionInnerClasses, classNames, generateClasses } from './helpers';
 /**
  * WordPress dependencies
  */
 import { renderToString } from '@wordpress/element';
-import {
-	createBlock,
-	getBlockType,
-	getBlockVariations,
-} from '@wordpress/blocks';
-import {
-	vAlignStart,
-	vAlignCenter,
-	vAlignEnd,
-	hAlignStart,
-	hAlignCenter,
-	hAlignEnd,
-	hDist,
-	vStretch,
-	dashOnly,
-	plusOnly,
-} from './icons';
-import {
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	Button,
-	ResponsiveWrapper,
-	Spinner,
-	Icon,
-	withNotices,
-} from '@wordpress/components';
+import { createBlock, getBlockType, getBlockVariations } from '@wordpress/blocks';
+import { vAlignStart, vAlignCenter, vAlignEnd, hAlignStart, hAlignCenter, hAlignEnd, hDist, vStretch, dashOnly, plusOnly } from './icons';
+import { RangeControl, PanelBody, PanelRow, Button, ResponsiveWrapper, Spinner, Icon, withNotices } from '@wordpress/components';
 
 import { Component, Fragment, useEffect, useRef } from '@wordpress/element';
 import { withSelect, useSelect } from '@wordpress/data';
 import * as BlockEditor from '@wordpress/block-editor';
 import * as Editor from '@wordpress/editor';
-const {
-	BlockAlignmentToolbar,
-	BlockControls,
-	BlockIcon,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-	RichText,
-	useBlockProps,
-} = BlockEditor || Editor;
+const { BlockAlignmentToolbar, BlockControls, BlockIcon, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText, useBlockProps } = BlockEditor || Editor;
 import { image as icon } from '@wordpress/icons';
 
 const ALLOWED_MEDIA_TYPES = ['image'];
@@ -89,9 +51,7 @@ function imageSources(image) {
 		const sizes = [];
 
 		if (image.media_details.sizes && image.mime_type !== 'image/svg+xml') {
-			for (const [name, size] of Object.entries(
-				image.media_details.sizes
-			)) {
+			for (const [name, size] of Object.entries(image.media_details.sizes)) {
 				const url = `${size.source_url} ${size.width}w ${size.height}h`;
 				sizes.push({
 					dataSrcset: url,
@@ -102,14 +62,7 @@ function imageSources(image) {
 			}
 		}
 		if (sizes.length > 0) {
-			return sizes.map((size) => (
-				<source
-					type={size.type}
-					data-srcset={size.dataSrcset}
-					media={size.media}
-					data-aspectratio={size.dataAspectratio}
-				/>
-			));
+			return sizes.map((size) => <source type={size.type} data-srcset={size.dataSrcset} media={size.media} data-aspectratio={size.dataAspectratio} />);
 		}
 	}
 }
@@ -124,13 +77,9 @@ export function displayImage(imageID, classes = '', isBG = false) {
 			const coverSize = isBG ? 'cover' : 'contain';
 			return (
 				<figure
-					className={classNames(
-						'figure media-wrapper image-wrapper',
-						classes,
-						{
-							'is-bg': isBG,
-						}
-					)}
+					className={classNames('figure media-wrapper image-wrapper', classes, {
+						'is-bg': isBG,
+					})}
 				>
 					<picture className="media-content">
 						<img
@@ -165,17 +114,7 @@ function getImgByID(id) {
 	return img;
 }
 
-export const RWPBGImage = ({
-	label,
-	attributeName,
-	attributeValue,
-	srcsetName,
-	srcsetValue,
-	urlName,
-	urlValue,
-	setAttributes,
-	...props
-}) => {
+export const RWPBGImage = ({ label, attributeName, attributeValue, srcsetName, srcsetValue, urlName, urlValue, setAttributes, ...props }) => {
 	let img = null;
 	if (!isNil(attributeValue)) {
 		img = getImgByID(attributeValue);
@@ -183,9 +122,7 @@ export const RWPBGImage = ({
 
 	console.log({ img, attributeValue });
 
-	const instructions = (
-		<p>{__('You need permission to upload media.', 'rwp')}</p>
-	);
+	const instructions = <p>{__('You need permission to upload media.', 'rwp')}</p>;
 
 	const onUpdateImage = (media) => {
 		img = media;
@@ -213,28 +150,12 @@ export const RWPBGImage = ({
 					value={attributeValue}
 					render={({ open }) => (
 						<div className="editor-post-featured-image__container">
-							<Button
-								className={
-									!isNil(img)
-										? 'editor-post-featured-image__toggle'
-										: 'editor-post-featured-image__preview'
-								}
-								onClick={open}
-							>
-								{isNil(attributeValue) &&
-									__('Set background image', 'rwp')}
-								{!isNil(attributeValue) && isNil(img) && (
-									<Spinner />
-								)}
+							<Button className={!isNil(img) ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview'} onClick={open}>
+								{isNil(attributeValue) && __('Set background image', 'rwp')}
+								{!isNil(attributeValue) && isNil(img) && <Spinner />}
 								{!isNil(attributeValue) && !isNil(img) && (
-									<ResponsiveWrapper
-										naturalWidth={img.media_details.width}
-										naturalHeight={img.media_details.height}
-									>
-										<img
-											src={img.source_url}
-											alt={__('Background image', 'rwp')}
-										/>
+									<ResponsiveWrapper naturalWidth={img.media_details.width} naturalHeight={img.media_details.height}>
+										<img src={img.source_url} alt={__('Background image', 'rwp')} />
 									</ResponsiveWrapper>
 								)}
 							</Button>

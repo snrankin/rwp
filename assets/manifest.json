@@ -58,5 +58,8 @@
   "fa-regular-400.woff2": "fonts/fa-regular-400.woff2",
   "section.css": "css/rwp-section.css",
   "section.js": "js/rwp-section.js",
-  "section.php": "js/rwp-section.asset.php"
+  "section.php": "js/rwp-section.asset.php",
+  "bootstrap-icons.woff.woff?e2f6e48459d8b0f394eea57aba940179": "fonts/bootstrap-icons.woff?e2f6e48459d8b0f394eea57aba940179",
+  "bootstrap-icons.woff2.woff2?e2f6e48459d8b0f394eea57aba940179": "fonts/bootstrap-icons.woff2?e2f6e48459d8b0f394eea57aba940179",
+  "rwp-icon.svg": "imgs/rwp-icon.svg"
 }
