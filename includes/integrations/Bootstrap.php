@@ -105,7 +105,7 @@ class Bootstrap extends Singleton {
 
 		// Callback function to insert 'styleselect' into the $buttons array
 
-		$tinymce_styles = rwp()->get_setting( 'tinymce.editor' );
+		$tinymce_styles = rwp()->get( 'tinymce.editor' );
 
 		add_filter( 'tiny_mce_before_init', function ( $init_array ) use ( $tinymce_styles ) {
 
