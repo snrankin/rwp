@@ -35,7 +35,9 @@ class TeamGrid extends Shortcode {
 	 */
 	public function initialize() {
 
-		if ( PostTypes::registered_cpts()->has( 'team_member' ) ) {
+		$cpts = rwp()->get_option( 'modules.cpts' );
+
+		if ( rwp_is_collection( $cpts ) && $cpts->has( 'team_member' ) ) {
 
 			parent::initialize();
         }
