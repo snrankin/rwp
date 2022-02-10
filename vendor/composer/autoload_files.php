@@ -14,8 +14,4 @@ return array(
     '6e3fae29631ef280660b3cdad06f25a8' => $vendorDir . '/symfony/deprecation-contracts/function.php',
     '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
     '0d59ee240a4cd96ddbb4ff164fccea4d' => $vendorDir . '/symfony/polyfill-php73/bootstrap.php',
-    '500106db8c29089c90e57ce448fe444d' => $baseDir . '/includes/functions/functions.php',
-    '0a40be422ac7eea099b9a03d96daeaf4' => $baseDir . '/includes/functions/utils.php',
-    'ecd8c88be481be33bd9fc6212c66c214' => $baseDir . '/includes/functions/filters.php',
-    '41aa7a7610e0b824c8719d10cc3a6e42' => $baseDir . '/includes/functions/components.php',
 );

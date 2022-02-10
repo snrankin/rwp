@@ -22,12 +22,7 @@
         "szepeviktor/phpstan-wordpress": "^0.7.5"
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true,
-            "phpro/grumphp-shim": true
-        }
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -38,13 +33,7 @@
             "RWP\\Frontend\\": "includes/frontend/",
             "RWP\\Integrations\\": "includes/integrations/",
             "RWP\\Internals\\": "includes/internals/"
-        },
-        "files": [
-            "includes/functions/functions.php",
-            "includes/functions/utils.php",
-            "includes/functions/filters.php",
-            "includes/functions/components.php"
-        ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

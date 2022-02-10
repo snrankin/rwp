@@ -15,10 +15,6 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
-        '500106db8c29089c90e57ce448fe444d' => __DIR__ . '/../..' . '/includes/functions/functions.php',
-        '0a40be422ac7eea099b9a03d96daeaf4' => __DIR__ . '/../..' . '/includes/functions/utils.php',
-        'ecd8c88be481be33bd9fc6212c66c214' => __DIR__ . '/../..' . '/includes/functions/filters.php',
-        '41aa7a7610e0b824c8719d10cc3a6e42' => __DIR__ . '/../..' . '/includes/functions/components.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -492,12 +488,11 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'RWP\\Engine\\Abstracts\\Taxonomy' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Taxonomy.php',
         'RWP\\Engine\\Abstracts\\Widget' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Widget.php',
         'RWP\\Engine\\Base' => __DIR__ . '/../..' . '/includes/engine/Base.php',
+        'RWP\\Engine\\Initialize' => __DIR__ . '/../..' . '/includes/engine/Initialize.php',
         'RWP\\Engine\\Interfaces\\Component' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Component.php',
         'RWP\\Engine\\Interfaces\\Core' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Core.php',
-        'RWP\\Engine\\Plugin' => __DIR__ . '/../..' . '/includes/engine/Plugin.php',
+        'RWP\\Engine\\Is_Methods' => __DIR__ . '/../..' . '/includes/engine/Is_Methods.php',
         'RWP\\Engine\\Traits\\Assets' => __DIR__ . '/../..' . '/includes/engine/Traits/Assets.php',
-        'RWP\\Engine\\Traits\\Initialize' => __DIR__ . '/../..' . '/includes/engine/Traits/Initialize.php',
-        'RWP\\Engine\\Traits\\Is_Methods' => __DIR__ . '/../..' . '/includes/engine/Traits/Is_Methods.php',
         'RWP\\Frontend\\Enqueue' => __DIR__ . '/../..' . '/includes/frontend/Enqueue.php',
         'RWP\\Frontend\\Extras\\Body_Class' => __DIR__ . '/../..' . '/includes/frontend/Extras/Body_Class.php',
         'RWP\\Frontend\\Extras\\Clean_Up' => __DIR__ . '/../..' . '/includes/frontend/Extras/Clean_Up.php',

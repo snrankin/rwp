@@ -9,130 +9,193 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-namespace RWP\Engine;
+namespace RWP\Engine\Abstracts;
 
-use RWP\Vendor\Illuminate\Container\Container;
-use Composer\Autoload\ClassLoader;
 use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
 
-final class Plugin extends Singleton implements Component {
-
-	use Traits\Assets;
-	use Traits\Initialize;
-	use Traits\Is_Methods;
+abstract class Plugin extends Singleton implements Component {
 
     /**
-	 * @var string $file Absolute path to plugin main file
+	 * @var string $plugin_file Absolute path to plugin main file
+	 * @access private
 	 */
-    public $file;
+    private $plugin_file;
 
     /**
-	 * @var string $version Current plugin version
+	 * @var string $_version Current plugin version
+	 * @access private
 	 */
-    public $version = '';
+    private $_version = '';
+
+    /**
+	 * @var array $components Array of plugin components which might need upgrade
+	 * @access private
+	 */
+    private static $components = [];
 
 	/**
-	 * @var Container $app The settings of the plugin.
+	 * @var ClassLoader
+	 * @access private
 	 */
-	public $app;
+    private static $autoloader;
 
 	/**
-	 * @var Collection $options The option keys available in the database
+	 * @var array
+	 * @access private
 	 */
-	public $options;
+    private static $classes;
+
+	/**
+	 * @var array $settings The settings of the plugin.
+	 */
+	public $settings = array();
+
+	/**
+	 * @var array|Collection $options The option keys available in the database
+	 */
+	public $options = array();
 
 	/**
 	 * @var array $paths An array of paths for various folders for easy access
 	 */
 	public $paths = array();
 
-	/**
-	 * @var array $active_classes Array of plugin components which might need upgrade
-	 */
-    public static $active_classes = array();
-
     /**
      *  @inheritdoc
      */
-    public function __construct( $args = array() ) {
+    public function __construct( $file, $args = array() ) {
+        $this->plugin_file = $file;
 
-		$defaults = array(
-			'file'         => RWP_PLUGIN_FILE,
-			'autoloader'   => require RWP_PLUGIN_ROOT . '/vendor/autoload.php',
-			'dir'          => RWP_PLUGIN_ROOT,
-			'uri'          => RWP_PLUGIN_URI,
-			'namespace'    => 'RWP',
-			'capability'   => 'manage_options',
-			'settings-uri' => add_query_arg( 'page', 'rwp-options', 'admin.php' ),
-			'paths'        => array(
-				'assets'       => array(
-					'dir' => RWP_PLUGIN_ROOT . 'assets/',
-					'uri' => RWP_PLUGIN_URI . 'assets/',
-				),
-				'config'       => array(
-					'dir' => RWP_PLUGIN_ROOT . 'config/',
-					'uri' => RWP_PLUGIN_URI . 'config/',
-				),
-				'includes'     => array(
-					'dir' => RWP_PLUGIN_ROOT . 'includes/',
-					'uri' => RWP_PLUGIN_URI . 'includes/',
-				),
-				'dependencies' => array(
-					'dir' => RWP_PLUGIN_ROOT . 'includes/dependencies/',
-					'uri' => RWP_PLUGIN_URI . 'includes/dependencies/',
-				),
-			),
-		);
+		$properties = \wp_parse_args( $args, get_object_vars( $this ) );
 
-		$args  = wp_parse_args( $args, $defaults );
-
-		if ( ! empty( $args ) ) {
-			foreach ( $args as $key => $value ) {
-				$this->set( $key, $value, true );
-			}
+		foreach ( $properties as $key => $value ) {
+			$this->set( $key, $value, true );
 		}
-		$this->app = new Container();
-		$this->initialize_settings();
-		$this->initialize_autoloader();
-		$this->initialize_configs();
-		$this->initialize_classes();
 
-		$this->initialize_assets();
-		$this->initialize_hooks();
-		$this->initialize_options();
-
-		//$icon = rwp_encode_img( $this->asset_path( 'rwp-icon.svg' ) );
-
-		//$this->set( 'icon', $icon );
-
-    }
-
-	public function initialize_hooks() {
-        // Activate plugin when new blog is added
+		// Activate plugin when new blog is added
 		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
         \register_activation_hook( $this->get_plugin_file(), array( $this, 'activate' ) );
         \register_deactivation_hook( $this->get_plugin_file(), array( $this, 'deactivate' ) );
-        //\register_uninstall_hook( $this->get_plugin_file(), array( $this, 'uninstall' ) );
+        \register_uninstall_hook( $this->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
         \add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
         \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
-	}
+        parent::__construct();
+		if ( is_array( $this->options ) ) {
+			$this->options = rwp_collection( $this->options );
+		}
+		$this->init_autoloader();
+		$this->initialize_paths();
+		$this->initialize_settings();
 
-	public function initialize_configs() {
+    }
 
-		$root    = $this->get_plugin_dir( 'config' );
-        $configs = glob( $root . '*.php' );
+	public function init_autoloader() {
+		$autoloader = rwp_get_plugin_file( 'autoload.php', 'vendor', true );
 
-		if ( $configs ) {
-			foreach ( $configs as $config ) {
-				$configname = rwp_basename( $config );
-				$config = include_once $config;
-				$this->set( $configname, $config );
+		$class_loader = $this->get_classes();
+
+		$prefix    = $autoloader->getPrefixesPsr4();
+		$classmap  = $autoloader->getClassMap();
+		$namespace = $this->get_setting( 'namespace' );
+
+		$class_loader = array();
+
+		// In case composer has autoload optimized
+		if ( isset( $classmap['RWP\\Engine\\Initialize'] ) ) {
+			$classes = \array_keys( $classmap );
+
+			foreach ( $classes as $class ) {
+				if ( 0 !== \strncmp( (string) $class, $namespace, \strlen( $namespace ) ) ) {
+					continue;
+				}
+
+				$class_loader[] = $class;
 			}
 		}
+
+		$namespace = rwp_add_suffix( $namespace . '\\' );
+
+		// In case composer is not optimized
+		if ( isset( $prefix[ $namespace ] ) ) {
+			$folder    = $prefix[ $namespace ][0];
+			$php_files = $this->scandir( $folder );
+			$this->find_classes( $php_files, $folder, $namespace );
+
+			if ( ! WP_DEBUG ) {
+				\wp_die( \esc_html__( 'RWP is on production environment with missing `composer dumpautoload -o` that will improve the performance on autoloading itself.', 'rwp' ) );
+			}
+		}
+
+		$components = rwp_collection( $class_loader )->groupBy( function ( $class ) use ( $namespace ) {
+
+			$class = rwp_remove_prefix( $class, $namespace );
+			$sub_groups = explode( '\\', $class );
+			$sub_key = array_shift( $sub_groups );
+			return $sub_key;
+		})->transform( function ( $group, $key ) use ( $namespace ) {
+			$parent = $key;
+			$group = $group->groupBy( function ( $class ) use ( $parent, $namespace ) {
+				$parent = rwp_add_suffix( $parent . '\\' );
+				$class = rwp_remove_prefix( $class, $namespace . $parent );
+				$sub_groups = explode( '\\', $class );
+				$sub_key = array_shift( $sub_groups );
+				return $sub_key;
+			});
+			return $group;
+		});
+
+		$components = rwp_object_to_array( $components );
+
+		// $components = $this->format_class_groups( $components );
+
+		$this->set( 'components', $components );
+
+		$this->set( 'autoloader', $autoloader );
+
+		$this->set( 'classes', $class_loader );
+	}
+
+	public function format_class_groups( $group, $key = '' ) {
+		$namespace = $this->get_setting( 'namespace' );
+
+		if ( ! empty( $key ) && ! is_numeric( $key ) ) {
+			$key = rwp_add_prefix( $key, '\\' );
+		} else {
+			$key = '';
+		}
+		$namespace = rwp_add_suffix( $namespace . $key, '\\' );
+		if ( rwp_is_collection( $group ) ) {
+			$group = $group->all();
+		}
+
+		if ( is_array( $group ) ) {
+			foreach ( $group as $i => $class ) {
+				unset( $group[ $i ] );
+				if ( is_array( $class ) ) {
+					$sub_key = $i;
+					$sub_groups = $this->format_class_groups( $class, $i );
+				} else if ( is_string( $class ) ) {
+					$sub_groups = rwp_remove_prefix( $class, $namespace );
+					$sub_groups = explode( '\\', $sub_groups );
+					$sub_key = array_shift( $sub_groups );
+
+					if ( ! empty( $sub_groups ) ) {
+						$this->format_class_groups( $sub_groups, $sub_key );
+					} else {
+						$sub_groups = $class;
+					}
+				}
+
+				$group[ $sub_key ] = $sub_groups;
+			}
+		}
+
+		return $group;
+
 	}
 
 	/**
@@ -144,53 +207,64 @@ final class Plugin extends Singleton implements Component {
 	public function initialize_settings() {
 		$meta = \get_plugin_data( $this->get_plugin_file(), false );
 
-		$settings = new Collection( \wp_parse_args( $this->settings, $meta ) );
+		$plugin_meta = array(
+			'name'        => data_get( $meta, 'Name' ),
+			'uri'         => data_get( $meta, 'PluginURI' ),
+			'version'     => data_get( $meta, 'Version' ),
+			'description' => data_get( $meta, 'Description' ),
+			'author'      => data_get( $meta, 'Author' ),
+			'author_uri'  => data_get( $meta, 'AuthorURI' ),
+			'textdomain'  => data_get( $meta, 'TextDomain' ),
+			'domainpath'  => data_get( $meta, 'DomainPath' ),
+			'network'     => data_get( $meta, 'Network' ),
+			'wp_ver'      => data_get( $meta, 'RequiresWP' ),
+			'php_ver'     => data_get( $meta, 'RequiresPHP' ),
+			'update_uri'  => data_get( $meta, 'UpdateURI' ),
+			'path'        => $this->get_plugin_dir(),
+			'slug'        => $this->get_slug(),
+		);
 
-		$settings = $settings->mapWithKeys(function( $value, $key ) {
-			$key = rwp_change_case( $key, 'snake' );
-			$key = rwp_str_replace( array( 'u_r_i', 'w_p', 'p_h_p' ), array( 'uri', 'wp', 'php' ), $key );
-			return [ $key => $value ];
-		})->each(function( $value, $key ) {
-			$this->set( $key, $value, true );
-		});
+		$settings = \wp_parse_args( $this->settings, $plugin_meta );
 
+		$this->set( 'settings', $settings );
 	}
 
-	public function initialize_options() {
-		$this->options = $this->get_options();
+	/**
+	 * Set up the array of plugin paths for easy reference
+	 *
+	 * @return void
+	 */
+
+	public function initialize_paths() {
+
+		$paths = array(
+			'base' => \plugin_dir_path( $this->get_plugin_file() ),
+		);
+
+		$paths = \wp_parse_args( $this->paths, $paths );
+
+		$this->set( 'paths', $paths );
 	}
 
     /**
      *  @return string full plugin file path (with file name)
      */
     public function get_plugin_file() {
-        return $this->get( 'file' );
+        return $this->plugin_file;
     }
 
-	/**
-	 * Get full plugin file path of a folder
-	 *
-	 * @param string $folder Get specific path folder
-	 * @return string
-	 */
-    public function get_plugin_dir( $folder = '' ) {
-		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.dir", '' );
-		} else {
-			return $this->get( 'dir' );
-		}
-
+    /**
+     *  @return string full plugin file path
+     */
+    public function get_plugin_dir( $folder = 'base' ) {
+		return $this->get( "paths.$folder" );
     }
 
     /**
      *  @return string full plugin url path
      */
-    public function get_plugin_uri( $folder = '' ) {
-		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.uri", '' );
-		} else {
-			return $this->get( 'uri' );
-		}
+    public function get_plugin_url() {
+        return \plugin_dir_url( $this->get_plugin_file() );
     }
 
     /**
@@ -219,10 +293,10 @@ final class Plugin extends Singleton implements Component {
      */
     public function version() {
 
-		if ( empty( $this->version ) ) {
-            $this->version = $this->get( 'version' );
+		if ( empty( $this->_version ) ) {
+            $this->_version = $this->get_setting( 'version' );
 		}
-        return $this->version;
+        return $this->_version;
     }
 
 	/**
@@ -257,127 +331,74 @@ final class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function load_textdomain() {
-        \load_plugin_textdomain( $this->get( 'textdomain' ), false, $this->get( 'domainpath' ) );
+        \load_plugin_textdomain( $this->get_setting( 'textdomain' ), false, $this->get_setting( 'domainpath' ) );
     }
 
 	/**
-	 * Get plugin options
-	 *
-	 * All options for this plugin are store in one table row as  a collection
-	 *
-	 * @param bool $global
-	 *
-	 * @return Collection
-	 */
-    public function get_options( $global = false ) {
-		$option = $this->prefix( 'options' );
-		if ( $global ) {
-			$options = get_network_option( get_current_network_id(), $option );
-		} else {
-			$options = get_option( $option );
-		}
+     * Get plugin option.
+     *
+     * @param string $key     The name of the option (without the prefix)
+     * @param mixed  $default The default value of the option
+     *
+     * @return mixed $option
+     */
+    public function get_option( $key, $default = null, $global = false ) {
+		return data_get( $this->options, $key, $default );
 
-		return new Collection( $options );
     }
 
-	/**
-	 * Update plugin options
-	 *
-	 * @param  Collection $options
-	 * @param  bool       $global
+    /**
+     * Get plugin option.
+     *
+     * @see https://developer.wordpress.org/reference/functions/delete_option/
+     *
+     * @param string  $key  The name of the option (without the prefix)
+     *
 	 * @return bool
-	 */
-    public function update_options( $options, $global = false ) {
+     *
+     */
+    public function delete_option( $key, $global = false ) {
 
-		$option = $this->prefix( 'options' );
-
-		if ( $global ) {
-			$updated = update_network_option( get_current_network_id(), $option, $options );
-		} else {
-			$updated = update_option( $option, $options, true );
-		}
-
-		$this->set( 'options', $options, true );
-
-		return $updated;
-    }
-
-	/**
-	 * Delete all plugin options.
-	 *
-	 * @param  bool $global
-	 * @return bool
-	 */
-    public function delete_options( $global = false ) {
-
-		$option = $this->prefix( 'options' );
+		$deleted = delete_option( $this->prefix( $key ) );
 
 		if ( $global ) {
-			$deleted = delete_network_option( get_current_network_id(), $option );
+			$deleted = delete_network_option( get_current_network_id(), $this->prefix( $key ) );
 		} else {
-			$deleted = delete_option( $option );
+			$deleted = delete_option( $this->prefix( $key ) );
 		}
+
+		$this->options = data_remove( $this->options, $key );
 
 		return $deleted;
     }
 
-	/**
-	 * Get plugin option.
-	 *
-	 * @param  string|array|int|null  $key
-     * @param  mixed                  $default
-	 * @param  bool                   $global
-	 * @return mixed
-	 */
-    public function get_option( $key, $default = null, $global = false ) {
-
-		$options = $this->get_options( $global );
-
-		return data_get( $options, $key, $default );
-    }
-
-	/**
-	 * Update plugin option
-	 *
-	 * Since all plugin options are stored in one object in the `rwp_options`
-	 * row in the `wp_options` table, the option must be updated in the
-	 * object and then the option in the database must be updated with the
-	 * updated object
-	 *
-	 * @param  string|array|int|null  $key
-	 * @param  mixed                  $value
-	 * @param  bool                   $global
-	 * @return void
-	 */
-    public function update_option( $key, $value, $global = false ) {
-
-		$options = $this->get_options( $global );
-
-		$options = data_set( $options, $key, $value );
-
-        $this->update_options( $options, $global );
-    }
-
     /**
-	 * Delete plugin option
+     * Update plugin option.
      *
-	 * Since all plugin options are stored in one object in the `rwp_options`
-	 * row in the `wp_options` table, the option must be deleted from the
-	 * object and then the option in the database must be updated with the
-	 * updated object
-	 *
-	 * @param  string|array|int|null  $key
-	 * @param  bool                   $global
-	 * @return void
-	 */
-    public function delete_option( $key, $global = false ) {
+     * @link https://developer.wordpress.org/reference/functions/update_option/
+     *
+     * @param string $key       The key of the option (without the prefix)
+     * @param mixed  $value     The default value of the option
+	 * @param bool   $autoload  Optional. Whether to load the option when
+	 *                          WordPress starts up.
+     *
+     * @return bool
+     */
+    public function update_option( $key, $value, $autoload = true, $global = false ) {
 
-		$options = $this->get_options( $global );
+		if ( $global ) {
+			$updated = update_network_option( get_current_network_id(), $this->prefix( $key ), $value );
+		} else {
+			$updated = update_option( $this->prefix( $key ), $value, $autoload );
+		}
 
-		$options = data_remove( $options, $key );
+		if ( 'options' === $key ) {
+			$this->set( 'options', $value );
+		} else {
+			$this->options = data_set( $this->options, $key, $value );
+		}
 
-		$this->update_options( $options, $global );
-
+        return $updated;
     }
 
 	/**
@@ -568,7 +589,7 @@ final class Plugin extends Singleton implements Component {
     public function prefix( $string, $separator = '_', $case = 'snake' ) {
 
 		if ( 'title' === $case ) {
-			$prefix = $this->get( 'name' );
+			$prefix = $this->get_setting( 'name' );
 		} else {
 			$prefix = $this->get_slug();
 		}
@@ -623,9 +644,9 @@ final class Plugin extends Singleton implements Component {
 	 */
     public function unprefix( $string, $separator = '_', $case = '' ) {
         if ( 'title' === $case ) {
-			$prefix = $this->get( 'name' );
+			$prefix = $this->get_setting( 'name' );
 		} else {
-			$prefix = $this->get( 'slug' );
+			$prefix = $this->get_setting( 'slug' );
 		}
 
 		// Add the separator if it isn't already there
@@ -640,6 +661,22 @@ final class Plugin extends Singleton implements Component {
 
 		return $string;
     }
+
+	/**
+	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
+	 *
+	 * @param string $component Class name to find.
+	 * @since 1.0.0
+	 * @return array Return the classes.
+	 */
+	public function get_component( string $component = '' ) {
+
+		if ( rwp_str_has( $component, '\\' ) ) {
+			$component = rwp_str_replace( '\\', '.', $component );
+		}
+		$component = rwp_str_replace( 'RWP.', '', $component );
+		return $this->get( "components.$component" );
+	}
 
 	/**
 	 * Get a setting from the plugin instance.

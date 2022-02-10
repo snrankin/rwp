@@ -9,9 +9,9 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-namespace RWP\Engine\Traits;
+namespace RWP\Engine;
 
-trait Is_Methods {
+class Is_Methods {
 
 	/**
 	 * What type of request is this?
