@@ -25,16 +25,16 @@ trait Assets {
 	 */
 	public function initialize_assets() {
 
-		$manifest_path = $this->get_setting( 'assets.manifest_path' );
+		$manifest_path = $this->get( 'assets.manifest_path' );
 
 		if ( rwp_file_exists( $manifest_path ) ) {
 			$manifest = rwp_get_file_data( $manifest_path, true );
 			if ( $manifest ) {
 				$manifest = new Collection( $manifest );
-				$this->set_setting( 'assets.manifest', $manifest );
+				$this->set( 'assets.manifest', $manifest );
 			}
 		} else {
-			$this->set_setting( 'assets.manifest', false );
+			$this->set( 'assets.manifest', false );
 		}
 
 	}
@@ -49,7 +49,7 @@ trait Assets {
 
 	public function asset_filename( $asset ) {
 
-		$manifest = $this->get_setting( 'assets.manifest' );
+		$manifest = $this->get( 'assets.manifest' );
 
 		if ( $manifest ) {
 			if ( $manifest->has( $asset ) ) {
@@ -72,7 +72,7 @@ trait Assets {
 
 		$asset = $this->asset_filename( $asset );
 
-		$path = $this->get_setting( 'assets.dir' ) . $asset;
+		$path = $this->get( 'assets.dir' ) . $asset;
 
 		if ( rwp_file_exists( $path ) ) {
 
@@ -99,12 +99,39 @@ trait Assets {
 
 		if ( $this->asset_path( $asset ) ) {
 
-			return $this->get_setting( 'assets.uri' ) . $file;
+			return $this->get( 'assets.uri' ) . $file;
 
 		} else {
 
 			return false;
 
+		}
+	}
+
+	/**
+	 * Add a script to the list of plugin assets
+	 * @param mixed $handle
+	 * @param mixed $location
+	 * @param array $args
+	 * @param bool $register
+	 * @param bool $enqueue
+	 * @return void
+	 * @throws NotFoundException
+	 * @throws IOException
+	 */
+
+	public function add_script( $handle, $location, $args = array(), $register = false, $enqueue = false ) {
+		$args = data_set( $args, 'handle', $handle );
+		$args = data_set( $args, 'location', $location );
+		$this->set( "assets.scripts.$handle", $args );
+		$handle = $this->prefix( $handle );
+
+		if ( $register && ! wp_script_is( $handle, 'registered' ) ) {
+			$this->register_script( $args );
+		}
+
+		if ( $enqueue && ! wp_script_is( $handle, 'enqueued' ) ) {
+			$this->enqueue_script( $args );
 		}
 	}
 
@@ -223,7 +250,7 @@ trait Assets {
 
 	public function get_plugin_scripts( $location = '' ) {
 
-		$scripts = $this->get_setting( 'assets.scripts' );
+		$scripts = $this->get( 'assets.scripts' );
 
 		try {
 			if ( rwp_has_value( $scripts ) ) {
@@ -247,19 +274,28 @@ trait Assets {
 	/**
 	 * Register all plugin scripts for a certain location
 	 *
-	 * @param string  $location  The location to register scripts for. Default
-	 *                           empty string. Accepts options like 'global',
-	 *                           'admin' and 'public'. Can be any custom location.
+	 * @param string|array  $location  The location to register scripts for. Can
+	 *                                 be an existing location or an array of
+	 *                                 arrays with script arguments
 	 * @return void
 	 */
 
 	public function register_scripts( $location = '' ) {
+		$additional_scripts = array();
+		if ( is_array( $location ) ) {
+			$additional_scripts = $location;
+			$location = '';
+		}
 		/**
 		 * @var false|Collection $scripts
 		 */
 		$scripts = $this->get_plugin_scripts( $location );
 
 		if ( $scripts ) {
+			if ( ! empty( $additional_scripts ) ) {
+
+				$scripts->merge( $additional_scripts );
+			}
 			$scripts->map( array( $this, 'register_script' ) );
 		}
 	}
@@ -286,6 +322,33 @@ trait Assets {
 				$item = rwp()->prefix( $item, '-' );
 				wp_enqueue_script( $item );
 			});
+		}
+	}
+
+	/**
+	 * Add a style to the list of plugin assets
+	 * @param mixed $handle
+	 * @param mixed $location
+	 * @param array $args
+	 * @param bool $register
+	 * @param bool $enqueue
+	 * @return void
+	 * @throws NotFoundException
+	 * @throws IOException
+	 */
+
+	public function add_style( $handle, $location, $args = array(), $register = false, $enqueue = false ) {
+		$args = data_set( $args, 'handle', $handle );
+		$args = data_set( $args, 'location', $location );
+		$$this->set( "assets.styles.$handle", $args );
+		$handle = $this->prefix( $handle );
+
+		if ( $register && ! wp_style_is( $handle, 'registered' ) ) {
+			$this->register_style( $args );
+		}
+
+		if ( $enqueue && ! wp_style_is( $handle, 'enqueued' ) ) {
+			$this->enqueue_style( $args );
 		}
 	}
 
@@ -350,10 +413,6 @@ trait Assets {
 		 * @var string $media
 		 */
 		$media = data_get( $args, 'media', 'all' );
-		/**
-		 * @var string $folder
-		 */
-		$folder = data_get( $args, 'folder', 'css' );
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
@@ -391,7 +450,7 @@ trait Assets {
 
 	public function get_plugin_styles( $location = '' ) {
 
-		$styles = $this->get_setting( 'assets.styles' );
+		$styles = $this->get( 'assets.styles' );
 
 		try {
 			if ( rwp_has_value( $styles ) ) {
@@ -415,16 +474,27 @@ trait Assets {
 	/**
 	 * Register all plugin styles for a certain location
 	 *
-	 * @param string  $location  The location to register styles for. Default
-	 *                           empty string. Accepts options like 'global',
-	 *                           'admin' and 'public'. Can be any custom location.
+	 * @param string|array  $location  The location to register styles for. Can
+	 *                                 be an existing location or an array of
+	 *                                 arrays with style arguments
 	 * @return void
 	 */
 	public function register_styles( $location = '' ) {
 
+		$additional_styles = array();
+		if ( is_array( $location ) ) {
+			$additional_styles = $location;
+			$location = '';
+		}
+		/**
+		 * @var false|Collection $styles
+		 */
 		$styles = $this->get_plugin_styles( $location );
 
 		if ( $styles ) {
+			if ( ! empty( $additional_styles ) ) {
+				$styles->merge( $additional_styles );
+			}
 			$styles->map( array( $this, 'register_style' ) );
 		}
 	}
@@ -481,6 +551,20 @@ trait Assets {
 	public function enqueue_assets( $location = '' ) {
 		$this->enqueue_scripts( $location );
 		$this->enqueue_styles( $location );
+	}
+
+	/**
+	 * Register and Enqueue all assets for a specific location
+	 *
+	 * @param string  $location  The location to register styles for. Default
+	 *                           empty string. Accepts options like 'global',
+	 *                           'admin' and 'public'. Can be any custom location.
+	 *
+	 * @return void
+	 */
+	public function add_assets( $location = '' ) {
+		$this->register_assets( $location );
+		$this->enqueue_assets( $location );
 	}
 
 }

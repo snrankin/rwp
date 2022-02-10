@@ -107,22 +107,29 @@ function rwp_file_exists( $filepath ) {
  */
 
 function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
-    $base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
+	if ( ! empty( $dir ) || ! empty( $base ) ) {
+		$base = rwp_trailingslashit( $base ); // only adds slash if it isn't already there
 
-	$folder = $base . $dir;
-    $folder = rwp_filesystem()->find_folder( $folder );
+		$folder = $base . $dir;
+		$folder = rwp_filesystem()->find_folder( $folder );
 
-	if ( $folder ) {
-		$folder = rwp_trailingslashit( $folder );
-		$filepath = $folder . $filename;
-		if ( rwp_file_exists( $filepath ) ) {
-			return $filepath;
+		if ( $folder ) {
+			$folder = rwp_trailingslashit( $folder );
+			$filepath = $folder . $filename;
+			if ( rwp_file_exists( $filepath ) ) {
+				return $filepath;
+			} else {
+				return false;
+			}
+		}
+	} else {
+		if ( rwp_file_exists( $filename ) ) {
+			return $filename;
 		} else {
 			return false;
 		}
-	} else {
-		return false;
 	}
+
 }
 
 /**
@@ -136,7 +143,7 @@ function rwp_find_file( $filename, $dir = '', $base = __DIR__ ) {
  */
 
 function rwp_find_plugin_file( $filename, $dir = '' ) {
-     return rwp_find_file( $filename, $dir, RWP_PLUGIN_ROOT );
+     return rwp_find_file( $filename, $dir, rwp()->get( 'dir' ) );
 }
 
 /**
