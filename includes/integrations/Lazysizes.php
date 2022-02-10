@@ -19,19 +19,93 @@ use RWP\Components\Image;
 class Lazysizes extends Singleton {
 
 	/**
+	 * @var string The current version of lazysizes
+	 */
+	private static $version = '5.3.2';
+
+	/**
+	 * @var bool[] The array of  additional lazysizes plugins to add
+	 */
+	protected static $plugins  = array(
+		'artdirect'   => false,
+		'aspectratio' => true,
+		'custommedia' => false,
+		'bgset'       => true,
+		'blur-up'     => false,
+		'noscript'    => false,
+		'object-fit'  => true,
+		'parent-fit'  => false,
+		'print'       => true,
+		'progressive' => true,
+		'respimg'     => true,
+		'unload'      => true,
+		'video-embed' => true,
+	);
+
+	/**
 	 * Initialize the class.
 	 *
 	 * @return void
 	 */
 	public function initialize() {
 
-		if ( rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
-			add_filter( 'wp_get_attachment_image', array( $this, 'update_image_tag' ), 30, 5 );
+		if ( ! rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
+			return;
 		}
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_lazysizes' ) );
+
+		add_filter( 'wp_get_attachment_image', array( $this, 'update_image_tag' ), 30, 5 );
 
 		add_filter( 'wp_calculate_image_srcset_meta', array( $this, 'svg_image_sizes' ), 5, 4 );
 
-		add_action( 'init', array( $this, 'update_image_sizes' ) );
+		add_action( 'after_setup_theme', array( $this, 'update_image_sizes' ) );
+	}
+
+	/**
+	 * Add the various lazysizes scripts
+	 *
+	 * @return void
+	 */
+
+	public function add_lazysizes() {
+		// Options that can be enabled/disabled from the admin
+		$user_options = array(
+			'artdirect',
+			'custommedia',
+			'blur-up',
+			'noscript',
+			'parent-fit',
+		);
+
+		foreach ( $user_options as $plugin => $value ) {
+			// Set values from the admin
+			self::$plugins[ $plugin ] = rwp_get_option( "modules.lazysizes.$value", false );
+		}
+
+		self::$plugins['artdirect'] = rwp_get_option( 'modules.lazysizes.artdirect', false );
+
+		$lazysizes_deps = array();
+
+		$version = self::$version;
+
+		foreach ( self::$plugins as $plugin => $include ) {
+			if ( $include ) {
+				rwp()->add_script( "lazysizes-$plugin", 'lazysizes', array(
+					'src'      => "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/$version/plugins/$plugin/ls.$plugin.min.js",
+					'version'  => $version,
+					'footer'   => true,
+				) );
+				$lazysizes_deps[] = "rwp-lazysizes-$plugin";
+			}
+		}
+
+		rwp()->add_script( 'lazysizes', 'lazysizes', array(
+			'src'      => "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/$version/lazysizes.min.js",
+			'version'  => $version,
+			'footer'   => true,
+			'deps'     => $lazysizes_deps,
+		) );
 	}
 
 	/**
@@ -42,25 +116,23 @@ class Lazysizes extends Singleton {
 	public function update_image_sizes() {
 		update_option( 'thumbnail_size_w', 120 );
 		update_option( 'thumbnail_size_h', 120 );
-		update_option( 'thumbnail_crop', 1 );
+		update_option( 'thumbnail_crop', true );
 
-		update_option( 'post-thumbnail_size_w', 480 );
-		update_option( 'post-thumbnail_size_h', 360 );
-		update_option( 'post-thumbnail_crop', 1 );
+		set_post_thumbnail_size( 360, 240, true );
+
+		add_image_size( 'small', 480, 360, false );
 
 		update_option( 'medium_size_w', 768 );
 		update_option( 'medium_size_h', 576 );
-		update_option( 'medium_crop', 0 );
+		update_option( 'medium_crop', false );
 
 		update_option( 'medium_large_size_w', 1024 );
 		update_option( 'medium_large_size_h', 768 );
-		update_option( 'medium_large_crop', 0 );
+		update_option( 'medium_large_crop', false );
 
 		update_option( 'large_size_w', 1280 );
 		update_option( 'large_size_h', 960 );
-		update_option( 'large_crop', 0 );
-
-		add_image_size( 'small', 480, 360, true );
+		update_option( 'large_crop', false );
 	}
 
 
@@ -110,19 +182,12 @@ class Lazysizes extends Singleton {
 		if ( 'svg' === $type && empty( $size_array ) ) {
 			$height = data_get( $image_meta, 'height', 0 );
 			$width = data_get( $image_meta, 'width', 0 );
-			if ( empty( $width ) || empty( $height ) ) {
-				$file = wp_get_original_image_path( $attachment_id );
-				$svg_file = simplexml_load_file( $file );
-				if ( $svg_file ) {
-					$svg_file = rwp_xml_to_array( $svg_file );
-					$view_box = explode( ' ', data_get( $svg_file, 'atts.viewBox', '' ) );
-
-					if ( ! empty( $view_box ) ) {
-						$height = intval( $view_box[3] );
-						$width = intval( $view_box[2] );
-					}
-				}
-				if ( ! empty( $width ) && ! empty( $height ) ) {
+			if ( ! rwp_image_has_dimensions( $width, $height ) ) {
+				$file       = wp_get_original_image_path( $attachment_id );
+				$dimensions = rwp_get_svg_dimensions( $file );
+				$width      = data_get( $dimensions, 'width', 0 );
+				$height     = data_get( $dimensions, 'height', 0 );
+				if ( rwp_image_has_dimensions( $width, $height ) ) {
 					$image_meta['width'] = $width;
 					$image_meta['height'] = $height;
 				}
