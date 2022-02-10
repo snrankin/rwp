@@ -22,7 +22,8 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 			parent::__construct( $collector );
 
 			$this->title = $title;
-			$this->id = rwp_change_case( $title );
+			$this->output = $output;
+			$this->id = rwp_change_case( $title, 'snake' );
 
 			add_filter( 'qm/output/menus', array( $this, 'admin_menu' ), 101 );
 

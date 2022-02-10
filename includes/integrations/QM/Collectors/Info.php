@@ -18,7 +18,7 @@ if ( class_exists( '\\QM_Collector' ) ) {
 		public function __construct( $title, $parent ) {
 			$this->title = $title;
 			$this->parent = $parent;
-			$this->id = rwp_change_case( $title );
+			$this->id = rwp_change_case( $title, 'snake' );
 		}
 		public function name() {
 			return $this->title;
