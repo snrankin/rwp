@@ -27,7 +27,7 @@ define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
 define( 'RWP_PLUGIN_PHP_VERSION', '7.0.0' );
 define( 'RWP_PLUGIN_ROOT',  trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'RWP_PLUGIN_ABSOLUTE', __FILE__ );
+define( 'RWP_PLUGIN_FILE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'includes/dependencies/' );
 
 function rwp_meets_requirements() {
@@ -155,11 +155,7 @@ if ( ! wp_installing() ) {
 	add_action(
 		'plugins_loaded',
 		static function () use ( $rwp_libraries ) {
-			if(!class_exists('\\RWP\\Engine\\Base')){
-				\RWP\Engine\Base::instance( array(
-					'autoloader' => $rwp_libraries
-				));
-			}
+			$rwp = \RWP\Engine\Base::instance();
 			new \RWP\Engine\Initialize( $rwp_libraries );
 		}
 	);
