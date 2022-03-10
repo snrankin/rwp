@@ -358,7 +358,7 @@ function rwp_merge_args( $defaults = array(), $args = array() ) {
  */
 
 function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empty = true ) {
-     $atts = rwp_prepare_args( $atts );
+    $atts = rwp_prepare_args( $atts );
     if ( ! empty( $atts ) ) {
 
         foreach ( $atts as $attr => $value ) {
@@ -567,4 +567,34 @@ function rwp_dom_node_to_string( $node ) {
 	}
 
 	return $html;
+}
+
+/**
+ * Function to beautify html
+ *
+ * @param mixed $content
+ * @param array $options
+ * @return string
+ * @throws Exception
+ * @throws DOMException
+ */
+function rwp_beautify_html( $content, $options = array() ) {
+
+	$html = $content;
+	if ( rwp_is_class( $html, '\\RWP\\Vendor\\Wa72\\HtmlPageDom\\HtmlPageCrawler' ) ) {
+		$html = $html->saveHtml();
+    }
+
+	$content = preg_replace( "/\r|\n{2,}|\h{2,}|\t/", '', $content );
+
+	$html = rwp_html_page( $content );
+
+	$html->indent( $options );
+
+	$html = $html->getBody()->saveHTML();
+
+	$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
+
+	return $html;
+
 }

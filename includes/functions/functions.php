@@ -9,6 +9,7 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
+ use RWP\Engine\Base;
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
@@ -24,7 +25,6 @@ function rwp( $method = '', ...$args ) {
 		return $plugin;
 	}
 }
-
 
 /**
  * Get the settings of the plugin in a filterable way

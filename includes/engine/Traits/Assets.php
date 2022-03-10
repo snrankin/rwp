@@ -25,16 +25,16 @@ trait Assets {
 	 */
 	public function initialize_assets() {
 
-		$manifest_path = $this->get_setting( 'assets.manifest_path' );
+		$manifest_path = $this->get( 'assets.manifest_path' );
 
 		if ( rwp_file_exists( $manifest_path ) ) {
 			$manifest = rwp_get_file_data( $manifest_path, true );
 			if ( $manifest ) {
 				$manifest = new Collection( $manifest );
-				$this->set_setting( 'assets.manifest', $manifest );
+				$this->set( 'assets.manifest', $manifest );
 			}
 		} else {
-			$this->set_setting( 'assets.manifest', false );
+			$this->set( 'assets.manifest', false );
 		}
 
 	}
@@ -49,7 +49,7 @@ trait Assets {
 
 	public function asset_filename( $asset ) {
 
-		$manifest = $this->get_setting( 'assets.manifest' );
+		$manifest = $this->get( 'assets.manifest' );
 
 		if ( $manifest ) {
 			if ( $manifest->has( $asset ) ) {
@@ -72,7 +72,7 @@ trait Assets {
 
 		$asset = $this->asset_filename( $asset );
 
-		$path = $this->get_setting( 'assets.dir' ) . $asset;
+		$path = $this->get( 'assets.dir' ) . $asset;
 
 		if ( rwp_file_exists( $path ) ) {
 
@@ -99,7 +99,7 @@ trait Assets {
 
 		if ( $this->asset_path( $asset ) ) {
 
-			return $this->get_setting( 'assets.uri' ) . $file;
+			return $this->get( 'assets.uri' ) . $file;
 
 		} else {
 
@@ -223,7 +223,7 @@ trait Assets {
 
 	public function get_plugin_scripts( $location = '' ) {
 
-		$scripts = $this->get_setting( 'assets.scripts' );
+		$scripts = $this->get( 'assets.scripts' );
 
 		try {
 			if ( rwp_has_value( $scripts ) ) {
@@ -391,7 +391,7 @@ trait Assets {
 
 	public function get_plugin_styles( $location = '' ) {
 
-		$styles = $this->get_setting( 'assets.styles' );
+		$styles = $this->get( 'assets.styles' );
 
 		try {
 			if ( rwp_has_value( $styles ) ) {

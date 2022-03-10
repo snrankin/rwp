@@ -232,11 +232,21 @@ class Embed extends Element {
 				if ( false !== $this->is_bg ) {
 					$wistia_classes = rwp_parse_classes($wistia_classes, array(
 						'autoPlay=true',
-						'muted=true',
-						'silentAutoPlay=true',
-						'videoFoam=false',
 						'endVideoBehavior=loop',
+						'fitStrategy=cover',
+						'fullscreenButton=false',
+						'playbackRateControl=false',
+						'muted=true',
 						'no-video-foam',
+						'playButton=false',
+						'preload=none',
+						'qualityControl=false',
+						'seo=false',
+						'silentAutoPlay=true',
+						'smallPlayButton=false',
+						'videoFoam=false',
+						'volume=0',
+						'volumeControl=false',
 					));
 				} else {
 					$wistia_classes = array_merge($wistia_classes, array(
@@ -276,7 +286,6 @@ class Embed extends Element {
 				if ( $lazyload ) {
 					$this->embed->set_attr( 'preload', 'none' );
 					$this->embed->add_class( 'lazyload' );
-					$this->embed->set_attr( 'data-src', $url );
 					$this->embed->set_attr( 'data-src', $url );
 					if ( $this->embed->has_attr( 'poster' ) ) {
 						$poster = $this->embed->get_attr( 'poster' );

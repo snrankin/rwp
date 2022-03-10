@@ -22,7 +22,7 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 			parent::__construct( $collector );
 			$this->output = $output;
 			$this->title = $title;
-			$this->id = rwp_change_case( $title );
+			$this->id = rwp_change_case( $title, 'snake' );
 			\add_filter( 'qm/output/menus', array( $this, 'admin_menu' ), 101 );
 			\add_filter( 'qm/output/title', array( $this, 'admin_title' ), 101 );
 			\add_filter( 'qm/output/menu_class', array( $this, 'admin_class' ) );
@@ -67,6 +67,8 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 		 * Outputs data in the footer
 		 */
 		public function output() {
+			$output = $this->output;
+
 			$this->before_tabular_output();
 
 			$dumper = new HtmlDumper();
@@ -91,50 +93,52 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 			echo '</tr>';
 			echo '</thead>';
 			echo '<tbody>';
+			if ( is_array( $output ) && ! empty( $output ) ) {
+				foreach ( $this->output as $value ) {
+					$file = data_get( $value, 'file', '' );
+					$line = data_get( $value, 'line', 0 );
+					$variable = data_get( $value, 'variable' );
 
-			foreach ( $this->output as $value ) {
-				$file = data_get( $value, 'file', '' );
-				$line = data_get( $value, 'line', 0 );
-				$variable = data_get( $value, 'variable' );
+					echo '<tr>';
 
-				echo '<tr>';
-
-				echo '<td>';
-				if ( ! empty( $file ) ) {
-					$text = wp_basename( $file );
-					echo $this->output_filename( $text, $file, $line ); //phpcs:ignore
-				}
-				echo '</td>';
-
-				echo '<td>';
-				echo esc_html( $line );
-				echo '</td>';
-
-				if ( is_array( $variable ) ) {
 					echo '<td>';
-					$dumper->dump( $cloner->cloneVar( $variable ) );
-					echo '</td>';
-				} elseif ( is_object( $variable ) ) {
-					echo '<td>';
-					$dumper->dump( $cloner->cloneVar( $variable ) );
-					echo '</td>';
-				} elseif ( is_bool( $variable ) ) {
-					if ( $variable ) {
-						echo '<td class="qm-true">true</td>';
-					} else {
-						echo '<td class="qm-false">false</td>';
+					if ( ! empty( $file ) ) {
+						$text = wp_basename( $file );
+						echo $this->output_filename( $text, $file, $line ); //phpcs:ignore
 					}
-				} else {
-					echo '<td>';
-					$dumper->dump( $cloner->cloneVar( $variable ) );
 					echo '</td>';
-				}
 
-				echo '</tr>';
+					echo '<td>';
+					echo esc_html( $line );
+					echo '</td>';
+
+					if ( is_array( $variable ) ) {
+						echo '<td>';
+						$dumper->dump( $cloner->cloneVar( $variable ) );
+						echo '</td>';
+					} elseif ( is_object( $variable ) ) {
+						echo '<td>';
+						$dumper->dump( $cloner->cloneVar( $variable ) );
+						echo '</td>';
+					} elseif ( is_bool( $variable ) ) {
+						if ( $variable ) {
+							echo '<td class="qm-true">true</td>';
+						} else {
+							echo '<td class="qm-false">false</td>';
+						}
+					} else {
+						echo '<td>';
+						$dumper->dump( $cloner->cloneVar( $variable ) );
+						echo '</td>';
+					}
+
+					echo '</tr>';
+				}
 			}
 			echo '</tbody>';
 			echo '</table>';
 			$this->after_tabular_output();
+
 		}
 	}
 }

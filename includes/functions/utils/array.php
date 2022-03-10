@@ -21,12 +21,17 @@ function rwp_array_has( $key, $array ) {
 	if ( is_array( $array ) ) {
 		if ( ! wp_is_numeric_array( $array ) ) {
 			if ( isset( $array[ $key ] ) && filled( $array[ $key ] ) ) {
-						return true;
+				return true;
 			} else {
 				return false;
 			}
 		} else {
-			$index = array_search( $key, $array, true );
+			if ( rwp_str_is_regex( $key ) ) {
+				$index = preg_grep( $key, $array );
+			} else {
+				$index = array_search( $key, $array, true );
+			}
+
 			if ( false !== $index ) {
 				return true;
 			} else {

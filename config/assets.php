@@ -46,21 +46,57 @@ $rwp_plugin_assets = [
         //     'location' => 'acf',
         // 	'footer'   => true,
         // ],
-        'modal' => [
+        'alert' => [
+            'handle'   => 'alert',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'alert',
+            'footer'   => true,
+        ],
+		'modal' => [
             'handle'   => 'modal',
-            'deps'     => ['rwp-app'],
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
             'location' => 'modal',
+            'footer'   => true,
+        ],
+		'offcanvas' => [
+            'handle'   => 'offcanvas',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'offcanvas',
+            'footer'   => true,
+        ],
+		'popover' => [
+            'handle'   => 'popover',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'popover',
+            'footer'   => true,
+        ],
+		'scrollspy' => [
+            'handle'   => 'scrollspy',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'scrollspy',
+            'footer'   => true,
+        ],
+		'slider' => [
+            'handle'   => 'slider',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'slider',
+            'footer'   => true,
+        ],
+		'toast' => [
+            'handle'   => 'toast',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'toast',
+            'footer'   => true,
+        ],
+		'tooltip' => [
+            'handle'   => 'tooltip',
+            'deps'     => ['rwp-app', 'rwp-bootstrap'],
+            'location' => 'tooltip',
             'footer'   => true,
         ],
         'select2' => [
             'handle'   => 'select2',
             'location' => 'select2',
-            'footer'   => true,
-        ],
-        'slider' => [
-            'handle'   => 'slider',
-            'deps'     => ['rwp-app'],
-            'location' => 'slider',
             'footer'   => true,
         ],
     ],
@@ -114,12 +150,12 @@ $rwp_plugin_assets = [
 
 if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monitor/query-monitor.php' ) ){
 	$rwp_plugin_assets['scripts'][ 'debug'] = array(
-		'location' => 'public',
+		'location' => 'global',
 		'footer'   => true,
 		'handle'   => 'debug'
 	);
 	$rwp_plugin_assets['styles'][ 'debug'] = array(
-		'location' => 'public',
+		'location' => 'global',
 		'handle'   => 'debug'
     );
 }
@@ -127,19 +163,21 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monito
 
 if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
     $rwp_lazysizes_version = '5.3.2';
-    $rwp_lazysizes_plugins = array(
-    'aspectratio' => true,
-    'print'       => true,
-    'video-embed' => true,
-    'progressive' => true,
-    'unload'      => true,
-    'object-fit'  => true,
-    'bgset'       => true,
-    'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
-    'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
-    'parent-fit'  => rwp_get_option('modules.lazysizes.parentfit', false),
-    'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false)
-    );
+	$rwp_lazysizes_plugins = array(
+		'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
+		'aspectratio' => true,
+		'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
+		'bgset'       => true,
+		'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
+		'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
+		'object-fit'  => true,
+		'parent-fit'  => rwp_get_option('modules.lazysizes.parentfit', false),
+		'print'       => true,
+		'progressive' => true,
+		'respimg'     => true,
+		'unload'      => true,
+		'video-embed' => true,
+	);
 
     $rwp_lazysizes_deps = array();
 

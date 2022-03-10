@@ -276,6 +276,16 @@ function rwp_is_phone_number( $str = '' ) {
 }
 
 /**
+ * Check if a string is a regular expression
+ *
+ * @param mixed $str
+ * @return bool
+ */
+function rwp_str_is_regex( $str ) {
+	return ( rwp_str_starts_with( $str, '/' ) && preg_match( '/\/(m|i|x|s|u|U|A|J|D)*$/', $str ) );
+}
+
+/**
  * Trim Text
  *
  * @global array       $allowedtags

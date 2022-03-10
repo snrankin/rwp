@@ -18,11 +18,12 @@ if ( class_exists( '\\QM_Output_Html' ) ) {
 
 	class Info extends \QM_Output_Html {
 
-		public function __construct( \QM_Collector $collector, $output, $title ) {
+		public function __construct( \QM_Collector $collector, $output = array(), $title = '' ) {
 			parent::__construct( $collector );
 
 			$this->title = $title;
-			$this->id = rwp_change_case( $title );
+			$this->output = $output;
+			$this->id = rwp_change_case( $title, 'snake' );
 
 			add_filter( 'qm/output/menus', array( $this, 'admin_menu' ), 101 );
 

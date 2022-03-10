@@ -1,37 +1,5 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
+var rwp;
 /******/ (function() { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./js/debug.js":
-/*!*********************!*\
-  !*** ./js/debug.js ***!
-  \*********************/
-/***/ (function() {
-
-eval("/** ============================================================================\n * debug\n *\n * @package   RWP\n * @since     1.0.1\n * @version   1.0.1\n * @author    RIESTER <wordpress@riester.com>\n * @copyright 2021 RIESTER\n * ========================================================================== */\nSfdump = // eslint-disable-line\nwindow.Sfdump || function (doc) {\n  var refStyle = doc.createElement('style'),\n      rxEsc = /([.*+?^${}()|[]\\/\\\\])/g,\n      idRx = /\\bsf-dump-\\d+-ref[012]\\w+\\b/,\n      keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl',\n      addEventListener = function addEventListener(e, n, cb) {\n    e.addEventListener(n, cb, false);\n  };\n\n  refStyle.innerHTML = 'pre.sf-dump .sf-dump-compact, .sf-dump-str-collapse .sf-dump-str-collapse, .sf-dump-str-expand .sf-dump-str-expand { display: none; }';\n  (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);\n  refStyle = doc.createElement('style');\n  (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);\n\n  if (!doc.addEventListener) {\n    addEventListener = function addEventListener(element, eventName, callback) {\n      element.attachEvent('on' + eventName, function (e) {\n        e.preventDefault = function () {\n          e.returnValue = false;\n        };\n\n        e.target = e.srcElement;\n        callback(e);\n      });\n    };\n  }\n\n  function toggle(a, recursive) {\n    var s = a.nextSibling || {},\n        oldClass = s.className,\n        arrow,\n        newClass;\n\n    if (/\\bsf-dump-compact\\b/.test(oldClass)) {\n      arrow = '&#9660;';\n      newClass = 'sf-dump-expanded';\n    } else if (/\\bsf-dump-expanded\\b/.test(oldClass)) {\n      arrow = '&#9654;';\n      newClass = 'sf-dump-compact';\n    } else {\n      return false;\n    }\n\n    if (doc.createEvent && s.dispatchEvent) {\n      var event = doc.createEvent('Event');\n      event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);\n      s.dispatchEvent(event);\n    }\n\n    a.lastChild.innerHTML = arrow;\n    s.className = s.className.replace(/\\bsf-dump-(compact|expanded)\\b/, newClass);\n\n    if (recursive) {\n      try {\n        a = s.querySelectorAll('.' + oldClass);\n\n        for (s = 0; s < a.length; ++s) {\n          if (-1 == a[s].className.indexOf(newClass)) {\n            a[s].className = newClass;\n            a[s].previousSibling.lastChild.innerHTML = arrow;\n          }\n        }\n      } catch (e) {} // eslint-disable-line\n\n    }\n\n    return true;\n  }\n\n  function collapse(a, recursive) {\n    var s = a.nextSibling || {},\n        oldClass = s.className;\n\n    if (/\\bsf-dump-expanded\\b/.test(oldClass)) {\n      toggle(a, recursive);\n      return true;\n    }\n\n    return false;\n  }\n\n  function expand(a, recursive) {\n    var s = a.nextSibling || {},\n        oldClass = s.className;\n\n    if (/\\bsf-dump-compact\\b/.test(oldClass)) {\n      toggle(a, recursive);\n      return true;\n    }\n\n    return false;\n  }\n\n  function collapseAll(root) {\n    var a = root.querySelector('a.sf-dump-toggle');\n\n    if (a) {\n      collapse(a, true);\n      expand(a);\n      return true;\n    }\n\n    return false;\n  }\n\n  function reveal(node) {\n    var previous,\n        parents = [];\n\n    while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) {\n      parents.push(previous);\n    }\n\n    if (0 !== parents.length) {\n      parents.forEach(function (parent) {\n        expand(parent);\n      });\n      return true;\n    }\n\n    return false;\n  }\n\n  function highlight(root, activeNode, nodes) {\n    resetHighlightedNodes(root);\n    Array.from(nodes || []).forEach(function (node) {\n      if (!/\\bsf-dump-highlight\\b/.test(node.className)) {\n        node.className = node.className + ' sf-dump-highlight';\n      }\n    });\n\n    if (!/\\bsf-dump-highlight-active\\b/.test(activeNode.className)) {\n      activeNode.className = activeNode.className + ' sf-dump-highlight-active';\n    }\n  }\n\n  function resetHighlightedNodes(root) {\n    Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {\n      strNode.className = strNode.className.replace(/\\bsf-dump-highlight\\b/, '');\n      strNode.className = strNode.className.replace(/\\bsf-dump-highlight-active\\b/, '');\n    });\n  }\n\n  return function (root, x) {\n    root = doc.getElementById(root);\n    var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\\\$1') + ')+', 'm'),\n        options = {\n      maxDepth: 1,\n      maxStringLength: 160,\n      fileLinkFormat: false\n    },\n        elt = root.getElementsByTagName('A'),\n        len = elt.length,\n        i = 0,\n        s,\n        h,\n        t = [];\n\n    while (i < len) {\n      t.push(elt[i++]);\n    }\n\n    for (i in x) {\n      options[i] = x[i];\n    }\n\n    function a(e, f) {\n      addEventListener(root, e, function (e, n) {\n        if ('A' == e.target.tagName) {\n          f(e.target, e);\n        } else if ('A' == e.target.parentNode.tagName) {\n          f(e.target.parentNode, e);\n        } else {\n          n = /\\bsf-dump-ellipsis\\b/.test(e.target.className) ? e.target.parentNode : e.target;\n\n          if ((n = n.nextElementSibling) && 'A' == n.tagName) {\n            if (!/\\bsf-dump-toggle\\b/.test(n.className)) {\n              n = n.nextElementSibling || n;\n            }\n\n            f(n, e, true);\n          }\n        }\n      });\n    }\n\n    function isCtrlKey(e) {\n      return e.ctrlKey || e.metaKey;\n    }\n\n    function xpathString(str) {\n      var parts = str.match(/[^'\"]+|['\"]/g).map(function (part) {\n        // eslint-disable-next-line\n        if (\"'\" == part) {\n          return '\"\\'\"';\n        }\n\n        if ('\"' == part) {\n          return \"'\\\"'\"; // eslint-disable-line\n        }\n\n        return \"'\" + part + \"'\"; // eslint-disable-line\n      });\n      return 'concat(' + parts.join(',') + \", '')\"; // eslint-disable-line\n    }\n\n    function xpathHasClass(className) {\n      return \"contains(concat(' ', normalize-space(@class), ' '), ' \" + // eslint-disable-line\n      className + \" ')\" // eslint-disable-line\n      ;\n    } // eslint-disable-next-line\n\n\n    addEventListener(root, 'mouseover', function (e) {\n      if ('' != refStyle.innerHTML) {\n        refStyle.innerHTML = '';\n      }\n    });\n    a('mouseover', function (a, e, c) {\n      if (c) {\n        e.target.style.cursor = 'pointer';\n      } else if (a = idRx.exec(a.className)) {\n        try {\n          refStyle.innerHTML = 'pre.sf-dump .' + a[0] + '{background-color: #B729D9; color: #FFF !important; border-radius: 2px}';\n        } catch (e) {} // eslint-disable-line\n\n      }\n    });\n    a('click', function (a, e, c) {\n      if (/\\bsf-dump-toggle\\b/.test(a.className)) {\n        e.preventDefault();\n\n        if (!toggle(a, isCtrlKey(e))) {\n          var r = doc.getElementById(a.getAttribute('href').substr(1)),\n              s = r.previousSibling,\n              f = r.parentNode,\n              t = a.parentNode;\n          t.replaceChild(r, a);\n          f.replaceChild(a, s);\n          t.insertBefore(s, r);\n          f = f.firstChild.nodeValue.match(indentRx);\n          t = t.firstChild.nodeValue.match(indentRx);\n\n          if (f && t && f[0] !== t[0]) {\n            r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\\\$1'), 'mg'), t[0]);\n          }\n\n          if (/\\bsf-dump-compact\\b/.test(r.className)) {\n            toggle(s, isCtrlKey(e));\n          }\n        }\n\n        if (c) {// eslint-disable-line\n        } else if (doc.getSelection) {\n          try {\n            doc.getSelection().removeAllRanges();\n          } catch (e) {\n            doc.getSelection().empty();\n          }\n        } else {\n          doc.selection.empty();\n        }\n      } else if (/\\bsf-dump-str-toggle\\b/.test(a.className)) {\n        e.preventDefault();\n        e = a.parentNode.parentNode;\n        e.className = e.className.replace(/\\bsf-dump-str-(expand|collapse)\\b/, a.parentNode.className);\n      }\n    });\n    elt = root.getElementsByTagName('SAMP');\n    len = elt.length;\n    i = 0;\n\n    while (i < len) {\n      t.push(elt[i++]);\n    }\n\n    len = t.length;\n\n    for (i = 0; i < len; ++i) {\n      elt = t[i];\n\n      if ('SAMP' == elt.tagName) {\n        a = elt.previousSibling || {}; // eslint-disable-line\n\n        if ('A' != a.tagName) {\n          a = doc.createElement('A'); // eslint-disable-line\n\n          a.className = 'sf-dump-ref';\n          elt.parentNode.insertBefore(a, elt);\n        } else {\n          a.innerHTML += ' ';\n        }\n\n        a.title = (a.title ? a.title + '\\n[' : '[') + keyHint + '+click] Expand all children';\n        a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>&#9654;</span>' : '<span>&#9660;</span>';\n        a.className += ' sf-dump-toggle';\n        x = 1;\n\n        if ('sf-dump' != elt.parentNode.className) {\n          x += elt.parentNode.getAttribute('data-depth') / 1;\n        }\n      } else if (/\\bsf-dump-ref\\b/.test(elt.className) && (a = elt.getAttribute('href')) // eslint-disable-line\n      ) {\n        a = a.substr(1); // eslint-disable-line\n\n        elt.className += ' ' + a;\n\n        if (/[[{]$/.test(elt.previousSibling.nodeValue)) {\n          a = a != elt.nextSibling.id && doc.getElementById(a); // eslint-disable-line\n\n          try {\n            s = a.nextSibling;\n            elt.appendChild(a);\n            s.parentNode.insertBefore(a, s);\n\n            if (/^[@#]/.test(elt.innerHTML)) {\n              elt.innerHTML += ' <span>&#9654;</span>';\n            } else {\n              elt.innerHTML = '<span>&#9654;</span>';\n              elt.className = 'sf-dump-ref';\n            }\n\n            elt.className += ' sf-dump-toggle';\n          } catch (e) {\n            if ('&' == elt.innerHTML.charAt(0)) {\n              elt.innerHTML = '&hellip;';\n              elt.className = 'sf-dump-ref';\n            }\n          }\n        }\n      }\n    }\n\n    if (doc.evaluate && Array.from && root.children.length > 1) {\n      // eslint-disable-next-line\n      var showCurrent = function showCurrent(state) {\n        var currentNode = state.current(),\n            currentRect,\n            searchRect;\n\n        if (currentNode) {\n          reveal(currentNode);\n          highlight(root, currentNode, state.nodes);\n\n          if ('scrollIntoView' in currentNode) {\n            currentNode.scrollIntoView(true);\n            currentRect = currentNode.getBoundingClientRect();\n            searchRect = search.getBoundingClientRect();\n\n            if (currentRect.top < searchRect.top + searchRect.height) {\n              window.scrollBy(0, -(searchRect.top + searchRect.height + 5));\n            }\n          }\n        }\n\n        counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();\n      };\n\n      root.setAttribute('tabindex', 0); // eslint-disable-next-line\n\n      var SearchState = function SearchState() {\n        this.nodes = [];\n        this.idx = 0;\n      }; // eslint-disable-next-line\n\n\n      SearchState.prototype = {\n        next: function next() {\n          if (this.isEmpty()) {\n            return this.current();\n          }\n\n          this.idx = this.idx < this.nodes.length - 1 ? this.idx + 1 : 0;\n          return this.current();\n        },\n        previous: function previous() {\n          if (this.isEmpty()) {\n            return this.current();\n          }\n\n          this.idx = this.idx > 0 ? this.idx - 1 : this.nodes.length - 1;\n          return this.current();\n        },\n        isEmpty: function isEmpty() {\n          return 0 === this.count();\n        },\n        current: function current() {\n          if (this.isEmpty()) {\n            return null;\n          }\n\n          return this.nodes[this.idx];\n        },\n        reset: function reset() {\n          this.nodes = [];\n          this.idx = 0;\n        },\n        count: function count() {\n          return this.nodes.length;\n        }\n      };\n      var search = doc.createElement('div');\n      search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';\n      search.innerHTML = ' <input type=\"text\" class=\"sf-dump-search-input\"> <span class=\"sf-dump-search-count\">0 of 0</span> <button type=\"button\" class=\"sf-dump-search-input-previous\" tabindex=\"-1\"> <svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z\"/></svg> </button> <button type=\"button\" class=\"sf-dump-search-input-next\" tabindex=\"-1\"> <svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z\"/></svg> </button> ';\n      root.insertBefore(search, root.firstChild);\n      var state = new SearchState();\n      var searchInput = search.querySelector('.sf-dump-search-input');\n      var counter = search.querySelector('.sf-dump-search-count');\n      var searchInputTimer = 0;\n      var previousSearchQuery = '';\n      addEventListener(searchInput, 'keyup', function (e) {\n        var searchQuery = e.target.value;\n        /* Don't perform anything if the pressed key didn't change the query */\n\n        if (searchQuery === previousSearchQuery) {\n          return;\n        }\n\n        previousSearchQuery = searchQuery;\n        clearTimeout(searchInputTimer);\n        searchInputTimer = setTimeout(function () {\n          state.reset();\n          collapseAll(root);\n          resetHighlightedNodes(root);\n\n          if ('' === searchQuery) {\n            counter.textContent = '0 of 0';\n            return;\n          }\n\n          var classMatches = ['sf-dump-str', 'sf-dump-key', 'sf-dump-public', 'sf-dump-protected', 'sf-dump-private'].map(xpathHasClass).join(' or ');\n          var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); // eslint-disable-next-line\n\n          while (node = xpathResult.iterateNext()) {\n            state.nodes.push(node);\n          } // eslint-disable-line\n\n\n          showCurrent(state);\n        }, 400);\n      });\n      Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {\n        addEventListener(btn, 'click', function (e) {\n          e.preventDefault();\n          -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();\n          searchInput.focus();\n          collapseAll(root);\n          showCurrent(state);\n        });\n      });\n      addEventListener(root, 'keydown', function (e) {\n        var isSearchActive = !/\\bsf-dump-search-hidden\\b/.test(search.className);\n\n        if (114 === e.keyCode && !isSearchActive || isCtrlKey(e) && 70 === e.keyCode) {\n          /* F3 or CMD/CTRL + F */\n          if (70 === e.keyCode && document.activeElement === searchInput) {\n            /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */\n            return;\n          }\n\n          e.preventDefault();\n          search.className = search.className.replace(/\\bsf-dump-search-hidden\\b/, '');\n          searchInput.focus();\n        } else if (isSearchActive) {\n          if (27 === e.keyCode) {\n            /* ESC key */\n            search.className += ' sf-dump-search-hidden';\n            e.preventDefault();\n            resetHighlightedNodes(root);\n            searchInput.value = '';\n          } else if (isCtrlKey(e) && 71 === e.keyCode\n          /* CMD/CTRL + G */\n          || 13 === e.keyCode\n          /* Enter */\n          || 114 === e.keyCode\n          /* F3 */\n          ) {\n            e.preventDefault();\n            e.shiftKey ? state.previous() : state.next();\n            collapseAll(root);\n            showCurrent(state);\n          }\n        }\n      });\n    }\n\n    if (0 >= options.maxStringLength) {\n      return;\n    }\n\n    try {\n      elt = root.querySelectorAll('.sf-dump-str');\n      len = elt.length;\n      i = 0;\n      t = [];\n\n      while (i < len) {\n        t.push(elt[i++]);\n      }\n\n      len = t.length;\n\n      for (i = 0; i < len; ++i) {\n        elt = t[i];\n        s = elt.innerText || elt.textContent;\n        x = s.length - options.maxStringLength;\n\n        if (0 < x) {\n          h = elt.innerHTML;\n          elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength);\n          elt.className += ' sf-dump-str-collapse';\n          elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class=\"sf-dump-ref sf-dump-str-toggle\" title=\"Collapse\"> &#9664;</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class=\"sf-dump-ref sf-dump-str-toggle\" title=\"' + x + ' remaining characters\"> &#9654;</a></span>';\n        }\n      } // eslint-disable-next-line\n\n    } catch (e) {}\n  };\n}(document);\n\n//# sourceURL=webpack:///./js/debug.js?");
-
-/***/ }),
-
-/***/ "./css/debug.scss":
-/*!************************!*\
-  !*** ./css/debug.scss ***!
-  \************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./css/debug.scss?");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
 /******/ 	
@@ -48,13 +16,552 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 	}();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	__webpack_modules__["./js/debug.js"](0, {}, __webpack_require__);
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./css/debug.scss"](0, __webpack_exports__, __webpack_require__);
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+!function() {
+/*!*********************!*\
+  !*** ./js/debug.js ***!
+  \*********************/
+/** ============================================================================
+ * debug
+ *
+ * @package   RWP
+ * @since     1.0.1
+ * @version   1.0.1
+ * @author    RIESTER <wordpress@riester.com>
+ * @copyright 2021 RIESTER
+ * ========================================================================== */
+Sfdump = // eslint-disable-line
+window.Sfdump || function (doc) {
+  var refStyle = doc.createElement('style'),
+      rxEsc = /([.*+?^${}()|[]\/\\])/g,
+      idRx = /\bsf-dump-\d+-ref[012]\w+\b/,
+      keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl',
+      addEventListener = function addEventListener(e, n, cb) {
+    e.addEventListener(n, cb, false);
+  };
+
+  refStyle.innerHTML = 'pre.sf-dump .sf-dump-compact, .sf-dump-str-collapse .sf-dump-str-collapse, .sf-dump-str-expand .sf-dump-str-expand { display: none; }';
+  (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);
+  refStyle = doc.createElement('style');
+  (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);
+
+  if (!doc.addEventListener) {
+    addEventListener = function addEventListener(element, eventName, callback) {
+      element.attachEvent('on' + eventName, function (e) {
+        e.preventDefault = function () {
+          e.returnValue = false;
+        };
+
+        e.target = e.srcElement;
+        callback(e);
+      });
+    };
+  }
+
+  function toggle(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className,
+        arrow,
+        newClass;
+
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
+      arrow = '&#9660;';
+      newClass = 'sf-dump-expanded';
+    } else if (/\bsf-dump-expanded\b/.test(oldClass)) {
+      arrow = '&#9654;';
+      newClass = 'sf-dump-compact';
+    } else {
+      return false;
+    }
+
+    if (doc.createEvent && s.dispatchEvent) {
+      var event = doc.createEvent('Event');
+      event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);
+      s.dispatchEvent(event);
+    }
+
+    a.lastChild.innerHTML = arrow;
+    s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass);
+
+    if (recursive) {
+      try {
+        a = s.querySelectorAll('.' + oldClass);
+
+        for (s = 0; s < a.length; ++s) {
+          if (-1 == a[s].className.indexOf(newClass)) {
+            a[s].className = newClass;
+            a[s].previousSibling.lastChild.innerHTML = arrow;
+          }
+        }
+      } catch (e) {} // eslint-disable-line
+
+    }
+
+    return true;
+  }
+
+  function collapse(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className;
+
+    if (/\bsf-dump-expanded\b/.test(oldClass)) {
+      toggle(a, recursive);
+      return true;
+    }
+
+    return false;
+  }
+
+  function expand(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className;
+
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
+      toggle(a, recursive);
+      return true;
+    }
+
+    return false;
+  }
+
+  function collapseAll(root) {
+    var a = root.querySelector('a.sf-dump-toggle');
+
+    if (a) {
+      collapse(a, true);
+      expand(a);
+      return true;
+    }
+
+    return false;
+  }
+
+  function reveal(node) {
+    var previous,
+        parents = [];
+
+    while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) {
+      parents.push(previous);
+    }
+
+    if (0 !== parents.length) {
+      parents.forEach(function (parent) {
+        expand(parent);
+      });
+      return true;
+    }
+
+    return false;
+  }
+
+  function highlight(root, activeNode, nodes) {
+    resetHighlightedNodes(root);
+    Array.from(nodes || []).forEach(function (node) {
+      if (!/\bsf-dump-highlight\b/.test(node.className)) {
+        node.className = node.className + ' sf-dump-highlight';
+      }
+    });
+
+    if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) {
+      activeNode.className = activeNode.className + ' sf-dump-highlight-active';
+    }
+  }
+
+  function resetHighlightedNodes(root) {
+    Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {
+      strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, '');
+      strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, '');
+    });
+  }
+
+  return function (root, x) {
+    root = doc.getElementById(root);
+    var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'),
+        options = {
+      maxDepth: 1,
+      maxStringLength: 160,
+      fileLinkFormat: false
+    },
+        elt = root.getElementsByTagName('A'),
+        len = elt.length,
+        i = 0,
+        s,
+        h,
+        t = [];
+
+    while (i < len) {
+      t.push(elt[i++]);
+    }
+
+    for (i in x) {
+      options[i] = x[i];
+    }
+
+    function a(e, f) {
+      addEventListener(root, e, function (e, n) {
+        if ('A' == e.target.tagName) {
+          f(e.target, e);
+        } else if ('A' == e.target.parentNode.tagName) {
+          f(e.target.parentNode, e);
+        } else {
+          n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target;
+
+          if ((n = n.nextElementSibling) && 'A' == n.tagName) {
+            if (!/\bsf-dump-toggle\b/.test(n.className)) {
+              n = n.nextElementSibling || n;
+            }
+
+            f(n, e, true);
+          }
+        }
+      });
+    }
+
+    function isCtrlKey(e) {
+      return e.ctrlKey || e.metaKey;
+    }
+
+    function xpathString(str) {
+      var parts = str.match(/[^'"]+|['"]/g).map(function (part) {
+        // eslint-disable-next-line
+        if ("'" == part) {
+          return '"\'"';
+        }
+
+        if ('"' == part) {
+          return "'\"'"; // eslint-disable-line
+        }
+
+        return "'" + part + "'"; // eslint-disable-line
+      });
+      return 'concat(' + parts.join(',') + ", '')"; // eslint-disable-line
+    }
+
+    function xpathHasClass(className) {
+      return "contains(concat(' ', normalize-space(@class), ' '), ' " + // eslint-disable-line
+      className + " ')" // eslint-disable-line
+      ;
+    } // eslint-disable-next-line
+
+
+    addEventListener(root, 'mouseover', function (e) {
+      if ('' != refStyle.innerHTML) {
+        refStyle.innerHTML = '';
+      }
+    });
+    a('mouseover', function (a, e, c) {
+      if (c) {
+        e.target.style.cursor = 'pointer';
+      } else if (a = idRx.exec(a.className)) {
+        try {
+          refStyle.innerHTML = 'pre.sf-dump .' + a[0] + '{background-color: #B729D9; color: #FFF !important; border-radius: 2px}';
+        } catch (e) {} // eslint-disable-line
+
+      }
+    });
+    a('click', function (a, e, c) {
+      if (/\bsf-dump-toggle\b/.test(a.className)) {
+        e.preventDefault();
+
+        if (!toggle(a, isCtrlKey(e))) {
+          var r = doc.getElementById(a.getAttribute('href').substr(1)),
+              s = r.previousSibling,
+              f = r.parentNode,
+              t = a.parentNode;
+          t.replaceChild(r, a);
+          f.replaceChild(a, s);
+          t.insertBefore(s, r);
+          f = f.firstChild.nodeValue.match(indentRx);
+          t = t.firstChild.nodeValue.match(indentRx);
+
+          if (f && t && f[0] !== t[0]) {
+            r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]);
+          }
+
+          if (/\bsf-dump-compact\b/.test(r.className)) {
+            toggle(s, isCtrlKey(e));
+          }
+        }
+
+        if (c) {// eslint-disable-line
+        } else if (doc.getSelection) {
+          try {
+            doc.getSelection().removeAllRanges();
+          } catch (e) {
+            doc.getSelection().empty();
+          }
+        } else {
+          doc.selection.empty();
+        }
+      } else if (/\bsf-dump-str-toggle\b/.test(a.className)) {
+        e.preventDefault();
+        e = a.parentNode.parentNode;
+        e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className);
+      }
+    });
+    elt = root.getElementsByTagName('SAMP');
+    len = elt.length;
+    i = 0;
+
+    while (i < len) {
+      t.push(elt[i++]);
+    }
+
+    len = t.length;
+
+    for (i = 0; i < len; ++i) {
+      elt = t[i];
+
+      if ('SAMP' == elt.tagName) {
+        a = elt.previousSibling || {}; // eslint-disable-line
+
+        if ('A' != a.tagName) {
+          a = doc.createElement('A'); // eslint-disable-line
+
+          a.className = 'sf-dump-ref';
+          elt.parentNode.insertBefore(a, elt);
+        } else {
+          a.innerHTML += ' ';
+        }
+
+        a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children';
+        a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>&#9654;</span>' : '<span>&#9660;</span>';
+        a.className += ' sf-dump-toggle';
+        x = 1;
+
+        if ('sf-dump' != elt.parentNode.className) {
+          x += elt.parentNode.getAttribute('data-depth') / 1;
+        }
+      } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href')) // eslint-disable-line
+      ) {
+        a = a.substr(1); // eslint-disable-line
+
+        elt.className += ' ' + a;
+
+        if (/[[{]$/.test(elt.previousSibling.nodeValue)) {
+          a = a != elt.nextSibling.id && doc.getElementById(a); // eslint-disable-line
+
+          try {
+            s = a.nextSibling;
+            elt.appendChild(a);
+            s.parentNode.insertBefore(a, s);
+
+            if (/^[@#]/.test(elt.innerHTML)) {
+              elt.innerHTML += ' <span>&#9654;</span>';
+            } else {
+              elt.innerHTML = '<span>&#9654;</span>';
+              elt.className = 'sf-dump-ref';
+            }
+
+            elt.className += ' sf-dump-toggle';
+          } catch (e) {
+            if ('&' == elt.innerHTML.charAt(0)) {
+              elt.innerHTML = '&hellip;';
+              elt.className = 'sf-dump-ref';
+            }
+          }
+        }
+      }
+    }
+
+    if (doc.evaluate && Array.from && root.children.length > 1) {
+      // eslint-disable-next-line
+      var showCurrent = function showCurrent(state) {
+        var currentNode = state.current(),
+            currentRect,
+            searchRect;
+
+        if (currentNode) {
+          reveal(currentNode);
+          highlight(root, currentNode, state.nodes);
+
+          if ('scrollIntoView' in currentNode) {
+            currentNode.scrollIntoView(true);
+            currentRect = currentNode.getBoundingClientRect();
+            searchRect = search.getBoundingClientRect();
+
+            if (currentRect.top < searchRect.top + searchRect.height) {
+              window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
+            }
+          }
+        }
+
+        counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
+      };
+
+      root.setAttribute('tabindex', 0); // eslint-disable-next-line
+
+      var SearchState = function SearchState() {
+        this.nodes = [];
+        this.idx = 0;
+      }; // eslint-disable-next-line
+
+
+      SearchState.prototype = {
+        next: function next() {
+          if (this.isEmpty()) {
+            return this.current();
+          }
+
+          this.idx = this.idx < this.nodes.length - 1 ? this.idx + 1 : 0;
+          return this.current();
+        },
+        previous: function previous() {
+          if (this.isEmpty()) {
+            return this.current();
+          }
+
+          this.idx = this.idx > 0 ? this.idx - 1 : this.nodes.length - 1;
+          return this.current();
+        },
+        isEmpty: function isEmpty() {
+          return 0 === this.count();
+        },
+        current: function current() {
+          if (this.isEmpty()) {
+            return null;
+          }
+
+          return this.nodes[this.idx];
+        },
+        reset: function reset() {
+          this.nodes = [];
+          this.idx = 0;
+        },
+        count: function count() {
+          return this.nodes.length;
+        }
+      };
+      var search = doc.createElement('div');
+      search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';
+      search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0</span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"/></svg> </button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"/></svg> </button> ';
+      root.insertBefore(search, root.firstChild);
+      var state = new SearchState();
+      var searchInput = search.querySelector('.sf-dump-search-input');
+      var counter = search.querySelector('.sf-dump-search-count');
+      var searchInputTimer = 0;
+      var previousSearchQuery = '';
+      addEventListener(searchInput, 'keyup', function (e) {
+        var searchQuery = e.target.value;
+        /* Don't perform anything if the pressed key didn't change the query */
+
+        if (searchQuery === previousSearchQuery) {
+          return;
+        }
+
+        previousSearchQuery = searchQuery;
+        clearTimeout(searchInputTimer);
+        searchInputTimer = setTimeout(function () {
+          state.reset();
+          collapseAll(root);
+          resetHighlightedNodes(root);
+
+          if ('' === searchQuery) {
+            counter.textContent = '0 of 0';
+            return;
+          }
+
+          var classMatches = ['sf-dump-str', 'sf-dump-key', 'sf-dump-public', 'sf-dump-protected', 'sf-dump-private'].map(xpathHasClass).join(' or ');
+          var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); // eslint-disable-next-line
+
+          while (node = xpathResult.iterateNext()) {
+            state.nodes.push(node);
+          } // eslint-disable-line
+
+
+          showCurrent(state);
+        }, 400);
+      });
+      Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {
+        addEventListener(btn, 'click', function (e) {
+          e.preventDefault();
+          -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();
+          searchInput.focus();
+          collapseAll(root);
+          showCurrent(state);
+        });
+      });
+      addEventListener(root, 'keydown', function (e) {
+        var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className);
+
+        if (114 === e.keyCode && !isSearchActive || isCtrlKey(e) && 70 === e.keyCode) {
+          /* F3 or CMD/CTRL + F */
+          if (70 === e.keyCode && document.activeElement === searchInput) {
+            /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */
+            return;
+          }
+
+          e.preventDefault();
+          search.className = search.className.replace(/\bsf-dump-search-hidden\b/, '');
+          searchInput.focus();
+        } else if (isSearchActive) {
+          if (27 === e.keyCode) {
+            /* ESC key */
+            search.className += ' sf-dump-search-hidden';
+            e.preventDefault();
+            resetHighlightedNodes(root);
+            searchInput.value = '';
+          } else if (isCtrlKey(e) && 71 === e.keyCode
+          /* CMD/CTRL + G */
+          || 13 === e.keyCode
+          /* Enter */
+          || 114 === e.keyCode
+          /* F3 */
+          ) {
+            e.preventDefault();
+            e.shiftKey ? state.previous() : state.next();
+            collapseAll(root);
+            showCurrent(state);
+          }
+        }
+      });
+    }
+
+    if (0 >= options.maxStringLength) {
+      return;
+    }
+
+    try {
+      elt = root.querySelectorAll('.sf-dump-str');
+      len = elt.length;
+      i = 0;
+      t = [];
+
+      while (i < len) {
+        t.push(elt[i++]);
+      }
+
+      len = t.length;
+
+      for (i = 0; i < len; ++i) {
+        elt = t[i];
+        s = elt.innerText || elt.textContent;
+        x = s.length - options.maxStringLength;
+
+        if (0 < x) {
+          h = elt.innerHTML;
+          elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength);
+          elt.className += ' sf-dump-str-collapse';
+          elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> &#9664;</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> &#9654;</a></span>';
+        }
+      } // eslint-disable-next-line
+
+    } catch (e) {}
+  };
+}(document);
+}();
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+/*!************************!*\
+  !*** ./css/debug.scss ***!
+  \************************/
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+}();
+rwp = __webpack_exports__;
 /******/ })()
 ;
+//# sourceMappingURL=rwp-debug.js.map

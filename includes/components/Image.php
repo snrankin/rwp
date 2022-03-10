@@ -159,6 +159,7 @@ class Image extends Element {
 		$src  = '';
 		$size = 'full';
 		$html = '';
+		$id   = 0;
 		if ( rwp_str_is_html( $args ) ) {
 			$html = $args;
 		}
@@ -166,19 +167,32 @@ class Image extends Element {
 		if ( ! empty( $args ) ) {
 
 			if ( is_string( $args ) || is_numeric( $args ) ) {
-				$src = rwp_extract_img_src( $args, $size );
 				if ( is_numeric( $args ) ) {
-					$html = wp_get_attachment_image( $args, $size, false );
+					$id   = $args;
 				}
+				$src = rwp_extract_img_src( $args, $size );
+
 			} elseif ( is_array( $args ) ) {
 				$src  = data_get( $args, 'src', '' );
+
 				$size = data_get( $args, 'size', $size );
-				$src = rwp_extract_img_src( $src, $size );
+				if ( is_numeric( $src ) ) {
+					$id   = $src;
+					$src = rwp_extract_img_src( $src, $size );
+				}
 			}
 		}
 
 		if ( ! is_array( $args ) ) {
 			$args = array();
+		}
+
+		if ( ! empty( $id ) ) {
+			$html = wp_get_attachment_image( $id, $size );
+			$defaults = rwp_extract_html_attributes( $html );
+			$image_args = data_get( $args, 'image', array() );
+			$image_args = rwp_merge_args( $defaults, $image_args );
+			$args['image'] = $image_args;
 		}
 
 		$args['src'] = $src;
@@ -314,6 +328,10 @@ class Image extends Element {
 			} else {
 				$this->inner->add_class( 'ratio-' . $this->ratio );
 			}
+		}
+
+		if ( $this->caption->has_content() ) {
+			$this->addClass( 'has-caption' );
 		}
 
 		$this->inner->set_content( $this->image, 'image' );

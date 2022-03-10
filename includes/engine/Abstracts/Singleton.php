@@ -18,7 +18,7 @@ if ( ! \defined( 'ABSPATH' ) ) {
 use RWP\Vendor\Exceptions\Http\Server\NotImplementedException;
 use RWP\Vendor\WPBP\Debug\Debug;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
-
+use RWP\Vendor\Illuminate\Support\Arr;
 abstract class Singleton {
 
     /**
@@ -73,8 +73,11 @@ abstract class Singleton {
 	 *
 	 * @return void
      */
-	public function set( $key, $value, $overwrite = true ) {
-		data_set( $this, $key, $value, $overwrite );
+	public function set( $key, $value = null, $overwrite = true ) {
+		$keys = \is_array($key) ? $key : [$key => $value];
+        foreach ($keys as $key => $value) {
+            data_set( $this, $key, $value, $overwrite );
+        }
 	}
 
 	/**

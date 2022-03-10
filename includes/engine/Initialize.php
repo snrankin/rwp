@@ -13,7 +13,7 @@ namespace RWP\Engine;
 
 use RWP\Engine\Is_Methods;
 use Composer\Autoload\ClassLoader;
-
+use RWP\Components\Collection;
 class Initialize {
 
 	/**
@@ -22,6 +22,11 @@ class Initialize {
 	 * @var array
 	 */
 	public $classes = array();
+
+	/**
+	 * @var array $components Array of plugin components which might need upgrade
+	 */
+    public static $active_classes = array();
 
 	/**
 	 * Instance of this Is_Methods.
@@ -47,46 +52,112 @@ class Initialize {
 		$this->is       = new Is_Methods();
 		$this->composer = $composer;
 
-		$this->get_classes( 'Internals' );
-		$this->get_classes( 'Integrations' );
+		$this->initialize_autoloader();
+
+		$classes_to_init = new Collection();
+
+		$internals = $this->get_classes( 'Internals' );
+		$integrations = $this->get_classes( 'Integrations' );
+
+		$classes_to_init = $classes_to_init->merge( $internals );
+		$classes_to_init = $classes_to_init->merge( $integrations );
 
 		if ( $this->is->request( 'rest' ) ) {
-			$this->get_classes( 'Rest' );
+			$rest = $this->get_classes( 'Rest' );
+			$classes_to_init = $classes_to_init->merge( $rest );
 		}
 
 		if ( $this->is->request( 'ajax' ) ) {
-			$this->get_classes( 'Ajax' );
+			$ajax = $this->get_classes( 'Ajax' );
+			$classes_to_init = $classes_to_init->merge( $ajax );
 		}
 
 		if ( $this->is->request( 'backend' ) ) {
-			$this->get_classes( 'Backend' );
+			$backend = $this->get_classes( 'Backend' );
+			$classes_to_init = $classes_to_init->merge( $backend );
 		}
 
 		if ( $this->is->request( 'frontend' ) ) {
-			$this->get_classes( 'Frontend' );
+			$frontend = $this->get_classes( 'Frontend' );
+			$classes_to_init = $classes_to_init->merge( $frontend );
 		}
 
-		$this->load_classes();
+		$classes_to_init = $classes_to_init->flatten()->unique()->all();
+
+		$this->load_classes( $classes_to_init );
 	}
+
+	/**
+	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
+	 *
+	 * @param string $namespace Class name to find.
+	 * @since 1.0.0
+	 * @return array Return the classes.
+	 */
+	private function initialize_autoloader() {
+		$autoloader = $this->composer;
+		$prefix    = $autoloader->getPrefixesPsr4();
+		$classmap  = $autoloader->getClassMap();
+		$namespace = 'RWP';
+
+		$class_loader = array();
+
+		// In case composer has autoload optimized
+		if ( isset( $classmap[__CLASS__] ) ) {
+			$classes = \array_keys( $classmap );
+
+			foreach ( $classes as $class ) {
+				if ( 0 !== \strncmp( (string) $class, $namespace, \strlen( $namespace ) ) ) {
+					continue;
+				}
+
+				$class_loader[] = $class;
+			}
+		}
+
+		$namespace .= '\\';
+
+		// In case composer is not optimized
+		if ( isset( $prefix[ $namespace ] ) ) {
+			$folder    = $prefix[ $namespace ][0];
+			$php_files = $this->scandir( $folder );
+			$class_loader = $this->find_classes( $php_files, $folder, $namespace );
+
+			if ( ! WP_DEBUG ) {
+				\wp_die( \esc_html__( 'RWP is on production environment with missing `composer dumpautoload -o` that will improve the performance on autoloading itself.', 'rwp' ) );
+			}
+		}
+
+		$components = array();
+
+		foreach ( $class_loader as $class ) {
+			if ( rwp_str_has( $class, '\\' ) ) {
+				$component = rwp_remove_prefix( $class, $namespace );
+				$component = rwp_str_replace( '\\', '.', $component );
+			}
+
+			$components = data_set( $components, $component, $class );
+		}
+
+		$this->classes = $components;
+
+		rwp()->set('components', $components);
+	}
+
 
 	/**
 	 * Initialize all the classes.
 	 *
 	 * @since 1.0.0
 	 */
-	private function load_classes() {
-		$this->classes = \apply_filters( 'rwp_classes_to_execute', $this->classes );
+	private function load_classes($classes = array() ) {
+		$classes = \apply_filters( 'rwp_classes_to_execute', $classes );
 
-		foreach ( $this->classes as $class ) {
-			try {
+		foreach ( $classes as $class ) {
+			if ( $this->is_component( $class ) && ! isset( $this::$active_classes[ $class ] ) ) {
 				$temp = $class::instance();
+				$this::$active_classes[ $class ] = $temp;
 				$temp->initialize();
-			} catch ( \Throwable $err ) {
-				\do_action( 'rwp_initialize_failed', $err );
-
-				if ( \WP_DEBUG ) {
-					throw new \Exception( $err->getMessage() );
-				}
 			}
 		}
 	}
@@ -154,6 +225,41 @@ class Initialize {
 
 		return \array_diff( $files, array( '..', '.', 'index.php' ) );
 	}
+
+	private function is_component( $class ) {
+		$rc = new \ReflectionClass( $class );
+
+		if ( self::IsExtendsOrImplements( 'RWP\\Engine\\Abstracts\\Singleton', $class ) && $rc->hasMethod( 'initialize' ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Check if a class extends or implements a specific class/interface
+     * @param string $search The class or interface name to look for
+     * @param string $class_name The class name of the object to compare to
+     * @return bool
+     */
+    public static function IsExtendsOrImplements( $search, $class_name ) {
+        $class = new \ReflectionClass( $class_name );
+        if ( false === $class ) {
+            return false;
+        }
+        do {
+            $name = $class->getName();
+            if ( $search == $name ) {
+                return true;
+            }
+            $interfaces = $class->getInterfaceNames();
+            if ( is_array( $interfaces ) && in_array( $search, $interfaces ) ) {
+                return true;
+            }
+            $class = $class->getParentClass();
+        } while ( false !== $class );
+        return false;
+    }
 
 	/**
 	 * Load namespace classes by files.

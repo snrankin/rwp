@@ -13,17 +13,6 @@ use RWP\Components\Collection;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Support\Enumerable;
-/**
- * Function wrapper for Collection class
- *
- * @param mixed $args The Collection class arguments
- *
- * @return Collection
- */
-
-function rwp_collection( $args = array() ) {
-     return new Collection( $args );
-}
 
 
 /**

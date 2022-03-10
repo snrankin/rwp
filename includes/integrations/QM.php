@@ -33,16 +33,18 @@ class QM extends Singleton {
 			return;
 		}
 
-		$this->title = rwp()->get_setting( 'name' );
+		$this->title = rwp()->get( 'name' );
 
 		if ( class_exists( '\\QM_Collectors' ) ) {
+			$class = get_called_class();
 
 			foreach ( $this->panels as $panel ) {
 				$name = rwp()->prefix( $panel, ' ', 'title' );
 
-				$collector = __NAMESPACE__ . "\\QM\\Collectors\\$panel";
+				$collector = rwp()->get_component( "$class\\Collectors\\$panel" );
+				$collector = new $collector( $name, $this );
 
-				\QM_Collectors::add( new $collector( $name, $this ) );
+				\QM_Collectors::add( $collector );
 			}
 		}
 
@@ -66,11 +68,12 @@ class QM extends Singleton {
 		foreach ( $this->panels as $panel ) {
 			$name = rwp()->prefix( $panel, ' ', 'title' );
 			$id = rwp_change_case( $name );
-
+			$class = get_called_class();
 			$collector = $collectors::get( $id );
 			if ( $collector ) {
-				$output_class = __NAMESPACE__ . "\\QM\\Output\\$panel";
-				$output[ $id ] = new $output_class( $collector, $this->output[ $id ], $name );
+				$output_class = rwp()->get_component( "$class\\Output\\$panel" );
+				$output_class = new $output_class( $collector, $output[ $id ], $name );
+				$output[ $id ] = $output_class;
 			}
 		}
 

@@ -76,7 +76,7 @@ class Html extends HtmlPageCrawler {
 			}
 
 			if ( $include_content ) {
-				$atts['content'] = $node->nodeValue; //phpcs:ignore
+				$atts['content'] = $crawler->getInnerHtml(); //phpcs:ignore
 			}
 
 			if ( $include_tag ) {

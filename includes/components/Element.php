@@ -64,7 +64,7 @@ class Element {
      * @var array $methods The current class' methods
 	 * @access private
      */
-    private static $methods = [];
+    public static $methods = [];
 
 	/**
 	 * @var array $selfClosing An array of html elements that don't need an end tag
@@ -991,10 +991,13 @@ class Element {
 	 */
 	public function __call( $method, $parameters ) {
 
+		$class = \get_called_class();
+		$methods = get_class_methods( $class );
+
 		try {
 			if ( in_array( $method, self::$html_methods ) ) {
 				return $this->html->$method( ...$parameters );
-			} else if ( in_array( $method, self::$methods ) ) {
+			} else if ( in_array( $method, $methods ) ) {
 				return $this->$method( ...$parameters );
 			} else {
 				throw new \Exception( 'Endpoint "' . $method . '" does not exist' );

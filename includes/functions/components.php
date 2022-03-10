@@ -16,6 +16,17 @@ use RWP\Vendor\Brain\Hierarchy\Hierarchy;
 
 // ============================ Vendor Components =========================== //
 
+/**
+ * Function wrapper for Collection class
+ *
+ * @param mixed $args The Collection class arguments
+ *
+ * @return Collection
+ */
+
+function rwp_collection( $args = array() ) {
+    return new Collection( $args );
+}
 
 /**
  * Create a new configuration repository.
@@ -49,6 +60,18 @@ function rwp_hierarchy( $query = null ) {
  */
 function rwp_html( $html ) {
 	return new RWP\Components\Html( $html );
+}
+
+/**
+ * Class to manipulate html pages
+ *
+ * @link https://github.com/wasinger/htmlpagedom
+ *
+ * @param string $html
+ * @return RWP\Vendor\Wa72\HtmlPageDom\HtmlPage
+ */
+function rwp_html_page( $html ) {
+	return new RWP\Vendor\Wa72\HtmlPageDom\HtmlPage( $html );
 }
 
 /**

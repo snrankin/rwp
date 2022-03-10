@@ -28,7 +28,7 @@ class Locations extends Organization {
 		 */
 		$locations = rwp_get_option( 'locations', rwp_collection() );
 
-		if ( $locations->isNotEmpty() ) {
+		if ( rwp_is_collection( $locations ) && $locations->isNotEmpty() ) {
 			$main_location = $locations->filter( function( $location ) {
 				return $location->get( 'main_location' );
 			});
