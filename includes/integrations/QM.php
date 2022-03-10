@@ -33,7 +33,7 @@ class QM extends Singleton {
 			return;
 		}
 
-		$this->title = rwp()->get_setting( 'name' );
+		$this->title = rwp()->get( 'name' );
 
 		if ( class_exists( '\\QM_Collectors' ) ) {
 			$class = get_called_class();

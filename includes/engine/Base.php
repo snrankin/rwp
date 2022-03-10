@@ -13,7 +13,7 @@ namespace RWP\Engine;
 
 use RWP\Engine\Abstracts\Plugin;
 use RWP\Components\Str;
-
+use RWP\Components\Collection;
 class Base extends Plugin {
 
 	use Traits\Assets;
@@ -22,40 +22,44 @@ class Base extends Plugin {
      *  @inheritdoc
      */
     protected function __construct( $args = array() ) {
-		$file = RWP_PLUGIN_ABSOLUTE;
-		$args['settings'] = array(
-			'name'        => __( 'RWP', 'rwp' ),
-			'namespace'   => 'RWP',
-			'title'       => __( 'RIESTER Core Plugin', 'rwp' ),
-			'capability'  => 'manage_options',
-			'settings-uri' => add_query_arg( 'page', 'rwp-options', 'admin.php' ),
-			'icon'        => 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjFlbSIgaGVpZ2h0PSIxZW0iIGZpbGw9ImN1cnJlbnRDb2xvciI+PHBhdGggZD0iTTAgMHYxNmgxNlYwem05LjMzIDE0LjRMNy43NyA5LjFhOS40NyA5LjQ3IDAgMDEtMS4xMy4wNXY1LjI1aC0yLjJWMS42aDMuMDhjMi40NyAwIDMuNzIgMSAzLjcyIDMuNzggMCAyLjA1LS43OSAyLjg5LTEuNTQgMy4yMmwxLjg2IDUuOHoiLz48cGF0aCBkPSJNNy40MiAzLjQxaC0uNzh2My45M2guNzhjMS4xOCAwIDEuNjMtLjQ0IDEuNjMtMlM4LjYgMy40MSA3LjQyIDMuNDF6Ii8+PC9zdmc+',
-		);
-		$args['options'] = rwp_get_options();
-		parent::__construct( $file, $args );
 
-		$this->initialize_configs();
+		$defaults = array(
+			'file'         => RWP_PLUGIN_FILE,
+			'autoloader'   => require RWP_PLUGIN_ROOT . '/vendor/autoload.php',
+			'dir'          => RWP_PLUGIN_ROOT,
+			'uri'          => RWP_PLUGIN_URI,
+			'namespace'    => 'RWP',
+			'title'        => __( 'RIESTER Core Plugin', 'rwp' ),
+			'capability'   => 'manage_options',
+			'settings-uri' => add_query_arg( 'page', 'rwp-options', 'admin.php' ),
+			'paths'        => array(
+				'assets'       => array(
+					'dir' => RWP_PLUGIN_ROOT . 'assets/',
+					'uri' => RWP_PLUGIN_URI . 'assets/',
+				),
+				'config'       => array(
+					'dir' => RWP_PLUGIN_ROOT . 'config/',
+					'uri' => RWP_PLUGIN_URI . 'config/',
+				),
+				'includes'     => array(
+					'dir' => RWP_PLUGIN_ROOT . 'includes/',
+					'uri' => RWP_PLUGIN_URI . 'includes/',
+				),
+				'dependencies' => array(
+					'dir' => RWP_PLUGIN_ROOT . 'includes/dependencies/',
+					'uri' => RWP_PLUGIN_URI . 'includes/dependencies/',
+				),
+			),
+		);
+
+		$args = rwp_merge_args($defaults, $args);
+
+
+		parent::__construct( $args );
+
 		$this->initialize_assets();
     }
 
 	/** Initialize the class and get the plugin settings */
 	public function initialize() {}
-
-	public function initialize_configs() {
-
-		$root    = $this->get_plugin_dir();
-        $configs = glob( $root . '/config/*.php' );
-
-		if ( $configs ) {
-			foreach ( $configs as $config ) {
-				$config = Str::after( $config, $root );
-				$filename = basename( $config );
-				$configname = rwp_basename( $config );
-				$dir = Str::before( $config, $filename );
-
-				$config = rwp_get_plugin_file( $filename, $dir, true, true );
-				$this->set_setting( $configname, $config );
-			}
-		}
-	}
 }

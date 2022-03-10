@@ -22,7 +22,12 @@
         "szepeviktor/phpstan-wordpress": "^0.7.5"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "phpro/grumphp-shim": true
+        }
     },
     "autoload": {
         "psr-4": {

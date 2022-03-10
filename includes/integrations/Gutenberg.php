@@ -49,7 +49,7 @@ class Gutenberg extends Singleton {
 		/**
 		 * @var false|Collection $manifest
 		 */
-		$manifest = rwp()->get_setting( 'assets.manifest' );
+		$manifest = rwp()->get( 'assets.manifest' );
 		if ( rwp_is_collection( $manifest ) ) {
 			$blocks_keys = $manifest->keys()->filter(function ( $key ) {
 				return rwp_str_ends_with( $key, '.php' );

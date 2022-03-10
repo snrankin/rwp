@@ -52,7 +52,7 @@ class Settings extends Singleton {
 	 * @return array
 	 */
 	public function add_action_links( array $links ) {
-		$url = rwp()->get_setting( 'settings-uri' );
+		$url = rwp()->get( 'settings-uri' );
 		return array_merge(
 			array(
 				'settings' => '<a href="' . $url . '">' . \__( 'Settings', 'rwp' ) . '</a>',
