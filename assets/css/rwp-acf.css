@@ -257,6 +257,10 @@ body:not(.post-type-acf-field-group) .acf-field .acf-input .acf-editor-wrap .wp-
     box-sizing:border-box !important;
 }
 
+.edit-post-layout__metaboxes .postbox.acf-postbox > .inside{
+    padding:0 8px 8px !important;
+}
+
 body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar{
     --rwp-gutter-x:0;
     --rwp-gutter-y:0;

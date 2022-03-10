@@ -170,3 +170,7 @@ body:not(.post-type-acf-field-group) {
 		box-sizing: border-box !important;
 	}
 }
+
+.edit-post-layout__metaboxes .postbox.acf-postbox > .inside {
+	padding: 0 8px 8px !important;
+}
