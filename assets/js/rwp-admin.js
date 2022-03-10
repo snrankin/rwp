@@ -1,3 +1,4 @@
+var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -43,6 +44,7 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
+rwp = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=rwp-admin.js.map

@@ -8,22 +8,22 @@
 	"cachebusting": "[name]-[contenthash]",
 	"enabled": {
 		"cache": false,
-		"cachebusting": false,
-		"debug": false,
-		"manifest": true,
-		"production": false
+		"debug": false
 	},
 	"entry": {
-		"blocks": {
-			"enabled": {
-				"cache": false,
-				"cachebusting": false,
-				"debug": false,
-				"manifest": true,
-				"optimize": false,
-				"production": false,
-				"sourcemaps": true
+		"app": {
+			"files": {
+				"app": {
+					"app": ["app.js"]
+				}
 			},
+			"webpack": {
+				"output": {
+					"library": "rwp"
+				}
+			}
+		},
+		"blocks": {
 			"files": {
 				"card": {
 					"card": ["./blocks/card/index.js"]
@@ -51,99 +51,91 @@
 		"fonts": {
 			"copy": [
 				{
-					"from": "../node_modules/bootstrap-icons/bootstrap-icons.svg",
-					"to": "imgs/"
-				},
-				{
-					"from": "../node_modules/@fortawesome/fontawesome-free/sprites/*",
-					"to": "imgs/[name][ext]"
-				},
-				{
 					"from": "./imgs/*",
-					"to": "imgs/[name][ext]"
+					"to": "imgs/[name][ext][query]"
 				}
 			],
 			"files": {
 				"bootstrap-icons": {
-					"bootstrap-icons": ["./css/vendor/bootstrap-icons.scss"]
+					"bootstrap-icons": ["vendor/bootstrap-icons.scss"]
 				},
 				"font-awesome": {
-					"font-awesome": ["./css/vendor/font-awesome.scss"]
+					"font-awesome": ["vendor/font-awesome.scss"]
 				}
 			}
 		},
 		"main": {
 			"files": {
 				"admin": {
-					"admin": ["./js/admin.js", "./css/admin.scss"]
+					"admin": ["admin.js", "admin.scss"]
 				},
 				"app": {
-					"app": ["./js/app.js"]
+					"app": ["app.js"]
 				},
 				"bootstrap": {
-					"bootstrap": ["./css/bootstrap.scss", "./js/vendor/bootstrap.js"]
+					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
 				},
 				"debug": {
-					"debug": ["./js/debug.js", "./css/debug.scss"]
+					"debug": ["debug.js", "debug.scss"]
 				},
 				"public": {
-					"public": ["./js/public.js", "./css/public.scss"]
+					"public": ["public.js", "public.scss"]
 				}
 			}
 		},
 		"plugins": {
 			"files": {
 				"alert": {
-					"alert": ["./js/plugins/alert.js", "./css/plugins/alert.scss"]
+					"alert": ["plugins/alert.js", "plugins/alert.scss"]
 				},
 				"modal": {
-					"modal": ["./js/plugins/modal.js", "./css/plugins/modal.scss"]
+					"modal": ["plugins/modal.js", "plugins/modal.scss"]
 				},
 				"offcanvas": {
-					"offcanvas": ["./js/plugins/offcanvas.js", "./css/plugins/offcanvas.scss"]
+					"offcanvas": ["plugins/offcanvas.js", "plugins/offcanvas.scss"]
 				},
 				"popover": {
-					"popover": ["./js/plugins/popover.js", "./css/plugins/popover.scss"]
+					"popover": ["plugins/popover.js", "plugins/popover.scss"]
 				},
 				"scrollspy": {
-					"scrollspy": ["./js/plugins/scrollspy.js"]
+					"scrollspy": ["plugins/scrollspy.js"]
 				},
 				"slider": {
-					"slider": ["./js/plugins/slider.js", "./css/plugins/slider.scss"]
+					"slider": ["plugins/slider.js", "plugins/slider.scss"]
 				},
 				"toast": {
-					"toast": ["./js/plugins/toast.js", "./css/plugins/toast.scss"]
+					"toast": ["plugins/toast.js", "plugins/toast.scss"]
 				},
 				"tooltip": {
-					"tooltip": ["./js/plugins/tooltip.js", "./css/plugins/tooltip.scss"]
+					"tooltip": ["plugins/tooltip.js", "plugins/tooltip.scss"]
 				}
 			}
 		},
 		"vendor": {
 			"files": {
 				"acf": {
-					"acf": ["./js/vendor/acf.js", "./css/vendor/acf.scss"]
+					"acf": ["vendor/acf.scss"]
 				},
 				"gravity-forms": {
-					"gravity-forms": ["./css/vendor/gravity-forms.scss"]
+					"gravity-forms": ["vendor/gravity-forms.scss"]
 				},
 				"lazysizes": {
-					"lazysizes": ["./css/vendor/lazysizes.scss"]
+					"lazysizes": ["vendor/lazysizes.scss"]
 				},
 				"modernizr": {
-					"modernizr": ["./js/vendor/modernizr.js"]
+					"modernizr": ["vendor/modernizr.js"]
 				},
 				"qm": {
-					"qm": ["./css/vendor/qm.scss"]
+					"qm": ["vendor/qm.scss"]
 				},
 				"reset": {
-					"reset": ["./css/reset.scss"]
+					"reset": ["reset.scss"]
 				},
 				"select2": {
-					"select2": ["./js/vendor/select2.js", "./css/vendor/select2.scss"]
+					"select2": ["vendor/select2.js", "vendor/select2.scss"]
 				},
 				"wordpress": {
-					"wordpress": ["./css/vendor/wordpress.scss"]
+					"wordpress": ["vendor/wordpress.scss"]
 				}
 			}
 		}
@@ -152,15 +144,15 @@
 	"folders": {
 		"blocks": "blocks",
 		"css": "css",
-		"dist": "assets",
 		"fonts": "fonts",
 		"images": "imgs",
-		"js": "js",
-		"src": "src"
+		"js": "js"
 	},
 	"paths": {
 		"dist": "./assets",
-		"public": "/wp-content/plugins/rwp/assets/",
+		"favicon": "./src/imgs/rwp-icon.svg",
+		"manifest": "./assets/manifest.json",
+		"public": "/wp-content/plugins/rwp",
 		"src": "./src"
 	}
 }

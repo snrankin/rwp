@@ -1,10 +1,10 @@
 /*!***************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../node_modules/bootstrap-icons/font/bootstrap-icons.css ***!
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/bootstrap-icons/font/bootstrap-icons.css ***!
   \***************************************************************************************************************************************/
 @font-face {
   font-family: "bootstrap-icons";
-  src: url(/wp-content/plugins/rwp/assets/fonts/bootstrap-icons.woff2?e2f6e48459d8b0f394eea57aba940179) format("woff2"),
-url(/wp-content/plugins/rwp/assets/fonts/bootstrap-icons.woff?e2f6e48459d8b0f394eea57aba940179) format("woff");
+  src: url(/wp-content/plugins/rwpfonts/bootstrap-icons.woff2?524846017b983fc8ded9325d94ed40f3) format("woff2"),
+url(/wp-content/plugins/rwpfonts/bootstrap-icons.woff?524846017b983fc8ded9325d94ed40f3) format("woff");
 }
 
 .bi::before,
@@ -1700,15 +1700,15 @@ url(/wp-content/plugins/rwp/assets/fonts/bootstrap-icons.woff?e2f6e48459d8b0f394
 .bi-valentine::before { content: "\f78c"; }
 .bi-valentine2::before { content: "\f78d"; }
 .bi-wrench-adjustable-circle-fill::before { content: "\f78e"; }
-.bi-wrench-adjustable-cricle::before { content: "\f78f"; }
+.bi-wrench-adjustable-circle::before { content: "\f78f"; }
 .bi-wrench-adjustable::before { content: "\f790"; }
 .bi-filetype-json::before { content: "\f791"; }
 .bi-filetype-pptx::before { content: "\f792"; }
 .bi-filetype-xlsx::before { content: "\f793"; }
 
-/*!***********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./css/vendor/bootstrap-icons.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/vendor/bootstrap-icons.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 
 
 /*# sourceMappingURL=rwp-bootstrap-icons.css.map*/

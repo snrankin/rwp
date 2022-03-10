@@ -9,7 +9,5 @@
  * @copyright 2021 RIESTER
  * ==========================================================================
  */
-import 'bootstrap/js/dist/button';
-import 'bootstrap/js/dist/collapse';
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/js/dist/tab';
+
+export * from 'bootstrap';

@@ -1,3 +1,4 @@
+var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -365,6 +366,30 @@ window.Sfdump || function (doc) {
     }
 
     if (doc.evaluate && Array.from && root.children.length > 1) {
+      // eslint-disable-next-line
+      var showCurrent = function showCurrent(state) {
+        var currentNode = state.current(),
+            currentRect,
+            searchRect;
+
+        if (currentNode) {
+          reveal(currentNode);
+          highlight(root, currentNode, state.nodes);
+
+          if ('scrollIntoView' in currentNode) {
+            currentNode.scrollIntoView(true);
+            currentRect = currentNode.getBoundingClientRect();
+            searchRect = search.getBoundingClientRect();
+
+            if (currentRect.top < searchRect.top + searchRect.height) {
+              window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
+            }
+          }
+        }
+
+        counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
+      };
+
       root.setAttribute('tabindex', 0); // eslint-disable-next-line
 
       var SearchState = function SearchState() {
@@ -407,31 +432,7 @@ window.Sfdump || function (doc) {
         count: function count() {
           return this.nodes.length;
         }
-      }; // eslint-disable-next-line
-
-      function showCurrent(state) {
-        var currentNode = state.current(),
-            currentRect,
-            searchRect;
-
-        if (currentNode) {
-          reveal(currentNode);
-          highlight(root, currentNode, state.nodes);
-
-          if ('scrollIntoView' in currentNode) {
-            currentNode.scrollIntoView(true);
-            currentRect = currentNode.getBoundingClientRect();
-            searchRect = search.getBoundingClientRect();
-
-            if (currentRect.top < searchRect.top + searchRect.height) {
-              window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
-            }
-          }
-        }
-
-        counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
-      }
-
+      };
       var search = doc.createElement('div');
       search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';
       search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0</span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"/></svg> </button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"/></svg> </button> ';
@@ -560,6 +561,7 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
+rwp = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=rwp-debug.js.map

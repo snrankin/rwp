@@ -1,3 +1,4 @@
+var rwp;
 /******/ (function() { // webpackBootstrap
 var __webpack_exports__ = {};
 /*!********************************!*\
@@ -1935,6 +1936,7 @@ var __webpack_exports__ = {};
 	window.Modernizr = Modernizr;
 })(window, document);
 
+rwp = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=rwp-modernizr.js.map

@@ -1,20 +1,40 @@
-/* eslint-disable @wordpress/no-global-event-listener */
-/**
- * ============================================================================
- * helpers
+/** ============================================================================
+ * utils
  *
- * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @version   1.0.1
  * @author    RIESTER <wordpress@riester.com>
- * @copyright 2021 RIESTER
- * ==========================================================================
- */
+ * @copyright 2022 RIESTER
+ * ========================================================================== */
 
 const _ = require('lodash');
-import { actual } from 'actual';
-import { verge } from 'verge';
 
+import { isArguments, isArrayLike, isBuffer, isPrototype, isTypedArray } from 'lodash';
+export { isArguments, isArrayLike, isBuffer, isPrototype, isTypedArray, isNil, has, defaultsDeep, forEach, each } from 'lodash';
+import { actual } from 'actual';
+export { actual, as, is } from 'actual';
+import { rectangle } from 'verge';
+export { viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect } from 'verge';
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+export function getTag(value) {
+	if (value == null) {
+		return value === undefined ? '[object Undefined]' : '[object Null]';
+	}
+	return Object.prototype.toString.call(value);
+}
+
+/**
+ * Function for making strings camelCase
+ *
+ * @param {string} str The string to convert
+ * @return {string} The converted string
+ */
 export function camelCase(str) {
 	return `${str.charAt(0).toLowerCase()}${str
 		.replace(/[\W_]/g, '|')
@@ -23,6 +43,55 @@ export function camelCase(str) {
 		.join('')
 		.slice(1)}`;
 }
+
+/**
+ * Convert a string to slug or kebab case
+ *
+ * @param {*} str
+ * @return {*}
+ */
+
+export function slugCase(str) {
+	let pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
+	str = _.replace(str, pattern, ' and ');
+	return _.chain(str).deburr().trim().kebabCase().value();
+}
+
+/**
+ * Convert a string to title case with ampersands
+ *
+ * @param {*} str
+ * @param {boolean} [useAmp=false] Whether to automatically change the word and
+ *                                 to an ampersand
+ * @return {*}
+ */
+export function titleCase(str, useAmp = false) {
+	let pattern = new RegExp(/(\/|-|_)/gm);
+	str = _.replace(str, pattern, ' ');
+	str = _.chain(str)
+		.trim()
+		.startCase()
+		.tap(function (str) {
+			if (useAmp) {
+				let andPattern = new RegExp(/and/gim);
+				var amp = _.escape('&');
+				return _.replace(str, andPattern, amp);
+			}
+
+			return str;
+		})
+		.value();
+	return str;
+}
+
+/**
+ *	Change the tag of a node element
+ *
+ * @param  {Element}  original  The element to change
+ * @param  {string}   tag        The new tag
+ *
+ * @return {Element} The updated element
+ */
 export function changeTag(original, tag) {
 	const replacement = document.createElement(tag);
 
@@ -42,9 +111,44 @@ export function changeTag(original, tag) {
 
 	return original;
 }
-export function toggleFocus() {
+
+const domParserSupport = (function () {
+	if (!window.DOMParser) return false;
+	var parser = new DOMParser();
+	try {
+		parser.parseFromString('x', 'text/html');
+	} catch (err) {
+		return false;
+	}
+	return true;
+})();
+
+/**
+ * Convert a template string into HTML DOM nodes
+ * @param  {String} str The template string
+ * @return {Node}       The template HTML
+ */
+export function stringToHtml(str) {
+	// If DOMParser is supported, use it
+	if (domParserSupport) {
+		var parser = new DOMParser();
+		var doc = parser.parseFromString(str, 'text/html');
+		return doc.body.firstElementChild;
+	}
+
+	// Otherwise, fallback to old-school method
+	var dom = document.createElement('div');
+	dom.innerHTML = str;
+	return dom;
+}
+
+/**
+ * Adds focus class for better accessibility
+ *
+ */
+export function toggleFocus(event) {
 	if (event.type === 'focus' || event.type === 'blur') {
-		let self = this;
+		let self = event.target;
 
 		if (!_.isUndefined(self)) {
 			const elementClasses = self.classList;
@@ -63,7 +167,7 @@ export function toggleFocus() {
 	}
 
 	if (event.type === 'touchstart') {
-		const menuItem = this.parentNode;
+		const menuItem = self.parentNode;
 		event.preventDefault();
 		for (const link of menuItem.parentNode.children) {
 			if (menuItem !== link) {
@@ -74,13 +178,50 @@ export function toggleFocus() {
 	}
 }
 
+export function betterHashLinks() {
+	const id = location.hash.substring(1);
+	const motionQuery = window.matchMedia('(prefers-reduced-motion)');
+
+	if (!/^[A-z0-9_-]+$/.test(id)) {
+		return;
+	}
+
+	const element = document.getElementById(id);
+
+	if (element) {
+		if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+			element.tabIndex = -1;
+		}
+
+		if (!motionQuery.matches) {
+			element.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+
+		if (element.is(':focus')) {
+			//checking if the target was focused
+			return false;
+		} else {
+			element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
+			element.focus(); //Setting focus
+		}
+	}
+}
+
+/**
+ * Get the screen size
+ *
+ * @param {string} prop
+ * @return {Object|Number} The object containing the size infor or the requested property
+ */
 export function screenSize(prop) {
 	const size = {
 		width: actual.actual('width', 'px'),
 		height: actual.actual('height', 'px'),
 	};
 
-	window.resize = () => {
+	window.addEventListener('resize', function () {
 		_.assign(
 			{
 				width: actual.actual('width', 'px'),
@@ -88,87 +229,100 @@ export function screenSize(prop) {
 			},
 			size
 		);
-	};
+	});
 
 	if (!_.isNil(prop)) {
 		return size[prop];
 	}
 
-	_.assign(
-		{
-			width: actual.actual('width', 'px'),
-			height: actual.actual('height', 'px'),
-		},
-		rwp.screen
-	);
-
 	return size;
 }
-export function skipLink() {
-	const isIe = /(trident|msie)/i.test(navigator.userAgent);
-	if (isIe && document.getElementById && window.addEventListener) {
-		window.addEventListener(
-			'hashchange',
-			function () {
-				const id = location.hash.substring(1);
 
-				if (!/^[A-z0-9_-]+$/.test(id)) {
-					return;
-				}
+// URL updates and the element focus is maintained
+// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
 
-				const element = document.getElementById(id);
-
-				if (element) {
-					if (
-						!/^(?:a|select|input|button|textarea)$/i.test(
-							element.tagName
-						)
-					) {
-						element.tabIndex = -1;
-					}
-
-					element.scrollIntoView({
-						behavior: 'smooth',
-					});
-
-					element.focus();
-				}
-			},
-			false
-		);
-	}
+// filter handling for a /dir/ OR /indexordefault.page
+export function filterPath(string) {
+	return string
+		.replace(/^\//, '')
+		.replace(/(index|default).[a-zA-Z]{3,4}$/, '')
+		.replace(/\/$/, '');
 }
+
+/**
+ * Get hash value for any string
+ *
+ * @param {*} string the string to extract from
+ * @return {*} the hash or false
+ */
+export function getHash(string) {
+	var index = string.indexOf('#');
+	if (index !== -1) {
+		return string.substring(index + 1);
+	}
+	return false;
+}
+
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
+export function isEmpty(el) {
+	if (_.isNil(el)) {
+		return true;
+	} else if (el === '') {
+		return true;
+	} else if (el === null) {
+		return true;
+	} else if (el === false) {
+		return true;
+	} else if (isArrayLike(el) && (Array.isArray(el) || typeof el === 'string' || typeof el.splice === 'function' || isBuffer(el) || isTypedArray(el) || isArguments(el))) {
+		return !el.length;
+	}
+	const tag = getTag(el);
+	if (tag == '[object Map]' || tag == '[object Set]') {
+		return !el.size;
+	}
+	if (isPrototype(el)) {
+		return !Object.keys(el).length;
+	}
+	for (const key in el) {
+		if (hasOwnProperty.call(el, key)) {
+			return false;
+		}
+	}
+	return false;
+}
+
 export function toggleNav(buttonId) {
 	const button = document.querySelector(buttonId);
 
 	// Return early if the button don't exist.
-	if ('undefined' === typeof button) {
+	if (isEmpty(button)) {
 		return;
 	}
 	let buttonTarget = button.getAttribute('data-target');
 
-	buttonTarget = buttonTarget.replace('#', '');
+	if (isEmpty(buttonTarget)) {
+		buttonTarget = button.getAttribute('href');
+	}
+
+	if (isEmpty(buttonTarget)) {
+		return;
+	}
+
+	buttonTarget = getHash(buttonTarget);
 
 	const siteNavigation = document.getElementById(buttonTarget);
 
 	// Return early if the navigation don't exist.
-	if (!siteNavigation) {
+	if (isEmpty(siteNavigation)) {
 		return;
 	}
 
 	const menu = siteNavigation.getElementsByTagName('ul')[0];
-
-	// Toggle the .toggled class and the aria-expanded value each time the button is clicked.
-
-	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
-	document.addEventListener('click', function (event) {
-		const isClickInside = siteNavigation.contains(event.target);
-
-		if (!isClickInside) {
-			siteNavigation.classList.remove('toggled');
-			$('#' + buttonTarget).collapse('hide');
-		}
-	});
 
 	// Get all the link elements within the menu.
 	const links = menu.getElementsByTagName('a');
@@ -179,30 +333,44 @@ export function toggleNav(buttonId) {
 
 	// Toggle focus each time a menu link is focused or blurred.
 	for (const link of links) {
-		link.addEventListener('focus', this.toggleFocus, true);
-		link.addEventListener('blur', this.toggleFocus, true);
+		link.addEventListener('focus', toggleFocus, true);
+		link.addEventListener('blur', toggleFocus, true);
 	}
 
 	// Toggle focus each time a menu link with children receive a touch event.
 	for (const link of linksWithChildren) {
-		link.addEventListener('touchstart', this.toggleFocus, false);
+		link.addEventListener('touchstart', toggleFocus, false);
 	}
 }
+
+/**
+ * Get tallest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
 export function getTallest(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
 		const heights = _.map(matches, function (elem) {
-			return this.rectangle(elem).height;
+			return rectangle(elem).height;
 		});
 
 		return Math.max.apply(null, heights);
 	}
 	return false;
 }
-export function matchHeights(el) {
-	const matches = document.querySelectorAll(el);
+
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+export function matchHeights(elem = '', container = Document) {
+	const matches = container.querySelectorAll(elem);
 	if (matches.length > 1) {
-		const minHeight = this.getTallest(el);
+		const minHeight = getTallest(elem);
 
 		if (false !== minHeight) {
 			_.map(matches, function (elem) {
@@ -210,13 +378,14 @@ export function matchHeights(el) {
 			});
 		}
 
-		window.resize = () => {
-			this.matchHeights(el);
-		};
+		window.addEventListener('resize', function () {
+			matchHeights(elem, container);
+		});
 	}
 }
+
 export function bsAtts() {
-	let bsColors = {
+	const bsColors = {
 		primary: '',
 		secondary: '',
 		tertiary: '',
@@ -249,19 +418,26 @@ export function bsAtts() {
 		'gray-900': '',
 	};
 
-	bsColors = _.mapValues(bsColors, function (v, k, o) {
+	const computedColors = {};
+
+	for (let [key, value] of Object.entries(bsColors)) {
 		const r = document.querySelector(':root');
 
 		// Get the styles (properties and values) for the root
 		const rs = getComputedStyle(r);
 		// Alert the value of the --blue variable
-		v = rs.getPropertyValue('--bs-' + k);
-		return _.trim(v);
-	});
+		value = rs.getPropertyValue(`--bs-${key}`);
+		value = value.trim();
+		if ('' !== value) {
+			computedColors[key] = value;
+		}
+	}
+
 	return {
-		colors: bsColors,
+		colors: computedColors,
 	};
 }
+
 export function logCustomProperties() {
 	const isSameDomain = (styleSheet) => {
 		// Internal style blocks won't have an href value
@@ -281,23 +457,14 @@ export function logCustomProperties() {
 			(finalArr, sheet) =>
 				finalArr.concat(
 					// cssRules is array-like, so we convert it to an array
-					[...sheet.cssRules]
-						.filter(isStyleRule)
-						.reduce((propValArr, rule) => {
-							const props = [...rule.style]
-								.map((propName) => [
-									propName.trim(),
-									rule.style
-										.getPropertyValue(propName)
-										.trim(),
-								])
-								// Discard any props that don't start with "--". Custom props are required to.
-								.filter(
-									([propName]) => propName.indexOf('--') === 0
-								);
+					[...sheet.cssRules].filter(isStyleRule).reduce((propValArr, rule) => {
+						const props = [...rule.style]
+							.map((propName) => [propName.trim(), rule.style.getPropertyValue(propName).trim()])
+							// Discard any props that don't start with "--". Custom props are required to.
+							.filter(([propName]) => propName.indexOf('--') === 0);
 
-							return [...propValArr, ...props];
-						}, [])
+						return [...propValArr, ...props];
+					}, [])
 				),
 			[]
 		);

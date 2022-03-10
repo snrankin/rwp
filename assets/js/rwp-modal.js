@@ -1,3 +1,4 @@
+var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1984,6 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
+rwp = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=rwp-modal.js.map

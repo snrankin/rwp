@@ -1,3 +1,4 @@
+var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1320,6 +1321,7 @@ __webpack_require__.r(__webpack_exports__);
  * ========================================================================== */
 
 }();
+rwp = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=rwp-scrollspy.js.map
