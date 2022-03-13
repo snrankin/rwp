@@ -140,7 +140,10 @@ $rwp_plugin_assets = [
 ];
 
 if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monitor/query-monitor.php' ) ){
-
+	$rwp_plugin_assets['scripts'][ 'debug'] = array(
+		'location' => 'global',
+		'handle'   => 'debug'
+    );
 	$rwp_plugin_assets['styles'][ 'debug'] = array(
 		'location' => 'global',
 		'handle'   => 'debug'

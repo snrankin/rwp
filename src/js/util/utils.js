@@ -15,8 +15,6 @@ export { actual, as, is } from 'actual';
 import { rectangle } from 'verge';
 export { viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect } from 'verge';
 
-export { dump } from './debug';
-
 /**
  * Gets the `toStringTag` of `value`.
  *
