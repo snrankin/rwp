@@ -55,8 +55,9 @@ class HtmlDumper extends CliDumper
         ]
     ];
     protected $dumpHeader;
-    protected $dumpPrefix = '<pre class=sf-dump id=%s data-indent-pad="%s">';
-    protected $dumpSuffix = '</pre><script>Sfdump(%s)</script>';
+    protected $dumpPrefix = '<pre class="sf-dump" id=%s data-indent-pad="%s">';
+
+    protected $dumpSuffix = '</pre><script>//rwp.dump(%s)</script>'; // FIXME
     protected $dumpId = 'sf-dump';
     protected $colors = \true;
     protected $headerIsDumped = \false;
