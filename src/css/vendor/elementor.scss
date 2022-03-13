@@ -1,0 +1,21 @@
+/// ======================================================================== ///
+/// @name   _elementor
+///
+/// @group  RIESTER RX
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@import '../global';
+
+$elementor-breakpoints: (
+	sm: mobile,
+	md: tablet,
+	lg: tablet_extra,
+	xl: laptop,
+	xxl: desktop,
+);
+
+@import 'elementor/global';
+@import 'elementor/grid';
+@import 'elementor/widgets';

@@ -4,11 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
+class ComposerStaticInit5b3e241b159c80f74a97209462e13c75
 {
     public static $files = array (
-        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
@@ -66,6 +66,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         ),
         'E' => 
         array (
+            'Ergebnis\\Json\\SchemaValidator\\' => 30,
             'Ergebnis\\Json\\Printer\\' => 22,
             'Ergebnis\\Json\\Normalizer\\' => 25,
             'Ergebnis\\Composer\\Normalize\\' => 28,
@@ -178,6 +179,10 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         array (
             0 => __DIR__ . '/..' . '/phpro/grumphp-shim/src',
         ),
+        'Ergebnis\\Json\\SchemaValidator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src',
+        ),
         'Ergebnis\\Json\\Printer\\' => 
         array (
             0 => __DIR__ . '/..' . '/ergebnis/json-printer/src',
@@ -221,7 +226,6 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'Ergebnis\\Json\\Normalizer\\Exception\\SchemaUriCouldNotBeResolvedException' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Exception/SchemaUriCouldNotBeResolvedException.php',
         'Ergebnis\\Json\\Normalizer\\Exception\\SchemaUriReferencesDocumentWithInvalidMediaTypeException' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Exception/SchemaUriReferencesDocumentWithInvalidMediaTypeException.php',
         'Ergebnis\\Json\\Normalizer\\Exception\\SchemaUriReferencesInvalidJsonDocumentException' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Exception/SchemaUriReferencesInvalidJsonDocumentException.php',
-        'Ergebnis\\Json\\Normalizer\\FinalNewLineNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/FinalNewLineNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\FixedFormatNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/FixedFormatNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Format\\Format' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Format/Format.php',
         'Ergebnis\\Json\\Normalizer\\Format\\Formatter' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Format/Formatter.php',
@@ -232,19 +236,29 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'Ergebnis\\Json\\Normalizer\\IndentNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/IndentNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Json' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Json.php',
         'Ergebnis\\Json\\Normalizer\\JsonEncodeNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/JsonEncodeNormalizer.php',
-        'Ergebnis\\Json\\Normalizer\\NoFinalNewLineNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/NoFinalNewLineNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\NormalizerInterface' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/NormalizerInterface.php',
         'Ergebnis\\Json\\Normalizer\\SchemaNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/SchemaNormalizer.php',
-        'Ergebnis\\Json\\Normalizer\\Validator\\Result' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Validator/Result.php',
-        'Ergebnis\\Json\\Normalizer\\Validator\\SchemaValidator' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Validator/SchemaValidator.php',
-        'Ergebnis\\Json\\Normalizer\\Validator\\SchemaValidatorInterface' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Validator/SchemaValidatorInterface.php',
         'Ergebnis\\Json\\Normalizer\\Vendor\\Composer\\BinNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Vendor/Composer/BinNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Vendor\\Composer\\ComposerJsonNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Vendor/Composer/ComposerJsonNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Vendor\\Composer\\ConfigHashNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Vendor/Composer/ConfigHashNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Vendor\\Composer\\PackageHashNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Vendor/Composer/PackageHashNormalizer.php',
         'Ergebnis\\Json\\Normalizer\\Vendor\\Composer\\VersionConstraintNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/Vendor/Composer/VersionConstraintNormalizer.php',
+        'Ergebnis\\Json\\Normalizer\\WithFinalNewLineNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/WithFinalNewLineNormalizer.php',
+        'Ergebnis\\Json\\Normalizer\\WithoutFinalNewLineNormalizer' => __DIR__ . '/..' . '/ergebnis/json-normalizer/src/WithoutFinalNewLineNormalizer.php',
         'Ergebnis\\Json\\Printer\\Printer' => __DIR__ . '/..' . '/ergebnis/json-printer/src/Printer.php',
         'Ergebnis\\Json\\Printer\\PrinterInterface' => __DIR__ . '/..' . '/ergebnis/json-printer/src/PrinterInterface.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\CanNotBeRead' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/CanNotBeRead.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\CanNotResolve' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/CanNotResolve.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\DoesNotExist' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/DoesNotExist.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\InvalidJson' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/InvalidJson.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\InvalidSchema' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/InvalidSchema.php',
+        'Ergebnis\\Json\\SchemaValidator\\Exception\\ResolvedToRootSchema' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Exception/ResolvedToRootSchema.php',
+        'Ergebnis\\Json\\SchemaValidator\\Json' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Json.php',
+        'Ergebnis\\Json\\SchemaValidator\\JsonPointer' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/JsonPointer.php',
+        'Ergebnis\\Json\\SchemaValidator\\Message' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/Message.php',
+        'Ergebnis\\Json\\SchemaValidator\\SchemaValidator' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/SchemaValidator.php',
+        'Ergebnis\\Json\\SchemaValidator\\ValidationError' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/ValidationError.php',
+        'Ergebnis\\Json\\SchemaValidator\\ValidationResult' => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src/ValidationResult.php',
         'GrumPHP\\Composer\\FixBrokenStaticAutoloader' => __DIR__ . '/..' . '/phpro/grumphp-shim/src/Composer/FixBrokenStaticAutoloader.php',
         'GrumPHP\\Composer\\GrumPHPPlugin' => __DIR__ . '/..' . '/phpro/grumphp-shim/src/Composer/GrumPHPPlugin.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
@@ -423,6 +437,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'Localheinz\\Diff\\Parser' => __DIR__ . '/..' . '/localheinz/diff/src/Parser.php',
         'Localheinz\\Diff\\TimeEfficientLongestCommonSubsequenceCalculator' => __DIR__ . '/..' . '/localheinz/diff/src/TimeEfficientLongestCommonSubsequenceCalculator.php',
         'ORM' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
         'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
         'Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',
@@ -782,6 +797,7 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Php73\\Php73' => __DIR__ . '/..' . '/symfony/polyfill-php73/Php73.php',
         'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
+        'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
         'SzepeViktor\\PHPStan\\WordPress\\Composer\\FixWpStubs' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/Composer/FixWpStubs.php',
         'SzepeViktor\\PHPStan\\WordPress\\GetCommentDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetCommentDynamicFunctionReturnTypeExtension.php',
         'SzepeViktor\\PHPStan\\WordPress\\GetPostDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetPostDynamicFunctionReturnTypeExtension.php',
@@ -805,9 +821,9 @@ class ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb9a700ac9d58e3a3255ca579cae564a9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$classMap;
 
         }, null, ClassLoader::class);
     }

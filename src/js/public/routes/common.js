@@ -16,7 +16,6 @@ export default {
 	finalize() {
 		// JavaScript to be fired on the home page, after the init JS
 		smoothscroll.polyfill();
-		window.addEventListener(betterHashLinks);
-		console.log(rwp);
+		window.addEventListener('click', betterHashLinks);
 	},
 };

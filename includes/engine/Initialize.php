@@ -102,8 +102,10 @@ class Initialize {
 
 		$class_loader = array();
 
+		$class = __CLASS__;
+
 		// In case composer has autoload optimized
-		if ( isset( $classmap[__CLASS__] ) ) {
+		if ( isset( $classmap[ __CLASS__ ] ) ) {
 			$classes = \array_keys( $classmap );
 
 			foreach ( $classes as $class ) {
@@ -141,7 +143,7 @@ class Initialize {
 
 		$this->classes = $components;
 
-		rwp()->set('components', $components);
+		rwp()->set( 'components', $components );
 	}
 
 
@@ -150,7 +152,7 @@ class Initialize {
 	 *
 	 * @since 1.0.0
 	 */
-	private function load_classes($classes = array() ) {
+	private function load_classes( $classes = array() ) {
 		$classes = \apply_filters( 'rwp_classes_to_execute', $classes );
 
 		foreach ( $classes as $class ) {

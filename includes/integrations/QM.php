@@ -15,7 +15,7 @@ use RWP\Engine\Abstracts\Singleton;
 
 class QM extends Singleton {
 
-	public $output;
+	public $output = [];
 
 	public $panels = array(
 		'Info',
@@ -33,13 +33,13 @@ class QM extends Singleton {
 			return;
 		}
 
-		$this->title = rwp()->get( 'name' );
+		$prefix = rwp()->get( 'namespace' );
 
 		if ( class_exists( '\\QM_Collectors' ) ) {
 			$class = get_called_class();
 
 			foreach ( $this->panels as $panel ) {
-				$name = rwp()->prefix( $panel, ' ', 'title' );
+				$name = rwp_add_prefix( $panel, $prefix . ' ' );
 
 				$collector = rwp()->get_component( "$class\\Collectors\\$panel" );
 				$collector = new $collector( $name, $this );
@@ -64,15 +64,16 @@ class QM extends Singleton {
 	 * @return array
 	 */
 	public function load( array $output, \QM_Collectors $collectors ) {
-
+		$prefix = rwp()->get( 'namespace' );
 		foreach ( $this->panels as $panel ) {
-			$name = rwp()->prefix( $panel, ' ', 'title' );
-			$id = rwp_change_case( $name );
+			$name = rwp_add_prefix( $panel, $prefix . ' ' );
+			$id = rwp()->prefix( $panel );
 			$class = get_called_class();
 			$collector = $collectors::get( $id );
 			if ( $collector ) {
 				$output_class = rwp()->get_component( "$class\\Output\\$panel" );
-				$output_class = new $output_class( $collector, $output[ $id ], $name );
+				$output_content = data_get( $this, "output.$id", '' );
+				$output_class = new $output_class( $collector, $output_content, $name );
 				$output[ $id ] = $output_class;
 			}
 		}
@@ -98,7 +99,7 @@ class QM extends Singleton {
 
 		$file = data_get( $caller, 'file' );
 		$line = data_get( $caller, 'line' );
-		$this->output['rwp-debug'][] = array(
+		$this->output['rwp_debug'][] = array(
 			'variable' => $var,
 			'file'     => $file,
 			'line'     => $line,

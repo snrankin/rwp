@@ -52,8 +52,7 @@ class Base extends Plugin {
 			),
 		);
 
-		$args = rwp_merge_args($defaults, $args);
-
+		$args = rwp_merge_args( $defaults, $args );
 
 		parent::__construct( $args );
 

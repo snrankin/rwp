@@ -13,10 +13,16 @@ const util = require('util');
 const config = require('../../config.json');
 const rootPath = config.paths && config.paths.root ? config.paths.root : process.cwd();
 const { argv } = require('yargs');
+const sassType = RegExp('scss$');
+const isSassError = (e) => {
+	let file = _.get(e, 'file', '');
+	let isSassFile = sassType.test(file);
 
-function isSassError(e) {
-	return e.originalStack.some((stackframe) => stackframe.fileName && stackframe.fileName.indexOf('sass-loader') > 0);
-}
+	let errorMessage = _.get(e, 'webpackError.message', '');
+	let miniCSSModule = errorMessage.indexOf('mini-css-extract-plugin');
+	let isNotMiniCSS = miniCSSModule == -1;
+	return isSassFile && isNotMiniCSS;
+};
 exports.isSassError = isSassError;
 
 /**
@@ -258,3 +264,16 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 };
 
 exports.fileNames = fileNames;
+
+const removeLoaders = (error) => {
+	let file = _.get(error, 'file', '');
+	if (!file) {
+		return '';
+	}
+	const split = file.split('!');
+	const filePath = split[split.length - 1];
+	_.set(error, 'file', filePath);
+	return error;
+};
+
+exports.removeLoaders = removeLoaders;

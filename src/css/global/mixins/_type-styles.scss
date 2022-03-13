@@ -95,8 +95,6 @@
 }
 
 %plain-link {
-	@include reset-text;
-
 	color: var(--#{$variable-prefix}link-color);
 	text-decoration: var(--#{$variable-prefix}link-decoration);
 	background-color: transparent; // 1

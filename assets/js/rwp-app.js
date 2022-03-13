@@ -1,580 +1,543 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/util/utils.js":
+/***/ "./js/util/debug.js":
 /*!**************************!*\
-  !*** ./js/util/utils.js ***!
+  !*** ./js/util/debug.js ***!
   \**************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.actual; },
-/* harmony export */   "as": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.as; },
-/* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.aspect; },
-/* harmony export */   "betterHashLinks": function() { return /* binding */ betterHashLinks; },
-/* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
-/* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
-/* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
-/* harmony export */   "defaultsDeep": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.defaultsDeep; },
-/* harmony export */   "each": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.each; },
-/* harmony export */   "filterPath": function() { return /* binding */ filterPath; },
-/* harmony export */   "forEach": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.forEach; },
-/* harmony export */   "getHash": function() { return /* binding */ getHash; },
-/* harmony export */   "getTag": function() { return /* binding */ getTag; },
-/* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
-/* harmony export */   "has": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.has; },
-/* harmony export */   "inViewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inViewport; },
-/* harmony export */   "inX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inX; },
-/* harmony export */   "inY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inY; },
-/* harmony export */   "is": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.is; },
-/* harmony export */   "isArguments": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArguments; },
-/* harmony export */   "isArrayLike": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike; },
-/* harmony export */   "isBuffer": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isBuffer; },
-/* harmony export */   "isEmpty": function() { return /* binding */ isEmpty; },
-/* harmony export */   "isNil": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isNil; },
-/* harmony export */   "isPrototype": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isPrototype; },
-/* harmony export */   "isTypedArray": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isTypedArray; },
-/* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
-/* harmony export */   "matchHeights": function() { return /* binding */ matchHeights; },
-/* harmony export */   "mq": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.mq; },
-/* harmony export */   "rectangle": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.rectangle; },
-/* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
-/* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollX; },
-/* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollY; },
-/* harmony export */   "slugCase": function() { return /* binding */ slugCase; },
-/* harmony export */   "stringToHtml": function() { return /* binding */ stringToHtml; },
-/* harmony export */   "titleCase": function() { return /* binding */ titleCase; },
-/* harmony export */   "toggleFocus": function() { return /* binding */ toggleFocus; },
-/* harmony export */   "toggleNav": function() { return /* binding */ toggleNav; },
-/* harmony export */   "viewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewport; },
-/* harmony export */   "viewportH": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportH; },
-/* harmony export */   "viewportW": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportW; }
+/* harmony export */   "dump": function() { return /* binding */ dump; }
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! actual */ "../node_modules/actual/actual.js");
-/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(actual__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! verge */ "../node_modules/verge/verge.js");
-/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(verge__WEBPACK_IMPORTED_MODULE_4__);
-
-
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /** ============================================================================
- * utils
+ * debug
  *
+ * @package   RWP
+ * @since     1.0.1
  * @version   1.0.1
  * @author    RIESTER <wordpress@riester.com>
- * @copyright 2022 RIESTER
+ * @copyright 2021 RIESTER
  * ========================================================================== */
-var _ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
+function dump(el) {
+  el = document.getElementById(el);
 
+  var refStyle = document.createElement('style'),
+      rxEsc = /([.*+?^${}()|[]\/\\])/g,
+      idRx = /\bsf-dump-\d+-ref[012]\w+\b/,
+      keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl',
+      addEventListener = function addEventListener(e, n, cb) {
+    e.addEventListener(n, cb, false);
+  };
 
+  refStyle.innerHTML = 'pre.sf-dump .sf-dump-compact, .sf-dump-str-collapse .sf-dump-str-collapse, .sf-dump-str-expand .sf-dump-str-expand { display: none; }';
+  el.appendChild(refStyle);
 
+  if (!el.addEventListener) {
+    addEventListener = function addEventListener(element, eventName, callback) {
+      element.attachEvent('on' + eventName, function (e) {
+        e.preventDefault = function () {
+          e.returnValue = false;
+        };
 
-
-
-
-/**
- * Gets the `toStringTag` of `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-
-function getTag(value) {
-  if (value == null) {
-    return value === undefined ? '[object Undefined]' : '[object Null]';
-  }
-
-  return Object.prototype.toString.call(value);
-}
-/**
- * Function for making strings camelCase
- *
- * @param {string} str The string to convert
- * @return {string} The converted string
- */
-
-function camelCase(str) {
-  return "".concat(str.charAt(0).toLowerCase()).concat(str.replace(/[\W_]/g, '|').split('|').map(function (part) {
-    return "".concat(part.charAt(0).toUpperCase()).concat(part.slice(1));
-  }).join('').slice(1));
-}
-/**
- * Convert a string to slug or kebab case
- *
- * @param {*} str
- * @return {*}
- */
-
-function slugCase(str) {
-  var pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
-  str = _.replace(str, pattern, ' and ');
-  return _.chain(str).deburr().trim().kebabCase().value();
-}
-/**
- * Convert a string to title case with ampersands
- *
- * @param {*} str
- * @param {boolean} [useAmp=false] Whether to automatically change the word and
- *                                 to an ampersand
- * @return {*}
- */
-
-function titleCase(str) {
-  var useAmp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var pattern = new RegExp(/(\/|-|_)/gm);
-  str = _.replace(str, pattern, ' ');
-  str = _.chain(str).trim().startCase().tap(function (str) {
-    if (useAmp) {
-      var andPattern = new RegExp(/and/gim);
-
-      var amp = _.escape('&');
-
-      return _.replace(str, andPattern, amp);
-    }
-
-    return str;
-  }).value();
-  return str;
-}
-/**
- *	Change the tag of a node element
- *
- * @param  {Element}  original  The element to change
- * @param  {string}   tag        The new tag
- *
- * @return {Element} The updated element
- */
-
-function changeTag(original, tag) {
-  var replacement = document.createElement(tag); // Grab all of the original's attributes, and pass them to the replacement
-
-  for (var i = 0, l = original.attributes.length; i < l; ++i) {
-    var nodeName = original.attributes.item(i).nodeName;
-    var nodeValue = original.attributes.item(i).nodeValue;
-    replacement.setAttribute(nodeName, nodeValue);
-  } // Persist contents
-
-
-  replacement.innerHTML = original.innerHTML; // Switch!
-
-  original.parentNode.replaceChild(replacement, original);
-  return original;
-}
-
-var domParserSupport = function () {
-  if (!window.DOMParser) return false;
-  var parser = new DOMParser();
-
-  try {
-    parser.parseFromString('x', 'text/html');
-  } catch (err) {
-    return false;
-  }
-
-  return true;
-}();
-/**
- * Convert a template string into HTML DOM nodes
- * @param  {String} str The template string
- * @return {Node}       The template HTML
- */
-
-
-function stringToHtml(str) {
-  // If DOMParser is supported, use it
-  if (domParserSupport) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, 'text/html');
-    return doc.body.firstElementChild;
-  } // Otherwise, fallback to old-school method
-
-
-  var dom = document.createElement('div');
-  dom.innerHTML = str;
-  return dom;
-}
-/**
- * Adds focus class for better accessibility
- *
- */
-
-function toggleFocus(event) {
-  if (event.type === 'focus' || event.type === 'blur') {
-    var _self = event.target;
-
-    if (!_.isUndefined(_self)) {
-      var elementClasses = _self.classList;
-
-      if (!_.isNil(elementClasses)) {
-        // Move up through the ancestors of the current link until we hit .nav-menu.
-        while (!elementClasses.contains('nav-menu')) {
-          // On li elements toggle the class .focus.
-          if ('li' === _self.tagName.toLowerCase()) {
-            _self.classList.toggle('focus');
-          }
-
-          _self = _self.parentNode;
-        }
-      }
-    }
-  }
-
-  if (event.type === 'touchstart') {
-    var menuItem = self.parentNode;
-    event.preventDefault();
-
-    var _iterator = _createForOfIteratorHelper(menuItem.parentNode.children),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var link = _step.value;
-
-        if (menuItem !== link) {
-          link.classList.remove('focus');
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    menuItem.classList.toggle('focus');
-  }
-}
-function betterHashLinks() {
-  var id = location.hash.substring(1);
-  var motionQuery = window.matchMedia('(prefers-reduced-motion)');
-
-  if (!/^[A-z0-9_-]+$/.test(id)) {
-    return;
-  }
-
-  var element = document.getElementById(id);
-
-  if (element) {
-    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-      element.tabIndex = -1;
-    }
-
-    if (!motionQuery.matches) {
-      element.scrollIntoView({
-        behavior: 'smooth'
+        e.target = e.srcElement;
+        callback(e);
       });
-    }
+    };
+  }
 
-    if (element.is(':focus')) {
-      //checking if the target was focused
-      return false;
+  function toggle(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className,
+        arrow,
+        newClass;
+
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
+      arrow = '&#9660;';
+      newClass = 'sf-dump-expanded';
+    } else if (/\bsf-dump-expanded\b/.test(oldClass)) {
+      arrow = '&#9654;';
+      newClass = 'sf-dump-compact';
     } else {
-      element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
-
-      element.focus(); //Setting focus
-    }
-  }
-}
-/**
- * Get the screen size
- *
- * @param {string} prop
- * @return {Object|Number} The object containing the size infor or the requested property
- */
-
-function screenSize(prop) {
-  var size = {
-    width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
-    height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
-  };
-  window.addEventListener('resize', function () {
-    _.assign({
-      width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
-      height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
-    }, size);
-  });
-
-  if (!_.isNil(prop)) {
-    return size[prop];
-  }
-
-  return size;
-} // URL updates and the element focus is maintained
-// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
-// filter handling for a /dir/ OR /indexordefault.page
-
-function filterPath(string) {
-  return string.replace(/^\//, '').replace(/(index|default).[a-zA-Z]{3,4}$/, '').replace(/\/$/, '');
-}
-/**
- * Get hash value for any string
- *
- * @param {*} string the string to extract from
- * @return {*} the hash or false
- */
-
-function getHash(string) {
-  var index = string.indexOf('#');
-
-  if (index !== -1) {
-    return string.substring(index + 1);
-  }
-
-  return false;
-}
-/**
- * Check if a variable is empty
- *
- * @param {*} el The variable to check
- * @return {boolean} True if empty, false if not
- */
-
-function isEmpty(el) {
-  if (_.isNil(el)) {
-    return true;
-  } else if (el === '') {
-    return true;
-  } else if (el === null) {
-    return true;
-  } else if (el === false) {
-    return true;
-  } else if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike)(el) && (Array.isArray(el) || typeof el === 'string' || typeof el.splice === 'function' || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isBuffer)(el) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isTypedArray)(el) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isArguments)(el))) {
-    return !el.length;
-  }
-
-  var tag = getTag(el);
-
-  if (tag == '[object Map]' || tag == '[object Set]') {
-    return !el.size;
-  }
-
-  if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isPrototype)(el)) {
-    return !Object.keys(el).length;
-  }
-
-  for (var key in el) {
-    if (hasOwnProperty.call(el, key)) {
       return false;
     }
-  }
 
-  return false;
-}
-function toggleNav(buttonId) {
-  var button = document.querySelector(buttonId); // Return early if the button don't exist.
-
-  if (isEmpty(button)) {
-    return;
-  }
-
-  var buttonTarget = button.getAttribute('data-target');
-
-  if (isEmpty(buttonTarget)) {
-    buttonTarget = button.getAttribute('href');
-  }
-
-  if (isEmpty(buttonTarget)) {
-    return;
-  }
-
-  buttonTarget = getHash(buttonTarget);
-  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
-
-  if (isEmpty(siteNavigation)) {
-    return;
-  }
-
-  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Get all the link elements within the menu.
-
-  var links = menu.getElementsByTagName('a'); // Get all the link elements with children within the menu.
-  // eslint-disable-next-line
-
-  var linksWithChildren = menu.querySelectorAll('.has-children > a'); // Toggle focus each time a menu link is focused or blurred.
-
-  var _iterator2 = _createForOfIteratorHelper(links),
-      _step2;
-
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var link = _step2.value;
-      link.addEventListener('focus', toggleFocus, true);
-      link.addEventListener('blur', toggleFocus, true);
-    } // Toggle focus each time a menu link with children receive a touch event.
-
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
-  }
-
-  var _iterator3 = _createForOfIteratorHelper(linksWithChildren),
-      _step3;
-
-  try {
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-      var _link = _step3.value;
-
-      _link.addEventListener('touchstart', toggleFocus, false);
-    }
-  } catch (err) {
-    _iterator3.e(err);
-  } finally {
-    _iterator3.f();
-  }
-}
-/**
- * Get tallest element
- *
- * @param {string} el
- * @return {number}
- */
-
-function getTallest(el) {
-  var matches = document.querySelectorAll(el);
-
-  if (matches.length > 1) {
-    var heights = _.map(matches, function (elem) {
-      return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).height;
-    });
-
-    return Math.max.apply(null, heights);
-  }
-
-  return false;
-}
-/**
- * Make all elements match the tallest element
- *
- * @param {string} [elem='']
- * @param {*} [container=Document]
- */
-
-function matchHeights() {
-  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
-  var matches = container.querySelectorAll(elem);
-
-  if (matches.length > 1) {
-    var minHeight = getTallest(elem);
-
-    if (false !== minHeight) {
-      _.map(matches, function (elem) {
-        elem.style.minHeight = minHeight;
-      });
+    if (document.createEvent && s.dispatchEvent) {
+      var event = document.createEvent('Event');
+      event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);
+      s.dispatchEvent(event);
     }
 
-    window.addEventListener('resize', function () {
-      matchHeights(elem, container);
-    });
-  }
-}
-function bsAtts() {
-  var bsColors = {
-    primary: '',
-    secondary: '',
-    tertiary: '',
-    info: '',
-    success: '',
-    warning: '',
-    danger: '',
-    light: '',
-    dark: '',
-    blue: '',
-    indigo: '',
-    purple: '',
-    pink: '',
-    red: '',
-    orange: '',
-    yellow: '',
-    green: '',
-    teal: '',
-    cyan: '',
-    white: '',
-    black: '',
-    'gray-100': '',
-    'gray-200': '',
-    'gray-300': '',
-    'gray-400': '',
-    'gray-500': '',
-    'gray-600': '',
-    'gray-700': '',
-    'gray-800': '',
-    'gray-900': ''
-  };
-  var computedColors = {};
+    a.lastChild.innerHTML = arrow;
+    s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass);
 
-  for (var _i = 0, _Object$entries = Object.entries(bsColors); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_Object$entries[_i], 2),
-        key = _Object$entries$_i[0],
-        value = _Object$entries$_i[1];
+    if (recursive) {
+      try {
+        a = s.querySelectorAll('.' + oldClass);
 
-    var r = document.querySelector(':root'); // Get the styles (properties and values) for the root
+        for (s = 0; s < a.length; ++s) {
+          if (-1 == a[s].className.indexOf(newClass)) {
+            a[s].className = newClass;
+            a[s].previousSibling.lastChild.innerHTML = arrow;
+          }
+        }
+      } catch (e) {} // eslint-disable-line
 
-    var rs = getComputedStyle(r); // Alert the value of the --blue variable
-
-    value = rs.getPropertyValue("--bs-".concat(key));
-    value = value.trim();
-
-    if ('' !== value) {
-      computedColors[key] = value;
     }
+
+    return true;
   }
 
-  return {
-    colors: computedColors
-  };
-}
-function logCustomProperties() {
-  var isSameDomain = function isSameDomain(styleSheet) {
-    // Internal style blocks won't have an href value
-    if (!styleSheet.href) {
+  function collapse(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className;
+
+    if (/\bsf-dump-expanded\b/.test(oldClass)) {
+      toggle(a, recursive);
       return true;
     }
 
-    return styleSheet.href.indexOf(window.location.origin) === 0;
+    return false;
+  }
+
+  function expand(a, recursive) {
+    var s = a.nextSibling || {},
+        oldClass = s.className;
+
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
+      toggle(a, recursive);
+      return true;
+    }
+
+    return false;
+  }
+
+  function collapseAll(root) {
+    var a = root.querySelector('a.sf-dump-toggle');
+
+    if (a) {
+      collapse(a, true);
+      expand(a);
+      return true;
+    }
+
+    return false;
+  }
+
+  function reveal(node) {
+    var previous,
+        parents = [];
+
+    while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) {
+      parents.push(previous);
+    }
+
+    if (0 !== parents.length) {
+      parents.forEach(function (parent) {
+        expand(parent);
+      });
+      return true;
+    }
+
+    return false;
+  }
+
+  function highlight(root, activeNode, nodes) {
+    resetHighlightedNodes(root);
+    Array.from(nodes || []).forEach(function (node) {
+      if (!/\bsf-dump-highlight\b/.test(node.className)) {
+        node.className = node.className + ' sf-dump-highlight';
+      }
+    });
+
+    if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) {
+      activeNode.className = activeNode.className + ' sf-dump-highlight-active';
+    }
+  }
+
+  function resetHighlightedNodes(root) {
+    Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {
+      strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, '');
+      strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, '');
+    });
+  }
+
+  return function (root, x) {
+    root = document.getElementById(root);
+    var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'),
+        options = {
+      maxDepth: 1,
+      maxStringLength: 160,
+      fileLinkFormat: false
+    },
+        elt = root.getElementsByTagName('A'),
+        len = elt.length,
+        i = 0,
+        s,
+        h,
+        t = [];
+
+    while (i < len) {
+      t.push(elt[i++]);
+    }
+
+    for (i in x) {
+      options[i] = x[i];
+    }
+
+    function a(e, f) {
+      addEventListener(root, e, function (e, n) {
+        if ('A' == e.target.tagName) {
+          f(e.target, e);
+        } else if ('A' == e.target.parentNode.tagName) {
+          f(e.target.parentNode, e);
+        } else {
+          n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target;
+
+          if ((n = n.nextElementSibling) && 'A' == n.tagName) {
+            if (!/\bsf-dump-toggle\b/.test(n.className)) {
+              n = n.nextElementSibling || n;
+            }
+
+            f(n, e, true);
+          }
+        }
+      });
+    }
+
+    function isCtrlKey(e) {
+      return e.ctrlKey || e.metaKey;
+    }
+
+    function xpathString(str) {
+      var parts = str.match(/[^'"]+|['"]/g).map(function (part) {
+        // eslint-disable-next-line
+        if ("'" == part) {
+          return '"\'"';
+        }
+
+        if ('"' == part) {
+          return "'\"'"; // eslint-disable-line
+        }
+
+        return "'" + part + "'"; // eslint-disable-line
+      });
+      return 'concat(' + parts.join(',') + ", '')"; // eslint-disable-line
+    }
+
+    function xpathHasClass(className) {
+      return "contains(concat(' ', normalize-space(@class), ' '), ' " + // eslint-disable-line
+      className + " ')" // eslint-disable-line
+      ;
+    } // eslint-disable-next-line
+
+
+    addEventListener(root, 'mouseover', function (e) {
+      if ('' != refStyle.innerHTML) {
+        refStyle.innerHTML = '';
+      }
+    });
+    a('mouseover', function (a, e, c) {
+      if (c) {
+        e.target.style.cursor = 'pointer';
+      } else if (a = idRx.exec(a.className)) {
+        try {
+          refStyle.innerHTML = 'pre.sf-dump .' + a[0] + '{background-color: #B729D9; color: #FFF !important; border-radius: 2px}';
+        } catch (e) {} // eslint-disable-line
+
+      }
+    });
+    a('click', function (a, e, c) {
+      if (/\bsf-dump-toggle\b/.test(a.className)) {
+        e.preventDefault();
+
+        if (!toggle(a, isCtrlKey(e))) {
+          var r = document.getElementById(a.getAttribute('href').substr(1)),
+              s = r.previousSibling,
+              f = r.parentNode,
+              t = a.parentNode;
+          t.replaceChild(r, a);
+          f.replaceChild(a, s);
+          t.insertBefore(s, r);
+          f = f.firstChild.nodeValue.match(indentRx);
+          t = t.firstChild.nodeValue.match(indentRx);
+
+          if (f && t && f[0] !== t[0]) {
+            r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]);
+          }
+
+          if (/\bsf-dump-compact\b/.test(r.className)) {
+            toggle(s, isCtrlKey(e));
+          }
+        }
+
+        if (c) {// eslint-disable-line
+        } else if (document.getSelection) {
+          try {
+            document.getSelection().removeAllRanges();
+          } catch (e) {
+            document.getSelection().empty();
+          }
+        } else {
+          document.selection.empty();
+        }
+      } else if (/\bsf-dump-str-toggle\b/.test(a.className)) {
+        e.preventDefault();
+        e = a.parentNode.parentNode;
+        e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className);
+      }
+    });
+    elt = root.getElementsByTagName('SAMP');
+    len = elt.length;
+    i = 0;
+
+    while (i < len) {
+      t.push(elt[i++]);
+    }
+
+    len = t.length;
+
+    for (i = 0; i < len; ++i) {
+      elt = t[i];
+
+      if ('SAMP' == elt.tagName) {
+        a = elt.previousSibling || {}; // eslint-disable-line
+
+        if ('A' != a.tagName) {
+          a = document.createElement('A'); // eslint-disable-line
+
+          a.className = 'sf-dump-ref';
+          elt.parentNode.insertBefore(a, elt);
+        } else {
+          a.innerHTML += ' ';
+        }
+
+        a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children';
+        a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>&#9654;</span>' : '<span>&#9660;</span>';
+        a.className += ' sf-dump-toggle';
+        x = 1;
+
+        if ('sf-dump' != elt.parentNode.className) {
+          x += elt.parentNode.getAttribute('data-depth') / 1;
+        }
+      } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href')) // eslint-disable-line
+      ) {
+        a = a.substr(1); // eslint-disable-line
+
+        elt.className += ' ' + a;
+
+        if (/[[{]$/.test(elt.previousSibling.nodeValue)) {
+          a = a != elt.nextSibling.id && document.getElementById(a); // eslint-disable-line
+
+          try {
+            s = a.nextSibling;
+            elt.appendChild(a);
+            s.parentNode.insertBefore(a, s);
+
+            if (/^[@#]/.test(elt.innerHTML)) {
+              elt.innerHTML += ' <span>&#9654;</span>';
+            } else {
+              elt.innerHTML = '<span>&#9654;</span>';
+              elt.className = 'sf-dump-ref';
+            }
+
+            elt.className += ' sf-dump-toggle';
+          } catch (e) {
+            if ('&' == elt.innerHTML.charAt(0)) {
+              elt.innerHTML = '&hellip;';
+              elt.className = 'sf-dump-ref';
+            }
+          }
+        }
+      }
+    }
+
+    if (document.evaluate && Array.from && root.children.length > 1) {
+      // eslint-disable-next-line
+      var showCurrent = function showCurrent(state) {
+        var currentNode = state.current(),
+            currentRect,
+            searchRect;
+
+        if (currentNode) {
+          reveal(currentNode);
+          highlight(root, currentNode, state.nodes);
+
+          if ('scrollIntoView' in currentNode) {
+            currentNode.scrollIntoView(true);
+            currentRect = currentNode.getBoundingClientRect();
+            searchRect = search.getBoundingClientRect();
+
+            if (currentRect.top < searchRect.top + searchRect.height) {
+              window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
+            }
+          }
+        }
+
+        counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
+      };
+
+      root.setAttribute('tabindex', 0); // eslint-disable-next-line
+
+      var SearchState = function SearchState() {
+        this.nodes = [];
+        this.idx = 0;
+      }; // eslint-disable-next-line
+
+
+      SearchState.prototype = {
+        next: function next() {
+          if (this.isEmpty()) {
+            return this.current();
+          }
+
+          this.idx = this.idx < this.nodes.length - 1 ? this.idx + 1 : 0;
+          return this.current();
+        },
+        previous: function previous() {
+          if (this.isEmpty()) {
+            return this.current();
+          }
+
+          this.idx = this.idx > 0 ? this.idx - 1 : this.nodes.length - 1;
+          return this.current();
+        },
+        isEmpty: function isEmpty() {
+          return 0 === this.count();
+        },
+        current: function current() {
+          if (this.isEmpty()) {
+            return null;
+          }
+
+          return this.nodes[this.idx];
+        },
+        reset: function reset() {
+          this.nodes = [];
+          this.idx = 0;
+        },
+        count: function count() {
+          return this.nodes.length;
+        }
+      };
+      var search = document.createElement('div');
+      search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';
+      search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0</span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"/></svg> </button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"/></svg> </button> ';
+      root.insertBefore(search, root.firstChild);
+      var state = new SearchState();
+      var searchInput = search.querySelector('.sf-dump-search-input');
+      var counter = search.querySelector('.sf-dump-search-count');
+      var searchInputTimer = 0;
+      var previousSearchQuery = '';
+      addEventListener(searchInput, 'keyup', function (e) {
+        var searchQuery = e.target.value;
+        /* Don't perform anything if the pressed key didn't change the query */
+
+        if (searchQuery === previousSearchQuery) {
+          return;
+        }
+
+        previousSearchQuery = searchQuery;
+        clearTimeout(searchInputTimer);
+        searchInputTimer = setTimeout(function () {
+          state.reset();
+          collapseAll(root);
+          resetHighlightedNodes(root);
+
+          if ('' === searchQuery) {
+            counter.textContent = '0 of 0';
+            return;
+          }
+
+          var classMatches = ['sf-dump-str', 'sf-dump-key', 'sf-dump-public', 'sf-dump-protected', 'sf-dump-private'].map(xpathHasClass).join(' or ');
+          var xpathResult = document.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); // eslint-disable-next-line
+
+          while (node = xpathResult.iterateNext()) {
+            state.nodes.push(node);
+          } // eslint-disable-line
+
+
+          showCurrent(state);
+        }, 400);
+      });
+      Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {
+        addEventListener(btn, 'click', function (e) {
+          e.preventDefault();
+          -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();
+          searchInput.focus();
+          collapseAll(root);
+          showCurrent(state);
+        });
+      });
+      addEventListener(root, 'keydown', function (e) {
+        var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className);
+
+        if (114 === e.keyCode && !isSearchActive || isCtrlKey(e) && 70 === e.keyCode) {
+          /* F3 or CMD/CTRL + F */
+          if (70 === e.keyCode && document.activeElement === searchInput) {
+            /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */
+            return;
+          }
+
+          e.preventDefault();
+          search.className = search.className.replace(/\bsf-dump-search-hidden\b/, '');
+          searchInput.focus();
+        } else if (isSearchActive) {
+          if (27 === e.keyCode) {
+            /* ESC key */
+            search.className += ' sf-dump-search-hidden';
+            e.preventDefault();
+            resetHighlightedNodes(root);
+            searchInput.value = '';
+          } else if (isCtrlKey(e) && 71 === e.keyCode
+          /* CMD/CTRL + G */
+          || 13 === e.keyCode
+          /* Enter */
+          || 114 === e.keyCode
+          /* F3 */
+          ) {
+            e.preventDefault();
+            e.shiftKey ? state.previous() : state.next();
+            collapseAll(root);
+            showCurrent(state);
+          }
+        }
+      });
+    }
+
+    if (0 >= options.maxStringLength) {
+      return;
+    }
+
+    try {
+      elt = root.querySelectorAll('.sf-dump-str');
+      len = elt.length;
+      i = 0;
+      t = [];
+
+      while (i < len) {
+        t.push(elt[i++]);
+      }
+
+      len = t.length;
+
+      for (i = 0; i < len; ++i) {
+        elt = t[i];
+        s = elt.innerText || elt.textContent;
+        x = s.length - options.maxStringLength;
+
+        if (0 < x) {
+          h = elt.innerHTML;
+          elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength);
+          elt.className += ' sf-dump-str-collapse';
+          elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> &#9664;</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> &#9654;</a></span>';
+        }
+      } // eslint-disable-next-line
+
+    } catch (e) {}
   };
-
-  var isStyleRule = function isStyleRule(rule) {
-    return rule.type === 1;
-  };
-
-  var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
-    return (// styleSheets is array-like, so we convert it to an array.
-      // Filter out any stylesheets not on this domain
-      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
-        return finalArr.concat( // cssRules is array-like, so we convert it to an array
-        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
-          var props = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(rule.style).map(function (propName) {
-            return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
-          }) // Discard any props that don't start with "--". Custom props are required to.
-          .filter(function (_ref) {
-            var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 1),
-                propName = _ref2[0];
-
-            return propName.indexOf('--') === 0;
-          });
-
-          return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(propValArr), (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(props));
-        }, []));
-      }, [])
-    );
-  };
-
-  var cssCustomPropIndex = getCSSCustomPropIndex();
-  return cssCustomPropIndex;
 }
 
 /***/ }),
@@ -18347,26 +18310,585 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-/*!*******************!*\
-  !*** ./js/app.js ***!
-  \*******************/
+/*!**************************!*\
+  !*** ./js/util/utils.js ***!
+  \**************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _util_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/utils */ "./js/util/utils.js");
-/**
- * ============================================================================
- * helpers
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.actual; },
+/* harmony export */   "as": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.as; },
+/* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.aspect; },
+/* harmony export */   "betterHashLinks": function() { return /* binding */ betterHashLinks; },
+/* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
+/* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
+/* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
+/* harmony export */   "defaultsDeep": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.defaultsDeep; },
+/* harmony export */   "dump": function() { return /* reexport safe */ _debug__WEBPACK_IMPORTED_MODULE_5__.dump; },
+/* harmony export */   "each": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.each; },
+/* harmony export */   "filter": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.filter; },
+/* harmony export */   "filterPath": function() { return /* binding */ filterPath; },
+/* harmony export */   "find": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.find; },
+/* harmony export */   "forEach": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.forEach; },
+/* harmony export */   "get": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.get; },
+/* harmony export */   "getHash": function() { return /* binding */ getHash; },
+/* harmony export */   "getTag": function() { return /* binding */ getTag; },
+/* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
+/* harmony export */   "has": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.has; },
+/* harmony export */   "inViewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inViewport; },
+/* harmony export */   "inX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inX; },
+/* harmony export */   "inY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inY; },
+/* harmony export */   "is": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.is; },
+/* harmony export */   "isArray": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArray; },
+/* harmony export */   "isArrayLike": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike; },
+/* harmony export */   "isEmpty": function() { return /* binding */ isEmpty; },
+/* harmony export */   "isObject": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isObject; },
+/* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
+/* harmony export */   "map": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.map; },
+/* harmony export */   "matchHeights": function() { return /* binding */ matchHeights; },
+/* harmony export */   "merge": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.merge; },
+/* harmony export */   "mq": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.mq; },
+/* harmony export */   "omit": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.omit; },
+/* harmony export */   "rectangle": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.rectangle; },
+/* harmony export */   "reduce": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.reduce; },
+/* harmony export */   "reject": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.reject; },
+/* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
+/* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollX; },
+/* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollY; },
+/* harmony export */   "slugCase": function() { return /* binding */ slugCase; },
+/* harmony export */   "sortObjectByKeys": function() { return /* binding */ sortObjectByKeys; },
+/* harmony export */   "stringToHtml": function() { return /* binding */ stringToHtml; },
+/* harmony export */   "titleCase": function() { return /* binding */ titleCase; },
+/* harmony export */   "toggleFocus": function() { return /* binding */ toggleFocus; },
+/* harmony export */   "toggleNav": function() { return /* binding */ toggleNav; },
+/* harmony export */   "viewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewport; },
+/* harmony export */   "viewportH": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportH; },
+/* harmony export */   "viewportW": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportW; }
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! actual */ "../node_modules/actual/actual.js");
+/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(actual__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! verge */ "../node_modules/verge/verge.js");
+/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(verge__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./debug */ "./js/util/debug.js");
+
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/** ============================================================================
+ * utils
  *
- * @package
- * @since     0.1.0
- * @version   0.1.0
+ * @version   1.0.1
  * @author    RIESTER <wordpress@riester.com>
- * @copyright 2021 RIESTER
- * ==========================================================================
+ * @copyright 2022 RIESTER
+ * ========================================================================== */
+var _ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
+
+
+
+
+
+
+
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
  */
 
-/* harmony default export */ __webpack_exports__["default"] = (_util_utils__WEBPACK_IMPORTED_MODULE_0__);
+function getTag(value) {
+  if (value == null) {
+    return value === undefined ? '[object Undefined]' : '[object Null]';
+  }
+
+  return Object.prototype.toString.call(value);
+}
+/**
+ * Function for making strings camelCase
+ *
+ * @param {string} str The string to convert
+ * @return {string} The converted string
+ */
+
+function camelCase(str) {
+  return "".concat(str.charAt(0).toLowerCase()).concat(str.replace(/[\W_]/g, '|').split('|').map(function (part) {
+    return "".concat(part.charAt(0).toUpperCase()).concat(part.slice(1));
+  }).join('').slice(1));
+}
+/**
+ * Convert a string to slug or kebab case
+ *
+ * @param {*} str
+ * @return {*}
+ */
+
+function slugCase(str) {
+  var pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
+  str = _.replace(str, pattern, ' and ');
+  return _.chain(str).deburr().trim().kebabCase().value();
+}
+/**
+ * Convert a string to title case with ampersands
+ *
+ * @param {*} str
+ * @param {boolean} [useAmp=false] Whether to automatically change the word and
+ *                                 to an ampersand
+ * @return {*}
+ */
+
+function titleCase(str) {
+  var useAmp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var pattern = new RegExp(/(\/|-|_)/gm);
+  str = _.replace(str, pattern, ' ');
+  str = _.chain(str).trim().startCase().tap(function (str) {
+    if (useAmp) {
+      var andPattern = new RegExp(/and/gim);
+
+      var amp = _.escape('&');
+
+      return _.replace(str, andPattern, amp);
+    }
+
+    return str;
+  }).value();
+  return str;
+}
+/**
+ *	Change the tag of a node element
+ *
+ * @param  {Element}  original  The element to change
+ * @param  {string}   tag        The new tag
+ *
+ * @return {Element} The updated element
+ */
+
+function changeTag(original, tag) {
+  var replacement = document.createElement(tag); // Grab all of the original's attributes, and pass them to the replacement
+
+  for (var i = 0, l = original.attributes.length; i < l; ++i) {
+    var nodeName = original.attributes.item(i).nodeName;
+    var nodeValue = original.attributes.item(i).nodeValue;
+    replacement.setAttribute(nodeName, nodeValue);
+  } // Persist contents
+
+
+  replacement.innerHTML = original.innerHTML; // Switch!
+
+  original.parentNode.replaceChild(replacement, original);
+  return original;
+}
+
+var domParserSupport = function () {
+  if (!window.DOMParser) return false;
+  var parser = new DOMParser();
+
+  try {
+    parser.parseFromString('x', 'text/html');
+  } catch (err) {
+    return false;
+  }
+
+  return true;
 }();
-rwp = __webpack_exports__;
+/**
+ * Convert a template string into HTML DOM nodes
+ * @param  {String} str The template string
+ * @return {Node}       The template HTML
+ */
+
+
+function stringToHtml(str) {
+  // If DOMParser is supported, use it
+  if (domParserSupport) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body.firstElementChild;
+  } // Otherwise, fallback to old-school method
+
+
+  var dom = document.createElement('div');
+  dom.innerHTML = str;
+  return dom;
+}
+/**
+ * Adds focus class for better accessibility
+ *
+ */
+
+function toggleFocus(event) {
+  if (event.type === 'focus' || event.type === 'blur') {
+    var _self = event.target;
+
+    if (!_.isUndefined(_self)) {
+      var elementClasses = _self.classList;
+
+      if (!_.isNil(elementClasses)) {
+        // Move up through the ancestors of the current link until we hit .nav-menu.
+        while (!elementClasses.contains('nav-menu')) {
+          // On li elements toggle the class .focus.
+          if ('li' === _self.tagName.toLowerCase()) {
+            _self.classList.toggle('focus');
+          }
+
+          _self = _self.parentNode;
+        }
+      }
+    }
+  }
+
+  if (event.type === 'touchstart') {
+    var menuItem = self.parentNode;
+    event.preventDefault();
+
+    var _iterator = _createForOfIteratorHelper(menuItem.parentNode.children),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var link = _step.value;
+
+        if (menuItem !== link) {
+          link.classList.remove('focus');
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    menuItem.classList.toggle('focus');
+  }
+}
+function betterHashLinks() {
+  var id = location.hash.substring(1);
+  var motionQuery = window.matchMedia('(prefers-reduced-motion)');
+
+  if (!/^[A-z0-9_-]+$/.test(id)) {
+    return;
+  }
+
+  var element = document.getElementById(id);
+
+  if (element) {
+    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+      element.tabIndex = -1;
+    }
+
+    if (!motionQuery.matches) {
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    if (element.is(':focus')) {
+      //checking if the target was focused
+      return false;
+    } else {
+      element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
+
+      element.focus(); //Setting focus
+    }
+  }
+}
+/**
+ * Get the screen size
+ *
+ * @param {string} prop
+ * @return {Object|Number} The object containing the size infor or the requested property
+ */
+
+function screenSize(prop) {
+  var size = {
+    width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
+    height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
+  };
+  window.addEventListener('resize', function () {
+    _.assign({
+      width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
+      height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
+    }, size);
+  });
+
+  if (!_.isNil(prop)) {
+    return size[prop];
+  }
+
+  return size;
+} // URL updates and the element focus is maintained
+// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
+// filter handling for a /dir/ OR /indexordefault.page
+
+function filterPath(string) {
+  return string.replace(/^\//, '').replace(/(index|default).[a-zA-Z]{3,4}$/, '').replace(/\/$/, '');
+}
+/**
+ * Get hash value for any string
+ *
+ * @param {*} string the string to extract from
+ * @return {*} the hash or false
+ */
+
+function getHash(string) {
+  var index = string.indexOf('#');
+
+  if (index !== -1) {
+    return string.substring(index + 1);
+  }
+
+  return false;
+}
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
+
+function isEmpty(el) {
+  if (_.isNil(el)) {
+    return true;
+  } else if (el === '') {
+    return true;
+  } else if (el === null) {
+    return true;
+  } else if (el === false) {
+    return true;
+  } else if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isEmpty)(el)) {
+    return true;
+  }
+
+  return false;
+}
+function toggleNav(buttonId) {
+  var button = document.querySelector(buttonId); // Return early if the button don't exist.
+
+  if (isEmpty(button)) {
+    return;
+  }
+
+  var buttonTarget = button.getAttribute('data-target');
+
+  if (isEmpty(buttonTarget)) {
+    buttonTarget = button.getAttribute('href');
+  }
+
+  if (isEmpty(buttonTarget)) {
+    return;
+  }
+
+  buttonTarget = getHash(buttonTarget);
+  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
+
+  if (isEmpty(siteNavigation)) {
+    return;
+  }
+
+  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Get all the link elements within the menu.
+
+  var links = menu.getElementsByTagName('a'); // Get all the link elements with children within the menu.
+  // eslint-disable-next-line
+
+  var linksWithChildren = menu.querySelectorAll('.has-children > a'); // Toggle focus each time a menu link is focused or blurred.
+
+  var _iterator2 = _createForOfIteratorHelper(links),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var link = _step2.value;
+      link.addEventListener('focus', toggleFocus, true);
+      link.addEventListener('blur', toggleFocus, true);
+    } // Toggle focus each time a menu link with children receive a touch event.
+
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  var _iterator3 = _createForOfIteratorHelper(linksWithChildren),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var _link = _step3.value;
+
+      _link.addEventListener('touchstart', toggleFocus, false);
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+}
+/**
+ * Get tallest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
+
+function getTallest(el) {
+  var matches = document.querySelectorAll(el);
+
+  if (matches.length > 1) {
+    var heights = _.map(matches, function (elem) {
+      return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).height;
+    });
+
+    return Math.max.apply(null, heights);
+  }
+
+  return false;
+}
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+
+function matchHeights() {
+  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
+  var matches = container.querySelectorAll(elem);
+
+  if (matches.length > 1) {
+    var minHeight = getTallest(elem);
+
+    if (false !== minHeight) {
+      _.map(matches, function (elem) {
+        elem.style.minHeight = minHeight;
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      matchHeights(elem, container);
+    });
+  }
+}
+function bsAtts() {
+  var bsColors = {
+    primary: '',
+    secondary: '',
+    tertiary: '',
+    info: '',
+    success: '',
+    warning: '',
+    danger: '',
+    light: '',
+    dark: '',
+    blue: '',
+    indigo: '',
+    purple: '',
+    pink: '',
+    red: '',
+    orange: '',
+    yellow: '',
+    green: '',
+    teal: '',
+    cyan: '',
+    white: '',
+    black: '',
+    'gray-100': '',
+    'gray-200': '',
+    'gray-300': '',
+    'gray-400': '',
+    'gray-500': '',
+    'gray-600': '',
+    'gray-700': '',
+    'gray-800': '',
+    'gray-900': ''
+  };
+  var computedColors = {};
+
+  for (var _i = 0, _Object$entries = Object.entries(bsColors); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_Object$entries[_i], 2),
+        key = _Object$entries$_i[0],
+        value = _Object$entries$_i[1];
+
+    var r = document.querySelector(':root'); // Get the styles (properties and values) for the root
+
+    var rs = getComputedStyle(r); // Alert the value of the --blue variable
+
+    value = rs.getPropertyValue("--bs-".concat(key));
+    value = value.trim();
+
+    if ('' !== value) {
+      computedColors[key] = value;
+    }
+  }
+
+  return {
+    colors: computedColors
+  };
+}
+function sortObjectByKeys(o) {
+  return Object.keys(o).sort().reduce(function (r, k) {
+    return r[k] = o[k], r;
+  }, {});
+}
+/**
+ * Log all custom css properties to the console.
+ *
+ * @link https://css-tricks.com/how-to-get-all-custom-properties-on-a-page-in-javascript/
+ *
+ * @export
+ */
+
+function logCustomProperties() {
+  var isSameDomain = function isSameDomain(styleSheet) {
+    if (!styleSheet.href) {
+      return true;
+    }
+
+    return styleSheet.href.indexOf(window.location.origin) === 0;
+  };
+
+  var isStyleRule = function isStyleRule(rule) {
+    return rule.type === 1;
+  }; // eslint-disable-next-line
+
+
+  var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
+    return (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
+      return finalArr.concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
+        var props = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(rule.style).map(function (propName) {
+          return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
+        }).filter(function (_ref) {
+          var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 1),
+              propName = _ref2[0];
+
+          return propName.indexOf('--') === 0;
+        });
+
+        return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(propValArr), (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(props));
+      }, []));
+    }, []);
+  };
+
+  var props = getCSSCustomPropIndex();
+  props = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.fromPairs)(props);
+  props = sortObjectByKeys(props);
+  console.groupCollapsed('Custom CSS Properties');
+  console.table(props);
+  console.groupEnd();
+}
+}();
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-app.js.map

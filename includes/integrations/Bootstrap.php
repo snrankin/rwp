@@ -64,12 +64,10 @@ class Bootstrap extends Singleton {
 
 	public function bootstrap_assets() {
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) ) {
-			rwp()->register_styles( 'bootstrap' );
-			rwp()->enqueue_styles( 'bootstrap' );
+			rwp()->add_styles( 'bootstrap' );
 		}
 		if ( rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
-			rwp()->register_scripts( 'bootstrap' );
-			rwp()->enqueue_scripts( 'bootstrap' );
+			rwp()->add_scripts( 'bootstrap' );
 		}
 	}
 

@@ -74,8 +74,8 @@ abstract class Singleton {
 	 * @return void
      */
 	public function set( $key, $value = null, $overwrite = true ) {
-		$keys = \is_array($key) ? $key : [$key => $value];
-        foreach ($keys as $key => $value) {
+		$keys = \is_array( $key ) ? $key : [ $key => $value ];
+        foreach ( $keys as $key => $value ) {
             data_set( $this, $key, $value, $overwrite );
         }
 	}

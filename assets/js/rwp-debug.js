@@ -1,9 +1,26 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
+/******/ 	// runtime can't be in strict mode because a global variable is assign and maybe created.
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -17,11 +34,17 @@ var rwp;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
+"use strict";
+var __webpack_exports__ = {};
 /*!*********************!*\
   !*** ./js/debug.js ***!
   \*********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sfDump": function() { return /* binding */ sfDump; }
+/* harmony export */ });
 /** ============================================================================
  * debug
  *
@@ -31,8 +54,9 @@ var __webpack_exports__ = {};
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2021 RIESTER
  * ========================================================================== */
-Sfdump = // eslint-disable-line
-window.Sfdump || function (doc) {
+console.log(rwp);
+rwp.logCustomProperties();
+function sfDump(doc) {
   var refStyle = doc.createElement('style'),
       rxEsc = /([.*+?^${}()|[]\/\\])/g,
       idRx = /\bsf-dump-\d+-ref[012]\w+\b/,
@@ -549,7 +573,7 @@ window.Sfdump || function (doc) {
 
     } catch (e) {}
   };
-}(document);
+}
 }();
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
@@ -561,7 +585,9 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-debug.js.map

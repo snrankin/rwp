@@ -6,15 +6,7 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-//@import '~bootstrap/scss/root';
-
-$container-widths: (
-	sm: 100vw,
-	md: 90vw,
-	lg: 85vw,
-	xl: 75vw,
-	xxl: 1050px,
-);
+@import '../global/index';
 
 :root {
 	// Note: Custom variable values only support SassScript inside `#{}`.
@@ -37,6 +29,10 @@ $container-widths: (
 
 	@each $color, $value in $theme-colors-rgb {
 		--#{$variable-prefix}#{$color}-rgb: #{$value};
+	}
+
+	@each $type, $value in $type-spaces {
+		--#{$variable-prefix}#{$type}: #{$value};
 	}
 
 	@each $size, $value in $font-sizes {

@@ -58,6 +58,8 @@ function rwp_menu_args( $args = [] ) {
     // Get the requested menu, either a menu ID or a theme location
     $menu = rwp_get_menu( $menu );
 
+	$menu_id = data_get( $menu, 'term_id' );
+
     // Set up the default WordPress nav arguments
     $wp_defaults = rwp_collection(
         array(
@@ -85,8 +87,6 @@ function rwp_menu_args( $args = [] ) {
 
     // Get the custom ACF fields for the menu term
     $menu_fields = rwp_get_field( 'nav_options', $menu, array() );
-
-	rwp_log( $menu_fields );
 
     if ( ! empty( $menu_fields ) ) {
         $args = $args->merge( $menu_fields );
@@ -158,7 +158,7 @@ function rwp_menu_args( $args = [] ) {
     $nav_type = data_get( $custom_args, 'type', 'nav' );
 
     // Apply filters per nav ID to new arguments
-    $new_args = apply_filters( "rwp_nav_args/nav/{$menu->term_id}", $new_args );
+    $new_args = apply_filters( "rwp_nav_args/nav/{$menu_id}", $new_args );
 
     // Initialize the Nav class
     $nav = rwp_nav( $new_args );
@@ -190,7 +190,7 @@ function rwp_menu_args( $args = [] ) {
     }
 
     // Apply html filters per nav ID to the Html class
-    $html = apply_filters( "rwp_nav_args/html/{$menu->term_id}", $html, $menu, $custom_args );
+    $html = apply_filters( "rwp_nav_args/html/{$menu_id}", $html, $menu, $custom_args );
 
     if ( false !== $args->get( 'items_wrap' ) ) {
         // If the container argument exists, then output everything

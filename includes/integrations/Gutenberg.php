@@ -94,7 +94,7 @@ class Gutenberg extends Singleton {
 						$files = array();
 					}
 
-					$block_name = rwp()->prefix( $block, '-', 'slug' );
+					$block_name = rwp()->prefix( $block, 'slug' );
 
 					$block_args = array(
 						'editor_script'   => $block_name,
@@ -124,7 +124,7 @@ class Gutenberg extends Singleton {
 						}
 					}
 
-					$this->blocks->put( rwp()->prefix( $block, '/', 'slug' ), $block_args );
+					$this->blocks->put( rwp()->prefix( $block, 'slug', '/' ), $block_args );
 				});
 			}
 		}

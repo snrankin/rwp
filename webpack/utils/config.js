@@ -41,32 +41,14 @@ const rootPath = filePaths && filePaths.root ? filePaths.root : process.cwd();
 const buildStats = !isEmpty(argv.stats)
 	? argv.stats
 	: {
-			// preset: 'minimal',
-			// cachedAssets: false,
-			// cachedModules: false,
-			// children: false,
-			// chunks: false,
 			colors: true,
-			// context: filePaths.src,
-			// depth: false,
-			// entrypoints: 'auto',
-			// env: true,
-			// errorDetails: 'auto',
-			// errorStack: false,
-			// errors: false,
 			excludeAssets: ['**/*.map'],
-			// groupAssetsByChunk: true,
-			// hash: false,
 			logging: false,
-			// moduleAssets: true,
 			modules: false,
 			nestedModules: false,
-			// publicPath: false,
 			reasons: false,
 			source: true,
-			// timings: false,
-			// version: false,
-			// warnings: false,
+			errors: false,
 	  };
 
 function createConfig(groupName = '', configName = '') {
@@ -102,7 +84,10 @@ function createConfig(groupName = '', configName = '') {
 				// clean: {
 				// 	keep: /\.(json|html)$/,
 				// },
-				library: 'rwp',
+				library: {
+					name: 'rwp',
+					type: 'assign-properties',
+				},
 				chunkFilename: '[name].js',
 			},
 			stats: buildStats,
@@ -378,7 +363,7 @@ const startingPlugins = [
 		Popper: '@popperjs',
 	}),
 	new ESLintPlugin({
-		failOnWarning: !buildWatch,
+		failOnWarning: false,
 		emitError: !isProduction,
 		emitWarning: !isProduction,
 		formatter: require('eslint-formatter-pretty'),
@@ -434,9 +419,7 @@ const endingPlugins = [
 		logLevel: buildWatch ? 'SILENT' : 'WARNING',
 		clearConsole: true,
 		additionalTransformers: [require('./transformers/sassError.js')],
-		onErrors: (severity, errors) => {
-			console.log({ severity, errors });
-		},
+		additionalFormatters: [require('./formatters/sassError.js')],
 	}),
 	new WebpackBuildNotifierPlugin(config.notify),
 ];

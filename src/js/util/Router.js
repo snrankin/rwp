@@ -1,4 +1,4 @@
-const rwp = rwp || {}; // eslint-disable-line
+import { camelCase } from './utils';
 /**
  * DOM-based Routing
  *
@@ -30,10 +30,7 @@ class Router {
 			})
 		);
 
-		const fire =
-			'' !== route &&
-			this.routes[route] &&
-			'function' === typeof this.routes[route][event];
+		const fire = '' !== route && this.routes[route] && 'function' === typeof this.routes[route][event];
 		if (fire) {
 			this.routes[route][event](arg);
 		}
@@ -57,7 +54,7 @@ class Router {
 			.toLowerCase()
 			.replace(/-/g, '_')
 			.split(/\s+/)
-			.map(rwp.utils.camelCase)
+			.map(camelCase)
 			.forEach((className) => {
 				this.fire(className);
 				this.fire(className, 'finalize');

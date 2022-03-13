@@ -37,7 +37,7 @@ class GravityForms extends Singleton {
 
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
+		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
 
 		rwp_add_filters(array(
 			'gform_preview_styles',
@@ -68,11 +68,8 @@ class GravityForms extends Singleton {
 	 * @see https://docs.gravityforms.com/gform_preview_styles/
 	 */
 	public function enqueue_gravity_styles() {
-		if ( ! wp_style_is( 'rwp-gravity-forms', 'registered' ) ) {
-			rwp()->register_assets( 'gravity-forms' );
-		}
 
-		rwp()->enqueue_assets( 'gravity-forms' );
+		rwp()->add_assets( 'gravity-forms' );
 	}
 
 	/**

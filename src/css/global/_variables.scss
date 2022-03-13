@@ -8,16 +8,20 @@
 
 @import '~modularscale-sass/stylesheets/modularscale';
 
-$hair-space      : 0.0417em; // 0.7px || Width varies, but narrower than thin space
-$fine-space      : 0.125em; // 2px || Bien ! For French punctuation
-$one-sixth-space : 0.1667em; // 2.7px || Might be suitable for grouping
-$thin-space      : 0.2em; // 3.2px || Recommended minimum width of space
-$math-space      : 0.2222em; // 3.6px ||a + b Around operators (according to Chicago)
-$default-space   : 0.25em; // 4px || Average width of normal space
-$thick-space     : 0.2778em; // 4.4.px || a = b Around relational operators (according to Chicago)
-$one-third-space : 0.3333em; // 5.3px || Width of space in a wide font
-$en-space        : 0.5em; // 8px || Recommended maximum width of space, width of en-dash
-$em-space        : 1em; // 16px || width of em-dash
+
+
+$type-spaces: (
+	'hair-space'      : 0.0417em, // 0.7px  || Width varies, but narrower than thin space
+	'fine-space'      : 0.125em,  // 2px    || Bien ! For French punctuation
+	'one-sixth-space' : 0.1667em, // 2.7px  || Might be suitable for grouping
+	'thin-space'      : 0.2em,    // 3.2px  || Recommended minimum width of space
+	'math-space'      : 0.2222em, // 3.6px  || a + b Around operators (according to Chicago)
+	'default-space'   : 0.25em,   // 4px    || Average width of normal space
+	'thick-space'     : 0.2778em, // 4.4.px || a = b Around relational operators (according to Chicago)
+	'one-third-space' : 0.3333em, // 5.3px  || Width of space in a wide font
+	'en-space'        : 0.5em,    // 8px    || Recommended maximum width of space, width of en-dash
+	'em-space'        : 1em,      // 16px   || width of em-dash
+);
 
 $emoji                  : 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
@@ -25,30 +29,13 @@ $sans-serif-fallback    : system-ui, -apple-system, BlinkMacSystemFont, 'Avenir 
 
 $serif-fallback         : 'Palatino Linotype', palatino, palladio, 'URW Palladio L', 'Book Antiqua', baskerville, 'Bookman Old Style', 'Bitstream Charter', 'Nimbus Roman No9 L', garamond, 'Apple Garamond', 'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook', 'Century Schoolbook L', georgia, serif, $emoji;
 
-$monospace-fallback     : ui-monospace, SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace, $emoji;
+$monospace-fallback     : ui-monospace, SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Droid Sans Mono', 'Courier New', monospace, $emoji;
 
 $font-family-sans-serif : $sans-serif-fallback;
 $font-family-serif      : $serif-fallback;
-$font-family-monospace  : 'FiraCode Nerd Font Mono', $monospace-fallback;
+$font-family-monospace  : 'Fira Mono', $monospace-fallback;
 $font-family-code       : $font-family-monospace;
 $font-family-base       : $font-family-sans-serif;
-
-$yellow: #FFAB41;
-$red: #800000;
-$blue: #0A7AC2;
-
-$gray-100: #DDDDDD;
-$gray-200: #c5c5c5;
-$gray-300: #adadad;
-$gray-400: #969696;
-$gray-500: #74747B;
-$gray-600: #515155;
-$gray-700: #303030;
-$gray-800: #2D2D2D;
-$gray-900: #161616;
-
-$primary: $red;
-$secondary: $gray-700;
 
 $spacer: 1rem;
 

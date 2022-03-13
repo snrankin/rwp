@@ -355,7 +355,7 @@ class PostTypes extends Singleton {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$type = rwp()->prefix( $singular, '_', 'snake' );
+		$type = rwp()->prefix( $singular );
 
 		$names  = $labels['names'];
 

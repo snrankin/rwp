@@ -186,7 +186,7 @@ trait Assets {
 			$src = $handle;
 		}
 
-		$handle = $this->prefix( $handle, '-', 'slug' );
+		$handle = rwp()->prefix( $handle, 'slug' );
 
 		$src = rwp_add_suffix( $src, '.js' ); // Only adds js if it isn't already there
 
@@ -283,10 +283,24 @@ trait Assets {
 
 		if ( $scripts ) {
 			$scripts->keys()->map(function ( $item ) {
-				$item = rwp()->prefix( $item, '-' );
+				$item = rwp()->prefix( $item, 'slug' );
 				wp_enqueue_script( $item );
 			});
 		}
+	}
+
+	/**
+	 * Register AND enqueue all scripts for a specific location
+	 * @param string  $location  The location to register scripts for. Default
+	 *                           empty string. Accepts options like 'global',
+	 *                           'admin' and 'public'. Can be any custom location.
+	 *
+	 * @return void
+	 */
+
+	public function add_scripts( $location = '' ) {
+		$this->register_scripts( $location );
+		$this->enqueue_scripts( $location );
 	}
 
 	/**
@@ -350,16 +364,12 @@ trait Assets {
 		 * @var string $media
 		 */
 		$media = data_get( $args, 'media', 'all' );
-		/**
-		 * @var string $folder
-		 */
-		$folder = data_get( $args, 'folder', 'css' );
 
 		if ( ! is_string( $src ) || empty( $src ) ) {
 			$src = $handle;
 		}
 
-		$handle = $this->prefix( $handle, '-' );
+		$handle = $this->prefix( $handle, 'slug' );
 
 		$src = rwp_add_suffix( $src, '.css' ); // Only adds css if it isn't already there
 
@@ -448,10 +458,24 @@ trait Assets {
 
 		if ( $styles ) {
 			$styles->keys()->map(function ( $item ) {
-				$item = rwp()->prefix( $item, '-' );
+				$item = rwp()->prefix( $item, 'slug' );
 				wp_enqueue_style( $item );
 			});
 		}
+	}
+
+	/**
+	 * Register AND enqueue all styles for a specific location
+	 * @param string  $location  The location to register styles for. Default
+	 *                           empty string. Accepts options like 'global',
+	 *                           'admin' and 'public'. Can be any custom location.
+	 *
+	 * @return void
+	 */
+
+	public function add_styles( $location = '' ) {
+		$this->register_styles( $location );
+		$this->enqueue_styles( $location );
 	}
 
 	/**
@@ -481,6 +505,21 @@ trait Assets {
 	public function enqueue_assets( $location = '' ) {
 		$this->enqueue_scripts( $location );
 		$this->enqueue_styles( $location );
+	}
+
+	/**
+	 * Register AND enqueue all assets for a specific location
+	 * @param string  $location  The location to register styles for. Default
+	 *                           empty string. Accepts options like 'global',
+	 *                           'admin' and 'public'. Can be any custom location.
+	 *
+	 * @return void
+	 */
+
+	public function add_assets( $location = '' ) {
+		$this->register_assets( $location );
+		$this->enqueue_assets( $location );
+
 	}
 
 }

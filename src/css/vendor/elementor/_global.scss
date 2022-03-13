@@ -1,0 +1,42 @@
+/// ======================================================================== ///
+/// @name   _global
+///
+/// @group  RIESTER
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body.rwp.rwp-elementor,
+body.elementor-editor-active {
+	&:not([class*='elementor-page-']) {
+		.site-main .elementor-inner,
+		.site-footer .footer-inner,
+		.site-header .header-inner {
+			@include make-container;
+		}
+	}
+	&.admin-bar {
+		#wp-admin-bar-elementor_edit_page {
+			.elementor-edit-link-title {
+				@include visually-hidden;
+			}
+		}
+	}
+	--#{$variable-prefix}primary: var(--e-global-color-primary);
+	--#{$variable-prefix}secondary: var(--e-global-color-secondary);
+	--#{$variable-prefix}body-color: var(--e-global-color-text);
+	--#{$variable-prefix}body-font-family: var(--e-global-typography-text-font-family);
+	@for $i from 1 to 6 {
+		h#{$i},
+		.h#{$i} {
+			@extend %h#{$i};
+		}
+	}
+	@each $breakpoint, $device in $elementor-breakpoints {
+		.elementor-hidden-#{$device} {
+			@include media-breakpoint-only($breakpoint) {
+				display: none !important;
+			}
+		}
+	}
+}

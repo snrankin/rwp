@@ -7,6 +7,12 @@
 /// ======================================================================== ///
 @import 'global/index';
 
+pre.sf-dump .sf-dump-compact,
+.sf-dump-str-collapse .sf-dump-str-collapse,
+.sf-dump-str-expand .sf-dump-str-expand {
+	display: none;
+}
+
 #query-monitor-main #qm-rwp-debug pre.sf-dump,
 pre.sf-dump {
 	display: block;

@@ -1,588 +1,7 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/util/utils.js":
-/*!**************************!*\
-  !*** ./js/util/utils.js ***!
-  \**************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.actual; },
-/* harmony export */   "as": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.as; },
-/* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.aspect; },
-/* harmony export */   "betterHashLinks": function() { return /* binding */ betterHashLinks; },
-/* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
-/* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
-/* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
-/* harmony export */   "defaultsDeep": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.defaultsDeep; },
-/* harmony export */   "each": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.each; },
-/* harmony export */   "filterPath": function() { return /* binding */ filterPath; },
-/* harmony export */   "forEach": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.forEach; },
-/* harmony export */   "getHash": function() { return /* binding */ getHash; },
-/* harmony export */   "getTag": function() { return /* binding */ getTag; },
-/* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
-/* harmony export */   "has": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.has; },
-/* harmony export */   "inViewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inViewport; },
-/* harmony export */   "inX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inX; },
-/* harmony export */   "inY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inY; },
-/* harmony export */   "is": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.is; },
-/* harmony export */   "isArguments": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArguments; },
-/* harmony export */   "isArrayLike": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike; },
-/* harmony export */   "isBuffer": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isBuffer; },
-/* harmony export */   "isEmpty": function() { return /* binding */ isEmpty; },
-/* harmony export */   "isNil": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isNil; },
-/* harmony export */   "isPrototype": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isPrototype; },
-/* harmony export */   "isTypedArray": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isTypedArray; },
-/* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
-/* harmony export */   "matchHeights": function() { return /* binding */ matchHeights; },
-/* harmony export */   "mq": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.mq; },
-/* harmony export */   "rectangle": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.rectangle; },
-/* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
-/* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollX; },
-/* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollY; },
-/* harmony export */   "slugCase": function() { return /* binding */ slugCase; },
-/* harmony export */   "stringToHtml": function() { return /* binding */ stringToHtml; },
-/* harmony export */   "titleCase": function() { return /* binding */ titleCase; },
-/* harmony export */   "toggleFocus": function() { return /* binding */ toggleFocus; },
-/* harmony export */   "toggleNav": function() { return /* binding */ toggleNav; },
-/* harmony export */   "viewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewport; },
-/* harmony export */   "viewportH": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportH; },
-/* harmony export */   "viewportW": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportW; }
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! actual */ "../node_modules/actual/actual.js");
-/* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(actual__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! verge */ "../node_modules/verge/verge.js");
-/* harmony import */ var verge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(verge__WEBPACK_IMPORTED_MODULE_4__);
-
-
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-/** ============================================================================
- * utils
- *
- * @version   1.0.1
- * @author    RIESTER <wordpress@riester.com>
- * @copyright 2022 RIESTER
- * ========================================================================== */
-var _ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
-
-
-
-
-
-
-
-/**
- * Gets the `toStringTag` of `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-
-function getTag(value) {
-  if (value == null) {
-    return value === undefined ? '[object Undefined]' : '[object Null]';
-  }
-
-  return Object.prototype.toString.call(value);
-}
-/**
- * Function for making strings camelCase
- *
- * @param {string} str The string to convert
- * @return {string} The converted string
- */
-
-function camelCase(str) {
-  return "".concat(str.charAt(0).toLowerCase()).concat(str.replace(/[\W_]/g, '|').split('|').map(function (part) {
-    return "".concat(part.charAt(0).toUpperCase()).concat(part.slice(1));
-  }).join('').slice(1));
-}
-/**
- * Convert a string to slug or kebab case
- *
- * @param {*} str
- * @return {*}
- */
-
-function slugCase(str) {
-  var pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
-  str = _.replace(str, pattern, ' and ');
-  return _.chain(str).deburr().trim().kebabCase().value();
-}
-/**
- * Convert a string to title case with ampersands
- *
- * @param {*} str
- * @param {boolean} [useAmp=false] Whether to automatically change the word and
- *                                 to an ampersand
- * @return {*}
- */
-
-function titleCase(str) {
-  var useAmp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var pattern = new RegExp(/(\/|-|_)/gm);
-  str = _.replace(str, pattern, ' ');
-  str = _.chain(str).trim().startCase().tap(function (str) {
-    if (useAmp) {
-      var andPattern = new RegExp(/and/gim);
-
-      var amp = _.escape('&');
-
-      return _.replace(str, andPattern, amp);
-    }
-
-    return str;
-  }).value();
-  return str;
-}
-/**
- *	Change the tag of a node element
- *
- * @param  {Element}  original  The element to change
- * @param  {string}   tag        The new tag
- *
- * @return {Element} The updated element
- */
-
-function changeTag(original, tag) {
-  var replacement = document.createElement(tag); // Grab all of the original's attributes, and pass them to the replacement
-
-  for (var i = 0, l = original.attributes.length; i < l; ++i) {
-    var nodeName = original.attributes.item(i).nodeName;
-    var nodeValue = original.attributes.item(i).nodeValue;
-    replacement.setAttribute(nodeName, nodeValue);
-  } // Persist contents
-
-
-  replacement.innerHTML = original.innerHTML; // Switch!
-
-  original.parentNode.replaceChild(replacement, original);
-  return original;
-}
-
-var domParserSupport = function () {
-  if (!window.DOMParser) return false;
-  var parser = new DOMParser();
-
-  try {
-    parser.parseFromString('x', 'text/html');
-  } catch (err) {
-    return false;
-  }
-
-  return true;
-}();
-/**
- * Convert a template string into HTML DOM nodes
- * @param  {String} str The template string
- * @return {Node}       The template HTML
- */
-
-
-function stringToHtml(str) {
-  // If DOMParser is supported, use it
-  if (domParserSupport) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, 'text/html');
-    return doc.body.firstElementChild;
-  } // Otherwise, fallback to old-school method
-
-
-  var dom = document.createElement('div');
-  dom.innerHTML = str;
-  return dom;
-}
-/**
- * Adds focus class for better accessibility
- *
- */
-
-function toggleFocus(event) {
-  if (event.type === 'focus' || event.type === 'blur') {
-    var _self = event.target;
-
-    if (!_.isUndefined(_self)) {
-      var elementClasses = _self.classList;
-
-      if (!_.isNil(elementClasses)) {
-        // Move up through the ancestors of the current link until we hit .nav-menu.
-        while (!elementClasses.contains('nav-menu')) {
-          // On li elements toggle the class .focus.
-          if ('li' === _self.tagName.toLowerCase()) {
-            _self.classList.toggle('focus');
-          }
-
-          _self = _self.parentNode;
-        }
-      }
-    }
-  }
-
-  if (event.type === 'touchstart') {
-    var menuItem = self.parentNode;
-    event.preventDefault();
-
-    var _iterator = _createForOfIteratorHelper(menuItem.parentNode.children),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var link = _step.value;
-
-        if (menuItem !== link) {
-          link.classList.remove('focus');
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    menuItem.classList.toggle('focus');
-  }
-}
-function betterHashLinks() {
-  var id = location.hash.substring(1);
-  var motionQuery = window.matchMedia('(prefers-reduced-motion)');
-
-  if (!/^[A-z0-9_-]+$/.test(id)) {
-    return;
-  }
-
-  var element = document.getElementById(id);
-
-  if (element) {
-    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-      element.tabIndex = -1;
-    }
-
-    if (!motionQuery.matches) {
-      element.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-
-    if (element.is(':focus')) {
-      //checking if the target was focused
-      return false;
-    } else {
-      element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
-
-      element.focus(); //Setting focus
-    }
-  }
-}
-/**
- * Get the screen size
- *
- * @param {string} prop
- * @return {Object|Number} The object containing the size infor or the requested property
- */
-
-function screenSize(prop) {
-  var size = {
-    width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
-    height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
-  };
-  window.addEventListener('resize', function () {
-    _.assign({
-      width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
-      height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
-    }, size);
-  });
-
-  if (!_.isNil(prop)) {
-    return size[prop];
-  }
-
-  return size;
-} // URL updates and the element focus is maintained
-// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
-// filter handling for a /dir/ OR /indexordefault.page
-
-function filterPath(string) {
-  return string.replace(/^\//, '').replace(/(index|default).[a-zA-Z]{3,4}$/, '').replace(/\/$/, '');
-}
-/**
- * Get hash value for any string
- *
- * @param {*} string the string to extract from
- * @return {*} the hash or false
- */
-
-function getHash(string) {
-  var index = string.indexOf('#');
-
-  if (index !== -1) {
-    return string.substring(index + 1);
-  }
-
-  return false;
-}
-/**
- * Check if a variable is empty
- *
- * @param {*} el The variable to check
- * @return {boolean} True if empty, false if not
- */
-
-function isEmpty(el) {
-  if (_.isNil(el)) {
-    return true;
-  } else if (el === '') {
-    return true;
-  } else if (el === null) {
-    return true;
-  } else if (el === false) {
-    return true;
-  } else if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike)(el) && (Array.isArray(el) || typeof el === 'string' || typeof el.splice === 'function' || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isBuffer)(el) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isTypedArray)(el) || (0,lodash__WEBPACK_IMPORTED_MODULE_2__.isArguments)(el))) {
-    return !el.length;
-  }
-
-  var tag = getTag(el);
-
-  if (tag == '[object Map]' || tag == '[object Set]') {
-    return !el.size;
-  }
-
-  if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isPrototype)(el)) {
-    return !Object.keys(el).length;
-  }
-
-  for (var key in el) {
-    if (hasOwnProperty.call(el, key)) {
-      return false;
-    }
-  }
-
-  return false;
-}
-function toggleNav(buttonId) {
-  var button = document.querySelector(buttonId); // Return early if the button don't exist.
-
-  if (isEmpty(button)) {
-    return;
-  }
-
-  var buttonTarget = button.getAttribute('data-target');
-
-  if (isEmpty(buttonTarget)) {
-    buttonTarget = button.getAttribute('href');
-  }
-
-  if (isEmpty(buttonTarget)) {
-    return;
-  }
-
-  buttonTarget = getHash(buttonTarget);
-  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
-
-  if (isEmpty(siteNavigation)) {
-    return;
-  }
-
-  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Get all the link elements within the menu.
-
-  var links = menu.getElementsByTagName('a'); // Get all the link elements with children within the menu.
-  // eslint-disable-next-line
-
-  var linksWithChildren = menu.querySelectorAll('.has-children > a'); // Toggle focus each time a menu link is focused or blurred.
-
-  var _iterator2 = _createForOfIteratorHelper(links),
-      _step2;
-
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var link = _step2.value;
-      link.addEventListener('focus', toggleFocus, true);
-      link.addEventListener('blur', toggleFocus, true);
-    } // Toggle focus each time a menu link with children receive a touch event.
-
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
-  }
-
-  var _iterator3 = _createForOfIteratorHelper(linksWithChildren),
-      _step3;
-
-  try {
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-      var _link = _step3.value;
-
-      _link.addEventListener('touchstart', toggleFocus, false);
-    }
-  } catch (err) {
-    _iterator3.e(err);
-  } finally {
-    _iterator3.f();
-  }
-}
-/**
- * Get tallest element
- *
- * @param {string} el
- * @return {number}
- */
-
-function getTallest(el) {
-  var matches = document.querySelectorAll(el);
-
-  if (matches.length > 1) {
-    var heights = _.map(matches, function (elem) {
-      return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).height;
-    });
-
-    return Math.max.apply(null, heights);
-  }
-
-  return false;
-}
-/**
- * Make all elements match the tallest element
- *
- * @param {string} [elem='']
- * @param {*} [container=Document]
- */
-
-function matchHeights() {
-  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
-  var matches = container.querySelectorAll(elem);
-
-  if (matches.length > 1) {
-    var minHeight = getTallest(elem);
-
-    if (false !== minHeight) {
-      _.map(matches, function (elem) {
-        elem.style.minHeight = minHeight;
-      });
-    }
-
-    window.addEventListener('resize', function () {
-      matchHeights(elem, container);
-    });
-  }
-}
-function bsAtts() {
-  var bsColors = {
-    primary: '',
-    secondary: '',
-    tertiary: '',
-    info: '',
-    success: '',
-    warning: '',
-    danger: '',
-    light: '',
-    dark: '',
-    blue: '',
-    indigo: '',
-    purple: '',
-    pink: '',
-    red: '',
-    orange: '',
-    yellow: '',
-    green: '',
-    teal: '',
-    cyan: '',
-    white: '',
-    black: '',
-    'gray-100': '',
-    'gray-200': '',
-    'gray-300': '',
-    'gray-400': '',
-    'gray-500': '',
-    'gray-600': '',
-    'gray-700': '',
-    'gray-800': '',
-    'gray-900': ''
-  };
-  var computedColors = {};
-
-  for (var _i = 0, _Object$entries = Object.entries(bsColors); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_Object$entries[_i], 2),
-        key = _Object$entries$_i[0],
-        value = _Object$entries$_i[1];
-
-    var r = document.querySelector(':root'); // Get the styles (properties and values) for the root
-
-    var rs = getComputedStyle(r); // Alert the value of the --blue variable
-
-    value = rs.getPropertyValue("--bs-".concat(key));
-    value = value.trim();
-
-    if ('' !== value) {
-      computedColors[key] = value;
-    }
-  }
-
-  return {
-    colors: computedColors
-  };
-}
-function logCustomProperties() {
-  var isSameDomain = function isSameDomain(styleSheet) {
-    // Internal style blocks won't have an href value
-    if (!styleSheet.href) {
-      return true;
-    }
-
-    return styleSheet.href.indexOf(window.location.origin) === 0;
-  };
-
-  var isStyleRule = function isStyleRule(rule) {
-    return rule.type === 1;
-  };
-
-  var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
-    return (// styleSheets is array-like, so we convert it to an array.
-      // Filter out any stylesheets not on this domain
-      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
-        return finalArr.concat( // cssRules is array-like, so we convert it to an array
-        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
-          var props = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(rule.style).map(function (propName) {
-            return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
-          }) // Discard any props that don't start with "--". Custom props are required to.
-          .filter(function (_ref) {
-            var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 1),
-                propName = _ref2[0];
-
-            return propName.indexOf('--') === 0;
-          });
-
-          return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(propValArr), (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(props));
-        }, []));
-      }, [])
-    );
-  };
-
-  var cssCustomPropIndex = getCSSCustomPropIndex();
-  return cssCustomPropIndex;
-}
-
-/***/ }),
-
-/***/ "../node_modules/actual/actual.js":
-/*!****************************************!*\
-  !*** ../node_modules/actual/actual.js ***!
-  \****************************************/
+/***/ 222:
 /***/ (function(module) {
 
 !function(root, name, make) {
@@ -641,10 +60,7 @@ function logCustomProperties() {
 
 /***/ }),
 
-/***/ "../node_modules/jquery/dist/jquery.js":
-/*!*********************************************!*\
-  !*** ../node_modules/jquery/dist/jquery.js ***!
-  \*********************************************/
+/***/ 115:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11533,10 +10949,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ "../node_modules/lodash/lodash.js":
-/*!****************************************!*\
-  !*** ../node_modules/lodash/lodash.js ***!
-  \****************************************/
+/***/ 465:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
@@ -28745,133 +28158,291 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "../node_modules/tiny-slider/src/helpers/addCSSRule.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/addCSSRule.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ 682:
+/***/ (function(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addCSSRule": function() { return /* binding */ addCSSRule; }
-/* harmony export */ });
-/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
-// cross browsers addRule method
+/*!
+ * verge 1.10.2+201705300050
+ * http://npm.im/verge
+ * MIT Ryan Van Etten
+ */
 
-function addCSSRule(sheet, selector, rules, index) {
-  // return raf(function() {
-    'insertRule' in sheet ?
-      sheet.insertRule(selector + '{' + rules + '}', index) :
-      sheet.addRule(selector, rules, index);
-  // });
-}
+!function(root, name, make) {
+  if ( true && module['exports']) module['exports'] = make();
+  else root[name] = make();
+}(this, 'verge', function() {
 
-/***/ }),
+  var xports = {}
+    , win = typeof window != 'undefined' && window
+    , doc = typeof document != 'undefined' && document
+    , docElem = doc && doc.documentElement
+    , matchMedia = win['matchMedia'] || win['msMatchMedia']
+    , mq = matchMedia ? function(q) {
+        return !!matchMedia.call(win, q).matches;
+      } : function() {
+        return false;
+      }
+    , viewportW = xports['viewportW'] = function() {
+        var a = docElem['clientWidth'], b = win['innerWidth'];
+        return a < b ? b : a;
+      }
+    , viewportH = xports['viewportH'] = function() {
+        var a = docElem['clientHeight'], b = win['innerHeight'];
+        return a < b ? b : a;
+      };
 
-/***/ "../node_modules/tiny-slider/src/helpers/addClass.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/addClass.js ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+  /**
+   * Test if a media query is active. Like Modernizr.mq
+   * @since 1.6.0
+   * @return {boolean}
+   */
+  xports['mq'] = mq;
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addClass": function() { return /* binding */ addClass; }
-/* harmony export */ });
-/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
+  /**
+   * Normalized matchMedia
+   * @since 1.6.0
+   * @return {MediaQueryList|Object}
+   */
+  xports['matchMedia'] = matchMedia ? function() {
+    // matchMedia must be binded to window
+    return matchMedia.apply(win, arguments);
+  } : function() {
+    // Gracefully degrade to plain object
+    return {};
+  };
 
-var addClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
-    function (el, str) {
-      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.add(str); }
-    } :
-    function (el, str) {
-      if (!(0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.className += ' ' + str; }
-    };
-
-
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/addEvents.js":
-/*!************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/addEvents.js ***!
-  \************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addEvents": function() { return /* binding */ addEvents; }
-/* harmony export */ });
-/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ "../node_modules/tiny-slider/src/helpers/passiveOption.js");
-
-
-function addEvents(el, obj, preventScrolling) {
-  for (var prop in obj) {
-    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 && !preventScrolling ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;
-    el.addEventListener(prop, obj[prop], option);
+  /**
+   * @since 1.8.0
+   * @return {{width:number, height:number}}
+   */
+  function viewport() {
+    return {'width':viewportW(), 'height':viewportH()};
   }
-}
+  xports['viewport'] = viewport;
 
-/***/ }),
+  /**
+   * Cross-browser window.scrollX
+   * @since 1.0.0
+   * @return {number}
+   */
+  xports['scrollX'] = function() {
+    return win.pageXOffset || docElem.scrollLeft;
+  };
 
-/***/ "../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+  /**
+   * Cross-browser window.scrollY
+   * @since 1.0.0
+   * @return {number}
+   */
+  xports['scrollY'] = function() {
+    return win.pageYOffset || docElem.scrollTop;
+  };
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "arrayFromNodeList": function() { return /* binding */ arrayFromNodeList; }
-/* harmony export */ });
-function arrayFromNodeList (nl) {
-  var arr = [];
-  for (var i = 0, l = nl.length; i < l; i++) {
-    arr.push(nl[i]);
+  /**
+   * @param {{top:number, right:number, bottom:number, left:number}} coords
+   * @param {number=} cushion adjustment
+   * @return {Object}
+   */
+  function calibrate(coords, cushion) {
+    var o = {};
+    cushion = +cushion || 0;
+    o['width'] = (o['right'] = coords['right'] + cushion) - (o['left'] = coords['left'] - cushion);
+    o['height'] = (o['bottom'] = coords['bottom'] + cushion) - (o['top'] = coords['top'] - cushion);
+    return o;
   }
-  return arr;
-}
 
-/***/ }),
+  /**
+   * Cross-browser element.getBoundingClientRect plus optional cushion.
+   * Coords are relative to the top-left corner of the viewport.
+   * @since 1.0.0
+   * @param {Element|Object} el element or stack (uses first item)
+   * @param {number=} cushion +/- pixel adjustment amount
+   * @return {Object|boolean}
+   */
+  function rectangle(el, cushion) {
+    el = el && !el.nodeType ? el[0] : el;
+    if (!el || 1 !== el.nodeType) return false;
+    return calibrate(el.getBoundingClientRect(), cushion);
+  }
+  xports['rectangle'] = rectangle;
 
-/***/ "../node_modules/tiny-slider/src/helpers/caf.js":
-/*!******************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/caf.js ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+  /**
+   * Get the viewport aspect ratio (or the aspect ratio of an object or element)
+   * @since 1.7.0
+   * @param {(Element|Object)=} o optional object with width/height props or methods
+   * @return {number}
+   * @link http://w3.org/TR/css3-mediaqueries/#orientation
+   */
+  function aspect(o) {
+    o = null == o ? viewport() : 1 === o.nodeType ? rectangle(o) : o;
+    var h = o['height'], w = o['width'];
+    h = typeof h == 'function' ? h.call(o) : h;
+    w = typeof w == 'function' ? w.call(o) : w;
+    return w/h;
+  }
+  xports['aspect'] = aspect;
 
+  /**
+   * Test if an element is in the same x-axis section as the viewport.
+   * @since 1.0.0
+   * @param {Element|Object} el
+   * @param {number=} cushion
+   * @return {boolean}
+   */
+  xports['inX'] = function(el, cushion) {
+    var r = rectangle(el, cushion);
+    return !!r && r.right >= 0 && r.left <= viewportW();
+  };
+
+  /**
+   * Test if an element is in the same y-axis section as the viewport.
+   * @since 1.0.0
+   * @param {Element|Object} el
+   * @param {number=} cushion
+   * @return {boolean}
+   */
+  xports['inY'] = function(el, cushion) {
+    var r = rectangle(el, cushion);
+    return !!r && r.bottom >= 0 && r.top <= viewportH();
+  };
+
+  /**
+   * Test if an element is in the viewport.
+   * @since 1.0.0
+   * @param {Element|Object} el
+   * @param {number=} cushion
+   * @return {boolean}
+   */
+  xports['inViewport'] = function(el, cushion) {
+    // Equiv to `inX(el, cushion) && inY(el, cushion)` but just manually do both
+    // to avoid calling rectangle() twice. It gzips just as small like this.
+    var r = rectangle(el, cushion);
+    return !!r && r.bottom >= 0 && r.right >= 0 && r.top <= viewportH() && r.left <= viewportW();
+  };
+
+  return xports;
+});
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			id: moduleId,
+/******/ 			loaded: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/global */
+/******/ 	!function() {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/node module decorator */
+/******/ 	!function() {
+/******/ 		__webpack_require__.nmd = function(module) {
+/******/ 			module.paths = [];
+/******/ 			if (!module.children) module.children = [];
+/******/ 			return module;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "caf": function() { return /* binding */ caf; }
-/* harmony export */ });
+
+// UNUSED EXPORTS: default
+
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/raf.js
 var win = window;
 
-var caf = win.cancelAnimationFrame
-  || win.mozCancelAnimationFrame
+var raf_raf = win.requestAnimationFrame
+  || win.webkitRequestAnimationFrame
+  || win.mozRequestAnimationFrame
+  || win.msRequestAnimationFrame
+  || function(cb) { return setTimeout(cb, 16); };
+
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/caf.js
+var caf_win = window;
+
+var caf_caf = caf_win.cancelAnimationFrame
+  || caf_win.mozCancelAnimationFrame
   || function(id){ clearTimeout(id); };
 
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/docElement.js
+var docElement_docElement = document.documentElement;
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/setFakeBody.js
 
-/***/ }),
 
-/***/ "../node_modules/tiny-slider/src/helpers/calc.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/calc.js ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+function setFakeBody_setFakeBody (body) {
+  var docOverflow = '';
+  if (body.fake) {
+    docOverflow = docElement.style.overflow;
+    //avoid crashing IE8, if background image is used
+    body.style.background = '';
+    //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+    body.style.overflow = docElement.style.overflow = 'hidden';
+    docElement.appendChild(body);
+  }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "calc": function() { return /* binding */ calc; }
-/* harmony export */ });
-/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
-/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
-/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+  return docOverflow;
+}
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/resetFakeBody.js
+
+
+function resetFakeBody_resetFakeBody (body, docOverflow) {
+  if (body.fake) {
+    body.remove();
+    docElement.style.overflow = docOverflow;
+    // Trigger layout so kinetic scrolling isn't disabled in iOS6+
+    // eslint-disable-next-line
+    docElement.offsetHeight;
+  }
+}
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/calc.js
 // get css-calc 
 // @return - false | calc | -webkit-calc | -moz-calc
 // @usage - var calc = getCalc(); 
@@ -28879,10 +28450,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function calc() {
+function calc_calc() {
   var doc = document, 
-      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
-      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      body = getBody(),
+      docOverflow = setFakeBody(body),
       div = doc.createElement('div'), 
       result = false;
 
@@ -28901,601 +28472,22 @@ function calc() {
     }
   } catch (e) {}
   
-  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();
+  body.fake ? resetFakeBody(body, docOverflow) : div.remove();
 
   return result;
 }
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/checkStorageValue.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/checkStorageValue.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "checkStorageValue": function() { return /* binding */ checkStorageValue; }
-/* harmony export */ });
-function checkStorageValue (value) {
-  return ['true', 'false'].indexOf(value) >= 0 ? JSON.parse(value) : value;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/classListSupport.js":
-/*!*******************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/classListSupport.js ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "classListSupport": function() { return /* binding */ classListSupport; }
-/* harmony export */ });
-var classListSupport = 'classList' in document.createElement('_');
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/createStyleSheet.js":
-/*!*******************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/createStyleSheet.js ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createStyleSheet": function() { return /* binding */ createStyleSheet; }
-/* harmony export */ });
-// create and append style sheet
-function createStyleSheet (media, nonce) {
-  // Create the <style> tag
-  var style = document.createElement("style");
-  // style.setAttribute("type", "text/css");
-
-  // Add a media (and/or media query) here if you'd like!
-  // style.setAttribute("media", "screen")
-  // style.setAttribute("media", "only screen and (max-width : 1024px)")
-  if (media) { style.setAttribute("media", media); }
-
-  // Add nonce attribute for Content Security Policy
-  if (nonce) { style.setAttribute("nonce", nonce); }
-
-  // WebKit hack :(
-  // style.appendChild(document.createTextNode(""));
-
-  // Add the <style> element to the page
-  document.querySelector('head').appendChild(style);
-
-  return style.sheet ? style.sheet : style.styleSheet;
-};
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/docElement.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/docElement.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "docElement": function() { return /* binding */ docElement; }
-/* harmony export */ });
-var docElement = document.documentElement;
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/events.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/events.js ***!
-  \*********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Events": function() { return /* binding */ Events; }
-/* harmony export */ });
-function Events() {
-  return {
-    topics: {},
-    on: function (eventName, fn) {
-      this.topics[eventName] = this.topics[eventName] || [];
-      this.topics[eventName].push(fn);
-    },
-    off: function(eventName, fn) {
-      if (this.topics[eventName]) {
-        for (var i = 0; i < this.topics[eventName].length; i++) {
-          if (this.topics[eventName][i] === fn) {
-            this.topics[eventName].splice(i, 1);
-            break;
-          }
-        }
-      }
-    },
-    emit: function (eventName, data) {
-      data.type = eventName;
-      if (this.topics[eventName]) {
-        this.topics[eventName].forEach(function(fn) {
-          fn(data, eventName);
-        });
-      }
-    }
-  };
-};
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/extend.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/extend.js ***!
-  \*********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "extend": function() { return /* binding */ extend; }
-/* harmony export */ });
-function extend() {
-  var obj, name, copy,
-      target = arguments[0] || {},
-      i = 1,
-      length = arguments.length;
-
-  for (; i < length; i++) {
-    if ((obj = arguments[i]) !== null) {
-      for (name in obj) {
-        copy = obj[name];
-
-        if (target === copy) {
-          continue;
-        } else if (copy !== undefined) {
-          target[name] = copy;
-        }
-      }
-    }
-  }
-  return target;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/forEach.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/forEach.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "forEach": function() { return /* binding */ forEach; }
-/* harmony export */ });
-// https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
-function forEach (arr, callback, scope) {
-  for (var i = 0, l = arr.length; i < l; i++) {
-    callback.call(scope, arr[i], i);
-  }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getAttr.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getAttr.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getAttr": function() { return /* binding */ getAttr; }
-/* harmony export */ });
-function getAttr(el, attr) {
-  return el.getAttribute(attr);
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getBody.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getBody.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getBody": function() { return /* binding */ getBody; }
-/* harmony export */ });
-function getBody () {
-  var doc = document,
-      body = doc.body;
-
-  if (!body) {
-    body = doc.createElement('body');
-    body.fake = true;
-  }
-
-  return body;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getCssRulesLength.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getCssRulesLength.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getCssRulesLength": function() { return /* binding */ getCssRulesLength; }
-/* harmony export */ });
-function getCssRulesLength(sheet) {
-  var rule = ('insertRule' in sheet) ? sheet.cssRules : sheet.rules;
-  return rule.length;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getEndProperty.js":
-/*!*****************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getEndProperty.js ***!
-  \*****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getEndProperty": function() { return /* binding */ getEndProperty; }
-/* harmony export */ });
-// get transitionend, animationend based on transitionDuration
-// @propin: string
-// @propOut: string, first-letter uppercase
-// Usage: getEndProperty('WebkitTransitionDuration', 'Transition') => webkitTransitionEnd
-function getEndProperty(propIn, propOut) {
-  var endProp = false;
-  if (/^Webkit/.test(propIn)) {
-    endProp = 'webkit' + propOut + 'End';
-  } else if (/^O/.test(propIn)) {
-    endProp = 'o' + propOut + 'End';
-  } else if (propIn) {
-    endProp = propOut.toLowerCase() + 'end';
-  }
-  return endProp;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getSlideId.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getSlideId.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getSlideId": function() { return /* binding */ getSlideId; }
-/* harmony export */ });
-function getSlideId() {
-  var id = window.tnsId;
-  window.tnsId = !id ? 1 : id + 1;
-  
-  return 'tns' + window.tnsId;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/getTouchDirection.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/getTouchDirection.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getTouchDirection": function() { return /* binding */ getTouchDirection; }
-/* harmony export */ });
-function getTouchDirection(angle, range) {
-  var direction = false,
-      gap = Math.abs(90 - Math.abs(angle));
-      
-  if (gap >= 90 - range) {
-    direction = 'horizontal';
-  } else if (gap <= range) {
-    direction = 'vertical';
-  }
-
-  return direction;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/has3DTransforms.js":
-/*!******************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/has3DTransforms.js ***!
-  \******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "has3DTransforms": function() { return /* binding */ has3DTransforms; }
-/* harmony export */ });
-/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
-/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
-/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
-
-
-
-
-function has3DTransforms(tf){
-  if (!tf) { return false; }
-  if (!window.getComputedStyle) { return false; }
-  
-  var doc = document,
-      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
-      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
-      el = doc.createElement('p'),
-      has3d,
-      cssTF = tf.length > 9 ? '-' + tf.slice(0, -9).toLowerCase() + '-' : '';
-
-  cssTF += 'transform';
-
-  // Add it to the body to get the computed style
-  body.insertBefore(el, null);
-
-  el.style[tf] = 'translate3d(1px,1px,1px)';
-  has3d = window.getComputedStyle(el).getPropertyValue(cssTF);
-
-  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : el.remove();
-
-  return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/hasAttr.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/hasAttr.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "hasAttr": function() { return /* binding */ hasAttr; }
-/* harmony export */ });
-function hasAttr(el, attr) {
-  return el.hasAttribute(attr);
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/hasClass.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/hasClass.js ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "classListSupport": function() { return /* reexport safe */ _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport; },
-/* harmony export */   "hasClass": function() { return /* binding */ hasClass; }
-/* harmony export */ });
-/* harmony import */ var _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classListSupport.js */ "../node_modules/tiny-slider/src/helpers/classListSupport.js");
-
-
-var hasClass = _classListSupport_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
-    function (el, str) { return el.classList.contains(str); } :
-    function (el, str) { return el.className.indexOf(str) >= 0; };
-
-
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/hideElement.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/hideElement.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "hideElement": function() { return /* binding */ hideElement; }
-/* harmony export */ });
-function hideElement(el, forceHide) {
-  if (el.style.display !== 'none') { el.style.display = 'none'; }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/isNodeList.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/isNodeList.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isNodeList": function() { return /* binding */ isNodeList; }
-/* harmony export */ });
-function isNodeList(el) {
-  // Only NodeList has the "item()" function
-  return typeof el.item !== "undefined"; 
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/isVisible.js":
-/*!************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/isVisible.js ***!
-  \************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isVisible": function() { return /* binding */ isVisible; }
-/* harmony export */ });
-function isVisible(el) {
-  return window.getComputedStyle(el).display !== 'none';
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/jsTransform.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/jsTransform.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "jsTransform": function() { return /* binding */ jsTransform; }
-/* harmony export */ });
-function jsTransform(element, attr, prefix, postfix, to, duration, callback) {
-  var tick = Math.min(duration, 10),
-      unit = (to.indexOf('%') >= 0) ? '%' : 'px',
-      to = to.replace(unit, ''),
-      from = Number(element.style[attr].replace(prefix, '').replace(postfix, '').replace(unit, '')),
-      positionTick = (to - from) / duration * tick,
-      running;
-
-  setTimeout(moveElement, tick);
-  function moveElement() {
-    duration -= tick;
-    from += positionTick;
-    element.style[attr] = prefix + from + unit + postfix;
-    if (duration > 0) { 
-      setTimeout(moveElement, tick); 
-    } else {
-      callback();
-    }
-  }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/mediaquerySupport.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/mediaquerySupport.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mediaquerySupport": function() { return /* binding */ mediaquerySupport; }
-/* harmony export */ });
-/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
-/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
-/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
-
-
-
-
-function mediaquerySupport () {
-  if (window.matchMedia || window.msMatchMedia) {
-    return true;
-  }
-  
-  var doc = document,
-      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
-      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
-      div = doc.createElement('div'),
-      style = doc.createElement('style'),
-      rule = '@media all and (min-width:1px){.tns-mq-test{position:absolute}}',
-      position;
-
-  style.type = 'text/css';
-  div.className = 'tns-mq-test';
-
-  body.appendChild(style);
-  body.appendChild(div);
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = rule;
-  } else {
-    style.appendChild(doc.createTextNode(rule));
-  }
-
-  position = window.getComputedStyle ? window.getComputedStyle(div).position : div.currentStyle['position'];
-
-  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : div.remove();
-
-  return position === "absolute";
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/passiveOption.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/passiveOption.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "passiveOption": function() { return /* binding */ passiveOption; }
-/* harmony export */ });
-// Test via a getter in the options object to see if the passive property is accessed
-var supportsPassive = false;
-try {
-  var opts = Object.defineProperty({}, 'passive', {
-    get: function() {
-      supportsPassive = true;
-    }
-  });
-  window.addEventListener("test", null, opts);
-} catch (e) {}
-var passiveOption = supportsPassive ? { passive: true } : false;
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/percentageLayout.js":
-/*!*******************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/percentageLayout.js ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "percentageLayout": function() { return /* binding */ percentageLayout; }
-/* harmony export */ });
-/* harmony import */ var _getBody_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getBody.js */ "../node_modules/tiny-slider/src/helpers/getBody.js");
-/* harmony import */ var _setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setFakeBody.js */ "../node_modules/tiny-slider/src/helpers/setFakeBody.js");
-/* harmony import */ var _resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resetFakeBody.js */ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js");
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/percentageLayout.js
 // get subpixel support value
 // @return - boolean
 
 
 
 
-function percentageLayout() {
+function percentageLayout_percentageLayout() {
   // check subpixel layout supporting
   var doc = document,
-      body = (0,_getBody_js__WEBPACK_IMPORTED_MODULE_0__.getBody)(),
-      docOverflow = (0,_setFakeBody_js__WEBPACK_IMPORTED_MODULE_1__.setFakeBody)(body),
+      body = getBody(),
+      docOverflow = setFakeBody(body),
       wrapper = doc.createElement('div'),
       outer = doc.createElement('div'),
       str = '',
@@ -29516,356 +28508,159 @@ function percentageLayout() {
 
   supported = Math.abs(wrapper.getBoundingClientRect().left - outer.children[count - perPage].getBoundingClientRect().left) < 2;
 
-  body.fake ? (0,_resetFakeBody_js__WEBPACK_IMPORTED_MODULE_2__.resetFakeBody)(body, docOverflow) : wrapper.remove();
+  body.fake ? resetFakeBody(body, docOverflow) : wrapper.remove();
 
   return supported;
 }
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/raf.js":
-/*!******************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/raf.js ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "raf": function() { return /* binding */ raf; }
-/* harmony export */ });
-var win = window;
-
-var raf = win.requestAnimationFrame
-  || win.webkitRequestAnimationFrame
-  || win.mozRequestAnimationFrame
-  || win.msRequestAnimationFrame
-  || function(cb) { return setTimeout(cb, 16); };
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/mediaquerySupport.js
 
 
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/removeAttrs.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/removeAttrs.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "removeAttrs": function() { return /* binding */ removeAttrs; }
-/* harmony export */ });
-/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ "../node_modules/tiny-slider/src/helpers/isNodeList.js");
 
 
-function removeAttrs(els, attrs) {
-  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];
-  attrs = (attrs instanceof Array) ? attrs : [attrs];
-
-  var attrLength = attrs.length;
-  for (var i = els.length; i--;) {
-    for (var j = attrLength; j--;) {
-      els[i].removeAttribute(attrs[j]);
-    }
+function mediaquerySupport_mediaquerySupport () {
+  if (window.matchMedia || window.msMatchMedia) {
+    return true;
   }
+  
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      div = doc.createElement('div'),
+      style = doc.createElement('style'),
+      rule = '@media all and (min-width:1px){.tns-mq-test{position:absolute}}',
+      position;
+
+  style.type = 'text/css';
+  div.className = 'tns-mq-test';
+
+  body.appendChild(style);
+  body.appendChild(div);
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = rule;
+  } else {
+    style.appendChild(doc.createTextNode(rule));
+  }
+
+  position = window.getComputedStyle ? window.getComputedStyle(div).position : div.currentStyle['position'];
+
+  body.fake ? resetFakeBody(body, docOverflow) : div.remove();
+
+  return position === "absolute";
 }
 
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/removeCSSRule.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/removeCSSRule.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "removeCSSRule": function() { return /* binding */ removeCSSRule; }
-/* harmony export */ });
-/* harmony import */ var _raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/addCSSRule.js
 // cross browsers addRule method
 
-function removeCSSRule(sheet, index) {
+function addCSSRule_addCSSRule(sheet, selector, rules, index) {
+  // return raf(function() {
+    'insertRule' in sheet ?
+      sheet.insertRule(selector + '{' + rules + '}', index) :
+      sheet.addRule(selector, rules, index);
+  // });
+}
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/removeCSSRule.js
+// cross browsers addRule method
+
+function removeCSSRule_removeCSSRule(sheet, index) {
   // return raf(function() {
     'deleteRule' in sheet ?
       sheet.deleteRule(index) :
       sheet.removeRule(index);
   // });
 }
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/classListSupport.js
+var classListSupport = 'classList' in document.createElement('_');
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/hasClass.js
 
-/***/ }),
 
-/***/ "../node_modules/tiny-slider/src/helpers/removeClass.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/removeClass.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+var hasClass_hasClass = classListSupport ?
+    function (el, str) { return el.classList.contains(str); } :
+    function (el, str) { return el.className.indexOf(str) >= 0; };
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "removeClass": function() { return /* binding */ removeClass; }
-/* harmony export */ });
-/* harmony import */ var _hasClass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
 
-var removeClass = _hasClass_js__WEBPACK_IMPORTED_MODULE_0__.classListSupport ?
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/addClass.js
+
+var addClass_addClass = classListSupport ?
     function (el, str) {
-      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el,  str)) { el.classList.remove(str); }
+      if (!hasClass_hasClass(el,  str)) { el.classList.add(str); }
     } :
     function (el, str) {
-      if ((0,_hasClass_js__WEBPACK_IMPORTED_MODULE_0__.hasClass)(el, str)) { el.className = el.className.replace(str, ''); }
+      if (!hasClass_hasClass(el,  str)) { el.className += ' ' + str; }
     };
 
 
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/removeClass.js
 
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/removeEvents.js":
-/*!***************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/removeEvents.js ***!
-  \***************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "removeEvents": function() { return /* binding */ removeEvents; }
-/* harmony export */ });
-/* harmony import */ var _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./passiveOption.js */ "../node_modules/tiny-slider/src/helpers/passiveOption.js");
+var removeClass_removeClass = classListSupport ?
+    function (el, str) {
+      if (hasClass_hasClass(el,  str)) { el.classList.remove(str); }
+    } :
+    function (el, str) {
+      if (hasClass_hasClass(el, str)) { el.className = el.className.replace(str, ''); }
+    };
 
 
-function removeEvents(el, obj) {
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/has3DTransforms.js
+
+
+
+
+function has3DTransforms_has3DTransforms(tf){
+  if (!tf) { return false; }
+  if (!window.getComputedStyle) { return false; }
+  
+  var doc = document,
+      body = getBody(),
+      docOverflow = setFakeBody(body),
+      el = doc.createElement('p'),
+      has3d,
+      cssTF = tf.length > 9 ? '-' + tf.slice(0, -9).toLowerCase() + '-' : '';
+
+  cssTF += 'transform';
+
+  // Add it to the body to get the computed style
+  body.insertBefore(el, null);
+
+  el.style[tf] = 'translate3d(1px,1px,1px)';
+  has3d = window.getComputedStyle(el).getPropertyValue(cssTF);
+
+  body.fake ? resetFakeBody(body, docOverflow) : el.remove();
+
+  return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+}
+
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/passiveOption.js
+// Test via a getter in the options object to see if the passive property is accessed
+var supportsPassive = false;
+try {
+  var opts = Object.defineProperty({}, 'passive', {
+    get: function() {
+      supportsPassive = true;
+    }
+  });
+  window.addEventListener("test", null, opts);
+} catch (e) {}
+var passiveOption_passiveOption = supportsPassive ? { passive: true } : false;
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/addEvents.js
+
+
+function addEvents_addEvents(el, obj, preventScrolling) {
   for (var prop in obj) {
-    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 ? _passiveOption_js__WEBPACK_IMPORTED_MODULE_0__.passiveOption : false;
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 && !preventScrolling ? passiveOption : false;
+    el.addEventListener(prop, obj[prop], option);
+  }
+}
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/helpers/removeEvents.js
+
+
+function removeEvents_removeEvents(el, obj) {
+  for (var prop in obj) {
+    var option = ['touchstart', 'touchmove'].indexOf(prop) >= 0 ? passiveOption : false;
     el.removeEventListener(prop, obj[prop], option);
   }
 }
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/resetFakeBody.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/resetFakeBody.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resetFakeBody": function() { return /* binding */ resetFakeBody; }
-/* harmony export */ });
-/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ "../node_modules/tiny-slider/src/helpers/docElement.js");
-
-
-function resetFakeBody (body, docOverflow) {
-  if (body.fake) {
-    body.remove();
-    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = docOverflow;
-    // Trigger layout so kinetic scrolling isn't disabled in iOS6+
-    // eslint-disable-next-line
-    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.offsetHeight;
-  }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/setAttrs.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/setAttrs.js ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "setAttrs": function() { return /* binding */ setAttrs; }
-/* harmony export */ });
-/* harmony import */ var _isNodeList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isNodeList.js */ "../node_modules/tiny-slider/src/helpers/isNodeList.js");
-
-
-function setAttrs(els, attrs) {
-  els = ((0,_isNodeList_js__WEBPACK_IMPORTED_MODULE_0__.isNodeList)(els) || els instanceof Array) ? els : [els];
-  if (Object.prototype.toString.call(attrs) !== '[object Object]') { return; }
-
-  for (var i = els.length; i--;) {
-    for(var key in attrs) {
-      els[i].setAttribute(key, attrs[key]);
-    }
-  }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/setFakeBody.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/setFakeBody.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "setFakeBody": function() { return /* binding */ setFakeBody; }
-/* harmony export */ });
-/* harmony import */ var _docElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./docElement.js */ "../node_modules/tiny-slider/src/helpers/docElement.js");
-
-
-function setFakeBody (body) {
-  var docOverflow = '';
-  if (body.fake) {
-    docOverflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow;
-    //avoid crashing IE8, if background image is used
-    body.style.background = '';
-    //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-    body.style.overflow = _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.style.overflow = 'hidden';
-    _docElement_js__WEBPACK_IMPORTED_MODULE_0__.docElement.appendChild(body);
-  }
-
-  return docOverflow;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/setLocalStorage.js":
-/*!******************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/setLocalStorage.js ***!
-  \******************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "setLocalStorage": function() { return /* binding */ setLocalStorage; }
-/* harmony export */ });
-function setLocalStorage(storage, key, value, access) {
-  if (access) {
-    try { storage.setItem(key, value); } catch (e) {}
-  }
-  return value;
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/showElement.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/showElement.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "showElement": function() { return /* binding */ showElement; }
-/* harmony export */ });
-function showElement(el, forceHide) {
-  if (el.style.display === 'none') { el.style.display = ''; }
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/toDegree.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/toDegree.js ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "toDegree": function() { return /* binding */ toDegree; }
-/* harmony export */ });
-function toDegree (y, x) {
-  return Math.atan2(y, x) * (180 / Math.PI);
-}
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/helpers/whichProperty.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/tiny-slider/src/helpers/whichProperty.js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "whichProperty": function() { return /* binding */ whichProperty; }
-/* harmony export */ });
-function whichProperty(props){
-  if (typeof props === 'string') {
-    var arr = [props],
-        Props = props.charAt(0).toUpperCase() + props.substr(1),
-        prefixes = ['Webkit', 'Moz', 'ms', 'O'];
-        
-    prefixes.forEach(function(prefix) {
-      if (prefix !== 'ms' || props === 'transform') {
-        arr.push(prefix + Props);
-      }
-    });
-
-    props = arr;
-  }
-
-  var el = document.createElement('fakeelement'),
-      len = props.length;
-  for(var i = 0; i < props.length; i++){
-    var prop = props[i];
-    if( el.style[prop] !== undefined ){ return prop; }
-  }
-
-  return false; // explicit for ie9-
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/tiny-slider/src/tiny-slider.js":
-/*!******************************************************!*\
-  !*** ../node_modules/tiny-slider/src/tiny-slider.js ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "tns": function() { return /* binding */ tns; }
-/* harmony export */ });
-/* harmony import */ var _helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/raf.js */ "../node_modules/tiny-slider/src/helpers/raf.js");
-/* harmony import */ var _helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/caf.js */ "../node_modules/tiny-slider/src/helpers/caf.js");
-/* harmony import */ var _helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/extend.js */ "../node_modules/tiny-slider/src/helpers/extend.js");
-/* harmony import */ var _helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/checkStorageValue.js */ "../node_modules/tiny-slider/src/helpers/checkStorageValue.js");
-/* harmony import */ var _helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers/setLocalStorage.js */ "../node_modules/tiny-slider/src/helpers/setLocalStorage.js");
-/* harmony import */ var _helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/getSlideId.js */ "../node_modules/tiny-slider/src/helpers/getSlideId.js");
-/* harmony import */ var _helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers/calc.js */ "../node_modules/tiny-slider/src/helpers/calc.js");
-/* harmony import */ var _helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers/percentageLayout.js */ "../node_modules/tiny-slider/src/helpers/percentageLayout.js");
-/* harmony import */ var _helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers/mediaquerySupport.js */ "../node_modules/tiny-slider/src/helpers/mediaquerySupport.js");
-/* harmony import */ var _helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./helpers/createStyleSheet.js */ "../node_modules/tiny-slider/src/helpers/createStyleSheet.js");
-/* harmony import */ var _helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helpers/addCSSRule.js */ "../node_modules/tiny-slider/src/helpers/addCSSRule.js");
-/* harmony import */ var _helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./helpers/removeCSSRule.js */ "../node_modules/tiny-slider/src/helpers/removeCSSRule.js");
-/* harmony import */ var _helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helpers/getCssRulesLength.js */ "../node_modules/tiny-slider/src/helpers/getCssRulesLength.js");
-/* harmony import */ var _helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./helpers/toDegree.js */ "../node_modules/tiny-slider/src/helpers/toDegree.js");
-/* harmony import */ var _helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helpers/getTouchDirection.js */ "../node_modules/tiny-slider/src/helpers/getTouchDirection.js");
-/* harmony import */ var _helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./helpers/forEach.js */ "../node_modules/tiny-slider/src/helpers/forEach.js");
-/* harmony import */ var _helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./helpers/hasClass.js */ "../node_modules/tiny-slider/src/helpers/hasClass.js");
-/* harmony import */ var _helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./helpers/addClass.js */ "../node_modules/tiny-slider/src/helpers/addClass.js");
-/* harmony import */ var _helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./helpers/removeClass.js */ "../node_modules/tiny-slider/src/helpers/removeClass.js");
-/* harmony import */ var _helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./helpers/hasAttr.js */ "../node_modules/tiny-slider/src/helpers/hasAttr.js");
-/* harmony import */ var _helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./helpers/getAttr.js */ "../node_modules/tiny-slider/src/helpers/getAttr.js");
-/* harmony import */ var _helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./helpers/setAttrs.js */ "../node_modules/tiny-slider/src/helpers/setAttrs.js");
-/* harmony import */ var _helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./helpers/removeAttrs.js */ "../node_modules/tiny-slider/src/helpers/removeAttrs.js");
-/* harmony import */ var _helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./helpers/arrayFromNodeList.js */ "../node_modules/tiny-slider/src/helpers/arrayFromNodeList.js");
-/* harmony import */ var _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./helpers/hideElement.js */ "../node_modules/tiny-slider/src/helpers/hideElement.js");
-/* harmony import */ var _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./helpers/showElement.js */ "../node_modules/tiny-slider/src/helpers/showElement.js");
-/* harmony import */ var _helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./helpers/isVisible.js */ "../node_modules/tiny-slider/src/helpers/isVisible.js");
-/* harmony import */ var _helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./helpers/whichProperty.js */ "../node_modules/tiny-slider/src/helpers/whichProperty.js");
-/* harmony import */ var _helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./helpers/has3DTransforms.js */ "../node_modules/tiny-slider/src/helpers/has3DTransforms.js");
-/* harmony import */ var _helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./helpers/getEndProperty.js */ "../node_modules/tiny-slider/src/helpers/getEndProperty.js");
-/* harmony import */ var _helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./helpers/addEvents.js */ "../node_modules/tiny-slider/src/helpers/addEvents.js");
-/* harmony import */ var _helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./helpers/removeEvents.js */ "../node_modules/tiny-slider/src/helpers/removeEvents.js");
-/* harmony import */ var _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./helpers/events.js */ "../node_modules/tiny-slider/src/helpers/events.js");
-/* harmony import */ var _helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./helpers/jsTransform.js */ "../node_modules/tiny-slider/src/helpers/jsTransform.js");
+;// CONCATENATED MODULE: ../node_modules/tiny-slider/src/tiny-slider.js
 // Object.keys
 if (!Object.keys) {
   Object.keys = function(object) {
@@ -29923,8 +28718,8 @@ if(!("remove" in Element.prototype)){
 
 
 
-var tns = function(options) {
-  options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)({
+var tiny_slider_tns = function(options) {
+  options = extend({
     container: '.slider',
     mode: 'carousel',
     axis: 'horizontal',
@@ -30019,17 +28814,17 @@ var tns = function(options) {
     }
   }
 
-  var CALC = tnsStorage['tC'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tC']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tC', (0,_helpers_calc_js__WEBPACK_IMPORTED_MODULE_6__.calc)(), localStorageAccess),
-      PERCENTAGELAYOUT = tnsStorage['tPL'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tPL']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tPL', (0,_helpers_percentageLayout_js__WEBPACK_IMPORTED_MODULE_7__.percentageLayout)(), localStorageAccess),
-      CSSMQ = tnsStorage['tMQ'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tMQ']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tMQ', (0,_helpers_mediaquerySupport_js__WEBPACK_IMPORTED_MODULE_8__.mediaquerySupport)(), localStorageAccess),
-      TRANSFORM = tnsStorage['tTf'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTf']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTf', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transform'), localStorageAccess),
-      HAS3DTRANSFORMS = tnsStorage['t3D'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['t3D']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 't3D', (0,_helpers_has3DTransforms_js__WEBPACK_IMPORTED_MODULE_28__.has3DTransforms)(TRANSFORM), localStorageAccess),
-      TRANSITIONDURATION = tnsStorage['tTDu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDuration'), localStorageAccess),
-      TRANSITIONDELAY = tnsStorage['tTDe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTDe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTDe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('transitionDelay'), localStorageAccess),
-      ANIMATIONDURATION = tnsStorage['tADu'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADu']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADu', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDuration'), localStorageAccess),
-      ANIMATIONDELAY = tnsStorage['tADe'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tADe']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tADe', (0,_helpers_whichProperty_js__WEBPACK_IMPORTED_MODULE_27__.whichProperty)('animationDelay'), localStorageAccess),
-      TRANSITIONEND = tnsStorage['tTE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tTE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tTE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(TRANSITIONDURATION, 'Transition'), localStorageAccess),
-      ANIMATIONEND = tnsStorage['tAE'] ? (0,_helpers_checkStorageValue_js__WEBPACK_IMPORTED_MODULE_3__.checkStorageValue)(tnsStorage['tAE']) : (0,_helpers_setLocalStorage_js__WEBPACK_IMPORTED_MODULE_4__.setLocalStorage)(tnsStorage, 'tAE', (0,_helpers_getEndProperty_js__WEBPACK_IMPORTED_MODULE_29__.getEndProperty)(ANIMATIONDURATION, 'Animation'), localStorageAccess);
+  var CALC = tnsStorage['tC'] ? checkStorageValue(tnsStorage['tC']) : setLocalStorage(tnsStorage, 'tC', calc(), localStorageAccess),
+      PERCENTAGELAYOUT = tnsStorage['tPL'] ? checkStorageValue(tnsStorage['tPL']) : setLocalStorage(tnsStorage, 'tPL', percentageLayout(), localStorageAccess),
+      CSSMQ = tnsStorage['tMQ'] ? checkStorageValue(tnsStorage['tMQ']) : setLocalStorage(tnsStorage, 'tMQ', mediaquerySupport(), localStorageAccess),
+      TRANSFORM = tnsStorage['tTf'] ? checkStorageValue(tnsStorage['tTf']) : setLocalStorage(tnsStorage, 'tTf', whichProperty('transform'), localStorageAccess),
+      HAS3DTRANSFORMS = tnsStorage['t3D'] ? checkStorageValue(tnsStorage['t3D']) : setLocalStorage(tnsStorage, 't3D', has3DTransforms(TRANSFORM), localStorageAccess),
+      TRANSITIONDURATION = tnsStorage['tTDu'] ? checkStorageValue(tnsStorage['tTDu']) : setLocalStorage(tnsStorage, 'tTDu', whichProperty('transitionDuration'), localStorageAccess),
+      TRANSITIONDELAY = tnsStorage['tTDe'] ? checkStorageValue(tnsStorage['tTDe']) : setLocalStorage(tnsStorage, 'tTDe', whichProperty('transitionDelay'), localStorageAccess),
+      ANIMATIONDURATION = tnsStorage['tADu'] ? checkStorageValue(tnsStorage['tADu']) : setLocalStorage(tnsStorage, 'tADu', whichProperty('animationDuration'), localStorageAccess),
+      ANIMATIONDELAY = tnsStorage['tADe'] ? checkStorageValue(tnsStorage['tADe']) : setLocalStorage(tnsStorage, 'tADe', whichProperty('animationDelay'), localStorageAccess),
+      TRANSITIONEND = tnsStorage['tTE'] ? checkStorageValue(tnsStorage['tTE']) : setLocalStorage(tnsStorage, 'tTE', getEndProperty(TRANSITIONDURATION, 'Transition'), localStorageAccess),
+      ANIMATIONEND = tnsStorage['tAE'] ? checkStorageValue(tnsStorage['tAE']) : setLocalStorage(tnsStorage, 'tAE', getEndProperty(ANIMATIONDURATION, 'Animation'), localStorageAccess);
 
   // get element nodes from selectors
   var supportConsoleWarn = win.console && typeof win.console.warn === "function",
@@ -30065,7 +28860,7 @@ var tns = function(options) {
   if (responsive) {
     // apply responsive[0] to options and remove it
     if (0 in responsive) {
-      options = (0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, responsive[0]);
+      options = extend(options, responsive[0]);
       delete responsive[0];
     }
 
@@ -30153,7 +28948,7 @@ var tns = function(options) {
       autoplayText = getOption('autoplayText'),
       autoplayHoverPause = getOption('autoplayHoverPause'),
       autoplayResetOnVisibility = getOption('autoplayResetOnVisibility'),
-      sheet = (0,_helpers_createStyleSheet_js__WEBPACK_IMPORTED_MODULE_9__.createStyleSheet)(null, getOption('nonce')),
+      sheet = createStyleSheet(null, getOption('nonce')),
       lazyload = options.lazyload,
       lazyloadSelector = options.lazyloadSelector,
       slidePositions, // collection of slide positions
@@ -30199,10 +28994,10 @@ var tns = function(options) {
       moveDirectionExpected = swipeAngle ? '?' : true,
       running = false,
       onInit = options.onInit,
-      events = new _helpers_events_js__WEBPACK_IMPORTED_MODULE_32__.Events(),
+      events = new Events(),
       // id, class
       newContainerClasses = ' tns-slider tns-' + options.mode,
-      slideId = container.id || (0,_helpers_getSlideId_js__WEBPACK_IMPORTED_MODULE_5__.getSlideId)(),
+      slideId = container.id || getSlideId(),
       disable = getOption('disable'),
       disabled = false,
       freezable = options.freezable,
@@ -30586,11 +29381,11 @@ var tns = function(options) {
 
     // add id, class, aria attributes
     // before clone slides
-    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
-      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-item');
+    forEach(slideItems, function(item, i) {
+      addClass(item, 'tns-item');
       if (!item.id) { item.id = slideId + '-item' + i; }
-      if (!carousel && animateNormal) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal); }
-      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+      if (!carousel && animateNormal) { addClass(item, animateNormal); }
+      setAttrs(item, {
         'aria-hidden': 'true',
         'tabindex': '-1'
       });
@@ -30606,14 +29401,14 @@ var tns = function(options) {
       for (var j = cloneCount; j--;) {
         var num = j%slideCount,
             cloneFirst = slideItems[num].cloneNode(true);
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneFirst, slideClonedClass);
-        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneFirst, 'id');
+        addClass(cloneFirst, slideClonedClass);
+        removeAttrs(cloneFirst, 'id');
         fragmentAfter.insertBefore(cloneFirst, fragmentAfter.firstChild);
 
         if (carousel) {
           var cloneLast = slideItems[slideCount - 1 - num].cloneNode(true);
-          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(cloneLast, slideClonedClass);
-          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(cloneLast, 'id');
+          addClass(cloneLast, slideClonedClass);
+          removeAttrs(cloneLast, 'id');
           fragmentBefore.appendChild(cloneLast);
         }
       }
@@ -30631,15 +29426,15 @@ var tns = function(options) {
       var imgs = container.querySelectorAll('img');
 
       // add img load event listener
-      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(imgs, function(img) {
+      forEach(imgs, function(img) {
         var src = img.src;
 
         if (!lazyload) {
           // not data img
           if (src && src.indexOf('data:image') < 0) {
             img.src = '';
-            (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);
-            (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');
+            addEvents(img, imgEvents);
+            addClass(img, 'loading');
 
             img.src = src;
           // data img
@@ -30650,12 +29445,12 @@ var tns = function(options) {
       });
 
       // set imgsComplete
-      (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), function() { imgsComplete = true; }); });
+      raf(function(){ imgsLoadedCheck(arrayFromNodeList(imgs), function() { imgsComplete = true; }); });
 
       // reset imgs for auto height: check visible imgs only
       if (hasOption('autoHeight')) { imgs = getImageArray(index, Math.min(index + items - 1, slideCountNew - 1)); }
 
-      lazyload ? initSliderTransformStyleCheck() : (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck((0,_helpers_arrayFromNodeList_js__WEBPACK_IMPORTED_MODULE_23__.arrayFromNodeList)(imgs), initSliderTransformStyleCheck); });
+      lazyload ? initSliderTransformStyleCheck() : raf(function(){ imgsLoadedCheck(arrayFromNodeList(imgs), initSliderTransformStyleCheck); });
 
     } else {
       // set container transform property
@@ -30717,8 +29512,8 @@ var tns = function(options) {
       for (var i = index, l = index + Math.min(slideCount, items); i < l; i++) {
         var item = slideItems[i];
         item.style.left = (i - index) * 100 / items + '%';
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+        addClass(item, animateIn);
+        removeClass(item, animateNormal);
       }
     }
 
@@ -30738,10 +29533,10 @@ var tns = function(options) {
     // Resource: https://docs.google.com/spreadsheets/d/147up245wwTXeQYve3BRSAD4oVcvQmuGsFteJOeA5xNQ/edit?usp=sharing
     if (horizontal) {
       if (PERCENTAGELAYOUT || autoWidth) {
-        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', 'font-size:' + win.getComputedStyle(slideItems[0]).fontSize + ';', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
-        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, 'font-size:0;', (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        addCSSRule(sheet, '#' + slideId + ' > .tns-item', 'font-size:' + win.getComputedStyle(slideItems[0]).fontSize + ';', getCssRulesLength(sheet));
+        addCSSRule(sheet, '#' + slideId, 'font-size:0;', getCssRulesLength(sheet));
       } else if (carousel) {
-        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function (slide, i) {
+        forEach(slideItems, function (slide, i) {
           slide.style.marginLeft = getSlideMarginLeft(i);
         });
       }
@@ -30753,18 +29548,18 @@ var tns = function(options) {
       // middle wrapper style
       if (TRANSITIONDURATION) {
         var str = middleWrapper && options.autoHeight ? getTransitionDurationStyle(options.speed) : '';
-        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-mw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        addCSSRule(sheet, '#' + slideId + '-mw', str, getCssRulesLength(sheet));
       }
 
       // inner wrapper styles
       str = getInnerWrapperStyles(options.edgePadding, options.gutter, options.fixedWidth, options.speed, options.autoHeight);
-      (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + '-iw', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+      addCSSRule(sheet, '#' + slideId + '-iw', str, getCssRulesLength(sheet));
 
       // container styles
       if (carousel) {
         str = horizontal && !autoWidth ? 'width:' + getContainerWidth(options.fixedWidth, options.gutter, options.items) + ';' : '';
         if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }
-        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId, str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        addCSSRule(sheet, '#' + slideId, str, getCssRulesLength(sheet));
       }
 
       // slide styles
@@ -30775,7 +29570,7 @@ var tns = function(options) {
         if (TRANSITIONDURATION) { str += getTransitionDurationStyle(speed); }
         if (ANIMATIONDURATION) { str += getAnimationDurationStyle(speed); }
       }
-      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }
+      if (str) { addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet)); }
 
     // non CSS mediaqueries: IE8
     // ## update inner wrapper, container, slides if needed
@@ -30798,7 +29593,7 @@ var tns = function(options) {
       if (gutter) { str += getSlideGutterStyle(gutter); }
 
       // append to the last line
-      if (str) { (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet)); }
+      if (str) { addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet)); }
     }
 
     // ## MEDIAQUERIES
@@ -30877,7 +29672,7 @@ var tns = function(options) {
     if (hasAutoplay) {
       var txt = autoplay ? 'stop' : 'start';
       if (autoplayButton) {
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': txt});
+        setAttrs(autoplayButton, {'data-action': txt});
       } else if (options.autoplayButtonOutput) {
         outerWrapper.insertAdjacentHTML(getInsertPosition(options.autoplayPosition), '<button type="button" data-action="' + txt + '">' + autoplayHtmlStrings[0] + txt + autoplayHtmlStrings[1] + autoplayText[0] + '</button>');
         autoplayButton = outerWrapper.querySelector('[data-action]');
@@ -30885,13 +29680,13 @@ var tns = function(options) {
 
       // add event
       if (autoplayButton) {
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(autoplayButton, {'click': toggleAutoplay});
+        addEvents(autoplayButton, {'click': toggleAutoplay});
       }
 
       if (autoplay) {
         startAutoplay();
-        if (autoplayHoverPause) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents); }
-        if (autoplayResetOnVisibility) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, visibilityEvent); }
+        if (autoplayHoverPause) { addEvents(container, hoverEvents); }
+        if (autoplayResetOnVisibility) { addEvents(container, visibilityEvent); }
       }
     }
 
@@ -30901,10 +29696,10 @@ var tns = function(options) {
       // customized nav
       // will not hide the navs in case they're thumbnails
       if (navContainer) {
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navContainer, {'aria-label': 'Carousel Pagination'});
+        setAttrs(navContainer, {'aria-label': 'Carousel Pagination'});
         navItems = navContainer.children;
-        (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(navItems, function(item, i) {
-          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+        forEach(navItems, function(item, i) {
+          setAttrs(item, {
             'data-nav': i,
             'tabindex': '-1',
             'aria-label': navStr + (i + 1),
@@ -30938,15 +29733,15 @@ var tns = function(options) {
           str = '-' + prefix + '-' + str;
         }
 
-        (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '[aria-controls^=' + slideId + '-item]', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+        addCSSRule(sheet, '[aria-controls^=' + slideId + '-item]', str, getCssRulesLength(sheet));
       }
 
-      (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navItems[navCurrentIndex], {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
-      (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navItems[navCurrentIndex], 'tabindex');
-      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navItems[navCurrentIndex], navActiveClass);
+      setAttrs(navItems[navCurrentIndex], {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
+      removeAttrs(navItems[navCurrentIndex], 'tabindex');
+      addClass(navItems[navCurrentIndex], navActiveClass);
 
       // add events
-      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(navContainer, navEvents);
+      addEvents(navContainer, navEvents);
     }
 
 
@@ -30965,22 +29760,22 @@ var tns = function(options) {
       }
 
       if (options.controlsContainer) {
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(controlsContainer, {
+        setAttrs(controlsContainer, {
           'aria-label': 'Carousel Navigation',
           'tabindex': '0'
         });
       }
 
       if (options.controlsContainer || (options.prevButton && options.nextButton)) {
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)([prevButton, nextButton], {
+        setAttrs([prevButton, nextButton], {
           'aria-controls': slideId,
           'tabindex': '-1',
         });
       }
 
       if (options.controlsContainer || (options.prevButton && options.nextButton)) {
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(prevButton, {'data-controls' : 'prev'});
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(nextButton, {'data-controls' : 'next'});
+        setAttrs(prevButton, {'data-controls' : 'prev'});
+        setAttrs(nextButton, {'data-controls' : 'next'});
       }
 
       prevIsButton = isButton(prevButton);
@@ -30990,10 +29785,10 @@ var tns = function(options) {
 
       // add events
       if (controlsContainer) {
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(controlsContainer, controlsEvents);
+        addEvents(controlsContainer, controlsEvents);
       } else {
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(prevButton, controlsEvents);
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(nextButton, controlsEvents);
+        addEvents(prevButton, controlsEvents);
+        addEvents(nextButton, controlsEvents);
       }
     }
 
@@ -31006,12 +29801,12 @@ var tns = function(options) {
     if (carousel && TRANSITIONEND) {
       var eve = {};
       eve[TRANSITIONEND] = onTransitionEnd;
-      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, eve);
+      addEvents(container, eve);
     }
 
-    if (touch) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch); }
-    if (mouseDrag) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents); }
-    if (arrowKeys) { (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent); }
+    if (touch) { addEvents(container, touchEvents, options.preventScrollOnTouch); }
+    if (mouseDrag) { addEvents(container, dragEvents); }
+    if (arrowKeys) { addEvents(doc, docmentKeydownEvent); }
 
     if (nested === 'inner') {
       events.on('outerResized', function () {
@@ -31019,7 +29814,7 @@ var tns = function(options) {
         events.emit('innerLoaded', info());
       });
     } else if (responsive || fixedWidth || autoWidth || autoHeight || !horizontal) {
-      (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(win, {'resize': onResize});
+      addEvents(win, {'resize': onResize});
     }
 
     if (autoHeight) {
@@ -31043,27 +29838,27 @@ var tns = function(options) {
     if (sheet.ownerNode) { sheet.ownerNode.remove(); }
 
     // remove win event listeners
-    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(win, {'resize': onResize});
+    removeEvents(win, {'resize': onResize});
 
     // arrowKeys, controls, nav
-    if (arrowKeys) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent); }
-    if (controlsContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(controlsContainer, controlsEvents); }
-    if (navContainer) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(navContainer, navEvents); }
+    if (arrowKeys) { removeEvents(doc, docmentKeydownEvent); }
+    if (controlsContainer) { removeEvents(controlsContainer, controlsEvents); }
+    if (navContainer) { removeEvents(navContainer, navEvents); }
 
     // autoplay
-    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);
-    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, visibilityEvent);
-    if (autoplayButton) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(autoplayButton, {'click': toggleAutoplay}); }
+    removeEvents(container, hoverEvents);
+    removeEvents(container, visibilityEvent);
+    if (autoplayButton) { removeEvents(autoplayButton, {'click': toggleAutoplay}); }
     if (autoplay) { clearInterval(autoplayTimer); }
 
     // container
     if (carousel && TRANSITIONEND) {
       var eve = {};
       eve[TRANSITIONEND] = onTransitionEnd;
-      (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, eve);
+      removeEvents(container, eve);
     }
-    if (touch) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents); }
-    if (mouseDrag) { (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents); }
+    if (touch) { removeEvents(container, touchEvents); }
+    if (mouseDrag) { removeEvents(container, dragEvents); }
 
     // cache Object values in options && reset HTML
     var htmlList = [containerHTML, controlsContainerHTML, prevButtonHTML, nextButtonHTML, navContainerHTML, autoplayButtonHTML];
@@ -31094,7 +29889,7 @@ var tns = function(options) {
 // === ON RESIZE ===
   // responsive || fixedWidth || autoWidth || !horizontal
   function onResize (e) {
-    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ resizeTasks(getEvent(e)); });
+    raf(function(){ resizeTasks(getEvent(e)); });
   }
 
   function resizeTasks (e) {
@@ -31230,62 +30025,62 @@ var tns = function(options) {
 
     if (arrowKeys !== arrowKeysTem) {
       arrowKeys ?
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, docmentKeydownEvent) :
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, docmentKeydownEvent);
+        addEvents(doc, docmentKeydownEvent) :
+        removeEvents(doc, docmentKeydownEvent);
     }
     if (controls !== controlsTem) {
       if (controls) {
         if (controlsContainer) {
-          (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);
+          showElement(controlsContainer);
         } else {
-          if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }
-          if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }
+          if (prevButton) { showElement(prevButton); }
+          if (nextButton) { showElement(nextButton); }
         }
       } else {
         if (controlsContainer) {
-          (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);
+          hideElement(controlsContainer);
         } else {
-          if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }
-          if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }
+          if (prevButton) { hideElement(prevButton); }
+          if (nextButton) { hideElement(nextButton); }
         }
       }
     }
     if (nav !== navTem) {
       if (nav) {
-        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer);
+        showElement(navContainer);
         updateNavVisibility();
       } else {
-        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer)
+        hideElement(navContainer)
       }
     }
     if (touch !== touchTem) {
       touch ?
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, touchEvents, options.preventScrollOnTouch) :
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, touchEvents);
+        addEvents(container, touchEvents, options.preventScrollOnTouch) :
+        removeEvents(container, touchEvents);
     }
     if (mouseDrag !== mouseDragTem) {
       mouseDrag ?
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, dragEvents) :
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, dragEvents);
+        addEvents(container, dragEvents) :
+        removeEvents(container, dragEvents);
     }
     if (autoplay !== autoplayTem) {
       if (autoplay) {
-        if (autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }
+        if (autoplayButton) { showElement(autoplayButton); }
         if (!animating && !autoplayUserPaused) { startAutoplay(); }
       } else {
-        if (autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }
+        if (autoplayButton) { hideElement(autoplayButton); }
         if (animating) { stopAutoplay(); }
       }
     }
     if (autoplayHoverPause !== autoplayHoverPauseTem) {
       autoplayHoverPause ?
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(container, hoverEvents) :
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(container, hoverEvents);
+        addEvents(container, hoverEvents) :
+        removeEvents(container, hoverEvents);
     }
     if (autoplayResetOnVisibility !== autoplayResetOnVisibilityTem) {
       autoplayResetOnVisibility ?
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(doc, visibilityEvent) :
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(doc, visibilityEvent);
+        addEvents(doc, visibilityEvent) :
+        removeEvents(doc, visibilityEvent);
     }
 
     if (bpChanged) {
@@ -31353,8 +30148,8 @@ var tns = function(options) {
 
           // remove the last line and
           // add new styles
-          (0,_helpers_removeCSSRule_js__WEBPACK_IMPORTED_MODULE_11__.removeCSSRule)(sheet, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet) - 1);
-          (0,_helpers_addCSSRule_js__WEBPACK_IMPORTED_MODULE_10__.addCSSRule)(sheet, '#' + slideId + ' > .tns-item', str, (0,_helpers_getCssRulesLength_js__WEBPACK_IMPORTED_MODULE_12__.getCssRulesLength)(sheet));
+          removeCSSRule(sheet, getCssRulesLength(sheet) - 1);
+          addCSSRule(sheet, '#' + slideId + ' > .tns-item', str, getCssRulesLength(sheet));
         }
       }
 
@@ -31443,27 +30238,27 @@ var tns = function(options) {
   })();
 
   function disableUI () {
-    if (!autoplay && autoplayButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(autoplayButton); }
-    if (!nav && navContainer) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(navContainer); }
+    if (!autoplay && autoplayButton) { hideElement(autoplayButton); }
+    if (!nav && navContainer) { hideElement(navContainer); }
     if (!controls) {
       if (controlsContainer) {
-        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(controlsContainer);
+        hideElement(controlsContainer);
       } else {
-        if (prevButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(prevButton); }
-        if (nextButton) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(nextButton); }
+        if (prevButton) { hideElement(prevButton); }
+        if (nextButton) { hideElement(nextButton); }
       }
     }
   }
 
   function enableUI () {
-    if (autoplay && autoplayButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(autoplayButton); }
-    if (nav && navContainer) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(navContainer); }
+    if (autoplay && autoplayButton) { showElement(autoplayButton); }
+    if (nav && navContainer) { showElement(navContainer); }
     if (controls) {
       if (controlsContainer) {
-        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(controlsContainer);
+        showElement(controlsContainer);
       } else {
-        if (prevButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(prevButton); }
-        if (nextButton) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(nextButton); }
+        if (prevButton) { showElement(prevButton); }
+        if (nextButton) { showElement(nextButton); }
       }
     }
   }
@@ -31478,8 +30273,8 @@ var tns = function(options) {
     if (cloneCount) {
       var str = 'tns-transparent';
       for (var i = cloneCount; i--;) {
-        if (carousel) { (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[i], str); }
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(slideItems[slideCountNew - i - 1], str);
+        if (carousel) { addClass(slideItems[i], str); }
+        addClass(slideItems[slideCountNew - i - 1], str);
       }
     }
 
@@ -31500,8 +30295,8 @@ var tns = function(options) {
     if (cloneCount) {
       var str = 'tns-transparent';
       for (var i = cloneCount; i--;) {
-        if (carousel) { (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[i], str); }
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(slideItems[slideCountNew - i - 1], str);
+        if (carousel) { removeClass(slideItems[i], str); }
+        removeClass(slideItems[slideCountNew - i - 1], str);
       }
     }
 
@@ -31516,24 +30311,24 @@ var tns = function(options) {
 
     sheet.disabled = true;
     container.className = container.className.replace(newContainerClasses.substring(1), '');
-    (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(container, ['style']);
+    removeAttrs(container, ['style']);
     if (loop) {
       for (var j = cloneCount; j--;) {
-        if (carousel) { (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[j]); }
-        (0,_helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement)(slideItems[slideCountNew - j - 1]);
+        if (carousel) { hideElement(slideItems[j]); }
+        hideElement(slideItems[slideCountNew - j - 1]);
       }
     }
 
     // vertical slider
-    if (!horizontal || !carousel) { (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(innerWrapper, ['style']); }
+    if (!horizontal || !carousel) { removeAttrs(innerWrapper, ['style']); }
 
     // gallery
     if (!carousel) {
       for (var i = index, l = index + slideCount; i < l; i++) {
         var item = slideItems[i];
-        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['style']);
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+        removeAttrs(item, ['style']);
+        removeClass(item, animateIn);
+        removeClass(item, animateNormal);
       }
     }
 
@@ -31552,8 +30347,8 @@ var tns = function(options) {
 
     if (loop) {
       for (var j = cloneCount; j--;) {
-        if (carousel) { (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[j]); }
-        (0,_helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement)(slideItems[slideCountNew - j - 1]);
+        if (carousel) { showElement(slideItems[j]); }
+        showElement(slideItems[slideCountNew - j - 1]);
       }
     }
 
@@ -31563,7 +30358,7 @@ var tns = function(options) {
         var item = slideItems[i],
             classN = i < index + items ? animateIn : animateNormal;
         item.style.left = (i - index) * 100 / items + '%';
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classN);
+        addClass(item, classN);
       }
     }
 
@@ -31660,22 +30455,22 @@ var tns = function(options) {
       arg.push(lazyloadSelector);
 
       getImageArray.apply(null, arg).forEach(function (img) {
-        if (!(0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) {
+        if (!hasClass(img, imgCompleteClass)) {
           // stop propagation transitionend event to container
           var eve = {};
           eve[TRANSITIONEND] = function (e) { e.stopPropagation(); };
-          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, eve);
+          addEvents(img, eve);
 
-          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(img, imgEvents);
+          addEvents(img, imgEvents);
 
           // update src
-          img.src = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-src');
+          img.src = getAttr(img, 'data-src');
 
           // update srcset
-          var srcset = (0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(img, 'data-srcset');
+          var srcset = getAttr(img, 'data-srcset');
           if (srcset) { img.srcset = srcset; }
 
-          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loading');
+          addClass(img, 'loading');
         }
       });
     }
@@ -31690,19 +30485,19 @@ var tns = function(options) {
   }
 
   function imgLoaded (img) {
-    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'loaded');
+    addClass(img, 'loaded');
     imgCompleted(img);
   }
 
   function imgFailed (img) {
-    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, 'failed');
+    addClass(img, 'failed');
     imgCompleted(img);
   }
 
   function imgCompleted (img) {
-    (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(img, imgCompleteClass);
-    (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(img, 'loading');
-    (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(img, imgEvents);
+    addClass(img, imgCompleteClass);
+    removeClass(img, 'loading');
+    removeEvents(img, imgEvents);
   }
 
   function getImageArray (start, end, imgSelector) {
@@ -31710,7 +30505,7 @@ var tns = function(options) {
     if (!imgSelector) { imgSelector = 'img'; }
 
     while (start <= end) {
-      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems[start].querySelectorAll(imgSelector), function (img) { imgs.push(img); });
+      forEach(slideItems[start].querySelectorAll(imgSelector), function (img) { imgs.push(img); });
       start++;
     }
 
@@ -31721,7 +30516,7 @@ var tns = function(options) {
   // and update container height if it's done
   function doAutoHeight () {
     var imgs = getImageArray.apply(null, getVisibleSlideRange());
-    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, updateInnerWrapperHeight); });
+    raf(function(){ imgsLoadedCheck(imgs, updateInnerWrapperHeight); });
   }
 
   function imgsLoadedCheck (imgs, cb) {
@@ -31731,14 +30526,14 @@ var tns = function(options) {
     // check image classes
     imgs.forEach(function (img, index) {
       if (!lazyload && img.complete) { imgCompleted(img); } // Check image.complete
-      if ((0,_helpers_hasClass_js__WEBPACK_IMPORTED_MODULE_16__.hasClass)(img, imgCompleteClass)) { imgs.splice(index, 1); }
+      if (hasClass(img, imgCompleteClass)) { imgs.splice(index, 1); }
     });
 
     // execute callback function if selected images are all complete
     if (!imgs.length) { return cb(); }
 
     // otherwise execute this functiona again
-    (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ imgsLoadedCheck(imgs, cb); });
+    raf(function(){ imgsLoadedCheck(imgs, cb); });
   }
 
   function additionalUpdates () {
@@ -31785,7 +30580,7 @@ var tns = function(options) {
         attr2 = horizontal ? 'right' : 'bottom',
         base = slideItems[0].getBoundingClientRect()[attr];
 
-    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
+    forEach(slideItems, function(item, i) {
       // skip the first slide
       if (i) { slidePositions.push(item.getBoundingClientRect()[attr] - base); }
       // add the end edge
@@ -31799,21 +30594,21 @@ var tns = function(options) {
         start = range[0],
         end = range[1];
 
-    (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(item, i) {
+    forEach(slideItems, function(item, i) {
       // show slides
       if (i >= start && i <= end) {
-        if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {
-          (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(item, ['aria-hidden', 'tabindex']);
-          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, slideActiveClass);
+        if (hasAttr(item, 'aria-hidden')) {
+          removeAttrs(item, ['aria-hidden', 'tabindex']);
+          addClass(item, slideActiveClass);
         }
       // hide slides
       } else {
-        if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(item, 'aria-hidden')) {
-          (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(item, {
+        if (!hasAttr(item, 'aria-hidden')) {
+          setAttrs(item, {
             'aria-hidden': 'true',
             'tabindex': '-1'
           });
-          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, slideActiveClass);
+          removeClass(item, slideActiveClass);
         }
       }
     });
@@ -31827,25 +30622,25 @@ var tns = function(options) {
 
       if (i >= index && i < l) {
         // add transitions to visible slides when adjusting their positions
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, 'tns-moving');
+        addClass(item, 'tns-moving');
 
         item.style.left = (i - index) * 100 / items + '%';
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateIn);
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateNormal);
+        addClass(item, animateIn);
+        removeClass(item, animateNormal);
       } else if (item.style.left) {
         item.style.left = '';
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateIn);
+        addClass(item, animateNormal);
+        removeClass(item, animateIn);
       }
 
       // remove outlet animation
-      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);
+      removeClass(item, animateOut);
     }
 
     // removing '.tns-moving'
     setTimeout(function() {
-      (0,_helpers_forEach_js__WEBPACK_IMPORTED_MODULE_15__.forEach)(slideItems, function(el) {
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(el, 'tns-moving');
+      forEach(slideItems, function(el) {
+        removeClass(el, 'tns-moving');
       });
     }, 300);
   }
@@ -31861,15 +30656,15 @@ var tns = function(options) {
         var navPrev = navItems[navCurrentIndexCached],
             navCurrent = navItems[navCurrentIndex];
 
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navPrev, {
+        setAttrs(navPrev, {
           'tabindex': '-1',
           'aria-label': navStr + (navCurrentIndexCached + 1)
         });
-        (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(navPrev, navActiveClass);
+        removeClass(navPrev, navActiveClass);
 
-        (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(navCurrent, {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
-        (0,_helpers_removeAttrs_js__WEBPACK_IMPORTED_MODULE_22__.removeAttrs)(navCurrent, 'tabindex');
-        (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(navCurrent, navActiveClass);
+        setAttrs(navCurrent, {'aria-label': navStr + (navCurrentIndex + 1) + navStrCurrent});
+        removeAttrs(navCurrent, 'tabindex');
+        addClass(navCurrent, navActiveClass);
 
         navCurrentIndexCached = navCurrentIndex;
       }
@@ -32000,8 +30795,8 @@ var tns = function(options) {
       if (animateDelay && TRANSITIONDELAY) {
         item.style[TRANSITIONDELAY] = item.style[ANIMATIONDELAY] = animateDelay * (i - number) / 1000 + 's';
       }
-      (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, classOut);
-      (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, classIn);
+      removeClass(item, classOut);
+      addClass(item, classIn);
 
       if (isOut) { slideItemsOut.push(item); }
     }
@@ -32020,11 +30815,11 @@ var tns = function(options) {
           doContainerTransform();
           // run fallback function manually
           // when duration is 0 / container is hidden
-          if (!speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }
+          if (!speed || !isVisible(container)) { onTransitionEnd(); }
 
         } else {
           // for old browser with non-zero duration
-          (0,_helpers_jsTransform_js__WEBPACK_IMPORTED_MODULE_33__.jsTransform)(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
+          jsTransform(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
         }
 
         if (!horizontal) { updateContentWrapperHeight(); }
@@ -32034,15 +30829,15 @@ var tns = function(options) {
 
         var eve = {};
         eve[TRANSITIONEND] = eve[ANIMATIONEND] = onTransitionEnd;
-        (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(slideItems[indexCached], eve);
-        (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(slideItems[index], eve);
+        removeEvents(slideItems[indexCached], eve);
+        addEvents(slideItems[index], eve);
 
         animateSlide(indexCached, animateIn, animateOut, true);
         animateSlide(index, animateNormal, animateIn);
 
         // run fallback function manually
         // when transition or animation not supported / duration is 0
-        if (!TRANSITIONEND || !ANIMATIONEND || !speed || !(0,_helpers_isVisible_js__WEBPACK_IMPORTED_MODULE_26__.isVisible)(container)) { onTransitionEnd(); }
+        if (!TRANSITIONEND || !ANIMATIONEND || !speed || !isVisible(container)) { onTransitionEnd(); }
       };
   })();
 
@@ -32099,8 +30894,8 @@ var tns = function(options) {
             item.style[ANIMATIONDELAY] = '';
             item.style[TRANSITIONDELAY] = '';
           }
-          (0,_helpers_removeClass_js__WEBPACK_IMPORTED_MODULE_18__.removeClass)(item, animateOut);
-          (0,_helpers_addClass_js__WEBPACK_IMPORTED_MODULE_17__.addClass)(item, animateNormal);
+          removeClass(item, animateOut);
+          addClass(item, animateNormal);
         }
       }
 
@@ -32241,9 +31036,9 @@ var tns = function(options) {
     var target = getTarget(e), navIndex;
 
     // find the clicked nav item
-    while (target !== navContainer && !(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) { target = target.parentNode; }
-    if ((0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(target, 'data-nav')) {
-      var navIndex = navClicked = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(target, 'data-nav')),
+    while (target !== navContainer && !hasAttr(target, 'data-nav')) { target = target.parentNode; }
+    if (hasAttr(target, 'data-nav')) {
+      var navIndex = navClicked = Number(getAttr(target, 'data-nav')),
           targetIndexBase = fixedWidth || autoWidth ? navIndex * slideCount / pages : navIndex * items,
           targetIndex = navAsThumbnails ? navIndex : Math.min(Math.ceil(targetIndexBase), slideCount - 1);
       goTo(targetIndex, e);
@@ -32270,7 +31065,7 @@ var tns = function(options) {
   }
 
   function updateAutoplayButton (action, txt) {
-    (0,_helpers_setAttrs_js__WEBPACK_IMPORTED_MODULE_21__.setAttrs)(autoplayButton, {'data-action': action});
+    setAttrs(autoplayButton, {'data-action': action});
     autoplayButton.innerHTML = autoplayHtmlStrings[0] + action + autoplayHtmlStrings[1] + txt;
   }
 
@@ -32367,11 +31162,11 @@ var tns = function(options) {
   function onNavKeydown (e) {
     e = getEvent(e);
     var curElement = doc.activeElement;
-    if (!(0,_helpers_hasAttr_js__WEBPACK_IMPORTED_MODULE_19__.hasAttr)(curElement, 'data-nav')) { return; }
+    if (!hasAttr(curElement, 'data-nav')) { return; }
 
     // var code = e.keyCode,
     var keyIndex = [KEYS.LEFT, KEYS.RIGHT, KEYS.ENTER, KEYS.SPACE].indexOf(e.keyCode),
-        navIndex = Number((0,_helpers_getAttr_js__WEBPACK_IMPORTED_MODULE_20__.getAttr)(curElement, 'data-nav'));
+        navIndex = Number(getAttr(curElement, 'data-nav'));
 
     if (keyIndex >= 0) {
       if (keyIndex === 0) {
@@ -32402,7 +31197,7 @@ var tns = function(options) {
   }
 
   function getMoveDirectionExpected () {
-    return (0,_helpers_getTouchDirection_js__WEBPACK_IMPORTED_MODULE_14__.getTouchDirection)((0,_helpers_toDegree_js__WEBPACK_IMPORTED_MODULE_13__.toDegree)(lastPosition.y - initPosition.y, lastPosition.x - initPosition.x), swipeAngle) === options.axis;
+    return getTouchDirection(toDegree(lastPosition.y - initPosition.y, lastPosition.x - initPosition.x), swipeAngle) === options.axis;
   }
 
   function onPanStart (e) {
@@ -32414,7 +31209,7 @@ var tns = function(options) {
 
     panStart = true;
     if (rafIndex) {
-      (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
+      caf(rafIndex);
       rafIndex = null;
     }
 
@@ -32440,7 +31235,7 @@ var tns = function(options) {
       lastPosition.y = $.clientY;
 
       if (carousel) {
-        if (!rafIndex) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }
+        if (!rafIndex) { rafIndex = raf(function(){ panUpdate(e); }); }
       } else {
         if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }
         if (moveDirectionExpected) { preventScroll = true; }
@@ -32457,8 +31252,8 @@ var tns = function(options) {
       panStart = false;
       return;
     }
-    (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
-    if (panStart) { rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function(){ panUpdate(e); }); }
+    caf(rafIndex);
+    if (panStart) { rafIndex = raf(function(){ panUpdate(e); }); }
 
     if (moveDirectionExpected === '?') { moveDirectionExpected = getMoveDirectionExpected(); }
     if (moveDirectionExpected) {
@@ -32486,7 +31281,7 @@ var tns = function(options) {
   function onPanEnd (e) {
     if (panStart) {
       if (rafIndex) {
-        (0,_helpers_caf_js__WEBPACK_IMPORTED_MODULE_1__.caf)(rafIndex);
+        caf(rafIndex);
         rafIndex = null;
       }
       if (carousel) { resetDuration(container, ''); }
@@ -32502,14 +31297,14 @@ var tns = function(options) {
         if (!isTouchEvent(e)) {
           // prevent "click"
           var target = getTarget(e);
-          (0,_helpers_addEvents_js__WEBPACK_IMPORTED_MODULE_30__.addEvents)(target, {'click': function preventClick (e) {
+          addEvents(target, {'click': function preventClick (e) {
             preventDefaultBehavior(e);
-            (0,_helpers_removeEvents_js__WEBPACK_IMPORTED_MODULE_31__.removeEvents)(target, {'click': preventClick});
+            removeEvents(target, {'click': preventClick});
           }});
         }
 
         if (carousel) {
-          rafIndex = (0,_helpers_raf_js__WEBPACK_IMPORTED_MODULE_0__.raf)(function() {
+          rafIndex = raf(function() {
             if (horizontal && !autoWidth) {
               var indexMoved = - dist * items / (viewport + gutter);
               indexMoved = dist > 0 ? Math.floor(indexMoved) : Math.ceil(indexMoved);
@@ -32570,12 +31365,12 @@ var tns = function(options) {
     if (pages !== pagesCached) {
       var min = pagesCached,
           max = pages,
-          fn = _helpers_showElement_js__WEBPACK_IMPORTED_MODULE_25__.showElement;
+          fn = showElement;
 
       if (pagesCached > pages) {
         min = pages;
         max = pagesCached;
-        fn = _helpers_hideElement_js__WEBPACK_IMPORTED_MODULE_24__.hideElement;
+        fn = hideElement;
       }
 
       while (min < max) {
@@ -32628,516 +31423,535 @@ var tns = function(options) {
     refresh: initSliderTransform,
     destroy: destroy,
     rebuild: function() {
-      return tns((0,_helpers_extend_js__WEBPACK_IMPORTED_MODULE_2__.extend)(options, optionsElements));
+      return tiny_slider_tns(extend(options, optionsElements));
     }
   };
 };
 
+// EXTERNAL MODULE: ../node_modules/lodash/lodash.js
+var lodash = __webpack_require__(465);
+// EXTERNAL MODULE: ../node_modules/actual/actual.js
+var actual_actual = __webpack_require__(222);
+// EXTERNAL MODULE: ../node_modules/verge/verge.js
+var verge = __webpack_require__(682);
+;// CONCATENATED MODULE: ./js/util/utils.js
 
-/***/ }),
 
-/***/ "../node_modules/verge/verge.js":
-/*!**************************************!*\
-  !*** ../node_modules/verge/verge.js ***!
-  \**************************************/
-/***/ (function(module) {
 
-/*!
- * verge 1.10.2+201705300050
- * http://npm.im/verge
- * MIT Ryan Van Etten
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/** ============================================================================
+ * utils
+ *
+ * @version   1.0.1
+ * @author    RIESTER <wordpress@riester.com>
+ * @copyright 2022 RIESTER
+ * ========================================================================== */
+var _ = __webpack_require__(465);
+
+
+
+
+
+
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
  */
 
-!function(root, name, make) {
-  if ( true && module['exports']) module['exports'] = make();
-  else root[name] = make();
-}(this, 'verge', function() {
-
-  var xports = {}
-    , win = typeof window != 'undefined' && window
-    , doc = typeof document != 'undefined' && document
-    , docElem = doc && doc.documentElement
-    , matchMedia = win['matchMedia'] || win['msMatchMedia']
-    , mq = matchMedia ? function(q) {
-        return !!matchMedia.call(win, q).matches;
-      } : function() {
-        return false;
-      }
-    , viewportW = xports['viewportW'] = function() {
-        var a = docElem['clientWidth'], b = win['innerWidth'];
-        return a < b ? b : a;
-      }
-    , viewportH = xports['viewportH'] = function() {
-        var a = docElem['clientHeight'], b = win['innerHeight'];
-        return a < b ? b : a;
-      };
-
-  /**
-   * Test if a media query is active. Like Modernizr.mq
-   * @since 1.6.0
-   * @return {boolean}
-   */
-  xports['mq'] = mq;
-
-  /**
-   * Normalized matchMedia
-   * @since 1.6.0
-   * @return {MediaQueryList|Object}
-   */
-  xports['matchMedia'] = matchMedia ? function() {
-    // matchMedia must be binded to window
-    return matchMedia.apply(win, arguments);
-  } : function() {
-    // Gracefully degrade to plain object
-    return {};
-  };
-
-  /**
-   * @since 1.8.0
-   * @return {{width:number, height:number}}
-   */
-  function viewport() {
-    return {'width':viewportW(), 'height':viewportH()};
-  }
-  xports['viewport'] = viewport;
-
-  /**
-   * Cross-browser window.scrollX
-   * @since 1.0.0
-   * @return {number}
-   */
-  xports['scrollX'] = function() {
-    return win.pageXOffset || docElem.scrollLeft;
-  };
-
-  /**
-   * Cross-browser window.scrollY
-   * @since 1.0.0
-   * @return {number}
-   */
-  xports['scrollY'] = function() {
-    return win.pageYOffset || docElem.scrollTop;
-  };
-
-  /**
-   * @param {{top:number, right:number, bottom:number, left:number}} coords
-   * @param {number=} cushion adjustment
-   * @return {Object}
-   */
-  function calibrate(coords, cushion) {
-    var o = {};
-    cushion = +cushion || 0;
-    o['width'] = (o['right'] = coords['right'] + cushion) - (o['left'] = coords['left'] - cushion);
-    o['height'] = (o['bottom'] = coords['bottom'] + cushion) - (o['top'] = coords['top'] - cushion);
-    return o;
+function getTag(value) {
+  if (value == null) {
+    return value === undefined ? '[object Undefined]' : '[object Null]';
   }
 
-  /**
-   * Cross-browser element.getBoundingClientRect plus optional cushion.
-   * Coords are relative to the top-left corner of the viewport.
-   * @since 1.0.0
-   * @param {Element|Object} el element or stack (uses first item)
-   * @param {number=} cushion +/- pixel adjustment amount
-   * @return {Object|boolean}
-   */
-  function rectangle(el, cushion) {
-    el = el && !el.nodeType ? el[0] : el;
-    if (!el || 1 !== el.nodeType) return false;
-    return calibrate(el.getBoundingClientRect(), cushion);
-  }
-  xports['rectangle'] = rectangle;
+  return Object.prototype.toString.call(value);
+}
+/**
+ * Function for making strings camelCase
+ *
+ * @param {string} str The string to convert
+ * @return {string} The converted string
+ */
 
-  /**
-   * Get the viewport aspect ratio (or the aspect ratio of an object or element)
-   * @since 1.7.0
-   * @param {(Element|Object)=} o optional object with width/height props or methods
-   * @return {number}
-   * @link http://w3.org/TR/css3-mediaqueries/#orientation
-   */
-  function aspect(o) {
-    o = null == o ? viewport() : 1 === o.nodeType ? rectangle(o) : o;
-    var h = o['height'], w = o['width'];
-    h = typeof h == 'function' ? h.call(o) : h;
-    w = typeof w == 'function' ? w.call(o) : w;
-    return w/h;
-  }
-  xports['aspect'] = aspect;
+function camelCase(str) {
+  return "".concat(str.charAt(0).toLowerCase()).concat(str.replace(/[\W_]/g, '|').split('|').map(function (part) {
+    return "".concat(part.charAt(0).toUpperCase()).concat(part.slice(1));
+  }).join('').slice(1));
+}
+/**
+ * Convert a string to slug or kebab case
+ *
+ * @param {*} str
+ * @return {*}
+ */
 
-  /**
-   * Test if an element is in the same x-axis section as the viewport.
-   * @since 1.0.0
-   * @param {Element|Object} el
-   * @param {number=} cushion
-   * @return {boolean}
-   */
-  xports['inX'] = function(el, cushion) {
-    var r = rectangle(el, cushion);
-    return !!r && r.right >= 0 && r.left <= viewportW();
-  };
+function slugCase(str) {
+  var pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
+  str = _.replace(str, pattern, ' and ');
+  return _.chain(str).deburr().trim().kebabCase().value();
+}
+/**
+ * Convert a string to title case with ampersands
+ *
+ * @param {*} str
+ * @param {boolean} [useAmp=false] Whether to automatically change the word and
+ *                                 to an ampersand
+ * @return {*}
+ */
 
-  /**
-   * Test if an element is in the same y-axis section as the viewport.
-   * @since 1.0.0
-   * @param {Element|Object} el
-   * @param {number=} cushion
-   * @return {boolean}
-   */
-  xports['inY'] = function(el, cushion) {
-    var r = rectangle(el, cushion);
-    return !!r && r.bottom >= 0 && r.top <= viewportH();
-  };
+function titleCase(str) {
+  var useAmp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var pattern = new RegExp(/(\/|-|_)/gm);
+  str = _.replace(str, pattern, ' ');
+  str = _.chain(str).trim().startCase().tap(function (str) {
+    if (useAmp) {
+      var andPattern = new RegExp(/and/gim);
 
-  /**
-   * Test if an element is in the viewport.
-   * @since 1.0.0
-   * @param {Element|Object} el
-   * @param {number=} cushion
-   * @return {boolean}
-   */
-  xports['inViewport'] = function(el, cushion) {
-    // Equiv to `inX(el, cushion) && inY(el, cushion)` but just manually do both
-    // to avoid calling rectangle() twice. It gzips just as small like this.
-    var r = rectangle(el, cushion);
-    return !!r && r.bottom >= 0 && r.right >= 0 && r.top <= viewportH() && r.left <= viewportW();
-  };
+      var amp = _.escape('&');
 
-  return xports;
-});
+      return _.replace(str, andPattern, amp);
+    }
+
+    return str;
+  }).value();
+  return str;
+}
+/**
+ *	Change the tag of a node element
+ *
+ * @param  {Element}  original  The element to change
+ * @param  {string}   tag        The new tag
+ *
+ * @return {Element} The updated element
+ */
+
+function changeTag(original, tag) {
+  var replacement = document.createElement(tag); // Grab all of the original's attributes, and pass them to the replacement
+
+  for (var i = 0, l = original.attributes.length; i < l; ++i) {
+    var nodeName = original.attributes.item(i).nodeName;
+    var nodeValue = original.attributes.item(i).nodeValue;
+    replacement.setAttribute(nodeName, nodeValue);
+  } // Persist contents
 
 
-/***/ }),
+  replacement.innerHTML = original.innerHTML; // Switch!
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
-/*!**********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _arrayLikeToArray; }
-/* harmony export */ });
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
+  original.parentNode.replaceChild(replacement, original);
+  return original;
 }
 
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js":
-/*!********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _arrayWithHoles; }
-/* harmony export */ });
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js":
-/*!***********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _arrayWithoutHoles; }
-/* harmony export */ });
-/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr);
-}
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/esm/iterableToArray.js":
-/*!*********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/iterableToArray.js ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _iterableToArray; }
-/* harmony export */ });
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-
-/***/ }),
-
-/***/ "../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js":
-/*!**************************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js ***!
-  \**************************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _iterableToArrayLimit; }
-/* harmony export */ });
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
+var domParserSupport = function () {
+  if (!window.DOMParser) return false;
+  var parser = new DOMParser();
 
   try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
+    parser.parseFromString('x', 'text/html');
   } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
+    return false;
+  }
+
+  return true;
+}();
+/**
+ * Convert a template string into HTML DOM nodes
+ * @param  {String} str The template string
+ * @return {Node}       The template HTML
+ */
+
+
+function stringToHtml(str) {
+  // If DOMParser is supported, use it
+  if (domParserSupport) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body.firstElementChild;
+  } // Otherwise, fallback to old-school method
+
+
+  var dom = document.createElement('div');
+  dom.innerHTML = str;
+  return dom;
+}
+/**
+ * Adds focus class for better accessibility
+ *
+ */
+
+function toggleFocus(event) {
+  if (event.type === 'focus' || event.type === 'blur') {
+    var _self = event.target;
+
+    if (!_.isUndefined(_self)) {
+      var elementClasses = _self.classList;
+
+      if (!_.isNil(elementClasses)) {
+        // Move up through the ancestors of the current link until we hit .nav-menu.
+        while (!elementClasses.contains('nav-menu')) {
+          // On li elements toggle the class .focus.
+          if ('li' === _self.tagName.toLowerCase()) {
+            _self.classList.toggle('focus');
+          }
+
+          _self = _self.parentNode;
+        }
+      }
     }
   }
 
-  return _arr;
+  if (event.type === 'touchstart') {
+    var menuItem = self.parentNode;
+    event.preventDefault();
+
+    var _iterator = _createForOfIteratorHelper(menuItem.parentNode.children),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var link = _step.value;
+
+        if (menuItem !== link) {
+          link.classList.remove('focus');
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    menuItem.classList.toggle('focus');
+  }
 }
+function betterHashLinks() {
+  var id = location.hash.substring(1);
+  var motionQuery = window.matchMedia('(prefers-reduced-motion)');
 
-/***/ }),
+  if (!/^[A-z0-9_-]+$/.test(id)) {
+    return;
+  }
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js":
-/*!*********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+  var element = document.getElementById(id);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _nonIterableRest; }
-/* harmony export */ });
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  if (element) {
+    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+      element.tabIndex = -1;
+    }
+
+    if (!motionQuery.matches) {
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    if (element.is(':focus')) {
+      //checking if the target was focused
+      return false;
+    } else {
+      element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
+
+      element.focus(); //Setting focus
+    }
+  }
 }
+/**
+ * Get the screen size
+ *
+ * @param {string} prop
+ * @return {Object|Number} The object containing the size infor or the requested property
+ */
 
-/***/ }),
+function screenSize(prop) {
+  var size = {
+    width: actual.actual('width', 'px'),
+    height: actual.actual('height', 'px')
+  };
+  window.addEventListener('resize', function () {
+    _.assign({
+      width: actual.actual('width', 'px'),
+      height: actual.actual('height', 'px')
+    }, size);
+  });
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js":
-/*!***********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+  if (!_.isNil(prop)) {
+    return size[prop];
+  }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _nonIterableSpread; }
-/* harmony export */ });
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  return size;
+} // URL updates and the element focus is maintained
+// originally found via in Update 3 on http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
+// filter handling for a /dir/ OR /indexordefault.page
+
+function filterPath(string) {
+  return string.replace(/^\//, '').replace(/(index|default).[a-zA-Z]{3,4}$/, '').replace(/\/$/, '');
 }
+/**
+ * Get hash value for any string
+ *
+ * @param {*} string the string to extract from
+ * @return {*} the hash or false
+ */
 
-/***/ }),
+function getHash(string) {
+  var index = string.indexOf('#');
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js":
-/*!*******************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/slicedToArray.js ***!
-  \*******************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+  if (index !== -1) {
+    return string.substring(index + 1);
+  }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _slicedToArray; }
-/* harmony export */ });
-/* harmony import */ var _arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithHoles.js */ "../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
-/* harmony import */ var _iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArrayLimit.js */ "../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js");
-/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
-/* harmony import */ var _nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableRest.js */ "../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
-
-
-
-
-function _slicedToArray(arr, i) {
-  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr, i) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr, i) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  return false;
 }
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
 
-/***/ }),
+function utils_isEmpty(el) {
+  if (_.isNil(el)) {
+    return true;
+  } else if (el === '') {
+    return true;
+  } else if (el === null) {
+    return true;
+  } else if (el === false) {
+    return true;
+  } else if (isArrayLike(el) && (Array.isArray(el) || typeof el === 'string' || typeof el.splice === 'function' || isBuffer(el) || isTypedArray(el) || isArguments(el))) {
+    return !el.length;
+  }
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js":
-/*!***********************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js ***!
-  \***********************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+  var tag = getTag(el);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _toConsumableArray; }
-/* harmony export */ });
-/* harmony import */ var _arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithoutHoles.js */ "../node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js");
-/* harmony import */ var _iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArray.js */ "../node_modules/@babel/runtime/helpers/esm/iterableToArray.js");
-/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
-/* harmony import */ var _nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableSpread.js */ "../node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js");
+  if (tag == '[object Map]' || tag == '[object Set]') {
+    return !el.size;
+  }
 
+  if (isPrototype(el)) {
+    return !Object.keys(el).length;
+  }
 
+  for (var key in el) {
+    if (hasOwnProperty.call(el, key)) {
+      return false;
+    }
+  }
 
-
-function _toConsumableArray(arr) {
-  return (0,_arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr) || (0,_nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  return false;
 }
+function toggleNav(buttonId) {
+  var button = document.querySelector(buttonId); // Return early if the button don't exist.
 
-/***/ }),
+  if (utils_isEmpty(button)) {
+    return;
+  }
 
-/***/ "../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
-/*!********************************************************************************!*\
-  !*** ../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
-  \********************************************************************************/
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+  var buttonTarget = button.getAttribute('data-target');
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _unsupportedIterableToArray; }
-/* harmony export */ });
-/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
+  if (utils_isEmpty(buttonTarget)) {
+    buttonTarget = button.getAttribute('href');
+  }
 
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+  if (utils_isEmpty(buttonTarget)) {
+    return;
+  }
+
+  buttonTarget = getHash(buttonTarget);
+  var siteNavigation = document.getElementById(buttonTarget); // Return early if the navigation don't exist.
+
+  if (utils_isEmpty(siteNavigation)) {
+    return;
+  }
+
+  var menu = siteNavigation.getElementsByTagName('ul')[0]; // Get all the link elements within the menu.
+
+  var links = menu.getElementsByTagName('a'); // Get all the link elements with children within the menu.
+  // eslint-disable-next-line
+
+  var linksWithChildren = menu.querySelectorAll('.has-children > a'); // Toggle focus each time a menu link is focused or blurred.
+
+  var _iterator2 = _createForOfIteratorHelper(links),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var link = _step2.value;
+      link.addEventListener('focus', toggleFocus, true);
+      link.addEventListener('blur', toggleFocus, true);
+    } // Toggle focus each time a menu link with children receive a touch event.
+
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  var _iterator3 = _createForOfIteratorHelper(linksWithChildren),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var _link = _step3.value;
+
+      _link.addEventListener('touchstart', toggleFocus, false);
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
 }
+/**
+ * Get tallest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
 
-/***/ })
+function getTallest(el) {
+  var matches = document.querySelectorAll(el);
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
-/******/ 			loaded: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	!function() {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/node module decorator */
-/******/ 	!function() {
-/******/ 		__webpack_require__.nmd = function(module) {
-/******/ 			module.paths = [];
-/******/ 			if (!module.children) module.children = [];
-/******/ 			return module;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
-"use strict";
-var __webpack_exports__ = {};
-/*!******************************!*\
-  !*** ./js/plugins/slider.js ***!
-  \******************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-slider/src/tiny-slider */ "../node_modules/tiny-slider/src/tiny-slider.js");
-/* harmony import */ var _util_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/utils */ "./js/util/utils.js");
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+  if (matches.length > 1) {
+    var heights = _.map(matches, function (elem) {
+      return rectangle(elem).height;
+    });
+
+    return Math.max.apply(null, heights);
+  }
+
+  return false;
+}
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+
+function matchHeights() {
+  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
+  var matches = container.querySelectorAll(elem);
+
+  if (matches.length > 1) {
+    var minHeight = getTallest(elem);
+
+    if (false !== minHeight) {
+      _.map(matches, function (elem) {
+        elem.style.minHeight = minHeight;
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      matchHeights(elem, container);
+    });
+  }
+}
+function bsAtts() {
+  var bsColors = {
+    primary: '',
+    secondary: '',
+    tertiary: '',
+    info: '',
+    success: '',
+    warning: '',
+    danger: '',
+    light: '',
+    dark: '',
+    blue: '',
+    indigo: '',
+    purple: '',
+    pink: '',
+    red: '',
+    orange: '',
+    yellow: '',
+    green: '',
+    teal: '',
+    cyan: '',
+    white: '',
+    black: '',
+    'gray-100': '',
+    'gray-200': '',
+    'gray-300': '',
+    'gray-400': '',
+    'gray-500': '',
+    'gray-600': '',
+    'gray-700': '',
+    'gray-800': '',
+    'gray-900': ''
+  };
+  var computedColors = {};
+
+  for (var _i = 0, _Object$entries = Object.entries(bsColors); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        key = _Object$entries$_i[0],
+        value = _Object$entries$_i[1];
+
+    var r = document.querySelector(':root'); // Get the styles (properties and values) for the root
+
+    var rs = getComputedStyle(r); // Alert the value of the --blue variable
+
+    value = rs.getPropertyValue("--bs-".concat(key));
+    value = value.trim();
+
+    if ('' !== value) {
+      computedColors[key] = value;
+    }
+  }
+
+  return {
+    colors: computedColors
+  };
+}
+function logCustomProperties() {
+  var isSameDomain = function isSameDomain(styleSheet) {
+    // Internal style blocks won't have an href value
+    if (!styleSheet.href) {
+      return true;
+    }
+
+    return styleSheet.href.indexOf(window.location.origin) === 0;
+  };
+
+  var isStyleRule = function isStyleRule(rule) {
+    return rule.type === 1;
+  };
+
+  var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
+    return (// styleSheets is array-like, so we convert it to an array.
+      // Filter out any stylesheets not on this domain
+      _toConsumableArray(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
+        return finalArr.concat( // cssRules is array-like, so we convert it to an array
+        _toConsumableArray(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
+          var props = _toConsumableArray(rule.style).map(function (propName) {
+            return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
+          }) // Discard any props that don't start with "--". Custom props are required to.
+          .filter(function (_ref) {
+            var _ref2 = _slicedToArray(_ref, 1),
+                propName = _ref2[0];
+
+            return propName.indexOf('--') === 0;
+          });
+
+          return [].concat(_toConsumableArray(propValArr), _toConsumableArray(props));
+        }, []));
+      }, [])
+    );
+  };
+
+  var cssCustomPropIndex = getCSSCustomPropIndex();
+  return cssCustomPropIndex;
+}
+;// CONCATENATED MODULE: ./js/plugins/slider.js
+/* provided dependency */ var $ = __webpack_require__(115);
 /**
  * ============================================================================
  * slider
@@ -33163,7 +31977,7 @@ var bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="
  * @return {TinySliderInstance}
  */
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
+/* harmony default export */ var slider = (function () {
   var containerClass = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.gallery-slider';
   var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var defaults = {
@@ -33185,11 +31999,11 @@ var bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="
         });
       }
 
-      if ((0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.has)(elem, 'navItems') && !(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(elem.navItems)) {
+      if (has(elem, 'navItems') && !isEmpty(elem.navItems)) {
         var navItems = elem.navItems;
 
         if (navItems.length) {
-          (0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.forEach)(navItems, function (value, i) {
+          forEach(navItems, function (value, i) {
             navItems[i].classList.add('btn');
             navItems[i].classList.add('btn-toggle');
             navItems[i].innerHTML = '<span aria-hidden="true" role="presentation" class="btn-icon">' + '<span aria-hidden="true" role="presentation" class="btn-icon-opened">' + bulletActive + '</span>' + '<span aria-hidden="true" role="presentation" class="btn-icon-closed">' + bullet + '</span>' + '</span>';
@@ -33212,35 +32026,34 @@ var bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="
     }
   };
 
-  if (!(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(args)) {
-    args = (0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.defaultsDeep)(args, defaults);
+  if (!isEmpty(args)) {
+    args = defaultsDeep(args, defaults);
   } else {
     args = defaults;
   }
 
-  if ((0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(containerClass)) {
+  if (isEmpty(containerClass)) {
     containerClass = '.gallery-slider';
   }
 
-  if (!(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(containerClass) && !(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.has)(args, 'container')) {
+  if (!isEmpty(containerClass) && !has(args, 'container')) {
     args.container = containerClass;
   }
 
-  var sliderInstance = (0,tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(args);
+  var sliderInstance = tns(args);
   return sliderInstance;
 });
 }();
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-/*!*********************************!*\
-  !*** ./css/plugins/slider.scss ***!
-  \*********************************/
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-slider.js.map

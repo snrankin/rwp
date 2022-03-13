@@ -40,11 +40,20 @@ class Elementor extends Singleton {
 				add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
 				add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
 				add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
+
+				add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+				add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+				add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+
 			}
 		}
 
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
 
+	}
+
+	public function enqueue_elementor_assets() {
+        rwp()->add_assets( 'elementor' );
 	}
 
 	public function init_widgets() {
@@ -55,7 +64,7 @@ class Elementor extends Singleton {
 
 			foreach ( $widgets as $widget ) {
 				if ( $class !== $widget && ! empty( $widget ) ) {
-					Elementor_Instance::instance()->widgets_manager->register_widget_type( new $widget() );
+					Elementor_Instance::instance()->widgets_manager->register( new $widget() );
 				}
 			}
 		}
@@ -164,7 +173,7 @@ class Elementor extends Singleton {
 
 		foreach ( array_keys( $breakpoints ) as $device ) {
 			if ( ! in_array( $device, $devices, true ) ) {
-				unset( $breakpiints[ $device ] );
+				unset( $breakpoints[ $device ] );
 			}
 		}
 
@@ -222,7 +231,9 @@ class Elementor extends Singleton {
 				$direction = 'min';
 
 				if ( Breakpoints_Manager::BREAKPOINT_KEY_DESKTOP !== $device_name ) {
-					$direction = $active_breakpoints[ $device_name ]->get_direction();
+					if ( rwp_array_has( $device_name, $active_breakpoints ) ) {
+						$direction = $active_breakpoints[ $device_name ]->get_direction();
+					}
 				}
 
 				$control_args['responsive'][ $direction ] = $device_name;
@@ -247,19 +258,21 @@ class Elementor extends Singleton {
 
 				$control_name = $id . $id_suffix;
 
-				$section->update_control( $control_args['parent'], array( 'inheritors' => array( $control_name ) ) );
+				if ( ! empty( $control_args['parent'] ) ) {
+					$section->update_control( $control_args['parent'], array( 'inheritors' => array( $control_name ) ) );
+				}
+				$control_exists = false;
+				$section_name = $section->get_unique_name();
+				$existing_control = self::plugin()->controls_manager->get_control_from_stack( $section_name, $control_name );
 
-				$current_controls = $section->get_data( 'settings' );
+				if ( ! is_wp_error( $existing_control ) ) {
+					$control_exists = true;
+				}
 
-				if ( ! empty( $options['overwrite'] ) ) {
-
+				if ( ! empty( $options['overwrite'] ) || $control_exists ) {
 					$section->update_control( $control_name, $control_args, $options );
 				} else {
-					if ( rwp_array_has( $control_name, $current_controls ) ) {
-						$section->update_control( $control_name, $control_args, $options );
-					} else {
-						$section->add_control( $control_name, $control_args, $options );
-					}
+					$section->add_control( $control_name, $control_args, $options );
 				}
 			}
 		}
@@ -469,18 +482,18 @@ class Elementor extends Singleton {
 				),
 			);
 
-			self::add_responsive_control_to_elementor(
-				$section,
-				'gap',
-				array(
-					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
-					'type' => Controls_Manager::HIDDEN,
-					'default' => '',
-				),
-				array(
-					'overwrite' => true,
-				)
-			);
+			// self::add_responsive_control_to_elementor(
+			// 	$section,
+			// 	'gap',
+			// 	array(
+			// 		'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+			// 		'type' => Controls_Manager::HIDDEN,
+			// 		'default' => '',
+			// 	),
+			// 	array(
+			// 		'overwrite' => true,
+			// 	)
+			// );
 
 			self::add_responsive_control_to_elementor(
 				$section,

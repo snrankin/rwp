@@ -8,33 +8,74 @@
 
 const path = require('path');
 const _ = require('lodash');
-function isSassError(e) {
-	return e.originalStack.some((stackframe) => stackframe.fileName && stackframe.fileName.indexOf('sass-loader') > 0);
+const chalk = require('chalk');
+const { removeLoaders, isEmpty, isSassError } = require('../utils');
+
+function cleanMessage(message) {
+	let result = message.replace(/(?<=╵)(.|\s)*/i, '');
+
+	return result;
 }
-exports.isSassError = isSassError;
 
-function cleanMessage(message, line = 0) {
-	message = message.replace(/^Error*:\s/, '');
+function transformSassError(error) {
+	let message = _.get(error, 'webpackError.error.originalSassError.message', '');
+	let file = _.get(error, 'webpackError.error.originalSassError.file', '');
+	let errorLine = _.get(error, 'webpackError.error.originalSassError.line', 0);
+	let errorCol = _.get(error, 'webpackError.error.originalSassError.column', 0);
+	let col = _.toString(errorCol);
+	message = cleanMessage(message);
+	message = message.split('\n');
+	let errorTitle = message.shift();
+	errorTitle = errorTitle.replace('.', ':');
 
-	message = message.replace(/(.*\n.*)(?=of)(of\s)(.*[^\n])((\n|.)*)/m, `$1$2$3:${line}$4`);
+	_.each(message, function (line, index) {
+		let padding = col.length + 1;
+		if (/^\d/.test(line)) {
+			let lineLocation = chalk.gray(`${errorLine}:${errorCol}`);
+			line = line.replace(/\d+(\s│\s)*/i, '');
+			line = `${lineLocation} │ ${chalk.bold(errorTitle)} ${line}`;
+			line = `\t${line}`;
+		} else if (/\^+/.test(line)) {
+			padding = padding + line.length + 1;
+			let innerPadding = _.repeat(' ', errorTitle.length);
 
-	return message;
+			line = _.padStart(line, padding);
+			line = line.replace(/(?<=│)(\s+)(\^+)/i, `$1${innerPadding}$2`);
+			line = line.replace('│', ' ');
+			line = `\t${line}`;
+			chalk.underline(line);
+		} else {
+			line = '';
+		}
+
+		message[index] = line;
+	});
+	message = _.reject(message, isEmpty);
+	message = message.join('\n');
+	file = path.relative(process.cwd(), file);
+
+	file = `${file}:${errorLine}`;
+	return _.defaultsDeep(
+		{
+			message,
+			file,
+		},
+		error
+	);
 }
 
 function transform(error) {
+	error = removeLoaders(error);
+
 	if (isSassError(error)) {
-		let message = _.get(error, 'webpackError.error.originalSassError.formatted', '');
-		let file = _.get(error, 'webpackError.error.originalSassError.file', '');
-		let line = _.get(error, 'webpackError.error.originalSassError.line', 0);
+		error = transformSassError(error);
+	}
 
-		message = cleanMessage(message, line, file);
-		file = path.relative(process.cwd(), file);
-		let e = Object.assign({}, error, {
-			message,
-			file,
-		});
-
-		return e;
+	let errorMessage = _.get(error, 'webpackError.message', '');
+	let miniCSSModule = errorMessage.indexOf('mini-css-extract-plugin');
+	let isMiniCSS = miniCSSModule > -1;
+	if (isMiniCSS) {
+		error.message = '';
 	}
 
 	return error;

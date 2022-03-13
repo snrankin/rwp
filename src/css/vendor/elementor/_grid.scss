@@ -1,0 +1,345 @@
+/// ======================================================================== ///
+/// @name   _grid
+///
+/// @group  RIESTER
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+$justify-content: map-deep-get($utilities, 'justify-content', 'values');
+$align-items: map-deep-get($utilities, 'align-items', 'values');
+$align-content: map-deep-get($utilities, 'align-content', 'values');
+$gap-size: (
+	0: 'no',
+	2: 'narrow',
+	4: 'default',
+	6: 'extended',
+	8: 'wide',
+	13: 'wider',
+);
+
+@mixin make-elementor-col-ready() {
+	// Add box sizing if only the grid is loaded
+	box-sizing: if(variable-exists(include-column-box-sizing) and $include-column-box-sizing, border-box, null);
+	// Prevent columns from becoming too narrow when at smaller grid tiers by
+	// always setting `width: 100%;`. This works because we set the width
+	// later on to override this initial width.
+	width: 100%;
+	margin-top: var(--#{$variable-prefix}gutter-y);
+	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5); // stylelint-disable-line function-disallowed-list
+	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5); // stylelint-disable-line function-disallowed-list
+	> .elementor-column-wrap.elementor-element-populated {
+		padding-top: unset;
+		padding-bottom: unset;
+	}
+}
+
+@mixin make-elementor-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+	@each $breakpoint in map-keys($breakpoints) {
+		$infix: breakpoint-infix($breakpoint, $breakpoints);
+
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			&.col#{$infix}-auto {
+				@include make-col-auto();
+			}
+
+			@if $columns > 0 {
+				@for $i from 1 through $columns {
+					&.col#{$infix}-#{$i} {
+						@include make-col($i, $columns);
+					}
+				}
+
+				// `$columns - 1` because offsetting by the width of an entire row isn't possible
+				@for $i from 0 through ($columns - 1) {
+					@if not($infix == '' and $i == 0) {
+						// Avoid emitting useless .offset-0
+						&.offset#{$infix}-#{$i} {
+							@include make-col-offset($i, $columns);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+body.rwp.rwp-elementor,
+body.elementor-editor-active {
+	@media only screen {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		[data-elementor-type='single-post'] {
+			flex: 1 1 auto;
+		}
+	}
+
+	.elementor-sticky__spacer {
+		opacity: 0;
+		z-index: -5;
+	}
+
+	.elementor-section:not(.elementor-sticky__spacer) {
+		position: relative;
+
+		@media only screen {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		&.elementor-section-boxed {
+			> .elementor-container {
+				@include make-container-widths();
+			}
+		}
+		&.elementor-reverse-mobile {
+			> .elementor-container {
+				> .elementor-row {
+					> :nth-child(1) {
+						order: initial;
+					}
+					> :nth-child(2) {
+						order: -1;
+						@include media-breakpoint-up(md) {
+							order: initial;
+						}
+					}
+				}
+			}
+		}
+
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+				$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+				@each $name, $property in $justify-content {
+					&.elementor-row-h-align#{$infix}-#{$name} > .elementor-container > .elementor-row {
+						justify-content: #{$property};
+					}
+				}
+				@each $name, $property in $align-items {
+					&.elementor-row-v-align#{$infix}-#{$name} > .elementor-container > .elementor-row {
+						align-items: #{$property};
+					}
+				}
+			}
+		}
+		@each $gap, $class in $gap-size {
+			@each $breakpoint in map-keys($grid-breakpoints) {
+				$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+				$value: map-get($gutters, $gap);
+				$unit: get-unit($spacer);
+				@include media-breakpoint-up($breakpoint) {
+					@if $gap == 0 {
+						&.elementor-row-gap#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-x: #{$value}#{$unit};
+								--#{$variable-prefix}gutter-y: #{$value}#{$unit};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-x: #{$value}#{$unit};
+									--#{$variable-prefix}gutter-y: #{$value}#{$unit};
+								}
+							}
+						}
+						&.elementor-row-gap-x#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-x: #{$value}#{$unit};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-x: #{$value}#{$unit};
+								}
+							}
+						}
+						&.elementor-row-gap-y#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-y: #{$value}#{$unit};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-y: #{$value}#{$unit};
+								}
+							}
+						}
+					} @else {
+						&.elementor-row-gap#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-x: #{$value};
+								--#{$variable-prefix}gutter-y: #{$value};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-x: #{$value};
+									--#{$variable-prefix}gutter-y: #{$value};
+								}
+							}
+						}
+						&.elementor-row-gap-x#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-x: #{$value};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-x: #{$value};
+								}
+							}
+						}
+						&.elementor-row-gap-y#{$infix}-#{$class} {
+							> .elementor-container {
+								--#{$variable-prefix}gutter-y: #{$value};
+								> .elementor-row {
+									--#{$variable-prefix}gutter-y: #{$value};
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.elementor-container {
+		@include make-container();
+	}
+
+	$elementor-col-widths: (
+		20: (
+			md: 4,
+			lg: 20,
+		),
+		25: (
+			md: 6,
+			lg: 3,
+		),
+		33: (
+			md: 4,
+			lg: 4,
+		),
+		40: (
+			md: 6,
+			lg: 40,
+		),
+		50: (
+			md: 6,
+			lg: 6,
+		),
+		60: (
+			md: 60,
+			lg: 60,
+		),
+		67: (
+			md: 8,
+			lg: 8,
+		),
+		75: (
+			md: 9,
+			lg: 9,
+		),
+		80: (
+			md: 80,
+			lg: 80,
+		),
+		100: (
+			md: 12,
+			lg: 12,
+		),
+	);
+
+	@each $size, $name-map in $elementor-col-widths {
+		.elementor-column.elementor-col-#{$size},
+		.elementor-column[data-col='#{$size}'] {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+
+	.elementor-row {
+		@include make-row();
+	}
+
+	.elementor-column {
+		@include make-elementor-col-ready();
+		@include make-elementor-columns();
+		flex-direction: column;
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+				$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+				@each $name, $property in $justify-content {
+					&.elementor-column-h-align#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
+						justify-content: #{$property};
+					}
+				}
+				@each $name, $property in $align-items {
+					&.elementor-column-v-align#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
+						align-items: #{$property};
+					}
+				}
+				@each $name, $property in $align-content {
+					&.elementor-column-v-wrap#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
+						align-content: #{$property};
+					}
+				}
+				&.elementor-column-align#{$infix}-column > .elementor-column-wrap > .elementor-widget-wrap {
+					flex-direction: column;
+				}
+				&.elementor-column-align#{$infix}-row > .elementor-column-wrap > .elementor-widget-wrap {
+					flex-direction: row;
+				}
+			}
+		}
+		.elementor-column-wrap {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			height: 100%;
+			min-height: 1px;
+		}
+		.elementor-widget-wrap {
+			flex: 1 1 auto;
+			height: 100%;
+			align-content: unset;
+			min-height: 1px;
+		}
+		.elementor-widget-container {
+			min-height: 1px;
+		}
+		&.full-height-content {
+			> .elementor-column-wrap {
+				> .elementor-widget-wrap {
+					flex-direction: column;
+				}
+			}
+		}
+		&.stretched-col {
+			&.left {
+				&:not(.in-grid-content) {
+					> .elementor-column-wrap {
+						position: relative;
+						@include stretch-col-content(left, false);
+					}
+				}
+
+				&.in-grid-content {
+					> .elementor-column-wrap {
+						position: relative;
+						@include stretch-col-content(left, true);
+					}
+				}
+			}
+
+			&.right {
+				&:not(.in-grid-content) {
+					> .elementor-column-wrap {
+						position: relative;
+						@include stretch-col-content(right, false);
+					}
+				}
+
+				&.in-grid-content {
+					> .elementor-column-wrap {
+						position: relative;
+						@include stretch-col-content(right, true);
+					}
+				}
+			}
+		}
+	}
+}
+
+[class*='elementor-column-gap'] > .elementor-row > .elementor-column > .elementor-element-populated > .elementor-widget-wrap {
+	padding: 0;
+}

@@ -11,18 +11,6 @@
 		"debug": false
 	},
 	"entry": {
-		"app": {
-			"files": {
-				"app": {
-					"app": ["app.js"]
-				}
-			},
-			"webpack": {
-				"output": {
-					"library": "rwp"
-				}
-			}
-		},
 		"blocks": {
 			"files": {
 				"card": {
@@ -70,7 +58,7 @@
 					"admin": ["admin.js", "admin.scss"]
 				},
 				"app": {
-					"app": ["app.js"]
+					"app": ["util/utils.js"]
 				},
 				"bootstrap": {
 					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
@@ -115,6 +103,9 @@
 			"files": {
 				"acf": {
 					"acf": ["vendor/acf.scss"]
+				},
+				"elementor": {
+					"elementor": ["vendor/elementor.scss"]
 				},
 				"gravity-forms": {
 					"gravity-forms": ["vendor/gravity-forms.scss"]

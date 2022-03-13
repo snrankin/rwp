@@ -1,4 +1,3 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -44,7 +43,9 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-admin.js.map

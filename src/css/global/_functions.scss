@@ -48,6 +48,14 @@
 	@return is-length($value) or is-percentage($value) or index('top' 'right' 'bottom' 'left' 'center', $value) != null;
 }
 
+@function is-map($var) {
+	@return type-of($var) == 'map';
+}
+
+@function cssvar($entry) {
+	@return unquote('var(--#{$variable-prefix}#{$entry})');
+}
+
 /// Map deep get
 /// @author Hugo Giraudel
 /// @link https://css-tricks.com/snippets/sass/deep-getset-maps/

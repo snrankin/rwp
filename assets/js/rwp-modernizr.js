@@ -1,9 +1,5 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!********************************!*\
-  !*** ./js/vendor/modernizr.js ***!
-  \********************************/
 /*! modernizr 3.6.0 (Custom Build) | MIT *
  * https://modernizr.com/download/?-adownload-apng-appearance-arrow-atobbtoa-audio-audiopreload-backdropfilter-backgroundblendmode-backgroundcliptext-backgroundsize-bgpositionshorthand-bgpositionxy-bgrepeatspace_bgrepeatround-bgsizecover-borderimage-borderradius-boxshadow-boxsizing-canvas-canvasblending-canvastext-capture-checked-classlist-contains-cookies-cors-cssall-cssanimations-csscalc-csschunit-csscolumns-cssescape-cssexunit-cssfilters-cssgradients-cssgrid_cssgridlegacy-cssinvalid-cssmask-csspointerevents-csspositionsticky-csspseudotransitions-cssreflections-cssremunit-cssresize-cssscrollbar-csstransforms-cssvalid-cssvhunit-cssvmaxunit-cssvminunit-cssvwunit-cubicbezierrange-datalistelem-datauri-details-directory-display_runin-displaytable-ellipsis-emoji-es5-es5array-es5date-es5function-es5object-es5string-es5syntax-es6array-es6collections-es6math-es6number-es6object-es6string-eventlistener-fileinput-filesystem-flexbox-flexboxtweener-flexwrap-focuswithin-fontface-formattribute-formvalidation-fullscreen-generatedcontent-generators-hairline-hidden-hiddenscroll-history-hovermq-hsla-inlinesvg-inputtypes-jpeg2000-json-lastchild-ligatures-localizednumber-mediaqueries-multiplebgs-notification-nthchild-objectfit-olreversed-opacity-overflowscrolling-pagevisibility-picture-placeholder-pointerevents-preserve3d-progressbar_meter-promises-queryselector-regions-rgba-sandbox-scriptasync-scriptdefer-scrollsnappoints-search-shapes-siblinggeneral-sizes-srcdoc-srcset-stylescoped-subpixelfont-supports-svg-svgasimg-svgclippaths-svgfilters-target-textalignlast-textshadow-time-touchevents-urlparser-variablefonts-video-videoautoplay-videocrossorigin-videopreload-webp-webpalpha-webplossless_webp_lossless-wrapflow-setclasses !*/
 !(function (window, document, undefined) {
@@ -1936,7 +1932,9 @@ var __webpack_exports__ = {};
 	window.Modernizr = Modernizr;
 })(window, document);
 
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-modernizr.js.map
