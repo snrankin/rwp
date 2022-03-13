@@ -53,7 +53,7 @@ module.exports = {
 		'no-misleading-character-class': 0,
 		'no-setter-return': 0,
 		'no-useless-catch': 0,
-		//'no-unused-vars': 0,
+		'no-unused-vars': 1,
 		yoda: 0,
 		'comma-dangle': [
 			'error',
