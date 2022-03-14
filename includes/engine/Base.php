@@ -32,7 +32,7 @@ class Base extends Plugin {
 			'title'        => __( 'RIESTER Core Plugin', 'rwp' ),
 			'capability'   => 'manage_options',
 			'settings-uri' => add_query_arg( 'page', 'rwp-options', 'admin.php' ),
-			'icon' => 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSI+Cgk8cGF0aCBkPSJNNDg2LjEsMzA4LjhoLTM0LjV2MTc0LjFoMzQuNWM1Mi41LDAsNzIuMi0xOS42LDcyLjItODdTNTM4LjcsMzA4LjgsNDg2LjEsMzA4Ljh6IiAvPgoJPHBhdGggZD0iTTAsMHYxMDI0aDEwMjRsMC0xMDI0SDB6IE01NzAuOCw3OTUuMmwtNjktMjM0LjVjLTEyLjUsMS42LTMyLjksMi4zLTUwLjIsMi4zdjIzMi4yaC05Ny4yVjIyOC44aDEzNi41IGMxMDksMCwxNjQuNyw0Ni4zLDE2NC43LDE2Ny4xYzAsOTEtMzUuMywxMjcuOC02OC4yLDE0Mi43bDgyLjMsMjU2LjVINTcwLjh6IiAvPgo8L3N2Zz4K',
+			'icon'         => 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZmlsbD0iY3VycmVudENvbG9yIj4KCTxwYXRoIGQ9Ik00ODYuMSwzMDguOGgtMzQuNXYxNzQuMWgzNC41YzUyLjUsMCw3Mi4yLTE5LjYsNzIuMi04N1M1MzguNywzMDguOCw0ODYuMSwzMDguOHoiIC8+Cgk8cGF0aCBkPSJNMCwwdjEwMjRoMTAyNGwwLTEwMjRIMHogTTU3MC44LDc5NS4ybC02OS0yMzQuNWMtMTIuNSwxLjYtMzIuOSwyLjMtNTAuMiwyLjN2MjMyLjJoLTk3LjJWMjI4LjhoMTM2LjUgYzEwOSwwLDE2NC43LDQ2LjMsMTY0LjcsMTY3LjFjMCw5MS0zNS4zLDEyNy44LTY4LjIsMTQyLjdsODIuMywyNTYuNUg1NzAuOHoiIC8+Cjwvc3ZnPgo=',
 			'paths'        => array(
 				'assets'       => array(
 					'dir' => RWP_PLUGIN_ROOT . 'assets/',
@@ -58,14 +58,6 @@ class Base extends Plugin {
 		parent::__construct( $args );
 
 		$this->initialize_assets();
-
-		// $icon = $this->asset_path( 'rwp-icon.svg' );
-
-		// if ( $icon ) {
-		// 	$icon = rwp_svg( $icon );
-		// 	$icon = $icon->data_uri();
-		// 	$this->set( 'icon', $icon );
-		// }
 
     }
 
