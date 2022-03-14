@@ -1,4 +1,12 @@
 @mixin make-container($x-spacing: null, $y-spacing: null, $important: false) {
+	@if $x-spacing != null {
+		--#{$variable-prefix}gutter-x: #{$x-spacing};
+	}
+
+	@if $y-spacing != null {
+		--#{$variable-prefix}gutter-y: #{$y-spacing};
+	}
+
 	width: 100%;
 	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
 	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
@@ -14,10 +22,6 @@
 		padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
 		margin-right: auto !important;
 		margin-left: auto !important;
-
-		&:not(:first-child) {
-			margin-top: var(--#{$variable-prefix}container-gutter-y) !important;
-		}
 	}
 }
 

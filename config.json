@@ -63,11 +63,16 @@
 				"bootstrap": {
 					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
 				},
-				"debug": {
-					"debug": ["debug.js", "debug.scss"]
-				},
 				"public": {
 					"public": ["public.js", "public.scss"]
+				}
+			},
+			"webpack": {
+				"output": {
+					"library": {
+						"name": "rwp",
+						"type": "assign-properties"
+					}
 				}
 			}
 		},
@@ -103,6 +108,9 @@
 			"files": {
 				"acf": {
 					"acf": ["vendor/acf.scss"]
+				},
+				"debug": {
+					"debug": ["vendor/debug.js", "vendor/debug.scss"]
 				},
 				"elementor": {
 					"elementor": ["vendor/elementor.scss"]

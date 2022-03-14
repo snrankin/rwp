@@ -16,6 +16,17 @@ $elementor-breakpoints: (
 	xxl: desktop,
 );
 
+$justify-content: map-deep-get($utilities, 'justify-content', 'values');
+$align-items: map-deep-get($utilities, 'align-items', 'values');
+$align-content: map-deep-get($utilities, 'align-content', 'values');
+$gap-size: (
+	0: 'no',
+	1: 'narrow',
+	2: 'default',
+	3: 'extended',
+	4: 'wide',
+	5: 'wider',
+);
+
 @import 'elementor/global';
 @import 'elementor/grid';
-@import 'elementor/widgets';

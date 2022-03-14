@@ -464,40 +464,43 @@ class Elementor extends Singleton {
 
 			self::add_responsive_control_to_elementor(
 				$section,
+				'row-gap',
+				array(
+					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => '',
+					'options' => [
+						'default' => esc_html__( 'Default', 'rwp' ),
+						'no' => esc_html__( 'No Gap', 'rwp' ),
+						'narrow' => esc_html__( 'Narrow', 'rwp' ),
+						'extended' => esc_html__( 'Extended', 'rwp' ),
+						'wide' => esc_html__( 'Wide', 'rwp' ),
+						'wider' => esc_html__( 'Wider', 'rwp' ),
+						'custom' => esc_html__( 'Custom', 'rwp' ),
+					],
+					'prefix_class' => 'elementor-row-gap-%s-',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			self::add_responsive_control_to_elementor(
+				$section,
 				'gap',
 				array(
 					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
-					'type' => Controls_Manager::SELECT,
+					'type' => Controls_Manager::HIDDEN,
 					'default' => '',
-					'options' => [
-						'' => esc_html__( 'Default', 'rwp' ),
-						'no' => esc_html__( 'No Gap', 'rwp' ),
-						'narrow' => esc_html__( 'Narrow', 'rwp' ),
-						'extended' => esc_html__( 'Extended', 'rwp' ),
-						'wide' => esc_html__( 'Wide', 'rwp' ),
-						'wider' => esc_html__( 'Wider', 'rwp' ),
-						'custom' => esc_html__( 'Custom', 'rwp' ),
-					],
-					'prefix_class' => 'elementor-row-gap-x%s-',
 				),
+				array(
+					'overwrite' => true,
+				)
 			);
-
-			// self::add_responsive_control_to_elementor(
-			// 	$section,
-			// 	'gap',
-			// 	array(
-			// 		'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
-			// 		'type' => Controls_Manager::HIDDEN,
-			// 		'default' => '',
-			// 	),
-			// 	array(
-			// 		'overwrite' => true,
-			// 	)
-			// );
 
 			self::add_responsive_control_to_elementor(
 				$section,
-				'gap-x',
+				'row-gap-x',
 				array(
 					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
 					'type' => Controls_Manager::SELECT,
@@ -517,7 +520,7 @@ class Elementor extends Singleton {
 
 			self::add_responsive_control_to_elementor(
 				$section,
-				'gap-y',
+				'row-gap-y',
 				array(
 					'label' => esc_html__( 'Columns Vertical Gap', 'rwp' ),
 					'type' => Controls_Manager::SELECT,

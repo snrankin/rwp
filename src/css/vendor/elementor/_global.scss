@@ -6,37 +6,29 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-body.rwp.rwp-elementor,
-body.elementor-editor-active {
-	&:not([class*='elementor-page-']) {
-		.site-main .elementor-inner,
-		.site-footer .footer-inner,
-		.site-header .header-inner {
-			@include make-container;
-		}
-	}
-	&.admin-bar {
-		#wp-admin-bar-elementor_edit_page {
-			.elementor-edit-link-title {
-				@include visually-hidden;
-			}
-		}
-	}
+body.elementor {
 	--#{$variable-prefix}primary: var(--e-global-color-primary);
 	--#{$variable-prefix}secondary: var(--e-global-color-secondary);
 	--#{$variable-prefix}body-color: var(--e-global-color-text);
 	--#{$variable-prefix}body-font-family: var(--e-global-typography-text-font-family);
-	@for $i from 1 to 6 {
-		h#{$i},
-		.h#{$i} {
-			@extend %h#{$i};
+	@each $gap, $class in $gap-size {
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+			$value: map-get($gutters, $gap);
+			--e-gx#{$infix}-#{$class}: #{$value};
+			--e-gy#{$infix}-#{$class}: #{$value};
+			@include media-breakpoint-up($breakpoint) {
+				--e-gx-#{$class}: #{$value};
+				--e-gy-#{$class}: #{$value};
+			}
 		}
 	}
-	@each $breakpoint, $device in $elementor-breakpoints {
-		.elementor-hidden-#{$device} {
-			@include media-breakpoint-only($breakpoint) {
-				display: none !important;
-			}
+}
+
+@each $breakpoint, $device in $elementor-breakpoints {
+	.elementor-hidden-#{$device} {
+		@include media-breakpoint-only($breakpoint) {
+			display: none !important;
 		}
 	}
 }

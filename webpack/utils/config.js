@@ -84,10 +84,7 @@ function createConfig(groupName = '', configName = '') {
 				// clean: {
 				// 	keep: /\.(json|html)$/,
 				// },
-				library: {
-					name: 'rwp',
-					type: 'assign-properties',
-				},
+
 				chunkFilename: '[name].js',
 			},
 			stats: buildStats,
