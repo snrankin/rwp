@@ -1,11 +1,7 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../node_modules/jquery/dist/jquery.js":
-/*!*********************************************!*\
-  !*** ../node_modules/jquery/dist/jquery.js ***!
-  \*********************************************/
+/***/ 115:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10894,13 +10890,10 @@ return jQuery;
 
 /***/ }),
 
-/***/ "../node_modules/select2/dist/js/select2.full.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/select2/dist/js/select2.full.js ***!
-  \*******************************************************/
+/***/ 906:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+/* provided dependency */ var $ = __webpack_require__(115);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Select2 4.1.0-rc.0
  * https://select2.github.io
@@ -10911,7 +10904,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 ;(function (factory) {
   if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(115)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -17477,17 +17470,9 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-var __webpack_exports__ = {};
-/*!******************************!*\
-  !*** ./js/vendor/select2.js ***!
-  \******************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! select2/dist/js/select2.full.js */ "../node_modules/select2/dist/js/select2.full.js");
+/* harmony import */ var select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(906);
 /* harmony import */ var select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) { return select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__[key]; }.bind(0, __WEBPACK_IMPORT_KEY__)
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+/* provided dependency */ var $ = __webpack_require__(115);
 /**
  * ============================================================================
  * select2
@@ -17533,14 +17518,13 @@ if (select2Inputs.length > 0) {
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-/*!*********************************!*\
-  !*** ./css/vendor/select2.scss ***!
-  \*********************************/
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-select2.js.map

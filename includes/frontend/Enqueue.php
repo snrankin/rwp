@@ -25,8 +25,8 @@ class Enqueue extends Singleton {
 		\add_action( 'wp_head', array( $this, 'replace_no_script' ) );
 
 		// Load public-facing style sheet and JavaScript.
-		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_styles' ) );
-		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_scripts' ) );
+		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_assets' ) );
+		//\add_action( 'wp_print_footer_scripts', array( $this, 'debug_plugin_js' ) );
 	}
 
 	public function replace_no_script() {
@@ -40,21 +40,14 @@ class Enqueue extends Singleton {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public function enqueue_public_styles() {
-		rwp( 'register_styles', 'public' );
-		rwp()->enqueue_styles( 'public' );
+	public function enqueue_public_assets() {
+		rwp()->add_assets( 'public' );
 	}
 
-
-	/**
-	 * Register and enqueues public-facing JavaScript files.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function enqueue_public_scripts() {
-		rwp()->register_scripts( 'public' );
-		rwp()->enqueue_scripts( 'public' );
+	public function debug_plugin_js() {
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			echo '<script> console.log(rwp); rwp.logCustomProperties(); </script>';
+        }
 	}
 
 }

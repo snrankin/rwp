@@ -253,6 +253,10 @@ abstract class Plugin extends Singleton implements Component {
 
 		$option = $this->prefix( 'options' );
 
+		if ( 1 == $options->count() && $options->has( 'options' ) ) {
+			$options = $options->first();
+		}
+
 		if ( $global ) {
 			$updated = update_network_option( get_current_network_id(), $option, $options );
 		} else {
@@ -521,13 +525,13 @@ abstract class Plugin extends Singleton implements Component {
 	 * @uses rwp_change_case()
 	 *
 	 * @param string  $string     The string to prefix
-	 * @param string  $separator  The string to add in between the prefix and
-	 *                            the string. Defaults to '_'
 	 * @param string  $case       The string case. @see rwp_change_case() for
 	 *                            details
+	 * @param string  $separator  The string to add in between the prefix and
+	 *                            the string. Defaults to null
 	 * @return string
 	 */
-    public function prefix( $string, $separator = '_', $case = 'snake' ) {
+    public function prefix( $string, $case = 'snake', $separator = null ) {
 
 		if ( 'title' === $case ) {
 			$prefix = $this->get( 'name' );
@@ -538,6 +542,9 @@ abstract class Plugin extends Singleton implements Component {
 		if ( ! empty( $case ) ) {
 			switch ( $case ) {
 				case 'title':
+					if ( null === $separator ) {
+						$separator = ' ';
+					}
 					$string = preg_replace( '/((?<=\w)-(?=\w)|\_)/m', ' ', $string );
 					$string = Str::title( $string );
 			        break;
@@ -545,12 +552,21 @@ abstract class Plugin extends Singleton implements Component {
 					$string = Str::lower( $string );
 			        break;
 				case 'snake':
+					if ( empty( $separator ) ) {
+						$separator = '_';
+					}
 					$string = Str::snake( $string );
 			        break;
 				case 'kebab':
+					if ( empty( $separator ) ) {
+						$separator = '-';
+					}
 					$string = Str::kebab( $string );
 			        break;
 				case 'slug':
+					if ( empty( $separator ) ) {
+						$separator = '-';
+					}
 					$string = Str::slug( $string );
 			        break;
 				case 'camel':

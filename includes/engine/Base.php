@@ -32,6 +32,7 @@ class Base extends Plugin {
 			'title'        => __( 'RIESTER Core Plugin', 'rwp' ),
 			'capability'   => 'manage_options',
 			'settings-uri' => add_query_arg( 'page', 'rwp-options', 'admin.php' ),
+			'icon'         => 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZmlsbD0iY3VycmVudENvbG9yIj4KCTxwYXRoIGQ9Ik00ODYuMSwzMDguOGgtMzQuNXYxNzQuMWgzNC41YzUyLjUsMCw3Mi4yLTE5LjYsNzIuMi04N1M1MzguNywzMDguOCw0ODYuMSwzMDguOHoiIC8+Cgk8cGF0aCBkPSJNMCwwdjEwMjRoMTAyNGwwLTEwMjRIMHogTTU3MC44LDc5NS4ybC02OS0yMzQuNWMtMTIuNSwxLjYtMzIuOSwyLjMtNTAuMiwyLjN2MjMyLjJoLTk3LjJWMjI4LjhoMTM2LjUgYzEwOSwwLDE2NC43LDQ2LjMsMTY0LjcsMTY3LjFjMCw5MS0zNS4zLDEyNy44LTY4LjIsMTQyLjdsODIuMywyNTYuNUg1NzAuOHoiIC8+Cjwvc3ZnPgo=',
 			'paths'        => array(
 				'assets'       => array(
 					'dir' => RWP_PLUGIN_ROOT . 'assets/',
@@ -52,12 +53,12 @@ class Base extends Plugin {
 			),
 		);
 
-		$args = rwp_merge_args($defaults, $args);
-
+		$args = rwp_merge_args( $defaults, $args );
 
 		parent::__construct( $args );
 
 		$this->initialize_assets();
+
     }
 
 	/** Initialize the class and get the plugin settings */

@@ -1,11 +1,7 @@
-var rwp;
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../node_modules/bootstrap/js/dist/alert.js":
-/*!**************************************************!*\
-  !*** ../node_modules/bootstrap/js/dist/alert.js ***!
-  \**************************************************/
+/***/ 943:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*!
@@ -14,7 +10,7 @@ var rwp;
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
-   true ? module.exports = factory(__webpack_require__(/*! ./dom/event-handler.js */ "../node_modules/bootstrap/js/dist/dom/event-handler.js"), __webpack_require__(/*! ./base-component.js */ "../node_modules/bootstrap/js/dist/base-component.js")) :
+   true ? module.exports = factory(__webpack_require__(663), __webpack_require__(998)) :
   0;
 })(this, (function (EventHandler, BaseComponent) { 'use strict';
 
@@ -245,10 +241,7 @@ var rwp;
 
 /***/ }),
 
-/***/ "../node_modules/bootstrap/js/dist/base-component.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/bootstrap/js/dist/base-component.js ***!
-  \***********************************************************/
+/***/ 998:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*!
@@ -257,7 +250,7 @@ var rwp;
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
-   true ? module.exports = factory(__webpack_require__(/*! ./dom/data.js */ "../node_modules/bootstrap/js/dist/dom/data.js"), __webpack_require__(/*! ./dom/event-handler.js */ "../node_modules/bootstrap/js/dist/dom/event-handler.js")) :
+   true ? module.exports = factory(__webpack_require__(821), __webpack_require__(663)) :
   0;
 })(this, (function (Data, EventHandler) { 'use strict';
 
@@ -436,10 +429,7 @@ var rwp;
 
 /***/ }),
 
-/***/ "../node_modules/bootstrap/js/dist/dom/data.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/bootstrap/js/dist/dom/data.js ***!
-  \*****************************************************/
+/***/ 821:
 /***/ (function(module) {
 
 /*!
@@ -513,10 +503,7 @@ var rwp;
 
 /***/ }),
 
-/***/ "../node_modules/bootstrap/js/dist/dom/event-handler.js":
-/*!**************************************************************!*\
-  !*** ../node_modules/bootstrap/js/dist/dom/event-handler.js ***!
-  \**************************************************************/
+/***/ 663:
 /***/ (function(module) {
 
 /*!
@@ -915,12 +902,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-var __webpack_exports__ = {};
-/*!*****************************!*\
-  !*** ./js/plugins/alert.js ***!
-  \*****************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var bootstrap_js_dist_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/js/dist/alert */ "../node_modules/bootstrap/js/dist/alert.js");
+/* harmony import */ var bootstrap_js_dist_alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(943);
 /* harmony import */ var bootstrap_js_dist_alert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap_js_dist_alert__WEBPACK_IMPORTED_MODULE_0__);
 /** ============================================================================
  * alert
@@ -936,14 +918,13 @@ __webpack_require__.r(__webpack_exports__);
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-/*!********************************!*\
-  !*** ./css/plugins/alert.scss ***!
-  \********************************/
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 }();
-rwp = __webpack_exports__;
+var __webpack_export_target__ = (rwp = typeof rwp === "undefined" ? {} : rwp);
+for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
+if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
 /******/ })()
 ;
 //# sourceMappingURL=rwp-alert.js.map

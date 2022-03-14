@@ -42,5 +42,6 @@
   "toast.css": "css/rwp-toast.css",
   "toast.js": "js/rwp-toast.js",
   "tooltip.css": "css/rwp-tooltip.css",
-  "tooltip.js": "js/rwp-tooltip.js"
+  "tooltip.js": "js/rwp-tooltip.js",
+  "elementor.css": "css/rwp-elementor.css"
 }

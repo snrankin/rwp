@@ -12,6 +12,7 @@
 use RWP\Components\Collection;
 use RWP\Components\Html;
 use RWP\Components\Str;
+use RWP\Vendor\Wa72\HtmlPageDom\HtmlPageCrawler;
 /**
  * Check if a string is an html string
  *
@@ -582,6 +583,9 @@ function rwp_beautify_html( $content, $options = array() ) {
 
 	$html = $content;
 	if ( rwp_is_class( $html, '\\RWP\\Vendor\\Wa72\\HtmlPageDom\\HtmlPageCrawler' ) ) {
+		/**
+		 * @var \RWP\Vendor\Wa72\HtmlPageDom\HtmlPageCrawler $html
+		 */
 		$html = $html->saveHtml();
     }
 
@@ -590,6 +594,39 @@ function rwp_beautify_html( $content, $options = array() ) {
 	$html = rwp_html_page( $content );
 
 	$html->indent( $options );
+
+	$html = $html->getBody()->saveHTML();
+
+	$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
+
+	return $html;
+
+}
+
+/**
+ * Safely minify html
+ *
+ * @param mixed $content
+ * @param array $options
+ * @return string
+ * @throws DOMException
+ * @throws Exception
+ */
+function rwp_minify_html( $content, $options = array() ) {
+
+	$html = $content;
+	if ( rwp_is_class( $html, '\\RWP\\Vendor\\Wa72\\HtmlPageDom\\HtmlPageCrawler' ) ) {
+		/**
+		 * @var \RWP\Vendor\Wa72\HtmlPageDom\HtmlPageCrawler $html
+		 */
+		$html = $html->saveHtml();
+    }
+
+	$content = preg_replace( "/\r|\n{2,}|\h{2,}|\t/", '', $content );
+
+	$html = rwp_html_page( $content );
+
+	$html->minify( $options );
 
 	$html = $html->getBody()->saveHTML();
 

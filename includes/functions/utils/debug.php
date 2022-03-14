@@ -22,7 +22,11 @@ use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
  * @return VarDumper
  */
 function rwp_dump( $var ) {
-    return VarDumper::dump( $var );
+	ob_start();
+
+	VarDumper::dump( $var );
+
+    return ob_get_clean();
 }
 
 /**

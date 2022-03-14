@@ -30,6 +30,10 @@ define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_FILE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'includes/dependencies/' );
 
+if (!function_exists('get_plugin_data')) {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
 function rwp_meets_requirements() {
 	$meta = get_plugin_data(__FILE__);
 

@@ -25,7 +25,7 @@ class ACF extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+		if ( ! \is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			return;
 		}
 
@@ -71,7 +71,7 @@ class ACF extends Singleton {
 			acf_add_options_page(array(
 				'page_title' => __( 'RIESTERWP Core General Settings', 'rwp' ),
 				'menu_title' => __( 'RIESTERWP Core', 'rwp' ),
-				'menu_slug'  => rwp()->prefix( 'options', '-' ),
+				'menu_slug'  => rwp()->prefix( 'options', 'slug' ),
 				'capability' => rwp()->get( 'capability' ),
 				'icon_url'   => rwp()->get( 'icon' ),
 				'autoload'   => true,
@@ -80,7 +80,7 @@ class ACF extends Singleton {
 			acf_add_options_page(array(
 				'page_title' => __( 'Company Schema Information', 'rwp' ),
 				'menu_title' => __( 'Company Info', 'rwp' ),
-				'menu_slug'  => rwp()->prefix( 'company-info', '-' ),
+				'menu_slug'  => rwp()->prefix( 'company-info', 'slug' ),
 				'icon_url'   => 'dashicons-building',
 				'autoload'   => true,
 			));
@@ -112,8 +112,7 @@ class ACF extends Singleton {
 	 */
 
 	public function enqueue_acf_assets() {
-		rwp()->register_assets( 'acf' );
-		rwp()->enqueue_assets( 'acf' );
+		rwp()->add_assets( 'acf' );
 	}
 
 	/**
@@ -191,7 +190,8 @@ class ACF extends Singleton {
 		$fields = self::sanitize_acf_array( $fields, '', $post_id ); // phpcs:ignore
 
 		if ( rwp_str_has( $option, 'rwp-' ) ) {
-			rwp()->update_option( 'options', $fields );
+
+			rwp()->update_options( $fields );
 
         } else {
 			$option = rwp_change_case( $option, 'snake' );

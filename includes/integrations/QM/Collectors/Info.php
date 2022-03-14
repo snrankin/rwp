@@ -11,23 +11,7 @@
 
 namespace RWP\Integrations\QM\Collectors;
 
-if ( class_exists( '\\QM_Collector' ) ) {
+use RWP\Engine\Abstracts\Collector;
 
-	class Info extends \QM_Collector {
-
-		public function __construct( $title, $parent ) {
-			$this->title = $title;
-			$this->parent = $parent;
-			$this->id = rwp_change_case( $title, 'snake' );
-		}
-		public function name() {
-			return $this->title;
-		}
-
-		public function process() {
-			if ( is_array( $this->parent->output ) ) {
-				$this->data['log'] = $this->parent->output;
-			}
-		}
-	}
+class Info extends Collector {
 }

@@ -51,6 +51,45 @@ function rwp_basename( $string ) {
     return $string;
 }
 
+/**
+ * @param string $dir
+ * @param string $path_replace
+ * @return string
+ */
+function rwp_standard_dir( $dir, $abspath = '', $path_replace = null ) {
+
+	$dir = rwp_normalize_path( $dir );
+
+	if ( is_string( $path_replace ) ) {
+		if ( ! empty( $abspath ) ) {
+			$abspath = rwp_normalize_path( ABSPATH );
+			$contentpath = rwp_normalize_path( dirname( WP_CONTENT_DIR ) . '/' );
+		}
+		$dir = str_replace( array(
+			$abspath,
+			$contentpath,
+		), $path_replace, $dir );
+	}
+
+	return $dir;
+
+}
+
+/**
+ * @param string $path
+ * @return string
+ */
+function rwp_normalize_path( $path ) {
+	if ( function_exists( 'wp_normalize_path' ) ) {
+		$path = wp_normalize_path( $path );
+	} else {
+		$path = str_replace( '\\', '/', $path );
+		$path = str_replace( '//', '/', $path );
+	}
+
+	return $path;
+}
+
 
 /**
  * Access the WordPress Filesystem class
