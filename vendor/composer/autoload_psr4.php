@@ -31,7 +31,6 @@ return array(
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'GrumPHP\\' => array($vendorDir . '/phpro/grumphp-shim/src'),
-    'Ergebnis\\Json\\SchemaValidator\\' => array($vendorDir . '/ergebnis/json-schema-validator/src'),
     'Ergebnis\\Json\\Printer\\' => array($vendorDir . '/ergebnis/json-printer/src'),
     'Ergebnis\\Json\\Normalizer\\' => array($vendorDir . '/ergebnis/json-normalizer/src'),
     'Ergebnis\\Composer\\Normalize\\' => array($vendorDir . '/ergebnis/composer-normalize/src'),

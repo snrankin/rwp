@@ -11,93 +11,78 @@
 
 namespace RWP\Integrations\QM\Output;
 
-use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
-use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use RWP\Vendor\Symfony\Component\VarDumper\Cloner\VarCloner;
-if ( class_exists( '\\QM_Output_Html' ) ) {
+use RWP\Engine\Abstracts\DebugOutput;
 
-	class Info extends \QM_Output_Html {
+class Info extends DebugOutput {
 
-		public function __construct( \QM_Collector $collector, $output = array(), $title = '' ) {
-			parent::__construct( $collector );
+	/**
+	 * Outputs data in the footer
+	 */
+	public function output() {
 
-			$this->title = $title;
-			$this->output = $output;
-			$this->id = rwp()->prefix( 'info' );
+		$plugin = rwp();
+		$context = rwp_post();
 
-			add_filter( 'qm/output/menus', array( $this, 'admin_menu' ), 101 );
+		$this->before_non_tabular_output();
 
-		}
-		/**
-		 * Outputs data in the footer
-		 */
-		public function output() {
+		$plugin_col = '<section><h3>' . $plugin->get( 'title' ) . '</h3>' . rwp_dump( $plugin ) . '</section>';
 
-			$plugin = rwp();
+		$context_col = '<section><h3>Page Context</h3>' . rwp_dump( $context ) . '</section>';
 
-			$this->before_non_tabular_output();
-
-			echo rwp_element( array( //phpcs:ignore
-				'content' => array(
-					'<h3>' . $plugin->get_setting( 'title' ) . '</h3>',
+		$plugin_col = rwp_element( array( //phpcs:ignore
+			'content' => $plugin_col . $context_col,
+			'tag' => 'div',
+			'atts' => array(
+				'class' => array(
+					'qm-boxed',
 				),
-				'tag' => 'section',
-				'atts' => array(
-					'class' => array(
-						'plugin-title',
-					),
-				),
-			));
+			),
+		));
 
-			echo '</div>';
+		$plugin_col = $plugin_col->html();
 
-			echo '<div class="qm-boxed">';
+		echo $plugin_col; //phpcs:ignore
 
-			echo '<section class="plugin-settings"><h3>Plugin Settings</h3>';
+		$this->after_non_tabular_output();
 
-			$dumper = new HtmlDumper();
-			$cloner = new VarCloner();
-
-			$dumper->dump( $cloner->cloneVar( $plugin ) );
-
-			echo '</section>'; //phpcs:ignore
-
-			$context_wrapper = rwp_element( array( //phpcs:ignore
-				'content' => array(
-					'<h3>Page Context</h3>',
-				),
-				'tag' => 'section',
-				'atts' => array(
-					'class' => array(
-						'page-context',
-					),
-				),
-			));
-
-			ob_start();
-
-			self::output_inner( rwp_post() );
-
-			$context = ob_get_clean();
-
-			$context_wrapper->set_content( $context );
-
-			echo $context_wrapper; //phpcs:ignore
-
-			$this->after_non_tabular_output();
-
-		}
-
-		public function admin_menu( array $menu ) {
-			$data = $this->collector->get_data();
-			if ( isset( $data['log'] ) ) {
-				$menu[] = $this->menu( array(
-					'id'    => $this->id,
-					'href'  => '#qm-' . str_replace( '_', '-', $this->id ),
-					'title' => $this->title,
-				));
-			}
-			return $menu;
-		}
 	}
+
+	/**
+	 * @param array $class
+	 *
+	 * @return array
+	 */
+	public function admin_class( array $class ) {
+
+		return $class;
+	}
+
+
+	/**
+	 * Function for admin bar title
+	 *
+	 * @param array<string, mixed[]> $menu
+	 * @return array<string, mixed[]>
+	 */
+	public function admin_menu( array $menu ) {
+		$menu[] = $this->menu( array(
+			'id' => $this->id,
+			'href' => '#qm-' . $this->id,
+			'title' => $this->title,
+		) );
+		return $menu;
+	}
+
+	/**
+	 * Adds data to top admin bar
+	 *
+	 * @param array $title
+	 *
+	 * @return array
+	 */
+	public function admin_title( array $title ) {
+
+		return $title;
+	}
+
 }
