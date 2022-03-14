@@ -102,4 +102,14 @@ class SVG extends Element {
 
 		parent::__construct( $args );
 	}
+
+	public function data_uri() {
+		$svg = $this;
+        $content = $svg->minify( array( 'remove_empty_attributes' => true ) );
+		//$content = trim( str_replace( '"', "'", $content ) );
+		$content = base64_encode( $content );
+		$content = rwp_add_prefix( $content, 'data:image/svg+xml;base64,' );
+
+		return $content;
+	}
 }

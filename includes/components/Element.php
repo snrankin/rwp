@@ -11,6 +11,7 @@
 
 namespace RWP\Components;
 
+use DOMException;
 use DOMNode;
 use DOMNodeList;
 use Exception;
@@ -890,6 +891,54 @@ class Element {
 		return ! in_array( $tag, $self_closing ) ? '</' . \esc_attr( $tag ) . '>' : '';
 	}
 
+	/**
+	 * Beautify the html string
+	 *
+	 * @param array $options Options passed to PrettyMin::__construct()
+	 * @return string
+	 * @throws Exception
+	 * @throws DOMException
+	 */
+	public function beautify( $options = array() ) {
+		$this->build();
+		$html = $this->html;
+
+		$html = rwp_html_page( $html );
+
+		$html->indent( $options );
+
+		$html = $html->getBody()->saveHTML();
+
+		$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
+
+		return $html;
+	}
+
+
+
+	/**
+	 * Minify the html string
+	 *
+	 * @param array $options Options passed to PrettyMin::__construct()
+	 * @return string
+	 * @throws Exception
+	 * @throws DOMException
+	 */
+	public function minify( $options = array() ) {
+        $this->build();
+		$html = $this->html;
+
+		$html = rwp_html_page( $html );
+
+		$html->minify( $options );
+
+		$html = $html->getBody()->saveHTML();
+
+		$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
+
+		return $html;
+	}
+
 
 	/**
 	 * Determine if the given key exists.
@@ -938,6 +987,8 @@ class Element {
 	public function remove( $key ) {
 		\data_remove( $this, $key );
 	}
+
+
 
 	/**
      * Getting a singleton.
