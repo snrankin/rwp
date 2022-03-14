@@ -25,12 +25,12 @@ class Info extends DebugOutput {
 
 		$this->before_non_tabular_output();
 
-		$plugin_col = '<section><h3>' . $plugin->get( 'title' ) . '</h3>' . rwp_dump( $plugin ) . '</section>';
+		$plugin_col = '<section style="max-width:50%; overflow:hidden"><h3>' . $plugin->get( 'title' ) . '</h3>' . rwp_dump( $plugin ) . '</section>';
+		$plugin_col .= '<section><h3>Plugin Options</h3>' . rwp_dump( rwp_get_options() ) . '</section>';
+		$plugin_col .= '<section><h3>Page Context</h3>' . rwp_dump( $context ) . '</section>';
 
-		$context_col = '<section><h3>Page Context</h3>' . rwp_dump( $context ) . '</section>';
-
-		$plugin_col = rwp_element( array( //phpcs:ignore
-			'content' => $plugin_col . $context_col,
+		$plugin_col = rwp_element( array(
+			'content' => $plugin_col,
 			'tag' => 'div',
 			'atts' => array(
 				'class' => array(

@@ -112,8 +112,7 @@ class ACF extends Singleton {
 	 */
 
 	public function enqueue_acf_assets() {
-		rwp()->register_assets( 'acf' );
-		rwp()->enqueue_assets( 'acf' );
+		rwp()->add_assets( 'acf' );
 	}
 
 	/**
@@ -191,7 +190,8 @@ class ACF extends Singleton {
 		$fields = self::sanitize_acf_array( $fields, '', $post_id ); // phpcs:ignore
 
 		if ( rwp_str_has( $option, 'rwp-' ) ) {
-			rwp()->update_option( 'options', $fields );
+
+			rwp()->update_options( $fields );
 
         } else {
 			$option = rwp_change_case( $option, 'snake' );

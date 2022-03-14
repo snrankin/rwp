@@ -253,6 +253,10 @@ abstract class Plugin extends Singleton implements Component {
 
 		$option = $this->prefix( 'options' );
 
+		if ( 1 == $options->count() && $options->has( 'options' ) ) {
+			$options = $options->first();
+		}
+
 		if ( $global ) {
 			$updated = update_network_option( get_current_network_id(), $option, $options );
 		} else {
