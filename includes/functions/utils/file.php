@@ -45,7 +45,7 @@ function rwp_trailingslashit( $string ) {
  */
 
 function rwp_basename( $string ) {
-     $ext = pathinfo( $string, PATHINFO_EXTENSION );
+    $ext = pathinfo( $string, PATHINFO_EXTENSION );
     $string = wp_basename( $string, ".$ext" );
 
     return $string;

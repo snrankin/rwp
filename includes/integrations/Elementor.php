@@ -147,8 +147,6 @@ class Elementor extends Singleton {
 	public static function add_responsive_control_to_elementor( &$section, $id, $args, $options = array() ) {
 		$args['responsive'] = array();
 
-		$controls = $section->get_controls();
-
 		$active_breakpoints = (array) self::plugin()->breakpoints->get_active_breakpoints();
 
 		$devices = self::plugin()->breakpoints->get_active_devices_list( array( 'reverse' => true ) );
