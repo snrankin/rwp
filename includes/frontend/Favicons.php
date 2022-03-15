@@ -174,7 +174,7 @@ class Favicons extends Singleton {
 					}
 
 					$item = rwp_element( $atts )->html();
-				} elseif ( in_array( $icons, $key ) ) {
+				} elseif ( in_array( $key, $icons ) ) {
 					$item = $icons[ $key ];
 				} else {
 					$item = '';
