@@ -78,7 +78,7 @@ class Favicons extends Singleton {
 				$icons['tile-icon'] = reset( $tile_icon );
 			}
 
-			$theme_color = '#000000';
+			$theme_color = (string) apply_filters( 'rwp_favicons_theme_color', '' );
 
 			$custom_icons = rwp_collection(array(
 
@@ -188,9 +188,10 @@ class Favicons extends Singleton {
 				$meta_tags = $custom_icons->values()->all();
 			}
 
-			$meta_tags[] = '<meta name="msapplication-TileColor" content="' . $theme_color . '">';
-			$meta_tags[] = '<meta name="theme-color" content="' . $theme_color . '">';
-
+			if ( ! empty( $theme_color ) ) {
+				$meta_tags[] = '<meta name="msapplication-TileColor" content="' . $theme_color . '">';
+				$meta_tags[] = '<meta name="theme-color" content="' . $theme_color . '">';
+			}
 		}
 
 		return $meta_tags;
