@@ -36,7 +36,6 @@ function rwp_get_options() {
 	return apply_filters( 'rwp_get_options', get_option( RWP_PLUGIN_TEXTDOMAIN . '_options' ) );
 }
 
-
 /**
  *
  * @param mixed $option
