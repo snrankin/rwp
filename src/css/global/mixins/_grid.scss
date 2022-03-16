@@ -53,13 +53,13 @@
 	margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1);
 	margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
 	margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
-	width: calc(100% + var(--#{$variable-prefix}gutter-x));
+	min-width: 100%;
 
 	@if $important {
 		margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1) !important;
 		margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5) !important;
 		margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5) !important;
-		width: calc(100% + var(--#{$variable-prefix}gutter-x)) !important;
+		min-width: 100% !important;
 	}
 }
 
@@ -206,6 +206,42 @@
 				.g#{$infix}-#{$key},
 				.gy#{$infix}-#{$key} {
 					--#{$variable-prefix}gutter-y: #{$value};
+				}
+			}
+		}
+	}
+}
+
+@mixin make-grid-columns-2($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+	@each $breakpoint in map-keys($breakpoints) {
+		$infix: breakpoint-infix($breakpoint, $breakpoints);
+
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			&.col#{$infix}-auto {
+				@include make-col-auto;
+			}
+
+			@if $columns > 0 {
+				@for $i from 1 through $columns {
+					&.col#{$infix}-#{$i} {
+						@include make-col($i, $columns);
+					}
+				}
+
+				// `$columns - 1` because offsetting by the width of an entire row isn't possible
+				@for $i from 0 through ($columns - 1) {
+					@if not($infix == '' and $i == 0) {
+						// Avoid emitting useless .offset-0
+						&.offset#{$infix}-#{$i} {
+							@include make-col-offset($i, $columns);
+						}
+						&.offset#{$infix}-nl#{$i} {
+							@include make-col-offset-negative-left($i, $columns);
+						}
+						&.offset#{$infix}-nr#{$i} {
+							@include make-col-offset-negative-right($i, $columns);
+						}
+					}
 				}
 			}
 		}
