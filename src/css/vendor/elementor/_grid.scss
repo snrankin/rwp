@@ -53,12 +53,28 @@
 }
 
 .elementor-container {
-	@include make-container();
 	--#{$variable-prefix}gutter-x: var(--e-gx-default);
 	--#{$variable-prefix}gutter-y: var(--e-gy-default);
+	width: 100%;
+	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
+	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
+	margin-right: auto;
+	margin-left: auto;
 	> .elementor-row {
 		--#{$variable-prefix}gutter-x: var(--e-gx-default);
 		--#{$variable-prefix}gutter-y: var(--e-gy-default);
+	}
+}
+
+.rwp-elementor {
+	.elementor-section.elementor-section-boxed > .elementor-container {
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			$infix: breakpoint-infix($breakpoint);
+
+			@include media-breakpoint-up($breakpoint) {
+				max-width: var(--#{$variable-prefix}container#{$infix}-width);
+			}
+		}
 	}
 }
 
@@ -72,11 +88,6 @@
 		align-items: center;
 	}
 
-	&.elementor-section-boxed {
-		> .elementor-container {
-			@include make-container-widths();
-		}
-	}
 	&.elementor-reverse-mobile {
 		> .elementor-container {
 			> .elementor-row {
@@ -87,6 +98,21 @@
 					order: -1;
 					@include media-breakpoint-up(md) {
 						order: initial;
+					}
+				}
+			}
+		}
+	}
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$infix: breakpoint-infix($breakpoint);
+
+		@for $i from 1 through $grid-row-columns {
+			&.row-cols#{$infix}-#{$i} {
+				> .elementor-container {
+					width: 100%;
+					flex: 0 1 auto;
+					> .elementor-row {
+						@include row-cols($i);
 					}
 				}
 			}
@@ -196,6 +222,17 @@ $elementor-col-widths: (
 
 .elementor-row {
 	@include make-row();
+	--#{$variable-prefix}gutter-x: var(--e-gx-default);
+	--#{$variable-prefix}gutter-y: var(--e-gy-default);
+
+	margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1);
+	margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
+	margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
+	min-width: 100%;
+	width: calc(100% + var(--#{$variable-prefix}gutter-x));
+
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .elementor-column {
@@ -288,4 +325,13 @@ $elementor-col-widths: (
 
 [class*='elementor-column-gap'] > .elementor-row > .elementor-column > .elementor-element-populated > .elementor-widget-wrap {
 	padding: 0;
+}
+
+.elementor-edit-area-active .elementor-column-wrap.elementor-element-empty {
+	padding: 10px;
+	@include media-breakpoint-up(md) {
+		.elementor-widget-wrap {
+			margin: 0;
+		}
+	}
 }
