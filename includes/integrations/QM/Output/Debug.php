@@ -15,6 +15,8 @@ use RWP\Engine\Abstracts\DebugOutput;
 
 class Debug extends DebugOutput {
 
+	public $output = array();
+
 
 	/**
 	 * Outputs data in the footer
