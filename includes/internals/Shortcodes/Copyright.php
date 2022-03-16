@@ -45,7 +45,7 @@ class Copyright extends Shortcode {
 
         $atts = rwp_process_shortcode( $atts, $this->defaults );
 
-		$content = wp_sprintf( '%s%d%s,%s', $atts['before'], gmdate( 'Y' ), $atts['name'], $atts['after'] );
+		$content = wp_sprintf( '%s%d %s%s', $atts['before'], gmdate( 'Y' ), $atts['name'], $atts['after'] );
 
 		$copyright = $this->wrapper( $content, $atts )->html();
 
