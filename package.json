@@ -13,6 +13,7 @@
     "scripts": {
         "build": "npm-run-all build-group:*",
         "build-group:main": "webpack --color --progress --name main --config ./webpack/webpack.config.js",
+        "build-group-dev:main": "webpack --color --progress --stats verbose --name main --config ./webpack/webpack.config.js",
         "build-group-prod:main": "webpack --color --progress --mode=production --name main --config ./webpack/webpack.config.js",
         "build:public": "webpack --color --progress --name main --config-name public --config ./webpack/webpack.config.js",
         "build-prod:public": "webpack --color --progress --mode=production --name main --config-name public --config ./webpack/webpack.config.js",
@@ -49,6 +50,7 @@
         "build:modal": "webpack --color --progress --name plugins --config-name modal --config ./webpack/webpack.config.js",
         "build-prod:modal": "webpack --color --progress --mode=production --name plugins --config-name modal --config ./webpack/webpack.config.js",
         "build:slider": "webpack --color --progress --name plugins --config-name slider --config ./webpack/webpack.config.js",
+        "build-debug:slider": "webpack --color --progress --stats verbose --name plugins --config-name slider --config ./webpack/webpack.config.js",
         "build-prod:slider": "webpack --color --progress --mode=production --name plugins --config-name slider --config ./webpack/webpack.config.js",
         "build-group:fonts": "webpack --color --progress --name fonts --config ./webpack/webpack.config.js",
         "build-group-prod:fonts": "webpack --color --progress --mode=production --name fonts --config ./webpack/webpack.config.js",

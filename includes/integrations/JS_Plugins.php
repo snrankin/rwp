@@ -66,18 +66,6 @@ class JS_Plugins extends Singleton {
 	}
 
 	/**
-	 * Register/enqueue Fancybox v4
-	 *
-	 * @link https://fancyapps.com/docs/ui/fancybox/
-	 *
-	 * @return void
-	 */
-	public function enqueue_fancybox() {
-		rwp()->register_assets( 'modal' );
-		rwp()->enqueue_assets( 'modal' );
-	}
-
-	/**
 	 * Register/enqueue Select2
 	 *
 	 * @link https://select2.org/
@@ -85,20 +73,7 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_select2() {
-		rwp()->register_assets( 'select2' );
-		rwp()->enqueue_assets( 'select2' );
-	}
-
-	/**
-	 * Register/enqueue Tiny Slider
-	 *
-	 * @link https://github.com/ganlanyuan/tiny-slider
-	 *
-	 * @return void
-	 */
-	public function enqueue_tiny_slider() {
-		rwp()->register_assets( 'slider' );
-		rwp()->enqueue_assets( 'slider' );
+		rwp()->add_assets( 'select2' );
 	}
 
 	/**
@@ -143,7 +118,6 @@ class JS_Plugins extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_lazysizes() {
-		rwp()->register_scripts( 'lazysizes' );
-		rwp()->enqueue_scripts( 'lazysizes' );
+		rwp()->add_assets( 'lazysizes' );
 	}
 }

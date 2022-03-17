@@ -326,7 +326,9 @@ let webpackConfig = {
 		modules: [filePaths.node, filePaths.src],
 		enforceExtension: false,
 	},
-	externals: {},
+	externals: {
+		jquery: 'jQuery',
+	},
 };
 
 webpackConfig = merge(config.webpack, webpackConfig);

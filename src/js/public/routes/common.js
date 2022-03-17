@@ -7,7 +7,7 @@
  * ========================================================================== */
 
 import smoothscroll from 'smoothscroll-polyfill';
-import { betterHashLinks } from '../../util/utils';
+// import { betterHashLinks } from '../../util/utils';
 
 export default {
 	init() {
@@ -16,6 +16,8 @@ export default {
 	finalize() {
 		// JavaScript to be fired on the home page, after the init JS
 		smoothscroll.polyfill();
-		window.addEventListener('click', betterHashLinks);
+		window.addEventListener('click', rwp.betterHashLinks);
+
+		rwp.slider('.autoWidth-lazyload');
 	},
 };

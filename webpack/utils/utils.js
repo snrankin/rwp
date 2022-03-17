@@ -207,7 +207,11 @@ const pathByType = (file = '') => {
 		folderType = folders.fonts;
 	}
 
-	return path.join(folderType, file);
+	if (!isEmpty(folderType)) {
+		file = './' + path.join(folderType, file);
+	}
+
+	return file;
 };
 
 /**
@@ -255,7 +259,7 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 
 	entry = _.mapValues(entry, function (value) {
 		_.each(value, function (file, fileKey) {
-			value[fileKey] = './' + pathByType(file);
+			value[fileKey] = pathByType(file);
 		});
 		return value;
 	});

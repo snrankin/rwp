@@ -48,7 +48,7 @@ if (_.has(webpackConfig, 'name')) {
 	webpackConfig = [webpackConfig];
 }
 
-if (!buildWatch && config.enabled.debug) {
+if (!buildWatch && (config.enabled.debug || argv.stats === 'verbose')) {
 	debug(webpackConfig);
 }
 

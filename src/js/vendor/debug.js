@@ -7,6 +7,8 @@
  * ========================================================================== */
 
 /* eslint-disable */
+
+console.log(rwp);
 Sfdump =
 	window.Sfdump ||
 	(function (doc) {

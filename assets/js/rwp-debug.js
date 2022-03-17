@@ -30,6 +30,8 @@ var __webpack_exports__ = {};
  * ========================================================================== */
 
 /* eslint-disable */
+
+console.log(rwp);
 Sfdump =
 	window.Sfdump ||
 	(function (doc) {

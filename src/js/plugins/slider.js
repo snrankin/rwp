@@ -26,7 +26,7 @@ const bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height
  * @param {*} [args={}]
  * @return {TinySliderInstance}
  */
-export default (containerClass = '.gallery-slider', args = {}) => {
+export function slider(containerClass = '.gallery-slider', args = {}) {
 	const defaults = {
 		navPosition: 'bottom',
 		loop: false,
@@ -91,4 +91,4 @@ export default (containerClass = '.gallery-slider', args = {}) => {
 	let sliderInstance = tns(args);
 
 	return sliderInstance;
-};
+}

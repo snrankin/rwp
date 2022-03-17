@@ -33,54 +33,6 @@ $rwp_plugin_assets = [
             'location' => 'modernizr',
         	'footer'   => true,
         ],
-        'alert' => [
-            'handle'   => 'alert',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'alert',
-            'footer'   => true,
-        ],
-		'modal' => [
-            'handle'   => 'modal',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'modal',
-            'footer'   => true,
-        ],
-		'offcanvas' => [
-            'handle'   => 'offcanvas',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'offcanvas',
-            'footer'   => true,
-        ],
-		'popover' => [
-            'handle'   => 'popover',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'popover',
-            'footer'   => true,
-        ],
-		'scrollspy' => [
-            'handle'   => 'scrollspy',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'scrollspy',
-            'footer'   => true,
-        ],
-		'slider' => [
-            'handle'   => 'slider',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'slider',
-            'footer'   => true,
-        ],
-		'toast' => [
-            'handle'   => 'toast',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'toast',
-            'footer'   => true,
-        ],
-		'tooltip' => [
-            'handle'   => 'tooltip',
-            'deps'     => ['rwp-app', 'rwp-bootstrap'],
-            'location' => 'tooltip',
-            'footer'   => true,
-        ],
         'select2' => [
             'handle'   => 'select2',
             'location' => 'select2',
@@ -108,17 +60,9 @@ $rwp_plugin_assets = [
             'handle'   => 'acf',
             'location' => 'acf',
         ],
-        'modal' => [
-            'handle'   => 'modal',
-            'location' => 'modal',
-        ],
         'select2' => [
             'handle'   => 'select2',
             'location' => 'select2',
-        ],
-        'slider' => [
-            'handle'   => 'slider',
-            'location' => 'slider',
         ],
         'gravity-forms' => [
             'handle'   => 'gravity-forms',
