@@ -52,6 +52,17 @@ function rwp_basename( $string ) {
 }
 
 /**
+ * Get the file extension
+ *
+ * @param string $file
+ * @return string
+ */
+
+function rwp_file_ext( $file ) {
+    return pathinfo( $file, PATHINFO_EXTENSION );
+}
+
+/**
  * @param string $dir
  * @param string $path_replace
  * @return string

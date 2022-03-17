@@ -30,7 +30,7 @@ $rwp_plugin_assets = [
         ],
         'modernizr' => [
             'handle'   => 'modernizr',
-            'location' => 'modernizr',
+            'location' => 'global',
         	'footer'   => true,
         ],
         'select2' => [
@@ -99,18 +99,9 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
     $rwp_lazysizes_version = '5.3.2';
 	$rwp_lazysizes_plugins = array(
 		'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
-		'aspectratio' => true,
 		'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
-		'bgset'       => true,
 		'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
 		'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
-		'object-fit'  => true,
-		'parent-fit'  => rwp_get_option('modules.lazysizes.parentfit', false),
-		'print'       => true,
-		'progressive' => true,
-		'respimg'     => true,
-		'unload'      => true,
-		'video-embed' => true,
 	);
 
     $rwp_lazysizes_deps = array();
@@ -129,8 +120,6 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
     }
 
     $rwp_plugin_assets['scripts']['lazysizes'] = array(
-    'src'      => "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/$rwp_lazysizes_version/lazysizes.min.js",
-    'version'  => $rwp_lazysizes_version,
     'location' => 'lazysizes',
     'footer'   => true,
     'handle'   => 'lazysizes',

@@ -12,6 +12,7 @@ module.exports = {
 		wp: true,
 		wpApiSettings: true,
 		_: true,
+		Modernizr: true,
 	},
 	env: {
 		es2017: true,

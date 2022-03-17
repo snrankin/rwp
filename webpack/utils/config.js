@@ -35,7 +35,7 @@ exports.folders = folders;
 const groupName = !isEmpty(argv.name) ? argv.name : '';
 const buildWatch = !isEmpty(argv.watch) ? true : false;
 const configName = !isEmpty(argv['config-name']) ? argv['config-name'] : '';
-const isProduction = env === 'production' ? true : false;
+const isProduction = env() === 'production' ? true : false;
 const rootPath = filePaths && filePaths.root ? filePaths.root : process.cwd();
 
 const buildStats = !isEmpty(argv.stats)
@@ -97,9 +97,11 @@ function createConfig(groupName = '', configName = '') {
 				nodeEnv: isProduction ? 'production' : 'development',
 				splitChunks: {
 					hidePathInfo: true,
+					automaticNameDelimiter: '-',
+
 					cacheGroups: {
 						vendors: {
-							test: /^[\\/]node_modules[\\/](?!(?:bootstrap|@fortawesome|bootstrap-icons)[\\/]).*/,
+							test: /^[\\/]node_modules[\\/](?!(?:bootstrap|@fortawesome|bootstrap-icons|select2|tiny-slider|lazysizes)[\\/]).*/,
 							layer: 'vendors',
 							chunks: 'all',
 							idHint: 'vendors',

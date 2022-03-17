@@ -37,6 +37,7 @@ body:not(.post-type-acf-field-group) {
 				@include acf-row('padding', true, 0, 0);
 				padding-top: 0;
 				padding-bottom: 0;
+				flex-direction: row;
 				&.label-none {
 					> .acf-input {
 						width: 100%;
