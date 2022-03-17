@@ -1,0 +1,16 @@
+/*
+**/.*
+
+!assets/
+!config/
+!includes/
+!languages/
+!vendor/
+vendor/*
+!vendor/composer
+!vendor/autoload.php
+!.gitignore
+!rwp.php
+!config.json
+!uninstall.php
+!readme.txt
