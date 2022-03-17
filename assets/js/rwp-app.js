@@ -119,7 +119,6 @@ function slider() {
 /* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.actual; },
 /* harmony export */   "as": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.as; },
 /* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.aspect; },
-/* harmony export */   "betterHashLinks": function() { return /* binding */ betterHashLinks; },
 /* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
 /* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
 /* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
@@ -366,37 +365,6 @@ function toggleFocus(event) {
     }
 
     menuItem.classList.toggle('focus');
-  }
-}
-function betterHashLinks() {
-  var id = location.hash.substring(1);
-  var motionQuery = window.matchMedia('(prefers-reduced-motion)');
-
-  if (!/^[A-z0-9_-]+$/.test(id)) {
-    return;
-  }
-
-  var element = document.getElementById(id);
-
-  if (element) {
-    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
-      element.tabIndex = -1;
-    }
-
-    if (!motionQuery.matches) {
-      element.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-
-    if (element.is(':focus')) {
-      //checking if the target was focused
-      return false;
-    } else {
-      element.attr('tabindex', '-1'); //Adding tabindex for elements not focusable
-
-      element.focus(); //Setting focus
-    }
   }
 }
 /**
@@ -22312,7 +22280,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "actual": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.actual; },
 /* harmony export */   "as": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.as; },
 /* harmony export */   "aspect": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.aspect; },
-/* harmony export */   "betterHashLinks": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.betterHashLinks; },
 /* harmony export */   "bsAtts": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.bsAtts; },
 /* harmony export */   "camelCase": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.camelCase; },
 /* harmony export */   "changeTag": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.changeTag; },
