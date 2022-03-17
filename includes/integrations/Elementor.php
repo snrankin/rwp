@@ -169,11 +169,9 @@ class Elementor extends Singleton {
 			'mobile'       => '',
 		);
 
-		foreach ( array_keys( $breakpoints ) as $device ) {
-			if ( ! in_array( $device, $devices, true ) ) {
-				unset( $breakpoints[ $device ] );
-			}
-		}
+		$breakpoints = array_filter($breakpoints, function( $device ) use ( $devices ) {
+			return in_array( $device, $devices, true );
+		}, ARRAY_FILTER_USE_KEY);
 
 		$responsive_duplication_mode   = self::plugin()->breakpoints->get_responsive_control_duplication_mode();
 		$additional_breakpoints_active = self::plugin()->experiments->is_feature_active( 'additional_custom_breakpoints' );
@@ -226,12 +224,12 @@ class Elementor extends Singleton {
 					$control_args['prefix_class'] = wp_sprintf( $args['prefix_class'], $device_prefix_class );
 				}
 
-				$direction = 'min';
+				$direction = 'max';
 
 				if ( Breakpoints_Manager::BREAKPOINT_KEY_DESKTOP !== $device_name ) {
 					if ( rwp_array_has( $device_name, $active_breakpoints ) ) {
 						$direction = $active_breakpoints[ $device_name ]->get_direction();
-					}
+					}               
 				}
 
 				$control_args['responsive'][ $direction ] = $device_name;

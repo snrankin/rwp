@@ -685,6 +685,10 @@ class Nav extends \Walker_Nav_Menu {
 		if ( current_user_can( 'edit_theme_options' ) ) {
 
 			$container_tag = data_get( $args, 'container', 'nav' );
+
+			if ( empty( $container_tag ) ) {
+				$container_tag = 'nav';
+			}
 			$container_id = data_get( $args, 'container_id', '' );
 			$container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
 

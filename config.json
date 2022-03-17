@@ -58,7 +58,7 @@
 					"admin": ["admin.js", "admin.scss"]
 				},
 				"app": {
-					"app": ["util/utils.js"]
+					"app": ["app.js"]
 				},
 				"bootstrap": {
 					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
@@ -68,39 +68,19 @@
 				}
 			},
 			"webpack": {
+				"optimization": {
+					"removeAvailableModules": true,
+					"splitChunks": {
+						"chunks": "async"
+					},
+					"usedExports": true
+				},
 				"output": {
+					"chunkLoading": "jsonp",
 					"library": {
 						"name": "rwp",
 						"type": "assign-properties"
 					}
-				}
-			}
-		},
-		"plugins": {
-			"files": {
-				"alert": {
-					"alert": ["plugins/alert.js", "plugins/alert.scss"]
-				},
-				"modal": {
-					"modal": ["plugins/modal.js", "plugins/modal.scss"]
-				},
-				"offcanvas": {
-					"offcanvas": ["plugins/offcanvas.js", "plugins/offcanvas.scss"]
-				},
-				"popover": {
-					"popover": ["plugins/popover.js", "plugins/popover.scss"]
-				},
-				"scrollspy": {
-					"scrollspy": ["plugins/scrollspy.js"]
-				},
-				"slider": {
-					"slider": ["plugins/slider.js", "plugins/slider.scss"]
-				},
-				"toast": {
-					"toast": ["plugins/toast.js", "plugins/toast.scss"]
-				},
-				"tooltip": {
-					"tooltip": ["plugins/tooltip.js", "plugins/tooltip.scss"]
 				}
 			}
 		},
