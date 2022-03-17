@@ -49,6 +49,20 @@ trait Assets {
 
 	public function asset_filename( $asset ) {
 
+		$type = rwp_file_ext( $asset );
+
+		if ( 'js' === $type ) {
+			if ( defined( 'COMPRESS_SCRIPTS' ) && COMPRESS_SCRIPTS ) {
+				$asset = rwp_str_replace( '.js', '.min.js', $asset );
+			}
+		}
+
+		if ( 'css' === $type ) {
+			if ( defined( 'COMPRESS_CSS' ) && COMPRESS_CSS ) {
+				$asset = rwp_str_replace( '.css', '.min.css', $asset );
+			}
+		}
+
 		$manifest = $this->get( 'assets.manifest' );
 
 		if ( $manifest ) {

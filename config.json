@@ -99,7 +99,7 @@
 					"gravity-forms": ["vendor/gravity-forms.scss"]
 				},
 				"lazysizes": {
-					"lazysizes": ["vendor/lazysizes.scss"]
+					"lazysizes": ["vendor/lazysizes.js", "vendor/lazysizes.scss"]
 				},
 				"modernizr": {
 					"modernizr": ["vendor/modernizr.js"]

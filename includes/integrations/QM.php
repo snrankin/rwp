@@ -193,7 +193,7 @@ class QM extends Singleton {
 
 			if ( defined( 'QM_EDITOR_COOKIE' ) ) {
 				$editor = QM_EDITOR_COOKIE;
-			} else if ( isset( $_COOKIE[ QM_EDITOR_COOKIE ] ) ) {
+			} else if ( isset( $_COOKIE['QM_EDITOR_COOKIE'] ) ) {
 				$editor = data_get( $_COOKIE, 'QM_EDITOR_COOKIE' );
 			}
 
