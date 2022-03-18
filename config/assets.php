@@ -28,6 +28,10 @@ $rwp_plugin_assets = [
             'location' => 'public',
         	'footer'   => true,
         ],
+		'bootstrap' => [
+            'handle'   => 'bootstrap',
+            'location' => 'bootstrap',
+        ],
         'modernizr' => [
             'handle'   => 'modernizr',
             'location' => 'global',
