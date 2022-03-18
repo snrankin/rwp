@@ -46,7 +46,7 @@ export function slider(containerClass = '.gallery-slider', args = {}) {
 					.find('.tns-controls .btn')
 					.css({ top: sliderheight * 0.5 });
 			}
-			if (has(elem, 'navItems') && !isEmpty(elem.navItems)) {
+			if (has(elem, 'navItems') && !isEmpty(elem.navItems) && !elem.navAsThumbnails) {
 				const navItems = elem.navItems;
 
 				if (navItems.length) {
