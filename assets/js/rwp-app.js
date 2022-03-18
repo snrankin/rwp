@@ -61,7 +61,7 @@ function slider() {
         });
       }
 
-      if ((0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.has)(elem, 'navItems') && !(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(elem.navItems)) {
+      if ((0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.has)(elem, 'navItems') && !(0,_util_utils__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(elem.navItems) && !elem.navAsThumbnails) {
         var navItems = elem.navItems;
 
         if (navItems.length) {
