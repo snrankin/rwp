@@ -40,7 +40,7 @@ class Body_Class extends Singleton {
 		}
 
 		if ( ! is_admin() ) {
-			if ( is_plugin_active( 'query-monitor/query-monitor.php' ) && ! is_user_logged_in() ) {
+			if ( is_plugin_active( 'query-monitor/query-monitor.php' ) && is_user_logged_in() ) {
 				$classes[] = 'qm';
 			}
 			if ( is_singular() && ! is_front_page() ) {
