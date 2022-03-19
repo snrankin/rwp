@@ -227,7 +227,12 @@ const cssLoaders = [
 						: [
 								'cssnano',
 								{
-									preset: 'lite',
+									preset: [
+										'lite',
+										{
+											normalizeWhitespace: false,
+										},
+									],
 								},
 						  ],
 				],

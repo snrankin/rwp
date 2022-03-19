@@ -289,7 +289,7 @@
 	}
 }
 
-@function page-gutter($breakpoint: 'xs') {
+@function page-gutter($breakpoint: 'xs', $container: false) {
 	$container-width: map-get($container-widths, $breakpoint);
 
 	@if $breakpoint == '' {
@@ -302,18 +302,23 @@
 		$container-width: 100vw;
 	}
 
-	$page-gutter: 'calc((100vw - #{$container-width}) * 0.5)';
+	$page-gutter: '';
+	@if $container == true {
+		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (var(--#{$variable-prefix}gutter-x) * 0.5))';
+	} @else {
+		$page-gutter: 'calc((100vw - #{$container-width}) * 0.5)';
+	}
 
 	@return unquote($page-gutter);
 }
 
 @function stretched-col-content($breakpoint) {
-	$gutter: quote(page-gutter($breakpoint));
+	$gutter: quote(page-gutter($breakpoint, true));
 	@if $gutter != 0 {
 		$gutter: str-replace('#{$gutter}', 'calc', '');
 	}
 
-	$stretch: 'calc(#{$gutter} + (var(--#{$variable-prefix}gutter-x) * 0.5) + 100%)';
+	$stretch: 'calc(#{$gutter} + 100%)';
 
 	@return unquote($stretch);
 }
@@ -335,18 +340,22 @@
 		@include media-breakpoint-up($breakpoint) {
 			width: stretched-col-content($breakpoint);
 
-			$gutter: page-gutter($breakpoint);
+			$gutter: page-gutter($breakpoint, true);
 			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
-			$padding-gutter: $gutter;
+			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
+			$padding-gutter: '#{$gutter} !important';
+			@debug 'Margin: #{$margin-gutter}';
+			@debug $padding-gutter;
+
 			@if $side == left {
-				margin-left: calc(#{$margin-gutter} * -1) !important;
+				margin-left: unquote($margin-gutter);
 				@if $content-in-grid == true {
-					padding-left: $padding-gutter !important;
+					padding-left: unquote($padding-gutter);
 				}
 			} @else {
-				margin-right: calc(#{$margin-gutter} * -1) !important;
+				margin-right: unquote($margin-gutter);
 				@if $content-in-grid == true {
-					padding-right: $padding-gutter !important;
+					padding-right: unquote($padding-gutter);
 				}
 			}
 		}
