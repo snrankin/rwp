@@ -348,3 +348,39 @@
 		}
 	}
 }
+
+@mixin stretch-col-content-mobile(
+	$side: left,
+	$content-in-grid: true,
+	$breakpoints: (
+		xs,
+		sm,
+	)
+) {
+	@if is-map($breakpoints) and map-has-key($breakpoints, 'md') == true {
+		$breakpoints: map-keys($breakpoints);
+	}
+	@each $breakpoint in $breakpoints {
+		@include media-breakpoint-down($breakpoint) {
+			$infix: breakpoint-infix($breakpoint);
+
+			width: stretched-col-content($infix);
+
+			$gutter: page-gutter($infix, true);
+			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
+			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
+			$padding-gutter: '#{$gutter} !important';
+			@if $side == left {
+				margin-left: unquote($margin-gutter);
+				@if $content-in-grid == true {
+					padding-left: unquote($padding-gutter);
+				}
+			} @else {
+				margin-right: unquote($margin-gutter);
+				@if $content-in-grid == true {
+					padding-right: unquote($padding-gutter);
+				}
+			}
+		}
+	}
+}

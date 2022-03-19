@@ -212,4 +212,38 @@
 			}
 		}
 	}
+
+	.stretched-col-mobile {
+		&.left-mobile {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(left, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(left, true);
+				}
+			}
+		}
+
+		&.right-mobile {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(right, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(right, true);
+				}
+			}
+		}
+	}
 }
