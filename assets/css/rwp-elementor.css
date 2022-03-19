@@ -1580,22 +1580,22 @@ body.elementor{
         flex-direction:row;
     }
     .elementor-column.stretched-col.left:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.left.in-grid-content > .elementor-column-wrap{
-        width:calc(5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-left:calc(5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-left:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .elementor-column.stretched-col.right:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.right.in-grid-content > .elementor-column-wrap{
-        width:calc(5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-right:calc(5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-md-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .elementor-edit-area-active .elementor-column-wrap.elementor-element-empty .elementor-widget-wrap{
         margin:0;
@@ -1933,22 +1933,22 @@ body.elementor{
         flex-direction:row;
     }
     .elementor-column.stretched-col.left:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(7.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((7.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.left.in-grid-content > .elementor-column-wrap{
-        width:calc(7.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((7.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-left:calc(7.5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-left:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .elementor-column.stretched-col.right:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(7.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((7.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.right.in-grid-content > .elementor-column-wrap{
-        width:calc(7.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((7.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-right:calc(7.5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-lg-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }}
 
 @media (min-width: 992px) and (max-width: 1199.98px){
@@ -2283,22 +2283,22 @@ body.elementor{
         flex-direction:row;
     }
     .elementor-column.stretched-col.left:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(12.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((12.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.left.in-grid-content > .elementor-column-wrap{
-        width:calc(12.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((12.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-left:calc(12.5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-left:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .elementor-column.stretched-col.right:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(12.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((12.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.right.in-grid-content > .elementor-column-wrap{
-        width:calc(12.5vw + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((12.5vw + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-right:calc(12.5vw + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-xl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }}
 
 @media (min-width: 1200px) and (max-width: 1399.98px){
@@ -2636,22 +2636,22 @@ body.elementor{
         flex-direction:row;
     }
     .elementor-column.stretched-col.left:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(50vw - 525px + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((50vw - 525px + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.left.in-grid-content > .elementor-column-wrap{
-        width:calc(50vw - 525px + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-left:calc((50vw - 525px + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-left:calc(50vw - 525px + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-left:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .elementor-column.stretched-col.right:not(.in-grid-content) > .elementor-column-wrap{
-        width:calc(50vw - 525px + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((50vw - 525px + var(--bs-gutter-x) * 0.5) * -1) !important;
+        width:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
     }
     .elementor-column.stretched-col.right.in-grid-content > .elementor-column-wrap{
-        width:calc(50vw - 525px + var(--bs-gutter-x) * 0.5 + 100%);
-        margin-right:calc((50vw - 525px + var(--bs-gutter-x) * 0.5) * -1) !important;
-        padding-right:calc(50vw - 525px + var(--bs-gutter-x) * 0.5) !important;
+        width:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-xxl-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }}
 
 /*# sourceMappingURL=rwp-elementor.css.map*/
