@@ -460,7 +460,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 0,
+					'acfe_seamless_style' => 1,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -630,7 +630,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 0,
+					'acfe_seamless_style' => 1,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -750,7 +750,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 0,
+					'acfe_seamless_style' => 1,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -777,6 +777,126 @@ acf_add_local_field_group(array(
 							'show_column_weight' => 1000,
 							'allow_quickedit' => 0,
 							'allow_bulkedit' => 0,
+						),
+					),
+				),
+				array(
+					'key' => 'field_623511a69d0ef',
+					'label' => 'BugHerd',
+					'name' => 'bugherd',
+					'type' => 'group',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'layout' => 'block',
+					'acfe_seamless_style' => 0,
+					'acfe_group_modal' => 0,
+					'sub_fields' => array(
+						array(
+							'key' => 'field_623511bc9d0f0',
+							'label' => 'Enable BugHerd',
+							'name' => 'enable',
+							'type' => 'true_false',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'message' => '',
+							'default_value' => 0,
+							'ui' => 1,
+							'ui_on_text' => '',
+							'ui_off_text' => '',
+						),
+						array(
+							'key' => 'field_623511f39d0f1',
+							'label' => 'Project Key',
+							'name' => 'project_key',
+							'type' => 'text',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => array(
+								array(
+									array(
+										'field' => 'field_623511bc9d0f0',
+										'operator' => '==',
+										'value' => '1',
+									),
+								),
+							),
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'acfe_save_meta' => 0,
+							'default_value' => '',
+							'placeholder' => '',
+							'prepend' => '',
+							'append' => '',
+							'maxlength' => '',
+						),
+						array(
+							'key' => 'field_623512149d0f2',
+							'label' => 'Enable Frontend',
+							'name' => 'frontend',
+							'type' => 'true_false',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => array(
+								array(
+									array(
+										'field' => 'field_623511bc9d0f0',
+										'operator' => '==',
+										'value' => '1',
+									),
+								),
+							),
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'message' => '',
+							'default_value' => 1,
+							'ui' => 1,
+							'ui_on_text' => '',
+							'ui_off_text' => '',
+						),
+						array(
+							'key' => 'field_623512329d0f3',
+							'label' => 'Enable Backend',
+							'name' => 'backend',
+							'type' => 'true_false',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => array(
+								array(
+									array(
+										'field' => 'field_623511bc9d0f0',
+										'operator' => '==',
+										'value' => '1',
+									),
+								),
+							),
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'message' => '',
+							'default_value' => 0,
+							'ui' => 1,
+							'ui_on_text' => '',
+							'ui_off_text' => '',
 						),
 					),
 				),
@@ -899,7 +1019,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1637954911,
+	'modified' => 1647645274,
 ));
 
 endif;
