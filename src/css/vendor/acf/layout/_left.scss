@@ -54,7 +54,7 @@ body:not(.post-type-acf-field-group) {
 					}
 				}
 				> .acf-input {
-					padding: $acf-gutter-y $acf-gutter-x;
+					padding: $acf-gutter-y $acf-gutter-x !important;
 					@include media-breakpoint-up(md) {
 						width: 80%;
 					}

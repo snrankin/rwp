@@ -32,6 +32,7 @@ body:not(.post-type-acf-field-group) {
 				}
 				&.label-inline {
 					display: flex;
+					flex-direction: row;
 					&:not(.left-label) {
 						> .acf-label {
 							order: 99;
