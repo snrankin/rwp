@@ -289,19 +289,8 @@
 	}
 }
 
-@function page-gutter($breakpoint: 'xs', $container: false) {
-	$container-width: map-get($container-widths, $breakpoint);
-
-	@if $breakpoint == '' {
-		$container-width: 100vw;
-	} @else if $breakpoint == false {
-		$container-width: 100vw;
-	}
-
-	@if $container-width == '' {
-		$container-width: 100vw;
-	}
-
+@function page-gutter($breakpoint: '', $container: false) {
+	$container-width: 'var(--#{$variable-prefix}container#{$breakpoint}-width)';
 	$page-gutter: '';
 	@if $container == true {
 		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (var(--#{$variable-prefix}gutter-x) * 0.5))';
@@ -322,7 +311,6 @@
 
 	@return unquote($stretch);
 }
-
 @mixin stretch-col-content(
 	$side: left,
 	$content-in-grid: true,
@@ -338,15 +326,14 @@
 	}
 	@each $breakpoint in $breakpoints {
 		@include media-breakpoint-up($breakpoint) {
-			width: stretched-col-content($breakpoint);
+			$infix: breakpoint-infix($breakpoint);
 
-			$gutter: page-gutter($breakpoint, true);
+			width: stretched-col-content($infix);
+
+			$gutter: page-gutter($infix, true);
 			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
 			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
 			$padding-gutter: '#{$gutter} !important';
-			@debug 'Margin: #{$margin-gutter}';
-			@debug $padding-gutter;
-
 			@if $side == left {
 				margin-left: unquote($margin-gutter);
 				@if $content-in-grid == true {
