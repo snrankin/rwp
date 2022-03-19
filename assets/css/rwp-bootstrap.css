@@ -1684,6 +1684,29 @@ img{
     position:relative;
 }
 
+.stretched-col-mobile.left-mobile:not(.in-grid-content) > .content-wrapper{
+    position:relative;
+    width:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+    margin-left:calc(((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+}
+.stretched-col-mobile.left-mobile.in-grid-content > .content-wrapper{
+    position:relative;
+    width:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+    margin-left:calc(((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+    padding-left:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
+}
+.stretched-col-mobile.right-mobile:not(.in-grid-content) > .content-wrapper{
+    position:relative;
+    width:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+    margin-right:calc(((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+}
+.stretched-col-mobile.right-mobile.in-grid-content > .content-wrapper{
+    position:relative;
+    width:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+    margin-right:calc(((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+    padding-right:calc((100vw - var(--bs-container-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
+}
+
 .table{
     --bs-table-bg:transparent;
     --bs-table-accent-bg:transparent;
@@ -18144,6 +18167,24 @@ textarea.form-control-lg{
     }
     .stretched-col .is-bg > .media-content > .media-src{
         position:relative;
+    }
+    .stretched-col-mobile.left-mobile:not(.in-grid-content) > .content-wrapper{
+        width:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+    }
+    .stretched-col-mobile.left-mobile.in-grid-content > .content-wrapper{
+        width:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-left:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-left:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
+    }
+    .stretched-col-mobile.right-mobile:not(.in-grid-content) > .content-wrapper{
+        width:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+    }
+    .stretched-col-mobile.right-mobile.in-grid-content > .content-wrapper{
+        width:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
     }
     .table-responsive-sm{
         overflow-x:auto;
