@@ -19,6 +19,7 @@ $rwp_plugin_assets = [
     'scripts' => [
         'app' => [
             'handle'   => 'app',
+			'deps'     => ['jquery'],
             'location' => 'public',
             'footer'   => false,
         ],
