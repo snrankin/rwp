@@ -54,6 +54,8 @@ class Icon extends Element {
 					$src = attachment_url_to_postid( $args );
 					if ( is_numeric( $args ) && intval( $args ) !== 0 ) {
 						$src = wp_get_attachment_image_url( $src, 'thumbnail', true );
+					} else {
+						$src = $args;
 					}
 				}
 			} else if ( rwp_str_is_element( $args, 'svg' ) ) {
