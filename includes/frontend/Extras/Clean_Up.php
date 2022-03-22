@@ -66,38 +66,6 @@ class Clean_Up extends Singleton {
 	}
 
 	/**
-	 * Clean up WordPress head
-	 *
-	 * @link http://wpengineer.com/1438/wordpress-header/
-	 *
-	 * @return void
-	 */
-
-	public function head_cleanup() {
-
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
-		remove_action( 'wp_head', 'rsd_link' );
-		remove_action( 'wp_head', 'wlwmanifest_link' );
-		remove_action( 'wp_head', 'wp_generator' );
-		remove_action( 'wp_head', 'wp_shortlink_wp_head', 10 );
-		remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
-		remove_action( 'wp_head', 'wp_oembed_add_host_js' );
-		remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
-		/**
-		 * Remove the WordPress version from RSS feeds
-		 */
-		add_filter( 'the_generator', '__return_false' );
-		add_filter( 'script_loader_tag', array( $this, 'clean_script_tag' ) );
-		add_filter( 'style_loader_tag', array( $this, 'clean_style_tag' ) );
-		rwp_add_filters( array( 'get_avatar', 'comment_id_fields', 'post_thumbnail_html' ), array( $this, 'remove_self_closing_tags' ) );
-		add_filter( 'get_bloginfo_rss', array( $this, 'remove_default_description' ) );
-
-		$this->remove_default_styles();
-		$this->remove_emoji();
-
-	}
-
-	/**
 	 * Remove default Gutenberg styles
 	 *
 	 * @since WordPress 5.9

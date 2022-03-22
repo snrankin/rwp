@@ -444,21 +444,23 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
 /**
  * Extract button arguments
  *
- * @param  string $input
- * @param  array  $args
- * @return string
+ * @param  string $input    The html string
+ * @param  array  $args     Additional Button arguments
+ * @param  string $output   How to output the reset. Can be one of ( `OBJECT` |
+ *                          `STRING` | `ARRAY` )
+ * @return string|Button|array
  */
 
-function rwp_input_to_button( $input = '', $tag = '', $args = array() ) {
+function rwp_input_to_button( $input = '', $tag = '', $args = array(), $output = 'OBJECT' ) {
 	if ( ! rwp_str_is_element( $input, 'input' ) ) {
-        return $input;
+		return $input;
 	}
 
 	$input_args = rwp_extract_html_attributes( $input, $tag );
 
 	$args = rwp_merge_args( $input_args, $args );
 
-    $button = rwp_button( $args );
+	$button = rwp_button( $args );
 
 	if ( $button->has_attr( 'value' ) ) {
 		$btn_text = $button->get_attr( 'value' );
@@ -467,7 +469,13 @@ function rwp_input_to_button( $input = '', $tag = '', $args = array() ) {
 		$button->remove_attr( 'value' );
 	}
 
-    return $button->html();
+	if ( 'STRING' === $output ) {
+		return $button->html();
+	} else if ( 'ARRAY' === $output ) {
+		return $button->toArray();
+	}
+
+	return $button;
 }
 
 /**
