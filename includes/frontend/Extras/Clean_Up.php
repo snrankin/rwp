@@ -33,17 +33,6 @@ class Clean_Up extends Singleton {
 		}
 
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
-		add_action( 'wp_head', 'ob_start', 1, 0 );
-		add_action('wp_head', function () {
-			$pattern = '/.*' . preg_quote( esc_url( get_feed_link( 'comments_' . get_default_feed() ) ), '/' ) . '.*[\r\n]+/';
-			$content = ob_get_clean();
-			if ( $content ) {
-				$content = preg_replace( $pattern, '', $content );
-				if ( ! empty( $content ) && is_string( $content ) ) {
-					echo wp_kses_post( $content );
-				}
-			}
-		}, 3, 0);
 		remove_action( 'wp_head', 'rsd_link' );
 		remove_action( 'wp_head', 'wlwmanifest_link' );
 		remove_action( 'wp_head', 'wp_generator' );
