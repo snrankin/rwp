@@ -32,7 +32,7 @@
 	}
 
 	@each $type, $value in $type-spaces {
-		--#{$variable-prefix}#{$type}: #{$value};
+		--#{$variable-prefix}spacer-#{$type}: #{$value};
 	}
 
 	@each $size, $value in $font-sizes {
