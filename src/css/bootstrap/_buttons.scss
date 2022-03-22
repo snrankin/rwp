@@ -47,11 +47,11 @@
 	min-height: 1em;
 
 	&.icon-right {
-		margin-left: var(--default-space);
+		margin-left: cssvar(spacer-default);
 	}
 
 	&.icon-left {
-		margin-right: var(--default-space);
+		margin-right: cssvar(spacer-default);
 		order: -1;
 	}
 
