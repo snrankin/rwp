@@ -6619,7 +6619,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const select2Inputs = document.querySelectorAll('.select2');
+const select2Inputs = document.querySelectorAll('select');
 $.fn.select2.defaults.set('minimumResultsForSearch', 'Infinity');
 $.fn.select2.defaults.set('theme', 'bootstrap-5');
 if (select2Inputs.length > 0) {

@@ -26,7 +26,6 @@ class Enqueue extends Singleton {
 
 		// Load public-facing style sheet and JavaScript.
 		\add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_assets' ) );
-		//\add_action( 'wp_print_footer_scripts', array( $this, 'debug_plugin_js' ) );
 	}
 
 	public function replace_no_script() {
