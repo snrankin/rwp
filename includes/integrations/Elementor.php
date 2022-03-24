@@ -16,6 +16,8 @@ use RWP\Engine\Abstracts\Singleton;
 use RWP\Integrations\Bootstrap;
 use Elementor\Element_Base;
 use Elementor\Plugin as Elementor_Instance;
+use Elementor\Core\Files\CSS\Post as CSS_File;
+use Elementor\Core\Files as File_Base;
 use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use Elementor\Core\Experiments\Manager as Experiments_Manager;
 use Elementor\Controls_Manager as Controls_Manager;
@@ -32,30 +34,135 @@ class Elementor extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( is_plugin_active( 'elementor/elementor.php' ) ) {
-			if ( rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
-				add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
-				add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
-
-				add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
-				add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
-				add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
-
-				add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
-				add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
-				add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
-
-			}
+		if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
+			return;
 		}
+
+		if ( rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
+			add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
+			add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
+
+			add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
+			add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
+			add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
+
+			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+			add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+			add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+		}
+		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
+			add_action( 'elementor/element/parse_css', array( $this, 'make_urls_relative' ), 10, 2 );
+			add_filter( 'elementor/utils/get_placeholder_image_src', array( $this, 'relative_placeholder_image_src' ), 50 );
+		}
+
+		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
 
 	}
 
+	/**
+	 * Get placeholder image source.
+	 *
+	 * Make the placeholder image source relative
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $placeholder_image The source of the default placeholder image.
+	 *
+	 * @return string The source of the default placeholder image used by Elementor.
+	 */
+	public function relative_placeholder_image_src( $placeholder_image ) {
+		return rwp_relative_url( $placeholder_image );
+	}
+
+	/**
+	 * Make the file name more understandable
+	 *
+	 * @param string $file_name
+	 * @param File_Base $file The file instance
+	 * @return void
+	 */
+
+	public function update_file_name( $file_name, $file ) {
+		if ( rwp_str_starts_with( $file_name, 'post' ) ) {
+			$post_id = $file->get_post_id();
+			$ext = rwp_file_ext( $file_name );
+			$file_name = rwp_post_id_html( $post_id ) . ".$ext";
+		}
+
+		return $file_name;
+	}
+
+	/**
+	 * Make all urls in css relative
+	 *
+	 * @since 1.0.0
+	 * @param CSS_File     $post_css_file The post CSS file instance.
+	 * @param Element_Base $element       The element instance.
+	 */
+	public function make_urls_relative( $post_css_file, $element ) {
+		$stylesheet = $post_css_file->get_stylesheet();
+		$rules = $stylesheet->get_rules();
+
+		foreach ( $rules as $device => $elements ) {
+			foreach ( $elements as $selector => $styles ) {
+				foreach ( $styles as $style => $value ) {
+					if ( rwp_str_has( $value, 'http' ) ) {
+						$value = \preg_replace( '/(url\(["|\'])(https?:\/\/.*(?=\/wp-content))(.*)/', '$1$3', $value );
+					}
+					if ( 'all' === $device ) {
+						$post_css_file->get_stylesheet()->add_rules( $selector, array( $style => $value ) );
+					} else {
+						$post_css_file->get_stylesheet()->add_rules( $selector, array( $style => $value ), $this->hash_to_query( $device ) );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Hash to query.
+	 *
+	 * Turns the hashed string to an array that contains the data of the query
+	 * endpoint.
+	 *
+	 * @since 1.2.0
+	 * @access private
+	 *
+	 * @param string $hash Hashed string of the query.
+	 *
+	 * @return array Media query data.
+	 */
+	private function hash_to_query( $hash ) {
+		$query = [];
+
+		preg_match( '/(min|max)_(.*)/', $hash, $query_parts );
+
+		$end_point = $query_parts[1];
+
+		$device_name = $query_parts[2];
+
+		$query[ $end_point ] = $device_name;
+
+		return $query;
+	}
+
+	/**
+	 * Add assets to elementor
+	 *
+	 * @return void
+	 */
 	public function enqueue_elementor_assets() {
         rwp()->add_assets( 'elementor' );
 	}
 
+	/**
+	 * Add Custom widgets to Elementor
+	 *
+	 * @return void
+	 */
 	public function init_widgets() {
         $class = get_called_class();
 		$widgets = rwp()->get_component( $class );
@@ -229,7 +336,7 @@ class Elementor extends Singleton {
 				if ( Breakpoints_Manager::BREAKPOINT_KEY_DESKTOP !== $device_name ) {
 					if ( rwp_array_has( $device_name, $active_breakpoints ) ) {
 						$direction = $active_breakpoints[ $device_name ]->get_direction();
-					}               
+					}
 				}
 
 				$control_args['responsive'][ $direction ] = $device_name;

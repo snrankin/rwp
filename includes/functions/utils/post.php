@@ -432,7 +432,7 @@ function rwp_post_slug( $post = null ) {
  *
  * @return mixed
  */
-function rwp_filtered_content( $content = '' ) {
+function rwp_filtered_content( $content = '', $beautify = false ) {
 
 	if ( ! is_string( $content ) ) {
 		return $content;
@@ -442,7 +442,9 @@ function rwp_filtered_content( $content = '' ) {
 
 	$content = str_replace( ']]>', ']]&gt;', $content );
 
-	$content = rwp_beautify_html( $content );
+	if ( $beautify ) {
+		$content = rwp_beautify_html( $content );
+	}
 
 	return $content;
 }
@@ -772,7 +774,7 @@ function rwp_post_id_html( $post = null ) {
 		}
 	} else {
 		$html_id[] = $type;
-		if ( ! empty( $subtype ) ) {
+		if ( ! empty( $subtype ) && $subtype !== $type ) {
 			$html_id[] = $subtype;
 		}
 	}
@@ -781,13 +783,17 @@ function rwp_post_id_html( $post = null ) {
 		$html_id[] = $slug;
 	}
 
-	$html_id[] = $id;
+	if ( 0 !== $id ) {
+		$html_id[] = $id;
+	}
 
+	$html_id = array_unique( $html_id );
 	$html_id = join( '-', $html_id );
 	$html_id = rwp_change_case( $html_id, 'slug' );
 
 	return esc_attr( $html_id );
 }
+
 
 /**
  * Get array of post classes
