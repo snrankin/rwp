@@ -1,6 +1,27 @@
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/vendor/debug.scss ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************/
+#query-monitor-main.qm-theme-rwp pre{
+    font-family:"Fira Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Droid Sans Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+    font-size:0.875em !important;
+    line-height:calc(4px + 2ex);
+}
+#query-monitor-main.qm-theme-rwp pre code{
+    font-size:inherit !important;
+    line-height:calc(4px + 2ex);
+    color:inherit !important;
+    word-break:normal !important;
+}
+#query-monitor-main.qm-theme-rwp code{
+    font-size:0.875em !important;
+    line-height:calc(4px + 2ex);
+    color:#d63384 !important;
+    word-wrap:break-word !important;
+}
+a > #query-monitor-main.qm-theme-rwp code{
+    color:inherit !important;
+}
+
 #query-monitor-main #qm-rwp-debug pre.sf-dump,
 pre.sf-dump{
     display:block;
@@ -151,7 +172,7 @@ pre.sf-dump .sf-dump-default{
     color:#ff8400;
     line-height:1.2em;
     font-size:1em;
-    font-family:var(--bs-font-monospace);
+    font-family:var(--prefixfont-monospace);
     word-wrap:break-word;
     white-space:pre-wrap;
     position:relative;

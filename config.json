@@ -12,29 +12,7 @@
 	},
 	"entry": {
 		"blocks": {
-			"files": {
-				"card": {
-					"card": ["./blocks/card/index.js"]
-				},
-				"column": {
-					"column": ["./blocks/column/index.js"]
-				},
-				"container": {
-					"container": ["./blocks/container/index.js"]
-				},
-				"global": {
-					"global": ["./blocks/global/index.js"]
-				},
-				"row": {
-					"row": ["./blocks/row/index.js"]
-				},
-				"section": {
-					"section": ["./blocks/section/index.js"]
-				},
-				"toggle": {
-					"toggle": ["./blocks/toggle/index.js"]
-				}
-			}
+			"files": ["card", "column", "container", "global", "row", "section", "toggle"]
 		},
 		"fonts": {
 			"copy": [
@@ -60,9 +38,6 @@
 				"app": {
 					"app": ["app.js"]
 				},
-				"bootstrap": {
-					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
-				},
 				"public": {
 					"public": ["public.js", "public.scss"]
 				}
@@ -84,10 +59,35 @@
 				}
 			}
 		},
+		"plugins": {
+			"files": {
+				"modal": {
+					"modal": ["plugins/modal.js", "plugins/modal.scss"]
+				},
+				"slider": {
+					"slider": ["plugins/slider.js", "plugins/slider.scss"]
+				}
+			},
+			"webpack": {
+				"externals": {
+					"rwp": "rwp"
+				},
+				"optimization": {
+					"removeAvailableModules": true,
+					"splitChunks": {
+						"chunks": "async"
+					},
+					"usedExports": true
+				}
+			}
+		},
 		"vendor": {
 			"files": {
 				"acf": {
 					"acf": ["vendor/acf.scss"]
+				},
+				"bootstrap": {
+					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
 				},
 				"debug": {
 					"debug": ["vendor/debug.js", "vendor/debug.scss"]
@@ -104,17 +104,8 @@
 				"modernizr": {
 					"modernizr": ["vendor/modernizr.js"]
 				},
-				"qm": {
-					"qm": ["vendor/qm.scss"]
-				},
-				"reset": {
-					"reset": ["reset.scss"]
-				},
 				"select2": {
 					"select2": ["vendor/select2.js", "vendor/select2.scss"]
-				},
-				"wordpress": {
-					"wordpress": ["vendor/wordpress.scss"]
 				}
 			}
 		}

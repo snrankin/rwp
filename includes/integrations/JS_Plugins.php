@@ -66,6 +66,28 @@ class JS_Plugins extends Singleton {
 	}
 
 	/**
+	 * Register/enqueue Tiny Slider
+	 *
+	 * @link https://github.com/ganlanyuan/tiny-slider
+	 *
+	 * @return void
+	 */
+	public function enqueue_tiny_slider() {
+		rwp()->add_assets( 'slider' );
+	}
+
+	/**
+	 * Register/enqueue Fancybox
+	 *
+	 * @link https://fancyapps.com/
+	 *
+	 * @return void
+	 */
+	public function enqueue_fancybox() {
+		rwp()->add_assets( 'modal' );
+	}
+
+	/**
 	 * Register/enqueue Select2
 	 *
 	 * @link https://select2.org/

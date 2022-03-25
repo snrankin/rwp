@@ -6605,7 +6605,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) { return select2_dist_js_select2_full_js__WEBPACK_IMPORTED_MODULE_0__[key]; }.bind(0, __WEBPACK_IMPORT_KEY__)
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+/* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "jquery");
 /**
  * ============================================================================
  * select2
@@ -6619,33 +6619,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const select2Inputs = document.querySelectorAll('select');
-$.fn.select2.defaults.set('minimumResultsForSearch', 'Infinity');
-$.fn.select2.defaults.set('theme', 'bootstrap-5');
-if (select2Inputs.length > 0) {
-	select2Inputs.forEach(function (input) {
-		let isSmall = input.classList.contains('form-select-sm');
-		let isLarge = input.classList.contains('form-select-lg');
+jQuery(document).ready(function ($) {
+	const select2Inputs = document.querySelectorAll('.select2');
+	$.fn.select2.defaults.set('minimumResultsForSearch', 'Infinity');
+	$.fn.select2.defaults.set('theme', 'bootstrap-5');
+	if (select2Inputs.length > 0) {
+		select2Inputs.forEach(function (input) {
+			let isSmall = input.classList.contains('form-select-sm');
+			let isLarge = input.classList.contains('form-select-lg');
 
-		let select2Options = {
-			dropdownParent: input.parentElement,
-		};
+			let select2Options = {
+				dropdownParent: input.parentElement,
+				theme: 'bootstrap-5',
+				minimumResultsForSearch: 'Infinity',
+			};
 
-		if (isSmall) {
-			select2Options.containerCssClass = 'select2--small'; // For Select2 v4.0
-			select2Options.selectionCssClass = 'select2--small'; // For Select2 v4.1
-			select2Options.dropdownCssClass = 'select2--small';
-		}
+			if (isSmall) {
+				select2Options.containerCssClass = 'select2--small'; // For Select2 v4.0
+				select2Options.selectionCssClass = 'select2--small'; // For Select2 v4.1
+				select2Options.dropdownCssClass = 'select2--small';
+			}
 
-		if (isLarge) {
-			select2Options.containerCssClass = 'select2--large'; // For Select2 v4.0
-			select2Options.selectionCssClass = 'select2--large'; // For Select2 v4.1
-			select2Options.dropdownCssClass = 'select2--large';
-		}
+			if (isLarge) {
+				select2Options.containerCssClass = 'select2--large'; // For Select2 v4.0
+				select2Options.selectionCssClass = 'select2--large'; // For Select2 v4.1
+				select2Options.dropdownCssClass = 'select2--large';
+			}
 
-		$(input).select2(select2Options);
-	});
-}
+			$(input).select2(select2Options);
+		});
+	}
+});
 
 }();
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.

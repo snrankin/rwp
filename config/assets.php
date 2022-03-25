@@ -21,7 +21,7 @@ $rwp_plugin_assets = [
             'handle'   => 'app',
 			'deps'     => ['jquery'],
             'location' => 'public',
-            'footer'   => false,
+            'footer'   => true,
         ],
         'public' => [
             'handle'   => 'public',
@@ -32,6 +32,8 @@ $rwp_plugin_assets = [
 		'bootstrap' => [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
+			'deps'     => ['jquery'],
+			'footer'   => true,
         ],
         'modernizr' => [
             'handle'   => 'modernizr',
@@ -41,21 +43,31 @@ $rwp_plugin_assets = [
         'select2' => [
             'handle'   => 'select2',
             'location' => 'select2',
+			'deps'     => ['jquery'],
+            'footer'   => true,
+        ],
+		'slider' => [
+            'handle'   => 'slider',
+            'location' => 'slider',
+			'deps'     => ['jquery', 'rwp-app'],
+            'footer'   => true,
+        ],
+		'modal' => [
+            'handle'   => 'modal',
+            'location' => 'modal',
+			'deps'     => ['jquery', 'rwp-app'],
             'footer'   => true,
         ],
     ],
     'styles' => [
-        'public' => [
-            'handle'   => 'public',
-            'location' => 'public',
-        ],
+
         'bootstrap' => [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
         ],
-		'wordpress' => [
-            'handle'   => 'wordpress',
-            'location' => 'global',
+		'public' => [
+            'handle'   => 'public',
+            'location' => 'public',
         ],
         'admin' => [
             'handle'   => 'admin',
@@ -85,13 +97,23 @@ $rwp_plugin_assets = [
             'handle'   => 'bootstrap-icons',
             'location' => 'bootstrap-icons',
         ],
+		'slider' => [
+            'handle'   => 'slider',
+            'location' => 'slider',
+        ],
+		'modal' => [
+            'handle'   => 'modal',
+            'location' => 'modal',
+        ],
     ],
 ];
 
 if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monitor/query-monitor.php' ) ){
-	$rwp_plugin_assets['scripts'][ 'debug'] = array(
+	$rwp_plugin_assets['scripts']['debug'] = array(
 		'location' => 'global',
-		'handle'   => 'debug'
+		'handle'   => 'debug',
+		'deps'     => ['jquery', 'rwp-app', 'rwp-slider', 'rwp-modal'],
+        'footer'   => true,
     );
 	$rwp_plugin_assets['styles'][ 'debug'] = array(
 		'location' => 'global',
