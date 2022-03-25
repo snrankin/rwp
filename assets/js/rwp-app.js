@@ -12,11 +12,14 @@
 /* harmony export */   "actual": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.actual; },
 /* harmony export */   "as": function() { return /* reexport safe */ actual__WEBPACK_IMPORTED_MODULE_3__.as; },
 /* harmony export */   "aspect": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.aspect; },
+/* harmony export */   "assign": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.assign; },
 /* harmony export */   "bsAtts": function() { return /* binding */ bsAtts; },
 /* harmony export */   "camelCase": function() { return /* binding */ camelCase; },
+/* harmony export */   "chain": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.chain; },
 /* harmony export */   "changeTag": function() { return /* binding */ changeTag; },
 /* harmony export */   "defaultsDeep": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.defaultsDeep; },
 /* harmony export */   "each": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.each; },
+/* harmony export */   "escape": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.escape; },
 /* harmony export */   "filter": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.filter; },
 /* harmony export */   "filterPath": function() { return /* binding */ filterPath; },
 /* harmony export */   "find": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.find; },
@@ -25,6 +28,7 @@
 /* harmony export */   "getHash": function() { return /* binding */ getHash; },
 /* harmony export */   "getTag": function() { return /* binding */ getTag; },
 /* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
+/* harmony export */   "getWidest": function() { return /* binding */ getWidest; },
 /* harmony export */   "has": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.has; },
 /* harmony export */   "inViewport": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inViewport; },
 /* harmony export */   "inX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.inX; },
@@ -37,15 +41,18 @@
 /* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
 /* harmony export */   "map": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.map; },
 /* harmony export */   "matchHeights": function() { return /* binding */ matchHeights; },
+/* harmony export */   "matchWidths": function() { return /* binding */ matchWidths; },
 /* harmony export */   "merge": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.merge; },
 /* harmony export */   "mq": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.mq; },
 /* harmony export */   "omit": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.omit; },
 /* harmony export */   "rectangle": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.rectangle; },
 /* harmony export */   "reduce": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.reduce; },
 /* harmony export */   "reject": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.reject; },
+/* harmony export */   "replace": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.replace; },
 /* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
 /* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollX; },
 /* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollY; },
+/* harmony export */   "setScrollbarVariable": function() { return /* binding */ setScrollbarVariable; },
 /* harmony export */   "slugCase": function() { return /* binding */ slugCase; },
 /* harmony export */   "sortObjectByKeys": function() { return /* binding */ sortObjectByKeys; },
 /* harmony export */   "stringToHtml": function() { return /* binding */ stringToHtml; },
@@ -80,14 +87,34 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2022 RIESTER
  * ========================================================================== */
-var _ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
 
 
 
 
 
 
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
 
+function isEmpty(el) {
+  if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isNil)(el)) {
+    return true;
+  } else if (el === '') {
+    return true;
+  } else if (el === null) {
+    return true;
+  } else if (el === false) {
+    return true;
+  } else if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isEmpty)(el)) {
+    return true;
+  }
+
+  return false;
+}
 /**
  * Gets the `toStringTag` of `value`.
  *
@@ -124,8 +151,8 @@ function camelCase(str) {
 
 function slugCase(str) {
   var pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
-  str = _.replace(str, pattern, ' and ');
-  return _.chain(str).deburr().trim().kebabCase().value();
+  str = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.replace)(str, pattern, ' and ');
+  return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.chain)(str).deburr().trim().kebabCase().value();
 }
 /**
  * Convert a string to title case with ampersands
@@ -139,14 +166,12 @@ function slugCase(str) {
 function titleCase(str) {
   var useAmp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var pattern = new RegExp(/(\/|-|_)/gm);
-  str = _.replace(str, pattern, ' ');
-  str = _.chain(str).trim().startCase().tap(function (str) {
+  str = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.replace)(str, pattern, ' ');
+  str = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.chain)(str).trim().startCase().tap(function (str) {
     if (useAmp) {
       var andPattern = new RegExp(/and/gim);
-
-      var amp = _.escape('&');
-
-      return _.replace(str, andPattern, amp);
+      var amp = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.escape)('&');
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.replace)(str, andPattern, amp);
     }
 
     return str;
@@ -213,18 +238,23 @@ function stringToHtml(str) {
 /**
  * Adds focus class for better accessibility
  *
+ * @export
+ * @param {*} event
+ * @param {string} [parentClass='nav']
  */
 
 function toggleFocus(event) {
+  var parentClass = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'nav';
+
   if (event.type === 'focus' || event.type === 'blur') {
     var _self = event.target;
 
-    if (!_.isUndefined(_self)) {
+    if (!isEmpty(_self)) {
       var elementClasses = _self.classList;
 
-      if (!_.isNil(elementClasses)) {
+      if (!isEmpty(elementClasses)) {
         // Move up through the ancestors of the current link until we hit .nav-menu.
-        while (!elementClasses.contains('nav-menu')) {
+        while (!elementClasses.contains(parentClass)) {
           // On li elements toggle the class .focus.
           if ('li' === _self.tagName.toLowerCase()) {
             _self.classList.toggle('focus');
@@ -273,13 +303,13 @@ function screenSize(prop) {
     height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
   };
   window.addEventListener('resize', function () {
-    _.assign({
+    (0,lodash__WEBPACK_IMPORTED_MODULE_2__.assign)({
       width: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('width', 'px'),
       height: actual__WEBPACK_IMPORTED_MODULE_3__.actual.actual('height', 'px')
     }, size);
   });
 
-  if (!_.isNil(prop)) {
+  if (!isEmpty(prop)) {
     return size[prop];
   }
 
@@ -303,28 +333,6 @@ function getHash(string) {
 
   if (index !== -1) {
     return string.substring(index + 1);
-  }
-
-  return false;
-}
-/**
- * Check if a variable is empty
- *
- * @param {*} el The variable to check
- * @return {boolean} True if empty, false if not
- */
-
-function isEmpty(el) {
-  if (_.isNil(el)) {
-    return true;
-  } else if (el === '') {
-    return true;
-  } else if (el === null) {
-    return true;
-  } else if (el === false) {
-    return true;
-  } else if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isEmpty)(el)) {
-    return true;
   }
 
   return false;
@@ -402,10 +410,9 @@ function getTallest(el) {
   var matches = document.querySelectorAll(el);
 
   if (matches.length > 1) {
-    var heights = _.map(matches, function (elem) {
+    var heights = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
       return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).height;
     });
-
     return Math.max.apply(null, heights);
   }
 
@@ -427,13 +434,58 @@ function matchHeights() {
     var minHeight = getTallest(elem);
 
     if (false !== minHeight) {
-      _.map(matches, function (elem) {
+      (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
         elem.style.minHeight = minHeight;
       });
     }
 
     window.addEventListener('resize', function () {
       matchHeights(elem, container);
+    });
+  }
+}
+/**
+ * Get widest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
+
+function getWidest(el) {
+  var matches = document.querySelectorAll(el);
+
+  if (matches.length > 1) {
+    var widths = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
+      return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).width;
+    });
+    return Math.max.apply(null, widths);
+  }
+
+  return false;
+}
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+
+function matchWidths() {
+  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
+  var matches = container.querySelectorAll(elem);
+
+  if (matches.length > 1) {
+    var minWidth = getWidest(elem);
+
+    if (false !== minWidth) {
+      (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
+        elem.style.minWidth = minWidth;
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      matchWidths(elem, container);
     });
   }
 }
@@ -543,6 +595,29 @@ function logCustomProperties() {
   console.groupCollapsed('Custom CSS Properties');
   console.table(props);
   console.groupEnd();
+}
+function setScrollbarVariable() {
+  var getScrollbarWidth = function getScrollbarWidth() {
+    // Create a temporary div container and append it into the body
+    var container = document.createElement('div'); // Append the container in the body
+
+    document.body.appendChild(container); // Force scrollbar on the container
+
+    container.style.overflow = 'scroll'; // Add ad fake div inside the container
+
+    var inner = document.createElement('div');
+    container.appendChild(inner); // Calculate the width based on the container width minus its child width
+
+    var width = container.offsetWidth - inner.offsetWidth; // Remove the container from the body
+
+    document.body.removeChild(container);
+    return width;
+  }; // Get the scrollbar dimension
+
+
+  var scrollbarWidth = getScrollbarWidth(); // Set a custom property with the value we calculated
+
+  document.documentElement.style.setProperty('--bs-scrollbar', "".concat(scrollbarWidth, "px"));
 }
 
 /***/ }),
@@ -18313,11 +18388,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "actual": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.actual; },
 /* harmony export */   "as": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.as; },
 /* harmony export */   "aspect": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.aspect; },
+/* harmony export */   "assign": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.assign; },
 /* harmony export */   "bsAtts": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.bsAtts; },
 /* harmony export */   "camelCase": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.camelCase; },
+/* harmony export */   "chain": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.chain; },
 /* harmony export */   "changeTag": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.changeTag; },
 /* harmony export */   "defaultsDeep": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.defaultsDeep; },
 /* harmony export */   "each": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.each; },
+/* harmony export */   "escape": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.escape; },
 /* harmony export */   "filter": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.filter; },
 /* harmony export */   "filterPath": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.filterPath; },
 /* harmony export */   "find": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.find; },
@@ -18326,6 +18404,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getHash": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getHash; },
 /* harmony export */   "getTag": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getTag; },
 /* harmony export */   "getTallest": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getTallest; },
+/* harmony export */   "getWidest": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getWidest; },
 /* harmony export */   "has": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.has; },
 /* harmony export */   "inViewport": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.inViewport; },
 /* harmony export */   "inX": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.inX; },
@@ -18338,15 +18417,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "logCustomProperties": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.logCustomProperties; },
 /* harmony export */   "map": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.map; },
 /* harmony export */   "matchHeights": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.matchHeights; },
+/* harmony export */   "matchWidths": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.matchWidths; },
 /* harmony export */   "merge": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.merge; },
 /* harmony export */   "mq": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.mq; },
 /* harmony export */   "omit": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.omit; },
 /* harmony export */   "rectangle": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.rectangle; },
 /* harmony export */   "reduce": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.reduce; },
 /* harmony export */   "reject": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.reject; },
+/* harmony export */   "replace": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.replace; },
 /* harmony export */   "screenSize": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.screenSize; },
 /* harmony export */   "scrollX": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.scrollX; },
 /* harmony export */   "scrollY": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.scrollY; },
+/* harmony export */   "setScrollbarVariable": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.setScrollbarVariable; },
 /* harmony export */   "slugCase": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.slugCase; },
 /* harmony export */   "sortObjectByKeys": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.sortObjectByKeys; },
 /* harmony export */   "stringToHtml": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.stringToHtml; },

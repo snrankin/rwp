@@ -10,6 +10,7 @@
 "use strict";
 /* harmony import */ var smoothscroll_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! smoothscroll-polyfill */ "../node_modules/smoothscroll-polyfill/dist/smoothscroll.js");
 /* harmony import */ var smoothscroll_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(smoothscroll_polyfill__WEBPACK_IMPORTED_MODULE_0__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
 /** ============================================================================
  * Public: common scripts
  *
@@ -56,6 +57,9 @@
     // JavaScript to be fired on the home page, after the init JS
     smoothscroll_polyfill__WEBPACK_IMPORTED_MODULE_0___default().polyfill();
     window.addEventListener('click', this.betterHashLinks);
+    $('.screen-full').width(rwp.screenSize('width')).height(rwp.screenSize('height'));
+    $('.screen-width').width(rwp.screenSize('width'));
+    $('.screen-height').height(rwp.screenSize('height'));
   }
 });
 
