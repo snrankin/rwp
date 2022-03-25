@@ -36,6 +36,13 @@
 			}
 		}
 	}
+	.hidden_label {
+		.gfield_label {
+			@include visually-hidden;
+			float: none;
+			display: block;
+		}
+	}
 
 	.btn {
 		&.submitting {
