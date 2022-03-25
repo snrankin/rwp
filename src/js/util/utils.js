@@ -6,8 +6,8 @@
  * @copyright 2022 RIESTER
  * ========================================================================== */
 
-import { isEmpty as empty, fromPairs, replace, map, isNil, chain, escape, assign } from 'lodash';
-export { isArray, isObject, isArrayLike, assign, filter, map, find, merge, reduce, reject, omit, get, has, defaultsDeep, forEach, each, replace, chain, escape } from 'lodash';
+import { isEmpty as empty, isString, fromPairs, replace, map, isNil, chain, escape, assign } from 'lodash';
+export { isArray, isString, isObject, isArrayLike, assign, filter, map, find, merge, reduce, reject, omit, get, has, defaultsDeep, forEach, each, replace, chain, escape } from 'lodash';
 import { actual } from 'actual';
 export { actual, as, is } from 'actual';
 import { rectangle } from 'verge';
@@ -365,10 +365,26 @@ export function getWidest(el) {
  * Make all elements match the tallest element
  *
  * @param {string} [elem='']
- * @param {*} [container=Document]
+ * @param {*} [container=null]
  */
-export function matchWidths(elem = '', container = Document) {
-	const matches = container.querySelectorAll(elem);
+export function matchWidths(elem = '', container = null) {
+	let matches;
+	if (!isEmpty(container)) {
+		if (isString(container)) {
+			let containerSelector = container;
+			container = document.querySelector(container);
+			try {
+				if (!isEmpty(container)) {
+					matches = container.querySelectorAll(elem);
+				}
+			} catch (error) {
+				console.warning(`${containerSelector} was not found`);
+			}
+		}
+	} else {
+		matches = document.querySelectorAll(elem);
+	}
+
 	if (matches.length > 1) {
 		const minWidth = getWidest(elem);
 
