@@ -46,5 +46,9 @@ export default {
 		// JavaScript to be fired on the home page, after the init JS
 		smoothscroll.polyfill();
 		window.addEventListener('click', this.betterHashLinks);
+
+		$('.screen-full').width(rwp.screenSize('width')).height(rwp.screenSize('height'));
+		$('.screen-width').width(rwp.screenSize('width'));
+		$('.screen-height').height(rwp.screenSize('height'));
 	},
 };

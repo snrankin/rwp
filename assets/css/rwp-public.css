@@ -1,6 +1,20 @@
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/public.scss ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+html{
+    --bs-scrollbar:0px;
+}
+
+.screen-width,
+.screen-full{
+    width:100%;
+}
+
+.screen-width,
+.screen-height{
+    height:100%;
+}
+
 .address-line .address-item{
     display:inline-block;
     margin-right:var(--default-space);
@@ -449,6 +463,17 @@ img.alignnone{
     margin-bottom:var(--bs-paragraph-margin-bottom);
     display:block;
 }
+
+@media screen{
+    .screen-width,
+.screen-full{
+        width:100vw;
+        width:100%;
+    }
+    .screen-width,
+.screen-height{
+        height:100vh;
+    }}
 
 @media screen and (max-width: 600px){
     body.rwp:not(.wp-admin) #wp-admin-bar-my-account{

@@ -52,6 +52,7 @@
 /* harmony export */   "screenSize": function() { return /* binding */ screenSize; },
 /* harmony export */   "scrollX": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollX; },
 /* harmony export */   "scrollY": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.scrollY; },
+/* harmony export */   "setScrollbarVariable": function() { return /* binding */ setScrollbarVariable; },
 /* harmony export */   "slugCase": function() { return /* binding */ slugCase; },
 /* harmony export */   "sortObjectByKeys": function() { return /* binding */ sortObjectByKeys; },
 /* harmony export */   "stringToHtml": function() { return /* binding */ stringToHtml; },
@@ -594,6 +595,29 @@ function logCustomProperties() {
   console.groupCollapsed('Custom CSS Properties');
   console.table(props);
   console.groupEnd();
+}
+function setScrollbarVariable() {
+  var getScrollbarWidth = function getScrollbarWidth() {
+    // Create a temporary div container and append it into the body
+    var container = document.createElement('div'); // Append the container in the body
+
+    document.body.appendChild(container); // Force scrollbar on the container
+
+    container.style.overflow = 'scroll'; // Add ad fake div inside the container
+
+    var inner = document.createElement('div');
+    container.appendChild(inner); // Calculate the width based on the container width minus its child width
+
+    var width = container.offsetWidth - inner.offsetWidth; // Remove the container from the body
+
+    document.body.removeChild(container);
+    return width;
+  }; // Get the scrollbar dimension
+
+
+  var scrollbarWidth = getScrollbarWidth(); // Set a custom property with the value we calculated
+
+  document.documentElement.style.setProperty('--bs-scrollbar', "".concat(scrollbarWidth, "px"));
 }
 
 /***/ }),
@@ -18404,6 +18428,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "screenSize": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.screenSize; },
 /* harmony export */   "scrollX": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.scrollX; },
 /* harmony export */   "scrollY": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.scrollY; },
+/* harmony export */   "setScrollbarVariable": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.setScrollbarVariable; },
 /* harmony export */   "slugCase": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.slugCase; },
 /* harmony export */   "sortObjectByKeys": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.sortObjectByKeys; },
 /* harmony export */   "stringToHtml": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.stringToHtml; },

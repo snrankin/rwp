@@ -50,6 +50,10 @@ body {
 	min-height: 100%;
 	padding: 0;
 	margin: 0;
+	width: 100%;
+	@media screen {
+		width: calc(100vw - (100vw - 100%)); // ignores scrollbar
+	}
 }
 
 @viewport {
