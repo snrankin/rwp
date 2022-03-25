@@ -2,11 +2,11 @@
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/vendor/gravity-forms.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 .gform_wrapper.gravity-theme form .gform_fields{
-    grid-column-gap:var(--prefixgutter-x);
-    grid-row-gap:var(--prefixgutter-y);
+    grid-column-gap:var(--bs-gutter-x);
+    grid-row-gap:var(--bs-gutter-y);
 }
 .gform_wrapper.gravity-theme form .gform_footer{
-    margin-top:var(--prefixgutter-y);
+    margin-top:var(--bs-gutter-y);
 }
 .gform_wrapper.gravity-theme form.form-inline{
     margin-top:calc(var(--bs-gutter-y) * -1);
@@ -58,7 +58,7 @@
     display:none;
 }
 .gform_wrapper.gravity-theme .gfield_required_asterisk{
-    color:var(--prefixdanger);
+    color:var(--bs-danger);
 }
 .gform_wrapper.gravity-theme .gform_ajax_spinner{
     display:none !important;

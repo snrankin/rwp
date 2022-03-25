@@ -1191,7 +1191,7 @@ img{
     position:relative;
 }
 .section-wrapper.has-background + .section-wrapper:not(.has-background){
-    margin-top:var(--prefixgutter-y);
+    margin-top:var(--bs-gutter-y);
 }
 .section-wrapper:not(.has-background) + .section-wrapper{
     margin-top:var(--bs-gutter-y);
@@ -4653,10 +4653,10 @@ textarea.form-control-lg{
     min-height:1em;
 }
 .btn-icon.icon-right{
-    margin-left:var(--prefixspacer-default);
+    margin-left:var(--bs-spacer-default);
 }
 .btn-icon.icon-left{
-    margin-right:var(--prefixspacer-default);
+    margin-right:var(--bs-spacer-default);
     order:-1;
 }
 .btn-icon.has-spinner .spinner{
