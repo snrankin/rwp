@@ -56,5 +56,10 @@
   "lazysizes.min.js": "js/rwp-lazysizes.min.js",
   "modernizr.min.js": "js/rwp-modernizr.min.js",
   "select2.min.css": "css/rwp-select2.min.css",
-  "select2.min.js": "js/rwp-select2.min.js"
+  "select2.min.js": "js/rwp-select2.min.js",
+  "admin.min.css": "css/rwp-admin.min.css",
+  "admin.min.js": "js/rwp-admin.min.js",
+  "app.min.js": "js/rwp-app.min.js",
+  "public.min.css": "css/rwp-public.min.css",
+  "public.min.js": "js/rwp-public.min.js"
 }

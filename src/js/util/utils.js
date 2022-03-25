@@ -6,14 +6,34 @@
  * @copyright 2022 RIESTER
  * ========================================================================== */
 
-const _ = require('lodash');
-
-import { isEmpty as empty, fromPairs } from 'lodash';
-export { isArray, isObject, isArrayLike, filter, map, find, merge, reduce, reject, omit, get, has, defaultsDeep, forEach, each } from 'lodash';
+import { isEmpty as empty, fromPairs, replace, map, isNil, chain, escape, assign } from 'lodash';
+export { isArray, isObject, isArrayLike, assign, filter, map, find, merge, reduce, reject, omit, get, has, defaultsDeep, forEach, each, replace, chain, escape } from 'lodash';
 import { actual } from 'actual';
 export { actual, as, is } from 'actual';
 import { rectangle } from 'verge';
 export { viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect } from 'verge';
+
+/**
+ * Check if a variable is empty
+ *
+ * @param {*} el The variable to check
+ * @return {boolean} True if empty, false if not
+ */
+export function isEmpty(el) {
+	if (isNil(el)) {
+		return true;
+	} else if (el === '') {
+		return true;
+	} else if (el === null) {
+		return true;
+	} else if (el === false) {
+		return true;
+	} else if (empty(el)) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * Gets the `toStringTag` of `value`.
@@ -53,8 +73,8 @@ export function camelCase(str) {
 
 export function slugCase(str) {
 	let pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
-	str = _.replace(str, pattern, ' and ');
-	return _.chain(str).deburr().trim().kebabCase().value();
+	str = replace(str, pattern, ' and ');
+	return chain(str).deburr().trim().kebabCase().value();
 }
 
 /**
@@ -67,15 +87,15 @@ export function slugCase(str) {
  */
 export function titleCase(str, useAmp = false) {
 	let pattern = new RegExp(/(\/|-|_)/gm);
-	str = _.replace(str, pattern, ' ');
-	str = _.chain(str)
+	str = replace(str, pattern, ' ');
+	str = chain(str)
 		.trim()
 		.startCase()
 		.tap(function (str) {
 			if (useAmp) {
 				let andPattern = new RegExp(/and/gim);
-				var amp = _.escape('&');
-				return _.replace(str, andPattern, amp);
+				var amp = escape('&');
+				return replace(str, andPattern, amp);
 			}
 
 			return str;
@@ -145,17 +165,20 @@ export function stringToHtml(str) {
 /**
  * Adds focus class for better accessibility
  *
+ * @export
+ * @param {*} event
+ * @param {string} [parentClass='nav']
  */
-export function toggleFocus(event) {
+export function toggleFocus(event, parentClass = 'nav') {
 	if (event.type === 'focus' || event.type === 'blur') {
 		let self = event.target;
 
-		if (!_.isUndefined(self)) {
+		if (!isEmpty(self)) {
 			const elementClasses = self.classList;
 
-			if (!_.isNil(elementClasses)) {
+			if (!isEmpty(elementClasses)) {
 				// Move up through the ancestors of the current link until we hit .nav-menu.
-				while (!elementClasses.contains('nav-menu')) {
+				while (!elementClasses.contains(parentClass)) {
 					// On li elements toggle the class .focus.
 					if ('li' === self.tagName.toLowerCase()) {
 						self.classList.toggle('focus');
@@ -191,7 +214,7 @@ export function screenSize(prop) {
 	};
 
 	window.addEventListener('resize', function () {
-		_.assign(
+		assign(
 			{
 				width: actual.actual('width', 'px'),
 				height: actual.actual('height', 'px'),
@@ -200,7 +223,7 @@ export function screenSize(prop) {
 		);
 	});
 
-	if (!_.isNil(prop)) {
+	if (!isEmpty(prop)) {
 		return size[prop];
 	}
 
@@ -229,28 +252,6 @@ export function getHash(string) {
 	if (index !== -1) {
 		return string.substring(index + 1);
 	}
-	return false;
-}
-
-/**
- * Check if a variable is empty
- *
- * @param {*} el The variable to check
- * @return {boolean} True if empty, false if not
- */
-export function isEmpty(el) {
-	if (_.isNil(el)) {
-		return true;
-	} else if (el === '') {
-		return true;
-	} else if (el === null) {
-		return true;
-	} else if (el === false) {
-		return true;
-	} else if (empty(el)) {
-		return true;
-	}
-
 	return false;
 }
 
@@ -310,7 +311,7 @@ export function toggleNav(buttonId) {
 export function getTallest(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
-		const heights = _.map(matches, function (elem) {
+		const heights = map(matches, function (elem) {
 			return rectangle(elem).height;
 		});
 
@@ -331,13 +332,54 @@ export function matchHeights(elem = '', container = Document) {
 		const minHeight = getTallest(elem);
 
 		if (false !== minHeight) {
-			_.map(matches, function (elem) {
+			map(matches, function (elem) {
 				elem.style.minHeight = minHeight;
 			});
 		}
 
 		window.addEventListener('resize', function () {
 			matchHeights(elem, container);
+		});
+	}
+}
+
+/**
+ * Get widest element
+ *
+ * @param {string} el
+ * @return {number}
+ */
+export function getWidest(el) {
+	const matches = document.querySelectorAll(el);
+	if (matches.length > 1) {
+		const widths = map(matches, function (elem) {
+			return rectangle(elem).width;
+		});
+
+		return Math.max.apply(null, widths);
+	}
+	return false;
+}
+
+/**
+ * Make all elements match the tallest element
+ *
+ * @param {string} [elem='']
+ * @param {*} [container=Document]
+ */
+export function matchWidths(elem = '', container = Document) {
+	const matches = container.querySelectorAll(elem);
+	if (matches.length > 1) {
+		const minWidth = getWidest(elem);
+
+		if (false !== minWidth) {
+			map(matches, function (elem) {
+				elem.style.minWidth = minWidth;
+			});
+		}
+
+		window.addEventListener('resize', function () {
+			matchWidths(elem, container);
 		});
 	}
 }
