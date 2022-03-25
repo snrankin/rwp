@@ -12,15 +12,7 @@
 
 import { __ } from '@wordpress/i18n';
 
-import {
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	Flex,
-	FlexItem,
-	FlexBlock,
-} from '@wordpress/components';
+import { RangeControl, PanelBody, PanelRow, ToggleControl, Flex, FlexItem, FlexBlock } from '@wordpress/components';
 import { Component, Fragment } from '@wordpress/element';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
@@ -29,25 +21,11 @@ import * as Editor from '@wordpress/editor';
 
 import { vAlignCenter, hAlignCenter } from '../global/icons';
 
-const { InnerBlocks, InspectorControls, BlockControls, AlignmentToolbar } =
-	BlockEditor || Editor; // Fallback to deprecated '@wordpress/editor' for backwards compatibility
+const { InnerBlocks, InspectorControls, BlockControls, AlignmentToolbar } = BlockEditor || Editor; // Fallback to deprecated '@wordpress/editor' for backwards compatibility
 
-import {
-	generateClasses,
-	alignControls,
-	classNames,
-	uniqueClasses,
-	getStyleClasses,
-	updateClassesFromAtts,
-} from '../global/helpers';
+import { generateClasses, alignControls, classNames, uniqueClasses, getStyleClasses, updateClassesFromAtts } from '../global/helpers';
 
-const ColumnsRangeControl = ({
-	label,
-	attributeName,
-	value,
-	setAttributes,
-	...props
-}) => {
+const ColumnsRangeControl = ({ label, attributeName, value, setAttributes, ...props }) => {
 	return (
 		<RangeControl
 			label={label}
@@ -73,132 +51,57 @@ wp.hooks.addFilter(
 				return <BlockListBlock {...props} />;
 			}
 			const { attributes } = props;
-			const {
-				rowColsXl,
-				rowColsLg,
-				rowColsMl,
-				rowColsMd,
-				rowColsMs,
-				rowColsSm,
-				hAlign,
-				vAlign,
-				className,
-				noGutters,
-			} = attributes;
+			const { rowColsXl, rowColsLg, rowColsMl, rowColsMd, rowColsMs, rowColsSm, hAlign, vAlign, className, noGutters } = attributes;
 			let classes = classNames(className, {
 				'no-gutters': noGutters,
 			});
 
 			if (rowColsSm > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-sm-${rowColsSm}`,
-					classes,
-					/row-cols-sm-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-sm-${rowColsSm}`, classes, /row-cols-sm-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-sm-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-sm-[\d|\w]+/);
 			}
 
 			if (rowColsMs > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-ms-${rowColsMs}`,
-					classes,
-					/row-cols-ms-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-ms-${rowColsMs}`, classes, /row-cols-ms-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-ms-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-ms-[\d|\w]+/);
 			}
 
 			if (rowColsMd > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-md-${rowColsMd}`,
-					classes,
-					/row-cols-md-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-md-${rowColsMd}`, classes, /row-cols-md-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-md-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-md-[\d|\w]+/);
 			}
 
 			if (rowColsMl > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-ml-${rowColsMl}`,
-					classes,
-					/row-cols-ml-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-ml-${rowColsMl}`, classes, /row-cols-ml-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-ml-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-ml-[\d|\w]+/);
 			}
 
 			if (rowColsLg > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-lg-${rowColsLg}`,
-					classes,
-					/row-cols-lg-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-lg-${rowColsLg}`, classes, /row-cols-lg-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-lg-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-lg-[\d|\w]+/);
 			}
 
 			if (rowColsXl > 0) {
-				classes = updateClassesFromAtts(
-					`row-cols-xl-${rowColsXl}`,
-					classes,
-					/row-cols-xl-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`row-cols-xl-${rowColsXl}`, classes, /row-cols-xl-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/row-cols-xl-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /row-cols-xl-[\d|\w]+/);
 			}
 
 			if (hAlign != undefined && hAlign !== 'none') {
-				classes = updateClassesFromAtts(
-					`justify-content-${hAlign}`,
-					classes,
-					/justify-content-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`justify-content-${hAlign}`, classes, /justify-content-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/justify-content-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /justify-content-[\d|\w]+/);
 			}
 
 			if (vAlign != undefined && vAlign !== 'none') {
-				classes = updateClassesFromAtts(
-					`align-items-${vAlign}`,
-					classes,
-					/align-items-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts(`align-items-${vAlign}`, classes, /align-items-[\d|\w]+/);
 			} else {
-				classes = updateClassesFromAtts(
-					'',
-					classes,
-					/align-items-[\d|\w]+/
-				);
+				classes = updateClassesFromAtts('', classes, /align-items-[\d|\w]+/);
 			}
 
 			classes = uniqueClasses(classes);
@@ -209,13 +112,9 @@ wp.hooks.addFilter(
 	})
 );
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/row',
-	(className, blockName) => {
-		return blockName === 'core/columns' ? 'row' : className;
-	}
-);
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/row', (className, blockName) => {
+	return blockName === 'core/columns' ? 'row' : className;
+});
 
 wp.hooks.addFilter(
 	'editor.BlockEdit',
@@ -227,122 +126,45 @@ wp.hooks.addFilter(
 			}
 
 			const { attributes, setAttributes } = props;
-			const {
-				noGutters,
-				hAlign,
-				vAlign,
-				rowColsXl,
-				rowColsLg,
-				rowColsMl,
-				rowColsMd,
-				rowColsMs,
-				className,
-			} = attributes;
+			const { noGutters, hAlign, vAlign, rowColsXl, rowColsLg, rowColsMl, rowColsMd, rowColsMs, className } = attributes;
 
 			return (
 				<Fragment>
 					<BlockEdit {...props} />
 					<InspectorControls>
-						<PanelBody
-							title={__('Row Settings', 'rwp')}
-							initialOpen={true}
-						>
+						<PanelBody title={__('Row Settings', 'rwp')} initialOpen={true}>
 							<PanelRow>
-								<ToggleControl
-									label={__('Remove Gutters', 'rwp')}
-									checked={noGutters}
-									onChange={(isChecked) =>
-										setAttributes({ noGutters: isChecked })
-									}
-								/>
+								<ToggleControl label={__('Remove Gutters', 'rwp')} checked={noGutters} onChange={(isChecked) => setAttributes({ noGutters: isChecked })} />
 							</PanelRow>
 							<PanelRow>
-								<ColumnsRangeControl
-									label={__(
-										'Number of columns per row XL',
-										'rwp'
-									)}
-									attributeName="rowColsXl"
-									value={rowColsXl}
-									setAttributes={setAttributes}
-								/>
+								<ColumnsRangeControl label={__('Number of columns per row XL', 'rwp')} attributeName="rowColsXl" value={rowColsXl} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
-								<ColumnsRangeControl
-									label={__(
-										'Number of columns per row LG',
-										'rwp'
-									)}
-									attributeName="rowColsLg"
-									value={rowColsLg}
-									setAttributes={setAttributes}
-								/>
+								<ColumnsRangeControl label={__('Number of columns per row LG', 'rwp')} attributeName="rowColsLg" value={rowColsLg} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
-								<ColumnsRangeControl
-									label={__(
-										'Number of columns per row ML',
-										'rwp'
-									)}
-									attributeName="rowColsMl"
-									value={rowColsMl}
-									setAttributes={setAttributes}
-								/>
+								<ColumnsRangeControl label={__('Number of columns per row ML', 'rwp')} attributeName="rowColsMl" value={rowColsMl} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
-								<ColumnsRangeControl
-									label={__(
-										'Number of columns per row MD',
-										'rwp'
-									)}
-									attributeName="rowColsMd"
-									value={rowColsMd}
-									setAttributes={setAttributes}
-								/>
+								<ColumnsRangeControl label={__('Number of columns per row MD', 'rwp')} attributeName="rowColsMd" value={rowColsMd} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
-								<ColumnsRangeControl
-									label={__(
-										'Number of columns per row MS',
-										'rwp'
-									)}
-									attributeName="rowColsMs"
-									value={rowColsMs}
-									setAttributes={setAttributes}
-								/>
+								<ColumnsRangeControl label={__('Number of columns per row MS', 'rwp')} attributeName="rowColsMs" value={rowColsMs} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
 					</InspectorControls>
 					<BlockControls>
-						<AlignmentToolbar
-							value={hAlign}
-							icon={hAlignCenter}
-							label={__(
-								'Change horizontal alignment of columns',
-								'rwp'
-							)}
-							onChange={(val) => setAttributes({ hAlign: val })}
-							alignmentControls={alignControls(
-								'columns',
-								'horizontal'
-							)}
-						/>
+						<AlignmentToolbar value={hAlign} icon={hAlignCenter} label={__('Change horizontal alignment of columns', 'rwp')} onChange={(val) => setAttributes({ hAlign: val })} alignmentControls={alignControls('columns', 'horizontal')} />
 						<AlignmentToolbar
 							value={vAlign}
 							icon={vAlignCenter}
-							label={__(
-								'Change vertical alignment of columns',
-								'rwp'
-							)}
+							label={__('Change vertical alignment of columns', 'rwp')}
 							onChange={(val) =>
 								setAttributes({
 									vAlign: val,
 								})
 							}
-							alignmentControls={alignControls(
-								'columns',
-								'vertical'
-							)}
+							alignmentControls={alignControls('columns', 'vertical')}
 						/>
 					</BlockControls>
 				</Fragment>

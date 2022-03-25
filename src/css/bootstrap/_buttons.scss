@@ -85,6 +85,12 @@
 		color: currentcolor;
 	}
 
+	img {
+		@include center-absolute;
+
+		min-width: 100%;
+	}
+
 	svg {
 		@include center-absolute;
 

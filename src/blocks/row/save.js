@@ -12,11 +12,7 @@
  */
 
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import {
-	classNames,
-	uniqueClasses,
-	updateClassesFromAtts,
-} from '../global/helpers';
+import { classNames, uniqueClasses, updateClassesFromAtts } from '../global/helpers';
 
 import { rowClasses } from './edit';
 

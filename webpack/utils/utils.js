@@ -214,6 +214,10 @@ const pathByType = (file = '') => {
 	return file;
 };
 
+const blockPath = (file = '') => {
+	return './' + path.join('blocks', file, 'index.js');
+};
+
 /**
  * Extracts the entry object from the config.json file with group set webpack args
  *
@@ -223,12 +227,17 @@ const pathByType = (file = '') => {
  * @return {*}
  */
 const fileNames = (groupName = '', configName = '', entry = {}) => {
-	if (_.isString(groupName) && groupName !== '' && _.has(entry, groupName)) {
-		entry = entry[groupName].files;
+	if (!isEmpty(groupName)) {
+		if (_.has(entry, groupName)) {
+			entry = _.get(entry, `${groupName}.files`, {});
+		}
 
-		if (_.isString(configName) && configName !== '' && _.has(entry, configName)) {
-			entry = entry[configName];
-		} else {
+		if (!isEmpty(configName) && groupName !== 'blocks' && _.has(entry, configName)) {
+			entry = _.get(entry, configName, {});
+		} else if (!isEmpty(configName) && groupName === 'blocks' && _.indexOf(configName) != '-1') {
+			let index = _.indexOf(configName);
+			entry = [entry[index]];
+		} else if (groupName !== 'blocks') {
 			entry = _.reduce(
 				entry,
 				function (result, value) {
@@ -239,30 +248,33 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 			);
 		}
 	} else {
-		entry = _.reduce(
-			entry,
-			function (result, value) {
-				_.merge(result, value.files);
-				return result;
-			},
-			{}
-		);
-		// entry = _.reduce(
-		// 	entry,
-		// 	function (result, value) {
-		// 		_.merge(result, value);
-		// 		return result;
-		// 	},
-		// 	{}
-		// );
+		if (groupName !== 'blocks') {
+			entry = _.reduce(
+				entry,
+				function (result, value) {
+					_.merge(result, value.files);
+					return result;
+				},
+				{}
+			);
+		}
 	}
 
-	entry = _.mapValues(entry, function (value) {
-		_.each(value, function (file, fileKey) {
-			value[fileKey] = pathByType(file);
+	if (groupName !== 'blocks') {
+		entry = _.mapValues(entry, function (value) {
+			_.each(value, function (file, fileKey) {
+				value[fileKey] = pathByType(file);
+			});
+			return value;
 		});
-		return value;
-	});
+	} else {
+		entry = _.keyBy(entry, function (value) {
+			return value;
+		});
+		entry = _.mapValues(entry, function (value) {
+			return blockPath(value);
+		});
+	}
 
 	return entry;
 };

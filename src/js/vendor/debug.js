@@ -7,7 +7,7 @@
  * ========================================================================== */
 
 /* eslint-disable */
-
+rwp = typeof rwp === 'undefined' ? {} : rwp;
 console.log(rwp);
 Sfdump =
 	window.Sfdump ||

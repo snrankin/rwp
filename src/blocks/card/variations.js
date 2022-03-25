@@ -15,20 +15,7 @@
  * WordPress dependencies
  */
 
-import { __ } from '@wordpress/i18n';
-import { Path, Circle, Rect, SVG } from '@wordpress/components';
-import {
-	cardFull,
-	cardBody,
-	cardHeaderBody,
-	cardBodyFooter,
-	cardHeaderBodyFooter,
-	cardImgTop,
-	cardImgBottom,
-	cardImgLeft,
-	cardImgRight,
-	cardImgOverlay,
-} from './icons';
+import { cardFull, cardBody, cardHeaderBody, cardBodyFooter, cardHeaderBodyFooter, cardImgTop, cardImgBottom, cardImgLeft, cardImgRight, cardImgOverlay } from './icons';
 
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 
@@ -100,8 +87,7 @@ const variations = [
 				],
 			],
 		},
-		description:
-			'A full vertical card with a header, image on top, body, and footer',
+		description: 'A full vertical card with a header, image on top, body, and footer',
 		attributes: {},
 		innerBlocks: [
 			[

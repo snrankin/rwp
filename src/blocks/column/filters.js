@@ -13,72 +13,18 @@
 
 import { __ } from '@wordpress/i18n';
 
-import {
-	compose,
-	createHigherOrderComponent,
-	withState,
-} from '@wordpress/compose';
+import { compose, createHigherOrderComponent, withState } from '@wordpress/compose';
 
 import { withSelect, useSelect } from '@wordpress/data';
 
-import {
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	Flex,
-	FlexBlock,
-	FlexItem,
-	Toolbar,
-	ToolbarGroup,
-	ToolbarButton,
-	ResizableBox,
-	Panel,
-} from '@wordpress/components';
-import {
-	Component,
-	Fragment,
-	cloneElement,
-	createElement,
-} from '@wordpress/element';
-import {
-	InnerBlocks,
-	BlockControls,
-	BlockVerticalAlignmentToolbar,
-	InspectorControls,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { RangeControl, PanelBody, PanelRow, ToggleControl, Flex, FlexBlock, FlexItem, Toolbar, ToolbarGroup, ToolbarButton, ResizableBox, Panel } from '@wordpress/components';
+import { Component, Fragment, cloneElement, createElement } from '@wordpress/element';
+import { InnerBlocks, BlockControls, BlockVerticalAlignmentToolbar, InspectorControls, useBlockProps, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
 import TokenList from '@wordpress/token-list';
 
-import {
-	vAlignStart,
-	vAlignCenter,
-	vAlignEnd,
-	hAlignStart,
-	hAlignCenter,
-	hAlignEnd,
-	vDist,
-	hStretch,
-	desktopIcon,
-	laptopIcon,
-	tabletLandscapeIcon,
-	tabletPortraitIcon,
-	mobileIcon,
-} from '../global/icons';
+import { vAlignStart, vAlignCenter, vAlignEnd, hAlignStart, hAlignCenter, hAlignEnd, vDist, hStretch, desktopIcon, laptopIcon, tabletLandscapeIcon, tabletPortraitIcon, mobileIcon } from '../global/icons';
 
-import {
-	classNames,
-	generateClasses,
-	contentClasses,
-	alignControls,
-	bsColumns,
-	closest,
-	arraySearch,
-	getStyleClasses,
-	uniqueClasses,
-	updateClassesFromAtts,
-} from '../global/helpers';
+import { classNames, generateClasses, contentClasses, alignControls, bsColumns, closest, arraySearch, getStyleClasses, uniqueClasses, updateClassesFromAtts } from '../global/helpers';
 
 const newAtts = {
 	apiVersion: 2,
@@ -200,185 +146,90 @@ function getColWidth(attributes, type = 'class') {
 }
 
 const colWidths = (attributes) => {
-	const {
-		sizeXl,
-		sizeLg,
-		sizeMl,
-		sizeMd,
-		sizeMs,
-		sizeSm,
-		autoXl,
-		autoLg,
-		autoMl,
-		autoMd,
-		autoMs,
-		autoSm,
-		offsetXl,
-		offsetLg,
-		offsetMl,
-		offsetMd,
-		offsetMs,
-		offsetSm,
-		hAlign,
-		vAlign,
-		className,
-		width,
-	} = attributes;
+	const { sizeXl, sizeLg, sizeMl, sizeMd, sizeMs, sizeSm, autoXl, autoLg, autoMl, autoMd, autoMs, autoSm, offsetXl, offsetLg, offsetMl, offsetMd, offsetMs, offsetSm, hAlign, vAlign, className, width } = attributes;
 
 	let classes = className;
 
 	if (!autoSm && sizeSm > 0) {
-		classes = updateClassesFromAtts(
-			`col-sm-${sizeSm}`,
-			classes,
-			/col-sm-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-sm-${sizeSm}`, classes, /col-sm-[\d|\w]+/);
 	} else if (autoSm && sizeSm > 0) {
-		classes = updateClassesFromAtts(
-			'col-sm-auto',
-			classes,
-			/col-sm-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-sm-auto', classes, /col-sm-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-sm-[\d|\w]+/);
 	}
 
 	if (!autoMs && sizeMs > 0) {
-		classes = updateClassesFromAtts(
-			`col-ms-${sizeMs}`,
-			classes,
-			/col-ms-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-ms-${sizeMs}`, classes, /col-ms-[\d|\w]+/);
 	} else if (autoMs && sizeMs > 0) {
-		classes = updateClassesFromAtts(
-			'col-ms-auto',
-			classes,
-			/col-ms-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-ms-auto', classes, /col-ms-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-ms-[\d|\w]+/);
 	}
 
 	if (!autoMd && sizeMd > 0) {
-		classes = updateClassesFromAtts(
-			`col-md-${sizeMd}`,
-			classes,
-			/col-md-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-md-${sizeMd}`, classes, /col-md-[\d|\w]+/);
 	} else if (autoMd && sizeMd > 0) {
-		classes = updateClassesFromAtts(
-			'col-md-auto',
-			classes,
-			/col-md-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-md-auto', classes, /col-md-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-md-[\d|\w]+/);
 	}
 
 	if (!autoMl && sizeMl > 0) {
-		classes = updateClassesFromAtts(
-			`col-ml-${sizeMl}`,
-			classes,
-			/col-ml-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-ml-${sizeMl}`, classes, /col-ml-[\d|\w]+/);
 	} else if (autoMl && sizeMl > 0) {
-		classes = updateClassesFromAtts(
-			'col-ml-auto',
-			classes,
-			/col-ml-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-ml-auto', classes, /col-ml-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-ml-[\d|\w]+/);
 	}
 
 	if (!autoLg && sizeLg > 0) {
-		classes = updateClassesFromAtts(
-			`col-lg-${sizeLg}`,
-			classes,
-			/col-lg-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-lg-${sizeLg}`, classes, /col-lg-[\d|\w]+/);
 	} else if (autoLg && sizeLg > 0) {
-		classes = updateClassesFromAtts(
-			'col-lg-auto',
-			classes,
-			/col-lg-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-lg-auto', classes, /col-lg-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-lg-[\d|\w]+/);
 	}
 
 	if (!autoXl && sizeXl > 0) {
-		classes = updateClassesFromAtts(
-			`col-xl-${sizeXl}`,
-			classes,
-			/col-xl-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`col-xl-${sizeXl}`, classes, /col-xl-[\d|\w]+/);
 	} else if (autoXl && sizeXl > 0) {
-		classes = updateClassesFromAtts(
-			'col-xl-auto',
-			classes,
-			/col-xl-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('col-xl-auto', classes, /col-xl-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /col-xl-[\d|\w]+/);
 	}
 
 	if (offsetSm > 0) {
-		classes = updateClassesFromAtts(
-			`offset-sm-${offsetSm}`,
-			classes,
-			/offset-sm-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-sm-${offsetSm}`, classes, /offset-sm-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-sm-[\d|\w]+/);
 	}
 
 	if (offsetMs > 0) {
-		classes = updateClassesFromAtts(
-			`offset-ms-${offsetMs}`,
-			classes,
-			/offset-ms-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-ms-${offsetMs}`, classes, /offset-ms-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-ms-[\d|\w]+/);
 	}
 
 	if (offsetMd > 0) {
-		classes = updateClassesFromAtts(
-			`offset-md-${offsetMd}`,
-			classes,
-			/offset-md-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-md-${offsetMd}`, classes, /offset-md-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-md-[\d|\w]+/);
 	}
 
 	if (offsetMl > 0) {
-		classes = updateClassesFromAtts(
-			`offset-ml-${offsetMl}`,
-			classes,
-			/offset-ml-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-ml-${offsetMl}`, classes, /offset-ml-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-ml-[\d|\w]+/);
 	}
 
 	if (offsetLg > 0) {
-		classes = updateClassesFromAtts(
-			`offset-lg-${offsetLg}`,
-			classes,
-			/offset-lg-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-lg-${offsetLg}`, classes, /offset-lg-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-lg-[\d|\w]+/);
 	}
 
 	if (offsetXl > 0) {
-		classes = updateClassesFromAtts(
-			`offset-xl-${offsetXl}`,
-			classes,
-			/offset-xl-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`offset-xl-${offsetXl}`, classes, /offset-xl-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /offset-xl-[\d|\w]+/);
 	}
@@ -387,13 +238,7 @@ const colWidths = (attributes) => {
 	return classes;
 };
 
-const ColumnSizeRangeControl = ({
-	label,
-	attributeName,
-	value,
-	setAttributes,
-	...props
-}) => {
+const ColumnSizeRangeControl = ({ label, attributeName, value, setAttributes, ...props }) => {
 	return (
 		<RangeControl
 			label={label}
@@ -436,34 +281,26 @@ wp.hooks.addFilter('blocks.registerBlockType', 'rwp/column', (props, name) => {
 	return { ...props, newAttributes };
 });
 
-wp.hooks.addFilter(
-	'blocks.getSaveElement',
-	'core/column',
-	(element, block, attributes) => {
-		if ('core/column' !== block.name) {
-			return element;
-		}
-
-		const elementChildren = createElement(
-			'div',
-			{
-				className: 'content-wrapper',
-			},
-			element.props.children
-		);
-		element = cloneElement(element, null, elementChildren);
-
+wp.hooks.addFilter('blocks.getSaveElement', 'core/column', (element, block, attributes) => {
+	if ('core/column' !== block.name) {
 		return element;
 	}
-);
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/column',
-	(className, blockName) => {
-		return blockName === 'core/column' ? 'col' : className;
-	}
-);
+	const elementChildren = createElement(
+		'div',
+		{
+			className: 'content-wrapper',
+		},
+		element.props.children
+	);
+	element = cloneElement(element, null, elementChildren);
+
+	return element;
+});
+
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/column', (className, blockName) => {
+	return blockName === 'core/column' ? 'col' : className;
+});
 
 wp.hooks.addFilter(
 	'editor.BlockListBlock',
@@ -509,30 +346,7 @@ wp.hooks.addFilter(
 			}
 
 			const { attributes, setAttributes } = props;
-			const {
-				sizeXl,
-				sizeLg,
-				sizeMl,
-				sizeMd,
-				sizeMs,
-				sizeSm,
-				autoXl,
-				autoLg,
-				autoMl,
-				autoMd,
-				autoMs,
-				autoSm,
-				offsetXl,
-				offsetLg,
-				offsetMl,
-				offsetMd,
-				offsetMs,
-				offsetSm,
-				hAlign,
-				vAlign,
-				className,
-				width,
-			} = attributes;
+			const { sizeXl, sizeLg, sizeMl, sizeMd, sizeMs, sizeSm, autoXl, autoLg, autoMl, autoMd, autoMs, autoSm, offsetXl, offsetLg, offsetMl, offsetMd, offsetMs, offsetSm, hAlign, vAlign, className, width } = attributes;
 
 			const innerBlocksProps = useInnerBlocksProps({
 				className: 'content-wrapper',
@@ -542,17 +356,8 @@ wp.hooks.addFilter(
 				<>
 					<BlockEdit {...props} />
 					<InspectorControls>
-						<PanelBody
-							title={__('Screens > 1440px', 'rwp')}
-							initialOpen={true}
-							icon={desktopIcon}
-						>
-							<ColumnSizeRangeControl
-								label={__('Column Width', 'rwp')}
-								attributeName="sizeXl"
-								value={sizeXl}
-								setAttributes={setAttributes}
-							/>
+						<PanelBody title={__('Screens > 1440px', 'rwp')} initialOpen={true} icon={desktopIcon}>
+							<ColumnSizeRangeControl label={__('Column Width', 'rwp')} attributeName="sizeXl" value={sizeXl} setAttributes={setAttributes} />
 							<PanelRow>
 								<ToggleControl
 									label={__('Auto Size', 'rwp')}
@@ -567,26 +372,12 @@ wp.hooks.addFilter(
 								/>
 							</PanelRow>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column offset', 'rwp')}
-									attributeName="offsetXl"
-									value={offsetXl}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column offset', 'rwp')} attributeName="offsetXl" value={offsetXl} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
-						<PanelBody
-							title={__('Screens > 1280px', 'rwp')}
-							initialOpen={false}
-							icon={laptopIcon}
-						>
+						<PanelBody title={__('Screens > 1280px', 'rwp')} initialOpen={false} icon={laptopIcon}>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column Width', 'rwp')}
-									attributeName="sizeLg"
-									value={sizeLg}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column Width', 'rwp')} attributeName="sizeLg" value={sizeLg} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
@@ -601,26 +392,12 @@ wp.hooks.addFilter(
 								/>
 							</PanelRow>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column offset', 'rwp')}
-									attributeName="offsetLg"
-									value={offsetLg}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column offset', 'rwp')} attributeName="offsetLg" value={offsetLg} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
-						<PanelBody
-							title={__('Screens > 1024px', 'rwp')}
-							initialOpen={false}
-							icon={tabletLandscapeIcon}
-						>
+						<PanelBody title={__('Screens > 1024px', 'rwp')} initialOpen={false} icon={tabletLandscapeIcon}>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column Width', 'rwp')}
-									attributeName="sizeMl"
-									value={sizeMl}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column Width', 'rwp')} attributeName="sizeMl" value={sizeMl} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
@@ -635,26 +412,12 @@ wp.hooks.addFilter(
 								/>
 							</PanelRow>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column offset', 'rwp')}
-									attributeName="offsetMl"
-									value={offsetMl}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column offset', 'rwp')} attributeName="offsetMl" value={offsetMl} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
-						<PanelBody
-							title={__('Screens > 768px', 'rwp')}
-							initialOpen={false}
-							icon={tabletPortraitIcon}
-						>
+						<PanelBody title={__('Screens > 768px', 'rwp')} initialOpen={false} icon={tabletPortraitIcon}>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column Width', 'rwp')}
-									attributeName="sizeMd"
-									value={sizeMd}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column Width', 'rwp')} attributeName="sizeMd" value={sizeMd} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
@@ -669,26 +432,12 @@ wp.hooks.addFilter(
 								/>
 							</PanelRow>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column offset', 'rwp')}
-									attributeName="offsetLg"
-									value={offsetLg}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column offset', 'rwp')} attributeName="offsetLg" value={offsetLg} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
-						<PanelBody
-							title={__('Screens < 768px', 'rwp')}
-							initialOpen={false}
-							icon={mobileIcon}
-						>
+						<PanelBody title={__('Screens < 768px', 'rwp')} initialOpen={false} icon={mobileIcon}>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column Width', 'rwp')}
-									attributeName="sizeSm"
-									value={sizeSm}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column Width', 'rwp')} attributeName="sizeSm" value={sizeSm} setAttributes={setAttributes} />
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
@@ -703,12 +452,7 @@ wp.hooks.addFilter(
 								/>
 							</PanelRow>
 							<PanelRow>
-								<ColumnSizeRangeControl
-									label={__('Column offset', 'rwp')}
-									attributeName="offsetSm"
-									value={offsetSm}
-									setAttributes={setAttributes}
-								/>
+								<ColumnSizeRangeControl label={__('Column offset', 'rwp')} attributeName="offsetSm" value={offsetSm} setAttributes={setAttributes} />
 							</PanelRow>
 						</PanelBody>
 					</InspectorControls>

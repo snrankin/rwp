@@ -79,6 +79,9 @@
 
 	--#{$variable-prefix}paragraph-spacing: #{$paragraph-margin-bottom};
 
+	--#{$variable-prefix}body-font-size-sm: #{$font-size-sm};
+	--#{$variable-prefix}body-font-size-lg: #{$font-size-lg};
+
 	// stylelint-enable custom-property-empty-line-before
 	// stylelint-disable-next-line
 	--#{$variable-prefix}gutter-x: #{$grid-gutter-width};

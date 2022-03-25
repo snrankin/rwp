@@ -7,24 +7,6 @@
 /// ======================================================================== ///
 
 @import '../global';
-@import '~bootstrap/scss/forms';
-
-input[type='text'],
-input[type='date'],
-input[type='email'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='file'],
-input[type='url'],
-textarea {
-	@extend .form-control !optional;
-}
-
-select {
-	@extend .form-select !optional;
-}
 
 .gform_wrapper.gravity-theme {
 	form {
@@ -48,6 +30,11 @@ select {
 				@include make-col-auto();
 			}
 		}
+		&.has-inline-submit {
+			.gform_footer {
+				@include visually-hidden;
+			}
+		}
 	}
 
 	.btn {
@@ -64,67 +51,57 @@ select {
 			}
 		}
 	}
-}
-
-form {
-	&.has-inline-submit {
-		.gform_footer {
-			@include visually-hidden;
-		}
+	.gfield_required_asterisk {
+		color: cssvar(danger);
 	}
-}
 
-.gfield_required_asterisk {
-	color: var(--bs-danger);
-}
-
-.gform_ajax_spinner {
-	display: none !important;
-}
-
-.gfield_list_group {
-	.btn {
-		i {
-			&::before {
-				display: inline-block;
-				font-family: bootstrap-icons;
-				font-style: normal;
-				font-weight: normal !important;
-				font-variant: normal;
-				text-transform: none;
-				line-height: 1;
-				vertical-align: -0.125em;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
+	.gform_ajax_spinner {
+		display: none !important;
+	}
+	.gfield_list_group {
+		.btn {
+			i {
+				&::before {
+					display: inline-block;
+					font-family: bootstrap-icons;
+					font-style: normal;
+					font-weight: normal !important;
+					font-variant: normal;
+					text-transform: none;
+					line-height: 1;
+					vertical-align: -0.125em;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
+				}
 			}
-		}
-		&.add_list_item {
-			i:before {
-				content: '\f4fe';
+			&.add_list_item {
+				i:before {
+					content: '\f4fe';
+				}
 			}
-		}
-		&.delete_list_item {
-			&[style*='visibility:hidden;'] {
-				visibility: visible !important;
-				pointer-events: none;
-				opacity: $btn-disabled-opacity;
-				@include box-shadow(none);
-			}
-			i:before {
-				content: '\f2ea';
+			&.delete_list_item {
+				&[style*='visibility:hidden;'] {
+					visibility: visible !important;
+					pointer-events: none;
+					opacity: $btn-disabled-opacity;
+					@include box-shadow(none);
+				}
+				i:before {
+					content: '\f2ea';
+				}
 			}
 		}
 	}
-}
 
-.gfield_list_group_item.form-control {
-	display: flex;
-	padding: 0 !important;
-	> .form-control {
-		flex: 1 1 auto;
-		width: 100%;
-		border-color: transparent !important;
-		border-radius: 0 !important;
-		background-color: transparent !important;
+	.gfield_list_group_item.form-control {
+		display: flex;
+		padding: 0 !important;
+		> .form-control {
+			flex: 1 1 auto;
+			width: 100%;
+			border-color: transparent !important;
+			border-radius: 0 !important;
+			background-color: transparent !important;
+		}
 	}
 }

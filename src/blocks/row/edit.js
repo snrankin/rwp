@@ -13,23 +13,10 @@
 
 import { __ } from '@wordpress/i18n';
 import { isNil, get } from 'lodash';
-import {
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-} from '@wordpress/components';
+import { RangeControl, PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 
-import {
-	InnerBlocks,
-	BlockControls,
-	AlignmentToolbar,
-	InspectorControls,
-	useBlockProps,
-	__experimentalBlockVariationPicker as VariationPicker,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks, BlockControls, AlignmentToolbar, InspectorControls, useBlockProps, __experimentalBlockVariationPicker as VariationPicker, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 
@@ -39,110 +26,58 @@ import { withSelect, useSelect } from '@wordpress/data';
 
 import { vStretch, hAlignStart } from '../global/icons';
 
-import {
-	classNames,
-	uniqueClasses,
-	updateClassesFromAtts,
-	alignControls,
-} from '../global/helpers';
+import { classNames, uniqueClasses, updateClassesFromAtts, alignControls } from '../global/helpers';
 
 export function rowClasses(attributes) {
-	const {
-		rowColsXl,
-		rowColsLg,
-		rowColsMl,
-		rowColsMd,
-		rowColsMs,
-		rowColsSm,
-		hAlign,
-		vAlign,
-		className,
-		noGutters,
-	} = attributes;
+	const { rowColsXl, rowColsLg, rowColsMl, rowColsMd, rowColsMs, rowColsSm, hAlign, vAlign, className, noGutters } = attributes;
 	let classes = classNames(className, {
 		'no-gutters': noGutters,
 	});
 
 	if (rowColsSm > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-sm-${rowColsSm}`,
-			classes,
-			/row-cols-sm-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-sm-${rowColsSm}`, classes, /row-cols-sm-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-sm-[\d|\w]+/);
 	}
 
 	if (rowColsMs > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-ms-${rowColsMs}`,
-			classes,
-			/row-cols-ms-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-ms-${rowColsMs}`, classes, /row-cols-ms-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-ms-[\d|\w]+/);
 	}
 
 	if (rowColsMd > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-md-${rowColsMd}`,
-			classes,
-			/row-cols-md-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-md-${rowColsMd}`, classes, /row-cols-md-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-md-[\d|\w]+/);
 	}
 
 	if (rowColsMl > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-ml-${rowColsMl}`,
-			classes,
-			/row-cols-ml-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-ml-${rowColsMl}`, classes, /row-cols-ml-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-ml-[\d|\w]+/);
 	}
 
 	if (rowColsLg > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-lg-${rowColsLg}`,
-			classes,
-			/row-cols-lg-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-lg-${rowColsLg}`, classes, /row-cols-lg-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-lg-[\d|\w]+/);
 	}
 
 	if (rowColsXl > 0) {
-		classes = updateClassesFromAtts(
-			`row-cols-xl-${rowColsXl}`,
-			classes,
-			/row-cols-xl-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(`row-cols-xl-${rowColsXl}`, classes, /row-cols-xl-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /row-cols-xl-[\d|\w]+/);
 	}
 
 	if (!isNil(hAlign) && hAlign !== 'none' && hAlign !== '') {
-		classes = updateClassesFromAtts(
-			hAlign,
-			classes,
-			/justify-content-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(hAlign, classes, /justify-content-[\d|\w]+/);
 	} else {
-		classes = updateClassesFromAtts(
-			'',
-			classes,
-			/justify-content-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts('', classes, /justify-content-[\d|\w]+/);
 	}
 
 	if (!isNil(vAlign) && vAlign !== 'none' && vAlign !== '') {
-		classes = updateClassesFromAtts(
-			vAlign,
-			classes,
-			/align-items-[\d|\w]+/
-		);
+		classes = updateClassesFromAtts(vAlign, classes, /align-items-[\d|\w]+/);
 	} else {
 		classes = updateClassesFromAtts('', classes, /align-items-[\d|\w]+/);
 	}
@@ -152,13 +87,7 @@ export function rowClasses(attributes) {
 	return classes;
 }
 
-const ColumnsRangeControl = ({
-	label,
-	attributeName,
-	value,
-	setAttributes,
-	...props
-}) => {
+const ColumnsRangeControl = ({ label, attributeName, value, setAttributes, ...props }) => {
 	return (
 		<RangeControl
 			label={label}
@@ -179,40 +108,19 @@ const BLOCK_TEMPLATE = [['rwp/column', {}]];
 const ALLOWED_BLOCKS = ['rwp/column'];
 const TEMPLATE_LOCK = false;
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/row',
-	(className, blockName) => {
-		if (blockName !== 'rwp/row') {
-			return className;
-		}
-
-		className = classNames('rwp', 'row');
-
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/row', (className, blockName) => {
+	if (blockName !== 'rwp/row') {
 		return className;
 	}
-);
+
+	className = classNames('rwp', 'row');
+
+	return className;
+});
 
 function Edit(props) {
-	const {
-		attributes,
-		setAttributes,
-		clientId,
-		hasInnerBlocks,
-		blockType,
-		defaultVariation,
-		variations,
-	} = props;
-	const {
-		noGutters,
-		hAlign,
-		vAlign,
-		rowColsXl,
-		rowColsLg,
-		rowColsMl,
-		rowColsMd,
-		rowColsMs,
-	} = attributes;
+	const { attributes, setAttributes, clientId, hasInnerBlocks, blockType, defaultVariation, variations } = props;
+	const { noGutters, hAlign, vAlign, rowColsXl, rowColsLg, rowColsMl, rowColsMd, rowColsMs } = attributes;
 
 	const classes = rowClasses(attributes);
 
@@ -224,9 +132,7 @@ function Edit(props) {
 		templateLock: TEMPLATE_LOCK,
 		allowedBlocks: ALLOWED_BLOCKS,
 		orientation: 'horizontal',
-		renderAppender: hasInnerBlocks
-			? undefined
-			: InnerBlocks.ButtonBlockAppender,
+		renderAppender: hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender,
 	});
 
 	const placeholder = (
@@ -240,15 +146,7 @@ function Edit(props) {
 						setAttributes(nextVariation.attributes);
 					}
 					if (nextVariation.innerBlocks) {
-						wp.data
-							.dispatch('core/block-editor')
-							.replaceInnerBlocks(
-								clientId,
-								createBlocksFromInnerBlocksTemplate(
-									nextVariation.innerBlocks
-								),
-								true
-							);
+						wp.data.dispatch('core/block-editor').replaceInnerBlocks(clientId, createBlocksFromInnerBlocksTemplate(nextVariation.innerBlocks), true);
 					}
 				}}
 				allowSkip
@@ -259,13 +157,7 @@ function Edit(props) {
 	return (
 		<>
 			<BlockControls>
-				<AlignmentToolbar
-					value={hAlign}
-					icon={hAlignStart}
-					label={__('Change horizontal alignment of columns', 'rwp')}
-					onChange={(val) => setAttributes({ hAlign: val })}
-					alignmentControls={alignControls('columns', 'horizontal')}
-				/>
+				<AlignmentToolbar value={hAlign} icon={hAlignStart} label={__('Change horizontal alignment of columns', 'rwp')} onChange={(val) => setAttributes({ hAlign: val })} alignmentControls={alignControls('columns', 'horizontal')} />
 				<AlignmentToolbar
 					value={vAlign}
 					icon={vStretch}
@@ -275,63 +167,28 @@ function Edit(props) {
 							vAlign: val,
 						})
 					}
-					alignmentControls={alignControls(
-						'columns',
-						'vertical',
-						'align-items'
-					)}
+					alignmentControls={alignControls('columns', 'vertical', 'align-items')}
 				/>
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Row Settings', 'rwp')} initialOpen={true}>
 					<PanelRow>
-						<ToggleControl
-							label={__('Remove Gutters', 'rwp')}
-							checked={noGutters}
-							onChange={(isChecked) =>
-								setAttributes({ noGutters: isChecked })
-							}
-						/>
+						<ToggleControl label={__('Remove Gutters', 'rwp')} checked={noGutters} onChange={(isChecked) => setAttributes({ noGutters: isChecked })} />
 					</PanelRow>
 					<PanelRow>
-						<ColumnsRangeControl
-							label={__('Number of columns per row XL', 'rwp')}
-							attributeName="rowColsXl"
-							value={rowColsXl}
-							setAttributes={setAttributes}
-						/>
+						<ColumnsRangeControl label={__('Number of columns per row XL', 'rwp')} attributeName="rowColsXl" value={rowColsXl} setAttributes={setAttributes} />
 					</PanelRow>
 					<PanelRow>
-						<ColumnsRangeControl
-							label={__('Number of columns per row LG', 'rwp')}
-							attributeName="rowColsLg"
-							value={rowColsLg}
-							setAttributes={setAttributes}
-						/>
+						<ColumnsRangeControl label={__('Number of columns per row LG', 'rwp')} attributeName="rowColsLg" value={rowColsLg} setAttributes={setAttributes} />
 					</PanelRow>
 					<PanelRow>
-						<ColumnsRangeControl
-							label={__('Number of columns per row ML', 'rwp')}
-							attributeName="rowColsMl"
-							value={rowColsMl}
-							setAttributes={setAttributes}
-						/>
+						<ColumnsRangeControl label={__('Number of columns per row ML', 'rwp')} attributeName="rowColsMl" value={rowColsMl} setAttributes={setAttributes} />
 					</PanelRow>
 					<PanelRow>
-						<ColumnsRangeControl
-							label={__('Number of columns per row MD', 'rwp')}
-							attributeName="rowColsMd"
-							value={rowColsMd}
-							setAttributes={setAttributes}
-						/>
+						<ColumnsRangeControl label={__('Number of columns per row MD', 'rwp')} attributeName="rowColsMd" value={rowColsMd} setAttributes={setAttributes} />
 					</PanelRow>
 					<PanelRow>
-						<ColumnsRangeControl
-							label={__('Number of columns per row MS', 'rwp')}
-							attributeName="rowColsMs"
-							value={rowColsMs}
-							setAttributes={setAttributes}
-						/>
+						<ColumnsRangeControl label={__('Number of columns per row MS', 'rwp')} attributeName="rowColsMs" value={rowColsMs} setAttributes={setAttributes} />
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
@@ -342,8 +199,7 @@ function Edit(props) {
 export default compose(
 	withSelect((select, ownProps) => {
 		const { clientId, name, setAttributes } = ownProps;
-		const { getBlockOrder } =
-			select('core/block-editor') || select('core/editor');
+		const { getBlockOrder } = select('core/block-editor') || select('core/editor');
 
 		const hasInnerBlocks = useSelect(
 			(select) => {
@@ -354,8 +210,7 @@ export default compose(
 			[clientId]
 		);
 
-		const { getBlockVariations, getBlockType, getDefaultBlockVariation } =
-			select('core/blocks');
+		const { getBlockVariations, getBlockType, getDefaultBlockVariation } = select('core/blocks');
 
 		return {
 			clientId,

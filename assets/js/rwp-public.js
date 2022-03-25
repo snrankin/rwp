@@ -731,8 +731,10 @@ var __webpack_exports__ = {};
 /*!**********************!*\
   !*** ./js/public.js ***!
   \**********************/
-/* harmony import */ var _util_Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/Router */ "./js/util/Router.js");
-/* harmony import */ var _public_routes_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./public/routes/common */ "./js/public/routes/common.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_Router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util/Router */ "./js/util/Router.js");
+/* harmony import */ var _public_routes_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./public/routes/common */ "./js/public/routes/common.js");
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "jquery");
 /**
  * ============================================================================
@@ -746,14 +748,15 @@ var __webpack_exports__ = {};
  * @copyright 2020 RIESTER
  * ==========================================================================
  */
-// import local dependencies
+ // import local dependencies
+
 
 
 /** Populate Router instance with DOM routes */
 
-var routes = new _util_Router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var routes = new _util_Router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   // All pages
-  common: _public_routes_common__WEBPACK_IMPORTED_MODULE_1__["default"]
+  common: _public_routes_common__WEBPACK_IMPORTED_MODULE_2__["default"]
 }); // Load Events
 
 jQuery(document).ready(function () {

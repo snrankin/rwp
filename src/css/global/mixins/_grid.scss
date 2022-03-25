@@ -63,7 +63,7 @@
 	}
 }
 
-@mixin make-row($x-spacing: $grid-gutter-width, $y-spacing: $grid-gutter-width, $important: false) {
+@mixin make-row($x-spacing: null, $y-spacing: null, $important: false) {
 	@include row-gutters($x-spacing, $y-spacing, $important);
 
 	display: flex;

@@ -11,11 +11,7 @@
  * ==========================================================================
  */
 
-import {
-	InnerBlocks,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks, useBlockProps, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { colWidths } from './edit';
 

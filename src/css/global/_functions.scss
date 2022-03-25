@@ -52,8 +52,12 @@
 	@return type-of($var) == 'map';
 }
 
-@function cssvar($entry) {
-	@return unquote('var(--#{$variable-prefix}#{$entry})');
+@function cssvar($entry, $default: null, $prefix: $variable-prefix) {
+	@if $default != null {
+		@return unquote('var(--#{prefix}#{$entry}, #{$default})');
+	} @else {
+		@return unquote('var(--#{prefix}#{$entry})');
+	}
 }
 
 /// Map deep get

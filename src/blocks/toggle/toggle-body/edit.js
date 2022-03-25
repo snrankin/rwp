@@ -13,33 +13,15 @@
 const _ = require('lodash');
 import { __ } from '@wordpress/i18n';
 import { PanelBody, PanelRow } from '@wordpress/components';
-import {
-	compose,
-	withState,
-	createHigherOrderComponent,
-} from '@wordpress/compose';
+import { compose, withState, createHigherOrderComponent } from '@wordpress/compose';
 
-import {
-	InnerBlocks,
-	InspectorControls,
-	BlockControls,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks, InspectorControls, BlockControls, useBlockProps, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { withSelect, useSelect } from '@wordpress/data';
 
 //import './edit.scss';
 
-import {
-	classNames,
-	uniqueClasses,
-	blockHasParent,
-	parentType,
-	parentAtts,
-	hasValue,
-	updateClassesFromAtts,
-} from '../../global/helpers';
+import { classNames, uniqueClasses, blockHasParent, parentType, parentAtts, hasValue, updateClassesFromAtts } from '../../global/helpers';
 
 const BLOCK_TEMPLATE = [
 	[
@@ -52,30 +34,18 @@ const BLOCK_TEMPLATE = [
 const ALLOWED_BLOCKS = [];
 const TEMPLATE_LOCK = false;
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/toggle-body',
-	(className, blockName) => {
-		if (blockName !== 'rwp/toggle-body') {
-			return className;
-		}
-
-		className = classNames('rwp', 'rwp-toggle-body');
-
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/toggle-body', (className, blockName) => {
+	if (blockName !== 'rwp/toggle-body') {
 		return className;
 	}
-);
+
+	className = classNames('rwp', 'rwp-toggle-body');
+
+	return className;
+});
 
 function toggleBodyEdit(props) {
-	const {
-		attributes,
-		setAttributes,
-		clientId,
-		isSelected,
-		hasInnerBlocks,
-		name,
-		context,
-	} = props;
+	const { attributes, setAttributes, clientId, isSelected, hasInnerBlocks, name, context } = props;
 	const { className, toggleBodyIsOpen, toggleBodyId } = attributes;
 
 	const isOpen = context['rwp-toggle/isOpen'];
@@ -108,10 +78,7 @@ function toggleBodyEdit(props) {
 
 	return (
 		<div {...blockProps}>
-			<InnerBlocks
-				template={BLOCK_TEMPLATE}
-				templateLock={TEMPLATE_LOCK}
-			/>
+			<InnerBlocks template={BLOCK_TEMPLATE} templateLock={TEMPLATE_LOCK} />
 		</div>
 	);
 }

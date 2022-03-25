@@ -7,6 +7,29 @@
 /// ======================================================================== ///
 @import '../global';
 
+#query-monitor-main.qm-theme-rwp {
+	pre {
+		font-family: $font-family-monospace !important;
+		@include font-size($code-font-size !important);
+		color: $pre-color !important;
+		code {
+			@include font-size(inherit !important);
+			color: inherit !important;
+			word-break: normal !important;
+		}
+	}
+	code {
+		@include font-size($code-font-size !important);
+		color: $code-color !important;
+		word-wrap: break-word !important;
+
+		// Streamline the style when inside anchors to avoid broken underline and more
+		a > & {
+			color: inherit !important;
+		}
+	}
+}
+
 #query-monitor-main #qm-rwp-debug pre.sf-dump,
 pre.sf-dump {
 	display: block;

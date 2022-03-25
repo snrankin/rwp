@@ -123,7 +123,11 @@ function createConfig(groupName = '', configName = '') {
 					module: /sass-loader\/dist\/cjs\.js/, // A RegExp
 				},
 			],
+			externals: {
+				jquery: 'jQuery',
+			},
 		},
+
 		filename: filenameTemplate,
 		assetname: assetnameTemplate,
 		prefix: fileprefix,
@@ -161,7 +165,29 @@ function createConfig(groupName = '', configName = '') {
 		newConfig.webpack.devtool = 'source-map';
 	}
 
+	// if (groupName !== 'main') {
+	// 	newConfig.webpack.externals.push(function ({ context, request }, callback) {
+	// 		if (/.{1,2}\/\/util\/utils$/.test(request)) {
+	// 			// Externalize to a commonjs module using the request path
+	// 			return callback(null, 'rwp');
+	// 		}
+
+	// 		// Continue without externalizing the import
+	// 		callback();
+	// 	});
+	// }
+
 	newConfig = _.defaultsDeep(newConfig, customConfig);
+
+	// newConfig.webpack.externals.push(function ({ context, request }, callback) {
+	// 	if (/.*(?<!app\.js)$/.test(request)) {
+	// 		// Externalize to a commonjs module using the request path
+	// 		return callback(null, 'rwp');
+	// 	}
+
+	// 	// Continue without externalizing the import
+	// 	callback();
+	// });
 
 	if (!isEmpty(configName) && _.isString(configName) && configName !== '') {
 		newConfig = _.merge({ webpack: { name: configName } }, newConfig);
@@ -332,9 +358,6 @@ let webpackConfig = {
 	resolve: {
 		modules: [filePaths.node, filePaths.src],
 		enforceExtension: false,
-	},
-	externals: {
-		jquery: 'jQuery',
 	},
 };
 

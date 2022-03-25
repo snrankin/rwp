@@ -1,0 +1,29 @@
+/// ======================================================================== ///
+/// @name   _global
+///
+/// @group  RWP
+/// @version   1.0.1
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+
+body.rwp {
+	&:not(.wp-admin) {
+		.quicklinks {
+			display: flex;
+			justify-content: space-between;
+		}
+		#wp-admin-bar-my-account {
+			@media screen and (max-width: 600px) {
+				height: 46px;
+			}
+		}
+	}
+}
+
+.screen-reader-text {
+	@include visually-hidden();
+}
+
+.entry-content img {
+	@include img-fluid;
+}

@@ -1,0 +1,65 @@
+/// ======================================================================== ///
+/// @name   tiny-slider
+///
+/// @group  RWP
+/// @version   1.0.1
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+@import '../global';
+@import '~tiny-slider/src/tiny-slider';
+
+.tns {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1000ms, filter 1500ms;
+
+	&.tns-slider,
+	&.tns-carousel {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.tns-outer,
+.tns-ovh {
+	position: relative;
+}
+
+.tns-controls {
+	position: relative;
+	z-index: 10;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.btn {
+		position: absolute;
+		transform: translateY(-50%);
+		z-index: 10;
+		color: currentcolor;
+
+		&.next {
+			right: 0;
+		}
+
+		&.prev {
+			left: 0;
+		}
+	}
+}
+
+.tns-nav {
+	@include make-row;
+
+	> * {
+		@include make-col-ready;
+		@include make-col-auto;
+	}
+
+	&.tns-thumbnails {
+		.btn-icon {
+			min-width: cssvar(thumbnail-width, rem(60px), tns-);
+		}
+	}
+}

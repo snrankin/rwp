@@ -13,41 +13,16 @@
 import domReady from '@wordpress/dom-ready';
 const _ = require('lodash');
 import { __ } from '@wordpress/i18n';
-import {
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	TextControl,
-} from '@wordpress/components';
-import {
-	compose,
-	createHigherOrderComponent,
-	withState,
-} from '@wordpress/compose';
+import { PanelBody, PanelRow, ToggleControl, TextControl } from '@wordpress/components';
+import { compose, createHigherOrderComponent, withState } from '@wordpress/compose';
 
-import {
-	InnerBlocks,
-	InspectorControls,
-	useBlockProps,
-	withColors,
-	textControl,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks, InspectorControls, useBlockProps, withColors, textControl, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { withSelect, useSelect } from '@wordpress/data';
 
 //import './edit.scss';
 
-import {
-	classNames,
-	hasValue,
-	buttonOptions,
-	updateClassesFromAtts,
-	uniqueClasses,
-	blockHasParent,
-	parentType,
-	parentAtts,
-} from '../global/helpers';
+import { classNames, hasValue, buttonOptions, updateClassesFromAtts, uniqueClasses, blockHasParent, parentType, parentAtts } from '../global/helpers';
 
 const BLOCK_TEMPLATE = [
 	['rwp/toggle-bar', {}],
@@ -56,19 +31,15 @@ const BLOCK_TEMPLATE = [
 const ALLOWED_BLOCKS = ['rwp/toggle-bar', 'rwp/toggle-body'];
 const TEMPLATE_LOCK = 'all';
 
-wp.hooks.addFilter(
-	'blocks.getBlockDefaultClassName',
-	'rwp/toggle',
-	(className, blockName) => {
-		if (blockName !== 'rwp/toggle') {
-			return className;
-		}
-
-		className = classNames('rwp', 'rwp-toggle');
-
+wp.hooks.addFilter('blocks.getBlockDefaultClassName', 'rwp/toggle', (className, blockName) => {
+	if (blockName !== 'rwp/toggle') {
 		return className;
 	}
-);
+
+	className = classNames('rwp', 'rwp-toggle');
+
+	return className;
+});
 
 function toggleEdit(props) {
 	const { attributes, setAttributes, clientId } = props;
@@ -87,16 +58,10 @@ function toggleEdit(props) {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody
-					title={__('Toggle Settings', 'rwp')}
-					initialOpen={true}
-				>
+				<PanelBody title={__('Toggle Settings', 'rwp')} initialOpen={true}>
 					<PanelRow>
 						<ToggleControl
-							label={__(
-								'Is toggle body initially opened?',
-								'rwp'
-							)}
+							label={__('Is toggle body initially opened?', 'rwp')}
 							checked={isOpen}
 							onChange={(val) =>
 								setAttributes({
@@ -119,11 +84,7 @@ function toggleEdit(props) {
 				</PanelBody>
 			</InspectorControls>
 
-			<InnerBlocks
-				template={BLOCK_TEMPLATE}
-				templateLock={TEMPLATE_LOCK}
-				allowedBlocks={ALLOWED_BLOCKS}
-			/>
+			<InnerBlocks template={BLOCK_TEMPLATE} templateLock={TEMPLATE_LOCK} allowedBlocks={ALLOWED_BLOCKS} />
 		</div>
 	);
 }

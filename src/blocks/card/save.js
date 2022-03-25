@@ -17,11 +17,7 @@ const classNames = require('classnames/dedupe');
 export default function Save(props) {
 	let contentClasses = classNames('card', props.attributes.className);
 
-	contentClasses = updateClassesFromAtts(
-		`text-${props.attributes.textAlignment}`,
-		contentClasses,
-		/text-[\d|\w]+/
-	);
+	contentClasses = updateClassesFromAtts(`text-${props.attributes.textAlignment}`, contentClasses, /text-[\d|\w]+/);
 	return (
 		<div
 			{...useBlockProps.save({

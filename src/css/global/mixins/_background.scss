@@ -1,0 +1,23 @@
+/// ======================================================================== ///
+/// @name   _background
+///
+/// @group  RWP
+/// @version   1.0.1
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+// stylelint-disable declaration-no-important
+
+// Contextual backgrounds
+
+@mixin bg-variant($parent, $color) {
+	#{$parent} {
+		background-color: $color !important;
+		color: cssvar(#{$color}-contrast);
+	}
+}
+
+@mixin text-emphasis-variant($parent, $color) {
+	#{$parent} {
+		color: $color !important;
+	}
+}

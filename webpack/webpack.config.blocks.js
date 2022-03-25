@@ -10,16 +10,54 @@
  * ==========================================================================
  */
 
+// ======================= Import Vendor Dependencies ======================= //
 const _ = require('lodash');
+const { argv } = require('yargs');
 const { mergeWithCustomize, customizeArray, merge, mergeWithRules } = require('webpack-merge');
-
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const wordPressConfig = require('@wordpress/scripts/config/webpack.config');
 
-const { startingPlugins, baseConfig, endingPlugins } = require('./webpack.config');
+// ======================== Import Local Dependencies ======================= //
+
+const { isEmpty, debug } = require('./utils/utils');
+let { startingPlugins, config, baseConfig, endingPlugins } = require('./utils/config');
+
+// =========================== Setup File Globals =========================== //
+
+const buildWatch = !isEmpty(argv.watch) ? true : false;
+
+// ============= Filter out unwanted items from Wordpress Config ============ //
+
+wordPressConfig.module.rules = wordPressConfig.module.rules.filter((rule) => {
+	if (rule.test.constructor == RegExp && rule.test.source !== '\\.css$' && rule.test.source !== '\\.(sc|sa)ss$') {
+		return rule;
+	}
+	return false;
+});
+
+wordPressConfig.plugins = wordPressConfig.plugins.filter((plugin) => {
+	if (plugin.constructor.name !== 'CleanWebpackPlugin' && plugin.constructor.name !== 'Plugin' && plugin.constructor.name !== 'FixStyleWebpackPlugin') {
+		return plugin;
+	}
+	return false;
+});
+
+// Merge Wordpress Config and Base config
+baseConfig = mergeWithRules({
+	module: {
+		rules: {
+			test: 'match',
+			use: {
+				loader: 'match',
+				options: 'replace',
+			},
+		},
+	},
+})(wordPressConfig, baseConfig);
+
+// ========================== Start Webpack Config ========================== //
 
 let webpackConfig = {
-	...wordPressConfig,
 	plugins: [
 		new DependencyExtractionWebpackPlugin({
 			injectPolyfill: true,
@@ -30,55 +68,15 @@ let webpackConfig = {
 
 webpackConfig = merge(baseConfig, webpackConfig);
 
-const modules1 = {
-	module: baseConfig.module,
-};
-
-const wordPressConfigRules = wordPressConfig.module.rules.filter((rule) => {
-	if (rule.test.constructor == RegExp && rule.test.source !== '\\.css$' && rule.test.source !== '\\.(sc|sa)ss$') {
-		return rule;
-	}
-	return false;
-});
-
-const modules2 = {
-	module: {
-		rules: wordPressConfigRules,
-	},
-};
-
-let modules = mergeWithRules({
-	module: {
-		rules: {
-			test: 'match',
-			use: {
-				loader: 'match',
-				options: 'replace',
-			},
-		},
-	},
-})(modules2, modules1);
-
-modules = modules.module;
-
-// //webpackConfig = merge(baseConfig, wordPressConfig, webpackConfig);
-
-webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
-	if (plugin.constructor.name !== 'CleanWebpackPlugin' && plugin.constructor.name !== 'Plugin' && plugin.constructor.name !== 'FixStyleWebpackPlugin') {
-		return plugin;
-	}
-	return false;
-});
-
-webpackConfig.module = modules;
-webpackConfig.output = baseConfig.output;
-webpackConfig.entry = baseConfig.entry;
+// ========================== Add Starting Plugins ========================== //
 
 webpackConfig = mergeWithCustomize({
 	customizeArray: customizeArray({
 		plugins: 'prepend',
 	}),
 })(webpackConfig, { plugins: startingPlugins });
+
+// =========================== Add Ending Plugins =========================== //
 
 webpackConfig = mergeWithCustomize({
 	customizeArray: customizeArray({
@@ -88,6 +86,10 @@ webpackConfig = mergeWithCustomize({
 
 if (_.has(webpackConfig, 'name')) {
 	webpackConfig = [webpackConfig];
+}
+
+if (!buildWatch && (config.enabled.debug || argv.stats === 'verbose')) {
+	debug(webpackConfig);
 }
 
 module.exports = webpackConfig;

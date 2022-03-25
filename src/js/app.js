@@ -7,4 +7,3 @@
  * ========================================================================== */
 
 export * from './util/utils';
-export { slider } from './plugins/slider';
