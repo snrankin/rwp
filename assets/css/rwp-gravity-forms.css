@@ -51,6 +51,20 @@
     border:0 !important;
     -webkit-overflow-scrolling:touch;
 }
+.gform_wrapper.gravity-theme .hidden_label .gfield_label{
+    position:absolute !important;
+    width:1px !important;
+    height:1px !important;
+    padding:0 !important;
+    margin:-1px !important;
+    overflow:hidden !important;
+    clip:rect(0, 0, 0, 0) !important;
+    white-space:nowrap !important;
+    border:0 !important;
+    float:none;
+    display:block;
+    -webkit-overflow-scrolling:touch;
+}
 .gform_wrapper.gravity-theme .btn.submitting .btn-icon.has-spinner{
     display:inline-block;
 }

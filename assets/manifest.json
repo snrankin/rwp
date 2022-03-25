@@ -44,5 +44,17 @@
   "section.js": "js/rwp-section.js",
   "section.php": "js/rwp-section.asset.php",
   "toggle.js": "js/rwp-toggle.js",
-  "toggle.php": "js/rwp-toggle.asset.php"
+  "toggle.php": "js/rwp-toggle.asset.php",
+  "acf.min.css": "css/rwp-acf.min.css",
+  "bootstrap.min.css": "css/rwp-bootstrap.min.css",
+  "bootstrap.min.js": "js/rwp-bootstrap.min.js",
+  "debug.min.css": "css/rwp-debug.min.css",
+  "debug.min.js": "js/rwp-debug.min.js",
+  "elementor.min.css": "css/rwp-elementor.min.css",
+  "gravity-forms.min.css": "css/rwp-gravity-forms.min.css",
+  "lazysizes.min.css": "css/rwp-lazysizes.min.css",
+  "lazysizes.min.js": "js/rwp-lazysizes.min.js",
+  "modernizr.min.js": "js/rwp-modernizr.min.js",
+  "select2.min.css": "css/rwp-select2.min.css",
+  "select2.min.js": "js/rwp-select2.min.js"
 }
