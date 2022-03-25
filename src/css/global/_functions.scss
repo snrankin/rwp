@@ -54,9 +54,9 @@
 
 @function cssvar($entry, $default: null, $prefix: $variable-prefix) {
 	@if $default != null {
-		@return unquote('var(--#{prefix}#{$entry}, #{$default})');
+		@return unquote('var(--#{$prefix}#{$entry}, #{$default})');
 	} @else {
-		@return unquote('var(--#{prefix}#{$entry})');
+		@return unquote('var(--#{$prefix}#{$entry})');
 	}
 }
 

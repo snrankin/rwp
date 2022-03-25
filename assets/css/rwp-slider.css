@@ -211,8 +211,8 @@
     width:auto;
 }
 .tns-nav.tns-thumbnails .btn-icon{
-    min-width:var(--prefixthumbnail-width, 60px);
-    min-width:var(--prefixthumbnail-width, 3.75rem);
+    min-width:var(--tns-thumbnail-width, 60px);
+    min-width:var(--tns-thumbnail-width, 3.75rem);
 }
 
 /*# sourceMappingURL=rwp-slider.css.map*/
