@@ -38,6 +38,7 @@
 /* harmony export */   "isArrayLike": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isArrayLike; },
 /* harmony export */   "isEmpty": function() { return /* binding */ isEmpty; },
 /* harmony export */   "isObject": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isObject; },
+/* harmony export */   "isString": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.isString; },
 /* harmony export */   "logCustomProperties": function() { return /* binding */ logCustomProperties; },
 /* harmony export */   "map": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.map; },
 /* harmony export */   "matchHeights": function() { return /* binding */ matchHeights; },
@@ -467,13 +468,30 @@ function getWidest(el) {
  * Make all elements match the tallest element
  *
  * @param {string} [elem='']
- * @param {*} [container=Document]
+ * @param {*} [container=null]
  */
 
 function matchWidths() {
   var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
-  var matches = container.querySelectorAll(elem);
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var matches;
+
+  if (!isEmpty(container)) {
+    if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isString)(container)) {
+      var containerSelector = container;
+      container = document.querySelector(container);
+
+      try {
+        if (!isEmpty(container)) {
+          matches = container.querySelectorAll(elem);
+        }
+      } catch (error) {
+        console.warning("".concat(containerSelector, " was not found"));
+      }
+    }
+  } else {
+    matches = document.querySelectorAll(elem);
+  }
 
   if (matches.length > 1) {
     var minWidth = getWidest(elem);
@@ -18414,6 +18432,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isArrayLike": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.isArrayLike; },
 /* harmony export */   "isEmpty": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.isEmpty; },
 /* harmony export */   "isObject": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.isObject; },
+/* harmony export */   "isString": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.isString; },
 /* harmony export */   "logCustomProperties": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.logCustomProperties; },
 /* harmony export */   "map": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.map; },
 /* harmony export */   "matchHeights": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.matchHeights; },
