@@ -50,12 +50,10 @@
 }
 
 .tns-nav {
-	@include make-row;
-
-	> * {
-		@include make-col-ready;
-		@include make-col-auto;
-	}
+	display: grid;
+	grid-row-gap: cssvar(gutter-y); //stylelint-disable-line
+	grid-column-gap: cssvar(gutter-x); //stylelint-disable-line
+	grid-auto-flow: column;
 
 	&.tns-thumbnails {
 		.btn-icon {
