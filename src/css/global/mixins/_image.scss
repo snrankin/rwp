@@ -75,36 +75,3 @@
 		flex: 1 1 auto;
 	}
 }
-
-@mixin media-breakpoints($breakpoints: $media-breakpoints) {
-	$description: '--media-thumbnail: (max-width: 119.8px) | --media-small: (min-width: 120px) and (max-width: 319.8px)';
-	@each $name, $breakpoint in $breakpoints {
-		$min: breakpoint-min($breakpoint, $grid-breakpoints);
-		$max: breakpoint-max($breakpoint, $grid-breakpoints);
-		$property: --media-#{$name};
-		$value: '';
-
-		@if $min != null and $max != null {
-			@if $name != 'full' {
-				$value: '(min-width: #{$min}) and (max-width: #{$max})';
-			} @else {
-				$value: '(min-width: #{$min})';
-			}
-		} @else if $max == null {
-			$value: '(min-width: #{$min})';
-		} @else if $min == null {
-			$value: '(max-width: #{$max})';
-		}
-
-		@if $value != '' {
-			@if $description != '' {
-				$description: $description + ' | ';
-			}
-
-			$description: $description + $property + ': ' + inspect($value);
-		}
-	}
-
-	display: none;
-	content: $description;
-}

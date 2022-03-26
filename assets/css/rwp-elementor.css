@@ -806,7 +806,6 @@ body.elementor{
 .elementor-column .elementor-widget-wrap{
     flex:1 1 auto;
     height:100%;
-    align-content:unset;
     min-height:1px;
 }
 .elementor-column .elementor-widget-container{
