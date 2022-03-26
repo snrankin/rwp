@@ -112,7 +112,7 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monito
 	$rwp_plugin_assets['scripts']['debug'] = array(
 		'location' => 'global',
 		'handle'   => 'debug',
-		'deps'     => ['jquery', 'rwp-app', 'rwp-slider', 'rwp-modal'],
+		'deps'     => ['jquery', 'rwp-app'],
         'footer'   => true,
     );
 	$rwp_plugin_assets['styles'][ 'debug'] = array(

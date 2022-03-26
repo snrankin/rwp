@@ -509,6 +509,7 @@ body{
     min-height:100%;
     padding:0;
     margin:0;
+    width:100%;
 }
 
 @-ms-viewport{
@@ -9601,6 +9602,10 @@ textarea.form-control-lg{
     }}
 
 @media screen{
+    html,
+body{
+        width:100%;
+    }
     body{
         display:flex;
         min-height:100vh;
