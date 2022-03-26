@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ============================================================================
  * assets
@@ -19,7 +20,7 @@ $rwp_plugin_assets = [
     'scripts' => [
         'app' => [
             'handle'   => 'app',
-			'deps'     => ['jquery'],
+            'deps'     => ['jquery'],
             'location' => 'public',
             'footer'   => true,
         ],
@@ -27,35 +28,35 @@ $rwp_plugin_assets = [
             'handle'   => 'public',
             'deps'     => ['jquery', 'rwp-app'],
             'location' => 'public',
-        	'footer'   => true,
+            'footer'   => true,
         ],
-		'bootstrap' => [
+        'bootstrap' => [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
-			'deps'     => ['jquery'],
-			'footer'   => true,
+        'deps'     => ['jquery'],
+        'footer'   => true,
         ],
         'modernizr' => [
             'handle'   => 'modernizr',
             'location' => 'global',
-        	'footer'   => true,
+            'footer'   => true,
         ],
         'select2' => [
             'handle'   => 'select2',
             'location' => 'select2',
-			'deps'     => ['jquery'],
+        'deps'     => ['jquery'],
             'footer'   => true,
         ],
-		'slider' => [
+        'slider' => [
             'handle'   => 'slider',
             'location' => 'slider',
-			'deps'     => ['jquery', 'rwp-app'],
+        'deps'     => ['jquery', 'rwp-app'],
             'footer'   => true,
         ],
-		'modal' => [
+        'modal' => [
             'handle'   => 'modal',
             'location' => 'modal',
-			'deps'     => ['jquery', 'rwp-app'],
+        'deps'     => ['jquery', 'rwp-app'],
             'footer'   => true,
         ],
     ],
@@ -65,7 +66,7 @@ $rwp_plugin_assets = [
             'handle'   => 'bootstrap',
             'location' => 'bootstrap',
         ],
-		'public' => [
+        'public' => [
             'handle'   => 'public',
             'location' => 'public',
         ],
@@ -89,7 +90,7 @@ $rwp_plugin_assets = [
             'handle'   => 'font-awesome',
             'location' => 'font-awesome',
         ],
-		'elementor' => [
+        'elementor' => [
             'handle'   => 'elementor',
             'location' => 'elementor',
         ],
@@ -97,39 +98,39 @@ $rwp_plugin_assets = [
             'handle'   => 'bootstrap-icons',
             'location' => 'bootstrap-icons',
         ],
-		'slider' => [
+        'slider' => [
             'handle'   => 'slider',
             'location' => 'slider',
         ],
-		'modal' => [
+        'modal' => [
             'handle'   => 'modal',
             'location' => 'modal',
         ],
     ],
 ];
 
-if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active( 'query-monitor/query-monitor.php' ) ){
-	$rwp_plugin_assets['scripts']['debug'] = array(
-		'location' => 'global',
-		'handle'   => 'debug',
-		'deps'     => ['jquery', 'rwp-app', 'rwp-slider', 'rwp-modal'],
+if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active('query-monitor/query-monitor.php') ) {
+    $rwp_plugin_assets['scripts']['debug'] = array(
+    'location' => 'global',
+    'handle'   => 'debug',
+    'deps'     => ['jquery', 'rwp-app'],
         'footer'   => true,
     );
-	$rwp_plugin_assets['styles'][ 'debug'] = array(
-		'location' => 'global',
-		'handle'   => 'debug'
+    $rwp_plugin_assets['styles'][ 'debug'] = array(
+    'location' => 'global',
+    'handle'   => 'debug'
     );
 }
 
 
 if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
     $rwp_lazysizes_version = '5.3.2';
-	$rwp_lazysizes_plugins = array(
-		'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
-		'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
-		'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
-		'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
-	);
+    $rwp_lazysizes_plugins = array(
+    'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
+    'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
+    'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
+    'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
+    );
 
     $rwp_lazysizes_deps = array();
 

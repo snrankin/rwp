@@ -6,11 +6,11 @@
  * @copyright 2022 RIESTER
  * ========================================================================== */
 
-import { isEmpty as empty, isString, fromPairs, replace, map, isNil, chain, escape, assign } from 'lodash';
+import { isEmpty as empty, get, fromPairs, replace, map, isNil, chain, escape, assign } from 'lodash';
 export { isArray, isString, isObject, isArrayLike, assign, filter, map, find, merge, reduce, reject, omit, get, has, defaultsDeep, forEach, each, replace, chain, escape } from 'lodash';
 import { actual } from 'actual';
 export { actual, as, is } from 'actual';
-import { rectangle } from 'verge';
+import { rectangle, mq } from 'verge';
 export { viewportW, viewportH, viewport, inViewport, inX, inY, scrollX, scrollY, mq, rectangle, aspect } from 'verge';
 
 /**
@@ -326,19 +326,33 @@ export function getTallest(el) {
  * @param {string} [elem='']
  * @param {*} [container=Document]
  */
-export function matchHeights(elem = '', container = Document) {
-	const matches = container.querySelectorAll(elem);
+export function matchHeights(elem = '', breakpoint = null) {
+	var matches = document.querySelectorAll(elem);
+	var bp = null;
+	if (!isEmpty(breakpoint)) {
+		breakpoint = getBootstrapBP(breakpoint);
+		if (false !== breakpoint && 0 != breakpoint) {
+			bp = `(min-width: ${breakpoint})`;
+		}
+	}
 	if (matches.length > 1) {
-		const minHeight = getTallest(elem);
+		if ((!isEmpty(bp) && mq(bp)) || isEmpty(bp)) {
+			var minHeight = getTallest(elem);
 
-		if (false !== minHeight) {
-			map(matches, function (elem) {
-				elem.style.minHeight = minHeight;
+			if (false !== minHeight) {
+				minHeight += 'px';
+				matches.forEach(function (el) {
+					el.style.minHeight = minHeight;
+				});
+			}
+		} else {
+			matches.forEach(function (el) {
+				el.style.removeProperty('minHeight');
 			});
 		}
 
 		window.addEventListener('resize', function () {
-			matchHeights(elem, container);
+			matchHeights(elem);
 		});
 	}
 }
@@ -353,7 +367,7 @@ export function getWidest(el) {
 	const matches = document.querySelectorAll(el);
 	if (matches.length > 1) {
 		const widths = map(matches, function (elem) {
-			return rectangle(elem).width;
+			return elem.offsetWidth;
 		});
 
 		return Math.max.apply(null, widths);
@@ -365,93 +379,78 @@ export function getWidest(el) {
  * Make all elements match the tallest element
  *
  * @param {string} [elem='']
- * @param {*} [container=null]
  */
-export function matchWidths(elem = '', container = null) {
-	let matches;
-	if (!isEmpty(container)) {
-		if (isString(container)) {
-			let containerSelector = container;
-			container = document.querySelector(container);
-			try {
-				if (!isEmpty(container)) {
-					matches = container.querySelectorAll(elem);
-				}
-			} catch (error) {
-				console.warning(`${containerSelector} was not found`);
-			}
+export function matchWidths(elem = '', breakpoint = null) {
+	var matches = document.querySelectorAll(elem);
+	var bp = null;
+	if (!isEmpty(breakpoint)) {
+		breakpoint = getBootstrapBP(breakpoint);
+		if (false !== breakpoint && 0 != breakpoint) {
+			bp = `(min-width: ${breakpoint})`;
 		}
-	} else {
-		matches = document.querySelectorAll(elem);
 	}
-
 	if (matches.length > 1) {
-		const minWidth = getWidest(elem);
+		if ((!isEmpty(bp) && mq(bp)) || isEmpty(bp)) {
+			var minWidth = getWidest(elem);
 
-		if (false !== minWidth) {
-			map(matches, function (elem) {
-				elem.style.minWidth = minWidth;
+			if (false !== minWidth) {
+				minWidth += 'px';
+				matches.forEach(function (el) {
+					el.style.minWidth = minWidth;
+				});
+			}
+		} else {
+			matches.forEach(function (el) {
+				el.style.removeProperty('minWidth');
 			});
 		}
 
 		window.addEventListener('resize', function () {
-			matchWidths(elem, container);
+			matchWidths(elem);
 		});
 	}
 }
 
-export function bsAtts() {
-	const bsColors = {
-		primary: '',
-		secondary: '',
-		tertiary: '',
-		info: '',
-		success: '',
-		warning: '',
-		danger: '',
-		light: '',
-		dark: '',
-		blue: '',
-		indigo: '',
-		purple: '',
-		pink: '',
-		red: '',
-		orange: '',
-		yellow: '',
-		green: '',
-		teal: '',
-		cyan: '',
-		white: '',
-		black: '',
-		'gray-100': '',
-		'gray-200': '',
-		'gray-300': '',
-		'gray-400': '',
-		'gray-500': '',
-		'gray-600': '',
-		'gray-700': '',
-		'gray-800': '',
-		'gray-900': '',
-	};
-
-	const computedColors = {};
-
-	for (let [key, value] of Object.entries(bsColors)) {
-		const r = document.querySelector(':root');
-
-		// Get the styles (properties and values) for the root
-		const rs = getComputedStyle(r);
-		// Alert the value of the --blue variable
-		value = rs.getPropertyValue(`--bs-${key}`);
-		value = value.trim();
-		if ('' !== value) {
-			computedColors[key] = value;
-		}
+const isSameDomain = (styleSheet) => {
+	if (!styleSheet.href) {
+		return true;
 	}
 
-	return {
-		colors: computedColors,
-	};
+	return styleSheet.href.indexOf(window.location.origin) === 0;
+};
+
+const isStyleRule = (rule) => rule.type === 1;
+
+const getCSSCustomPropIndex = (index = '--') =>
+	[...document.styleSheets].filter(isSameDomain).reduce(
+		(finalArr, sheet) =>
+			finalArr.concat(
+				[...sheet.cssRules].filter(isStyleRule).reduce((propValArr, rule) => {
+					const props = [...rule.style].map((propName) => [propName.trim(), rule.style.getPropertyValue(propName).trim()]).filter(([propName]) => propName.indexOf(index) === 0);
+					return [...propValArr, ...props];
+				}, [])
+			),
+		[]
+	);
+
+export function bsAtts() {
+	let props = getCSSCustomPropIndex('--bs-');
+
+	props = fromPairs(props);
+
+	props = sortObjectByKeys(props);
+
+	return props;
+}
+
+export function getBootstrapVar(v = '') {
+	let props = bsAtts();
+	return get(props, v, false);
+}
+
+export function getBootstrapBP(breakpoint) {
+	breakpoint = `--bs-bp-${breakpoint}`;
+	return getBootstrapVar(breakpoint);
 }
 
 export function sortObjectByKeys(o) {
@@ -468,27 +467,7 @@ export function sortObjectByKeys(o) {
  * @export
  */
 export function logCustomProperties() {
-	const isSameDomain = (styleSheet) => {
-		if (!styleSheet.href) {
-			return true;
-		}
-
-		return styleSheet.href.indexOf(window.location.origin) === 0;
-	};
-
-	const isStyleRule = (rule) => rule.type === 1;
 	// eslint-disable-next-line
-	const getCSSCustomPropIndex = () =>
-		[...document.styleSheets].filter(isSameDomain).reduce(
-			(finalArr, sheet) =>
-				finalArr.concat(
-					[...sheet.cssRules].filter(isStyleRule).reduce((propValArr, rule) => {
-						const props = [...rule.style].map((propName) => [propName.trim(), rule.style.getPropertyValue(propName).trim()]).filter(([propName]) => propName.indexOf('--') === 0);
-						return [...propValArr, ...props];
-					}, [])
-				),
-			[]
-		);
 	let props = getCSSCustomPropIndex();
 
 	props = fromPairs(props);
