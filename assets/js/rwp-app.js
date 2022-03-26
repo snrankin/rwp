@@ -25,6 +25,8 @@
 /* harmony export */   "find": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.find; },
 /* harmony export */   "forEach": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.forEach; },
 /* harmony export */   "get": function() { return /* reexport safe */ lodash__WEBPACK_IMPORTED_MODULE_2__.get; },
+/* harmony export */   "getBootstrapBP": function() { return /* binding */ getBootstrapBP; },
+/* harmony export */   "getBootstrapVar": function() { return /* binding */ getBootstrapVar; },
 /* harmony export */   "getHash": function() { return /* binding */ getHash; },
 /* harmony export */   "getTag": function() { return /* binding */ getTag; },
 /* harmony export */   "getTallest": function() { return /* binding */ getTallest; },
@@ -64,8 +66,8 @@
 /* harmony export */   "viewportH": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportH; },
 /* harmony export */   "viewportW": function() { return /* reexport safe */ verge__WEBPACK_IMPORTED_MODULE_4__.viewportW; }
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "../node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var actual__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! actual */ "../node_modules/actual/actual.js");
@@ -428,20 +430,36 @@ function getTallest(el) {
 
 function matchHeights() {
   var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Document;
-  var matches = container.querySelectorAll(elem);
+  var breakpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var matches = document.querySelectorAll(elem);
+  var bp = null;
+
+  if (!isEmpty(breakpoint)) {
+    breakpoint = getBootstrapBP(breakpoint);
+
+    if (false !== breakpoint && 0 != breakpoint) {
+      bp = "(min-width: ".concat(breakpoint, ")");
+    }
+  }
 
   if (matches.length > 1) {
-    var minHeight = getTallest(elem);
+    if (!isEmpty(bp) && (0,verge__WEBPACK_IMPORTED_MODULE_4__.mq)(bp) || isEmpty(bp)) {
+      var minHeight = getTallest(elem);
 
-    if (false !== minHeight) {
-      (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
-        elem.style.minHeight = minHeight;
+      if (false !== minHeight) {
+        minHeight += 'px';
+        matches.forEach(function (el) {
+          el.style.minHeight = minHeight;
+        });
+      }
+    } else {
+      matches.forEach(function (el) {
+        el.style.removeProperty('minHeight');
       });
     }
 
     window.addEventListener('resize', function () {
-      matchHeights(elem, container);
+      matchHeights(elem);
     });
   }
 }
@@ -457,7 +475,7 @@ function getWidest(el) {
 
   if (matches.length > 1) {
     var widths = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
-      return (0,verge__WEBPACK_IMPORTED_MODULE_4__.rectangle)(elem).width;
+      return elem.offsetWidth;
     });
     return Math.max.apply(null, widths);
   }
@@ -468,100 +486,88 @@ function getWidest(el) {
  * Make all elements match the tallest element
  *
  * @param {string} [elem='']
- * @param {*} [container=null]
  */
 
 function matchWidths() {
   var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var matches;
+  var breakpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var matches = document.querySelectorAll(elem);
+  var bp = null;
 
-  if (!isEmpty(container)) {
-    if ((0,lodash__WEBPACK_IMPORTED_MODULE_2__.isString)(container)) {
-      var containerSelector = container;
-      container = document.querySelector(container);
+  if (!isEmpty(breakpoint)) {
+    breakpoint = getBootstrapBP(breakpoint);
 
-      try {
-        if (!isEmpty(container)) {
-          matches = container.querySelectorAll(elem);
-        }
-      } catch (error) {
-        console.warning("".concat(containerSelector, " was not found"));
-      }
+    if (false !== breakpoint && 0 != breakpoint) {
+      bp = "(min-width: ".concat(breakpoint, ")");
     }
-  } else {
-    matches = document.querySelectorAll(elem);
   }
 
   if (matches.length > 1) {
-    var minWidth = getWidest(elem);
+    if (!isEmpty(bp) && (0,verge__WEBPACK_IMPORTED_MODULE_4__.mq)(bp) || isEmpty(bp)) {
+      var minWidth = getWidest(elem);
 
-    if (false !== minWidth) {
-      (0,lodash__WEBPACK_IMPORTED_MODULE_2__.map)(matches, function (elem) {
-        elem.style.minWidth = minWidth;
+      if (false !== minWidth) {
+        minWidth += 'px';
+        matches.forEach(function (el) {
+          el.style.minWidth = minWidth;
+        });
+      }
+    } else {
+      matches.forEach(function (el) {
+        el.style.removeProperty('minWidth');
       });
     }
 
     window.addEventListener('resize', function () {
-      matchWidths(elem, container);
+      matchWidths(elem);
     });
   }
 }
-function bsAtts() {
-  var bsColors = {
-    primary: '',
-    secondary: '',
-    tertiary: '',
-    info: '',
-    success: '',
-    warning: '',
-    danger: '',
-    light: '',
-    dark: '',
-    blue: '',
-    indigo: '',
-    purple: '',
-    pink: '',
-    red: '',
-    orange: '',
-    yellow: '',
-    green: '',
-    teal: '',
-    cyan: '',
-    white: '',
-    black: '',
-    'gray-100': '',
-    'gray-200': '',
-    'gray-300': '',
-    'gray-400': '',
-    'gray-500': '',
-    'gray-600': '',
-    'gray-700': '',
-    'gray-800': '',
-    'gray-900': ''
-  };
-  var computedColors = {};
 
-  for (var _i = 0, _Object$entries = Object.entries(bsColors); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_Object$entries[_i], 2),
-        key = _Object$entries$_i[0],
-        value = _Object$entries$_i[1];
-
-    var r = document.querySelector(':root'); // Get the styles (properties and values) for the root
-
-    var rs = getComputedStyle(r); // Alert the value of the --blue variable
-
-    value = rs.getPropertyValue("--bs-".concat(key));
-    value = value.trim();
-
-    if ('' !== value) {
-      computedColors[key] = value;
-    }
+var isSameDomain = function isSameDomain(styleSheet) {
+  if (!styleSheet.href) {
+    return true;
   }
 
-  return {
-    colors: computedColors
-  };
+  return styleSheet.href.indexOf(window.location.origin) === 0;
+};
+
+var isStyleRule = function isStyleRule(rule) {
+  return rule.type === 1;
+};
+
+var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
+  var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '--';
+  return (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
+    return finalArr.concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
+      var props = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(rule.style).map(function (propName) {
+        return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
+      }).filter(function (_ref) {
+        var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, 1),
+            propName = _ref2[0];
+
+        return propName.indexOf(index) === 0;
+      });
+
+      return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(propValArr), (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(props));
+    }, []));
+  }, []);
+};
+
+function bsAtts() {
+  var props = getCSSCustomPropIndex('--bs-');
+  props = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.fromPairs)(props);
+  props = sortObjectByKeys(props);
+  return props;
+}
+function getBootstrapVar() {
+  var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var props = bsAtts();
+  return (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(props, v, false);
+}
+function getBootstrapBP(breakpoint) {
+  breakpoint = "--bs-bp-".concat(breakpoint);
+  return getBootstrapVar(breakpoint);
 }
 function sortObjectByKeys(o) {
   return Object.keys(o).sort().reduce(function (r, k) {
@@ -577,36 +583,7 @@ function sortObjectByKeys(o) {
  */
 
 function logCustomProperties() {
-  var isSameDomain = function isSameDomain(styleSheet) {
-    if (!styleSheet.href) {
-      return true;
-    }
-
-    return styleSheet.href.indexOf(window.location.origin) === 0;
-  };
-
-  var isStyleRule = function isStyleRule(rule) {
-    return rule.type === 1;
-  }; // eslint-disable-next-line
-
-
-  var getCSSCustomPropIndex = function getCSSCustomPropIndex() {
-    return (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.styleSheets).filter(isSameDomain).reduce(function (finalArr, sheet) {
-      return finalArr.concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(sheet.cssRules).filter(isStyleRule).reduce(function (propValArr, rule) {
-        var props = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(rule.style).map(function (propName) {
-          return [propName.trim(), rule.style.getPropertyValue(propName).trim()];
-        }).filter(function (_ref) {
-          var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 1),
-              propName = _ref2[0];
-
-          return propName.indexOf('--') === 0;
-        });
-
-        return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(propValArr), (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(props));
-      }, []));
-    }, []);
-  };
-
+  // eslint-disable-next-line
   var props = getCSSCustomPropIndex();
   props = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.fromPairs)(props);
   props = sortObjectByKeys(props);
@@ -18419,6 +18396,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "find": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.find; },
 /* harmony export */   "forEach": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.forEach; },
 /* harmony export */   "get": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.get; },
+/* harmony export */   "getBootstrapBP": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getBootstrapBP; },
+/* harmony export */   "getBootstrapVar": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getBootstrapVar; },
 /* harmony export */   "getHash": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getHash; },
 /* harmony export */   "getTag": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getTag; },
 /* harmony export */   "getTallest": function() { return /* reexport safe */ _util_utils__WEBPACK_IMPORTED_MODULE_0__.getTallest; },
