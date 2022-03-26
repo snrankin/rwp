@@ -190,25 +190,10 @@
 }
 
 .tns-nav{
-    margin-top:calc(var(--bs-gutter-y) * -1);
-    margin-right:calc(var(--bs-gutter-x) * -0.5);
-    margin-left:calc(var(--bs-gutter-x) * -0.5);
-    min-width:100%;
-    display:flex;
-    flex-wrap:wrap;
-    float:none;
-}
-.tns-nav:before, .tns-nav:after{
-    display:none;
-}
-.tns-nav > *{
-    padding-right:calc(var(--bs-gutter-x) * 0.5);
-    padding-left:calc(var(--bs-gutter-x) * 0.5);
-    margin-top:var(--bs-gutter-y);
-    display:flex;
-    flex-direction:column;
-    flex:0 0 auto;
-    width:auto;
+    display:grid;
+    grid-row-gap:var(--bs-gutter-y);
+    grid-column-gap:var(--bs-gutter-x);
+    grid-auto-flow:column;
 }
 .tns-nav.tns-thumbnails .btn-icon{
     min-width:var(--tns-thumbnail-width, 60px);

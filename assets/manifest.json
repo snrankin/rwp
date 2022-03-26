@@ -61,5 +61,9 @@
   "admin.min.js": "js/rwp-admin.min.js",
   "app.min.js": "js/rwp-app.min.js",
   "public.min.css": "css/rwp-public.min.css",
-  "public.min.js": "js/rwp-public.min.js"
+  "public.min.js": "js/rwp-public.min.js",
+  "modal.min.css": "css/rwp-modal.min.css",
+  "modal.min.js": "js/rwp-modal.min.js",
+  "slider.min.css": "css/rwp-slider.min.css",
+  "slider.min.js": "js/rwp-slider.min.js"
 }

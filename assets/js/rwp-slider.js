@@ -3917,7 +3917,6 @@ rwp.slider = function (containerClass) {
 
   if (!rwp.isEmpty(args)) {
     rwp.defaultsDeep(args, defaults);
-    console.log(args);
   } else {
     args = defaults;
   }
@@ -3964,12 +3963,10 @@ rwp.slider = function (containerClass) {
       var standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains('tns-nav'); // Make sure a custom nav container isn't specified
 
       if (standardNavContainer) {
-        navContainer.classList.add('nav');
         rwp.each(elem.navItems, function (el, i) {
           var navItem = el.cloneNode();
           navItem.classList.add('btn');
-          navItem.classList.add('nav-link');
-          navItem.classList.add('btn-toggle');
+          navItem.classList.add('btn-link');
           var navItemContent = rwp.stringToHtml("<span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon\"><span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon-opened\">".concat(bulletActive, "</span><span aria-hidden=\"true\" role=\"presentation\" class=\"btn-icon-closed\">").concat(bullet, "</span></span>"));
 
           if (hasThumbnails) {
@@ -3978,10 +3975,12 @@ rwp.slider = function (containerClass) {
             var thumbWrapper = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"></span>');
             thumbWrapper.append(thumb);
             navItemContent = thumbWrapper;
+          } else {
+            navItem.classList.add('btn-toggle');
           }
 
           navItem.append(navItemContent);
-          var navItemWrapper = rwp.stringToHtml('<span class="nav-item"></span>');
+          var navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
           navItemWrapper.append(navItem);
           navItem = navItemWrapper;
           changeActiveClass(navItem);
