@@ -32,10 +32,7 @@ class Testimonial extends PostType {
 
 	public $args = array(
 		'has_archive'         => false,
-		'public'              => false,
 		'exclude_from_search' => true,
-		'publicly_queryable'  => true,
-		'show_in_menu'        => true,
 		'show_in_admin_bar'   => false,
 		'show_in_nav_menus'   => false,
 	);
