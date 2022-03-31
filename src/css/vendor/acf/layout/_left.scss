@@ -31,9 +31,9 @@ body:not(.post-type-acf-field-group) {
 			&::after {
 				display: none;
 			}
-			> .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal='1']),
-			> .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal='1']),
-			> .acf-field {
+			// > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal='1']),
+			// > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal='1']),
+			> .acf-field:not(.acfe-seamless-style) {
 				@include acf-row('padding', true, 0, 0);
 				padding-top: 0;
 				padding-bottom: 0;

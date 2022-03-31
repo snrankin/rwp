@@ -103,6 +103,11 @@ class NavItem extends Element {
 	public $parent;
 
 	/**
+	 * @var string $parent_type The parent type toggle
+	 */
+	public $parent_type = 'collapse';
+
+	/**
      * @var bool $is_parent Is item a parent item?
      */
     public $is_parent = false;
@@ -161,12 +166,16 @@ class NavItem extends Element {
 	 */
 
 	public function setup_html() {
+		if ( 'dropdown' === $this->parent_type && $this->depth > 0 ) {
+			$this->remove_class( 'nav-item' );
+			$this->link->add_class( 'dropdown-item' );
+		}
 		$this->setup_link();
 		$this->setup_toggle();
 	}
 
 	public function setup_toggle() {
-		if ( $this->is_parent && false !== $this->toggle_type && is_array( $this->toggle ) ) {
+		if ( $this->is_parent && false !== $this->toggle_type && filled( $this->toggle ) ) {
 			switch ( $this->toggle_type ) {
 				case 'dropdown':
 					$this->add_class( 'dropdown' );

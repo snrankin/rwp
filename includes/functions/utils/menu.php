@@ -81,7 +81,7 @@ function rwp_menu_args( $args = [] ) {
 			'depth'                => 0,
 			'walker'               => '',
 			'theme_location'       => '',
-			'nav_item_options'     => rwp_collection(), // Custom argument but needed in Walker
+			'item_options'         => rwp_collection(), // Custom argument but needed in Walker
         )
     );
 

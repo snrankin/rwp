@@ -16,6 +16,7 @@ use Exception;
 use RWP\Components\Str;
 use RWP\Components\NavItem;
 use RWP\Components\Nav as HtmlNav;
+use RWP\Components\NavList;
 use RWP\Components\Collection;
 use stdClass;
 
@@ -100,6 +101,11 @@ class Nav extends \Walker_Nav_Menu {
 	/**
 	 * @var Collection The collection of item options for ACF
 	 */
+	public $parent_options;
+
+	/**
+	 * @var Collection The collection of item options for ACF
+	 */
 	public $item_options;
 
 	public function __construct( $args = array() ) {
@@ -143,12 +149,12 @@ class Nav extends \Walker_Nav_Menu {
 		 * @var Collection $item_args Arguments applied to all nav items (comes from menu object)
 		 */
 
-		$item_args = data_get( $args, 'nav_item_options', rwp_collection() );
+		$item_args = data_get( $args, 'item_options', rwp_collection() );
 
 		/**
 		 * @var Collection $item_options Custom arguments for the individual nav item
 		 */
-		$item_options = rwp_get_field( 'nav_item_options', $item );
+		$item_options = rwp_get_field( 'nav_item_options', rwp_post_id( $item, 'acf' ) );
 
 		$this->item_options = rwp_collection( rwp_merge_args( $item_args, $item_options ) );
 
@@ -159,6 +165,10 @@ class Nav extends \Walker_Nav_Menu {
 		$menu = $this->menu;
 
 		$menu_id = $this->menu_id;
+
+		$this->sub_menu_id = 'item-' . $item->ID . '-sub-menu';
+
+		$parent_type = data_get( $this->parent_options, 'toggle_type', false );
 
         /**
 		 * Filters the CSS classes applied to a menu item's list item element.
@@ -213,7 +223,7 @@ class Nav extends \Walker_Nav_Menu {
 		$parent = intval( data_get( $item, 'menu_item_parent', 0 ) );
 
 		if ( $parent ) {
-				$parent = '#item-' . $parent . '-sub-menu';
+			$parent = '#item-' . $parent . '-sub-menu';
 		} else {
 			$parent = '#' . $menu_id;
 		}
@@ -221,13 +231,14 @@ class Nav extends \Walker_Nav_Menu {
 		$this->parent = $parent;
 
 		$nav_item_args = array(
-			'nav_item'   => $item,
-			'depth'      => $depth,
-			'menu'       => $menu,
-			'active'     => $this->checkCurrent( $classes ),
-			'is_parent'  => $is_parent,
-			'parent'     => $parent,
-			'atts'       => array(
+			'nav_item'    => $item,
+			'depth'       => $depth,
+			'menu'        => $menu,
+			'active'      => $this->checkCurrent( $classes ),
+			'is_parent'   => $is_parent,
+			'parent'      => $parent,
+			'parent_type' => $parent_type,
+			'atts'        => array(
 				'id'     => $id,
 				'class'  => $classes,
 			),
@@ -241,21 +252,19 @@ class Nav extends \Walker_Nav_Menu {
 		}
 
 		if ( $is_parent ) {
-			$this->sub_menu_id = $id . '-sub-menu';
+			$this->sub_menu_id = $this->sub_menu_id;
 			$nav_item_order[] = 'toggle';
-			$nav_item_args['toggle']['link'] = '#' . $id . '-sub-menu';
+			$nav_item_args['toggle']['link'] = '#' . $this->sub_menu_id;
 
-			$toggle_type = data_get( $this->item_options, 'item_toggle_type', 'collapse' );
+			$nav_item_args['toggle_type'] = data_get( $this->item_options, 'toggle_type', 'collapse' );
 
-			$nav_item_args['toggle_type'] = $toggle_type;
-
-			$toggle_icon_opened = data_get( $this->item_options, 'item_toggle_icon.icon_opened.icon' );
+			$toggle_icon_opened = data_get( $this->item_options, 'toggle_icon.icon_opened.icon', false );
 			$toggle_icon_opened = rwp_get_icon_from_acf( $toggle_icon_opened );
 			if ( $toggle_icon_opened ) {
 				$nav_item_args['toggle']['icon_opened'] = $toggle_icon_opened;
 			}
 
-			$toggle_icon_closed = data_get( $this->item_options, 'item_toggle_icon.icon_closed.icon' );
+			$toggle_icon_closed = data_get( $this->item_options, 'item_toggle_icon.icon_closed.icon', false );
 			$toggle_icon_closed = rwp_get_icon_from_acf( $toggle_icon_closed );
 
 			if ( $toggle_icon_closed ) {
@@ -278,6 +287,8 @@ class Nav extends \Walker_Nav_Menu {
 
 	private function nav_link_args( $item, $depth = 0, $args = null, $id = 0 ) {
 
+		$parent_type = data_get( $this->parent_options, 'toggle_type', false );
+
         $title = data_get( $item, 'title' );
 		$title = apply_filters( 'the_title', $title, $item->ID ); // phpcs:ignore
 
@@ -292,6 +303,26 @@ class Nav extends \Walker_Nav_Menu {
 		 * @param int      $depth Depth of menu item. Used for padding.
 		 */
 		$title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth ); // phpcs:ignore
+
+		/**
+		 * Filters the CSS classes applied to a menu item's list item element.
+		 *
+		 * @since 3.0.0
+		 * @since 4.1.0 The `$depth` parameter was added.
+		 *
+		 * @param string[] $classes Array of the CSS classes that are applied to the menu item's `<li>` element.
+		 * @param \WP_Post  $item    The current menu item.
+		 * @param stdClass $args    An object of wp_nav_menu() arguments.
+		 * @param int      $depth   Depth of menu item. Used for padding.
+		 */
+
+		$classes = apply_filters( 'nav_menu_link_css_class', array( 'menu-link' ), $item, $args, $depth ); // phpcs:ignore
+
+		if ( false !== $parent_type ) {
+			if ( 'dropdown' === $parent_type ) {
+				$classes[] = 'dropdown-item';
+			}
+		}
 
 		$link_attr_title = data_get( $item, 'attr_title', strip_tags( $title ) );
 		$link_target     = data_get( $item, 'target', '' );
@@ -334,6 +365,8 @@ class Nav extends \Walker_Nav_Menu {
 		$nav_link_args = array(
 			'atts' => $link_atts,
 		);
+
+		$nav_link_args['atts']['class'] = $classes;
 
 		$nav_link_content = array(
 			'title' => $title,
@@ -418,18 +451,21 @@ class Nav extends \Walker_Nav_Menu {
 
 		$menu_depth = $depth + 1;
 
+		$this->parent_options = $this->item_options;
+
 		$output .= $n . $indent;
 		$sub_menu_args = array(
 			'depth'  => $menu_depth,
 			'parent' => $this->parent,
-			'toggle_type' => data_get( $this->item_options, 'item_toggle_type', 'collapse' ),
+			'toggle_type' => data_get( $this->item_options, 'toggle_type', 'collapse' ),
+			'has_wrapper' => false,
 			'atts'   => array(
 				'id'    => $id,
 				'class' => $classes,
 			),
 		);
 
-		$sub_menu = new HtmlNav( $sub_menu_args );
+		$sub_menu = new NavList( $sub_menu_args );
 		$this->sub_menu = $sub_menu;
 		$item_output = $sub_menu->start_tag( true );
 		$item_output = Str::replaceLast( '</ul>', '', $item_output );
@@ -550,7 +586,7 @@ class Nav extends \Walker_Nav_Menu {
 		}
 		$indent = str_repeat( $t, $depth );
 		$output .= $n . $indent;
-		$output .= '</ul></nav>';
+		$output .= '</ul>';
 	}
 
 	/**

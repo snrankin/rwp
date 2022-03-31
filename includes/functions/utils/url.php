@@ -65,12 +65,19 @@ function rwp_is_outbound_link( $link ) {
 	if ( ! is_string( $link ) ) {
         return false;
 	}
-	if ( rwp_is_url( $link ) && ! rwp_is_relative_url( $link ) && ! rwp_str_starts_with( $link, array( 'tel:', 'mailto:' ) ) ) {
-		$home = network_home_url();
-		if ( ! rwp_str_has( $link, $home ) ) {
-			return true;
-		} else {
+
+	$is_url = rwp_is_url( $link );
+	$is_relative = rwp_is_relative_url( $link );
+	$is_email = rwp_is_email( $link );
+	$is_phone = rwp_is_phone_number( $link );
+
+	if ( $is_url && ! $is_relative && ! $is_email && ! $is_phone ) {
+		$home = wp_parse_url( network_home_url(), PHP_URL_HOST );
+		$input = wp_parse_url( $link, PHP_URL_HOST );
+		if ( rwp_str_starts_with( $input, $home ) ) {
 			return false;
+		} else {
+			return true;
 		}
 	} else {
 		return false;
@@ -89,7 +96,18 @@ function rwp_relative_url( $input ) {
 		return $input;
 	}
 
-	if ( ! rwp_is_relative_url( $input ) && ! rwp_is_outbound_link( $input ) && ! rwp_str_starts_with( $input, array( 'tel:', 'mailto:' ) ) && \rwp_get_option( 'modules.relative_urls', false ) ) {
+	$use_relative_urls = rwp_get_option( 'modules.relative_urls', false );
+
+	if ( ! $use_relative_urls ) {
+		return $input;
+	}
+
+	$is_relative = rwp_is_relative_url( $input );
+	$is_outbound = rwp_is_outbound_link( $input );
+	$is_email = rwp_is_email( $input );
+	$is_phone = rwp_is_phone_number( $input );
+
+	if ( ! $is_relative && ! $is_outbound && ! $is_email && ! $is_phone ) {
 		$link          = $input;
 		$url           = wp_parse_url( $input );
 		$hosts_match   = true;

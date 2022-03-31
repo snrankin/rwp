@@ -276,6 +276,26 @@ function rwp_is_phone_number( $str = '' ) {
 }
 
 /**
+  * Check if a string is an email
+  *
+  * @param string $str
+  * @return bool
+  */
+function rwp_is_email( $str = '' ) {
+	if ( ! is_string( $str ) ) {
+		return $str;
+	}
+	$str = rwp_remove_prefix( $str, 'mailto:' );
+
+	if ( filter_var( $str, FILTER_VALIDATE_EMAIL ) ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+/**
  * Check if a string is a regular expression
  *
  * @param mixed $str

@@ -10,6 +10,7 @@ grumphp:
         - "var_dump\\("
         - "exit;"
         - "rwp_log"
+        - "\\sray\\("
       whitelist_patterns:
         - /^src\/FolderA\/(.*)/
         - /^includes\/functions\/utils\/debug.php/
