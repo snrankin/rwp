@@ -8221,20 +8221,59 @@ __webpack_require__.r(__webpack_exports__);
   \********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Alert": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Alert; },
-/* harmony export */   "Button": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Button; },
-/* harmony export */   "Carousel": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Carousel; },
-/* harmony export */   "Collapse": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Collapse; },
-/* harmony export */   "Dropdown": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Dropdown; },
-/* harmony export */   "Modal": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal; },
-/* harmony export */   "Offcanvas": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Offcanvas; },
-/* harmony export */   "Popover": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Popover; },
-/* harmony export */   "ScrollSpy": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.ScrollSpy; },
-/* harmony export */   "Tab": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Tab; },
-/* harmony export */   "Toast": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Toast; },
-/* harmony export */   "Tooltip": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_0__.Tooltip; }
+/* harmony export */   "Alert": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Alert; },
+/* harmony export */   "Button": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Button; },
+/* harmony export */   "Carousel": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Carousel; },
+/* harmony export */   "Collapse": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Collapse; },
+/* harmony export */   "Dropdown": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown; },
+/* harmony export */   "Modal": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal; },
+/* harmony export */   "Offcanvas": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Offcanvas; },
+/* harmony export */   "Popover": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Popover; },
+/* harmony export */   "ScrollSpy": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.ScrollSpy; },
+/* harmony export */   "Tab": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Tab; },
+/* harmony export */   "Toast": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Toast; },
+/* harmony export */   "Tooltip": function() { return /* reexport safe */ bootstrap__WEBPACK_IMPORTED_MODULE_1__.Tooltip; },
+/* harmony export */   "afterMain": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.afterMain; },
+/* harmony export */   "afterRead": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.afterRead; },
+/* harmony export */   "afterWrite": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.afterWrite; },
+/* harmony export */   "applyStyles": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.applyStyles; },
+/* harmony export */   "arrow": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.arrow; },
+/* harmony export */   "auto": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.auto; },
+/* harmony export */   "basePlacements": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.basePlacements; },
+/* harmony export */   "beforeMain": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.beforeMain; },
+/* harmony export */   "beforeRead": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.beforeRead; },
+/* harmony export */   "beforeWrite": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.beforeWrite; },
+/* harmony export */   "bottom": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.bottom; },
+/* harmony export */   "clippingParents": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.clippingParents; },
+/* harmony export */   "computeStyles": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.computeStyles; },
+/* harmony export */   "createPopper": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.createPopper; },
+/* harmony export */   "createPopperBase": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.createPopperBase; },
+/* harmony export */   "createPopperLite": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.createPopperLite; },
+/* harmony export */   "detectOverflow": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.detectOverflow; },
+/* harmony export */   "end": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.end; },
+/* harmony export */   "eventListeners": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.eventListeners; },
+/* harmony export */   "flip": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.flip; },
+/* harmony export */   "hide": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.hide; },
+/* harmony export */   "left": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.left; },
+/* harmony export */   "main": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.main; },
+/* harmony export */   "modifierPhases": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.modifierPhases; },
+/* harmony export */   "offset": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.offset; },
+/* harmony export */   "placements": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.placements; },
+/* harmony export */   "popper": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.popper; },
+/* harmony export */   "popperGenerator": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.popperGenerator; },
+/* harmony export */   "popperOffsets": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.popperOffsets; },
+/* harmony export */   "preventOverflow": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.preventOverflow; },
+/* harmony export */   "read": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.read; },
+/* harmony export */   "reference": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.reference; },
+/* harmony export */   "right": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.right; },
+/* harmony export */   "start": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.start; },
+/* harmony export */   "top": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.top; },
+/* harmony export */   "variationPlacements": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.variationPlacements; },
+/* harmony export */   "viewport": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.viewport; },
+/* harmony export */   "write": function() { return /* reexport safe */ _popperjs_core__WEBPACK_IMPORTED_MODULE_0__.write; }
 /* harmony export */ });
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @popperjs/core */ "../node_modules/@popperjs/core/lib/index.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "../node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /**
  * ============================================================================
  * bootstrap
@@ -8247,6 +8286,52 @@ __webpack_require__.r(__webpack_exports__);
  * ==========================================================================
  */
 
+
+
+
+(function () {
+	const CLASS_NAME = 'has-child-dropdown-show';
+	bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown.prototype.toggle = (function (_orginal) {
+		return function () {
+			document.querySelectorAll('.' + CLASS_NAME).forEach(function (e) {
+				e.classList.remove(CLASS_NAME);
+			});
+			let dd = this._element.closest('.dropdown').parentNode.closest('.dropdown');
+			for (; dd && dd !== document; dd = dd.parentNode.closest('.dropdown')) {
+				dd.classList.add(CLASS_NAME);
+			}
+			return _orginal.call(this);
+		};
+	})(bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown.prototype.toggle);
+
+	document.querySelectorAll('.dropdown').forEach(function (dd) {
+		dd.addEventListener('hide.bs.dropdown', function (e) {
+			if (this.classList.contains(CLASS_NAME)) {
+				this.classList.remove(CLASS_NAME);
+				e.preventDefault();
+			}
+			e.stopPropagation(); // do not need pop in multi level mode
+		});
+	});
+
+	// for hover
+	document.querySelectorAll('.dropdown-hover, .dropdown-hover-all .dropdown').forEach(function (dd) {
+		dd.addEventListener('mouseenter', function (e) {
+			let toggle = e.target.querySelector(':scope>[data-bs-toggle="dropdown"]');
+			if (!toggle.classList.contains('show')) {
+				bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown.getOrCreateInstance(toggle).toggle();
+				dd.classList.add(CLASS_NAME);
+				bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown.clearMenus();
+			}
+		});
+		dd.addEventListener('mouseleave', function (e) {
+			let toggle = e.target.querySelector(':scope>[data-bs-toggle="dropdown"]');
+			if (toggle.classList.contains('show')) {
+				bootstrap__WEBPACK_IMPORTED_MODULE_1__.Dropdown.getOrCreateInstance(toggle).toggle();
+			}
+		});
+	});
+});
 
 }();
 /******/ })()

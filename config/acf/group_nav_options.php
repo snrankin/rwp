@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 if( function_exists('acf_add_local_field_group') ):
 
@@ -21,8 +21,10 @@ acf_add_local_field_group(array(
 			),
 			'acfe_save_meta' => 0,
 			'layout' => 'block',
-			'acfe_seamless_style' => 1,
 			'acfe_group_modal' => 1,
+			'acfe_group_modal_close' => 0,
+			'acfe_group_modal_button' => '',
+			'acfe_group_modal_size' => 'large',
 			'sub_fields' => array(
 				array(
 					'key' => 'field_5f97580f6830d',
@@ -677,7 +679,7 @@ acf_add_local_field_group(array(
 							),
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'bg-light mx-2 label-md',
+								'class' => 'col-12 bg-light label-md',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -764,7 +766,7 @@ acf_add_local_field_group(array(
 							),
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'bg-light mx-2 label-md',
+								'class' => 'col-12 bg-light label-md',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -832,7 +834,7 @@ acf_add_local_field_group(array(
 							),
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'bg-light mx-2 label-md',
+								'class' => 'col-12 bg-light mt-3 label-md',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -1242,6 +1244,22 @@ acf_add_local_field_group(array(
 					),
 				),
 				array(
+					'key' => 'field_61a7fcde36fb8',
+					'label' => 'Divider',
+					'name' => '',
+					'type' => 'admin_divider',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => 'spacer',
+						'id' => '',
+					),
+					'acfe_save_meta' => 0,
+					'spacer' => false,
+				),
+				array(
 					'key' => 'field_619448221dcfb',
 					'label' => 'Nav Item Options',
 					'name' => 'item_options',
@@ -1251,7 +1269,7 @@ acf_add_local_field_group(array(
 					'conditional_logic' => 0,
 					'wrapper' => array(
 						'width' => '',
-						'class' => 'label-lg border',
+						'class' => 'label-lg border w-100 p-3',
 						'id' => '',
 					),
 					'acfe_save_meta' => 0,
@@ -1487,7 +1505,7 @@ acf_add_local_field_group(array(
 							'conditional_logic' => 0,
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'bg-light mx-2',
+								'class' => 'bg-light',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -1582,7 +1600,7 @@ acf_add_local_field_group(array(
 							'conditional_logic' => 0,
 							'wrapper' => array(
 								'width' => '',
-								'class' => 'bg-light mx-2',
+								'class' => 'bg-light',
 								'id' => '',
 							),
 							'acfe_save_meta' => 0,
@@ -1700,7 +1718,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1638733586,
+	'modified' => 1648661316,
 ));
 
 endif;

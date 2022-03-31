@@ -354,12 +354,8 @@ body:not(.post-type-acf-field-group) .acf-fields.-left:after,
 body:not(.post-type-acf-field-group) td.acf-fields.-left:after{
     display:none;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]),
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]),
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]),
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]),
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style),
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style){
     --rwp-gutter-x:0;
     --rwp-gutter-y:0;
     display:flex !important;
@@ -372,44 +368,24 @@ body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field{
     padding-bottom:0;
     flex-direction:row;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]).label-none > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]).label-none > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field.label-none > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]).label-none > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]).label-none > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field.label-none > .acf-input{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style).label-none > .acf-input,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style).label-none > .acf-input{
     width:100%;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]):after,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]):after,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:after,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]):after,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]):after,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:after{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style):after,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style):after{
     display:none;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-label{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-label,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-label{
     padding:15px 12px;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-input{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input{
     padding:15px 12px !important;
 }
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input > .acf-fields.-top,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input > .acf-fields.-top,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-input > .acf-fields.-top,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input > .acf-fields.-top,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input > .acf-fields.-top,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-input > .acf-fields.-top{
+body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input > .acf-fields.-top,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input > .acf-fields.-top{
     --rwp-gutter-x:12px;
     --rwp-gutter-y:15px;
     display:flex !important;
@@ -1210,20 +1186,12 @@ body:not(.post-type-acf-field-group) .acf-field.acf-field-true-false .acf-switch
     body:not(.post-type-acf-field-group) .acf-postbox > .inside.acf-fields.-top.-sidebar > .acf-field:not(.acf-field-tab){
         width:80%;
     }
-    body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-label,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-label{
+    body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-label,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-label{
         width:20%;
     }
-    body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-block.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field-group.acfe-field-group-layout-table.acfe-seamless-style:not([data-acfe-group-modal="1"]) > .acf-input,
-body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field > .acf-input{
+    body:not(.post-type-acf-field-group) .acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input,
+body:not(.post-type-acf-field-group) td.acf-fields.-left > .acf-field:not(.acfe-seamless-style) > .acf-input{
         width:80%;
     }}
 @media (min-width: 992px){

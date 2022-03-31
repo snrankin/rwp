@@ -33,21 +33,21 @@ class Nav_Menus extends Singleton {
 			return;
 		}
 
-			\add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_item_class' ), 10, 4 );
-			\add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes' ), 10, 4 );
-			\add_filter( 'nav_menu_submenu_css_class', array( $this, 'nav_menu_submenu_css_class' ), 10, 3 );
-			\add_filter( 'wp_nav_menu_args', 'rwp_menu_args', 5 );
+		\add_filter( 'nav_menu_css_class', array( $this, 'nav_menu_item_class' ), 10, 4 );
+		\add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes' ), 10, 4 );
+		\add_filter( 'nav_menu_submenu_css_class', array( $this, 'nav_menu_submenu_css_class' ), 10, 3 );
+		\add_filter( 'wp_nav_menu_args', 'rwp_menu_args', 5 );
 
-			\add_filter( 'wp_nav_menu_args', function( array $args ) {
+		\add_filter( 'wp_nav_menu_args', function( array $args ) {
 
-				if ( rwp_get_option( 'modules.bootstrap.nav.navwalker', false ) ) {
-					$args['walker'] = new \RWP\Integrations\Walkers\Nav( $args );
+			if ( rwp_get_option( 'modules.bootstrap.nav.navwalker', false ) ) {
+				$args['walker'] = new \RWP\Integrations\Walkers\Nav( $args );
 
-					$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
+				$args['fallback_cb'] = '\RWP\Integrations\Walkers\Nav::fallback';
 
-				}
-				return $args;
-			}, 20 );
+			}
+			return $args;
+		}, 20 );
 
 		$this->current = data_get( $_SERVER, 'REQUEST_URI' );
 	}
