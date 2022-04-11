@@ -52,14 +52,6 @@
 	@return type-of($var) == 'map';
 }
 
-@function cssvar($entry, $default: null, $prefix: $variable-prefix) {
-	@if $default != null {
-		@return unquote('var(--#{$prefix}#{$entry}, #{$default})');
-	} @else {
-		@return unquote('var(--#{$prefix}#{$entry})');
-	}
-}
-
 /// Map deep get
 /// @author Hugo Giraudel
 /// @link https://css-tricks.com/snippets/sass/deep-getset-maps/
@@ -169,5 +161,21 @@
 @function line-height($size) {
 	$size: lineheightex($size);
 
-	@return calc(0.5em + #{$size});
+	@return calc(0.025em + #{$size});
+}
+
+@function cssvar($entry, $default: null, $prefix: $variable-prefix) {
+	@if $default != null {
+		@return unquote('var(--#{$prefix}#{$entry}, #{$default})');
+	} @else {
+		@return unquote('var(--#{$prefix}#{$entry})');
+	}
+}
+
+@function setcssvar($entry, $value, $prefix: $variable-prefix) {
+	@return unquote('--#{$prefix}#{$entry}: #{$value}');
+}
+
+@function remove-calc($value) {
+	@return unquote(str-replace(#{quote($value)}, 'calc', ''));
 }

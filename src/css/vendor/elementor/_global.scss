@@ -17,10 +17,6 @@ body.elementor {
 			$value: map-get($gutters, $gap);
 			--e-gx#{$infix}-#{$class}: #{$value};
 			--e-gy#{$infix}-#{$class}: #{$value};
-			@include media-breakpoint-up($breakpoint) {
-				--e-gx-#{$class}: #{$value};
-				--e-gy-#{$class}: #{$value};
-			}
 		}
 	}
 }

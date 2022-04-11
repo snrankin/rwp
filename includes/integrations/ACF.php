@@ -97,8 +97,6 @@ class ACF extends Singleton {
 		rwp_get_dependency_file( 'index.php', 'externals/acf/acf-quick-edit-fields', true, true );
 		rwp_get_dependency_file( 'class-acf-to-rest-api.php', 'externals/acf/acf-to-rest-api', true, true );
 		rwp_get_dependency_file( 'acf-star_rating_field.php', 'externals/acf/acf-star-rating-field', true, true );
-		rwp_get_dependency_file( 'acf-svg-icon.php', 'externals/acf/acf-svg-icon-field', true, true );
-		rwp_get_dependency_file( 'acf-background.php', 'externals/acf/acf-background-field', true, true );
 		rwp_get_dependency_file( 'acf-admin-divider.php', 'externals/acf/acf-admin-divider', true, true );
 
 	}

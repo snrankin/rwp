@@ -290,7 +290,7 @@
 }
 
 @function page-gutter($breakpoint: '', $container: false) {
-	$container-width: 'var(--#{$variable-prefix}container#{$breakpoint}-width)';
+	$container-width: 'var(--#{$variable-prefix}container-#{$breakpoint}-width)';
 	$page-gutter: '';
 	@if $container == true {
 		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (var(--#{$variable-prefix}gutter-x) * 0.5))';
@@ -328,9 +328,9 @@
 		@include media-breakpoint-up($breakpoint) {
 			$infix: breakpoint-infix($breakpoint);
 
-			width: stretched-col-content($infix);
+			width: stretched-col-content($breakpoint);
 
-			$gutter: page-gutter($infix, true);
+			$gutter: page-gutter($breakpoint, true);
 			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
 			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
 			$padding-gutter: '#{$gutter} !important';
@@ -353,32 +353,41 @@
 	$side: left,
 	$content-in-grid: true,
 	$breakpoints: (
-		xs,
 		sm,
 	)
 ) {
-	@if is-map($breakpoints) and map-has-key($breakpoints, 'md') == true {
-		$breakpoints: map-keys($breakpoints);
-	}
 	@each $breakpoint in $breakpoints {
 		@include media-breakpoint-down($breakpoint) {
-			$infix: breakpoint-infix($breakpoint);
-
-			width: stretched-col-content($infix);
-
-			$gutter: page-gutter($infix, true);
+			$gutter: page-gutter($breakpoint, true);
 			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
 			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
 			$padding-gutter: '#{$gutter} !important';
 			@if $side == left {
+				width: stretched-col-content($breakpoint);
 				margin-left: unquote($margin-gutter);
 				@if $content-in-grid == true {
 					padding-left: unquote($padding-gutter);
 				}
-			} @else {
+			} @else if $side == right {
+				width: stretched-col-content($breakpoint);
 				margin-right: unquote($margin-gutter);
 				@if $content-in-grid == true {
 					padding-right: unquote($padding-gutter);
+				}
+			} @else {
+				$gutter: quote(page-gutter($breakpoint, true));
+				@if $gutter != 0 {
+					$gutter: str-replace('#{$gutter}', 'calc', '');
+				}
+
+				$stretch: 'calc((#{$gutter}*2) + 100%)';
+
+				width: unquote($stretch);
+				margin-right: unquote($margin-gutter);
+				margin-left: unquote($margin-gutter);
+				@if $content-in-grid == true {
+					padding-right: unquote($padding-gutter);
+					padding-left: unquote($padding-gutter);
 				}
 			}
 		}
