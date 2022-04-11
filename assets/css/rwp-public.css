@@ -17,10 +17,10 @@ html{
 
 .address-line .address-item{
     display:inline-block;
-    margin-right:var(--default-space);
+    margin-right:var(--bs-default-space);
 }
 .address-line .address-item.address-item-separator{
-    margin-left:calc(-1 * var(--default-space));
+    margin-left:calc(-1 * var(--bs-default-space));
 }
 
 body.rwp:not(.wp-admin) .quicklinks{
