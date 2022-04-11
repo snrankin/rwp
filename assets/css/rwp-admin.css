@@ -2,113 +2,6 @@
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/admin.scss ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************/
 html{
-    --rwp-spacer-0:0px;
-    --rwp-spacer-1:calc(var(--rwp-spacer) * 0.25);
-    --rwp-spacer-2:calc(var(--rwp-spacer) * 0.5);
-    --rwp-spacer-3:calc(var(--rwp-spacer) * 0.75);
-    --rwp-spacer-4:var(--rwp-spacer);
-    --rwp-spacer-5:calc(var(--rwp-spacer) * 1.25);
-    --rwp-spacer-6:calc(var(--rwp-spacer) * 1.5);
-    --rwp-spacer-7:calc(var(--rwp-spacer) * 1.75);
-    --rwp-spacer-8:calc(var(--rwp-spacer) * 2);
-    --rwp-spacer-9:calc(var(--rwp-spacer) * 2.25);
-    --rwp-spacer-10:calc(var(--rwp-spacer) * 2.5);
-    --rwp-spacer-11:calc(var(--rwp-spacer) * 2.75);
-    --rwp-spacer-12:calc(var(--rwp-spacer) * 3);
-    --rwp-spacer-13:calc(var(--rwp-spacer) * 3.25);
-    --rwp-spacer-14:calc(var(--rwp-spacer) * 3.5);
-    --rwp-spacer-15:calc(var(--rwp-spacer) * 3.75);
-    --rwp-spacer-16:calc(var(--rwp-spacer) * 4);
-    --rwp-gray-100:#f4f4f4;
-    --rwp-gray-200:#e1e1e1;
-    --rwp-gray-300:#ccd0d4;
-    --rwp-gray-400:#ced4da;
-    --rwp-gray-500:#9ea3a9;
-    --rwp-gray-600:#6c757d;
-    --rwp-gray-700:#495057;
-    --rwp-gray-800:#343a40;
-    --rwp-gray-900:#23282e;
-    --rwp-100:#f4f4f4;
-    --rwp-200:#e1e1e1;
-    --rwp-300:#ccd0d4;
-    --rwp-400:#ced4da;
-    --rwp-500:#9ea3a9;
-    --rwp-600:#6c757d;
-    --rwp-700:#495057;
-    --rwp-800:#343a40;
-    --rwp-900:#23282e;
-    --rwp-blue:#2271b1;
-    --rwp-indigo:#6610f2;
-    --rwp-purple:#6f42c1;
-    --rwp-pink:#d63384;
-    --rwp-red:#dc3545;
-    --rwp-orange:#fd7e14;
-    --rwp-yellow:#ffc107;
-    --rwp-green:#198754;
-    --rwp-teal:#20c997;
-    --rwp-cyan:#0dcaf0;
-    --rwp-white:#fff;
-    --rwp-gray:#6c757d;
-    --rwp-gray-dark:#343a40;
-    --rwp-primary:#2271b1;
-    --rwp-secondary:#0a4b78;
-    --rwp-success:#198754;
-    --rwp-info:#0dcaf0;
-    --rwp-warning:#ffc107;
-    --rwp-danger:#dc3545;
-    --rwp-light:#f4f4f4;
-    --rwp-dark:#23282e;
-    --rwp-muted:#6c757d;
-    --rwp-border-color:#ccd0d4;
-    --rwp-gray-100-contrast:#000;
-    --rwp-gray-200-contrast:#000;
-    --rwp-gray-300-contrast:#000;
-    --rwp-gray-400-contrast:#000;
-    --rwp-gray-500-contrast:#000;
-    --rwp-gray-600-contrast:#fff;
-    --rwp-gray-700-contrast:#fff;
-    --rwp-gray-800-contrast:#fff;
-    --rwp-gray-900-contrast:#fff;
-    --rwp-100-contrast:#000;
-    --rwp-200-contrast:#000;
-    --rwp-300-contrast:#000;
-    --rwp-400-contrast:#000;
-    --rwp-500-contrast:#000;
-    --rwp-600-contrast:#fff;
-    --rwp-700-contrast:#fff;
-    --rwp-800-contrast:#fff;
-    --rwp-900-contrast:#fff;
-    --rwp-blue-contrast:#fff;
-    --rwp-indigo-contrast:#fff;
-    --rwp-purple-contrast:#fff;
-    --rwp-pink-contrast:#fff;
-    --rwp-red-contrast:#fff;
-    --rwp-orange-contrast:#000;
-    --rwp-yellow-contrast:#000;
-    --rwp-green-contrast:#fff;
-    --rwp-teal-contrast:#000;
-    --rwp-cyan-contrast:#000;
-    --rwp-white-contrast:#000;
-    --rwp-gray-contrast:#fff;
-    --rwp-gray-dark-contrast:#fff;
-    --rwp-primary-contrast:#fff;
-    --rwp-secondary-contrast:#fff;
-    --rwp-success-contrast:#fff;
-    --rwp-info-contrast:#000;
-    --rwp-warning-contrast:#000;
-    --rwp-danger-contrast:#fff;
-    --rwp-light-contrast:#000;
-    --rwp-dark-contrast:#fff;
-    --rwp-muted-contrast:#fff;
-    --rwp-border-color-contrast:#000;
-    --rwp-primary-rgb:34, 113, 177;
-    --rwp-secondary-rgb:10, 75, 120;
-    --rwp-success-rgb:25, 135, 84;
-    --rwp-info-rgb:13, 202, 240;
-    --rwp-warning-rgb:255, 193, 7;
-    --rwp-danger-rgb:220, 53, 69;
-    --rwp-light-rgb:244, 244, 244;
-    --rwp-dark-rgb:35, 40, 46;
     --rwp-spacer-hair:0.0417em;
     --rwp-spacer-fine:0.125em;
     --rwp-spacer-one-sixth:0.1667em;
@@ -119,43 +12,7 @@ html{
     --rwp-spacer-one-third:0.3333em;
     --rwp-spacer-en:0.5em;
     --rwp-spacer-em:1em;
-    --rwp-h1-font-size:calc(1.375rem + 1.5vw);
-    --rwp-h2-font-size:calc(1.325rem + 0.9vw);
-    --rwp-h3-font-size:calc(1.3rem + 0.6vw);
-    --rwp-h4-font-size:calc(1.275rem + 0.3vw);
-    --rwp-h5-font-size:20px;
-    --rwp-h5-font-size:1.25rem;
-    --rwp-h6-font-size:16px;
-    --rwp-h6-font-size:1rem;
-    --rwp-display1-font-size:calc(1.58736rem + 4.04835vw);
-    --rwp-display2-font-size:calc(1.53599rem + 3.43187vw);
-    --rwp-display3-font-size:calc(1.49032rem + 2.88388vw);
-    --rwp-display4-font-size:calc(1.44973rem + 2.39679vw);
-    --rwp-display5-font-size:calc(1.41365rem + 1.96381vw);
-    --rwp-display6-font-size:calc(1.38158rem + 1.57894vw);
-    --rwp-white-rgb:255, 255, 255;
-    --rwp-black-rgb:0, 0, 0;
-    --rwp-body-color-rgb:35, 40, 46;
-    --rwp-body-bg-rgb:255, 255, 255;
-    --rwp-font-sans-serif:system-ui, -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, "Noto Sans", "Liberation Sans", Ubuntu, Roboto, Noto, Arial, sans-serif, ("Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
-    --rwp-font-monospace:"Fira Mono", (ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Droid Sans Mono", "Courier New", monospace, ("Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"));
-    --rwp-gradient:linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    --rwp-body-font-family:system-ui, -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Segoe UI, Helvetica Neue, Helvetica, Noto Sans, Liberation Sans, Ubuntu, Roboto, Noto, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    --rwp-body-font-size:18px;
-    --rwp-body-font-size:1.125rem;
-    --rwp-body-font-weight:400;
-    --rwp-body-line-height:1.5;
-    --rwp-body-color:#23282e;
-    --rwp-body-bg:#fff;
-    --rwp-link-color:var(--rwp-primary);
-    --rwp-link-decoration:underline;
-    --rwp-link-hover-color:var(--rwp-secondary);
-    --rwp-link-hover-decoration:null;
-    --rwp-paragraph-spacing:1em;
-    --rwp-body-font-size-sm:16px;
-    --rwp-body-font-size-sm:1rem;
-    --rwp-body-font-size-lg:20.25px;
-    --rwp-body-font-size-lg:1.265625rem;
+    --rwp-nav-icon-size:max-content;
     --rwp-gutter-x:12px;
     --rwp-gutter-y:12px;
     --rwp-row-gutter-y:calc(var(--rwp-gutter-y) * 2);
@@ -206,7 +63,7 @@ html{
             margin-inline-end:0;
 }
 .media-wrapper:not(:last-child){
-    margin-bottom:1em;
+    margin-bottom:var(--rwp-paragraph-spacing);
 }
 .media-wrapper.gallery-wrapper{
     width:100%;
@@ -230,9 +87,6 @@ html{
 }
 .media-wrapper.has-caption .media-caption{
     text-align:center;
-}
-.media-wrapper.media-video .ls-blur-up-img{
-    display:none;
 }
 
 .media-video{
@@ -3616,8 +3470,8 @@ img.alignnone{
         --rwp-container-width:90vw;
     }
     .media-wrapper.has-caption.caption-left{
-        grid-template-columns:unset !important;
-        grid-auto-flow:column;
+        grid-template-columns:-webkit-max-content -webkit-max-content;
+        grid-template-columns:max-content max-content;
     }
     .media-wrapper.has-caption.caption-left .media-content{
         grid-column-start:1;
@@ -3626,8 +3480,8 @@ img.alignnone{
         text-align:right;
     }
     .media-wrapper.has-caption.caption-right{
-        grid-template-columns:unset !important;
-        grid-auto-flow:column;
+        grid-template-columns:-webkit-max-content -webkit-max-content;
+        grid-template-columns:max-content max-content;
     }
     .media-wrapper.has-caption.caption-right .media-caption{
         text-align:left;
@@ -4989,36 +4843,6 @@ img.alignnone{
     }}
 
 @media (min-width: 1200px){
-    html{
-        --rwp-h1-font-size:2.5rem;
-    }
-    html{
-        --rwp-h2-font-size:2rem;
-    }
-    html{
-        --rwp-h3-font-size:1.75rem;
-    }
-    html{
-        --rwp-h4-font-size:1.5rem;
-    }
-    html{
-        --rwp-display1-font-size:4.623627007rem;
-    }
-    html{
-        --rwp-display2-font-size:4.1098906729rem;
-    }
-    html{
-        --rwp-display3-font-size:3.6532361537rem;
-    }
-    html{
-        --rwp-display4-font-size:3.2473210255rem;
-    }
-    html{
-        --rwp-display5-font-size:2.8865075782rem;
-    }
-    html{
-        --rwp-display6-font-size:2.565784514rem;
-    }
     html{
         --rwp-container-width:75vw;
     }

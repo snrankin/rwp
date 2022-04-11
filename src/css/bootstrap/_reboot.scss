@@ -316,7 +316,7 @@ samp {
 pre {
 	display: block;
 	margin-top: 0; // 1
-	margin-bottom: var(--#{$variable-prefix}paragraph-spacing); // 2
+	margin-bottom: cssvar(paragraph-spacing); // 2
 	overflow: auto; // 3
 	@include font-size($code-font-size);
 

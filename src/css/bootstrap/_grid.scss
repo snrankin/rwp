@@ -30,12 +30,12 @@
 
 	&:not(.has-background) {
 		+ .section-wrapper {
-			margin-top: var(--#{$variable-prefix}gutter-y);
+			margin-top: cssvar(gutter-y);
 		}
 	}
 
-	&:not(.has-background):first-child {
-		margin-top: var(--#{$variable-prefix}gutter-y);
+	&:not(.has-background):not(:first-child) {
+		margin-top: cssvar(gutter-y);
 	}
 }
 
@@ -45,14 +45,14 @@
 	width: 100%;
 
 	.has-background & {
-		padding-top: var(--#{$variable-prefix}gutter-y);
-		padding-bottom: var(--#{$variable-prefix}gutter-y);
+		padding-top: cssvar(gutter-y);
+		padding-bottom: cssvar(gutter-y);
 	}
 	@supports (padding: unquote('max(0px)')) {
 		// stylelint-disable-next-line
 		@media only screen and (min-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-			padding-left: unquote('max(--#{$variable-prefix}gutter-x, env(safe-area-inset-left))');
-			padding-right: unquote('max(--#{$variable-prefix}gutter-x, env(safe-area-inset-right))');
+			padding-left: unquote('max(#{cssvar(gutter-x)}, env(safe-area-inset-left))');
+			padding-right: unquote('max(--#{cssvar(gutter-x)}, env(safe-area-inset-right))');
 		}
 	}
 }
@@ -62,38 +62,6 @@
 	height: 100vh;
 	@media only print {
 		height: 100%;
-	}
-}
-
-.stretched-col {
-	&.left {
-		> .content-wrapper {
-			@include stretch-col-content(left, $grid-gutter-width, false);
-		}
-	}
-
-	&.right {
-		> .content-wrapper {
-			@include stretch-col-content(right, $grid-gutter-width, false);
-		}
-	}
-
-	.is-bg {
-		@include media-breakpoint-down(sm) {
-			position: relative;
-		}
-
-		> .media-content {
-			@include media-breakpoint-down(sm) {
-				position: relative;
-			}
-
-			> .media-src {
-				@include media-breakpoint-down(sm) {
-					position: relative;
-				}
-			}
-		}
 	}
 }
 
@@ -156,9 +124,9 @@
 @if $enable-cssgrid {
 	.grid {
 		display: grid;
-		grid-template-rows: repeat(var(--#{$variable-prefix}rows, 1), 1fr);
-		grid-template-columns: repeat(var(--#{$variable-prefix}columns, #{$grid-columns}), 1fr);
-		gap: var(--#{$variable-prefix}gap, #{$grid-gutter-width});
+		grid-template-rows: repeat(cssvar(rows, 1), 1fr);
+		grid-template-columns: repeat(cssvar(columns, #{$grid-columns}), 1fr);
+		gap: cssvar(gap, #{$grid-gutter-width});
 
 		@include make-cssgrid;
 	}
@@ -211,9 +179,43 @@
 				}
 			}
 		}
+
+		> .content-wrapper:not(.ratio) {
+			> .is-bg:only-child {
+				@include media-breakpoint-down(md) {
+					position: relative;
+				}
+
+				> .media-content {
+					@include media-breakpoint-down(md) {
+						position: relative;
+					}
+
+					> .media-src {
+						@include media-breakpoint-down(md) {
+							position: relative;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	.stretched-col-mobile {
+		&:not(.in-grid-content) {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, false);
+			}
+		}
+
+		&.in-grid-content {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, true);
+			}
+		}
+
 		&.left-mobile {
 			&:not(.in-grid-content) {
 				> .content-wrapper {
@@ -242,6 +244,26 @@
 				> .content-wrapper {
 					position: relative;
 					@include stretch-col-content-mobile(right, true);
+				}
+			}
+		}
+
+		> .content-wrapper:not(.ratio) {
+			> .is-bg:only-child {
+				@include media-breakpoint-down(md) {
+					position: relative;
+				}
+
+				> .media-content {
+					@include media-breakpoint-down(md) {
+						position: relative;
+					}
+
+					> .media-src {
+						@include media-breakpoint-down(md) {
+							position: relative;
+						}
+					}
 				}
 			}
 		}

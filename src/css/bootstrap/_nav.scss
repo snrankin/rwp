@@ -10,12 +10,12 @@
 @import '~bootstrap/scss/navbar';
 
 .nav-item {
-	// stylelint-disable-next-line
-	--#{$variable-prefix}-icon-size: rem(42px);
-
-	display: grid;
-	grid-template-columns: 1fr var(--#{$variable-prefix}-icon-size);
 	position: relative;
+
+	&.has-children {
+		display: grid;
+		grid-template-columns: 1fr cssvar(nav-icon-size);
+	}
 }
 
 .sub-nav {
@@ -48,10 +48,7 @@
 	@each $color, $value in $theme-colors {
 		&.bg-#{$color} {
 			.sub-nav {
-				// stylelint-disable-next-line
-				--#{$variable-prefix}-sub-nav-bg: #{$value};
-
-				background-color: var(--#{$variable-prefix}-sub-nav-bg);
+				background-color: rgba(#{cssvar(primary-rgb)}, #{cssvar(bg-opacity)}) !important;
 			}
 		}
 	}
@@ -66,44 +63,12 @@
 
 		&#{$infix} {
 			@include media-breakpoint-up($next) {
-				.sub-nav.level-1-menu {
+				.sub-nav.level-1-menu.collapse {
 					position: absolute;
 					top: 100%;
 					left: 0;
 					z-index: $zindex-dropdown;
-					padding: $dropdown-padding-y $dropdown-padding-x;
-					text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
-					background-clip: padding-box;
-					border: $dropdown-border-width solid $dropdown-border-color;
-					@include border-radius($dropdown-border-radius);
-					@include box-shadow($dropdown-box-shadow);
-
-					ul {
-						@include font-size($dropdown-font-size);
-					}
 				}
-			}
-		}
-	}
-
-	.nav-item {
-		&:not(.level-0-item) {
-			padding: $dropdown-item-padding-y $dropdown-item-padding-x;
-
-			// Prevent dropdown overflow if there's no padding
-			// See https://github.com/twbs/bootstrap/pull/27703
-			@if $dropdown-padding-y == 0 {
-				&:first-child {
-					@include border-top-radius($dropdown-inner-border-radius);
-				}
-
-				&:last-child {
-					@include border-bottom-radius($dropdown-inner-border-radius);
-				}
-			}
-
-			.nav-link {
-				padding: 0;
 			}
 		}
 	}

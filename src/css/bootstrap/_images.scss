@@ -14,7 +14,7 @@
 	margin-inline-end: 0;
 
 	&:not(:last-child) {
-		margin-bottom: $paragraph-margin-bottom;
+		margin-bottom: cssvar(paragraph-spacing);
 	}
 
 	&.gallery-wrapper {
@@ -44,8 +44,7 @@
 
 		&.caption-left {
 			@include media-breakpoint-up(md) {
-				grid-template-columns: unset !important;
-				grid-auto-flow: column;
+				grid-template-columns: max-content max-content;
 			}
 
 			.media-content {
@@ -63,8 +62,7 @@
 
 		&.caption-right {
 			@include media-breakpoint-up(md) {
-				grid-template-columns: unset !important;
-				grid-auto-flow: column;
+				grid-template-columns: max-content max-content;
 			}
 
 			.media-caption {
@@ -76,12 +74,6 @@
 
 		.media-caption {
 			text-align: center;
-		}
-	}
-
-	&.media-video {
-		.ls-blur-up-img {
-			display: none;
 		}
 	}
 }

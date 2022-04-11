@@ -52,18 +52,17 @@
 	}
 }
 
+:root {
+	@include cssvar(gutter-x, var(--e-gx-default));
+	@include cssvar(gutter-x, var(--e-gy-default));
+}
+
 .elementor-container {
-	--#{$variable-prefix}gutter-x: var(--e-gx-default);
-	--#{$variable-prefix}gutter-y: var(--e-gy-default);
 	width: 100%;
 	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
 	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
 	margin-right: auto;
 	margin-left: auto;
-	> .elementor-row {
-		--#{$variable-prefix}gutter-x: var(--e-gx-default);
-		--#{$variable-prefix}gutter-y: var(--e-gy-default);
-	}
 }
 
 .rwp-elementor {
@@ -141,30 +140,14 @@
 			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 			@include media-breakpoint-up($breakpoint) {
 				&.elementor-row-gap#{$infix}-#{$class} {
-					> .elementor-container {
-						--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-						--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
-						> .elementor-row {
-							--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-							--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
-						}
-					}
+					--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
+					--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
 				}
 				&.elementor-row-gap-x#{$infix}-#{$class} {
-					> .elementor-container {
-						--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-						> .elementor-row {
-							--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-						}
-					}
+					--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
 				}
 				&.elementor-row-gap-y#{$infix}-#{$class} {
-					> .elementor-container {
-						--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
-						> .elementor-row {
-							--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
-						}
-					}
+					--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
 				}
 			}
 		}
@@ -224,17 +207,6 @@ $elementor-col-widths: (
 
 .elementor-row {
 	@include make-row();
-	--#{$variable-prefix}gutter-x: var(--e-gx-default);
-	--#{$variable-prefix}gutter-y: var(--e-gy-default);
-
-	margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1);
-	margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
-	margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
-	min-width: 100%;
-	width: calc(100% + var(--#{$variable-prefix}gutter-x));
-
-	display: flex;
-	flex-wrap: wrap;
 }
 
 .elementor-column {

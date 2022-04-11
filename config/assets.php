@@ -113,7 +113,7 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active('query-monitor
     $rwp_plugin_assets['scripts']['debug'] = array(
     'location' => 'global',
     'handle'   => 'debug',
-    'deps'     => ['jquery', 'rwp-app'],
+    'deps'     => ['jquery'],
         'footer'   => true,
     );
     $rwp_plugin_assets['styles'][ 'debug'] = array(
@@ -123,36 +123,75 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active('query-monitor
 }
 
 
+
+
 if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
-    $rwp_lazysizes_version = '5.3.2';
-    $rwp_lazysizes_plugins = array(
-    'artdirect'   => rwp_get_option('modules.lazysizes.artdirect', false),
-    'custommedia' => rwp_get_option('modules.lazysizes.custommedia', false),
-    'blur-up'     => rwp_get_option('modules.lazysizes.blurup', false),
-    'noscript'    => rwp_get_option('modules.lazysizes.noscript', false),
-    );
 
-    $rwp_lazysizes_deps = array();
+	$rwp_lazysizes_version = '5.3.2';
+	$rwp_lazysizes_plugins = array(
+		'lazysizes'      => true,
+		'aspectratio'    => true,
+		'attrchange'     => false,
+		'bgset'          => true,
+		'fix-ios-sizes'  => true,
+		'include'        => false,
+		'native-loading' => true,
+		'object-fit'     => true,
+		'optimumx'       => false,
+		'parent-fit'     => true,
+		'print'          => true,
+		'progressive'    => false,
+		'respimg'        => true,
+		'rias'           => false,
+		'twitter'        => false,
+		'unload'         => false,
+		'unveilhooks'    => true,
+		'video-embed'    => true,
+		'artdirect'      => rwp_get_option('modules.lazysizes.artdirect', false),
+		'custommedia'    => rwp_get_option('modules.lazysizes.custommedia', false),
+		'blur-up'        => rwp_get_option('modules.lazysizes.blurup', false),
+		'noscript'       => rwp_get_option('modules.lazysizes.noscript', false),
+	);
 
-    foreach ($rwp_lazysizes_plugins as $plugin => $include) {
-        if($include) {
-            $rwp_lazysizes_deps[] = "rwp-lazysizes-$plugin";
-            $rwp_plugin_assets['scripts']["lazysizes-$plugin"] = array(
-            'src'      => "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/$rwp_lazysizes_version/plugins/$plugin/ls.$plugin.min.js",
-            'version'  => $rwp_lazysizes_version,
-            'location' => 'lazysizes',
-            'footer'   => true,
-            'handle'   => "lazysizes-$plugin"
-            );
-        }
-    }
+	$rwp_lazysizes_deps = array();
 
-    $rwp_plugin_assets['scripts']['lazysizes'] = array(
-    'location' => 'lazysizes',
-    'footer'   => true,
-    'handle'   => 'lazysizes',
-    'deps'     => $rwp_lazysizes_deps
-    );
+	$rwp_lazysizes_url = 'https://cdn.jsdelivr.net/combine/';
+
+	foreach ($rwp_lazysizes_plugins as $plugin => $include) {
+
+		if ($include) {
+			$prefix = 'npm/lazysizes@5';
+			$name = '';
+			if ($plugin !== 'lazysizes' && $plugin !== 'fix-ios-sizes') {
+				$name = "$prefix/plugins/$plugin/ls.$plugin";
+				if (defined('COMPRESS_CSS') && COMPRESS_CSS) {
+					$name .= '.min';
+				}
+				$name .= '.js';
+			} else if ($plugin === 'fix-ios-sizes') {
+				$name = "$prefix/plugins/$plugin/$plugin";
+				if (defined('COMPRESS_CSS') && COMPRESS_CSS) {
+					$name .= '.min';
+				}
+				$name .= '.js';
+			} else {
+				$name = $prefix;
+			}
+			$rwp_lazysizes_deps[] = $name;
+		}
+	}
+
+	$rwp_lazysizes_url .= join(',', $rwp_lazysizes_deps);
+
+
+	$assets['scripts']->put('lazysizes', array(
+		'src'      => $rwp_lazysizes_url,
+		'version'  => $rwp_lazysizes_version,
+		'location' => 'lazysizes',
+		'footer'   => true,
+		'handle'   => 'lazysizes',
+	));
+
 }
 
 $rwp_webpack_config = rwp_get_file_data(RWP_PLUGIN_ROOT . 'config.json', true);
