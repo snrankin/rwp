@@ -5,35 +5,3 @@
 /// @since  1.0.0
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
-
-@import '../global/index';
-
-:root {
-	// Note: Custom variable values only support SassScript inside `#{}`.
-
-	// Colors
-	//
-	// Generate palettes for full colors, grays, and theme colors.
-
-	@each $type, $value in $type-spaces {
-		--#{$variable-prefix}spacer-#{$type}: #{$value};
-	}
-
-	@include cssvar(spacer, $spacer);
-
-	@include cssvar(nav-icon-size, max-content);
-
-	--#{$variable-prefix}gutter-x: #{$grid-gutter-width};
-	// stylelint-disable-next-line
-	--#{$variable-prefix}gutter-y: #{$grid-gutter-width};
-	--#{$variable-prefix}row-gutter-y: calc(var(--#{$variable-prefix}gutter-y) * 2);
-	--#{$variable-prefix}section-gutter-y: calc(var(--#{$variable-prefix}gutter-y) * 3);
-	@each $breakpoint, $value in $container-widths {
-		$infix: breakpoint-infix($breakpoint);
-
-		--#{$variable-prefix}container#{$infix}-width: #{$value};
-		@include media-breakpoint-up($breakpoint) {
-			--#{$variable-prefix}container-width: #{$value};
-		}
-	}
-}

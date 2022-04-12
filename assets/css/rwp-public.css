@@ -23,6 +23,33 @@ html{
     margin-left:calc(-1 * var(--bs-default-space));
 }
 
+html{
+    --bs-spacer-hair:0.0417em;
+    --bs-spacer-fine:0.125em;
+    --bs-spacer-one-sixth:0.1667em;
+    --bs-spacer-thin:0.2em;
+    --bs-spacer-math:0.2222em;
+    --bs-spacer-default:0.25em;
+    --bs-spacer-thick:0.2778em;
+    --bs-spacer-one-third:0.3333em;
+    --bs-spacer-en:0.5em;
+    --bs-spacer-em:1em;
+    --bs-spacer:16px;
+    --bs-spacer:1rem;
+    --bs-nav-icon-size:max-content;
+    --bs-gutter-x:24px;
+    --bs-gutter-x:1.5rem;
+    --bs-gutter-y:24px;
+    --bs-gutter-y:1.5rem;
+    --bs-row-gutter-y:calc(var(--bs-gutter-y) * 2);
+    --bs-section-gutter-y:calc(var(--bs-gutter-y) * 3);
+    --bs-container-sm-width:100vw;
+    --bs-container-md-width:90vw;
+    --bs-container-lg-width:85vw;
+    --bs-container-xl-width:75vw;
+    --bs-container-xxl-width:1050px;
+}
+
 body.rwp:not(.wp-admin) .quicklinks{
     display:flex;
     justify-content:space-between;
@@ -473,6 +500,31 @@ img.alignnone{
     .screen-width,
 .screen-height{
         height:100vh;
+    }}
+
+@media (min-width: 576px){
+    html{
+        --bs-container-width:100vw;
+    }}
+
+@media (min-width: 768px){
+    html{
+        --bs-container-width:90vw;
+    }}
+
+@media (min-width: 992px){
+    html{
+        --bs-container-width:85vw;
+    }}
+
+@media (min-width: 1200px){
+    html{
+        --bs-container-width:75vw;
+    }}
+
+@media (min-width: 1400px){
+    html{
+        --bs-container-width:1050px;
     }}
 
 @media screen and (max-width: 600px){

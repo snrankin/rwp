@@ -1,29 +1,6 @@
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/admin.scss ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************/
-html{
-    --rwp-spacer-hair:0.0417em;
-    --rwp-spacer-fine:0.125em;
-    --rwp-spacer-one-sixth:0.1667em;
-    --rwp-spacer-thin:0.2em;
-    --rwp-spacer-math:0.2222em;
-    --rwp-spacer-default:0.25em;
-    --rwp-spacer-thick:0.2778em;
-    --rwp-spacer-one-third:0.3333em;
-    --rwp-spacer-en:0.5em;
-    --rwp-spacer-em:1em;
-    --rwp-nav-icon-size:max-content;
-    --rwp-gutter-x:12px;
-    --rwp-gutter-y:12px;
-    --rwp-row-gutter-y:calc(var(--rwp-gutter-y) * 2);
-    --rwp-section-gutter-y:calc(var(--rwp-gutter-y) * 3);
-    --rwp-container-sm-width:100vw;
-    --rwp-container-md-width:90vw;
-    --rwp-container-lg-width:85vw;
-    --rwp-container-xl-width:75vw;
-    --rwp-container-xxl-width:1050px;
-}
-
 .img-fluid{
     max-width:100%;
     height:auto;
@@ -272,69 +249,6 @@ img{
     content:"";
 }
 
-.link-gray-100{
-    color:#f4f4f4;
-}
-.link-gray-100:hover, .link-gray-100:focus{
-    color:#f6f6f6;
-}
-
-.link-gray-200{
-    color:#e1e1e1;
-}
-.link-gray-200:hover, .link-gray-200:focus{
-    color:#e7e7e7;
-}
-
-.link-gray-300{
-    color:#ccd0d4;
-}
-.link-gray-300:hover, .link-gray-300:focus{
-    color:#d6d9dd;
-}
-
-.link-gray-400{
-    color:#ced4da;
-}
-.link-gray-400:hover, .link-gray-400:focus{
-    color:#d8dde1;
-}
-
-.link-gray-500{
-    color:#9ea3a9;
-}
-.link-gray-500:hover, .link-gray-500:focus{
-    color:#b1b5ba;
-}
-
-.link-gray-600{
-    color:#6c757d;
-}
-.link-gray-600:hover, .link-gray-600:focus{
-    color:#565e64;
-}
-
-.link-gray-700{
-    color:#495057;
-}
-.link-gray-700:hover, .link-gray-700:focus{
-    color:#3a4046;
-}
-
-.link-gray-800{
-    color:#343a40;
-}
-.link-gray-800:hover, .link-gray-800:focus{
-    color:#2a2e33;
-}
-
-.link-gray-900{
-    color:#23282e;
-}
-.link-gray-900:hover, .link-gray-900:focus{
-    color:#1c2025;
-}
-
 .link-100{
     color:#f4f4f4;
 }
@@ -543,20 +457,6 @@ img{
 }
 .link-dark:hover, .link-dark:focus{
     color:#1c2025;
-}
-
-.link-muted{
-    color:#6c757d;
-}
-.link-muted:hover, .link-muted:focus{
-    color:#565e64;
-}
-
-.link-border-color{
-    color:#ccd0d4;
-}
-.link-border-color:hover, .link-border-color:focus{
-    color:#d6d9dd;
 }
 
 .ratio{
@@ -2786,9 +2686,6 @@ img.alignnone{
     }}
 
 @media (min-width: 576px){
-    html{
-        --rwp-container-width:100vw;
-    }
     .sticky-sm-top{
         position:-webkit-sticky;
         position:sticky;
@@ -3466,9 +3363,6 @@ img.alignnone{
     }}
 
 @media (min-width: 768px){
-    html{
-        --rwp-container-width:90vw;
-    }
     .media-wrapper.has-caption.caption-left{
         grid-template-columns:-webkit-max-content -webkit-max-content;
         grid-template-columns:max-content max-content;
@@ -4163,9 +4057,6 @@ img.alignnone{
     }}
 
 @media (min-width: 992px){
-    html{
-        --rwp-container-width:85vw;
-    }
     .sticky-lg-top{
         position:-webkit-sticky;
         position:sticky;
@@ -4843,9 +4734,6 @@ img.alignnone{
     }}
 
 @media (min-width: 1200px){
-    html{
-        --rwp-container-width:75vw;
-    }
     .sticky-xl-top{
         position:-webkit-sticky;
         position:sticky;
@@ -5538,9 +5426,6 @@ img.alignnone{
     }}
 
 @media (min-width: 1400px){
-    html{
-        --rwp-container-width:1050px;
-    }
     .sticky-xxl-top{
         position:-webkit-sticky;
         position:sticky;
