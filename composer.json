@@ -79,7 +79,7 @@
             "@composer dump-autoload --working-dir includes/dependencies -o --no-dev"
         ],
         "grum": [
-            "vendor/bin/grumphp run"
+            "./vendor/bin/grumphp run --tasks=git_blacklist"
         ],
         "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"

@@ -4,19 +4,19 @@ grumphp:
     enabled: true
     fix_by_default: true
   tasks:
-    git_blacklist:
-      keywords:
-        - "die\\("
-        - "var_dump\\("
-        - "exit;"
-        - "rwp_log"
-        - "\\sray\\("
-      whitelist_patterns:
-        - /^src\/FolderA\/(.*)/
-        - /^includes\/functions\/utils\/debug.php/
-      triggered_by: ['php']
-      regexp_type: G
-      match_word: true
+    # git_blacklist:
+    #   keywords:
+    #     - "die\\("
+    #     - "var_dump\\("
+    #     - "exit;"
+    #     - "rwp_log\\("
+    #     - "\\sray\\("
+    #   whitelist_patterns:
+    #     - /^src\/FolderA\/(.*)/
+    #     - /^includes\/functions\/utils\/debug.php/
+    #   triggered_by: ['php']
+    #   regexp_type: G
+    #   match_word: true
     phpcs:
       report: full
       report_width: ~
