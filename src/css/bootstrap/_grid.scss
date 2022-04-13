@@ -202,17 +202,19 @@
 	}
 
 	.stretched-col-mobile {
-		&:not(.in-grid-content) {
-			> .content-wrapper {
-				position: relative;
-				@include stretch-col-content-mobile(both, false);
+		&:not(.left-mobile):not(.right-mobile) {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(both, false);
+				}
 			}
-		}
 
-		&.in-grid-content {
-			> .content-wrapper {
-				position: relative;
-				@include stretch-col-content-mobile(both, true);
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(both, true);
+				}
 			}
 		}
 

@@ -295,6 +295,21 @@ $elementor-col-widths: (
 		}
 	}
 	&.stretched-col-mobile {
+		&:not(.left-mobile):not(.right-mobile) {
+			&:not(.in-grid-content) {
+				> .elementor-column-wrap {
+					position: relative;
+					@include stretch-col-content-mobile(both, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .elementor-column-wrap {
+					position: relative;
+					@include stretch-col-content-mobile(both, true);
+				}
+			}
+		}
 		&.left-mobile {
 			&:not(.in-grid-content) {
 				> .elementor-column-wrap {
