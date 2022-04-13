@@ -1,6 +1,6 @@
 <?php
-/**
- * ============================================================================
+
+/** ============================================================================
  * menu
  *
  * @package   RWP\/includes/functions/utils/menu.php
@@ -8,8 +8,7 @@
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
- * ==========================================================================
- */
+ * ========================================================================== */
 
 use RWP\Components\Element;
 use RWP\Components\Collection;
