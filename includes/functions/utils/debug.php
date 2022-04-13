@@ -40,7 +40,10 @@ function rwp_dump( $var ) {
  * @return void
  */
 function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
-	QM::instance()->log( $var, $die, $function );
+	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
+		QM::instance()->log( $var, $die, $function );
+	}
+
 }
 
 

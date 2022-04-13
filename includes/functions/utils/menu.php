@@ -323,15 +323,20 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		$logo_args = data_get( $custom_args, 'navbar.brand.atts', array() );
 		$logo_args = rwp_merge_args( $logo_defaults, $logo_args );
         $logo = rwp_get_logo( $logo_args );
-
         $navbar_content->set_content( $logo, 'brand' );
     }
 
     if ( false !== $order->search( 'search' ) ) {
 		$search_args = data_get( $custom_args, 'navbar.search' );
         $search = rwp_search_form( '', $search_args );
-
         $navbar_content->set_content( $search, 'search' );
+    }
+
+	if ( false !== $order->search( 'text' ) ) {
+		$text_args = data_get( $custom_args, 'navbar.text' );
+		$text_content = data_get( $text_args, 'content' );
+		$text_content = rwp_filtered_content( $text_content );
+        $navbar_content->set_content( $text_content, 'text' );
     }
 
 	$nav->list->remove_class( 'nav' );
