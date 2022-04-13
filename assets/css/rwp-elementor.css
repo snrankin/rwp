@@ -504,6 +504,12 @@ html{
 .elementor-column.stretched-col.right.in-grid-content > .elementor-column-wrap{
     position:relative;
 }
+.elementor-column.stretched-col-mobile:not(.left-mobile):not(.right-mobile):not(.in-grid-content) > .elementor-column-wrap{
+    position:relative;
+}
+.elementor-column.stretched-col-mobile:not(.left-mobile):not(.right-mobile).in-grid-content > .elementor-column-wrap{
+    position:relative;
+}
 .elementor-column.stretched-col-mobile.left-mobile:not(.in-grid-content) > .elementor-column-wrap{
     position:relative;
 }
@@ -2090,6 +2096,18 @@ html{
     }}
 
 @media (max-width: 575.98px){
+    .elementor-column.stretched-col-mobile:not(.left-mobile):not(.right-mobile):not(.in-grid-content) > .elementor-column-wrap{
+        width:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * 2 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        margin-left:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+    }
+    .elementor-column.stretched-col-mobile:not(.left-mobile):not(.right-mobile).in-grid-content > .elementor-column-wrap{
+        width:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * 2 + 100%);
+        margin-right:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        margin-left:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
+        padding-right:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
+        padding-left:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) !important;
+    }
     .elementor-column.stretched-col-mobile.left-mobile:not(.in-grid-content) > .elementor-column-wrap{
         width:calc((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5 + 100%);
         margin-left:calc(((100vw - var(--bs-container-sm-width)) * 0.5 + var(--bs-gutter-x) * 0.5) * -1) !important;
