@@ -3927,12 +3927,10 @@ rwp.slider = function (containerClass) {
     args.slideBy = 1;
   }
 
-  console.log(args);
-
   var changeActiveClass = function changeActiveClass(navItem) {
     var button = navItem.querySelector('.btn');
 
-    if (!rwp.isEmpty(button)) {
+    if (button != undefined) {
       if (navItem.classList.contains('tns-nav-active')) {
         button.classList.add('active');
       } else {
@@ -3982,6 +3980,12 @@ rwp.slider = function (containerClass) {
           navItem.append(navItemContent);
           var navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
           navItemWrapper.append(navItem);
+
+          if (navItem.classList.contains('tns-nav-active')) {
+            navItemWrapper.classList.add('tns-nav-active');
+            navItem.classList.remove('tns-nav-active');
+          }
+
           navItem = navItemWrapper;
           changeActiveClass(navItem);
           el.parentNode.replaceChild(navItem, el);

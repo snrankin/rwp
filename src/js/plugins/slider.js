@@ -53,11 +53,9 @@ rwp.slider = (containerClass, args = {}) => {
 		args.slideBy = 1;
 	}
 
-	console.log(args);
-
 	const changeActiveClass = function (navItem) {
 		let button = navItem.querySelector('.btn');
-		if (!rwp.isEmpty(button)) {
+		if (button != undefined) {
 			if (navItem.classList.contains('tns-nav-active')) {
 				button.classList.add('active');
 			} else {
@@ -106,8 +104,14 @@ rwp.slider = (containerClass, args = {}) => {
 					}
 
 					navItem.append(navItemContent);
+
 					let navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
 					navItemWrapper.append(navItem);
+
+					if (navItem.classList.contains('tns-nav-active')) {
+						navItemWrapper.classList.add('tns-nav-active');
+						navItem.classList.remove('tns-nav-active');
+					}
 
 					navItem = navItemWrapper;
 
