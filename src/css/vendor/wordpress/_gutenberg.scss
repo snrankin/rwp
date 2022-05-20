@@ -16,7 +16,7 @@
 
 			&::before {
 				display: block;
-				padding-top: cssvar(aspect-ratio);
+				padding-top: getcssvar(aspect-ratio);
 				content: '';
 			}
 
@@ -41,12 +41,12 @@
 
 hr.wp-block-separator {
 	border: none !important;
-	margin-top: cssvar(paragraph-margin-bottom);
+	margin-top: getcssvar(paragraph-margin-bottom);
 }
 
 @each $color in map-keys($theme-colors) {
-	@include bg-variant('.has-#{$color}-background-color', cssvar(#{$color}));
-	@include text-emphasis-variant('.has-#{$color}-color', cssvar(#{$color}));
+	@include bg-variant('.has-#{$color}-background-color', getcssvar(#{$color}));
+	@include text-emphasis-variant('.has-#{$color}-color', getcssvar(#{$color}));
 }
 
 //
@@ -54,17 +54,17 @@ hr.wp-block-separator {
 //
 @for $i from 1 through 6 {
 	.has-h-#{$i}-font-size {
-		font-size: cssvar(h#{$i}-font-size);
+		font-size: getcssvar(h#{$i}-font-size);
 	}
 }
 
 // Type display classes
 @each $display in map-keys($display-font-sizes) {
 	.has-display-#{$display}-font-size {
-		font-size: cssvar(display#{$display}-font-size);
+		font-size: getcssvar(display#{$display}-font-size);
 	}
 }
 
 .wp-block-file {
-	margin-bottom: cssvar(paragraph-margin-bottom);
+	margin-bottom: getcssvar(paragraph-margin-bottom);
 }

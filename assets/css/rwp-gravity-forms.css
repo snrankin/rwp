@@ -1,6 +1,6 @@
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/vendor/gravity-forms.scss ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./css/vendor/gravity-forms.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
 .gform_wrapper.gravity-theme form .gform_fields{
     grid-column-gap:var(--bs-gutter-x);
     grid-row-gap:var(--bs-gutter-y);
@@ -12,10 +12,11 @@
     margin-top:calc(var(--bs-gutter-y) * -1);
     margin-right:calc(var(--bs-gutter-x) * -0.5);
     margin-left:calc(var(--bs-gutter-x) * -0.5);
-    min-width:100%;
+    width:calc(100% + var(--bs-gutter-x));
     display:flex;
     flex-wrap:wrap;
     float:none;
+    min-width:100%;
 }
 .gform_wrapper.gravity-theme form.form-inline:before, .gform_wrapper.gravity-theme form.form-inline:after{
     display:none;
@@ -24,9 +25,11 @@
     padding-right:calc(var(--bs-gutter-x) * 0.5);
     padding-left:calc(var(--bs-gutter-x) * 0.5);
     margin-top:var(--bs-gutter-y);
+    width:100%;
+    max-width:100%;
     display:flex;
     flex-direction:column;
-    flex:0 0 auto;
+    flex:0 1 auto;
     width:auto;
     flex-grow:1;
 }
@@ -34,9 +37,11 @@
     padding-right:calc(var(--bs-gutter-x) * 0.5);
     padding-left:calc(var(--bs-gutter-x) * 0.5);
     margin-top:var(--bs-gutter-y);
+    width:100%;
+    max-width:100%;
     display:flex;
     flex-direction:column;
-    flex:0 0 auto;
+    flex:0 1 auto;
     width:auto;
 }
 .gform_wrapper.gravity-theme form.has-inline-submit .gform_footer{

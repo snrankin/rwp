@@ -8,13 +8,14 @@
  * @author    Kevin Brown <wordpress@riester.com>
  * ==========================================================================
  */
-
-export * from 'select2/dist/js/select2.full.js';
+import 'jquery';
+import(/* webpackMode: "eager" */ 'select2/dist/js/select2.full');
 
 jQuery(document).ready(function ($) {
 	const select2Inputs = document.querySelectorAll('.select2');
 	$.fn.select2.defaults.set('minimumResultsForSearch', 'Infinity');
 	$.fn.select2.defaults.set('theme', 'bootstrap-5');
+	$.fn.select2.defaults.set('width', 'resolve');
 	if (select2Inputs.length > 0) {
 		select2Inputs.forEach(function (input) {
 			let isSmall = input.classList.contains('form-select-sm');
@@ -22,8 +23,15 @@ jQuery(document).ready(function ($) {
 
 			let select2Options = {
 				dropdownParent: input.parentElement,
-				theme: 'bootstrap-5',
 				minimumResultsForSearch: 'Infinity',
+				theme: 'bootstrap-5',
+				width: 'resolve',
+				templateResult: (data, container) => {
+					if (data.element) {
+						$(container).addClass($(data.element).attr('class'));
+					}
+					return data.text;
+				},
 			};
 
 			if (isSmall) {
@@ -37,7 +45,6 @@ jQuery(document).ready(function ($) {
 				select2Options.selectionCssClass = 'select2--large'; // For Select2 v4.1
 				select2Options.dropdownCssClass = 'select2--large';
 			}
-
 			$(input).select2(select2Options);
 		});
 	}

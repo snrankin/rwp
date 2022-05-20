@@ -11,11 +11,9 @@
  * ==========================================================================
  */
 
-import 'jquery';
-
 // import local dependencies
 import Router from './util/Router';
-import common from './public/routes/common';
+import common from './public/common';
 
 /** Populate Router instance with DOM routes */
 const routes = new Router({
@@ -24,4 +22,4 @@ const routes = new Router({
 });
 
 // Load Events
-jQuery(document).ready(() => routes.loadEvents());
+routes.loadEvents();

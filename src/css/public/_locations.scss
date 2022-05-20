@@ -9,10 +9,10 @@
 .address-line {
 	.address-item {
 		display: inline-block;
-		margin-right: cssvar(spacer-default);
+		margin-right: getcssvar(spacer-default);
 
 		&.address-item-separator {
-			margin-left: calc(-1 * #{cssvar(spacer-default)});
+			margin-left: calc(-1 * #{getcssvar(spacer-default)});
 		}
 	}
 }

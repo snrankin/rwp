@@ -5,3 +5,10 @@
 /// @since  1.0.0
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
+@import '~bootstrap/scss/root';
+
+:root {
+	@each $type, $value in $type-spaces {
+		--#{$variable-prefix}spacer-#{$type}: #{$value};
+	}
+}

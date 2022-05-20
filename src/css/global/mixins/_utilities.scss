@@ -7,6 +7,6 @@
 /// ======================================================================== ///
 @import '~bootstrap/scss/mixins/utilities';
 
-@mixin cssvar($entry, $value, $prefix: $variable-prefix) {
+@mixin setcssvar($entry, $value, $prefix: $variable-prefix) {
 	--#{$prefix}#{$entry}: #{$value};
 }

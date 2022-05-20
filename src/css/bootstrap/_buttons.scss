@@ -6,10 +6,13 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
+@import '~bootstrap/scss/buttons';
+
 .btn {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+	appearance: none;
 
 	&[aria-expanded='true'],
 	&[aria-selected='true'],
@@ -75,11 +78,11 @@
 	min-width: 1em;
 
 	&.icon-right {
-		margin-left: cssvar(spacer-default);
+		margin-left: getcssvar(spacer-default);
 	}
 
 	&.icon-left {
-		margin-right: cssvar(spacer-default);
+		margin-right: getcssvar(spacer-default);
 		order: -1;
 	}
 
@@ -139,9 +142,6 @@
 	}
 
 	&.btn-toggle-icon {
-		width: $navbar-toggler-icon-width;
-		height: $navbar-toggler-icon-height;
-
 		&::before {
 			display: none;
 		}

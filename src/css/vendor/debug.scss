@@ -161,7 +161,7 @@ pre.sf-dump .sf-dump-default {
 	color: #ff8400;
 	line-height: 1.2em;
 	font-size: 1em;
-	font-family: cssvar('font-monospace');
+	font-family: getcssvar('font-monospace');
 	word-wrap: break-word;
 	white-space: pre-wrap;
 	position: relative;

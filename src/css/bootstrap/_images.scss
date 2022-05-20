@@ -14,7 +14,7 @@
 	margin-inline-end: 0;
 
 	&:not(:last-child) {
-		margin-bottom: cssvar(paragraph-spacing);
+		margin-bottom: getcssvar(paragraph-spacing);
 	}
 
 	&.gallery-wrapper {

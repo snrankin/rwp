@@ -51,13 +51,13 @@
 
 .tns-nav {
 	display: grid;
-	grid-row-gap: cssvar(gutter-y); //stylelint-disable-line
-	grid-column-gap: cssvar(gutter-x); //stylelint-disable-line
+	grid-row-gap: getcssvar(gutter-y); //stylelint-disable-line
+	grid-column-gap: getcssvar(gutter-x); //stylelint-disable-line
 	grid-auto-flow: column;
 
 	&.tns-thumbnails {
 		.btn-icon {
-			min-width: cssvar(thumbnail-width, rem(60px), tns-);
+			min-width: getcssvar(thumbnail-width, rem(60px), tns-);
 		}
 	}
 }

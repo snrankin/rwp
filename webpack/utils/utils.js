@@ -108,6 +108,8 @@ exports.manifest = manifestSeed;
  * @return {string}
  */
 const filenameHelper = (filename) => {
+	filename = path.basename(filename);
+	filename = _.replace(filename, '.scss', '.css');
 	if (!isEmpty(filename)) {
 		if (_.has(manifestSeed, filename)) {
 			return _.get(manifestSeed, filename);
@@ -127,7 +129,12 @@ exports.filenameHelper = filenameHelper;
  * @param {*} debug_item
  */
 const debug = (debug_item) => {
-	console.log(util.inspect(debug_item, false, null, true /* enable colors */));
+	console.log(
+		util.inspect(debug_item, {
+			depth: 8,
+			colors: true,
+		})
+	);
 };
 exports.debug = debug;
 
@@ -240,8 +247,15 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 		} else if (groupName !== 'blocks') {
 			entry = _.reduce(
 				entry,
-				function (result, value) {
-					_.merge(result, value);
+				function (result, value, key) {
+					if (_.isString(value)) {
+						_.merge(result, {
+							[key]: value,
+						});
+					} else if (_.isObject(value)) {
+						_.merge(result, value);
+					}
+
 					return result;
 				},
 				{}
@@ -262,9 +276,25 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 
 	if (groupName !== 'blocks') {
 		entry = _.mapValues(entry, function (value) {
-			_.each(value, function (file, fileKey) {
-				value[fileKey] = pathByType(file);
-			});
+			if (_.isString(value)) {
+				value = pathByType(value);
+			} else {
+				if (_.isObject(value) && _.has(value, 'import')) {
+					if (_.isArray(value.import)) {
+						_.each(value.import, function (file, fileKey) {
+							value.import[fileKey] = pathByType(file);
+						});
+					}
+					if (_.isString(value.import)) {
+						value.import = pathByType(value.import);
+					}
+				} else if (_.isArray(value)) {
+					_.each(value, function (file, fileKey) {
+						value[fileKey] = pathByType(file);
+					});
+				}
+			}
+
 			return value;
 		});
 	} else {
@@ -280,6 +310,20 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 };
 
 exports.fileNames = fileNames;
+
+const copyPath = (file, filePath = '') => {
+	if (!isEmpty(file)) {
+		let packagePath = path.dirname(file);
+
+		let name = path.basename(file);
+
+		return path.join(filePaths.node, filePath, packagePath, name);
+	} else {
+		return '';
+	}
+};
+
+exports.copyPath = copyPath;
 
 const removeLoaders = (error) => {
 	let file = _.get(error, 'file', '');

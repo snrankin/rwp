@@ -6,10 +6,10 @@
  * @copyright 2022 RIESTER
  * ========================================================================== */
 
-import { Fancybox } from '@fancyapps/ui/src/Fancybox/Fancybox.js';
+import { /* webpackMode: "eager" */ Fancybox } from '@fancyapps/ui/src/Fancybox/Fancybox.js';
 rwp = typeof rwp === 'undefined' ? {} : rwp;
 
-rwp.modal = (selector = '[data-fancybox]', args = {}) => {
+function modal(selector = '[data-fancybox]', args = {}) {
 	const defaults = {
 		template: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
 		on: {
@@ -21,7 +21,7 @@ rwp.modal = (selector = '[data-fancybox]', args = {}) => {
 	};
 
 	if (!rwp.isEmpty(args)) {
-		args = rwp.defaultsDeep(args, defaults);
+		args = rwp.extend(args, defaults);
 	} else {
 		args = defaults;
 	}
@@ -31,4 +31,6 @@ rwp.modal = (selector = '[data-fancybox]', args = {}) => {
 
 		return modal;
 	}
-};
+}
+
+rwp.modal = modal;

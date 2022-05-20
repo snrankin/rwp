@@ -11,22 +11,106 @@
 
 const _ = require('lodash');
 const { argv } = require('yargs');
-const { mergeWithCustomize, customizeArray, merge } = require('webpack-merge');
+const path = require('path');
+const webpack = require('webpack');
+const { mergeWithCustomize, customizeArray, mergeWithRules } = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 
 // ======================== Import Local Dependencies ======================= //
 
-const { isEmpty, debug } = require('./utils/utils');
+const { isEmpty, debug, filePaths, env } = require('./utils/utils');
 const { startingPlugins, config, baseConfig, endingPlugins } = require('./utils/config');
 
 // =========================== Setup File Globals =========================== //
 
 const buildWatch = !isEmpty(argv.watch) ? true : false;
+const isProduction = env() === 'production' ? true : false;
 
 // ========================== Start Webpack Config ========================== //
 
-let webpackConfig = {}; // Add custom options to webpack here
+let webpackConfig = {
+	module: {
+		rules: [
+			{
+				test: /\.modernizrrc$/,
+				use: ['@sect/modernizr-loader'],
+			},
+			{
+				test: /modernizr(\.json)?$/,
+				use: ['@sect/modernizr-loader', 'json-loader'],
+			},
+		],
+	},
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				test: /\.js(\?.*)?$/i,
+				terserOptions: {
+					format: {
+						comments: false,
+						ecma: 2017,
+						beautify: isProduction ? false : true,
+					},
+					ecma: 2017,
+					safari10: true,
+					mangle: isProduction ? true : false,
+					compress: isProduction ? true : false,
+				},
 
-webpackConfig = merge(baseConfig, webpackConfig);
+				extractComments: false,
+			}),
+		],
+		providedExports: true,
+		splitChunks: {
+			maxInitialRequests: Infinity,
+			minSize: 0,
+			hidePathInfo: true,
+			chunks: 'all',
+			cacheGroups: {
+				defaultVendors: false,
+				default: false,
+				vendors: {
+					test: /[\\/]node_modules[\\/]/,
+					layer: 'vendors',
+					chunks: 'all',
+					idHint: 'vendors',
+					name: 'vendors',
+					priority: -5,
+				},
+			},
+		},
+	},
+	resolve: {
+		alias: {
+			modernizr$: path.resolve(filePaths.root, '.modernizrrc'),
+		},
+	},
+	plugins: [
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery',
+			_: 'lodash',
+			bootstrap: 'bootstrap',
+			Popper: '@popperjs',
+			select2: 'select2',
+			bs: 'bootstrap',
+		}),
+	],
+}; // Add custom options to webpack here
+
+webpackConfig = mergeWithRules({
+	module: {
+		rules: {
+			test: 'match',
+			use: {
+				loader: 'match',
+				options: 'replace',
+			},
+		},
+	},
+})(baseConfig, webpackConfig);
 
 // ========================== Add Starting Plugins ========================== //
 

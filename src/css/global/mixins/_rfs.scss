@@ -1,4 +1,23 @@
 @import '~bootstrap/scss/vendor/rfs';
+@mixin rfs-val($value, $property, $breakpoint: md, $important: false) {
+	@if $important == true {
+		@include media-breakpoint-up($breakpoint) {
+			#{$property}: rfs-fluid-value($value) !important;
+		}
+
+		@media (min-width: #{$rfs-breakpoint}) {
+			#{$property}: rfs-value($value) !important;
+		}
+	} @else {
+		@include media-breakpoint-up($breakpoint) {
+			#{$property}: rfs-fluid-value($value);
+		}
+
+		@media (min-width: #{$rfs-breakpoint}) {
+			#{$property}: rfs-value($value);
+		}
+	}
+}
 
 // Shorthand helper mixins
 @mixin font-size($value) {

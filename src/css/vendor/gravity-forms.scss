@@ -11,11 +11,11 @@
 .gform_wrapper.gravity-theme {
 	form {
 		.gform_fields {
-			grid-column-gap: cssvar(gutter-x);
-			grid-row-gap: cssvar(gutter-y);
+			grid-column-gap: getcssvar(gutter-x);
+			grid-row-gap: getcssvar(gutter-y);
 		}
 		.gform_footer {
-			margin-top: cssvar(gutter-y);
+			margin-top: getcssvar(gutter-y);
 		}
 		&.form-inline {
 			@include make-row;
@@ -59,7 +59,7 @@
 		}
 	}
 	.gfield_required_asterisk {
-		color: cssvar(danger);
+		color: getcssvar(danger);
 	}
 
 	.gform_ajax_spinner {

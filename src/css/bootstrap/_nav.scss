@@ -7,14 +7,33 @@
 /// ======================================================================== ///
 
 @import '~bootstrap/scss/nav';
-@import '~bootstrap/scss/navbar';
 
-.nav-item {
+.nav {
+	&[aria-orientation='vertical'] {
+		flex-direction: column;
+	}
+}
+
+.menu-text {
+	display: inline-block;
+	font-family: inherit;
+	color: currentcolor;
+	line-height: inherit;
+	font-size: inherit;
+	text-decoration: inherit;
+}
+
+.menu-item {
 	position: relative;
+	max-width: 100%;
 
 	&.has-children {
 		display: grid;
-		grid-template-columns: 1fr cssvar(nav-icon-size);
+		grid-template-columns: 1fr getcssvar(nav-icon-size, max-content);
+	}
+
+	&.menu-divider {
+		padding: 0 !important;
 	}
 }
 
@@ -22,7 +41,7 @@
 	min-width: 100%;
 }
 
-.nav-link {
+.menu-link {
 	flex: 1 1 auto;
 	display: flex;
 	align-items: center;
@@ -30,46 +49,34 @@
 	white-space: nowrap;
 	position: relative;
 	z-index: 2;
+	@include hover-focus-active(true) {
+		outline: none;
+		text-decoration: none;
+		background: none;
+		background-color: transparent;
+	}
+	@include hover(true) {
+		color: $nav-link-hover-color;
+	}
+	@include active(true) {
+		color: $nav-link-hover-color;
+	}
+
+	@include focus(true) {
+		color: $nav-link-hover-color;
+		@include box-shadow($btn-focus-box-shadow);
+	}
 }
 
-.nav-toggle {
+.menu-toggle {
 	grid-row: 1/2;
 	position: relative;
 	z-index: 2;
 }
 
 .subnav {
-	grid-column: 1/3;
-	grid-row: 2/3;
+	grid-column: 1/ -1;
+	grid-row: 2/ 3;
 	z-index: 2;
-}
-
-.navbar {
-	@each $color, $value in $theme-colors {
-		&.bg-#{$color} {
-			.sub-nav {
-				background-color: rgba(#{cssvar(primary-rgb)}, #{cssvar(bg-opacity)}) !important;
-			}
-		}
-	}
-}
-
-// Generate series of `.navbar-expand-*` responsive classes for configuring
-// where your navbar collapses.
-.navbar-expand {
-	@each $breakpoint in map-keys($grid-breakpoints) {
-		$next: breakpoint-next($breakpoint, $grid-breakpoints);
-		$infix: breakpoint-infix($next, $grid-breakpoints);
-
-		&#{$infix} {
-			@include media-breakpoint-up($next) {
-				.sub-nav.level-1-menu.collapse {
-					position: absolute;
-					top: 100%;
-					left: 0;
-					z-index: $zindex-dropdown;
-				}
-			}
-		}
-	}
+	background-color: getcssvar(sub-nav-bg);
 }

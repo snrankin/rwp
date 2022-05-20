@@ -20,9 +20,9 @@
 		--#{$variable-prefix}spacer-#{$type}: #{$value};
 	}
 
-	@include cssvar(spacer, $spacer);
+	@include setcssvar(spacer, $spacer);
 
-	@include cssvar(nav-icon-size, max-content);
+	@include setcssvar(nav-icon-size, max-content);
 
 	--#{$variable-prefix}gutter-x: #{$grid-gutter-width};
 	// stylelint-disable-next-line

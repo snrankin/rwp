@@ -8,18 +8,18 @@
 	}
 
 	width: 100%;
-	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
-	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
+	padding-right: calc(#{getcssvar(gutter-x)} * 0.5);
+	padding-left: calc(#{getcssvar(gutter-x)} * 0.5);
 	margin-right: auto;
 	margin-left: auto;
 
 	&:not(:first-child) {
-		margin-top: var(--#{$variable-prefix}container-gutter-y);
+		margin-top: getcssvar(container-gutter-y);
 	}
 	@if $important {
 		width: 100% !important;
-		padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
-		padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
+		padding-right: calc(#{getcssvar(gutter-x)} * 0.5) !important;
+		padding-left: calc(#{getcssvar(gutter-x)} * 0.5) !important;
 		margin-right: auto !important;
 		margin-left: auto !important;
 	}
@@ -30,9 +30,9 @@
 	@each $breakpoint, $container-max-width in $max-widths {
 		@include media-breakpoint-up($breakpoint, $breakpoints) {
 			@if $important {
-				max-width: $container-max-width !important;
+				max-width: getcssvar(container-#{$breakpoint}-width) !important;
 			} @else {
-				max-width: $container-max-width;
+				max-width: getcssvar(container-#{$breakpoint}-width);
 			}
 		}
 	}
@@ -50,16 +50,16 @@
 		--#{$variable-prefix}gutter-y: #{$y-spacing};
 	}
 
-	margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1);
-	margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
-	margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5);
-	min-width: 100%;
+	margin-top: calc(#{getcssvar(gutter-y)} * -1);
+	margin-right: calc(#{getcssvar(gutter-x)} * -0.5);
+	margin-left: calc(#{getcssvar(gutter-x)} * -0.5);
+	width: calc(100% + #{getcssvar(gutter-x)});
 
 	@if $important {
-		margin-top: calc(var(--#{$variable-prefix}gutter-y) * -1) !important;
-		margin-right: calc(var(--#{$variable-prefix}gutter-x) * -0.5) !important;
-		margin-left: calc(var(--#{$variable-prefix}gutter-x) * -0.5) !important;
-		min-width: 100% !important;
+		margin-top: calc(#{getcssvar(gutter-y)} * -1) !important;
+		margin-right: calc(#{getcssvar(gutter-x)} * -0.5) !important;
+		margin-left: calc(#{getcssvar(gutter-x)} * -0.5) !important;
+		width: calc(100% + #{getcssvar(gutter-x)}) !important;
 	}
 }
 
@@ -69,6 +69,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	float: none;
+	min-width: 100%;
 
 	&::before,
 	&::after {
@@ -77,13 +78,13 @@
 }
 
 @mixin col-gutters($important: false) {
-	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
-	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
-	margin-top: var(--#{$variable-prefix}gutter-y);
+	padding-right: calc(#{getcssvar(gutter-x)} * 0.5);
+	padding-left: calc(#{getcssvar(gutter-x)} * 0.5);
+	margin-top: getcssvar(gutter-y);
 	@if $important {
-		padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
-		padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5) !important;
-		margin-top: var(--#{$variable-prefix}gutter-y) !important;
+		padding-right: calc(#{getcssvar(gutter-x)} * 0.5) !important;
+		padding-left: calc(#{getcssvar(gutter-x)} * 0.5) !important;
+		margin-top: getcssvar(gutter-y) !important;
 	}
 }
 
@@ -93,41 +94,38 @@
 	// Prevent columns from becoming too narrow when at smaller grid tiers by
 	// always setting `width: 100%;`. This works because we set the width
 	// later on to override this initial width.
+	width: 100%;
+	max-width: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
 	display: flex;
 	flex-direction: column;
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
 	@if $size {
-		flex: 0 0 auto;
+		flex: 0 1 auto;
 		width: percentage(divide($size, $columns));
 	} @else {
-		flex: 1 1 0;
+		flex: 0 1 auto;
 		max-width: 100%;
 	}
 }
 
 @mixin make-col-auto() {
-	flex: 0 0 auto;
+	flex: 0 1 auto;
 	width: auto;
 }
 
-@mixin make-col-offset($size, $columns: $grid-columns) {
+@mixin make-col-offset($size, $side: left, $negative: false, $columns: $grid-columns) {
 	$num: divide($size, $columns);
+	@if $negative == true {
+		$num: $num * -1;
+	}
 
-	margin-left: if($num == 0, 0, percentage($num));
-}
-
-@mixin make-col-offset-negative-left($size, $columns: $grid-columns) {
-	$num: divide($size, $columns) * -1;
-
-	margin-left: if($num == 0, 0, percentage($num));
-}
-
-@mixin make-col-offset-negative-right($size, $columns: $grid-columns) {
-	$num: divide($size, $columns) * -1;
-
-	margin-right: if($num == 0, 0, percentage($num));
+	@if $side == right {
+		margin-right: if($num == 0, 0, percentage($num));
+	} @else {
+		margin-left: if($num == 0, 0, percentage($num));
+	}
 }
 
 // Row columns
@@ -182,14 +180,18 @@
 				@for $i from 0 through ($columns - 1) {
 					@if not($infix == '' and $i == 0) {
 						// Avoid emitting useless .offset-0
-						.offset#{$infix}-#{$i} {
-							@include make-col-offset($i, $columns);
+						.offset#{$infix}-#{$i},
+						.offset-l#{$infix}-#{$i} {
+							@include make-col-offset($i, left, false, $columns);
 						}
-						.offset#{$infix}-nl#{$i} {
-							@include make-col-offset-negative-left($i, $columns);
+						.offset-r#{$infix}-#{$i} {
+							@include make-col-offset($i, right, false, $columns);
 						}
-						.offset#{$infix}-nr#{$i} {
-							@include make-col-offset-negative-right($i, $columns);
+						.offset-nl#{$infix}-#{$i} {
+							@include make-col-offset($i, left, true, $columns);
+						}
+						.offset-nr#{$infix}-#{$i} {
+							@include make-col-offset($i, right, true, $columns);
 						}
 					}
 				}
@@ -206,42 +208,6 @@
 				.g#{$infix}-#{$key},
 				.gy#{$infix}-#{$key} {
 					--#{$variable-prefix}gutter-y: #{$value};
-				}
-			}
-		}
-	}
-}
-
-@mixin make-grid-columns-2($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
-	@each $breakpoint in map-keys($breakpoints) {
-		$infix: breakpoint-infix($breakpoint, $breakpoints);
-
-		@include media-breakpoint-up($breakpoint, $breakpoints) {
-			&.col#{$infix}-auto {
-				@include make-col-auto;
-			}
-
-			@if $columns > 0 {
-				@for $i from 1 through $columns {
-					&.col#{$infix}-#{$i} {
-						@include make-col($i, $columns);
-					}
-				}
-
-				// `$columns - 1` because offsetting by the width of an entire row isn't possible
-				@for $i from 0 through ($columns - 1) {
-					@if not($infix == '' and $i == 0) {
-						// Avoid emitting useless .offset-0
-						&.offset#{$infix}-#{$i} {
-							@include make-col-offset($i, $columns);
-						}
-						&.offset#{$infix}-nl#{$i} {
-							@include make-col-offset-negative-left($i, $columns);
-						}
-						&.offset#{$infix}-nr#{$i} {
-							@include make-col-offset-negative-right($i, $columns);
-						}
-					}
 				}
 			}
 		}
@@ -290,10 +256,11 @@
 }
 
 @function page-gutter($breakpoint: '', $container: false) {
-	$container-width: 'var(--#{$variable-prefix}container-#{$breakpoint}-width)';
+	$container-width: getcssvar(container-#{$breakpoint}-width);
+	$container-gutter: getcssvar(gutter-x);
 	$page-gutter: '';
 	@if $container == true {
-		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (var(--#{$variable-prefix}gutter-x) * 0.5))';
+		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (#{$container-gutter} * 0.5))';
 	} @else {
 		$page-gutter: 'calc((100vw - #{$container-width}) * 0.5)';
 	}
@@ -311,6 +278,7 @@
 
 	@return unquote($stretch);
 }
+
 @mixin stretch-col-content(
 	$side: left,
 	$content-in-grid: true,
@@ -388,6 +356,46 @@
 				@if $content-in-grid == true {
 					padding-right: unquote($padding-gutter);
 					padding-left: unquote($padding-gutter);
+				}
+			}
+		}
+	}
+}
+
+@mixin make-grid-columns-2($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+	@each $breakpoint in map-keys($breakpoints) {
+		$infix: breakpoint-infix($breakpoint, $breakpoints);
+
+		@include media-breakpoint-up($breakpoint, $breakpoints) {
+			&.col#{$infix}-auto {
+				@include make-col-auto;
+			}
+
+			@if $columns > 0 {
+				@for $i from 1 through $columns {
+					&.col#{$infix}-#{$i} {
+						@include make-col($i, $columns);
+					}
+				}
+
+				// `$columns - 1` because offsetting by the width of an entire row isn't possible
+				@for $i from 0 through ($columns - 1) {
+					@if not($infix == '' and $i == 0) {
+						// Avoid emitting useless .offset-0
+						&.offset#{$infix}-#{$i},
+						&.offset-l#{$infix}-#{$i} {
+							@include make-col-offset($i, left, false, $columns);
+						}
+						&.offset-r#{$infix}-#{$i} {
+							@include make-col-offset($i, right, false, $columns);
+						}
+						&.offset-nl#{$infix}-#{$i} {
+							@include make-col-offset($i, left, true, $columns);
+						}
+						&.offset-nr#{$infix}-#{$i} {
+							@include make-col-offset($i, right, true, $columns);
+						}
+					}
 				}
 			}
 		}

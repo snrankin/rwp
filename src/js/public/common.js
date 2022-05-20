@@ -6,12 +6,12 @@
  * @copyright 2022 RIESTER
  * ========================================================================== */
 
-import smoothscroll from 'smoothscroll-polyfill';
+import { /* webpackChunkName: "vendors" */ polyfill as smoothscroll } from 'smoothscroll-polyfill';
+rwp = typeof rwp === 'undefined' ? {} : rwp;
 
 export default {
 	betterHashLinks() {
 		const id = location.hash.substring(1);
-		const motionQuery = window.matchMedia('(prefers-reduced-motion)');
 
 		if (!/^[A-z0-9_-]+$/.test(id)) {
 			return;
@@ -24,7 +24,7 @@ export default {
 				element.tabIndex = -1;
 			}
 
-			if (!motionQuery.matches) {
+			if (!rwp.isReduced) {
 				element.scrollIntoView({
 					behavior: 'smooth',
 				});
@@ -39,12 +39,15 @@ export default {
 			}
 		}
 	},
+	resize() {
+		// JavaScript to be fired on the home page
+	},
 	init() {
 		// JavaScript to be fired on the home page
 	},
 	finalize() {
 		// JavaScript to be fired on the home page, after the init JS
-		smoothscroll.polyfill();
+		smoothscroll();
 		window.addEventListener('click', this.betterHashLinks);
 
 		$('.screen-full').width(rwp.screenSize('width')).height(rwp.screenSize('height'));

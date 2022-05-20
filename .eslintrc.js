@@ -5,6 +5,7 @@ module.exports = {
 	parser: '@babel/eslint-parser',
 	globals: {
 		rwp: true,
+		window: true,
 		document: true,
 		fancybox: true,
 		tns: true,
@@ -13,9 +14,12 @@ module.exports = {
 		wpApiSettings: true,
 		_: true,
 		Modernizr: true,
+		hoverintent: true,
+		bs: true,
+		bootstrap: true,
 	},
 	env: {
-		es2017: true,
+		es2022: true,
 		amd: true,
 		node: true,
 		browser: true,
@@ -40,6 +44,7 @@ module.exports = {
 		allowImportExportEverywhere: true,
 		sourceType: 'module',
 	},
+	plugins: ['import'],
 	settings: {
 		'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
 		react: {

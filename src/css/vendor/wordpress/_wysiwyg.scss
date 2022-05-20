@@ -8,9 +8,9 @@
 
 .alignleft,
 img.alignleft {
-	margin-bottom: cssvar(paragraph-margin-bottom);
+	margin-bottom: getcssvar(paragraph-margin-bottom);
 	display: inline-block;
-	margin-right: cssvar(paragraph-margin-bottom);
+	margin-right: getcssvar(paragraph-margin-bottom);
 	float: left;
 	@include media-breakpoint-down(xs) {
 		float: none;
@@ -19,9 +19,9 @@ img.alignleft {
 }
 .alignright,
 img.alignright {
-	margin-bottom: cssvar(paragraph-margin-bottom);
+	margin-bottom: getcssvar(paragraph-margin-bottom);
 	display: inline-block;
-	margin-left: cssvar(paragraph-margin-bottom);
+	margin-left: getcssvar(paragraph-margin-bottom);
 	float: right;
 	@include media-breakpoint-down(xs) {
 		float: none;
@@ -30,13 +30,13 @@ img.alignright {
 }
 .aligncenter,
 img.aligncenter {
-	margin-bottom: cssvar(paragraph-margin-bottom);
+	margin-bottom: getcssvar(paragraph-margin-bottom);
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
 }
 .alignnone,
 img.alignnone {
-	margin-bottom: cssvar(paragraph-margin-bottom);
+	margin-bottom: getcssvar(paragraph-margin-bottom);
 	display: block;
 }

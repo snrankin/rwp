@@ -1,3 +1,13 @@
+/** ============================================================================
+ * Router
+ *
+ * @version   1.0.1
+ * @author    RIESTER <wordpress@riester.com>
+ * @copyright 2022 RIESTER
+ * ========================================================================== */
+
+import domready from 'domready';
+
 function camelCase(str) {
 	return `${str.charAt(0).toLowerCase()}${str
 		.replace(/[\W_]/g, '|')
@@ -19,6 +29,33 @@ class Router {
 		this.routes = routes;
 	}
 
+	promisedEvent(route = {}, eventType = '', timeout = 0, ...args) {
+		const event = route[eventType];
+		var listener = () => {
+			setTimeout(() => {
+				event.apply(route, args);
+			}, timeout);
+		};
+		return new Promise((resolve) => {
+			if ('resize' === eventType) {
+				window.addEventListener('resize', listener);
+			} else if ('init' == eventType) {
+				domready(listener);
+			} else if ('finalize' == eventType) {
+				window.addEventListener('load', listener, false);
+			}
+			resolve();
+		});
+	}
+
+	async asyncEvent(route, eventType, ...args) {
+		let timeout = 1;
+		if ('finalize' == eventType) {
+			timeout = 2000;
+		}
+		await this.promisedEvent(route, eventType, timeout, ...args);
+	}
+
 	/**
 	 * Fire Router events
 	 *
@@ -26,20 +63,35 @@ class Router {
 	 * @param {string} [event] Events on the route. By default, `init` and `finalize` events are called.
 	 * @param {string} [arg]   Any custom argument to be passed to the event.
 	 */
-	fire(route, event = 'init', arg) {
+	fire(routeName, eventType = 'init', ...args) {
+		console.log('🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ eventType', eventType);
+		console.log('🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ routeName', routeName);
 		document.dispatchEvent(
 			new CustomEvent('routed', {
 				bubbles: true,
 				detail: {
-					route,
-					fn: event,
+					routeName,
+					fn: eventType,
 				},
 			})
 		);
 
-		const fire = '' !== route && this.routes[route] && 'function' === typeof this.routes[route][event];
-		if (fire) {
-			this.routes[route][event](arg);
+		const route = this.routes[routeName],
+			event = route[eventType];
+
+		const fire = routeName !== '' && route && typeof event === 'function';
+
+		try {
+			if (fire) {
+				this.asyncEvent(route, eventType, ...args);
+			} else if (typeof event !== 'function') {
+				throw new TypeError(`callback for ${route.name}.${eventType} must be a function`);
+			} else {
+				throw new Error(`cannot run ${route.name}.${eventType}`);
+			}
+		} catch (e) {
+			// statements to handle any exceptions
+			console.error('Router Error:', e.message);
 		}
 	}
 
@@ -53,22 +105,32 @@ class Router {
 	 *  common finalize
 	 */
 	loadEvents() {
+		const pageClasses = document.body.className.toLowerCase().replace(/-/g, '_').split(/\s+/).map(camelCase);
+		console.log('🚀 ~ file: Router.js ~ line 109 ~ Router ~ loadEvents ~ pageClasses', pageClasses);
+
 		// Fire common init JS
 		this.fire('common');
 
 		// Fire page-specific init JS, and then finalize JS
-		document.body.className
-			.toLowerCase()
-			.replace(/-/g, '_')
-			.split(/\s+/)
-			.map(camelCase)
-			.forEach((className) => {
-				this.fire(className);
-				this.fire(className, 'finalize');
-			});
+		Object.keys(this.routes).forEach((route) => {
+			if (pageClasses.includes(route) && route !== 'common') {
+				this.fire(route);
+			}
+		});
+		Object.keys(this.routes).forEach((route) => {
+			if (pageClasses.includes(route) && route !== 'common') {
+				this.fire(route, 'finalize');
+			}
+		});
+		Object.keys(this.routes).forEach((route) => {
+			if (pageClasses.includes(route) && route !== 'common') {
+				this.fire(route, 'resize');
+			}
+		});
 
 		// Fire common finalize JS
 		this.fire('common', 'finalize');
+		this.fire('common', 'resize');
 	}
 }
 

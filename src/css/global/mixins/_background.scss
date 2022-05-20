@@ -12,7 +12,7 @@
 @mixin bg-variant($parent, $color) {
 	#{$parent} {
 		background-color: $color !important;
-		color: cssvar(#{$color}-contrast);
+		color: getcssvar(#{$color}-contrast);
 	}
 }
 

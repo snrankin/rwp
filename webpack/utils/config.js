@@ -21,9 +21,10 @@ const magicImporter = require('node-sass-magic-importer');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const WebpackBar = require('webpackbar');
 
 // ======================== Import Local Dependencies ======================= //
-const { isEmpty, env, manifest, filePaths, fileNames } = require('./utils');
+const { isEmpty, env, manifest, filePaths, fileNames, pathByType, copyPath } = require('./utils');
 
 const configFile = require('../../config.json');
 
@@ -36,6 +37,7 @@ const groupName = !isEmpty(argv.name) ? argv.name : '';
 const buildWatch = !isEmpty(argv.watch) ? true : false;
 const configName = !isEmpty(argv['config-name']) ? argv['config-name'] : '';
 const isProduction = env() === 'production' ? true : false;
+const isDebug = configFile.enabled.debug || argv.stats === 'verbose' ? true : false;
 const rootPath = filePaths && filePaths.root ? filePaths.root : process.cwd();
 
 const buildStats = !isEmpty(argv.stats)
@@ -69,46 +71,36 @@ function createConfig(groupName = '', configName = '') {
 		filenameTemplate = filenameTemplate + '.min';
 	}
 
-	const assetnameTemplate = customConfig.enabled.cachebusting ? `${customConfig.cachebusting}[ext][query]` : '[name][ext][query]';
+	const assetnameTemplate = customConfig.enabled.cachebusting ? `[path]${customConfig.cachebusting}[ext][query]` : '[path][name][ext][query]';
 
 	let newConfig = {
 		webpack: {
 			mode: isProduction ? 'production' : 'development',
 			entry: entryFiles,
-			context: filePaths.src || rootPath,
+			context: filePaths.src || filePaths.root,
+			cache: !isDebug
+				? {
+						type: 'filesystem',
+						cacheDirectory: path.join(filePaths.root, '.cache'),
+				  }
+				: false,
 			output: {
 				path: filePaths.dist,
 				publicPath: !isEmpty(filePaths.public) ? filePaths.public : 'auto',
 				filename: path.join(folders.js, `${filenameTemplate}.js`),
 				assetModuleFilename: assetnameTemplate,
-				// clean: {
-				// 	keep: /\.(json|html)$/,
-				// },
-
 				chunkFilename: '[name].js',
 			},
-			stats: buildStats,
+			//stats: buildStats,
 			watchOptions: {
 				ignored: [filePaths.dist, path.join(rootPath, 'node_modules')],
 			},
 			optimization: {
-				providedExports: true,
-				minimize: isProduction ? true : false,
 				nodeEnv: isProduction ? 'production' : 'development',
 				splitChunks: {
 					hidePathInfo: true,
 					automaticNameDelimiter: '-',
-
-					cacheGroups: {
-						vendors: {
-							test: /^[\\/]node_modules[\\/](?!(?:bootstrap|@fortawesome|bootstrap-icons|select2|tiny-slider|lazysizes)[\\/]).*/,
-							layer: 'vendors',
-							chunks: 'all',
-							idHint: 'vendors',
-							filename: path.join(folders.js, `${filenameTemplate}.js`),
-							name: false,
-						},
-					},
+					filename: path.join(folders.js, `${filenameTemplate}.js`),
 				},
 			},
 			node: {
@@ -165,29 +157,7 @@ function createConfig(groupName = '', configName = '') {
 		newConfig.webpack.devtool = 'source-map';
 	}
 
-	// if (groupName !== 'main') {
-	// 	newConfig.webpack.externals.push(function ({ context, request }, callback) {
-	// 		if (/.{1,2}\/\/util\/utils$/.test(request)) {
-	// 			// Externalize to a commonjs module using the request path
-	// 			return callback(null, 'rwp');
-	// 		}
-
-	// 		// Continue without externalizing the import
-	// 		callback();
-	// 	});
-	// }
-
 	newConfig = _.defaultsDeep(newConfig, customConfig);
-
-	// newConfig.webpack.externals.push(function ({ context, request }, callback) {
-	// 	if (/.*(?<!app\.js)$/.test(request)) {
-	// 		// Externalize to a commonjs module using the request path
-	// 		return callback(null, 'rwp');
-	// 	}
-
-	// 	// Continue without externalizing the import
-	// 	callback();
-	// });
 
 	if (!isEmpty(configName) && _.isString(configName) && configName !== '') {
 		newConfig = _.merge({ webpack: { name: configName } }, newConfig);
@@ -211,6 +181,8 @@ const cssLoaders = [
 		loader: 'css-loader',
 		options: {
 			sourceMap: !isProduction,
+			importLoaders: 2,
+			url: false,
 		},
 	},
 	{
@@ -221,12 +193,48 @@ const cssLoaders = [
 				plugins: [
 					'postcss-fixes',
 					'postcss-momentum-scrolling',
+					'postcss-easings',
 					'autoprefixer',
 					[
 						'postcss-inline-svg',
 						{
 							paths: [filePaths.imagesSrc, path.join(filePaths.node, 'bootstrap-icons', 'icons')],
 						},
+					],
+					[
+						'postcss-url',
+						[
+							{
+								filter: /\.(png|jpg|jpeg|gif|ico)$/,
+								url: (asset) => {
+									let filename = path.basename(asset.relativePath);
+
+									let imagePath = path.join(filePaths.imagesDist, filename);
+									let url = path.relative(filePaths.cssDist, imagePath);
+									console.log('🚀 ~ file: config.js ~ line 228 ~ url', url);
+									return url;
+								},
+								from: filePaths.cssSrc,
+								to: filePaths.imagesDist,
+								assetsPath: folders.images,
+								basePath: filePaths.imagesSrc,
+							},
+							{
+								filter: /\.(woff|woff2|eot|ttf|otf)$/,
+								url: (asset) => {
+									let filename = path.basename(asset.relativePath);
+
+									let fontPath = path.join(filePaths.fontsDist, filename);
+									let url = path.relative(filePaths.cssDist, fontPath);
+									console.log('🚀 ~ file: config.js ~ line 228 ~ url', url);
+									return url;
+								},
+								from: filePaths.cssSrc,
+								to: filePaths.fontsDist,
+								assetsPath: folders.fonts,
+								basePath: filePaths.fontsSrc,
+							},
+						],
 					],
 					[
 						'postcss-sort-media-queries',
@@ -317,13 +325,13 @@ let webpackConfig = {
 				test: /\.(sc|sa)ss$/,
 				use: [
 					...cssLoaders,
-					{
-						loader: 'resolve-url-loader',
-						options: {
-							root: filePaths.root,
-							sourceMap: !isProduction,
-						},
-					},
+					// {
+					// 	loader: 'resolve-url-loader',
+					// 	options: {
+					// 		root: filePaths.root,
+					// 		sourceMap: !isProduction,
+					// 	},
+					// },
 					{
 						loader: 'sass-loader',
 						options: {
@@ -383,14 +391,8 @@ if (isProduction) {
 exports.baseConfig = webpackConfig;
 
 const startingPlugins = [
-	new webpack.ProvidePlugin({
-		$: 'jquery',
-		jQuery: 'jquery',
-		'window.jQuery': 'jquery',
-		_: 'lodash',
-		bootstrap: 'bootstrap',
-		Popper: '@popperjs',
-	}),
+	new WebpackBar(),
+
 	new ESLintPlugin({
 		failOnWarning: false,
 		emitError: !isProduction,
@@ -399,12 +401,14 @@ const startingPlugins = [
 		fix: true,
 	}),
 	new StyleLintPlugin({
+		failOnWarning: false,
 		failOnError: !buildWatch,
-		emitError: !isProduction,
-		emitWarning: !isProduction,
+		emitError: !isProduction && !buildWatch,
+		emitWarning: !isProduction && !buildWatch,
 		formatter: require('stylelint-formatter-pretty'),
 		lintDirtyModulesOnly: true,
-		fix: true,
+		fix: !buildWatch,
+		quiet: buildWatch,
 	}),
 	new RemoveEmptyScriptsPlugin(),
 	new ExtractCssChunks({
@@ -447,8 +451,8 @@ const endingPlugins = [
 	new FriendlyErrorsWebpackPlugin({
 		logLevel: buildWatch ? 'SILENT' : 'WARNING',
 		clearConsole: true,
-		additionalTransformers: [require('./transformers/sassError.js')],
-		additionalFormatters: [require('./formatters/sassError.js')],
+		// additionalTransformers: [require('./transformers/sassError.js')],
+		// additionalFormatters: [require('./formatters/sassError.js')],
 	}),
 	new WebpackBuildNotifierPlugin(config.notify),
 ];
@@ -456,16 +460,50 @@ const endingPlugins = [
 if (!isEmpty(config.copy)) {
 	const CopyPlugin = require('copy-webpack-plugin');
 	let copyPatterns = [];
+
 	if (_.isArray(config.copy)) {
 		_.each(config.copy, function (pattern) {
 			if (_.isString(pattern)) {
-				pattern = {
-					from: pattern,
-					to: filePaths.dist,
-				};
+				if (_.startsWith(pattern, '~')) {
+					pattern = pattern.replace('~', '');
+					pattern = copyPath(pattern);
+					//pattern = './' + path.relative(filePaths.node, pattern);
+					let name = path.basename(pattern);
+					let dest = path.dirname(pathByType(name)) + '/[name][ext]';
+					dest = path.join(filePaths.assets, dest);
+					dest = path.relative(filePaths.node, dest);
+					pattern = {
+						from: pattern,
+						to: dest,
+						context: filePaths.node,
+					};
+				} else {
+					pattern = {
+						from: pattern,
+						to: filePaths.assets,
+					};
+				}
+			} else if (_.isPlainObject(pattern)) {
+				let from = _.get(pattern, 'from');
+				let dest = _.get(pattern, 'to');
+
+				if (_.startsWith(from, '~')) {
+					from = from.replace('~', '');
+					from = copyPath(from);
+					//from = './' + path.relative(filePaths.node, from);
+					let name = path.basename(from);
+					if (isEmpty(dest)) {
+						dest = path.join(path.dirname(pathByType(name)), dest, '[name][ext]');
+						dest = path.join(filePaths.assets, dest);
+						dest = path.relative(filePaths.node, dest);
+					}
+					pattern.context = filePaths.node;
+				}
+				pattern.from = from;
+				pattern.to = dest;
 			}
 			_.defaultsDeep(pattern, {
-				noErrorOnMissing: true,
+				//noErrorOnMissing: true,
 				globOptions: {
 					gitignore: true,
 				},

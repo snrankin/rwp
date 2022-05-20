@@ -35,7 +35,7 @@
 
 :root {
 	@if $font-size-root != null {
-		font-size: var(--#{$variable-prefix}root-font-size);
+		font-size: getcssvar(root-font-size);
 	}
 
 	@if $enable-smooth-scroll {
@@ -77,13 +77,13 @@ html {
 
 // scss-docs-start reboot-body-rules
 body {
-	@include font-size(var(--#{$variable-prefix}body-font-size));
+	@include font-size(getcssvar(body-font-size));
 
-	font-family: var(--#{$variable-prefix}body-font-family);
-	font-weight: var(--#{$variable-prefix}body-font-weight);
-	color: var(--#{$variable-prefix}body-color);
-	text-align: var(--#{$variable-prefix}body-text-align);
-	background-color: var(--#{$variable-prefix}body-bg); // 2
+	font-family: getcssvar(body-font-family);
+	font-weight: getcssvar(body-font-weight);
+	color: getcssvar(body-color);
+	text-align: getcssvar(body-text-align);
+	background-color: getcssvar(body-bg); // 2
 	text-size-adjust: 100%; // 3
 	-webkit-tap-highlight-color: rgba($black, 0); // 4
 	overflow-x: hidden;
@@ -101,11 +101,16 @@ body {
 
 ::selection {
 	text-shadow: none;
-	color: var(--#{$variable-prefix}primary-contrast);
-	background-color: var(--#{$variable-prefix}primary);
-	text-fill-color: var(--#{$variable-prefix}primary-contrast);
-	-webkit-text-fill-color: var(--#{$variable-prefix}primary-contrast);
-	-moz-text-fill-color: var(--#{$variable-prefix}primary-contrast);
+	color: getcssvar(primary-contrast);
+	background-color: getcssvar(primary);
+	text-fill-color: getcssvar(primary-contrast);
+}
+
+:focus,
+:focus-within,
+:focus-visible {
+	outline-color: $input-btn-focus-color;
+	outline-width: $input-btn-focus-width;
 }
 
 // scss-docs-end reboot-body-rules
@@ -121,7 +126,7 @@ hr {
 	box-sizing: content-box; // 3
 	height: 0; // 3
 	overflow: visible; // 4
-	margin: var(--#{$variable-prefix}paragraph-spacing) 0;
+	margin: getcssvar(paragraph-spacing) 0;
 	color: currentcolor; // 1
 	background-color: currentcolor;
 	border: 0;
@@ -162,7 +167,10 @@ section {
 
 p {
 	margin-top: 0;
-	margin-bottom: var(--#{$variable-prefix}paragraph-spacing);
+
+	&:not(:last-child) {
+		margin-bottom: getcssvar(paragraph-spacing);
+	}
 }
 
 // Abbreviations
@@ -183,9 +191,12 @@ abbr[data-bs-original-title] {
 // Address
 
 address {
-	margin-bottom: var(--#{$variable-prefix}paragraph-spacing);
 	font-style: normal;
 	line-height: inherit;
+
+	&:not(:last-child) {
+		margin-bottom: getcssvar(paragraph-spacing);
+	}
 }
 
 // Lists
@@ -199,7 +210,10 @@ ol,
 ul,
 dl {
 	margin-top: 0;
-	margin-bottom: var(--#{$variable-prefix}paragraph-spacing);
+
+	&:not(:last-child) {
+		margin-bottom: getcssvar(paragraph-spacing);
+	}
 }
 
 ol ol,
@@ -316,7 +330,7 @@ samp {
 pre {
 	display: block;
 	margin-top: 0; // 1
-	margin-bottom: cssvar(paragraph-spacing); // 2
+	margin-bottom: getcssvar(paragraph-spacing); // 2
 	overflow: auto; // 3
 	@include font-size($code-font-size);
 
@@ -371,7 +385,13 @@ figure {
 // Apply a consistent margin strategy (matches our type styles).
 
 figure {
-	margin: 0 0 var(--#{$variable-prefix}paragraph-spacing);
+	&:last-child {
+		margin: 0;
+	}
+
+	&:not(:last-child) {
+		margin: 0 0 getcssvar(paragraph-spacing);
+	}
 }
 
 // Images and content
@@ -399,7 +419,7 @@ table {
 caption {
 	padding-top: $table-cell-padding-y;
 	padding-bottom: $table-cell-padding-y;
-	color: var(--#{$variable-prefix}text-muted);
+	color: getcssvar(text-muted);
 	text-align: left;
 }
 
@@ -558,7 +578,6 @@ legend {
 	float: left; // 1
 	width: 100%;
 	padding: 0; // 5
-	margin-bottom: var(--#{$variable-prefix}paragraph-spacing);
 	line-height: inherit;
 	box-sizing: border-box; // 3
 	color: inherit; //4
@@ -567,6 +586,10 @@ legend {
 	white-space: normal; // 3
 	+ * {
 		clear: left; // 2
+	}
+
+	&:not(:last-child) {
+		margin-bottom: getcssvar(paragraph-spacing);
 	}
 }
 
@@ -684,4 +707,16 @@ template {
 
 [hidden] {
 	display: none !important;
+}
+
+// Chrome, Safari, Edge, Opera
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none; //stylelint-disable-line
+	margin: 0;
+}
+
+// Firefox
+input[type='number'] {
+	-moz-appearance: textfield; //stylelint-disable-line
 }

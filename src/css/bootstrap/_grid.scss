@@ -24,18 +24,18 @@
 		position: relative;
 
 		+ .section-wrapper:not(.has-background) {
-			margin-top: cssvar(gutter-y);
+			margin-top: getcssvar(gutter-y);
 		}
 	}
 
 	&:not(.has-background) {
 		+ .section-wrapper {
-			margin-top: cssvar(gutter-y);
+			margin-top: getcssvar(gutter-y);
 		}
 	}
 
 	&:not(.has-background):not(:first-child) {
-		margin-top: cssvar(gutter-y);
+		margin-top: getcssvar(gutter-y);
 	}
 }
 
@@ -45,8 +45,8 @@
 	width: 100%;
 
 	.has-background & {
-		padding-top: cssvar(gutter-y);
-		padding-bottom: cssvar(gutter-y);
+		padding-top: getcssvar(gutter-y);
+		padding-bottom: getcssvar(gutter-y);
 	}
 	@supports (padding: unquote('max(0px)')) {
 		// stylelint-disable-next-line
@@ -126,7 +126,7 @@
 		display: grid;
 		grid-template-rows: repeat(cssvar(rows, 1), 1fr);
 		grid-template-columns: repeat(cssvar(columns, #{$grid-columns}), 1fr);
-		gap: cssvar(gap, #{$grid-gutter-width});
+		gap: getcssvar(gap, #{$grid-gutter-width});
 
 		@include make-cssgrid;
 	}

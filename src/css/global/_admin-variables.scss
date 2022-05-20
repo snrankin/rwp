@@ -5,7 +5,28 @@
 /// @since  1.0.1
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
-
+$type-spaces: (
+	'hair': 0.0417em,
+	// 0.7px  || Width varies, but narrower than thin space
+	'fine': 0.125em,
+	// 2px    || Bien ! For French punctuation
+	'one-sixth': 0.1667em,
+	// 2.7px  || Might be suitable for grouping
+	'thin': 0.2em,
+	// 3.2px  || Recommended minimum width of space
+	'math': 0.2222em,
+	// 3.6px  || a + b Around operators (according to Chicago)
+	'default': 0.25em,
+	// 4px    || Average width of normal space
+	'thick': 0.2778em,
+	// 4.4.px || a = b Around relational operators (according to Chicago)
+	'one-third': 0.3333em,
+	// 5.3px  || Width of space in a wide font
+	'en': 0.5em,
+	// 8px    || Recommended maximum width of space, width of en-dash
+	'em': 1em,
+	// 16px   || width of em-dash
+);
 $blue: #2271b1;
 $gray-900: #23282e;
 $gray-200: #ccd0d4;

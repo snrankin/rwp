@@ -53,8 +53,8 @@
 }
 
 :root {
-	@include cssvar(gutter-x, var(--e-gx-default));
-	@include cssvar(gutter-x, var(--e-gy-default));
+	@include setcssvar(gutter-x, var(--e-gx-default));
+	@include setcssvar(gutter-x, var(--e-gy-default));
 }
 
 .elementor-container {
