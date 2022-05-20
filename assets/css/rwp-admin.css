@@ -1,6 +1,105 @@
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[4]!./css/admin.scss ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./css/admin.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+html{
+    --rwp-100:#f4f4f4;
+    --rwp-200:#e1e1e1;
+    --rwp-300:#ccd0d4;
+    --rwp-400:#ced4da;
+    --rwp-500:#9ea3a9;
+    --rwp-600:#6c757d;
+    --rwp-700:#495057;
+    --rwp-800:#343a40;
+    --rwp-900:#23282e;
+    --rwp-blue:#2271b1;
+    --rwp-indigo:#6610f2;
+    --rwp-purple:#6f42c1;
+    --rwp-pink:#d63384;
+    --rwp-red:#dc3545;
+    --rwp-orange:#fd7e14;
+    --rwp-yellow:#ffc107;
+    --rwp-green:#198754;
+    --rwp-teal:#20c997;
+    --rwp-cyan:#0dcaf0;
+    --rwp-white:#fff;
+    --rwp-gray:#6c757d;
+    --rwp-gray-dark:#343a40;
+    --rwp-gray-100:#f4f4f4;
+    --rwp-gray-200:#e1e1e1;
+    --rwp-gray-300:#ccd0d4;
+    --rwp-gray-400:#ced4da;
+    --rwp-gray-500:#9ea3a9;
+    --rwp-gray-600:#6c757d;
+    --rwp-gray-700:#495057;
+    --rwp-gray-800:#343a40;
+    --rwp-gray-900:#23282e;
+    --rwp-100:#f4f4f4;
+    --rwp-200:#e1e1e1;
+    --rwp-300:#ccd0d4;
+    --rwp-400:#ced4da;
+    --rwp-500:#9ea3a9;
+    --rwp-600:#6c757d;
+    --rwp-700:#495057;
+    --rwp-800:#343a40;
+    --rwp-900:#23282e;
+    --rwp-blue:#2271b1;
+    --rwp-indigo:#6610f2;
+    --rwp-purple:#6f42c1;
+    --rwp-pink:#d63384;
+    --rwp-red:#dc3545;
+    --rwp-orange:#fd7e14;
+    --rwp-yellow:#ffc107;
+    --rwp-green:#198754;
+    --rwp-teal:#20c997;
+    --rwp-cyan:#0dcaf0;
+    --rwp-white:#fff;
+    --rwp-gray:#6c757d;
+    --rwp-gray-dark:#343a40;
+    --rwp-primary:#2271b1;
+    --rwp-secondary:#0a4b78;
+    --rwp-success:#198754;
+    --rwp-info:#0dcaf0;
+    --rwp-warning:#ffc107;
+    --rwp-danger:#dc3545;
+    --rwp-light:#f4f4f4;
+    --rwp-dark:#23282e;
+    --rwp-primary-rgb:34, 113, 177;
+    --rwp-secondary-rgb:10, 75, 120;
+    --rwp-success-rgb:25, 135, 84;
+    --rwp-info-rgb:13, 202, 240;
+    --rwp-warning-rgb:255, 193, 7;
+    --rwp-danger-rgb:220, 53, 69;
+    --rwp-light-rgb:244, 244, 244;
+    --rwp-dark-rgb:35, 40, 46;
+    --rwp-white-rgb:255, 255, 255;
+    --rwp-black-rgb:0, 0, 0;
+    --rwp-body-color-rgb:35, 40, 46;
+    --rwp-body-bg-rgb:255, 255, 255;
+    --rwp-font-sans-serif:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --rwp-font-monospace:"FiraCode Nerd Font Mono", ui-monospace, sfmono-regular, menlo, monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+    --rwp-gradient:linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --rwp-body-font-family:var(--rwp-font-sans-serif);
+    --rwp-body-font-size:16px;
+    --rwp-body-font-size:1rem;
+    --rwp-body-font-weight:400;
+    --rwp-body-line-height:1.5;
+    --rwp-body-color:#23282e;
+    --rwp-body-bg:#fff;
+}
+
+html{
+    --rwp-spacer-hair:0.0417em;
+    --rwp-spacer-fine:0.125em;
+    --rwp-spacer-one-sixth:0.1667em;
+    --rwp-spacer-thin:0.2em;
+    --rwp-spacer-math:0.2222em;
+    --rwp-spacer-default:0.25em;
+    --rwp-spacer-thick:0.2778em;
+    --rwp-spacer-one-third:0.3333em;
+    --rwp-spacer-en:0.5em;
+    --rwp-spacer-em:1em;
+}
+
 .img-fluid{
     max-width:100%;
     height:auto;

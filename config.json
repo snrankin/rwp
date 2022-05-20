@@ -17,8 +17,20 @@
 		"fonts": {
 			"copy": [
 				{
-					"from": "./imgs/*",
-					"to": "imgs/[name][ext][query]"
+					"from": "./fonts/**/*",
+					"to": "fonts"
+				},
+				{
+					"from": "~@fortawesome/fontawesome-free/webfonts/*",
+					"to": "fonts/[name][ext]"
+				},
+				{
+					"from": "~bootstrap-icons/font/fonts/*",
+					"to": "fonts/[name][ext]"
+				},
+				{
+					"from": "~select2/dist/js/i18n/*",
+					"to": "js/i18n/[name][ext]"
 				}
 			],
 			"files": {
@@ -27,6 +39,9 @@
 				},
 				"font-awesome": {
 					"font-awesome": ["vendor/font-awesome.scss"]
+				},
+				"modernizr": {
+					"modernizr": ["js/vendor/.modernizrrc"]
 				}
 			}
 		},
@@ -36,26 +51,49 @@
 					"admin": ["admin.js", "admin.scss"]
 				},
 				"app": {
-					"app": ["app.js"]
+					"app": {
+						"import": ["app.js"],
+						"library": {
+							"name": "rwp",
+							"type": "assign-properties"
+						}
+					}
+				},
+				"modal": {
+					"modal": ["plugins/modal.js", "plugins/modal.scss"]
+				},
+				"slider": {
+					"slider": ["plugins/slider.js", "plugins/slider.scss"]
 				},
 				"public": {
 					"public": ["public.js", "public.scss"]
+				},
+
+				"acf": {
+					"acf": ["vendor/acf.scss"]
+				},
+				"bootstrap": {
+					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
+				},
+				"debug": {
+					"debug": ["vendor/debug.js", "vendor/debug.scss"]
+				},
+				"elementor": {
+					"elementor": ["vendor/elementor.scss"]
+				},
+				"gravity-forms": {
+					"gravity-forms": ["vendor/gravity-forms.scss"]
+				},
+				"lazysizes": {
+					"lazysizes": ["vendor/lazysizes.js", "vendor/lazysizes.scss"]
+				},
+				"select2": {
+					"select2": ["vendor/select2.js", "vendor/select2.scss"]
 				}
 			},
 			"webpack": {
-				"optimization": {
-					"removeAvailableModules": true,
-					"splitChunks": {
-						"chunks": "async"
-					},
-					"usedExports": true
-				},
 				"output": {
-					"chunkLoading": "jsonp",
-					"library": {
-						"name": "rwp",
-						"type": "assign-properties"
-					}
+					"globalObject": "this"
 				}
 			}
 		},
@@ -100,9 +138,6 @@
 				},
 				"lazysizes": {
 					"lazysizes": ["vendor/lazysizes.js", "vendor/lazysizes.scss"]
-				},
-				"modernizr": {
-					"modernizr": ["vendor/modernizr.js"]
 				},
 				"select2": {
 					"select2": ["vendor/select2.js", "vendor/select2.scss"]
