@@ -334,7 +334,7 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 	if ( false !== $order->search( 'text' ) ) {
 		$text_args = data_get( $custom_args, 'navbar.text' );
 		$text_content = data_get( $text_args, 'content' );
-		$text_content = rwp_filtered_content( $text_content );
+		$text_content = do_shortcode( $text_content );
         $navbar_content->set_content( $text_content, 'text' );
     }
 

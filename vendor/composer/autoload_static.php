@@ -145,6 +145,7 @@ class ComposerStaticInit5b3e241b159c80f74a97209462e13c75
         'RWP\\Internals\\SVG\\Sanitizer' => __DIR__ . '/../..' . '/includes/internals/SVG/Sanitizer.php',
         'RWP\\Internals\\SVG\\Tags' => __DIR__ . '/../..' . '/includes/internals/SVG/Tags.php',
         'RWP\\Internals\\SVGs' => __DIR__ . '/../..' . '/includes/internals/SVGs.php',
+        'RWP\\Internals\\Shortcodes\\Button' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Button.php',
         'RWP\\Internals\\Shortcodes\\Copyright' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Copyright.php',
         'RWP\\Internals\\Shortcodes\\Location' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Location.php',
         'RWP\\Internals\\Shortcodes\\SiblingGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SiblingGrid.php',
