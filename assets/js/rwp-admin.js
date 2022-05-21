@@ -123,8 +123,6 @@
                     key: "fire",
                     value: function fire(routeName) {
                         var eventType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "init";
-                        console.log("🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ eventType", eventType);
-                        console.log("🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ routeName", routeName);
                         document.dispatchEvent(new CustomEvent("routed", {
                             bubbles: true,
                             detail: {
@@ -154,7 +152,6 @@
                     value: function loadEvents() {
                         var _this = this;
                         var pageClasses = document.body.className.toLowerCase().replace(/-/g, "_").split(/\s+/).map(camelCase);
-                        console.log("🚀 ~ file: Router.js ~ line 109 ~ Router ~ loadEvents ~ pageClasses", pageClasses);
                         this.fire("common");
                         Object.keys(this.routes).forEach((function(route) {
                             if (pageClasses.includes(route) && route !== "common") {
