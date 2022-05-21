@@ -3142,7 +3142,6 @@
                 slides = slides.filter((function(slide) {
                     return !slide.classList.contains("tns-slide-cloned");
                 }));
-                console.log("🚀 ~ file: slider.js ~ line 82 ~ slides", slides);
                 var navContainer = elem.navContainer;
                 var standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains("tns-nav");
                 if (standardNavContainer) {

@@ -64,8 +64,6 @@ class Router {
 	 * @param {string} [arg]   Any custom argument to be passed to the event.
 	 */
 	fire(routeName, eventType = 'init', ...args) {
-		console.log('🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ eventType', eventType);
-		console.log('🚀 ~ file: Router.js ~ line 67 ~ Router ~ fire ~ routeName', routeName);
 		document.dispatchEvent(
 			new CustomEvent('routed', {
 				bubbles: true,
@@ -106,7 +104,6 @@ class Router {
 	 */
 	loadEvents() {
 		const pageClasses = document.body.className.toLowerCase().replace(/-/g, '_').split(/\s+/).map(camelCase);
-		console.log('🚀 ~ file: Router.js ~ line 109 ~ Router ~ loadEvents ~ pageClasses', pageClasses);
 
 		// Fire common init JS
 		this.fire('common');

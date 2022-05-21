@@ -88,7 +88,6 @@ function createNav(elem, hasThumbnails) {
 		slides = slides.filter(function (slide) {
 			return !slide.classList.contains('tns-slide-cloned');
 		});
-		console.log('🚀 ~ file: slider.js ~ line 82 ~ slides', slides);
 
 		let navContainer = elem.navContainer;
 		let standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains('tns-nav'); // Make sure a custom nav container isn't specified
