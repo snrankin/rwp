@@ -25,6 +25,7 @@ class Location extends Shortcode {
 		'class'     => '',
 		'add_label' => false,
 		'combine'   => false,
+		'add_links' => true,
 	);
 
 	/**
@@ -69,11 +70,9 @@ class Location extends Shortcode {
 		}
 		unset( $args ['combine'] );
 
-		if ( ! empty( $location ) ) {
-			$location = rwp_location( $location, $args );
+		$location = rwp_location( $location, $args );
 			$location = $location->html();
 			$output  = $location;
-		}
 
 		return $output;
 	}
