@@ -45,7 +45,7 @@ class Location extends Element {
 	 * @var array $order Array that sets the order of the child nodes
 	 */
 
-	public $order = array( 'title', 'address', 'phone', 'email', 'schedule' );
+	public $order = array( 'title', 'address', 'phone', 'fax', 'email', 'schedule' );
 
 	/**
 	 * @var array|string|Element $title The header content wrapper
@@ -61,7 +61,7 @@ class Location extends Element {
 	);
 
 	/**
-	 * @var array|string|Element $address The image content wrapper
+	 * @var array|string|Element $address The location address
 	 */
 	public $address = array(
 		'tag' => 'address',
@@ -76,13 +76,11 @@ class Location extends Element {
 			'class' => array(
 				'location-address',
 			),
-			'itemscope' => '',
-			'itemtype' => 'http://schema.org/PostalAddress',
 		),
 	);
 
 	/**
-	 * @var array|string|Element $phone The image content wrapper
+	 * @var array|string|Element $phone The location phone
 	 */
 	public $phone = array(
 		'tag' => 'a',
@@ -94,7 +92,19 @@ class Location extends Element {
 	);
 
 	/**
-	 * @var array|string|Element $email The image content wrapper
+	 * @var array|string|Element $fax The location fax
+	 */
+	public $fax = array(
+		'tag' => 'span',
+		'atts' => array(
+			'class' => array(
+				'location-fax',
+			),
+		),
+	);
+
+	/**
+	 * @var array|string|Element $email The location email
 	 */
 	public $email = array(
 		'tag' => 'a',
@@ -106,7 +116,7 @@ class Location extends Element {
 	);
 
 	/**
-	 * @var array|string|Element $schedule The image content wrapper
+	 * @var array|string|Element $schedule The location hours of operation
 	 */
 	public $schedule = array(
 		'tag' => 'div',
@@ -139,8 +149,16 @@ class Location extends Element {
 	 */
 	public $time_format = 'g:i a';
 
+	/**
+	 * Whether to add links to items or not
+	 *
+	 * @var bool
+	 */
+	public $add_links = true;
 
-	public function __construct( $location, $args = [] ) {
+
+
+	public function __construct( $location = null, $args = [] ) {
 
 		parent::__construct( $args );
 
@@ -149,9 +167,9 @@ class Location extends Element {
 			if ( in_array( 'title', $order ) ) {
 				$order = preg_replace( '/title/', 'label', $order );
 			}
-
-			$this->location = self::get_location_info( $location );
 		}
+
+		$this->location = self::get_location_info( $location );
 
 		$this->day_separator = apply_filters( 'rwp_schedules_day_separator', $this->day_separator );
 		$this->time_separator = apply_filters( 'rwp_schedules_time_separator', $this->time_separator );
@@ -198,6 +216,9 @@ class Location extends Element {
 				case 'phone':
 					$this->set_phone();
 					break;
+				case 'fax':
+					$this->set_fax();
+					break;
 				case 'email':
 					$this->set_email();
 					break;
@@ -218,16 +239,26 @@ class Location extends Element {
 	 * @return Collection
 	 */
 	public static function get_location_info( $location = '', $info_parts = array() ) {
-		/**
-		 * @var Collection $locations
-		 */
-		$locations = rwp_get_option( 'locations' );
 
 		$info = rwp_collection();
 
-		if ( ! empty( $location ) ) {
+		if ( rwp_is_collection( $location ) ) {
+			$info = $location;
+		} else {
+			/**
+				 * @var Collection $locations
+				 */
+				$locations = rwp_get_option( 'locations', rwp_collection() );
+			if ( ! empty( $location ) ) {
 
-			$info = $locations->get( $location );
+				$info = $locations->get( $location );
+
+			} else if ( $locations->isNotEmpty() ) {
+				$info = $locations->firstWhere( 'main_location', '==', true );
+				if ( empty( $info ) || $info->isEmpty() ) {
+					$info = $locations->first();
+				}
+			}
 		}
 
 		if ( $info->isNotEmpty() ) {
@@ -259,7 +290,7 @@ class Location extends Element {
 			$this->title = new Element( $defaults );
 		}
 
-		$this->title->set_content( $title, 0 );
+		$this->title->set_content( $title );
 
 	}
 
@@ -392,12 +423,50 @@ class Location extends Element {
 		$line_1 = $line_1->html();
 		$line_2 = $line_2->html();
 
-		$this->address->set_content( $line_1, 'line_1' );
+		if ( $this->add_links ) {
+			$url = $this->map_link( $this->location );
+			$content = wp_sprintf( '<a href="%s" target="_blank" title="Open location on Google Maps">%s</a>', $url, $line_1 . $line_2 );
 
-		$this->address->set_content( $line_2, 'line_2' );
+			$this->address->set_content( $content );
+		} else {
+			$this->address->set_content( $line_1, 'line_1' );
 
-		$this->address->set_order( 'line_1', 0 );
-		$this->address->set_order( 'line_2', 1 );
+			$this->address->set_content( $line_2, 'line_2' );
+
+			$this->address->set_order( 'line_1', 0 );
+			$this->address->set_order( 'line_2', 1 );
+		}
+
+	}
+
+	/**
+	 * Get the address url
+	 * @param string $location
+	 * @return mixed
+	 */
+	public function map_link( $location = '' ) {
+
+		$address_info = self::get_location_info( $location, array( 'address', 'map_url' ) );
+
+		$url = false;
+
+		$address = $address_info->get( 'address' );
+
+		if ( $address_info->isNotEmpty() ) {
+			$url = data_get( $address_info, 'map_url.url' );
+
+			if ( blank( $url ) && filled( $address ) ) {
+				$address = $address->get( 'address' );
+
+				if ( filled( $address ) ) {
+
+					$url = add_query_arg( 'q', urlencode( $address ), 'https://google.com/maps' );
+
+				}
+			}
+		}
+
+		return $url;
 
 	}
 
@@ -422,17 +491,46 @@ class Location extends Element {
 			$this->phone = new Element( $defaults );
 		}
 
-		$this->phone->set_content( $phone, 0 );
+		$this->phone->set_content( $phone );
 
-		if ( 'a' === $this->phone->tag ) {
+		if ( $this->add_links ) {
+			$this->phone->set_tag( 'a' );
 			$link = rwp_output_href( $phone );
 			$this->phone->set_attr( 'href', $link );
-			$title = wp_sprintf( 'Call %s at %s', get_bloginfo( 'name' ), $phone );
+			$title = wp_sprintf( 'Call %s at %s', rwp_company_name(), $phone );
 			$title = apply_filters( 'rwp_phone_link_title', $title, $label );
 			$this->phone->set_attr( 'title', $title );
+		} else {
+			$this->phone->set_tag( 'span' );
 		}
 
 	}
+
+	/**
+	 * Add a fax
+	 * @param string $fax
+	 * @param mixed $args
+	 * @return void
+	 */
+	public function set_fax( $fax = '', $args = array() ) {
+
+		if ( empty( $fax ) ) {
+			$fax = $this->location->get( 'fax' );
+		}
+
+		$label = $this->location->get( 'label' );
+
+		if ( is_array( $args ) && ! empty( $args ) ) {
+			$defaults = $this->fax->toArray();
+			$defaults = rwp_merge_args( $defaults, $args );
+
+			$this->fax = new Element( $defaults );
+		}
+
+		$this->fax->set_content( $fax, 0 );
+
+	}
+
 
 	/**
 	 * Add a email
@@ -457,12 +555,15 @@ class Location extends Element {
 
 		$this->email->set_content( $email, 0 );
 
-		if ( 'a' === $this->email->tag ) {
+		if ( $this->add_links ) {
+			$this->email->set_tag( 'a' );
 			$link = rwp_output_href( $email );
 			$this->email->set_attr( 'href', $link );
-			$title = wp_sprintf( 'Email %s at %s', get_bloginfo( 'name' ), $email );
+			$title = wp_sprintf( 'Email %s at %s', rwp_company_name(), $email );
 			$title = apply_filters( 'rwp_email_link_title', $title, $label );
 			$this->email->set_attr( 'title', $title );
+		} else {
+			$this->email->set_tag( 'span' );
 		}
 
 	}
@@ -561,6 +662,8 @@ class Location extends Element {
 		 */
 		$schedules = $this->get( 'hours' );
 		if ( ! rwp_is_collection( $schedules ) || $schedules->isEmpty() ) {
+			$this->remove_order_item( 'schedule' );
+
 			return;
 		}
 
@@ -750,9 +853,6 @@ class Location extends Element {
 
 		$time_output->set_content( $time_block );
 	}
-
-
-
 
 	public function setup_html() {
 

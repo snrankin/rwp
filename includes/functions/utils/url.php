@@ -68,8 +68,8 @@ function rwp_is_outbound_link( $link ) {
 
 	$is_url = rwp_is_url( $link );
 	$is_relative = rwp_is_relative_url( $link );
-	$is_email = rwp_is_email( $link );
-	$is_phone = rwp_is_phone_number( $link );
+	$is_email = rwp_is_email( $link ) || rwp_str_starts_with( $link, 'mailto' ) ? true : false;
+	$is_phone = rwp_is_phone_number( $link ) || rwp_str_starts_with( $link, 'tel' ) ? true : false;
 
 	if ( $is_url && ! $is_relative && ! $is_email && ! $is_phone ) {
 		$home = wp_parse_url( network_home_url(), PHP_URL_HOST );

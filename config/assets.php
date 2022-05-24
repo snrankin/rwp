@@ -114,11 +114,16 @@ if((defined('WP_DEBUG') && true === WP_DEBUG) || is_plugin_active('query-monitor
 		'location' => 'global',
 		'handle'   => 'debug',
 		'deps'     => ['jquery'],
-        'footer'   => true,
+        'footer'   => false,
     );
     $rwp_plugin_assets['styles'][ 'debug'] = array(
 		'location' => 'global',
 		'handle'   => 'debug'
+    );
+	 $rwp_plugin_assets['styles']['debug_font'] = array(
+		'location' => 'global',
+		'src'      => 'https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css',
+		'handle'   => 'debug-font'
     );
 }
 

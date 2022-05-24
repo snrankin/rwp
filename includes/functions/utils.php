@@ -26,5 +26,6 @@ if ( function_exists( 'rwp_get_plugin_file' ) ) {
 		'menu.php',
 		'rest.php',
 		'theme.php',
+		'company.php',
 	), 'includes/functions/utils/', true, true);
 }
