@@ -132,6 +132,12 @@ class Locations extends Organization {
 			$data['email'] = $email;
 		}
 
+		$fax = data_get( $location, 'fax' );
+
+		if ( ! empty( $fax ) ) {
+			$data['faxNumber'] = $fax;
+		}
+
 		/**
 		 * @var Collection $schedules
 		 */

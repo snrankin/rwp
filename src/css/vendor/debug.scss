@@ -5,11 +5,11 @@
 /// @since  1.0.1
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
-@import '../global';
+@import '../global/index';
 
 #query-monitor-main.qm-theme-rwp {
 	pre {
-		font-family: $font-family-monospace !important;
+		font-family: getcssvar(font-monospace) !important;
 		@include font-size($code-font-size !important);
 		color: $pre-color !important;
 		code {
@@ -36,6 +36,7 @@ pre.sf-dump {
 	white-space: pre;
 	padding: 5px;
 	overflow: initial !important;
+	font-family: getcssvar(font-monospace) !important;
 }
 pre.sf-dump:after {
 	content: '';
@@ -161,7 +162,7 @@ pre.sf-dump .sf-dump-default {
 	color: #ff8400;
 	line-height: 1.2em;
 	font-size: 1em;
-	font-family: getcssvar('font-monospace');
+	font-family: getcssvar(font-monospace) !important;
 	word-wrap: break-word;
 	white-space: pre-wrap;
 	position: relative;

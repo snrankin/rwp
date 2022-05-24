@@ -147,7 +147,7 @@ function rwp_modal( $args = array() ) {
 	return new RWP\Components\Modal( $args );
 }
 
-function rwp_location( $location, $args = [] ) {
+function rwp_location( $location = null, $args = [] ) {
 	return new RWP\Components\Location( $location, $args );
 }
 
