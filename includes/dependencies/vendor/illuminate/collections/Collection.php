@@ -450,7 +450,7 @@ class Collection implements \ArrayAccess, CanBeEscapedWhenCastToString, Enumerab
     public function implode($value, $glue = null)
     {
         $first = $this->first();
-        if (\is_array($first) || \is_object($first) && !$first instanceof Stringable) {
+        if (\is_array($first) || \is_object($first) ) {
             return \implode($glue ?? '', $this->pluck($value)->all());
         }
         return \implode($value ?? '', $this->items);

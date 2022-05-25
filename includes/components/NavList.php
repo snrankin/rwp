@@ -100,15 +100,6 @@ class NavList extends HtmlList {
 		}
 
 		$this->set_attr( 'aria-orientation', $direction, true );
-
-		switch ( $direction ) {
-			case 'vertical':
-				$this->add_class( 'flex-column' );
-				break;
-			default:
-				$this->remove_class( 'flex-column' );
-				break;
-		}
 	}
 
 	public function setup_html() {
