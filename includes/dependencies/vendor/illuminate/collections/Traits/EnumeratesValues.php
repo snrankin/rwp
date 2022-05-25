@@ -773,7 +773,8 @@ trait EnumeratesValues
      */
     public function __toString()
     {
-        return $this->escapeWhenCastingToString ? e($this->toJson()) : $this->toJson();
+
+        return $this->escapeWhenCastingToString ? htmlspecialchars($this->toJson() ?? '', ENT_QUOTES, 'UTF-8', true) : $this->toJson();
     }
     /**
      * Indicate that the model's string representation should be escaped when __toString is invoked.

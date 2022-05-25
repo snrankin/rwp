@@ -60,32 +60,32 @@ function rwp_menu_args( $args = [] ) {
 	$menu_id = data_get( $menu, 'term_id' );
 
     // Set up the default WordPress nav arguments
-    $wp_defaults = rwp_collection(
-        array(
-			'menu'                 => '',
-			'container'            => 'nav',
-			'container_class'      => '',
-			'container_id'         => '',
-			'container_aria_label' => '',
-			'menu_class'           => 'menu',
-			'menu_id'              => '',
-			'echo'                 => true,
-			'fallback_cb'          => 'wp_page_menu',
-			'before'               => '',
-			'after'                => '',
-			'link_before'          => '',
-			'link_after'           => '',
-			'items_wrap'           => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-			'item_spacing'         => 'preserve',
-			'depth'                => 0,
-			'walker'               => '',
-			'theme_location'       => '',
-			'item_options'         => rwp_collection(), // Custom argument but needed in Walker
-        )
-    );
+    $wp_defaults = rwp_collection(array(
+		'menu'                 => '',
+		'container'            => 'nav',
+		'container_class'      => '',
+		'container_id'         => '',
+		'container_aria_label' => '',
+		'menu_class'           => 'menu',
+		'menu_id'              => '',
+		'echo'                 => true,
+		'fallback_cb'          => 'wp_page_menu',
+		'before'               => '',
+		'after'                => '',
+		'link_before'          => '',
+		'link_after'           => '',
+		'items_wrap'           => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'item_spacing'         => 'preserve',
+		'depth'                => 0,
+		'walker'               => '',
+		'theme_location'       => '',
+		'item_options'         => rwp_collection(), // Custom argument but needed in Walker
+	));
 
     // Get the custom ACF fields for the menu term
     $menu_fields = rwp_get_field( 'nav_options', $menu, array() );
+
+	rwp_log( $menu_fields );
 
     if ( ! empty( $menu_fields ) ) {
         $args = $args->merge( $menu_fields );
@@ -107,26 +107,29 @@ function rwp_menu_args( $args = [] ) {
     $args = rwp_collection_remove_empty_items( $defaults );
 
     // Merge the menu classes from the ACF fields with classes set in the $args variable
-    $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ) );
-
-	$menu_class[] = 'nav';
-
-    // Merge the container classes from the ACF fields with classes set in the
-    // $args variable
-    $container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
-
-	if ( false !== $menu ) {
-		$container_class[] = 'menu-' . $menu->slug;
-	}
-
-    // Set the container ID to the incoming arguments or set placeholder string
-    $container_id = data_get( $args, 'container_id', '%1$s-wrapper' );
-
-    // Set the container label to the incoming arguments or set it as tthe menu name
-    $container_label = data_get( $args, 'container_aria_label', data_get( $menu, 'name' ) );
+    $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
 
 	$direction = data_get( $custom_args, 'direction', 'vertical' );
 	$type = data_get( $custom_args, 'type', 'nav' );
+
+	$container = data_get( $args, 'container', 'nav' );
+
+	if ( ! empty( $container ) ) {
+		 // Merge the container classes from the ACF fields with classes set in the
+		// $args variable
+		$container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
+
+		if ( false !== $menu ) {
+			$container_class[] = 'menu-' . $menu->slug;
+		}
+
+		// Set the container ID to the incoming arguments or set placeholder string
+		$container_id = data_get( $args, 'container_id', '%1$s-wrapper' );
+
+		// Set the container label to the incoming arguments or set it as the menu name
+		$container_label = data_get( $args, 'container_aria_label', data_get( $menu, 'name' ) );
+
+	}
 
     // Build the arguments array for the Nav class
     $new_args = array(
@@ -334,12 +337,12 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 	if ( false !== $order->search( 'text' ) ) {
 		$text_args = data_get( $custom_args, 'navbar.text' );
 		$text_content = data_get( $text_args, 'content' );
-		$text_content = do_shortcode( $text_content );
+
         $navbar_content->set_content( $text_content, 'text' );
     }
 
 	$nav->list->remove_class( 'nav' );
-	$nav->list->add_class( 'navbar-nav' );
+	$nav->list->add_class( 'navbar-nav', false );
 
     if ( $in_grid_content ) {
         $navbar_content->add_class( 'container' );
