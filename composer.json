@@ -1,9 +1,8 @@
 {
     "name": "rwp/plugin",
-    "type": "wordpress-plugin",
     "description": "Wordpress Plugin Boilerplate with steroids!",
-    "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
     "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
     "authors": [
         {
             "name": "RIESTER Advertising Agency",
@@ -11,6 +10,7 @@
             "homepage": "https://www.riester.com"
         }
     ],
+    "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
     "require-dev": {
         "php": "^7.4",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
@@ -19,17 +19,10 @@
         "php-stubs/acf-pro-stubs": "^5.9",
         "php-stubs/wordpress-seo-stubs": "^17.2",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "phpro/grumphp-shim": "^1.5",
         "szepeviktor/phpstan-wordpress": "^0.7.5"
     },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true,
-            "phpro/grumphp-shim": true
-        }
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "RWP\\Assets\\": "includes/assets/",
@@ -41,8 +34,13 @@
             "RWP\\Internals\\": "includes/internals/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
+        "sort-packages": true
+    },
     "scripts": {
         "post-install-cmd": [
             "@composer normalize",
@@ -79,7 +77,7 @@
             "@composer dump-autoload --working-dir includes/dependencies -o --no-dev"
         ],
         "grum": [
-            "./vendor/bin/grumphp run --tasks=git_blacklist"
+            "grum git:pre-commit"
         ],
         "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"

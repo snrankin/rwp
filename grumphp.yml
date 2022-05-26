@@ -3,45 +3,44 @@ grumphp:
   fixer:
     enabled: true
     fix_by_default: true
+  parallel:
+    enabled: true
+    max_workers: 32
+  environment:
+    paths:
+      - node_modules/.bin
   tasks:
-    # git_blacklist:
-    #   keywords:
-    #     - "die\\("
-    #     - "var_dump\\("
-    #     - "exit;"
-    #     - "rwp_log\\("
-    #     - "\\sray\\("
-    #   whitelist_patterns:
-    #     - /^src\/FolderA\/(.*)/
-    #     - /^includes\/functions\/utils\/debug.php/
-    #   triggered_by: ['php']
-    #   regexp_type: G
-    #   match_word: true
-    phpcs:
-      report: full
-      report_width: ~
+    # codeception: ~
+    composer: ~
+    composer_normalize: ~
+    eslint:
+      bin: node_modules/.bin/eslint
+      triggered_by: [js, jsx, ts, tsx, vue]
       whitelist_patterns:
         - /^tests\/(.*)/
         - /^vendor\/(.*)/
         - /^dependencies\/(.*)/
-      ignore_patterns:
-        - tests/
-        - vendor/
-        - dependencies/
-      encoding: ~
-      standard: ~
-      sniffs: []
-      triggered_by: ['php']
-      exclude: []
-    # phpstan:
-    #   autoload_file: ~
-    #   configuration: './phpstan.neon'
-    #   level: null
-    #   use_grumphp_paths: false
-    #   force_patterns: []
-    #   ignore_patterns:
-    #     - /^tests\/(.*)/
-    #     - /^vendor\/(.*)/
-    #     - /^dependencies\/(.*)/
-    #   triggered_by: ['php']
-    #   memory_limit: '-1'
+        - /^node_modules\/(.*)/
+        - /^assets\/(.*)/
+      config: .eslintrc.js
+    git_blacklist:
+      keywords:
+        - "die\\("
+        - "var_dump\\("
+        - "rwp_log\\("
+        - "ray\\("
+      whitelist_patterns:
+        - /^includes\/dependencies\/(.*)/
+        - /^vendor\/(.*)/
+        - /^tests\/(.*)/
+        - /^includes\/functions\/utils\/debug.php/
+      match_word: true
+    # phpcs: ~
+    # phpcsfixer: ~
+    # phpstan: ~
+    stylelint:
+      bin: node_modules/.bin/stylelint
+      triggered_by: [scss]
+      config: .stylelintrc.js
+      ignore_path: .stylelintignore
+      quiet: true

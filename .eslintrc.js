@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
 	extends: ['eslint:recommended', 'prettier'],
-	ignorePatterns: ['assets/js/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
+	ignorePatterns: ['assets/js/**/*.js', 'src/blocks/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
 	parser: '@babel/eslint-parser',
 	globals: {
 		rwp: true,
