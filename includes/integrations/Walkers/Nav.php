@@ -441,6 +441,12 @@ class Nav extends \Walker_Nav_Menu {
 			$indent = '';
 		}
 
+		$item_options = $this->item_options;
+
+		if ( rwp_is_collection( $item_options ) ) {
+			$item_options = $item_options->all();
+		}
+
 		$classes = apply_filters( 'nav_menu_submenu_css_class', array(), $args, $depth ); // phpcs:ignore
 		$id = $this->sub_menu_id;
 
@@ -451,13 +457,13 @@ class Nav extends \Walker_Nav_Menu {
 
 		$menu_depth = $depth + 1;
 
-		$this->parent_options = $this->item_options;
+		$this->parent_options = $item_options;
 
 		$output .= $n . $indent;
 		$sub_menu_args = array(
 			'depth'  => $menu_depth,
 			'parent' => $this->parent,
-			'toggle_type' => data_get( $this->item_options, 'toggle_type', 'collapse' ),
+			'toggle_type' => data_get( $item_options, 'toggle_type', 'collapse' ),
 			'has_wrapper' => false,
 			'atts'   => array(
 				'id'    => $id,

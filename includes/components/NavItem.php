@@ -130,10 +130,6 @@ class NavItem extends Element {
 			$args = data_set( $args, 'toggle.toggle', $toggle_type );
 		}
 
-		if ( $depth > 0 ) {
-			$test = true;
-		}
-
 		parent::__construct( $args );
 
 		$url = $this->link->get_attr( 'href' );
@@ -179,6 +175,9 @@ class NavItem extends Element {
 			switch ( $this->toggle_type ) {
 				case 'dropdown':
 					$this->add_class( 'dropdown' );
+					if ( $this->depth >= 1 ) {
+						$this->add_class( 'dropend' );
+					}
 				    break;
 				case 'tab':
 				case 'pill':
