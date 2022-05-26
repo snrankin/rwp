@@ -78,7 +78,7 @@ class PostCard extends Card {
 
 		$this->post_type = $post_type;
 
-		$post_type = rwp()->unprefix( $post_type ); // Remove rwp_ to prevent double rwp_rwp_ below
+		$post_type = rwp_remove_prefix( $post_type, 'rwp_' ); // Remove rwp_ to prevent double rwp_rwp_ below
 
 		$defaults = apply_filters( "rwp_{$post_type}_card_defaults", $defaults, $post );
 

@@ -87,8 +87,6 @@ function rwp_menu_args( $args = [] ) {
     // Get the custom ACF fields for the menu term
     $menu_fields = rwp_get_field( 'nav_options', $menu, array() );
 
-	rwp_log( $menu_fields );
-
     if ( ! empty( $menu_fields ) ) {
         $args = $args->merge( $menu_fields );
     }
