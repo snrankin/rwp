@@ -107,37 +107,27 @@ class NavList extends HtmlList {
 		if ( ! $this->has_wrapper ) {
 			switch ( $this->toggle_type ) {
 				case 'dropdown':
-					if ( $this->nested_type_depth === $this->depth ) {
+					if ( 0 < $this->depth ) {
 						$this->add_class( 'dropdown-menu' );
-						$this->remove_class( 'nav' );
-					} elseif ( $this->nested_type_depth < $this->depth ) {
-						if ( 'collapse' === $this->nested_type ) {
-							$this->add_class( 'collapse' );
-						}
+						$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
 					}
-                    break;
+				    break;
 				case 'tab':
-					if ( $this->nested_type_depth === $this->depth ) {
+					if ( 0 == $this->depth ) {
 						$this->add_class( array( 'tab-pane', 'fade' ) );
 						$this->set_attr( 'role', 'tabpanel' );
-					} elseif ( $this->nested_type_depth < $this->depth ) {
-						if ( 'collapse' === $this->nested_type ) {
-							$this->add_class( 'collapse' );
-						}
 					}
-                    break;
+				    break;
 				case 'collapse':
-					if ( $this->depth > 0 ) {
+					if ( 0 < $this->depth ) {
 						$this->add_class( 'collapse' );
+						$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
 					}
-                    break;
+				    break;
 			}
 
 			if ( 0 < $this->depth ) {
 				$this->add_class( array( 'sub-nav', 'level-' . ( $this->depth ) . '-menu' ) );
-				if ( ! empty( $this->toggle_type ) ) {
-					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-				}
 			}
 		}
 

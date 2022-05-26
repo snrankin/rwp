@@ -97,13 +97,11 @@ class Nav extends Element {
 
 	public function __construct( $args = array() ) {
 
-		$direction = data_get( $args, 'direction', $this->direction );
+		$list = data_get( $args, 'list' );
 
-		$args = data_set( $args, 'list.direction', $direction );
+		$list_args = rwp_collection( $args )->only( array( 'direction', 'toggle_type', 'depth', 'type', 'parent', 'toggle' ) );
 
-		$type = data_get( $args, 'type', $this->type );
-
-		$args = data_set( $args, 'list.type', $type );
+		$args['list'] = $list_args->merge( $list )->all();
 
 		parent::__construct( $args );
 
@@ -113,36 +111,27 @@ class Nav extends Element {
 
 		switch ( $this->toggle_type ) {
 			case 'dropdown':
-				if ( $this->nested_type_depth === $this->depth ) {
+				if ( 0 < $this->depth ) {
 					$this->add_class( 'dropdown-menu' );
-				} elseif ( $this->nested_type_depth < $this->depth ) {
-					if ( 'collapse' === $this->nested_type ) {
-						$this->add_class( 'collapse' );
-					}
+					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
 				}
 				break;
 			case 'tab':
-				if ( $this->nested_type_depth === $this->depth ) {
+				if ( 0 == $this->depth ) {
 					$this->add_class( array( 'tab-pane', 'fade' ) );
 					$this->set_attr( 'role', 'tabpanel' );
-				} elseif ( $this->nested_type_depth < $this->depth ) {
-					if ( 'collapse' === $this->nested_type ) {
-						$this->add_class( 'collapse' );
-					}
 				}
 				break;
 			case 'collapse':
-				if ( $this->depth > 0 ) {
+				if ( 0 < $this->depth ) {
 					$this->add_class( 'collapse' );
+					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
 				}
 				break;
 		}
 
 		if ( 0 < $this->depth ) {
 			$this->add_class( array( 'sub-nav', 'level-' . ( $this->depth ) . '-menu' ) );
-			if ( ! empty( $this->toggle_type ) ) {
-				$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-			}
 		}
 
 	}

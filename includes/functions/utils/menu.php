@@ -82,6 +82,8 @@ function rwp_menu_args( $args = [] ) {
 		'item_options'         => rwp_collection(), // Custom argument but needed in Walker
 	));
 
+	$item_options = data_get( $args, 'item_options', rwp_collection() );
+
     // Get the custom ACF fields for the menu term
     $menu_fields = rwp_get_field( 'nav_options', $menu, array() );
 
@@ -203,6 +205,8 @@ function rwp_menu_args( $args = [] ) {
         }
     }
 
+	$item_options->put( 'toggle_type', data_get( $custom_args, 'toggle_type' ) );
+
     /**
      * Setup arguments in the defaults collection
      *
@@ -214,6 +218,8 @@ function rwp_menu_args( $args = [] ) {
     $defaults->put( 'container_id', '' );
     $defaults->put( 'container', '' );
     $defaults->put( 'items_wrap', $items_wrap );
+
+	$defaults->put( 'item_options', $item_options );
 
 	if ( rwp_get_option( 'modules.bootstrap.nav_menus', false ) ) {
 		$walker = new \RWP\Integrations\Walkers\Nav( $defaults->all() );
@@ -350,31 +356,31 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
         $navbar_content->add_class( 'container-fluid' );
     }
 
-    $navbar_wrapper = rwp_element( array(
-		'tag' => 'div',
-		'atts' => array(
-			'class' => array(
-				'navbar-wrapper',
-			),
-		),
-	) );
-
 	if ( ! empty( $item_styles ) ) {
 		$styles = rwp_output_styles( $item_styles );
 
-		$navbar_wrapper->set_content( '<style> .navbar-' . $menu_slug . ' .nav-item::before {' . $styles . ' }</style>' );
+		$nav->set_content( '<style> .navbar-' . $menu_slug . ' .nav-item::before {' . $styles . ' }</style>', 'styles' );
 
 	}
-
-    if ( $in_grid ) {
-        $navbar_wrapper->add_class( 'container' );
-    }
 
     $navbar_content->set_content( $nav, 'navbar' );
 
     $navbar->set_content( $navbar_content );
 
-    $navbar_wrapper->set_content( $navbar );
+    if ( $in_grid ) {
+		$navbar_wrapper = rwp_element( array(
+			'tag' => 'div',
+			'atts' => array(
+				'class' => array(
+					'navbar-wrapper container',
+				),
+			),
+		) );
 
-    return $navbar_wrapper;
+		$navbar_wrapper->set_content( $navbar );
+
+		$navbar = $navbar_wrapper;
+	}
+
+    return $navbar;
 }
