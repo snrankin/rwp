@@ -11,11 +11,23 @@
 
 namespace RWP\Engine\Abstracts;
 
+use RWP\Integrations\QM;
+
 if ( ! \defined( 'ABSPATH' ) ) {
 	die( 'FU!' );
 }
 
 abstract class Collector extends \QM_Collector {
+
+	/**
+	 * @var string
+	 */
+	public $title;
+
+	/**
+	 * @var QM
+	 */
+	public $parent;
 
 	public function __construct( \RWP\Integrations\QM $parent, $id = '' ) {
 		$prefix = rwp()->get( 'namespace' );

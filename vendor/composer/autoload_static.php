@@ -4,34 +4,9 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5b3e241b159c80f74a97209462e13c75
+class ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69
 {
-    public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
-        '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'V' => 
-        array (
-            'VariableAnalysis\\' => 17,
-        ),
-        'S' => 
-        array (
-            'SzepeViktor\\PHPStan\\WordPress\\' => 30,
-            'Symfony\\Polyfill\\Php80\\' => 23,
-            'Symfony\\Polyfill\\Php73\\' => 23,
-            'Symfony\\Polyfill\\Ctype\\' => 23,
-            'Symfony\\Component\\Filesystem\\' => 29,
-            'Symfony\\Component\\DependencyInjection\\' => 38,
-            'Symfony\\Component\\Config\\' => 25,
-        ),
         'R' => 
         array (
             'RWP\\Internals\\' => 14,
@@ -42,73 +17,9 @@ class ComposerStaticInit5b3e241b159c80f74a97209462e13c75
             'RWP\\Backend\\' => 12,
             'RWP\\Assets\\' => 11,
         ),
-        'P' => 
-        array (
-            'Psr\\Log\\' => 8,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
-            'Psr\\Container\\' => 14,
-        ),
-        'L' => 
-        array (
-            'League\\OAuth2\\Client\\' => 21,
-        ),
-        'J' => 
-        array (
-            'JsonSchema\\' => 11,
-        ),
-        'G' => 
-        array (
-            'GuzzleHttp\\Psr7\\' => 16,
-            'GuzzleHttp\\Promise\\' => 19,
-            'GuzzleHttp\\' => 11,
-        ),
-        'E' => 
-        array (
-            'Ergebnis\\Json\\SchemaValidator\\' => 30,
-            'Ergebnis\\Json\\Printer\\' => 22,
-            'Ergebnis\\Json\\Normalizer\\' => 25,
-            'Ergebnis\\Composer\\Normalize\\' => 28,
-        ),
-        'D' => 
-        array (
-            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'VariableAnalysis\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
-        ),
-        'SzepeViktor\\PHPStan\\WordPress\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src',
-        ),
-        'Symfony\\Polyfill\\Php80\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
-        ),
-        'Symfony\\Polyfill\\Php73\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php73',
-        ),
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
-        'Symfony\\Component\\Filesystem\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/filesystem',
-        ),
-        'Symfony\\Component\\DependencyInjection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/dependency-injection',
-        ),
-        'Symfony\\Component\\Config\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/config',
-        ),
         'RWP\\Internals\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes/internals',
@@ -137,102 +48,120 @@ class ComposerStaticInit5b3e241b159c80f74a97209462e13c75
         array (
             0 => __DIR__ . '/../..' . '/includes/assets',
         ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'League\\OAuth2\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/oauth2-client/src',
-        ),
-        'JsonSchema\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
-        ),
-        'GuzzleHttp\\Psr7\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
-        ),
-        'GuzzleHttp\\Promise\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
-        ),
-        'GuzzleHttp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
-        ),
-        'Ergebnis\\Json\\SchemaValidator\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src',
-        ),
-        'Ergebnis\\Json\\Printer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ergebnis/json-printer/src',
-        ),
-        'Ergebnis\\Json\\Normalizer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ergebnis/json-normalizer/src',
-        ),
-        'Ergebnis\\Composer\\Normalize\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ergebnis/composer-normalize/src',
-        ),
-        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
-        ),
     );
 
     public static $classMap = array (
-        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'IdiormMethodMissingException' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
-        'IdiormResultSet' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
-        'IdiormString' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
-        'IdiormStringException' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
-        'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-        'Localheinz\\Diff\\Chunk' => __DIR__ . '/..' . '/localheinz/diff/src/Chunk.php',
-        'Localheinz\\Diff\\ConfigurationException' => __DIR__ . '/..' . '/localheinz/diff/src/Exception/ConfigurationException.php',
-        'Localheinz\\Diff\\Diff' => __DIR__ . '/..' . '/localheinz/diff/src/Diff.php',
-        'Localheinz\\Diff\\Differ' => __DIR__ . '/..' . '/localheinz/diff/src/Differ.php',
-        'Localheinz\\Diff\\Exception' => __DIR__ . '/..' . '/localheinz/diff/src/Exception/Exception.php',
-        'Localheinz\\Diff\\InvalidArgumentException' => __DIR__ . '/..' . '/localheinz/diff/src/Exception/InvalidArgumentException.php',
-        'Localheinz\\Diff\\Line' => __DIR__ . '/..' . '/localheinz/diff/src/Line.php',
-        'Localheinz\\Diff\\LongestCommonSubsequenceCalculator' => __DIR__ . '/..' . '/localheinz/diff/src/LongestCommonSubsequenceCalculator.php',
-        'Localheinz\\Diff\\MemoryEfficientLongestCommonSubsequenceCalculator' => __DIR__ . '/..' . '/localheinz/diff/src/MemoryEfficientLongestCommonSubsequenceCalculator.php',
-        'Localheinz\\Diff\\Output\\AbstractChunkOutputBuilder' => __DIR__ . '/..' . '/localheinz/diff/src/Output/AbstractChunkOutputBuilder.php',
-        'Localheinz\\Diff\\Output\\DiffOnlyOutputBuilder' => __DIR__ . '/..' . '/localheinz/diff/src/Output/DiffOnlyOutputBuilder.php',
-        'Localheinz\\Diff\\Output\\DiffOutputBuilderInterface' => __DIR__ . '/..' . '/localheinz/diff/src/Output/DiffOutputBuilderInterface.php',
-        'Localheinz\\Diff\\Output\\StrictUnifiedDiffOutputBuilder' => __DIR__ . '/..' . '/localheinz/diff/src/Output/StrictUnifiedDiffOutputBuilder.php',
-        'Localheinz\\Diff\\Output\\UnifiedDiffOutputBuilder' => __DIR__ . '/..' . '/localheinz/diff/src/Output/UnifiedDiffOutputBuilder.php',
-        'Localheinz\\Diff\\Parser' => __DIR__ . '/..' . '/localheinz/diff/src/Parser.php',
-        'Localheinz\\Diff\\TimeEfficientLongestCommonSubsequenceCalculator' => __DIR__ . '/..' . '/localheinz/diff/src/TimeEfficientLongestCommonSubsequenceCalculator.php',
-        'ORM' => __DIR__ . '/..' . '/j4mie/idiorm/idiorm.php',
-        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
-        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
-        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+        'RWP\\Backend\\Enqueue' => __DIR__ . '/../..' . '/includes/backend/Enqueue.php',
+        'RWP\\Backend\\Notices' => __DIR__ . '/../..' . '/includes/backend/Notices.php',
+        'RWP\\Backend\\Settings' => __DIR__ . '/../..' . '/includes/backend/Settings.php',
+        'RWP\\Components\\Button' => __DIR__ . '/../..' . '/includes/components/Button.php',
+        'RWP\\Components\\Card' => __DIR__ . '/../..' . '/includes/components/Card.php',
+        'RWP\\Components\\Collection' => __DIR__ . '/../..' . '/includes/components/Collection.php',
+        'RWP\\Components\\Column' => __DIR__ . '/../..' . '/includes/components/Column.php',
+        'RWP\\Components\\Container' => __DIR__ . '/../..' . '/includes/components/Container.php',
+        'RWP\\Components\\Element' => __DIR__ . '/../..' . '/includes/components/Element.php',
+        'RWP\\Components\\Embed' => __DIR__ . '/../..' . '/includes/components/Embed.php',
+        'RWP\\Components\\Grid' => __DIR__ . '/../..' . '/includes/components/Grid.php',
+        'RWP\\Components\\Group' => __DIR__ . '/../..' . '/includes/components/Group.php',
+        'RWP\\Components\\Html' => __DIR__ . '/../..' . '/includes/components/Html.php',
+        'RWP\\Components\\HtmlList' => __DIR__ . '/../..' . '/includes/components/HtmlList.php',
+        'RWP\\Components\\Icon' => __DIR__ . '/../..' . '/includes/components/Icon.php',
+        'RWP\\Components\\Image' => __DIR__ . '/../..' . '/includes/components/Image.php',
+        'RWP\\Components\\Location' => __DIR__ . '/../..' . '/includes/components/Location.php',
+        'RWP\\Components\\Modal' => __DIR__ . '/../..' . '/includes/components/Modal.php',
+        'RWP\\Components\\Nav' => __DIR__ . '/../..' . '/includes/components/Nav.php',
+        'RWP\\Components\\NavItem' => __DIR__ . '/../..' . '/includes/components/NavItem.php',
+        'RWP\\Components\\NavList' => __DIR__ . '/../..' . '/includes/components/NavList.php',
+        'RWP\\Components\\Pluralizer' => __DIR__ . '/../..' . '/includes/components/Pluralizer.php',
+        'RWP\\Components\\PostCard' => __DIR__ . '/../..' . '/includes/components/PostCard.php',
+        'RWP\\Components\\Row' => __DIR__ . '/../..' . '/includes/components/Row.php',
+        'RWP\\Components\\SVG' => __DIR__ . '/../..' . '/includes/components/SVG.php',
+        'RWP\\Components\\Section' => __DIR__ . '/../..' . '/includes/components/Section.php',
+        'RWP\\Components\\Str' => __DIR__ . '/../..' . '/includes/components/Str.php',
+        'RWP\\Components\\Table' => __DIR__ . '/../..' . '/includes/components/Table.php',
+        'RWP\\Components\\TableCell' => __DIR__ . '/../..' . '/includes/components/TableCell.php',
+        'RWP\\Components\\TableRow' => __DIR__ . '/../..' . '/includes/components/TableRow.php',
+        'RWP\\Components\\TableSection' => __DIR__ . '/../..' . '/includes/components/TableSection.php',
+        'RWP\\Engine\\Abstracts\\Collector' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Collector.php',
+        'RWP\\Engine\\Abstracts\\DebugOutput' => __DIR__ . '/../..' . '/includes/engine/Abstracts/DebugOutput.php',
+        'RWP\\Engine\\Abstracts\\Plugin' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Plugin.php',
+        'RWP\\Engine\\Abstracts\\PostType' => __DIR__ . '/../..' . '/includes/engine/Abstracts/PostType.php',
+        'RWP\\Engine\\Abstracts\\Shortcode' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Shortcode.php',
+        'RWP\\Engine\\Abstracts\\Singleton' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Singleton.php',
+        'RWP\\Engine\\Abstracts\\Taxonomy' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Taxonomy.php',
+        'RWP\\Engine\\Abstracts\\Widget' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Widget.php',
+        'RWP\\Engine\\Base' => __DIR__ . '/../..' . '/includes/engine/Base.php',
+        'RWP\\Engine\\Initialize' => __DIR__ . '/../..' . '/includes/engine/Initialize.php',
+        'RWP\\Engine\\Interfaces\\Component' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Component.php',
+        'RWP\\Engine\\Interfaces\\Core' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Core.php',
+        'RWP\\Engine\\Is_Methods' => __DIR__ . '/../..' . '/includes/engine/Is_Methods.php',
+        'RWP\\Engine\\Traits\\Assets' => __DIR__ . '/../..' . '/includes/engine/Traits/Assets.php',
+        'RWP\\Frontend\\Enqueue' => __DIR__ . '/../..' . '/includes/frontend/Enqueue.php',
+        'RWP\\Frontend\\Extras\\Body_Class' => __DIR__ . '/../..' . '/includes/frontend/Extras/Body_Class.php',
+        'RWP\\Frontend\\Extras\\Clean_Up' => __DIR__ . '/../..' . '/includes/frontend/Extras/Clean_Up.php',
+        'RWP\\Frontend\\Extras\\JS_Footer' => __DIR__ . '/../..' . '/includes/frontend/Extras/JS_Footer.php',
+        'RWP\\Frontend\\Extras\\Nice_Search' => __DIR__ . '/../..' . '/includes/frontend/Extras/Nice_Search.php',
+        'RWP\\Frontend\\Favicons' => __DIR__ . '/../..' . '/includes/frontend/Favicons.php',
+        'RWP\\Integrations\\ACF' => __DIR__ . '/../..' . '/includes/integrations/ACF.php',
+        'RWP\\Integrations\\Bootstrap' => __DIR__ . '/../..' . '/includes/integrations/Bootstrap.php',
+        'RWP\\Integrations\\BugHerd' => __DIR__ . '/../..' . '/includes/integrations/BugHerd.php',
+        'RWP\\Integrations\\Elementor' => __DIR__ . '/../..' . '/includes/integrations/Elementor.php',
+        'RWP\\Integrations\\Elementor\\OEmbed' => __DIR__ . '/../..' . '/includes/integrations/Elementor/OEmbed.php',
+        'RWP\\Integrations\\GravityForms' => __DIR__ . '/../..' . '/includes/integrations/GravityForms.php',
+        'RWP\\Integrations\\Gutenberg' => __DIR__ . '/../..' . '/includes/integrations/Gutenberg.php',
+        'RWP\\Integrations\\JS_Plugins' => __DIR__ . '/../..' . '/includes/integrations/JS_Plugins.php',
+        'RWP\\Integrations\\Lazysizes' => __DIR__ . '/../..' . '/includes/integrations/Lazysizes.php',
+        'RWP\\Integrations\\Nav_Menus' => __DIR__ . '/../..' . '/includes/integrations/Nav_Menus.php',
+        'RWP\\Integrations\\QM' => __DIR__ . '/../..' . '/includes/integrations/QM.php',
+        'RWP\\Integrations\\QM\\Collectors\\Debug' => __DIR__ . '/../..' . '/includes/integrations/QM/Collectors/Debug.php',
+        'RWP\\Integrations\\QM\\Collectors\\Info' => __DIR__ . '/../..' . '/includes/integrations/QM/Collectors/Info.php',
+        'RWP\\Integrations\\QM\\Output\\Debug' => __DIR__ . '/../..' . '/includes/integrations/QM/Output/Debug.php',
+        'RWP\\Integrations\\QM\\Output\\Info' => __DIR__ . '/../..' . '/includes/integrations/QM/Output/Info.php',
+        'RWP\\Integrations\\Walkers\\Nav' => __DIR__ . '/../..' . '/includes/integrations/Walkers/Nav.php',
+        'RWP\\Integrations\\Wistia' => __DIR__ . '/../..' . '/includes/integrations/Wistia.php',
+        'RWP\\Integrations\\Yoast' => __DIR__ . '/../..' . '/includes/integrations/Yoast.php',
+        'RWP\\Integrations\\Yoast\\Locations' => __DIR__ . '/../..' . '/includes/integrations/Yoast/Locations.php',
+        'RWP\\Internals\\CustomBulkAction' => __DIR__ . '/../..' . '/includes/internals/CustomBulkAction.php',
+        'RWP\\Internals\\PostTypes' => __DIR__ . '/../..' . '/includes/internals/PostTypes.php',
+        'RWP\\Internals\\PostTypes\\GlobalBlock' => __DIR__ . '/../..' . '/includes/internals/PostTypes/GlobalBlock.php',
+        'RWP\\Internals\\PostTypes\\LandingPage' => __DIR__ . '/../..' . '/includes/internals/PostTypes/LandingPage.php',
+        'RWP\\Internals\\PostTypes\\PageForPostType' => __DIR__ . '/../..' . '/includes/internals/PostTypes/PageForPostType.php',
+        'RWP\\Internals\\PostTypes\\PageHeader' => __DIR__ . '/../..' . '/includes/internals/PostTypes/PageHeader.php',
+        'RWP\\Internals\\PostTypes\\TeamMember' => __DIR__ . '/../..' . '/includes/internals/PostTypes/TeamMember.php',
+        'RWP\\Internals\\PostTypes\\Testimonial' => __DIR__ . '/../..' . '/includes/internals/PostTypes/Testimonial.php',
+        'RWP\\Internals\\Relative_Urls' => __DIR__ . '/../..' . '/includes/internals/Relative_Urls.php',
+        'RWP\\Internals\\SVG\\Attributes' => __DIR__ . '/../..' . '/includes/internals/SVG/Attributes.php',
+        'RWP\\Internals\\SVG\\Data\\AllowedAttributes' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AllowedAttributes.php',
+        'RWP\\Internals\\SVG\\Data\\AllowedTags' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AllowedTags.php',
+        'RWP\\Internals\\SVG\\Data\\AttributeInterface' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AttributeInterface.php',
+        'RWP\\Internals\\SVG\\Data\\TagInterface' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/TagInterface.php',
+        'RWP\\Internals\\SVG\\Data\\XPath' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/XPath.php',
+        'RWP\\Internals\\SVG\\ElementReference\\Resolver' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Resolver.php',
+        'RWP\\Internals\\SVG\\ElementReference\\Subject' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Subject.php',
+        'RWP\\Internals\\SVG\\ElementReference\\Usage' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Usage.php',
+        'RWP\\Internals\\SVG\\Exceptions\\NestingException' => __DIR__ . '/../..' . '/includes/internals/SVG/Exceptions/NestingException.php',
+        'RWP\\Internals\\SVG\\Helper' => __DIR__ . '/../..' . '/includes/internals/SVG/Helper.php',
+        'RWP\\Internals\\SVG\\Sanitizer' => __DIR__ . '/../..' . '/includes/internals/SVG/Sanitizer.php',
+        'RWP\\Internals\\SVG\\Tags' => __DIR__ . '/../..' . '/includes/internals/SVG/Tags.php',
+        'RWP\\Internals\\SVGs' => __DIR__ . '/../..' . '/includes/internals/SVGs.php',
+        'RWP\\Internals\\Shortcodes\\Button' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Button.php',
+        'RWP\\Internals\\Shortcodes\\Copyright' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Copyright.php',
+        'RWP\\Internals\\Shortcodes\\Location' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Location.php',
+        'RWP\\Internals\\Shortcodes\\SiblingGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SiblingGrid.php',
+        'RWP\\Internals\\Shortcodes\\SubpageGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SubpageGrid.php',
+        'RWP\\Internals\\Shortcodes\\TeamGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/TeamGrid.php',
+        'RWP\\Internals\\Taxonomies' => __DIR__ . '/../..' . '/includes/internals/Taxonomies.php',
+        'RWP\\Internals\\Taxonomies\\TeamCategory' => __DIR__ . '/../..' . '/includes/internals/Taxonomies/TeamCategory.php',
+        'RWP\\Internals\\Transient' => __DIR__ . '/../..' . '/includes/internals/Transient.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit5b3e241b159c80f74a97209462e13c75::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$classMap;
 
         }, null, ClassLoader::class);
     }

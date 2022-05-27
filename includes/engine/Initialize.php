@@ -144,6 +144,8 @@ class Initialize {
 		$this->classes = $components;
 
 		rwp()->set( 'components', $components );
+
+		return $components;
 	}
 
 

@@ -133,7 +133,7 @@ class SVGs extends Singleton {
 	 *
 	 * @return null
 	 */
-	public function fix_mime_type_svg( $data = null, $file = null, $filename = null, $mimes = null ) {
+	public function fix_mime_type_svg( $data = null, $file = null, $filename = '', $mimes = null ) {
 		$ext = isset( $data['ext'] ) ? $data['ext'] : '';
 		if ( \strlen( $ext ) < 1 ) {
 			$exploded = \explode( '.', $filename );
@@ -398,9 +398,9 @@ class SVGs extends Singleton {
 	/**
 	 * Filters the attachment meta data.
 	 *
-	 * @param array|bool $data Array of meta data for the given attachment, or false
-	 *                            if the object does not exist.
-	 * @param int $post_id Attachment ID.
+	 * @param mixed $data   Array of meta data for the given attachment, or false
+	 *                      if the object does not exist.
+	 * @param int $post_id  Attachment ID.
 	 */
 	public function metadata_error_fix( $data, $post_id ) {
 		// If it's a WP_Error regenerate metadata and save it

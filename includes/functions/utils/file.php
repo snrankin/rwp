@@ -317,7 +317,7 @@ function rwp_get_plugin_file( $filename, $dir = '', $require = false, $once = fa
 function rwp_get_dependency_file( $filename, $dir = '', $require = false, $once = false ) {
 	if ( is_string( $filename ) ) {
         $file = '';
-		$base_dir = 'includes/dependencies/';
+		$base_dir = 'dependencies/';
 		if ( ! empty( $dir ) ) {
 			$dir = rwp_add_suffix( $base_dir, $dir );
 			$dir = wp_normalize_path( $dir );
