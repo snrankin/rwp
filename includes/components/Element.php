@@ -602,12 +602,130 @@ class Element {
 		}
 	}
 
+	public function add_bg( $bg, $target = '' ) {
+
+		if ( blank( $target ) ) {
+			$target = $this;
+		}
+
+		if ( ! blank( $bg ) ) {
+			$bg_elem = new self(array(
+				'tag' => 'div',
+				'atts' => array(
+					'class' => array(
+						'bg-wrapper',
+					),
+				),
+			));
+			$lazysizes = rwp_get_option( 'modules.lazysizes.lazyload', false );
+
+			$srcset = false;
+			if ( is_numeric( $bg ) && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg, 'full', false );
+			}
+			if ( $bg instanceof \WP_Post && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg->ID, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg->ID, 'full', false );
+			}
+			if ( is_string( $bg ) ) {
+				if ( preg_match( '/\#(?<=#)[a-zA-Z0-9]{3,8}|rgba?\((?:(?:\d{1,3}|\.)\,?\s*)+\)|hsla?\((?:(?:\d{1,3}|\%|\.)\,?\s*)+\)|var\(--[^\)|\s]+\)/', $bg ) ) {
+					$bg_elem->set_style( 'background-color', $bg );
+				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
+					$bg_elem->add_class( $bg );
+				} else if ( rwp_is_url( $bg ) || rwp_is_relative_url( $bg ) ) {
+					if ( $lazysizes ) {
+						if ( $srcset ) {
+							$bg_elem->set_attr( 'data-bgset', $srcset );
+
+						} else {
+							$bg_elem->set_attr( 'data-bgset', $bg );
+						}
+						$bg_elem->set_attr( 'data-sizes', 'auto' );
+						$bg_elem->add_class( 'lazyload' );
+					} else {
+						$bg_elem->set_style( 'background-image', $bg );
+					}
+				}
+            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) && $bg !== $bg_elem ) {
+				$bg_elem = $bg;
+			}
+			$target->background = $bg_elem;
+			$target->set_order( 'background', 'first' );
+			$target->add_class( 'has-bg' );
+		}
+	}
+
+	/**
+	 * Set a background on an element
+	 * @param mixed $bg
+	 * @param string $target
+	 * @return void
+	 */
 	public function set_background( $bg = null, $target = '' ) {
-		if ( empty( $bg ) && $this->has( 'background' ) ) {
+		if ( blank( $bg ) && $this->has( 'background' ) ) {
 			$bg = $this->background;
 		}
 
-		return $this::add_background( $bg, $this, $target );
+		if ( blank( $target ) ) {
+			$target = $this;
+		}
+
+		if ( ! blank( $bg ) ) {
+			$bg_elem = new self(array(
+				'tag' => 'div',
+				'atts' => array(
+					'class' => array(
+						'bg-wrapper',
+					),
+				),
+			));
+			$lazysizes = rwp_get_option( 'modules.lazysizes.lazyload', false );
+
+			$srcset = false;
+			if ( is_numeric( $bg ) && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg, 'full', false );
+			}
+			if ( $bg instanceof \WP_Post && wp_attachment_is_image( $bg ) ) {
+				if ( $lazysizes ) {
+					$srcset = wp_get_attachment_image_srcset( $bg->ID, 'full' );
+				}
+				$bg = wp_get_attachment_image_url( $bg->ID, 'full', false );
+			}
+			if ( is_string( $bg ) ) {
+				if ( preg_match( '/\#(?<=#)[a-zA-Z0-9]{3,8}|rgba?\((?:(?:\d{1,3}|\.)\,?\s*)+\)|hsla?\((?:(?:\d{1,3}|\%|\.)\,?\s*)+\)|var\(--[^\)|\s]+\)/', $bg ) ) {
+					$bg_elem->set_style( 'background-color', $bg );
+				} else if ( rwp_str_starts_with( $bg, array( 'bg-' ) ) ) {
+					$bg_elem->add_class( $bg );
+				} else if ( rwp_is_url( $bg ) || rwp_is_relative_url( $bg ) ) {
+					if ( $lazysizes ) {
+						if ( $srcset ) {
+							$bg_elem->set_attr( 'data-bgset', $srcset );
+
+						} else {
+							$bg_elem->set_attr( 'data-bgset', $bg );
+						}
+						$bg_elem->set_attr( 'data-sizes', 'auto' );
+						$bg_elem->add_class( 'lazyload' );
+					} else {
+						$bg_elem->set_style( 'background-image', $bg );
+					}
+				}
+            } else if ( $bg instanceof Element || rwp_str_is_html( $bg ) && $bg !== $bg_elem ) {
+				$bg_elem = $bg;
+			}
+			$target->background = $bg_elem;
+			$target->set_order( 'background', 'first' );
+			$target->add_class( 'has-bg' );
+		}
+
 	}
 
 	/**
@@ -988,13 +1106,10 @@ class Element {
 		\data_remove( $this, $key );
 	}
 
-
-
 	/**
-     * Getting a singleton.
-     *
-     * @return self single instance of Core
-     */
+	 * Set the methods
+	 * @return void
+	 */
     final public static function mapApiMethods() {
 
         $class = \get_called_class();

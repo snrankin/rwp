@@ -28,7 +28,7 @@ define( 'RWP_PLUGIN_PHP_VERSION', '7.0.0' );
 define( 'RWP_PLUGIN_ROOT',  trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_FILE', __FILE__ );
-define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'includes/dependencies/' );
+define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'dependencies/' );
 
 if (!function_exists('get_plugin_data')) {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -133,7 +133,7 @@ function rwp_register_required_plugins() {
 	 */
 	$config = array(
 		'id'           => 'rwp',                 // Unique ID for hashing notices for multiple instances of TGMPA.
-		'default_path' => plugin_dir_path( __FILE__ ) . '/includes/dependencies/externals/plugins/',                      // Default absolute path to bundled plugins.
+		'default_path' => plugin_dir_path( __FILE__ ) . 'dependencies/externals/plugins/',                      // Default absolute path to bundled plugins.
 		'menu'         => 'tgmpa-install-plugins', // Menu slug.
 		'parent_slug'  => add_query_arg( 'page', 'rwp-options', 'admin.php' ),            // Parent menu slug.
 		'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.

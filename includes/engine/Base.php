@@ -47,8 +47,8 @@ class Base extends Plugin {
 					'uri' => RWP_PLUGIN_URI . 'includes/',
 				),
 				'dependencies' => array(
-					'dir' => RWP_PLUGIN_ROOT . 'includes/dependencies/',
-					'uri' => RWP_PLUGIN_URI . 'includes/dependencies/',
+					'dir' => RWP_PLUGIN_ROOT . 'dependencies/',
+					'uri' => RWP_PLUGIN_URI . 'dependencies/',
 				),
 			),
 		);

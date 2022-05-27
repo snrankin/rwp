@@ -176,7 +176,7 @@ class Section extends Element {
 	 * @return bool
 	 */
 	public function has_col( $key, $row = 0 ) {
-		$this->inner->has_col( $key, $row );
+		return $this->inner->has_col( $key, $row );
 	}
 
 	/**

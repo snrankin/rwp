@@ -1,5 +1,6 @@
 grumphp:
   ignore_unstaged_changes: false
+  stop_on_failure: true
   fixer:
     enabled: true
     fix_by_default: true
@@ -25,19 +26,35 @@ grumphp:
       config: .eslintrc.js
     git_blacklist:
       keywords:
-        - "die\\("
-        - "var_dump\\("
-        - "rwp_log\\("
-        - "ray\\("
+        - "die"
+        - "var_dump"
+        - "rwp_log"
+        - "ray"
       whitelist_patterns:
         - /^includes\/dependencies\/(.*)/
         - /^vendor\/(.*)/
         - /^tests\/(.*)/
         - /^includes\/functions\/utils\/debug.php/
       match_word: true
-    # phpcs: ~
-    # phpcsfixer: ~
-    # phpstan: ~
+    phpcs:
+      report: full
+      whitelist_patterns:
+        - /^includes\/dependencies\/(.*)/
+        - /^vendor\/(.*)/
+        - /^tests\/(.*)/
+      triggered_by: ['php']
+    # phpstan:
+    #   autoload_file: ~
+    #   configuration: phpstan.neon
+    #   level: null
+    #   use_grumphp_paths: false
+    #   force_patterns: []
+    #   ignore_patterns:
+    #     - /^includes\/dependencies\/(.*)/
+    #     - /^vendor\/(.*)/
+    #     - /^tests\/(.*)/
+    #   triggered_by: ['php']
+    #   memory_limit: '-1'
     stylelint:
       bin: node_modules/.bin/stylelint
       triggered_by: [scss]

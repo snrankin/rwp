@@ -15,6 +15,15 @@ use Yoast\WP\SEO\Generators\Schema\Organization;
 use RWP\Components\Collection;
 class Locations extends Organization {
 
+	/**
+	 *
+	 * @param \WPSEO_Schema_Context $context Object with context variables.
+	 * @return void
+	 */
+	public function __construct( $context ) {
+		$this->context = $context;
+	}
+
     /**
      * Adds our Team Member's Person piece of the graph.
      *

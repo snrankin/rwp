@@ -16,6 +16,14 @@ if ( ! \defined( 'ABSPATH' ) ) {
 
 abstract class Widget extends \WP_Widget {
 
+	public $classname;
+	public $fields;
+	public $width;
+	public $height;
+	public $slug;
+	public $options;
+	public $instance;
+
     /**
      * Create Widget
      *
@@ -82,7 +90,6 @@ abstract class Widget extends \WP_Widget {
      *
      * Creates the settings form.
      *
-     * @access   private
      * @param    array
      * @return   void
      */
@@ -94,7 +101,6 @@ abstract class Widget extends \WP_Widget {
     /**
      * Update Fields
      *
-     * @access   private
      * @param    array
      * @param    array
      * @return   array
@@ -126,7 +132,7 @@ abstract class Widget extends \WP_Widget {
      * @return   string
      */
     public function before_update_fields() {
-         return;
+        return;
     }
     /**
      * After Validate Fields
@@ -143,7 +149,6 @@ abstract class Widget extends \WP_Widget {
     /**
      * Validate
      *
-     * @access   private
      * @param    string
      * @param    string
      * @return   boolean
@@ -160,14 +165,15 @@ abstract class Widget extends \WP_Widget {
         }
         return \true;
     }
-    /**
-     * Filter
-     *
-     * @access   private
-     * @param    string
-     * @param    string
-     * @return   void
-     */
+
+
+	 /**
+	  * Filter
+	  *
+	  * @param mixed $filters
+	  * @param mixed $value
+	  * @return mixed
+	  */
     public function filter( $filters, $value ) {
         $filters = \explode( '|', $filters );
         if ( empty( $filters ) || \count( $filters ) < 1 ) {
@@ -181,11 +187,11 @@ abstract class Widget extends \WP_Widget {
     /**
      * Do Validation Rule
      *
-     * @access   private
      * @param    string
      * @param    string
      * @return   boolean
      */
+
     public function do_validation( $rule, $value = '' ) {
         switch ( $rule ) {
             case 'alpha':
@@ -232,7 +238,6 @@ abstract class Widget extends \WP_Widget {
     /**
      * Do Filter
      *
-     * @access   private
      * @param    string
      * @param    string
      * @return   boolean
@@ -268,7 +273,6 @@ abstract class Widget extends \WP_Widget {
      *
      * Creates each field defined.
      *
-     * @access   private
      * @param    string
      * @return   string
      */
@@ -309,7 +313,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Create Fields
      *
-     * @access   private
+
      * @param    string
      * @param    string
      * @return   string
@@ -336,13 +340,15 @@ abstract class Widget extends \WP_Widget {
         $p = isset( $key['class-p'] ) ? '<p class="' . $key['class-p'] . '">' : '<p>';
         /* Run method */
         if ( \method_exists( $this, $field_method ) ) {
-            return $p . $this->{$field_method}( $key ) . '</p>';
+            $out .= $p . $this->{$field_method}( $key ) . '</p>';
         }
+
+		return $out;
     }
     /**
      * Field Text
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -367,7 +373,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Textarea
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -395,7 +401,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Checkbox
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -419,7 +425,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Select
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -448,7 +454,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Select with Options Group
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -481,7 +487,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Number
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -506,7 +512,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Label
      *
-     * @access   private
+
      * @param    string
      * @param    string
      * @return   string
@@ -518,7 +524,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Taxonomy
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -555,7 +561,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Taxonomy Term
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -609,7 +615,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Pages Select
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -639,7 +645,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Post Select from spesific taxonomy
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string
@@ -675,7 +681,7 @@ abstract class Widget extends \WP_Widget {
     /**
      * Field Hidden Input
      *
-     * @access   private
+
      * @param    array
      * @param    string
      * @return   string

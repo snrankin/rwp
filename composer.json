@@ -16,10 +16,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
         "ergebnis/composer-normalize": "^2.6",
         "lipemat/wp-phpcs": "^2.3",
-        "php-stubs/acf-pro-stubs": "^5.9",
-        "php-stubs/wordpress-seo-stubs": "^17.2",
-        "phpcompatibility/phpcompatibility-wp": "*",
-        "szepeviktor/phpstan-wordpress": "^0.7.5"
+        "phpcompatibility/phpcompatibility-wp": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -39,6 +36,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true
         },
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
         "sort-packages": true
     },
     "scripts": {
@@ -86,7 +85,12 @@
             "vendor/bin/phpcs"
         ],
         "phpstan": [
-            "vendor/bin/phpstan analyse --ansi --memory-limit=-1"
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpstan analyse --ansi --memory-limit=-1 --debug"
+        ],
+        "phpstan-baseline": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
         ],
         "test": [
             "@grum"

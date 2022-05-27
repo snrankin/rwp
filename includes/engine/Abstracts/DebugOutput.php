@@ -19,13 +19,24 @@ use RWP\Components\TableSection;
 use RWP\Components\TableRow;
 use RWP\Components\TableCell;
 
-use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use RWP\Vendor\Symfony\Component\VarDumper\Cloner\VarCloner;
-
 abstract class DebugOutput extends \QM_Output_Html {
 
 	public static $table_header = array();
 	public static $table_footer = array();
+
+	public $id;
+
+	/**
+	 * @var string
+	 */
+	public $title;
+
+	/**
+	 * @var QM
+	 */
+	public $parent;
+
+	public $output;
 
 	public function __construct( \QM_Collector $collector, \RWP\Integrations\QM $parent, $id = '' ) {
 		parent::__construct( $collector );
