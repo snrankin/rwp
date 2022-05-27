@@ -48,12 +48,15 @@ class QM extends Singleton {
 			foreach ( $this->panels as $panel ) {
 
 				$collector = rwp()->get_component( "$class\\Collectors\\$panel" );
-				/**
-				 * @var \RWP\Engine\Abstracts\Collector $collector
-				 */
-				$collector = new $collector( $this, $panel );
 
-				\QM_Collectors::add( $collector );
+				if ( class_exists( $collector ) ) {
+					/**
+					 * @var \RWP\Engine\Abstracts\Collector $collector
+					 */
+					$collector = new $collector( $this, $panel );
+
+					\QM_Collectors::add( $collector );
+				}
 			}
 		}
 
