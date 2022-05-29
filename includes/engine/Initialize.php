@@ -16,17 +16,7 @@ use Composer\Autoload\ClassLoader;
 use RWP\Components\Collection;
 class Initialize {
 
-	/**
-	 * List of classes to initialize.
-	 *
-	 * @var array
-	 */
-	public $classes = array();
-
-	/**
-	 * @var array $components Array of plugin components which might need upgrade
-	 */
-    public static $active_classes = array();
+	use Traits\Helpers;
 
 	/**
 	 * Instance of this Is_Methods.
@@ -36,13 +26,6 @@ class Initialize {
 	protected $is = null;
 
 	/**
-	 * Composer autoload file list.
-	 *
-	 * @var ClassLoader
-	 */
-	private $composer;
-
-	/**
 	 * The Constructor that load the entry classes
 	 *
 	 * @param ClassLoader $composer Composer autoload output.
@@ -50,7 +33,7 @@ class Initialize {
 	 */
 	public function __construct( ClassLoader $composer ) {
 		$this->is       = new Is_Methods();
-		$this->composer = $composer;
+		$this->autoloader = $composer;
 
 		$this->initialize_autoloader();
 
@@ -88,68 +71,6 @@ class Initialize {
 	}
 
 	/**
-	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
-	 *
-	 * @param string $namespace Class name to find.
-	 * @since 1.0.0
-	 * @return array Return the classes.
-	 */
-	private function initialize_autoloader() {
-		$autoloader = $this->composer;
-		$prefix    = $autoloader->getPrefixesPsr4();
-		$classmap  = $autoloader->getClassMap();
-		$namespace = 'RWP';
-
-		$class_loader = array();
-
-		$class = __CLASS__;
-
-		// In case composer has autoload optimized
-		if ( isset( $classmap[ __CLASS__ ] ) ) {
-			$classes = \array_keys( $classmap );
-
-			foreach ( $classes as $class ) {
-				if ( 0 !== \strncmp( (string) $class, $namespace, \strlen( $namespace ) ) ) {
-					continue;
-				}
-
-				$class_loader[] = $class;
-			}
-		}
-
-		$namespace .= '\\';
-
-		// In case composer is not optimized
-		if ( isset( $prefix[ $namespace ] ) ) {
-			$folder    = $prefix[ $namespace ][0];
-			$php_files = $this->scandir( $folder );
-			$class_loader = $this->find_classes( $php_files, $folder, $namespace );
-
-			if ( ! WP_DEBUG ) {
-				\wp_die( \esc_html__( 'RWP is on production environment with missing `composer dumpautoload -o` that will improve the performance on autoloading itself.', 'rwp' ) );
-			}
-		}
-
-		$components = array();
-
-		foreach ( $class_loader as $class ) {
-			if ( rwp_str_has( $class, '\\' ) ) {
-				$component = rwp_remove_prefix( $class, $namespace );
-				$component = rwp_str_replace( '\\', '.', $component );
-			}
-
-			$components = data_set( $components, $component, $class );
-		}
-
-		$this->classes = $components;
-
-		rwp()->set( 'components', $components );
-
-		return $components;
-	}
-
-
-	/**
 	 * Initialize all the classes.
 	 *
 	 * @since 1.0.0
@@ -163,138 +84,6 @@ class Initialize {
 				$this::$active_classes[ $class ] = $temp;
 				$temp->initialize();
 			}
-		}
-	}
-
-	/**
-	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
-	 *
-	 * @param string $namespace Class name to find.
-	 * @since 1.0.0
-	 * @return array Return the classes.
-	 */
-	private function get_classes( string $namespace ) {
-		$prefix    = $this->composer->getPrefixesPsr4();
-		$classmap  = $this->composer->getClassMap();
-		$namespace = 'RWP\\' . $namespace;
-
-		// In case composer has autoload optimized
-		if ( isset( $classmap['RWP\\Engine\\Initialize'] ) ) {
-			$classes = \array_keys( $classmap );
-
-			foreach ( $classes as $class ) {
-				if ( 0 !== \strncmp( (string) $class, $namespace, \strlen( $namespace ) ) ) {
-					continue;
-				}
-
-				$this->classes[] = $class;
-			}
-
-			return $this->classes;
-		}
-
-		$namespace .= '\\';
-
-		// In case composer is not optimized
-		if ( isset( $prefix[ $namespace ] ) ) {
-			$folder    = $prefix[ $namespace ][0];
-			$php_files = $this->scandir( $folder );
-			$this->find_classes( $php_files, $folder, $namespace );
-
-			if ( ! WP_DEBUG ) {
-				\wp_die( \esc_html__( 'RWP is on production environment with missing `composer dumpautoload -o` that will improve the performance on autoloading itself.', 'rwp' ) );
-			}
-
-			return $this->classes;
-		}
-
-		return $this->classes;
-	}
-
-	/**
-	 * Get php files inside the folder/subfolder that will be loaded.
-	 * This class is used only when Composer is not optimized.
-	 *
-	 * @param string $folder Path.
-	 * @since 1.0.0
-	 * @return array List of files.
-	 */
-	private function scandir( string $folder ) {
-		$temp_files = \scandir( $folder );
-			$files  = array();
-
-		if ( \is_array( $temp_files ) ) {
-			$files = $temp_files;
-		}
-
-		return \array_diff( $files, array( '..', '.', 'index.php' ) );
-	}
-
-	private function is_component( $class ) {
-		$rc = new \ReflectionClass( $class );
-
-		if ( self::IsExtendsOrImplements( 'RWP\\Engine\\Abstracts\\Singleton', $class ) && $rc->hasMethod( 'initialize' ) ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-     * Check if a class extends or implements a specific class/interface
-     * @param string $search The class or interface name to look for
-     * @param string $class_name The class name of the object to compare to
-     * @return bool
-     */
-    public static function IsExtendsOrImplements( $search, $class_name ) {
-        $class = new \ReflectionClass( $class_name );
-        if ( false === $class ) {
-            return false;
-        }
-        do {
-            $name = $class->getName();
-            if ( $search == $name ) {
-                return true;
-            }
-            $interfaces = $class->getInterfaceNames();
-            if ( is_array( $interfaces ) && in_array( $search, $interfaces ) ) {
-                return true;
-            }
-            $class = $class->getParentClass();
-        } while ( false !== $class );
-        return false;
-    }
-
-	/**
-	 * Load namespace classes by files.
-	 *
-	 * @param array  $php_files List of files with the Class.
-	 * @param string $folder Path of the folder.
-	 * @param string $base Namespace base.
-	 * @since 1.0.0
-	 */
-	private function find_classes( array $php_files, string $folder, string $base ) {
-		foreach ( $php_files as $php_file ) {
-			$class_name = \substr( $php_file, 0, -4 );
-			$path       = $folder . '/' . $php_file;
-
-			if ( \is_file( $path ) ) {
-				$this->classes[] = $base . $class_name;
-
-				continue;
-			}
-
-			// Verify the Namespace level
-			if ( \substr_count( $base . $class_name, '\\' ) < 2 ) {
-				continue;
-			}
-
-			if ( ! \is_dir( $path ) || \strtolower( $php_file ) === $php_file ) {
-				continue;
-			}
-
-			$sub_php_files = $this->scandir( $folder . '/' . $php_file );
-			$this->find_classes( $sub_php_files, $folder . '/' . $php_file, $base . $php_file . '\\' );
 		}
 	}
 

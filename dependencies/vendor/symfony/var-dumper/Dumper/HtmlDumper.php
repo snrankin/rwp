@@ -12,6 +12,7 @@ namespace RWP\Vendor\Symfony\Component\VarDumper\Dumper;
 
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Cursor;
 use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Data;
+
 /**
  * HtmlDumper dumps variables as HTML.
  *
@@ -57,20 +58,21 @@ class HtmlDumper extends CliDumper
     ];
 
     protected $dumpHeader;
-    protected $dumpPrefix = '<pre class=sf-dump id=%s data-indent-pad="%s">';
+    protected $dumpPrefix = '<pre class="sf-dump" id="%s" data-indent-pad="%s" data-theme="%s">';
     protected $dumpSuffix = '</pre><script>Sfdump(%s)</script>';
     protected $dumpId = 'sf-dump';
     protected $colors = true;
     protected $headerIsDumped = false;
     protected $lastDepth = -1;
     protected $styles;
+	protected $theme;
 
-    private $displayOptions = [
+    private array $displayOptions = [
         'maxDepth' => 1,
         'maxStringLength' => 160,
         'fileLinkFormat' => null,
     ];
-    private $extraDisplayOptions = [];
+    private array $extraDisplayOptions = [];
 
     /**
      * {@inheritdoc}
@@ -97,6 +99,8 @@ class HtmlDumper extends CliDumper
         if (!isset(static::$themes[$themeName])) {
             throw new \InvalidArgumentException(sprintf('Theme "%s" does not exist in class "%s".', $themeName, static::class));
         }
+
+		$this->theme = $themeName;
 
         $this->setStyles(static::$themes[$themeName]);
     }
@@ -132,7 +136,7 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Data $data, $output = null, array $extraDisplayOptions = [])
+    public function dump(Data $data, $output = null, array $extraDisplayOptions = []): ?string
     {
         $this->extraDisplayOptions = $extraDisplayOptions;
         $result = parent::dump($data, $output);
@@ -146,7 +150,6 @@ class HtmlDumper extends CliDumper
      */
     protected function getDumpHeader()
     {
-		return;
         $this->headerIsDumped = $this->outputStream ?? $this->lineDumper;
 
         if (null !== $this->dumpHeader) {
@@ -368,7 +371,7 @@ return function (root, x) {
         if (/\bsf-dump-toggle\b/.test(a.className)) {
             e.preventDefault();
             if (!toggle(a, isCtrlKey(e))) {
-                var r = doc.getElementById(a.getAttribute('href').substr(1)),
+                var r = doc.getElementById(a.getAttribute('href').slice(1)),
                     s = r.previousSibling,
                     f = r.parentNode,
                     t = a.parentNode;
@@ -429,7 +432,7 @@ return function (root, x) {
                 x += elt.parentNode.getAttribute('data-depth')/1;
             }
         } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) {
-            a = a.substr(1);
+            a = a.slice(1);
             elt.className += ' '+a;
 
             if (/[\[{]$/.test(elt.previousSibling.nodeValue)) {
@@ -802,7 +805,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    public function enterHash(Cursor $cursor, int $type, $class, bool $hasChild)
+    public function enterHash($cursor, $type, $class, $hasChild)
     {
         if (Cursor::HASH_OBJECT === $type) {
             $cursor->attr['depth'] = $cursor->depth;
@@ -833,7 +836,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    public function leaveHash(Cursor $cursor, int $type, $class, bool $hasChild, int $cut)
+    public function leaveHash($cursor, $type, $class, $hasChild, $cut)
     {
         $this->dumpEllipsis($cursor, $hasChild, $cut);
         if ($hasChild) {
@@ -845,7 +848,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    protected function style(string $style, string $value, array $attr = [])
+    protected function style(string $style, string $value, array $attr = []): string
     {
         if ('' === $value) {
             return '';
@@ -943,11 +946,11 @@ EOHTML
     protected function dumpLine(int $depth, bool $endOfValue = false)
     {
         if (-1 === $this->lastDepth) {
-            $this->line = sprintf($this->dumpPrefix, $this->dumpId, $this->indentPad).$this->line;
+            $this->line = sprintf($this->dumpPrefix, $this->dumpId, $this->indentPad, $this->theme).$this->line;
         }
-        if ($this->headerIsDumped !== ($this->outputStream ?? $this->lineDumper)) {
-            $this->line = $this->getDumpHeader().$this->line;
-        }
+        // if ($this->headerIsDumped !== ($this->outputStream ?? $this->lineDumper)) {
+        //     $this->line = $this->getDumpHeader().$this->line;
+        // }
 
         if (-1 === $depth) {
             $args = ['"'.$this->dumpId.'"'];
@@ -959,7 +962,7 @@ EOHTML
         }
         $this->lastDepth = $depth;
 
-        $this->line = mb_encode_numericentity($this->line, [0x80, 0xFFFF, 0, 0xFFFF], 'UTF-8');
+        $this->line = mb_encode_numericentity($this->line, [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8');
 
         if (-1 === $depth) {
             AbstractDumper::dumpLine(0);

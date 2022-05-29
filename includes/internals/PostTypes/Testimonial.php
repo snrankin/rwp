@@ -37,7 +37,7 @@ class Testimonial extends PostType {
 		'show_in_nav_menus'   => false,
 	);
 
-	public function initialize() {
+	public function __construct() {
 
 		$this->admin_cols['rating'] = array(
 			'title'       => 'Rating',
@@ -47,7 +47,7 @@ class Testimonial extends PostType {
 			},
 		);
 
-		parent::initialize();
+		parent::__construct();
 	}
 
 }

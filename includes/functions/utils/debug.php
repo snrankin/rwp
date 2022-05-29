@@ -9,9 +9,14 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
+use RWP\Engine\Base as Plugin;
 use RWP\Integrations\QM;
 use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
-
+use RWP\Vendor\Symfony\Component\VarDumper\Cloner\VarCloner;
+use RWP\Vendor\Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use RWP\Vendor\Symfony\Component\VarDumper\Dumper\AbstractDumper;
+use RWP\Vendor\Symfony\Component\VarDumper\Cloner\Stub;
+use RWP\Vendor\Symfony\Component\VarDumper\Caster\{LinkStub, ClassStub, ImgStub, TraceStub};
 /**
  * A wrapper for Symfony VarDumper
  *
@@ -21,12 +26,80 @@ use RWP\Vendor\Symfony\Component\VarDumper\VarDumper;
  *
  * @return VarDumper
  */
-function rwp_dump( $var ) {
-	ob_start();
+function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
+	$output = '';
+	$cloner = new VarCloner();
+	$dumper = new HtmlDumper( null, null, AbstractDumper::DUMP_LIGHT_ARRAY );
+	$file_link_format = QM::get_file_link_format();
+	$dumper->setDisplayOptions(array(
+		'fileLinkFormat' => $file_link_format,
+	));
 
-	VarDumper::dump( $var );
+	$dumper->setTheme( $theme );
 
-    return ob_get_clean();
+	// if ( $add_trace ) {
+	// 	$prefix = $dumper->prefix;
+	// 	$suffix = $dumper->suffix;
+
+	// 	$backtrace = debug_backtrace( 1, 1 );
+
+	// 	$backtrace = head($backtrace);
+
+	// 	$file_link = QM::get_file_link_format();
+
+	// 	$dumper->setDumpBoundaries( $prefix, $suffix );
+	// }
+
+	// $backtrace = new TraceStub( debug_backtrace( 1, 1 ) );
+
+	// $backtrace_output = fopen( 'php://memory', 'r+b' );
+
+	// $backtrace_output = $dumper->dump( $cloner->cloneVar( $backtrace ), true, [
+	// 	'maxDepth' => -1,
+	// ] );
+
+	$output = $dumper->dump( $cloner->cloneVar( $var ), true, [
+		'maxDepth' => -1,
+	] );
+
+	return $output;
+}
+
+
+
+function rwp_caster( $object, $array, $stub, $is_nested, $filter = 0 ) {
+
+	//$array = rwp_object_to_array( $object );
+
+	$file = data_get( $array, '-file', RWP_PLUGIN_FILE );
+
+	if ( ! blank( $file ) ) {
+		$array['-file'] = new LinkStub( "file:/$file" );
+	}
+
+	$settings = rwp()->get_settings_uri();
+
+	if ( ! blank( $settings ) ) {
+		$components = parse_url( $settings );
+		parse_str( $components['query'], $results );
+		$settings = data_get( $results, 'page', false );
+		if ( $settings ) {
+			$settings = esc_url( add_query_arg(
+			'page',
+			'rwp-options',
+			get_admin_url() . 'admin.php'
+			) );
+			$array['#settings_uri'] = new LinkStub( $settings );
+		}
+	}
+
+	$icon = rwp()->get_settings_icon( true );
+
+	if ( $icon ) {
+		$array['*icon'] = new ImgStub( $icon, 'image/svg+xml' );
+	}
+
+    return $array;
 }
 
 /**
@@ -71,5 +144,37 @@ function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
  */
 
 function rwp_error( $message, $level = 'error', $context = array() ) {
-    do_action( "qm/$level", $message, $context ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+    do_action( "qm / $level", $message, $context ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+}
+
+/**
+ * Function for seeing all registered shortcodes
+ *
+ * @return int[]|string[]
+ */
+function rwp_get_list_of_shortcodes() {
+
+    // Get the array of all the shortcodes
+    global $shortcode_tags;
+
+    $shortcodes = $shortcode_tags;
+
+    // sort the shortcodes with alphabetical order
+    ksort( $shortcodes );
+
+    return array_keys( $shortcodes );
+
+}
+
+/**
+ * Function for seeing all registered post types
+ *
+ * @return string[]|WP_Post_Type[]
+ */
+function rwp_get_registered_post_types() {
+	$get_cpt_args = array(
+		'public'   => true,
+		'_builtin' => false,
+	);
+	return get_post_types( $get_cpt_args, 'names' ); // use 'names' if you want to get only name of the post type.
 }

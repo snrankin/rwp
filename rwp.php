@@ -159,8 +159,8 @@ if ( ! wp_installing() ) {
 	add_action(
 		'plugins_loaded',
 		static function () use ( $rwp_libraries ) {
-			$rwp = \RWP\Engine\Base::instance();
-			new \RWP\Engine\Initialize( $rwp_libraries );
+			$rwp = \RWP\Engine\Plugin::instance();
+			$rwp_libraries = new \RWP\Engine\Initialize( $rwp_libraries );
 		}
 	);
 }

@@ -47,9 +47,9 @@ class TeamMember extends PostType {
 		'hierarchical'      => false,
 	);
 
-	public function initialize() {
+	public function __construct() {
 
-		parent::initialize();
+		parent::__construct();
 
 		add_filter( 'the_title', function( $title, $id = null ) {
 			$type = get_post_type( $id );

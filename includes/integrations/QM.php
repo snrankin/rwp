@@ -40,7 +40,7 @@ class QM extends Singleton {
 			return;
 		}
 
-		self::$file_link_format = self::get_file_link_format();
+		self::$file_link_format = self::get_qm_file_link_format();
 
 		if ( class_exists( '\\QM_Collectors' ) ) {
 			$class = get_called_class();
@@ -185,10 +185,66 @@ class QM extends Singleton {
 		}
 	}
 
+	public static function get_theme() {
+        $editor = '';
+
+		if ( defined( 'QM_EDITOR_COOKIE' ) ) {
+			$editor = QM_EDITOR_COOKIE;
+		} else if ( isset( $_COOKIE['QM_EDITOR_COOKIE'] ) ) {
+			$editor = data_get( $_COOKIE, 'QM_EDITOR_COOKIE' );
+		}
+	}
+
+	/**
+	 * @return string|false
+	 */
+	public static function get_file_link( $file, $line ) {
+		$format = ini_get( 'xdebug.file_link_format' );
+
+			$editor = '';
+
+		if ( defined( 'QM_EDITOR_COOKIE' ) ) {
+			$editor = QM_EDITOR_COOKIE;
+		} else if ( isset( $_COOKIE['QM_EDITOR_COOKIE'] ) ) {
+			$editor = data_get( $_COOKIE, 'QM_EDITOR_COOKIE' );
+		}
+
+		$format = self::get_editor_file_link_format(
+			$editor,
+			$format
+		);
+
+		$file = str_replace( array( '%f', '%l' ), array( $file, $line ), $format );
+
+		return $file;
+	}
+
 	/**
 	 * @return string|false
 	 */
 	public static function get_file_link_format() {
+		$format = ini_get( 'xdebug.file_link_format' );
+
+			$editor = '';
+
+		if ( defined( 'QM_EDITOR_COOKIE' ) ) {
+			$editor = QM_EDITOR_COOKIE;
+		} else if ( isset( $_COOKIE['QM_EDITOR_COOKIE'] ) ) {
+			$editor = data_get( $_COOKIE, 'QM_EDITOR_COOKIE' );
+		}
+
+		$format = self::get_editor_file_link_format(
+			$editor,
+			$format
+		);
+
+		return $format;
+	}
+
+	/**
+	 * @return string|false
+	 */
+	public static function get_qm_file_link_format() {
 		if ( ! isset( self::$file_link_format ) ) {
 			$format = ini_get( 'xdebug.file_link_format' );
 
@@ -246,7 +302,7 @@ class QM extends Singleton {
 
 		$link_line = ( $line ) ? $line : 1;
 
-		if ( ! ( false !== self::get_file_link_format() ) ) {
+		if ( ! ( false !== self::get_qm_file_link_format() ) ) {
 			$fallback = rwp_standard_dir( $file, '' );
 			if ( $line ) {
 				$fallback .= ':' . $line;
@@ -270,7 +326,7 @@ class QM extends Singleton {
 			}
 		}
 
-		$link = sprintf( self::get_file_link_format(), rawurlencode( $file ), intval( $link_line ) );
+		$link = sprintf( self::get_qm_file_link_format(), rawurlencode( $file ), intval( $link_line ) );
 
 		if ( $is_filename ) {
 			$format = '<a href="%s" class="qm-edit-link">%s</a>';
