@@ -18,7 +18,7 @@ if ( ! \defined( 'ABSPATH' ) ) {
 	die( 'FU!' );
 }
 
-abstract class PostType extends Singleton {
+abstract class PostType {
 
 	/**
 	 * @var string $type The post type
@@ -102,7 +102,7 @@ abstract class PostType extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function initialize() {
+	public function __construct() {
 		$type = $this->type;
 		if ( empty( $type ) ) {
 			$type = explode( '\\', get_called_class() );

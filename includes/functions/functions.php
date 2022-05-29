@@ -9,21 +9,17 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
- use RWP\Engine\Base;
+ use RWP\Engine\Plugin;
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
  *
  * @since  1.0.0
- * @return mixed
+ * @return RWP\Engine\Plugin
  */
-function rwp( $method = '', ...$args ) {
-	$plugin = RWP\Engine\Base::instance();
-	if ( ! empty( $method ) ) {
-		return $plugin->__call( $method, ...$args );
-	} else {
-		return $plugin;
-	}
+function rwp() {
+	return Plugin::instance();
+
 }
 
 /**

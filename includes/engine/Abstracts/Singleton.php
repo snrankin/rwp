@@ -22,30 +22,54 @@ use RWP\Vendor\Illuminate\Support\Arr;
 abstract class Singleton {
 
     /**
-     * @var array $instances
-     */
-    private static $instances = array();
-
-	/**
+	 * Any Singleton class.
 	 *
-	 * @var string $name The component name (useful for debugging)
+	 * @var Singleton[] $instances
 	 */
-	public $name;
+    private static $instances = array();
 
     /**
      * Getting a singleton.
      *
-     * @return self single instance of Core
+     * @return Singleton
      */
     final public static function instance() {
 
         $class = \get_called_class();
         if ( ! isset( self::$instances[ $class ] ) ) {
             $args = \func_get_args();
+
             self::$instances[ $class ] = new $class( ...$args ); // @phpstan-ignore-line
         }
         return self::$instances[ $class ];
     }
+
+	/**
+	 * Consctruct.
+	 * Private to avoid "new".
+	 *
+	 * @access
+	 */
+	private function __construct() {
+	}
+
+	/**
+	 * Avoid clone instance
+	 */
+	private function __clone() {
+	}
+
+	/**
+	 * Avoid serialize instance
+	 */
+	private function __sleep() { // phpcs:ignore
+	}
+
+	/**
+	 * Avoid unserialize instance
+	 */
+	private function __wakeup() {
+	}
 
 	/**
      *  Needed for initializing the component
@@ -117,15 +141,7 @@ abstract class Singleton {
 
 	}
 
-	/**
-     *  Prevent Instantinating
-     */
-    final private function __clone(){}
 
-    /**
-     *  Protected constructor
-     */
-    protected function __construct(){}
 
 	/**
 	 * Handle dynamic calls to the plugin instance to set attributes.

@@ -35,9 +35,9 @@ class LandingPage extends PostType {
 	 *
 	 * @return void
 	 */
-	public function initialize() {
+	public function __construct() {
 
-		parent::initialize();
+		parent::__construct();
 
 		/**
 		 * Remove the slug from published post permalinks.

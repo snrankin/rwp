@@ -36,12 +36,23 @@ class PostTypes extends Singleton {
 	public function initialize() {
 
 		$this::$cpts = rwp_collection( rwp_get_option( 'cpt_options.cpts', array() ) )->mapWithKeys(function ( $item ) {
-			return [ $item['value'] => $item['label'] ];
+			if ( rwp_is_collection( $item ) ) {
+				$item = $item->all();
+			}
+			$post_type = rwp_change_case( $item['value'], 'pascal' );
+
+			$post_type_obj = rwp()->get_component( get_called_class() . "\\$post_type" );
+
+			if ( $post_type_obj ) {
+				$post_type = rwp_object_to_array( new $post_type_obj() );
+			}
+
+			return [ $item['value'] => $post_type ];
 		});
 
-		rwp_get_plugin_file( 'PageForPostType.php', 'includes/internals/PostTypes', true, true );
+		//rwp_get_plugin_file( 'PageForPostType.php', 'includes/internals/PostTypes', true, true );
 
-		\add_action( 'init', array( $this, 'load_cpts' ) );
+		\add_action( 'init', array( $this, 'load_cpts' ), 5 );
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
@@ -54,67 +65,6 @@ class PostTypes extends Singleton {
 
 		\add_action( 'pre_get_posts', array( $this, 'update_permalinks' ) );
 
-	}
-
-	/**
-	 * Rewrite WordPress URLs to Include /blog/ in Post Permalink Structure
-	 *
-	 * @author   Golden Oak Web Design <info@goldenoakwebdesign.com>
-	 * @license  https://www.gnu.org/licenses/gpl-2.0.html GPLv2+
-	 */
-	public function generate_blog_rewrite_rules( $wp_rewrite ) {
-		$blog_page = rwp_get_blog_page();
-		if ( ! $blog_page ) {
-			return;
-		}
-
-		$blog_page = get_post( $blog_page );
-
-		$blog_page = untrailingslashit( wp_make_link_relative( get_permalink( $blog_page ) ) );
-		$blog_page = rwp_remove_prefix( $blog_page, '/' );
-
-		$rules = $wp_rewrite->rules;
-
-		$new_rules = array(
-			'/' . $blog_page . '/?$' => 'index.php?post_type=post',
-			'/' . $blog_page . '/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post_type=post&feed=$matches[1]',
-			'/' . $blog_page . '/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post_type=post&feed=$matches[1]',
-			'/' . $blog_page . '/page/([0-9]{1,})/?$' => 'index.php?post_type=post&paged=$matches[1]',
-			$blog_page . '/([^/]+)/page/?([0-9]{1,})/?$' => 'index.php?acfe-dt=$matches[1]&paged=$matches[2]',
-			$blog_page . '/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?acfe-dt=$matches[1]&cpage=$matches[2]',
-			$blog_page . '/([^/]+)/?$' => 'index.php?wp_template=$matches[1]',
-			$blog_page . '/(.+?)/page/?([0-9]{1,})/?$' => 'index.php?acfe-dop=$matches[1]&paged=$matches[2]',
-			$blog_page . '/(.+?)/comment-page-([0-9]{1,})/?$' => 'index.php?acfe-dop=$matches[1]&cpage=$matches[2]',
-			$blog_page . '/(.+?)/?$' => 'index.php?post_type=page&pagename=$matches[1]',
-			$blog_page . '/.+?/attachment/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
-			$blog_page . '/.+?/attachment/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
-			$blog_page . '/.+?/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/.+?/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/.+?/attachment/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
-			$blog_page . '/.+?/attachment/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
-			$blog_page . '/(.+?)/embed/?$' => 'index.php?acfe-dop=$matches[1]&embed=true',
-			$blog_page . '/(.+?)/trackback/?$' => 'index.php?acfe-dop=$matches[1]&tb=1',
-			$blog_page . '/(.+?)(?:/([0-9]+))?/?$' => 'index.php?acfe-dop=$matches[1]&page=$matches[2]',
-			$blog_page . '/[^/]+/attachment/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
-			$blog_page . '/[^/]+/attachment/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
-			$blog_page . '/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
-			$blog_page . '/[^/]+/attachment/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
-			$blog_page . '/([^/]+)/embed/?$' => 'index.php?acfe-dt=$matches[1]&embed=true',
-			$blog_page . '/([^/]+)/trackback/?$' => 'index.php?acfe-dt=$matches[1]&tb=1',
-			$blog_page . '/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post=$matches[1]&feed=$matches[2]',
-			$blog_page . '/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?post=$matches[1]&feed=$matches[2]',
-			$blog_page . '/([^/]+)(?:/([0-9]+))?/?$' => 'index.php?acfe-dt=$matches[1]&page=$matches[2]',
-			$blog_page . '/[^/]+/([^/]+)/?$' => 'index.php?attachment=$matches[1]',
-			$blog_page . '/[^/]+/([^/]+)/trackback/?$' => 'index.php?attachment=$matches[1]&tb=1',
-			$blog_page . '/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?attachment=$matches[1]&feed=$matches[2]',
-			$blog_page . '/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$' => 'index.php?attachment=$matches[1]&cpage=$matches[2]',
-			$blog_page . '/[^/]+/([^/]+)/embed/?$' => 'index.php?attachment=$matches[1]&embed=true',
-		);
-		$rules = array_merge( $rules, $new_rules );
-		$wp_rewrite->rules = $rules;
 	}
 
 	/**

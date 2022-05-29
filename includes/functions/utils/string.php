@@ -87,6 +87,8 @@ function rwp_change_case( $string = '', $case = 'slug' ) {
 		case 'camel':
 			$string = Str::camel( $string );
 			break;
+		case 'pascal':
+			$string = ucfirst( Str::camel( $string ) );
 	}
 
 	$string = apply_filters( 'rwp_change_case', $string, $original, $case );

@@ -11,7 +11,7 @@
  * @author    Human Made Limited
  * ========================================================================== */
 
-namespace RWP\Internals\PostTypes;
+namespace RWP\Internals;
 
 use RWP\Engine\Abstracts\Singleton;
 

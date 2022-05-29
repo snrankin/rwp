@@ -1,52 +1,63 @@
 <?php
 /** ============================================================================
- * Plugin
+ * Base skeleton of the plugin
  *
- * @package   RWP\/includes/engine/Plugin.php
+ * @package   RWP\Engine
  * @since     1.0.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
 
-namespace RWP\Engine\Abstracts;
+namespace RWP\Engine;
 
 use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
+use RWP\Engine\Traits\Assets;
+use RWP\Engine\Traits\Helpers;
+class Plugin extends Singleton implements Component {
 
-abstract class Plugin extends Singleton implements Component {
+	use Assets;
+	use Helpers;
+
+    protected $name;
+
+	protected $dir;
+	protected $uri;
+	protected $namespace;
+	protected $title;
+	protected $capability;
+	protected $icon;
+	protected $plugin_uri;
+	protected $description;
+	protected $author;
+	protected $settings_uri;
+	protected $text_domain;
+	protected $domain_path;
+	protected $network;
+	protected $requires;
 
     /**
 	 * @var string $file Absolute path to plugin main file
 	 * @access private
 	 */
-    public $file;
+    private $file;
 
     /**
 	 * @var string $version Current plugin version
-	 * @access public
+	 * @access private
 	 */
-    public $version = '';
+    private $version = '';
+
 
     /**
 	 * @var array $components Array of plugin components which might need upgrade
 	 * @access public
 	 */
-    public static $components = [];
+    public $components = [];
 
-	/**
-	 * @var ClassLoader
-	 * @access public
-	 */
-    public static $autoloader;
-
-	/**
-	 * @var array
-	 * @access public
-	 */
-    public static $classes;
 
 	/**
 	 * @var array $settings The settings of the plugin.
@@ -66,9 +77,36 @@ abstract class Plugin extends Singleton implements Component {
     /**
      *  @inheritdoc
      */
-    public function __construct( $args = array() ) {
+    protected function __construct() {
 
-        $this->set( $args );
+		$this->file         = RWP_PLUGIN_FILE;
+		$this->autoloader   = require RWP_PLUGIN_ROOT . '/vendor/autoload.php';
+		$this->dir          = RWP_PLUGIN_ROOT;
+		$this->uri          = RWP_PLUGIN_URI;
+		$this->namespace    = 'RWP';
+		$this->slug         = 'rwp';
+		$this->title        = __( 'RIESTER Core Plugin', 'rwp' );
+		$this->capability   = 'manage_options';
+		$this->settings_uri = add_query_arg( 'page', 'rwp-options', 'admin.php' );
+		$this->icon         = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZmlsbD0iY3VycmVudENvbG9yIj4KCTxwYXRoIGQ9Ik00ODYuMSwzMDguOGgtMzQuNXYxNzQuMWgzNC41YzUyLjUsMCw3Mi4yLTE5LjYsNzIuMi04N1M1MzguNywzMDguOCw0ODYuMSwzMDguOHoiIC8+Cgk8cGF0aCBkPSJNMCwwdjEwMjRoMTAyNGwwLTEwMjRIMHogTTU3MC44LDc5NS4ybC02OS0yMzQuNWMtMTIuNSwxLjYtMzIuOSwyLjMtNTAuMiwyLjN2MjMyLjJoLTk3LjJWMjI4LjhoMTM2LjUgYzEwOSwwLDE2NC43LDQ2LjMsMTY0LjcsMTY3LjFjMCw5MS0zNS4zLDEyNy44LTY4LjIsMTQyLjdsODIuMywyNTYuNUg1NzAuOHoiIC8+Cjwvc3ZnPgo=';
+		$this->paths        = array(
+			'assets'       => array(
+				'dir' => RWP_PLUGIN_ROOT . 'assets/',
+				'uri' => RWP_PLUGIN_URI . 'assets/',
+			),
+			'config'       => array(
+				'dir' => RWP_PLUGIN_ROOT . 'config/',
+				'uri' => RWP_PLUGIN_URI . 'config/',
+			),
+			'includes'     => array(
+				'dir' => RWP_PLUGIN_ROOT . 'includes/',
+				'uri' => RWP_PLUGIN_URI . 'includes/',
+			),
+			'dependencies' => array(
+				'dir' => RWP_PLUGIN_ROOT . 'dependencies/',
+				'uri' => RWP_PLUGIN_URI . 'dependencies/',
+			),
+		);
 
 		// Activate plugin when new blog is added
 		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
@@ -78,10 +116,10 @@ abstract class Plugin extends Singleton implements Component {
         \add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
         \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
-        parent::__construct();
-
+		$this->initialize_autoloader();
 		$this->initialize_settings();
 		$this->initialize_configs();
+		$this->initialize_assets();
     }
 
 	public function initialize_configs() {
@@ -114,7 +152,7 @@ abstract class Plugin extends Singleton implements Component {
 			$key = Str::replace( array( 'u_r_i', 'w_p', 'p_h_p' ), array( 'uri', 'wp', 'php' ), $key );
 			return [ $key => $value ];
 		})->each(function( $value, $key ) {
-			$this->set( $key, $value, true );
+			$this->$key = $value;
 		});
 	}
 
@@ -125,8 +163,18 @@ abstract class Plugin extends Singleton implements Component {
     /**
      *  @return string full plugin file path (with file name)
      */
+
     public function get_plugin_file() {
         return $this->file;
+    }
+
+	/**
+	 * Get plugin namespace
+	 *
+	 * @return string
+	 */
+    public function get_namespace() {
+        return $this->namespace;
     }
 
 	/**
@@ -166,7 +214,7 @@ abstract class Plugin extends Singleton implements Component {
      *  @return string plugin slug
      */
     public function get_slug() {
-        return \basename( $this->get_plugin_dir() );
+        return $this->get( 'slug' );
     }
 
     /**

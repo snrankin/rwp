@@ -36,7 +36,7 @@ class Gutenberg extends Singleton {
 
 		// \add_filter( 'block_categories', $this, 'add_block_category', 10, 2 );
 		// \add_filter( 'render_block', $this, 'section_block_filter', 20, 2 );
-		\add_action( 'init', array( $this, 'register_block_types' ) );
+		//\add_action( 'init', array( $this, 'register_block_types' ) );
 
 	}
 

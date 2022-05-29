@@ -40,7 +40,7 @@ abstract class DebugOutput extends \QM_Output_Html {
 
 	public function __construct( \QM_Collector $collector, \RWP\Integrations\QM $parent, $id = '' ) {
 		parent::__construct( $collector );
-		$prefix = rwp()->get( 'namespace' );
+		$prefix = rwp()->get_namespace();
 
 		$this->title = rwp_add_prefix( $id, $prefix . ' ' );
 		$id = rwp()->prefix( $id );
@@ -54,6 +54,10 @@ abstract class DebugOutput extends \QM_Output_Html {
 		\add_filter( 'qm/output/menus', array( $this, 'admin_menu' ), 101 );
 		\add_filter( 'qm/output/title', array( $this, 'admin_title' ), 101 );
 		\add_filter( 'qm/output/menu_class', array( $this, 'admin_class' ) );
+	}
+
+	public function name() {
+        return $this->title;
 	}
 
 	/**
