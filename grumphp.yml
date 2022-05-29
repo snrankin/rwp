@@ -28,7 +28,6 @@ grumphp:
       keywords:
         - "die"
         - "var_dump"
-        - "rwp_log"
         - "ray"
       whitelist_patterns:
         - /^includes\/dependencies\/(.*)/

@@ -1,6 +1,7 @@
 module.exports = {
 	extends: ['stylelint-config-standard-scss', 'stylelint-config-prettier'],
 	rules: {
+		'alpha-value-notation': 'number',
 		'at-rule-empty-line-before': null,
 		'at-rule-no-unknown': null,
 		'color-function-notation': null,
@@ -16,8 +17,15 @@ module.exports = {
 		'scss/no-global-function-names': null,
 		'scss/at-if-no-null': null,
 		'scss/operator-no-unspaced': null,
+		'scss/double-slash-comment-empty-line-before': null,
 		'selector-class-pattern': null,
 		'string-quotes': 'single',
+		'value-keyword-case': [
+			'lower',
+			{
+				camelCaseSvgKeywords: true,
+			},
+		],
 	},
 	overrides: [
 		{

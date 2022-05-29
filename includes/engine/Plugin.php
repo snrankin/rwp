@@ -51,18 +51,12 @@ class Plugin extends Singleton implements Component {
 	 */
     private $version = '';
 
-
     /**
 	 * @var array $components Array of plugin components which might need upgrade
 	 * @access public
 	 */
     public $components = [];
 
-
-	/**
-	 * @var array $settings The settings of the plugin.
-	 */
-	public $settings = array();
 
 	/**
 	 * @var array|Collection $options The option keys available in the database
@@ -215,6 +209,26 @@ class Plugin extends Singleton implements Component {
      */
     public function get_slug() {
         return $this->get( 'slug' );
+    }
+
+	/**
+     *  @return string plugin settings uri
+     */
+    public function get_settings_uri() {
+        return $this->settings_uri;
+    }
+
+	/**
+	 * Get the admin icon
+	 * @param bool $decode
+	 * @return string|false
+	 */
+    public function get_settings_icon( $decode = false ) {
+		$icon = $this->icon;
+		if ( $decode ) {
+			$icon = base64_decode( $icon );
+		}
+        return $icon;
     }
 
     /**
@@ -672,7 +686,7 @@ class Plugin extends Singleton implements Component {
 	 *
 	 * @param string $component Class name to find.
 	 * @since 1.0.0
-	 * @return array Return the classes.
+	 * @return string Return the classes.
 	 */
 	public function get_component( string $component = '' ) {
 
