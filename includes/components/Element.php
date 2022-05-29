@@ -136,7 +136,7 @@ class Element {
 			'atts'    => $this->get_atts(),
 			'content' => array(),
 		);
-
+		$string = trim( $string );
 		$string = \force_balance_tags( $string );
 		if ( ! rwp_str_is_html( $string ) ) {
 			$args['content'][] = $string;

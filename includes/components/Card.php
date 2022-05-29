@@ -286,11 +286,11 @@ class Card extends Element {
 	 *
 	 * @return void
 	 */
-	public function add_text( $text ) {
+	public function add_text( $text_args ) {
 
 		$text = new Element( $this->text_args );
 
-		$text->merge_args( $text, true );
+		$text->merge_args( $text_args, true );
 
 		$location = data_get( $text, 'location', 'body' );
 

@@ -37,7 +37,7 @@ class TeamGrid extends Shortcode {
 
 		$cpts = rwp()->get_option( 'cpt_options.cpts' );
 
-		if ( rwp_is_collection( $cpts ) && $cpts->has( 'team_member' ) ) {
+		if ( rwp_is_collection( $cpts ) && $cpts->has( 'team_members' ) ) {
 
 			parent::initialize();
         }

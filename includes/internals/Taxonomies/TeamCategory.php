@@ -37,13 +37,13 @@ class TeamCategory extends Taxonomy {
 	 * @var string $singular The taxonomy type
 	 */
 
-	public $singular = 'Category';
+	public $singular = 'Team Category';
 
 	/**
 	 * @var string $plural The taxonomy type in plural form
 	 */
 
-	public $plural = 'Categories';
+	public $plural = 'Team Categories';
 
 	/**
 	 * @var string $menu The taxonomy menu title
