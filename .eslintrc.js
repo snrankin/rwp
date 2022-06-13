@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
 	extends: ['eslint:recommended', 'prettier'],
-	ignorePatterns: ['assets/js/**/*.js', 'src/blocks/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
+	ignorePatterns: ['assets/js/**/*.js', 'src/blocks/global/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
 	parser: '@babel/eslint-parser',
 	globals: {
 		rwp: true,
@@ -47,9 +47,6 @@ module.exports = {
 	plugins: ['import'],
 	settings: {
 		'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
-		react: {
-			pragma: 'wp',
-		},
 	},
 	rules: {
 		quotes: ['error', 'single'],

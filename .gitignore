@@ -11,3 +11,5 @@
 
 vendor/composer/*
 vendor/composer/!*.php
+
+!src/blocks/**/*

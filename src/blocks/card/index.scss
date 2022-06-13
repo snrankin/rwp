@@ -5,13 +5,3 @@
 /// @since  0.1.1
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
-
-@import '../../css/global/index';
-
-.rwp-card {
-	@extend %block;
-}
-
-.card-img-left {
-	@include border-left-radius($card-border-radius);
-}

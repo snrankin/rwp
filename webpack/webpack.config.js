@@ -82,6 +82,7 @@ let webpackConfig = {
 		},
 	},
 	resolve: {
+		extensions: ['.ts', '.js'],
 		alias: {
 			modernizr$: path.resolve(filePaths.root, '.modernizrrc'),
 		},

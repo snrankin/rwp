@@ -1,0 +1,52 @@
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./blocks/card/edit.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+.rwp.card{
+    margin:0;
+    padding:0;
+}
+.rwp.card:not(.card-row) .card-body,
+.rwp.card:not(.card-row) .card-header,
+.rwp.card:not(.card-row) .card-footer{
+    flex:1 1 100%;
+    width:100%;
+}
+.rwp.card.text-left .card-body,
+.rwp.card.text-left .card-footer,
+.rwp.card.text-left .card-header{
+    align-items:flex-start;
+    text-align:left;
+}
+.rwp.card.text-left .list-inline{
+    justify-content:flex-start;
+}
+.rwp.card.text-center .card-body,
+.rwp.card.text-center .card-footer,
+.rwp.card.text-center .card-header{
+    align-items:center;
+    text-align:center;
+}
+.rwp.card.text-center .list-inline{
+    justify-content:center;
+}
+.rwp.card.text-right .card-body,
+.rwp.card.text-right .card-footer,
+.rwp.card.text-right .card-header{
+    align-items:flex-end;
+    text-align:right;
+}
+.rwp.card.text-right .list-inline{
+    justify-content:flex-end;
+}
+.rwp.card .card-body,
+.rwp.card .card-footer,
+.rwp.card .card-header{
+    display:flex;
+    flex-direction:column;
+}
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./blocks/card/index.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+
+
+/*# sourceMappingURL=rwp-card.css.map*/

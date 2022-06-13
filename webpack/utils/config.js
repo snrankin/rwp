@@ -40,18 +40,16 @@ const isProduction = env() === 'production' ? true : false;
 const isDebug = configFile.enabled.debug || argv.stats === 'verbose' ? true : false;
 const rootPath = filePaths && filePaths.root ? filePaths.root : process.cwd();
 
-const buildStats = !isEmpty(argv.stats)
-	? argv.stats
-	: {
-			colors: true,
-			excludeAssets: ['**/*.map'],
-			logging: false,
-			modules: false,
-			nestedModules: false,
-			reasons: false,
-			source: true,
-			errors: false,
-	  };
+const buildStats =
+	'verbose' === argv.stats
+		? argv.stats
+		: {
+				preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
+				colors: true,
+				excludeAssets: ['**/*.map'],
+				cachedModules: true,
+				errorDetails: true,
+		  };
 
 function createConfig(groupName = '', configName = '') {
 	const entryFiles = fileNames(groupName, configName, configFile.entry);
@@ -91,7 +89,7 @@ function createConfig(groupName = '', configName = '') {
 				assetModuleFilename: assetnameTemplate,
 				chunkFilename: '[name].js',
 			},
-			//stats: buildStats,
+			stats: buildStats,
 			watchOptions: {
 				ignored: [filePaths.dist, path.join(rootPath, 'node_modules')],
 			},
@@ -280,11 +278,11 @@ exports.cssLoaders = cssLoaders;
 const jsLoaders = [
 	{
 		enforce: 'pre',
-		test: /\.js$/,
+		test: /\.(j|t)sx?$/,
 		loader: 'import-glob-loader',
 	},
 	{
-		test: /\.js$/,
+		test: /\.(j|t)sx?$/,
 		exclude: [/node_modules/, /vendor/],
 		use: [
 			{

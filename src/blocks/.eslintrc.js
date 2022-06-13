@@ -37,8 +37,8 @@ module.exports = {
 		},
 		babelOptions: {
 			presets: ['@babel/preset-react'],
+			plugins: ['@babel/plugin-syntax-jsx'],
 		},
-		jsx: true,
 		requireConfigFile: false,
 		ecmaVersion: 2017,
 		allowImportExportEverywhere: true,
