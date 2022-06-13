@@ -27,7 +27,6 @@ class Settings extends Singleton {
 
 		\add_filter( 'plugin_action_links_' . plugin_basename( RWP_PLUGIN_FILE ), array( $this, 'add_action_links' ), );
 		\add_filter( 'admin_body_class', array( $this, 'add_plugin_class' ) );
-
 	}
 
 	/**
