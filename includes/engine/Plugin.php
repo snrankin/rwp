@@ -172,6 +172,24 @@ class Plugin extends Singleton implements Component {
     }
 
 	/**
+	 * Get plugin capability
+	 *
+	 * @return string
+	 */
+    public function get_capability() {
+        return $this->capability;
+    }
+
+	/**
+	 * Get plugin capability
+	 *
+	 * @return string
+	 */
+    public function get_icon() {
+        return $this->icon;
+    }
+
+	/**
 	 * Get full plugin file path of a folder
 	 *
 	 * @param string $folder Get specific path folder
@@ -202,6 +220,13 @@ class Plugin extends Singleton implements Component {
      */
     public function get_asset_roots() {
         return array( $this->get_plugin_dir() => $this->get_plugin_url() );
+    }
+
+	/**
+     *  @return string plugin slug
+     */
+    public function get_name() {
+        return $this->get( 'name' );
     }
 
     /**
