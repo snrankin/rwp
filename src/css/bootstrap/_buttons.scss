@@ -75,7 +75,7 @@
 .btn-icon {
 	display: inline-block;
 	position: relative;
-	min-width: 1em;
+	width: 1em;
 
 	&.icon-right {
 		margin-left: getcssvar(spacer-default);

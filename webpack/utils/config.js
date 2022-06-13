@@ -47,7 +47,6 @@ const buildStats =
 				preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
 				colors: true,
 				excludeAssets: ['**/*.map'],
-				cachedModules: true,
 				errorDetails: true,
 		  };
 

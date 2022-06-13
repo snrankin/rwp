@@ -3177,15 +3177,21 @@
         }
         function slider(element) {
             var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            if (rwp.isEmpty(element)) {
+                return;
+            }
             if (!rwp.isEmpty(args)) {
-                args = rwp.extend(args, defaults);
+                args = rwp.extend(defaults, args);
             } else {
                 args = defaults;
+            }
+            if (typeof element === "string" || element instanceof String) {
+                element = document.querySelector(element);
             }
             var inlineArgs = element.getAttribute("data-tns");
             if (!rwp.isEmpty(inlineArgs)) {
                 inlineArgs = JSON.parse(inlineArgs);
-                args = rwp.extend(inlineArgs, args);
+                args = rwp.extend(args, inlineArgs);
             }
             var hasThumbnails = rwp.get(args, "navAsThumbnails", false);
             if (hasThumbnails) {

@@ -129,16 +129,23 @@ function createNav(elem, hasThumbnails) {
 }
 
 function slider(element, args = {}) {
+	if (rwp.isEmpty(element)) {
+		return;
+	}
 	if (!rwp.isEmpty(args)) {
-		args = rwp.extend(args, defaults);
+		args = rwp.extend(defaults, args);
 	} else {
 		args = defaults;
+	}
+
+	if (typeof element === 'string' || element instanceof String) {
+		element = document.querySelector(element);
 	}
 
 	let inlineArgs = element.getAttribute('data-tns');
 	if (!rwp.isEmpty(inlineArgs)) {
 		inlineArgs = JSON.parse(inlineArgs);
-		args = rwp.extend(inlineArgs, args);
+		args = rwp.extend(args, inlineArgs);
 	}
 
 	const hasThumbnails = rwp.get(args, 'navAsThumbnails', false);

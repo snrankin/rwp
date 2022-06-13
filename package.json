@@ -12,7 +12,7 @@
     },
     "scripts": {
         "main:debug": "webpack --stats verbose --color --progress --mode=development --name main --config ./webpack/webpack.config.js",
-        "main:dev": "webpack --color --progress --mode=development --name main --config ./webpack/webpack.config.js",
+        "main:dev": "webpack --color --progress --stats errors-only --mode=development --name main --config ./webpack/webpack.config.js",
         "main:prod": "webpack --color --progress --mode=production --name main --config ./webpack/webpack.config.js",
         "main:profile": "webpack --stats verbose --no-color --progress --mode=development --name main --profile --json > stats.json --config ./webpack/webpack.config.js",
         "fonts:debug": "webpack --stats verbose --color --progress --mode=development --name fonts --config ./webpack/webpack.config.js",
