@@ -495,7 +495,17 @@
             module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
         },
         "../node_modules/@babel/runtime/regenerator/index.js": function(module, __unused_webpack_exports, __webpack_require__) {
-            module.exports = __webpack_require__("../node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
+            var runtime = __webpack_require__("../node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
+            module.exports = runtime;
+            try {
+                regeneratorRuntime = runtime;
+            } catch (accidentalStrictMode) {
+                if (typeof globalThis === "object") {
+                    globalThis.regeneratorRuntime = runtime;
+                } else {
+                    Function("r", "regeneratorRuntime = r")(runtime);
+                }
+            }
         },
         "../node_modules/domready/ready.js": function(module) {
             !function(name, definition) {
