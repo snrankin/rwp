@@ -135,7 +135,6 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 		'aspectratio'    => true,
 		'attrchange'     => false,
 		'bgset'          => true,
-		'fix-ios-sizes'  => true,
 		'include'        => false,
 		'native-loading' => true,
 		'object-fit'     => true,
