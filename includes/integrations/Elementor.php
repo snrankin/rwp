@@ -21,7 +21,7 @@ use Elementor\Core\Files as File_Base;
 use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use Elementor\Core\Experiments\Manager as Experiments_Manager;
 use Elementor\Controls_Manager as Controls_Manager;
-
+use RWP\Components\Image;
 
 class Elementor extends Singleton {
 
@@ -55,10 +55,32 @@ class Elementor extends Singleton {
 			add_filter( 'elementor/utils/get_placeholder_image_src', array( $this, 'relative_placeholder_image_src' ), 50 );
 		}
 
+		if ( rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
+			add_filter( 'elementor/image_size/get_attachment_image_html', array( $this, 'add_lazysizes' ), 10, 4 );
+		}
+
 		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
 
+	}
+
+	/**
+	 * Adjust lazysizes for elementor
+	 *
+	 * @param mixed $html
+	 * @param mixed $settings
+	 * @param mixed $image_size_key
+	 * @param mixed $image_key
+	 * @return mixed
+	 */
+	public function add_lazysizes( $html, $settings, $image_size_key, $image_key ) {
+		if ( ! empty( $html ) ) {
+			$html = Image::add_lazysizes( $html );
+			$html->set_attr( 'data-parent', '.elementor-image', true );
+			$html = $html->html();
+		}
+		return $html;
 	}
 
 	/**
