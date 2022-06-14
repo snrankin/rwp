@@ -264,6 +264,15 @@ class Image extends Element {
 			}
 		}
 
+		if ( $image->has_attr( 'width' ) && $image->has_attr( 'height' ) ) {
+			$width = floatval( $image->get_attr( 'width', 0 ) );
+			$height = floatval( $image->get_attr( 'height', 0 ) );
+			$srcset = $image->get_attr( 'srcset' );
+			if ( rwp_image_has_dimensions( $width, $height ) ) {
+				$image->set_attr( 'data-aspectratio', "$width/$height" );
+			}
+		}
+
 		if ( $image->has_attr( 'sizes' ) ) {
 			$image->remove_attr( 'sizes' );
 		}
