@@ -711,7 +711,7 @@ class Plugin extends Singleton implements Component {
 	 *
 	 * @param string $component Class name to find.
 	 * @since 1.0.0
-	 * @return string Return the classes.
+	 * @return mixed Return the classes.
 	 */
 	public function get_component( string $component = '' ) {
 
