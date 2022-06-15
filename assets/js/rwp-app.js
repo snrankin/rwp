@@ -691,7 +691,8 @@
         function matchHeights() {
             var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
             var breakpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-            var matches = document.querySelectorAll(elem);
+            var elements = document.querySelectorAll(elem);
+            var matches = Array.from(elements);
             if (matches.length > 1) {
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint) || isEmpty(breakpoint)) {
                     var minHeight = getTallest(elem);
@@ -725,7 +726,8 @@
         function matchWidths() {
             var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
             var breakpoint = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-            var matches = document.querySelectorAll(elem);
+            var elements = document.querySelectorAll(elem);
+            var matches = Array.from(elements);
             if (matches.length > 1) {
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint) || isEmpty(breakpoint)) {
                     var minWidth = getWidest(elem);
