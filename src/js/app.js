@@ -340,7 +340,8 @@ export function getHash(string) {
  * @return {number}
  */
 export function getTallest(el) {
-	const matches = document.querySelectorAll(el);
+	const elements = document.querySelectorAll(el);
+	const matches = Array.from(elements);
 	if (matches.length > 1) {
 		const heights = matches.map(function (elem) {
 			return elem.offsetHeight;
@@ -358,7 +359,8 @@ export function getTallest(el) {
  * @param {*} [container=Document]
  */
 export function matchHeights(elem = '', breakpoint = null) {
-	var matches = document.querySelectorAll(elem);
+	const elements = document.querySelectorAll(elem);
+	var matches = Array.from(elements);
 
 	if (matches.length > 1) {
 		if ((!isEmpty(breakpoint) && isBootstrapBP(breakpoint)) || isEmpty(breakpoint)) {
@@ -389,7 +391,8 @@ export function matchHeights(elem = '', breakpoint = null) {
  * @return {number}
  */
 export function getWidest(el) {
-	const matches = document.querySelectorAll(el);
+	const elements = document.querySelectorAll(el);
+	const matches = Array.from(elements);
 	if (matches.length > 1) {
 		const widths = matches.map(function (elem) {
 			return elem.offsetWidth;
@@ -406,7 +409,8 @@ export function getWidest(el) {
  * @param {string} [elem='']
  */
 export function matchWidths(elem = '', breakpoint = null) {
-	var matches = document.querySelectorAll(elem);
+	const elements = document.querySelectorAll(elem);
+	var matches = Array.from(elements);
 	if (matches.length > 1) {
 		if ((!isEmpty(breakpoint) && isBootstrapBP(breakpoint)) || isEmpty(breakpoint)) {
 			var minWidth = getWidest(elem);
