@@ -340,7 +340,8 @@ export function getHash(string) {
  * @return {number}
  */
 export function getTallest(el) {
-	const matches = document.querySelectorAll(el);
+	const elements = document.querySelectorAll(el);
+	const matches = Array.from(elements);
 	if (matches.length > 1) {
 		const heights = matches.map(function (elem) {
 			return elem.offsetHeight;
@@ -389,7 +390,8 @@ export function matchHeights(elem = '', breakpoint = null) {
  * @return {number}
  */
 export function getWidest(el) {
-	const matches = document.querySelectorAll(el);
+	const elements = document.querySelectorAll(el);
+	const matches = Array.from(elements);
 	if (matches.length > 1) {
 		const widths = matches.map(function (elem) {
 			return elem.offsetWidth;

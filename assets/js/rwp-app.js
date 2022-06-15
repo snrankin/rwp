@@ -678,7 +678,8 @@
             return false;
         }
         function getTallest(el) {
-            var matches = document.querySelectorAll(el);
+            var elements = document.querySelectorAll(el);
+            var matches = Array.from(elements);
             if (matches.length > 1) {
                 var heights = matches.map((function(elem) {
                     return elem.offsetHeight;
@@ -711,7 +712,8 @@
             }
         }
         function getWidest(el) {
-            var matches = document.querySelectorAll(el);
+            var elements = document.querySelectorAll(el);
+            var matches = Array.from(elements);
             if (matches.length > 1) {
                 var widths = matches.map((function(elem) {
                     return elem.offsetWidth;
