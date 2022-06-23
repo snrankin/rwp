@@ -17,15 +17,19 @@ module.exports = {
 	globals: {
 		wp: true,
 		wpApiSettings: true,
+		window: true,
+		document: true,
+		_: true,
 	},
 	env: {
-		es2017: true,
+		es2022: true,
 		amd: true,
 		node: true,
 		browser: true,
 		jquery: true,
 		mocha: true,
 		commonjs: true,
+		'jest/globals': true,
 	},
 	parserOptions: {
 		ecmaFeatures: {
@@ -39,6 +43,7 @@ module.exports = {
 			presets: ['@babel/preset-react'],
 			plugins: ['@babel/plugin-syntax-jsx'],
 		},
+		jsx: true,
 		requireConfigFile: false,
 		ecmaVersion: 2017,
 		allowImportExportEverywhere: true,
