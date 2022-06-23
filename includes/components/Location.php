@@ -834,7 +834,7 @@ class Location extends Element {
 			 */
 			$start_time = data_get( $time, 'start' );
 			if ( ! empty( $start_time ) ) {
-				$start_time = date_i18n( $time_format, strtotime( $start_time->format( 'c' ) ) );
+				$start_time = $start_time->format( $time_format );
 				$start_time = wp_sprintf( '<span class="schedule time start">%s</span>', $start_time );
 				$time_block->set_content( $start_time );
 			}
@@ -849,7 +849,7 @@ class Location extends Element {
 			}
 
 			if ( ! empty( $end_time ) ) {
-				$end_time = date_i18n( $time_format, strtotime( $end_time->format( 'c' ) ) );
+				$end_time = $end_time->format( $time_format );
 				$end_time = wp_sprintf( '<span class="schedule time end">%s</span>', $end_time );
 				$time_block->set_content( $end_time );
 			}
