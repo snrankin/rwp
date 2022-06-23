@@ -619,6 +619,7 @@ class Location extends Element {
 
 							$end_time = data_get( $day, 'times.end' );
 							$end_time = new \DateTime( $end_time, $timezone );
+
 							$time = array(
 								'start' => $start_time,
 								'end'  => $end_time,
@@ -690,7 +691,7 @@ class Location extends Element {
 					$times_output = $this->setup_times( $times, $time_format );
 
 					if ( $weekday instanceof \DateTime ) {
-						$weekday = $weekday->format( $day_format );
+						$weekday = date_i18n( $day_format, strtotime( $weekday->format( 'c' ) ) );
 					}
 
 					return array(
@@ -832,8 +833,11 @@ class Location extends Element {
 			 * @var null|\DateTime $start_time
 			 */
 			$start_time = data_get( $time, 'start' );
-			$start_time = ! empty( $start_time ) ? wp_sprintf( '<span class="schedule time start">%s</span>', $start_time->format( $time_format ) ) : $start_time;
-			$time_block->set_content( $start_time );
+			if ( ! empty( $start_time ) ) {
+				$start_time = date_i18n( $time_format, strtotime( $start_time->format( 'c' ) ) );
+				$start_time = wp_sprintf( '<span class="schedule time start">%s</span>', $start_time );
+				$time_block->set_content( $start_time );
+			}
 
 			/**
 			 * @var null|\DateTime $end_time
@@ -844,8 +848,11 @@ class Location extends Element {
 				$time_block->set_content( $time_separator );
 			}
 
-			$end_time = ! empty( $end_time ) ? wp_sprintf( '<span class="schedule time end">%s</span>', $end_time->format( $time_format ) ) : $end_time;
-			$time_block->set_content( $end_time );
+			if ( ! empty( $end_time ) ) {
+				$end_time = date_i18n( $time_format, strtotime( $end_time->format( 'c' ) ) );
+				$end_time = wp_sprintf( '<span class="schedule time end">%s</span>', $end_time );
+				$time_block->set_content( $end_time );
+			}
 		} else {
 			$time = wp_sprintf( '<span class="schedule time all-day">%s</span>', $time );
 			$time_block->set_content( $time );
