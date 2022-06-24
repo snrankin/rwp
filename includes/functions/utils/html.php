@@ -400,12 +400,15 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
                         break;
                 }
                 if ( 'string' === $output ) {
+
                     if ( $is_json ) {
+
                         $value = esc_attr( $attr ) . '=\'' . $value . '\'';
                     } else {
-                        if ( ! empty( $value ) ) {
+
+                        if ( filled( $value ) ) {
 							$value = esc_attr( $attr ) . '="' . $value . '"';
-						} else {
+						} else if ( rwp_attr_can_be_empty( $attr ) ) {
 							$value = esc_attr( $attr );
 						}
                     }
@@ -439,6 +442,71 @@ function rwp_format_html_atts( $atts = array(), $output = 'string', $remove_empt
             return array();
         }
     }
+}
+
+/**
+ * Test if an html attributes is a boolean attribute
+ *
+ * @see https://meiert.com/en/blog/boolean-attributes-of-html/
+ *
+ * @param string $attr
+ * @return bool
+ */
+function rwp_is_boolean_attr( $attr = '' ) {
+	$boolean_atts = array(
+		'allowfullscreen',
+		'allowpaymentrequest',
+		'async',
+		'autofocus',
+		'autoplay',
+		'checked',
+		'controls',
+		'default',
+		'defer',
+		'disabled',
+		'formnovalidate',
+		'hidden',
+		'ismap',
+		'itemscope',
+		'loop',
+		'multiple',
+		'muted',
+		'nomodule',
+		'novalidate',
+		'open',
+		'playsinline',
+		'readonly',
+		'required',
+		'reversed',
+		'selected',
+		'truespeed',
+	);
+
+	/**
+	 * Filter to allow custom empty attributes
+	 *
+	 * @var array $boolean_atts
+	 */
+
+	$boolean_atts = (array) apply_filters( 'rwp_allowed_empty_attributes', $boolean_atts );
+
+	return in_array( $attr, $boolean_atts );
+}
+
+/**
+ * Test and see if the attribute is allowed to be empty
+ *
+ * By default this allows boolean attributes and data attributes to be empty
+ *
+ * @param string $attr
+ * @return bool
+ */
+function rwp_attr_can_be_empty( $attr = '' ) {
+	if ( rwp_is_boolean_attr( $attr ) || rwp_str_has( $attr, 'data-' ) ) {
+		return true;
+	}
+
+	return false;
 }
 
 /**

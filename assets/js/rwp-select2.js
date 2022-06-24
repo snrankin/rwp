@@ -4519,7 +4519,7 @@
             const select2Inputs = document.querySelectorAll(".select2");
             $.fn.select2.defaults.set("minimumResultsForSearch", "Infinity");
             $.fn.select2.defaults.set("theme", "bootstrap-5");
-            $.fn.select2.defaults.set("width", "resolve");
+            $.fn.select2.defaults.set("width", "100%");
             if (select2Inputs.length > 0) {
                 select2Inputs.forEach((function(input) {
                     let isSmall = input.classList.contains("form-select-sm");
@@ -4528,7 +4528,7 @@
                         dropdownParent: input.parentElement,
                         minimumResultsForSearch: "Infinity",
                         theme: "bootstrap-5",
-                        width: "resolve",
+                        width: "100%",
                         templateResult: (data, container) => {
                             if (data.element) {
                                 $(container).addClass($(data.element).attr("class"));
@@ -4549,6 +4549,28 @@
                     $(input).select2(select2Options);
                 }));
             }
+            const optgroupState = {};
+            $("body").on("click", ".select2-container--open .select2-results__group", (function() {
+                $(this).toggleClass("open").siblings().toggle();
+                const id = $(this).closest(".select2-results__options").attr("id");
+                const index = $(".select2-results__group").index(this);
+                optgroupState[id][index] = !optgroupState[id][index];
+            }));
+            $(".select2").on("select2:open", (function() {
+                $(".select2-dropdown--below").css("opacity", 0);
+                setTimeout((() => {
+                    const groups = $(".select2-container--open .select2-results__group");
+                    const id = $(".select2-results__options").attr("id");
+                    if (!optgroupState[id]) {
+                        optgroupState[id] = {};
+                    }
+                    $.each(groups, ((index, v) => {
+                        optgroupState[id][index] = optgroupState[id][index] || false;
+                        optgroupState[id][index] ? $(v).siblings().show() : $(v).siblings().hide();
+                    }));
+                    $(".select2-dropdown--below").css("opacity", 1);
+                }), 0);
+            }));
         }));
     }();
     !function() {

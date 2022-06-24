@@ -42,6 +42,11 @@ class Image extends Element {
 	public $src;
 
 	/**
+	 * @var int $id The attachement id
+	 */
+	public $id;
+
+	/**
 	 * @var bool|string $is_bg Whether or not the item is background media and the background type.
 	 */
 	public $is_bg = false;
@@ -73,10 +78,35 @@ class Image extends Element {
 	public $srcset = array();
 
 	/**
+	 * @var array $elements_map An array that maps order items into new Element classes
+	 */
+	public $elements_map = array(
+		'link'    => 'Element',
+		'inner'   => 'Element',
+		'title'   => 'Element',
+		'caption' => 'Element',
+		'image'   => 'Element',
+	);
+
+	/**
+	 * @var string|array|Element $link Image Link options
+	 */
+	public $link = array(
+		'tag' => 'a',
+		'order' => array( 'inner' ),
+		'atts' => array(
+			'class' => array(
+				'media-link',
+			),
+		),
+	);
+
+	/**
 	 * @var string|array|Element $inner Inner wrapper options
 	 */
 	public $inner = array(
-		'tag' => 'media',
+		'tag' => 'picture',
+		'order' => array( 'sources', 'image' ),
 		'atts' => array(
 			'class' => array(
 				'media-content',
@@ -157,34 +187,47 @@ class Image extends Element {
 		);
 
 		$src  = '';
-		$size = 'full';
+		$size = data_get( $args, 'size', 'full' );
 		$html = '';
 		$id   = 0;
-		if ( rwp_str_is_html( $args ) ) {
-			$html = $args;
-		}
+		$defaults = array();
 
 		if ( ! empty( $args ) ) {
 
-			if ( is_string( $args ) || is_numeric( $args ) ) {
-				if ( is_numeric( $args ) ) {
-					$id   = $args;
-				}
+			if ( rwp_str_is_html( $args ) ) {
+				$html = $args;
+				$id = rwp_image_id( $args );
+				$src = rwp_extract_img_src( $args, $size );
+			} else if ( is_numeric( $args ) ) {
+				//$html = wp_get_attachment_image( $id, $size );
+				$id = $args;
+				$src = rwp_extract_img_src( $args, $size );
+			} else if ( rwp_is_class( $args, 'Element' ) ) {
+
+				/**
+				 * @var Element $args
+				 */
+				$html = $args->html();
+				$id = rwp_image_id( $args );
 				$src = rwp_extract_img_src( $args, $size );
 
-			} elseif ( is_array( $args ) ) {
-				$src  = data_get( $args, 'src', '' );
-
+			} else if ( rwp_is_class( $args, 'Html' ) ) {
+				/**
+				 * @var Html $args
+				 */
+				$html = $args->__toString();
+				$id = rwp_image_id( $args );
+				$src = rwp_extract_img_src( $args, $size );
+			} else {
+				$src  = data_get( $args, 'src', $src );
 				$size = data_get( $args, 'size', $size );
-				if ( is_numeric( $src ) ) {
-					$id   = $src;
-					$src = rwp_extract_img_src( $src, $size );
-				}
+				$html = data_get( $args, 'html', $html );
+				$id   = data_get( $args, 'id', $id );
 			}
-		}
-
-		if ( ! is_array( $args ) ) {
-			$args = array();
+		} else {
+			if ( ! is_array( $args ) ) {
+				$args = array();
+			}
 		}
 
 		if ( ! empty( $id ) ) {
@@ -196,8 +239,8 @@ class Image extends Element {
 		}
 
 		$args['src'] = $src;
-		$args['image']['atts']['src'] = $src;
 		$args['size'] = $size;
+		$args['id'] = $id;
 
 		if ( rwp_str_is_element( $html, 'div|figure' ) ) {
 			$args['html'] = $html;
@@ -205,12 +248,19 @@ class Image extends Element {
 			$args['image']['html'] = $html;
 		}
 
+		if ( rwp_array_has( 'link', $args ) ) {
+			$link = data_get( $args, 'link' );
+			if ( filled( $link ) ) {
+				$this->set_order( 'link', 'first' );
+				$this->remove_order_item( 'inner' );
+				if ( is_string( $link ) && rwp_is_url( $link ) ) {
+					$args = data_set( $args, 'link.atts.href', $link );
+				}
+			}
+		}
+
 		parent::__construct( $args );
 
-		$this->image = new Element( $this->image );
-		$this->inner = new Element( $this->inner );
-		$this->caption = new Element( $this->caption );
-		$this->title = new Element( $this->title );
 	}
 
 	/**
@@ -221,10 +271,6 @@ class Image extends Element {
 	 */
 
 	public static function add_lazysizes( $image = '' ) {
-
-		if ( ! ( $image instanceof Element ) ) {
-			$image = new Element( $image );
-		}
 
 		$lazysizes = array(
 			'lazyload'  => rwp_get_option( 'modules.lazysizes.lazyload', false ),
@@ -241,6 +287,39 @@ class Image extends Element {
 			return $image;
 		}
 
+		$placeholder = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
+		if ( ! rwp_is_class( $image, __NAMESPACE__ . '\\Element' ) ) {
+			$image = new Element( $image );
+
+			$image->set_attr( 'data-src', $image->get_attr( 'src' ) );
+
+			if ( $image->has_attr( 'srcset' ) ) {
+				$srcset = $image->get_attr( 'srcset' );
+				if ( $srcset !== $placeholder ) {
+					$image->set_attr( 'data-srcset', $image->get_attr( 'srcset' ) );
+					$image->set_attr( 'srcset', $placeholder, true ); // set to trasparent gif
+				}
+			}
+		}
+
+		$element = $image;
+
+		if ( rwp_is_class( $image, __NAMESPACE__ . '\\Image' ) ) {
+			$image = $image->image;
+
+			$sources = rwp_image_sources( $element->id, $element->size );
+
+			$element->inner->set_content( $sources, 'sources' );
+
+			$image->set_attr( 'data-src', $placeholder );
+
+			$image->set_attr( 'data-parent', '.media-content' );
+			$image->set_attr( 'data-parent-fit', 'cover' );
+			$image->remove_attr( 'data-srcset' );
+
+		}
+
 		$image->add_class( 'lazyload' );
 
 		if ( data_get( $lazysizes, 'blurup', false ) ) {
@@ -249,25 +328,13 @@ class Image extends Element {
 			$image->remove_class( 'blur-up' );
 		}
 
-		if ( $image->has_attr( 'src' ) ) {
-			$image->set_attr( 'data-src', $image->get_attr( 'src' ) );
 			$image->remove_attr( 'src' );
-		}
 
-		$placeholder_srcset = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-
-		if ( $image->has_attr( 'srcset' ) ) {
-			$srcset = $image->get_attr( 'srcset' );
-			if ( $srcset !== $placeholder_srcset ) {
-				$image->set_attr( 'data-srcset', $image->get_attr( 'srcset' ) );
-				$image->set_attr( 'srcset', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==', true ); // set to trasparent gif
-			}
-		}
+			$image->remove_attr( 'srcset' );
 
 		if ( $image->has_attr( 'width' ) && $image->has_attr( 'height' ) ) {
 			$width = floatval( $image->get_attr( 'width', 0 ) );
 			$height = floatval( $image->get_attr( 'height', 0 ) );
-			$srcset = $image->get_attr( 'srcset' );
 			if ( rwp_image_has_dimensions( $width, $height ) ) {
 				$image->set_attr( 'data-aspectratio', "$width/$height" );
 			}
@@ -279,8 +346,13 @@ class Image extends Element {
 
 		$image->set_attr( 'data-sizes', 'auto' );
 
-		$image->set_attr( 'data-parent', '.media-content' );
-		$image->set_attr( 'data-parent-fit', 'cover' );
+		if ( rwp_is_class( $image, __NAMESPACE__ . '\\Image' ) ) {
+
+			$element->image = $image;
+
+			$image = $element;
+
+		}
 
 		return $image;
 	}
@@ -328,7 +400,7 @@ class Image extends Element {
 	}
 
 	public function setup_html() {
-		self::add_lazysizes( $this->image );
+		self::add_lazysizes( $this );
 
 		if ( ! empty( $this->ratio ) ) {
 			$this->inner->add_class( 'ratio' );
@@ -344,5 +416,9 @@ class Image extends Element {
 		}
 
 		$this->inner->set_content( $this->image, 'image' );
+
+		if ( $this->link->has_attr( 'href' ) ) {
+			$this->link->set_content( $this->inner, 'inner' );
+		}
 	}
 }

@@ -20,7 +20,7 @@ use RWP\Vendor\Illuminate\Support\Enumerable;
  *
  * Converts a multilevel object into an array
  *
- * @param object $obj
+ * @param mixed $obj
  *
  * @return array The converted object
  */

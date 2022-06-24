@@ -280,7 +280,7 @@ class Element {
 	 */
 
 	public function has_attr( $key ) {
-		return $this->has( "atts.$key" );
+		return $this->exists( "atts.$key" );
 	}
 
 	/**
@@ -294,6 +294,28 @@ class Element {
 
 	public function get_attr( $key, $default = null ) {
 		return $this->get( "atts.$key", $default );
+	}
+
+	/**
+	 * Check if attribute exists in atts array
+	 *
+	 * @param string|string[]  $key
+	 *
+	 * @return bool
+	 */
+
+	public function is_empty_attr( $key ) {
+		if ( $this->has_attr( $key ) ) {
+			$attr = $this->get_attr( $key );
+
+			if ( rwp_attr_can_be_empty( $key ) || filled( $attr ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -1059,13 +1081,24 @@ class Element {
 
 
 	/**
-	 * Determine if the given key exists.
+	 * Determine if the given key exists and is not empty.
 	 *
 	 * @param  string|string[]  $key
 	 *
 	 * @return bool
 	 */
 	public function has( $key ) {
+		return $this->exists( $key ) && filled( $this->get( $key ) );
+	}
+
+	/**
+	 * Determine if the given key exists.
+	 *
+	 * @param  string|string[]  $key
+	 *
+	 * @return bool
+	 */
+	public function exists( $key ) {
 		return \data_has( $this, $key );
 	}
 
@@ -1203,7 +1236,7 @@ class Element {
 	 * @return bool
 	 */
 	public function __isset( $key ) {
-		return $this->has( $key );
+		return $this->exists( $key );
 	}
 
 	/**

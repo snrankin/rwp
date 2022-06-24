@@ -42,13 +42,11 @@ class PostCard extends Card {
 
 		$title = rwp_post_title( $post );
 
-		$image = rwp_get_featured_image($post, 'thumbnail', array(
-			'inner' => array(
-				'tag' => 'a',
-				'atts' => array(
-					'href' => $url,
-				),
-			),
+		$image_size = apply_filters( 'rwp_card_image_size', 'medium' ); // Adjust size for post card images globally
+		$image_size = apply_filters( "rwp_{$post_type}_image_size", $image_size, $post ); // Adjust size of post card images per post type
+
+		$image = rwp_get_featured_image($post, $image_size, array(
+			'link' => $url,
 			'atts' => array(
 				'class' => array(
 					'post-image',
