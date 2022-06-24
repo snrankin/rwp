@@ -14,37 +14,6 @@
 		"blocks": {
 			"files": ["card", "column", "container", "global", "row", "section", "toggle"]
 		},
-		"fonts": {
-			"copy": [
-				{
-					"from": "./fonts/**/*",
-					"to": "fonts"
-				},
-				{
-					"from": "~@fortawesome/fontawesome-free/webfonts/*",
-					"to": "fonts/[name][ext]"
-				},
-				{
-					"from": "~bootstrap-icons/font/fonts/*",
-					"to": "fonts/[name][ext]"
-				},
-				{
-					"from": "~select2/dist/js/i18n/*",
-					"to": "js/i18n/[name][ext]"
-				}
-			],
-			"files": {
-				"bootstrap-icons": {
-					"bootstrap-icons": ["vendor/bootstrap-icons.scss"]
-				},
-				"font-awesome": {
-					"font-awesome": ["vendor/font-awesome.scss"]
-				},
-				"modernizr": {
-					"modernizr": ["js/vendor/.modernizrrc"]
-				}
-			}
-		},
 		"main": {
 			"files": {
 				"admin": {
@@ -97,6 +66,38 @@
 				}
 			}
 		},
+
+		"fonts": {
+			"copy": [
+				{
+					"from": "./fonts/**/*",
+					"to": "fonts"
+				},
+				{
+					"from": "~@fortawesome/fontawesome-free/webfonts/*",
+					"to": "fonts/[name][ext]"
+				},
+				{
+					"from": "~bootstrap-icons/font/fonts/*",
+					"to": "fonts/[name][ext]"
+				},
+				{
+					"from": "~select2/dist/js/i18n/*",
+					"to": "js/i18n/[name][ext]"
+				}
+			],
+			"files": {
+				"bootstrap-icons": {
+					"bootstrap-icons": ["vendor/bootstrap-icons.scss"]
+				},
+				"font-awesome": {
+					"font-awesome": ["vendor/font-awesome.scss"]
+				},
+				"modernizr": {
+					"modernizr": ["js/vendor/.modernizrrc"]
+				}
+			}
+		},
 		"plugins": {
 			"files": {
 				"modal": {
@@ -118,35 +119,12 @@
 					"usedExports": true
 				}
 			}
-		},
-		"vendor": {
-			"files": {
-				"acf": {
-					"acf": ["vendor/acf.scss"]
-				},
-				"bootstrap": {
-					"bootstrap": ["bootstrap.scss", "vendor/bootstrap.js"]
-				},
-				"debug": {
-					"debug": ["vendor/debug.js", "vendor/debug.scss"]
-				},
-				"elementor": {
-					"elementor": ["vendor/elementor.scss"]
-				},
-				"gravity-forms": {
-					"gravity-forms": ["vendor/gravity-forms.scss"]
-				},
-				"lazysizes": {
-					"lazysizes": ["vendor/lazysizes.js", "vendor/lazysizes.scss"]
-				},
-				"select2": {
-					"select2": ["vendor/select2.js", "vendor/select2.scss"]
-				}
-			}
 		}
 	},
 	"fileprefix": "rwp-",
 	"folders": {
+		"dist": "assets",
+		"src": "src",
 		"blocks": "blocks",
 		"css": "css",
 		"fonts": "fonts",
@@ -154,10 +132,8 @@
 		"js": "js"
 	},
 	"paths": {
-		"dist": "./assets",
 		"favicon": "./src/imgs/rwp-icon.svg",
 		"manifest": "./assets/manifest.json",
-		"public": "/wp-content/plugins/rwp",
-		"src": "./src"
+		"public": "/wp-content/plugins/rwp/"
 	}
 }

@@ -14,17 +14,15 @@ const { argv } = require('yargs');
 const path = require('path');
 const webpack = require('webpack');
 const { mergeWithCustomize, customizeArray, mergeWithRules } = require('webpack-merge');
-const TerserPlugin = require('terser-webpack-plugin');
+
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 // ======================== Import Local Dependencies ======================= //
 
-const { isEmpty, debug, filePaths, env } = require('./utils/utils');
+const { debug, filePaths, buildWatch } = require('./utils/utils');
 const { startingPlugins, config, baseConfig, endingPlugins } = require('./utils/config');
 
 // =========================== Setup File Globals =========================== //
-
-const buildWatch = !isEmpty(argv.watch) ? true : false;
-const isProduction = env() === 'production' ? true : false;
 
 // ========================== Start Webpack Config ========================== //
 
@@ -40,46 +38,6 @@ let webpackConfig = {
 				use: ['@sect/modernizr-loader', 'json-loader'],
 			},
 		],
-	},
-	optimization: {
-		minimize: true,
-		minimizer: [
-			new TerserPlugin({
-				test: /\.js(\?.*)?$/i,
-				terserOptions: {
-					format: {
-						comments: false,
-						ecma: 2017,
-						beautify: isProduction ? false : true,
-					},
-					ecma: 2017,
-					safari10: true,
-					mangle: isProduction ? true : false,
-					compress: isProduction ? true : false,
-				},
-
-				extractComments: false,
-			}),
-		],
-		providedExports: true,
-		splitChunks: {
-			maxInitialRequests: Infinity,
-			minSize: 0,
-			hidePathInfo: true,
-			chunks: 'all',
-			cacheGroups: {
-				defaultVendors: false,
-				default: false,
-				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					layer: 'vendors',
-					chunks: 'all',
-					idHint: 'vendors',
-					name: 'vendors',
-					priority: -5,
-				},
-			},
-		},
 	},
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -98,6 +56,7 @@ let webpackConfig = {
 			select2: 'select2',
 			bs: 'bootstrap',
 		}),
+		new LodashModuleReplacementPlugin(),
 	],
 }; // Add custom options to webpack here
 

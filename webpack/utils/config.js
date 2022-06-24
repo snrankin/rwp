@@ -9,7 +9,6 @@
 // ======================= Import Vendor Dependencies ======================= //
 const _ = require('lodash');
 const path = require('path');
-const webpack = require('webpack');
 const { argv } = require('yargs');
 const { merge } = require('webpack-merge');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -18,10 +17,12 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const ExtractCssChunks = require('mini-css-extract-plugin');
 const CleanupMiniCssExtractPlugin = require('cleanup-mini-css-extract-plugin');
 const magicImporter = require('node-sass-magic-importer');
-const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
-const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const WebpackMessages = require('webpack-messages');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // ======================== Import Local Dependencies ======================= //
 const { isEmpty, env, manifest, filePaths, fileNames, pathByType, copyPath } = require('./utils');
@@ -30,27 +31,37 @@ const configFile = require('../../config.json');
 
 // =========================== Setup File Globals =========================== //
 
-const folders = _.get(configFile, 'folders', {});
-exports.folders = folders;
+const folders = _.get(configFile, 'folders', {}),
+	useCache = !isEmpty(argv.cache) ? true : false,
+	groupName = !isEmpty(argv.name) ? argv.name : '',
+	buildWatch = !isEmpty(argv.watch) ? true : false,
+	configName = !isEmpty(argv['config-name']) ? argv['config-name'] : '',
+	isProduction = env() === 'production' ? true : false,
+	jsDist = _.replace(filePaths.js.dist, filePaths.dist + '/', ''),
+	buildGroup = !isEmpty(groupName) ? groupName : 'Build',
+	buildType = !isEmpty(configName) ? `: ${configName}` : '',
+	envType = env() === 'production' ? ' - production' : ' - development',
+	buildName = `${buildGroup}${buildType}${envType}`,
+	shouldAnalyze = !isEmpty(argv.profile) ? true : false,
+	buildStats = {
+		preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
+		colors: true,
+		excludeAssets: ['**/*.map'],
+		hash: false,
+		version: false,
+		timings: false,
+		children: false,
+		errors: true,
+		errorDetails: true,
+		warnings: false,
+		chunks: false,
+		modules: false,
+		reasons: false,
+		source: false,
+		publicPath: false,
+	};
 
-const groupName = !isEmpty(argv.name) ? argv.name : '';
-const buildWatch = !isEmpty(argv.watch) ? true : false;
-const configName = !isEmpty(argv['config-name']) ? argv['config-name'] : '';
-const isProduction = env() === 'production' ? true : false;
-const isDebug = configFile.enabled.debug || argv.stats === 'verbose' ? true : false;
-const rootPath = filePaths && filePaths.root ? filePaths.root : process.cwd();
-
-const buildStats =
-	'verbose' === argv.stats
-		? argv.stats
-		: {
-				preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
-				colors: true,
-				excludeAssets: ['**/*.map'],
-				errorDetails: true,
-		  };
-
-function createConfig(groupName = '', configName = '') {
+function createConfig() {
 	const entryFiles = fileNames(groupName, configName, configFile.entry);
 
 	let customConfig = {};
@@ -72,32 +83,69 @@ function createConfig(groupName = '', configName = '') {
 
 	let newConfig = {
 		webpack: {
-			mode: isProduction ? 'production' : 'development',
+			mode: env(),
 			entry: entryFiles,
-			context: filePaths.src || filePaths.root,
-			cache: !isDebug
+			cache: useCache
 				? {
 						type: 'filesystem',
 						cacheDirectory: path.join(filePaths.root, '.cache'),
 				  }
 				: false,
+			context: filePaths.src || filePaths.root,
+			stats: buildStats,
 			output: {
 				path: filePaths.dist,
-				publicPath: !isEmpty(filePaths.public) ? filePaths.public : 'auto',
-				filename: path.join(folders.js, `${filenameTemplate}.js`),
+				publicPath: filePaths.public,
+				filename: `${jsDist}/${filenameTemplate}.js`,
 				assetModuleFilename: assetnameTemplate,
 				chunkFilename: '[name].js',
 			},
-			stats: buildStats,
 			watchOptions: {
-				ignored: [filePaths.dist, path.join(rootPath, 'node_modules')],
+				ignored: [filePaths.dist, path.join(filePaths.root, 'node_modules')],
 			},
 			optimization: {
-				nodeEnv: isProduction ? 'production' : 'development',
+				nodeEnv: env(),
+				mangleExports: isProduction,
+				minimize: true,
+				minimizer: [
+					new TerserPlugin({
+						test: /\.js(\?.*)?$/i,
+						terserOptions: {
+							format: {
+								comments: false,
+								ecma: 2017,
+								beautify: !isProduction,
+							},
+							ecma: 2017,
+							safari10: true,
+							mangle: isProduction,
+							compress: isProduction,
+							sourceMap: !isProduction,
+						},
+						parallel: true,
+						extractComments: false,
+					}),
+				],
+				providedExports: true,
 				splitChunks: {
+					maxInitialRequests: Infinity,
+					minSize: 0,
 					hidePathInfo: true,
+					chunks: 'all',
 					automaticNameDelimiter: '-',
 					filename: path.join(folders.js, `${filenameTemplate}.js`),
+					cacheGroups: {
+						defaultVendors: false,
+						default: false,
+						vendors: {
+							test: /[\\/]node_modules[\\/]/,
+							layer: 'vendors',
+							chunks: 'all',
+							idHint: 'vendors',
+							name: 'vendors',
+							priority: -5,
+						},
+					},
 				},
 			},
 			node: {
@@ -191,11 +239,11 @@ const cssLoaders = [
 					'postcss-fixes',
 					'postcss-momentum-scrolling',
 					'postcss-easings',
-					'autoprefixer',
+
 					[
 						'postcss-inline-svg',
 						{
-							paths: [filePaths.imagesSrc, path.join(filePaths.node, 'bootstrap-icons', 'icons')],
+							paths: [filePaths.images.src, path.join(filePaths.node, 'bootstrap-icons', 'icons')],
 						},
 					],
 					[
@@ -206,30 +254,29 @@ const cssLoaders = [
 								url: (asset) => {
 									let filename = path.basename(asset.relativePath);
 
-									let imagePath = path.join(filePaths.imagesDist, filename);
-									let url = path.relative(filePaths.cssDist, imagePath);
-									console.log('🚀 ~ file: config.js ~ line 228 ~ url', url);
+									let imagePath = path.join(filePaths.images.dist, filename);
+									let url = path.relative(filePaths.css.dist, imagePath);
+
 									return url;
 								},
-								from: filePaths.cssSrc,
-								to: filePaths.imagesDist,
+								from: filePaths.css.src,
+								to: filePaths.images.dist,
 								assetsPath: folders.images,
-								basePath: filePaths.imagesSrc,
+								basePath: filePaths.images.src,
 							},
 							{
 								filter: /\.(woff|woff2|eot|ttf|otf)$/,
 								url: (asset) => {
 									let filename = path.basename(asset.relativePath);
 
-									let fontPath = path.join(filePaths.fontsDist, filename);
-									let url = path.relative(filePaths.cssDist, fontPath);
-									console.log('🚀 ~ file: config.js ~ line 228 ~ url', url);
+									let fontPath = path.join(filePaths.fonts.dist, filename);
+									let url = path.relative(filePaths.css.dist, fontPath);
 									return url;
 								},
-								from: filePaths.cssSrc,
-								to: filePaths.fontsDist,
+								from: filePaths.css.src,
+								to: filePaths.fonts.dist,
 								assetsPath: folders.fonts,
-								basePath: filePaths.fontsSrc,
+								basePath: filePaths.fonts.src,
 							},
 						],
 					],
@@ -241,6 +288,7 @@ const cssLoaders = [
 							},
 						},
 					],
+					'autoprefixer',
 					isProduction
 						? [
 								'cssnano',
@@ -282,11 +330,15 @@ const jsLoaders = [
 	},
 	{
 		test: /\.(j|t)sx?$/,
-		exclude: [/node_modules/, /vendor/],
+		exclude: [/node_modules/, /vendors?/, /modernizr\.js$/],
 		use: [
 			{
 				loader: 'babel-loader',
 				options: {
+					envName: env(),
+					targets: '> 0.25%, not dead',
+					sourceMaps: !isProduction,
+					comments: !isProduction,
 					presets: [
 						[
 							'@babel/preset-env',
@@ -296,7 +348,7 @@ const jsLoaders = [
 							},
 						],
 					],
-					plugins: ['@babel/plugin-transform-runtime'],
+					plugins: ['lodash', '@babel/plugin-transform-runtime'],
 				},
 			},
 		],
@@ -334,7 +386,7 @@ let webpackConfig = {
 						options: {
 							sourceMap: true, // required for resolve-url-loader
 							sassOptions: {
-								includePaths: [filePaths.node, filePaths.cssSrc],
+								includePaths: [filePaths.node, filePaths.css.src],
 								outputStyle: 'expanded',
 								indentWidth: 4,
 								fiber: false,
@@ -407,15 +459,21 @@ const startingPlugins = [
 		fix: !buildWatch,
 		quiet: buildWatch,
 	}),
-	new RemoveEmptyScriptsPlugin(),
+	new RemoveEmptyScriptsPlugin({ verbose: !isProduction }),
 	new ExtractCssChunks({
 		filename: `${folders.css}/${config.filename}.css`,
 	}),
 	new CleanupMiniCssExtractPlugin(),
 ];
 
-if (!isEmpty(config.enabled.cache)) {
-	endingPlugins.unshift(new webpack.MemoryCachePlugin());
+if (shouldAnalyze) {
+	startingPlugins.unshift(
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static',
+			reportTitle: buildName,
+			excludeAssets: [/\.map$/],
+		})
+	);
 }
 
 exports.startingPlugins = startingPlugins;
@@ -445,11 +503,9 @@ const endingPlugins = [
 		seed: manifest,
 		removeKeyHash: true,
 	}),
-	new FriendlyErrorsWebpackPlugin({
-		logLevel: buildWatch ? 'SILENT' : 'WARNING',
-		clearConsole: true,
-		// additionalTransformers: [require('./transformers/sassError.js')],
-		// additionalFormatters: [require('./formatters/sassError.js')],
+	new WebpackMessages({
+		name: buildName,
+		logger: (str) => console.log(` >> ${str}`), // eslint-disable-line
 	}),
 	new WebpackBuildNotifierPlugin(config.notify),
 ];
@@ -500,7 +556,7 @@ if (!isEmpty(config.copy)) {
 				pattern.to = dest;
 			}
 			_.defaultsDeep(pattern, {
-				//noErrorOnMissing: true,
+				noErrorOnMissing: true,
 				globOptions: {
 					gitignore: true,
 				},

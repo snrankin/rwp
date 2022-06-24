@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
 	extends: ['eslint:recommended', 'prettier'],
-	ignorePatterns: ['assets/js/**/*.js', 'src/blocks/global/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
+	ignorePatterns: ['assets/js/**/*.js', 'src/blocks/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
 	parser: '@babel/eslint-parser',
 	globals: {
 		rwp: true,
@@ -10,8 +10,6 @@ module.exports = {
 		fancybox: true,
 		tns: true,
 		select2: true,
-		wp: true,
-		wpApiSettings: true,
 		_: true,
 		Modernizr: true,
 		hoverintent: true,
@@ -33,12 +31,7 @@ module.exports = {
 			generators: false,
 			objectLiteralDuplicateProperties: false,
 			experimentalObjectRestSpread: true,
-			jsx: true,
 		},
-		babelOptions: {
-			presets: ['@babel/preset-react'],
-		},
-		jsx: true,
 		requireConfigFile: false,
 		ecmaVersion: 2017,
 		allowImportExportEverywhere: true,
@@ -49,6 +42,7 @@ module.exports = {
 		'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
 	},
 	rules: {
+		'no-console': 0,
 		quotes: ['error', 'single'],
 		'no-async-promise-executor': 0,
 		'no-dupe-else-if': 0,

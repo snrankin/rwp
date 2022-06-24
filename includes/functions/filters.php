@@ -90,47 +90,11 @@ add_action('init', function() {
  * @return array
  */
 function rwp_empty_html_attributes_filter( $args = array(), $remove_empty = true ) {
-	$boolean_atts = array(
-		'allowfullscreen',
-		'allowpaymentrequest',
-		'async',
-		'autofocus',
-		'autoplay',
-		'checked',
-		'controls',
-		'default',
-		'defer',
-		'disabled',
-		'formnovalidate',
-		'hidden',
-		'ismap',
-		'itemscope',
-		'loop',
-		'multiple',
-		'muted',
-		'nomodule',
-		'novalidate',
-		'open',
-		'playsinline',
-		'readonly',
-		'required',
-		'reversed',
-		'selected',
-		'truespeed',
-	);
-
-	/**
-	 * Filter to allow custom empty attributes
-	 *
-	 * @var array $boolean_atts
-	 */
-
-	$boolean_atts = (array) apply_filters( 'rwp_allowed_empty_attributes', $boolean_atts );
 
 	if ( $remove_empty ) {
 
 		foreach ( $args as $key => $value ) {
-			if ( ! in_array( $key, $boolean_atts ) && blank( $value ) && ! rwp_str_has( $key, 'data-' ) ) {
+			if ( ! rwp_attr_can_be_empty( $key ) && blank( $value ) ) {
 				unset( $args[ $key ] );
 			}
 		}

@@ -186,8 +186,8 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 
 
 	$rwp_plugin_assets['scripts']['lazysizes'] = array(
-		'src'      => $rwp_lazysizes_url,
-		'version'  => $rwp_lazysizes_version,
+		//'src'      => $rwp_lazysizes_url,
+		//'version'  => $rwp_lazysizes_version,
 		'location' => 'lazysizes',
 		'footer'   => true,
 		'handle'   => 'lazysizes',

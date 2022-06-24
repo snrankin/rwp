@@ -14,12 +14,11 @@
 const _ = require('lodash');
 const path = require('path');
 const { argv } = require('yargs');
-const { mergeWithCustomize, customizeArray, merge, mergeWithRules, unique } = require('webpack-merge');
+const { mergeWithCustomize, customizeArray, mergeWithRules, unique } = require('webpack-merge');
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const webpack = require('webpack');
 let wordPressConfig = require('@wordpress/scripts/config/webpack.config');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 // ======================== Import Local Dependencies ======================= //
 
 const { isEmpty, debug, env, filePaths } = require('./utils/utils');
@@ -75,52 +74,6 @@ let webpackConfig = {
 			},
 		],
 	},
-	optimization: {
-		minimize: true,
-		minimizer: [
-			new TerserPlugin({
-				test: /\.js(\?.*)?$/i,
-				terserOptions: {
-					format: {
-						comments: false,
-						ecma: 2017,
-						beautify: isProduction ? false : true,
-					},
-					ecma: 2017,
-					safari10: true,
-					mangle: isProduction ? true : false,
-					compress: isProduction ? true : false,
-				},
-
-				extractComments: false,
-			}),
-		],
-		providedExports: true,
-		splitChunks: {
-			maxInitialRequests: Infinity,
-			minSize: 0,
-			hidePathInfo: true,
-			chunks: 'all',
-			cacheGroups: {
-				defaultVendors: false,
-				default: false,
-				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					layer: 'vendors',
-					chunks: 'all',
-					idHint: 'vendors',
-					name: 'vendors',
-					priority: -5,
-				},
-			},
-		},
-	},
-	resolve: {
-		extensions: ['.ts', '.js'],
-		alias: {
-			modernizr$: path.resolve(filePaths.root, '.modernizrrc'),
-		},
-	},
 	plugins: [
 		new webpack.ProvidePlugin({
 			$: 'jquery',
@@ -164,7 +117,7 @@ startingPlugins[esLint] = new ESLintPlugin({
 	emitWarning: !isProduction,
 	formatter: require('eslint-formatter-pretty'),
 	fix: true,
-	overrideConfigFile: path.join(filePaths.blocksSrc, '.eslintrc.js'),
+	overrideConfigFile: path.join(filePaths.blocks.src, '.eslintrc.js'),
 });
 
 webpackConfig = mergeWithCustomize({

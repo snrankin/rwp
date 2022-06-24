@@ -445,7 +445,8 @@ class Card extends Element {
 	 */
 	public function setup_image() {
 		if ( in_array( 'image', $this->order, true ) ) {
-			if ( ! $this->image->has( 'src' ) || empty( $this->image->get( 'src' ) ) ) {
+
+			if ( ! $this->image->has( 'src' ) && ! $this->image->has( 'id' ) ) {
 				$this->remove_order_item( 'image' );
 			}
 		}

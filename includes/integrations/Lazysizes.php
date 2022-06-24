@@ -153,6 +153,14 @@ class Lazysizes extends Singleton {
 	public function update_image_tag( $html, $attachment_id, $size, $icon, $attr ) {
 
 		if ( ! empty( $html ) ) {
+			$args = array(
+				'html'  => $html,
+				'id'    => intval( $attachment_id ),
+				'size'  => $size,
+				'image' => array(
+					'atts' => $attr,
+				),
+			);
 			$html = Image::add_lazysizes( $html );
 			$html = $html->html();
 		}

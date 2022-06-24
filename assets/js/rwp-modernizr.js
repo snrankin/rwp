@@ -922,7 +922,6 @@
                         Modernizr.addTest("subpixelfont", computedStyle(subpixel, null, "width") !== "44px");
                     }), 1, [ "subpixel" ]);
                     Modernizr.addTest("willchange", "willChange" in docElement.style);
-                    Modernizr.addTest("hidden", "hidden" in createElement("a"));
                     Modernizr.addTest("intersectionobserver", "IntersectionObserver" in window);
                     Modernizr.addTest("canvas", (function() {
                         var elem = createElement("canvas");

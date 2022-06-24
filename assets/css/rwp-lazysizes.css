@@ -1,7 +1,7 @@
 /*!*****************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./css/vendor/lazysizes.scss ***!
   \*****************************************************************************************************************************************************************************************************************************************************/
-.no-js img.lazyload{
+.no-js .lazyload{
     display:none;
 }
 
@@ -13,11 +13,6 @@
     transition:opacity 1000ms, -webkit-filter 1500ms;
     transition:opacity 1000ms, filter 1500ms;
     transition:opacity 1000ms, filter 1500ms, -webkit-filter 1500ms;
-}
-.lazyload.blur-up,
-.lazyloading.blur-up{
-    -webkit-filter:blur(10px);
-            filter:blur(10px);
 }
 .parent-fit-cover .lazyload, .lazyload[data-parent-fit=cover],
 .parent-fit-cover .lazyloading,
@@ -33,27 +28,43 @@
     -o-object-fit:contain;
        object-fit:contain;
 }
+.lazyload:not([src]),
+.lazyloading:not([src]){
+    visibility:hidden;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity:0;
+}
 
 .lazyloaded{
     visibility:visible;
-}
-.lazyloaded.blur-up{
-    -webkit-filter:blur(0);
-            filter:blur(0);
 }
 .lazyloaded.fade-in{
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     opacity:1;
 }
 
-.ls-blur-up-is-loading{
-    font-family:"blur-up: auto", "object-fit: cover";
+.ls-blur-up-img{
     -webkit-filter:blur(10px);
             filter:blur(10px);
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     opacity:1;
+    transition:opacity 1000ms, -webkit-filter 1500ms;
+    transition:opacity 1000ms, filter 1500ms;
+    transition:opacity 1000ms, filter 1500ms, -webkit-filter 1500ms;
+    -o-object-fit:cover;
+       object-fit:cover;
+    font-family:"blur-up: auto", "object-fit: cover";
 }
-
+.parent-fit-cover .ls-blur-up-img, .ls-blur-up-img[data-parent-fit=cover]{
+    -o-object-fit:cover;
+       object-fit:cover;
+    font-family:"blur-up: auto", "object-fit: cover";
+}
+.parent-fit-contain .ls-blur-up-img, .ls-blur-up-img[data-parent-fit=contain]{
+    font-family:"blur-up: auto", "object-fit: contain";
+    -o-object-fit:contain;
+       object-fit:contain;
+}
 .ls-blur-up-img.ls-inview.ls-original-loaded{
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity:0;
@@ -61,17 +72,8 @@
             filter:blur(5px);
 }
 
-.lazyloaded{
-    visibility:visible;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    opacity:1;
-    transition:opacity 300ms;
-}
-
-.lazyload:not([src]){
+.ls-blur-up-is-loading{
     visibility:hidden;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    opacity:0;
 }
 
 /*# sourceMappingURL=rwp-lazysizes.css.map*/

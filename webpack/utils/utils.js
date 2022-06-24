@@ -25,6 +25,13 @@ const isSassError = (e) => {
 };
 exports.isSassError = isSassError;
 
+const sortObjectByKeys = (o) => {
+	return Object.keys(o)
+		.sort()
+		.reduce((r, k) => ((r[k] = o[k]), r), {});
+};
+exports.sortObjectByKeys = sortObjectByKeys;
+
 /**
  * Get the current enviornment
  *
@@ -54,16 +61,25 @@ exports.folders = folders;
 
 let paths = config.paths;
 paths.root = rootPath;
-paths.node = 'node_modules';
+paths.node = path.join(rootPath, 'node_modules');
+paths.src = path.join(rootPath, folders.src);
+paths.dist = path.join(rootPath, folders.dist);
 
 let fileFolders = _.transform(
 	folders,
 	function (result, value, key) {
-		let distFolder = paths.dist;
-		let srcFolder = paths.src;
+		if ('src' !== key && 'dist' !== key) {
+			let distFolder = folders.dist;
+			let srcFolder = folders.src;
+			let publicFolder = '';
+			let publicPath = paths.public;
 
-		result[`${key}Dist`] = path.join(distFolder, value);
-		result[`${key}Src`] = path.join(srcFolder, value);
+			result[key] = {
+				dist: path.join(rootPath, distFolder, value),
+				src: path.join(rootPath, srcFolder, value),
+				public: publicPath + path.join(publicFolder, value),
+			};
+		}
 	},
 	{}
 );
@@ -74,14 +90,19 @@ const filePaths = _.transform(
 	paths,
 	function (result, value, key) {
 		if ('public' !== key) {
-			result[key] = path.resolve(rootPath, value);
+			if (_.isString(value)) {
+				result[key] = path.resolve(rootPath, value);
+			} else {
+				result[key] = _.transform(value, function (r, v, k) {
+					r[k] = path.resolve(rootPath, v);
+				});
+			}
 		} else {
-			result[key] = value;
+			result[key] = paths.public;
 		}
 	},
 	{}
 );
-
 filePaths.distRel = path.relative(rootPath, filePaths.dist);
 
 exports.filePaths = filePaths;
@@ -123,6 +144,15 @@ const filenameHelper = (filename) => {
 
 exports.filenameHelper = filenameHelper;
 
+const sortArray = (arr1, arr2) => {
+	arr2.sort((a, b) => {
+		const aKey = Object.keys(a)[0];
+		const bKey = Object.keys(b)[0];
+		return arr1.indexOf(aKey) - arr1.indexOf(bKey);
+	});
+};
+exports.sortArray = sortArray;
+
 /**
  * Nicer looking console.log helper
  *
@@ -146,13 +176,11 @@ exports.debug = debug;
  * @return {boolean} True if empty, false if not
  */
 const isEmpty = (el) => {
-	if (_.isNil(el)) {
+	if (_.isNull(el) || _.isUndefined(el)) {
 		return true;
-	} else if (el === '') {
+	} else if (_.isString(el) && el.length == 0) {
 		return true;
-	} else if (el === false) {
-		return true;
-	} else if (_.isEmpty(el)) {
+	} else if (_.isObject(el) && _.isEmpty(el)) {
 		return true;
 	}
 	return false;
@@ -214,7 +242,7 @@ const pathByType = (file = '') => {
 		folderType = folders.fonts;
 	}
 
-	if (!isEmpty(folderType)) {
+	if (typeof folderType === 'string' && !isEmpty(folderType)) {
 		file = './' + path.join(folderType, file);
 	}
 
@@ -224,6 +252,12 @@ const pathByType = (file = '') => {
 const blockPath = (file = '') => {
 	return './' + path.join('blocks', file, 'index.js');
 };
+
+const getPathFromUrl = (url) => {
+	return url.split('?')[0];
+};
+
+exports.getPathFromUrl = getPathFromUrl;
 
 /**
  * Extracts the entry object from the config.json file with group set webpack args
@@ -267,6 +301,22 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 				entry,
 				function (result, value) {
 					_.merge(result, value.files);
+					return result;
+				},
+				{}
+			);
+
+			entry = _.reduce(
+				entry,
+				function (result, value, key) {
+					if (_.isString(value)) {
+						_.merge(result, {
+							[key]: value,
+						});
+					} else if (_.isObject(value)) {
+						_.merge(result, value);
+					}
+
 					return result;
 				},
 				{}
