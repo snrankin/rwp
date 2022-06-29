@@ -781,11 +781,14 @@
                 }
             }));
         },
-        "../node_modules/lazysizes/plugins/native-loading/ls.native-loading.js": function(module, exports, __webpack_require__) {
+        "../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js": function(module, exports, __webpack_require__) {
             var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
             (function(window, factory) {
-                var globalInstall = function() {
-                    factory(window.lazySizes);
+                if (!window) {
+                    return;
+                }
+                var globalInstall = function(initialEvent) {
+                    factory(window.lazySizes, initialEvent);
                     window.removeEventListener("lazyunveilread", globalInstall, true);
                 };
                 factory = factory.bind(null, window, window.document);
@@ -796,83 +799,151 @@
                     __WEBPACK_AMD_DEFINE_FACTORY__ = factory, __WEBPACK_AMD_DEFINE_RESULT__ = typeof __WEBPACK_AMD_DEFINE_FACTORY__ === "function" ? __WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__) : __WEBPACK_AMD_DEFINE_FACTORY__, 
                     __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
                 } else {}
-            })(window, (function(window, document, lazySizes) {
+            })(typeof window != "undefined" ? window : 0, (function(window, document, lazySizes, initialEvent) {
                 "use strict";
-                var imgSupport = "loading" in HTMLImageElement.prototype;
-                var iframeSupport = "loading" in HTMLIFrameElement.prototype;
-                var isConfigSet = false;
-                var oldPrematureUnveil = lazySizes.prematureUnveil;
-                var cfg = lazySizes.cfg;
-                var listenerMap = {
-                    focus: 1,
-                    mouseover: 1,
-                    click: 1,
-                    load: 1,
-                    transitionend: 1,
-                    animationend: 1,
-                    scroll: 1,
-                    resize: 1
+                var cloneElementClass;
+                var style = document.createElement("a").style;
+                var fitSupport = "objectFit" in style;
+                var positionSupport = fitSupport && "objectPosition" in style;
+                var regCssFit = /object-fit["']*\s*:\s*["']*(contain|cover)/;
+                var regCssPosition = /object-position["']*\s*:\s*["']*(.+?)(?=($|,|'|"|;))/;
+                var blankSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+                var regBgUrlEscape = /\(|\)|'/;
+                var positionDefaults = {
+                    center: "center",
+                    "50% 50%": "center"
                 };
-                if (!cfg.nativeLoading) {
-                    cfg.nativeLoading = {};
-                }
-                if (!window.addEventListener || !window.MutationObserver || !imgSupport && !iframeSupport) {
-                    return;
-                }
-                function disableEvents() {
-                    var loader = lazySizes.loader;
-                    var throttledCheckElements = loader.checkElems;
-                    var removeALSL = function() {
-                        setTimeout((function() {
-                            window.removeEventListener("scroll", loader._aLSL, true);
-                        }), 1e3);
+                function getObject(element) {
+                    var css = getComputedStyle(element, null) || {};
+                    var content = css.fontFamily || "";
+                    var objectFit = content.match(regCssFit) || "";
+                    var objectPosition = objectFit && content.match(regCssPosition) || "";
+                    if (objectPosition) {
+                        objectPosition = objectPosition[1];
+                    }
+                    return {
+                        fit: objectFit && objectFit[1] || "",
+                        position: positionDefaults[objectPosition] || objectPosition || "center"
                     };
-                    var currentListenerMap = typeof cfg.nativeLoading.disableListeners == "object" ? cfg.nativeLoading.disableListeners : listenerMap;
-                    if (currentListenerMap.scroll) {
-                        window.addEventListener("load", removeALSL);
-                        removeALSL();
-                        window.removeEventListener("scroll", throttledCheckElements, true);
+                }
+                function generateStyleClass() {
+                    if (cloneElementClass) {
+                        return;
                     }
-                    if (currentListenerMap.resize) {
-                        window.removeEventListener("resize", throttledCheckElements, true);
+                    var styleElement = document.createElement("style");
+                    cloneElementClass = lazySizes.cfg.objectFitClass || "lazysizes-display-clone";
+                    document.querySelector("head").appendChild(styleElement);
+                }
+                function removePrevClone(element) {
+                    var prev = element.previousElementSibling;
+                    if (prev && lazySizes.hC(prev, cloneElementClass)) {
+                        prev.parentNode.removeChild(prev);
+                        element.style.position = prev.getAttribute("data-position") || "";
+                        element.style.visibility = prev.getAttribute("data-visibility") || "";
                     }
-                    Object.keys(currentListenerMap).forEach((function(name) {
-                        if (currentListenerMap[name]) {
-                            document.removeEventListener(name, throttledCheckElements, true);
+                }
+                function initFix(element, config) {
+                    var switchClassesAdded, addedSrc, styleElement, styleElementStyle;
+                    var lazysizesCfg = lazySizes.cfg;
+                    var onChange = function() {
+                        var src = element.currentSrc || element.src;
+                        if (src && addedSrc !== src) {
+                            addedSrc = src;
+                            styleElementStyle.backgroundImage = "url(" + (regBgUrlEscape.test(src) ? JSON.stringify(src) : src) + ")";
+                            if (!switchClassesAdded) {
+                                switchClassesAdded = true;
+                                lazySizes.rC(styleElement, lazysizesCfg.loadingClass);
+                                lazySizes.aC(styleElement, lazysizesCfg.loadedClass);
+                            }
+                        }
+                    };
+                    var rafedOnChange = function() {
+                        lazySizes.rAF(onChange);
+                    };
+                    element._lazysizesParentFit = config.fit;
+                    element.addEventListener("lazyloaded", rafedOnChange, true);
+                    element.addEventListener("load", rafedOnChange, true);
+                    lazySizes.rAF((function() {
+                        var hideElement = element;
+                        var container = element.parentNode;
+                        if (container.nodeName.toUpperCase() == "PICTURE") {
+                            hideElement = container;
+                            container = container.parentNode;
+                        }
+                        removePrevClone(hideElement);
+                        if (!cloneElementClass) {
+                            generateStyleClass();
+                        }
+                        styleElement = element.cloneNode(false);
+                        styleElementStyle = styleElement.style;
+                        styleElement.addEventListener("load", (function() {
+                            var curSrc = styleElement.currentSrc || styleElement.src;
+                            if (curSrc && curSrc != blankSrc) {
+                                styleElement.src = blankSrc;
+                                styleElement.srcset = "";
+                            }
+                        }));
+                        lazySizes.rC(styleElement, lazysizesCfg.loadedClass);
+                        lazySizes.rC(styleElement, lazysizesCfg.lazyClass);
+                        lazySizes.rC(styleElement, lazysizesCfg.autosizesClass);
+                        lazySizes.aC(styleElement, lazysizesCfg.loadingClass);
+                        lazySizes.aC(styleElement, cloneElementClass);
+                        [ "data-parent-fit", "data-parent-container", "data-object-fit-polyfilled", lazysizesCfg.srcsetAttr, lazysizesCfg.srcAttr ].forEach((function(attr) {
+                            styleElement.removeAttribute(attr);
+                        }));
+                        styleElement.src = blankSrc;
+                        styleElement.srcset = "";
+                        styleElementStyle.backgroundRepeat = "no-repeat";
+                        styleElementStyle.backgroundPosition = config.position;
+                        styleElementStyle.backgroundSize = config.fit;
+                        styleElement.setAttribute("data-position", hideElement.style.position);
+                        styleElement.setAttribute("data-visibility", hideElement.style.visibility);
+                        hideElement.style.visibility = "hidden";
+                        hideElement.style.position = "absolute";
+                        element.setAttribute("data-parent-fit", config.fit);
+                        element.setAttribute("data-parent-container", "prev");
+                        element.setAttribute("data-object-fit-polyfilled", "");
+                        element._objectFitPolyfilledDisplay = styleElement;
+                        container.insertBefore(styleElement, hideElement);
+                        if (element._lazysizesParentFit) {
+                            delete element._lazysizesParentFit;
+                        }
+                        if (element.complete) {
+                            onChange();
                         }
                     }));
                 }
-                function runConfig() {
-                    if (isConfigSet) {
-                        return;
-                    }
-                    isConfigSet = true;
-                    if (imgSupport && iframeSupport && cfg.nativeLoading.disableListeners) {
-                        if (cfg.nativeLoading.disableListeners === true) {
-                            cfg.nativeLoading.setLoadingAttribute = true;
+                if (!fitSupport || !positionSupport) {
+                    var onRead = function(e) {
+                        if (e.detail.instance != lazySizes) {
+                            return;
                         }
-                        disableEvents();
-                    }
-                    if (cfg.nativeLoading.setLoadingAttribute) {
-                        window.addEventListener("lazybeforeunveil", (function(e) {
-                            var element = e.target;
-                            if ("loading" in element && !element.getAttribute("loading")) {
-                                element.setAttribute("loading", "lazy");
+                        var element = e.target;
+                        var obj = getObject(element);
+                        if (obj.fit && (!fitSupport || obj.position != "center")) {
+                            initFix(element, obj);
+                            return true;
+                        }
+                        return false;
+                    };
+                    window.addEventListener("lazybeforesizes", (function(e) {
+                        if (e.detail.instance != lazySizes) {
+                            return;
+                        }
+                        var element = e.target;
+                        if (element.getAttribute("data-object-fit-polyfilled") != null && !element._objectFitPolyfilledDisplay) {
+                            if (!onRead(e)) {
+                                lazySizes.rAF((function() {
+                                    element.removeAttribute("data-object-fit-polyfilled");
+                                }));
                             }
-                        }), true);
+                        }
+                    }));
+                    window.addEventListener("lazyunveilread", onRead, true);
+                    if (initialEvent && initialEvent.detail) {
+                        onRead(initialEvent);
                     }
                 }
-                lazySizes.prematureUnveil = function prematureUnveil(element) {
-                    if (!isConfigSet) {
-                        runConfig();
-                    }
-                    if ("loading" in element && (cfg.nativeLoading.setLoadingAttribute || element.getAttribute("loading")) && (element.getAttribute("data-sizes") != "auto" || element.offsetWidth)) {
-                        return true;
-                    }
-                    if (oldPrematureUnveil) {
-                        return oldPrematureUnveil(element);
-                    }
-                };
             }));
         },
         "../node_modules/lazysizes/plugins/parent-fit/ls.parent-fit.js": function(module, exports, __webpack_require__) {
@@ -1507,10 +1578,10 @@
     var __webpack_exports__ = {};
     !function() {
         Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/lazysizes.js", 23));
-        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/parent-fit/ls.parent-fit.js", 23));
-        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/aspectratio/ls.aspectratio.js", 23));
         Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/respimg/ls.respimg.js", 23));
-        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/native-loading/ls.native-loading.js", 23));
+        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/parent-fit/ls.parent-fit.js", 23));
+        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js", 23));
+        Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/aspectratio/ls.aspectratio.js", 23));
         Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/print/ls.print.js", 23));
         Promise.resolve().then(__webpack_require__.t.bind(__webpack_require__, "../node_modules/lazysizes/plugins/video-embed/ls.video-embed.js", 23));
     }();

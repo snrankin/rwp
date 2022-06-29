@@ -308,15 +308,15 @@ class Image extends Element {
 		if ( rwp_is_class( $image, __NAMESPACE__ . '\\Image' ) ) {
 			$image = $image->image;
 
-			$sources = rwp_image_sources( $element->id, $element->size );
+			// $sources = rwp_image_sources( $element->id, $element->size );
 
-			$element->inner->set_content( $sources, 'sources' );
+			// $element->inner->set_content( $sources, 'sources' );
 
 			$image->set_attr( 'data-src', $placeholder );
 
 			$image->set_attr( 'data-parent', '.media-content' );
 			$image->set_attr( 'data-parent-fit', 'cover' );
-			$image->remove_attr( 'data-srcset' );
+			//$image->remove_attr( 'data-srcset' );
 
 		}
 
@@ -336,7 +336,7 @@ class Image extends Element {
 			$width = floatval( $image->get_attr( 'width', 0 ) );
 			$height = floatval( $image->get_attr( 'height', 0 ) );
 			if ( rwp_image_has_dimensions( $width, $height ) ) {
-				$image->set_attr( 'data-aspectratio', "$width/$height" );
+				$image->set_attr( 'data-aspectratio', $width / $height );
 			}
 		}
 
