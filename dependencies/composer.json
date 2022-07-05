@@ -77,7 +77,12 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true,
+            "wikimedia/composer-merge-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -102,6 +107,7 @@
     "autoload": {
         "psr-4": {
             "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor\/wordpress\/hierarchy\/src\/",
+            "RWP\\Vendor\\PUC\\": "vendor/wordpress/plugin-update-checker/includes/",
             "RWP\\Vendor\\WPBP\\": "externals/wpbp/"
         },
         "files": [
