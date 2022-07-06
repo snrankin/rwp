@@ -24,11 +24,8 @@ function rwp_is_url( $url = '' ) {
         return false;
     }
 	$is_url = false;
-	if ( rwp_str_starts_with( $url, array( '/' ) ) && wp_parse_url( $url ) ) {
-		$is_url = true;
-	} else if ( rwp_str_starts_with( $url, array( 'tel:', 'mailto:' ) ) ) {
-		$is_url = true;
-	} else if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+	$wp_content_dir = rwp_add_prefix( basename( WP_CONTENT_DIR ), '/' );
+	if ( rwp_str_starts_with( $url, array( 'http', $wp_content_dir, 'tel:', 'mailto:' ) ) ) {
 		$is_url = true;
 	}
 

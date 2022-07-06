@@ -491,19 +491,15 @@ function rwp_is_wp_image( $image ) {
  * @throws InvalidArgumentException
  */
 function rwp_image_id( $image ) {
-    $id = 0;
-    if ( rwp_is_wp_image( $image ) ) {
-        $image = rwp_extract_img_src( $image );
-        if ( rwp_is_url( $image ) ) {
-			$image = preg_replace( '/-\d{1,4}x\d{1,4}/', '', $image );
-			$image = rwp_add_prefix( $image, get_home_url() );
-            $id = attachment_url_to_postid( $image );
-        }
-    }
+	$id = 0;
+	if ( rwp_is_url( $image ) ) {
+		$image = preg_replace( '/-\d{1,4}x\d{1,4}/', '', $image );
+		$image = rwp_add_prefix( $image, get_home_url() );
+		$id = attachment_url_to_postid( $image );
+	}
 
-    return $id;
+	return $id;
 }
-
 /**
  * Get the linked site title or the custom logo
  *

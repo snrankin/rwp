@@ -182,7 +182,7 @@ class Image extends Element {
 			'noscript'  => rwp_get_option( 'modules.lazysizes.noscript', false ),
 			'blurup'    => rwp_get_option( 'modules.lazysizes.blurup', false ),
 			'fadein'    => rwp_get_option( 'modules.lazysizes.fadein', false ),
-			'parentfit' => rwp_get_option( 'modules.lazysizes.parentfit', false ),
+			'custommedia' => rwp_get_option( 'modules.lazysizes.custommedia', false ),
 			'artdirect' => rwp_get_option( 'modules.lazysizes.artdirect', false ),
 		);
 
@@ -223,6 +223,9 @@ class Image extends Element {
 				$size = data_get( $args, 'size', $size );
 				$html = data_get( $args, 'html', $html );
 				$id   = data_get( $args, 'id', $id );
+				if ( empty( $id ) ) {
+					$id   = rwp_image_id( $src );
+				}
 			}
 		} else {
 			if ( ! is_array( $args ) ) {
@@ -277,7 +280,7 @@ class Image extends Element {
 			'noscript'  => rwp_get_option( 'modules.lazysizes.noscript', false ),
 			'blurup'    => rwp_get_option( 'modules.lazysizes.blurup', false ),
 			'fadein'    => rwp_get_option( 'modules.lazysizes.fadein', false ),
-			'parentfit' => rwp_get_option( 'modules.lazysizes.parentfit', false ),
+			'custommedia' => rwp_get_option( 'modules.lazysizes.custommedia', false ),
 			'artdirect' => rwp_get_option( 'modules.lazysizes.artdirect', false ),
 		);
 
@@ -308,15 +311,18 @@ class Image extends Element {
 		if ( rwp_is_class( $image, __NAMESPACE__ . '\\Image' ) ) {
 			$image = $image->image;
 
-			// $sources = rwp_image_sources( $element->id, $element->size );
+			if ( data_get( $lazysizes, 'custommedia', false ) ) {
+				$sources = rwp_image_sources( $element->id, $element->size );
 
-			// $element->inner->set_content( $sources, 'sources' );
+				$element->inner->set_content( $sources, 'sources' );
+				$image->remove_attr( 'data-srcset' );
+
+			}
 
 			$image->set_attr( 'data-src', $placeholder );
 
 			$image->set_attr( 'data-parent', '.media-content' );
 			$image->set_attr( 'data-parent-fit', 'cover' );
-			//$image->remove_attr( 'data-srcset' );
 
 		}
 

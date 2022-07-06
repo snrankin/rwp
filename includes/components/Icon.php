@@ -58,6 +58,8 @@ class Icon extends Element {
 						$src = $args;
 					}
 				}
+			} else if ( is_file( $args ) ) {
+				$src = $args;
 			} else if ( rwp_str_is_element( $args, 'svg' ) ) {
 				$this->set_tag( 'svg' );
 				$html = $args;
@@ -88,8 +90,10 @@ class Icon extends Element {
 		}
 
 		if ( ! empty( $src ) ) {
-			if ( rwp_is_url( $src ) ) {
-				$src = wp_parse_url( $src, 6 );
+			if ( rwp_is_url( $src ) || is_file( $src ) ) {
+				if ( rwp_is_url( $src ) ) {
+					$src = wp_parse_url( $src, 6 );
+				}
 				if ( rwp_str_ends_with( $src, 'svg' ) ) {
 					if ( rwp_str_has( $src, 'wp-content' ) ) {
 						$dir = rwp_filesystem()->wp_content_dir();
