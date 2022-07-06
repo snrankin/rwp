@@ -3,18 +3,20 @@
  * functions
  *
  * @package   RWP\functions
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
 
- use RWP\Engine\Plugin;
+use RWP\Components\Collection;
+use RWP\Engine\Plugin;
+use RWP\Vendor\PUC\Factory;
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
  *
- * @since  1.0.0
+ * @since  0.9.0
  * @return RWP\Engine\Plugin
  */
 function rwp() {
@@ -22,27 +24,43 @@ function rwp() {
 
 }
 
+function rwp_check_for_updates() {
+	$update_checker = Factory::buildUpdateChecker(
+	'https://bitbucket.org/riester/rwp',
+	RWP_PLUGIN_FILE,
+	'rwp'
+	);
+
+	$update_checker->setAuthentication(array(
+		'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+		'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+	));
+
+}
+
+
 /**
  * Get the settings of the plugin in a filterable way
  *
- * @since 1.0.0
- * @return array
+ * @since 0.9.0
+ * @param bool $global
+ * @return Collection
  */
-function rwp_get_options() {
-	return apply_filters( 'rwp_get_options', get_option( RWP_PLUGIN_TEXTDOMAIN . '_options' ) );
+function rwp_get_options( $global = false ) {
+	return rwp()->get_options( $global );
 }
 
+
 /**
+ * Get a plugin option
  *
- * @param mixed $option
+ * @param mixed $key
  * @param mixed $default
+ * @param bool $global
  * @return mixed
  */
-function rwp_get_option( $option, $default = null ) {
-	$options = rwp_get_options();
-
-	$value = data_get( $options, $option, $default );
-	return apply_filters( "rwp_get_option_{$option}", $value );
+function rwp_get_option( $key, $default = null, $global = false ) {
+	return rwp()->get_option( $key, $default, $global );
 }
 
 
@@ -170,4 +188,18 @@ function rwp_process_shortcode( $atts, $defaults = array() ) {
 	}
 	$args['atts'] = rwp_prepare_args( $args['atts'] );
 	return $args;
+}
+
+
+function rwp_custom_bulk_action( $post_type, $actions = [] ) {
+	$bulk_actions = new \RWP\Internals\CustomBulkAction( array( 'post_type' => $post_type ) );
+
+	if ( wp_is_numeric_array( $actions ) ) {
+		foreach ( $actions as $action ) {
+			$bulk_actions->register_bulk_action( $action );
+		}
+	} else {
+		$bulk_actions->register_bulk_action( $actions );
+	}
+	$bulk_actions->init();
 }

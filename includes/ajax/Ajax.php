@@ -35,7 +35,7 @@ class Ajax extends Singleton {
 	/**
 	 * The method to run on ajax
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function your_method() {

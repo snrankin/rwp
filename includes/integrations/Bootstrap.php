@@ -21,6 +21,8 @@ use RWP\Vendor\Exceptions\Collection\KeyNotFoundException;
 
 class Bootstrap extends Singleton {
 
+	use \RWP\Engine\Traits\Helpers;
+
 	/**
 	 * Initialize the class.
 	 *

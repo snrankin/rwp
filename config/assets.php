@@ -5,7 +5,7 @@
  * assets
  *
  * @package   RWP\/config/assets.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -131,27 +131,9 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 
 	$rwp_lazysizes_version = '5.3.2';
 	$rwp_lazysizes_plugins = array(
-		'lazysizes'      => true,
-		'aspectratio'    => true,
-		'attrchange'     => false,
-		'bgset'          => true,
-		'include'        => false,
-		'native-loading' => true,
-		'object-fit'     => true,
-		'optimumx'       => false,
-		'parent-fit'     => true,
-		'print'          => true,
-		'progressive'    => false,
-		'respimg'        => true,
-		'rias'           => false,
-		'twitter'        => false,
-		'unload'         => false,
-		'unveilhooks'    => true,
-		'video-embed'    => true,
 		'artdirect'      => rwp_get_option('modules.lazysizes.artdirect', false),
 		'custommedia'    => rwp_get_option('modules.lazysizes.custommedia', false),
-		'blur-up'        => rwp_get_option('modules.lazysizes.blurup', false),
-		'noscript'       => rwp_get_option('modules.lazysizes.noscript', false),
+		'blur-up'        => rwp_get_option('modules.lazysizes.blurup', false)
 	);
 
 	$rwp_lazysizes_deps = array();
@@ -163,21 +145,11 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 		if ($include) {
 			$prefix = 'npm/lazysizes@5';
 			$name = '';
-			if ($plugin !== 'lazysizes' && $plugin !== 'fix-ios-sizes') {
-				$name = "$prefix/plugins/$plugin/ls.$plugin";
+			$name = "$prefix/plugins/$plugin/ls.$plugin";
 				if (defined('COMPRESS_CSS') && COMPRESS_CSS) {
 					$name .= '.min';
 				}
 				$name .= '.js';
-			} else if ($plugin === 'fix-ios-sizes') {
-				$name = "$prefix/plugins/$plugin/$plugin";
-				if (defined('COMPRESS_CSS') && COMPRESS_CSS) {
-					$name .= '.min';
-				}
-				$name .= '.js';
-			} else {
-				$name = $prefix;
-			}
 			$rwp_lazysizes_deps[] = $name;
 		}
 	}
@@ -186,11 +158,19 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 
 
 	$rwp_plugin_assets['scripts']['lazysizes'] = array(
-		//'src'      => $rwp_lazysizes_url,
-		//'version'  => $rwp_lazysizes_version,
+
 		'location' => 'lazysizes',
 		'footer'   => true,
 		'handle'   => 'lazysizes',
+	);
+
+	$rwp_plugin_assets['scripts']['lazysizes_addons'] = array(
+		'src'      => $rwp_lazysizes_url,
+		'version'  => $rwp_lazysizes_version,
+		'location' => 'lazysizes',
+		'footer'   => true,
+		'handle'   => 'lazysizes-addons',
+		'deps'     => ['rwp-lazysizes'],
 	);
 
 }

@@ -19,7 +19,7 @@ class Gutenberg extends Singleton {
 	/**
 	 * The registered blocks
 	 *
-	 * @since    1.0.0
+	 * @since    0.9.0
 	 * @access   protected
 	 * @var      Collection $blocks
 	 */

@@ -5,7 +5,7 @@
  * Post Types
  *
  * @package   RWP\Internals
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -50,20 +50,11 @@ class PostTypes extends Singleton {
 			return [ $item['value'] => $post_type ];
 		});
 
-		//rwp_get_plugin_file( 'PageForPostType.php', 'includes/internals/PostTypes', true, true );
-
 		\add_action( 'init', array( $this, 'load_cpts' ), 5 );
 		\add_filter( 'post_class', array( $this, 'clean_post_classes' ) );
 		\add_filter( 'pre_get_posts', array( $this, 'filter_search' ) );
 
-		// if ( rwp_get_option( 'modules.blog.update_urls', false ) ) { // can't rewrite basic permalinks with ELementor :(
-
-		// 	\add_action( 'generate_rewrite_rules', array( $this, 'generate_blog_rewrite_rules' ) );
-		// 	\add_filter( 'pre_post_link', array( $this, 'post_link' ), 1, 3 );
-		// 	\add_action( 'init', array( $this, 'update_post_permalinks' ) );
-		// }
-
-		\add_action( 'pre_get_posts', array( $this, 'update_permalinks' ) );
+		//\add_action( 'pre_get_posts', array( $this, 'update_permalinks' ) );
 
 	}
 
@@ -218,7 +209,7 @@ class PostTypes extends Singleton {
 	 * Add support for custom CPT on the search box
 	 *
 	 * @param  \WP_Query $query WP_Query.
-	 * @since  1.0.0
+	 * @since  0.9.0
 	 * @return void
 	 */
 	public function filter_search( \WP_Query $query ) {
@@ -255,7 +246,7 @@ class PostTypes extends Singleton {
 	/**
 	 * Load CPT and Taxonomies on WordPress
 	 *
-	 * @since  1.0.0
+	 * @since  0.9.0
 	 * @return void
 	 */
 	public function load_cpts() {

@@ -24,7 +24,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 *
 	 * Initializing the widget base class.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access public
 	 *
 	 * @throws \Exception If arguments are missing when initializing a full widget
@@ -45,7 +45,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 *
 	 * Retrieve video widget name.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access public
 	 *
 	 * @return string Widget name.
@@ -59,7 +59,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 *
 	 * Retrieve video widget title.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access public
 	 *
 	 * @return string Widget title.
@@ -73,7 +73,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 *
 	 * Retrieve video widget icon.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access public
 	 *
 	 * @return string Widget icon.
@@ -118,7 +118,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 * Adds different input fields to allow the user to change and customize
 	 * the widget settings.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access protected
 	 */
 	protected function _register_controls() {
@@ -148,7 +148,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 *
 	 * Written in PHP and used to generate the final HTML.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access protected
 	 */
 	protected function render() {

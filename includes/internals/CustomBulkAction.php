@@ -10,9 +10,7 @@
  * ========================================================================== */
 namespace RWP\Internals;
 
-use RWP\Engine\Abstracts\Singleton;
-
-class CustomBulkAction extends Singleton {
+class CustomBulkAction {
 
 
 	public $bulk_action_post_type;
@@ -23,7 +21,7 @@ class CustomBulkAction extends Singleton {
 		$defaults = array( 'post_type' => 'post' );
 		$args = \wp_parse_args( $args, $defaults );
 		//Define args as their own variables as well eg. $post_type
-		\extract( $args, \EXTR_SKIP );
+		\extract( $args, \EXTR_SKIP );  //phpcs:ignore
 		$this->bulk_action_post_type = $post_type;
 	}
 
@@ -32,7 +30,7 @@ class CustomBulkAction extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function initialize() {
+	public function init() {
 		if ( \is_admin() ) {
 			// admin actions/filters
 			\add_action( 'admin_footer-edit.php', array( $this, 'custom_bulk_admin_footer' ) );
@@ -48,12 +46,12 @@ class CustomBulkAction extends Singleton {
 		$defaults = array( 'action_name' => '' );
 		$args = \wp_parse_args( $args, $defaults );
 		//Define args as their own variables as well eg. $post_type
-		\extract( $args, \EXTR_SKIP );
+		\extract( $args, \EXTR_SKIP ); // phpcs:ignore
 		$func = array();
 		$func['callback'] = $callback;
 		$func['menu_text'] = $menu_text;
 		$func['admin_notice'] = $admin_notice;
-		if ( $action_name === '' ) {
+		if ( '' === $action_name ) {
 			//Convert menu text to action_name 'Mark as sold' => 'mark_as_sold'
 			$action_name = \lcfirst( \str_replace( ' ', '_', $menu_text ) );
 		}
@@ -77,7 +75,7 @@ class CustomBulkAction extends Singleton {
 			$js .= '});';
 			$js .= '</script>';
 
-			echo $js;
+			echo $js; //phpcs:ignore
 		}
 	}
 	/**
@@ -143,7 +141,8 @@ class CustomBulkAction extends Singleton {
 	public function custom_bulk_admin_notices() {
 		global $post_type, $pagenow;
 		if ( isset( $_REQUEST['ids'] ) ) {
-			$post_ids = \explode( ',', $_REQUEST['ids'] );
+			$post_ids = data_get( $_REQUEST, 'ids', '' );
+			$post_ids = \explode( ',', $post_ids );
 		}
 		// make sure ids are submitted.  depending on the resource type, this may be 'media' or 'ids'
 		if ( empty( $post_ids ) ) {
@@ -153,16 +152,19 @@ class CustomBulkAction extends Singleton {
 		if ( \is_array( $post_ids ) ) {
 			$post_ids_count = \count( $post_ids );
 		}
-		if ( $pagenow == 'edit.php' && $post_type == $this->bulk_action_post_type ) {
+		if ( 'edit.php' === $pagenow && $post_type == $this->bulk_action_post_type ) {
 			if ( isset( $_REQUEST['success_action'] ) ) {
 				//Print notice in admin bar
-				$message = $this->actions[ $_REQUEST['success_action'] ]['admin_notice'];
+				$success_action = data_get( $_REQUEST, 'success_action', '' );
+				$message = $this->actions[ $success_action ]['admin_notice'];
 				if ( \is_array( $message ) ) {
-					$message = \sprintf( \_n( $message['single'], $message['plural'], $post_ids_count, 'wordpress' ), $post_ids_count );
+					$single = $message['single'];
+					$plural = $message['plural'];
+					$message = \sprintf( \_n( $single, $plural, $post_ids_count, 'rwp' ), $post_ids_count ); //phpcs:ignore
 				}
 				$class = 'updated notice is-dismissible above-h2';
 				if ( ! empty( $message ) ) {
-					echo "<div class=\"{$class}\"><p>{$message}</p></div>";
+					echo "<div class=\"{$class}\"><p>{$message}</p></div>"; //phpcs:ignore
 				}
 			}
 		}

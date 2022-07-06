@@ -3,7 +3,7 @@
  * debug
  *
  * @package   RWP\functions\debug
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -26,7 +26,7 @@ use RWP\Vendor\Symfony\Component\VarDumper\Caster\{LinkStub, ClassStub, ImgStub,
  *
  * @return VarDumper
  */
-function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
+function rwp_dump( $var, $theme = 'dark' ) {
 	$output = '';
 	$cloner = new VarCloner();
 	$dumper = new HtmlDumper( null, null, AbstractDumper::DUMP_LIGHT_ARRAY );
@@ -36,27 +36,6 @@ function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
 	));
 
 	$dumper->setTheme( $theme );
-
-	// if ( $add_trace ) {
-	// 	$prefix = $dumper->prefix;
-	// 	$suffix = $dumper->suffix;
-
-	// 	$backtrace = debug_backtrace( 1, 1 );
-
-	// 	$backtrace = head($backtrace);
-
-	// 	$file_link = QM::get_file_link_format();
-
-	// 	$dumper->setDumpBoundaries( $prefix, $suffix );
-	// }
-
-	// $backtrace = new TraceStub( debug_backtrace( 1, 1 ) );
-
-	// $backtrace_output = fopen( 'php://memory', 'r+b' );
-
-	// $backtrace_output = $dumper->dump( $cloner->cloneVar( $backtrace ), true, [
-	// 	'maxDepth' => -1,
-	// ] );
 
 	$output = $dumper->dump( $cloner->cloneVar( $var ), true, [
 		'maxDepth' => -1,
@@ -114,7 +93,11 @@ function rwp_caster( $object, $array, $stub, $is_nested, $filter = 0 ) {
  */
 function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
 	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
-		QM::instance()->log( $var, $die, $function );
+		/**
+		 * @var RWP\Integrations\QM $qm
+		 */
+		$qm = QM::instance();
+		$qm->log( $var, $die, $function );
 	}
 
 }

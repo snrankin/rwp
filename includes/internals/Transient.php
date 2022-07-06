@@ -3,7 +3,7 @@
  * Transients used by the plugin
  *
  * @package   RWP\Internals
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -22,7 +22,7 @@ class Transient extends Singleton {
 	/**
 	 * This method contain an example of caching a transient with an external request.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return object
 	 */
 	public function transient_caching_example() {
@@ -50,7 +50,7 @@ class Transient extends Singleton {
 	/**
 	 * Print the transient content
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function print_transient_output() {

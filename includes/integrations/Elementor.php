@@ -88,7 +88,7 @@ class Elementor extends Singleton {
 	 *
 	 * Make the placeholder image source relative
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @access public
 	 *
 	 * @param string $placeholder_image The source of the default placeholder image.
@@ -120,7 +120,7 @@ class Elementor extends Singleton {
 	/**
 	 * Make all urls in css relative
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @param CSS_File     $post_css_file The post CSS file instance.
 	 * @param Element_Base $element       The element instance.
 	 */

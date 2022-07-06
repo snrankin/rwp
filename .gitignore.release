@@ -1,0 +1,30 @@
+/** ============================================================================
+ * .gitignore
+ *
+ * Project: RWP
+ * Version: 1.0.1
+ * Author: RIESTER <wordpress@riester.com>
+ * Copyright (c) 2022 RIESTER
+ * ========================================================================== */
+.vscode
+
+vendor/*
+!vendor/autoload.php
+!vendor/composer
+vendor/composer/*
+vendor/composer/!*.php
+
+tests/
+webpack/
+node_modules/
+src/
+.*
+!.gitignore.release
+composer.json
+package.json
+php*.*
+*.lock
+*.xml
+*.neon
+*.yml
+./*.json

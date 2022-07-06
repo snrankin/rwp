@@ -1,6 +1,4 @@
-<?php
-
-if( function_exists('acf_add_local_field_group') ):
+<?php 			if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array(
 	'key' => 'group_rwp_plugin_options',
@@ -460,7 +458,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 1,
+					'acfe_seamless_style' => 0,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -469,31 +467,6 @@ acf_add_local_field_group(array(
 							'name' => 'lazyload',
 							'type' => 'true_false',
 							'instructions' => 'Add additional features for lazyloading that do more than WordPress\' built in functionality',
-							'required' => 0,
-							'conditional_logic' => 0,
-							'wrapper' => array(
-								'width' => '',
-								'class' => 'label-inline w-100',
-								'id' => '',
-							),
-							'acfe_save_meta' => 0,
-							'message' => '',
-							'default_value' => 0,
-							'ui' => 1,
-							'ui_on_text' => '',
-							'ui_off_text' => '',
-							'show_column' => 0,
-							'show_column_sortable' => 0,
-							'show_column_weight' => 1000,
-							'allow_quickedit' => 0,
-							'allow_bulkedit' => 0,
-						),
-						array(
-							'key' => 'field_60dce73775dbd',
-							'label' => 'Add noscript',
-							'name' => 'noscript',
-							'type' => 'true_false',
-							'instructions' => 'Add noscript code in case of disabled javascript',
 							'required' => 0,
 							'conditional_logic' => 0,
 							'wrapper' => array(
@@ -565,10 +538,10 @@ acf_add_local_field_group(array(
 						),
 						array(
 							'key' => 'field_60dce81b75dc0',
-							'label' => 'Parent-fit',
-							'name' => 'parentfit',
+							'label' => 'Custom Media',
+							'name' => 'custommedia',
 							'type' => 'true_false',
-							'instructions' => 'Add the ability to also calculate the right sizes for image elements in relationship to a specified parent container',
+							'instructions' => 'Automatically sync and manage your breakpoints between your CSS and the media attributes of your "picture > source" elements',
 							'required' => 0,
 							'conditional_logic' => 0,
 							'wrapper' => array(
@@ -630,7 +603,7 @@ acf_add_local_field_group(array(
 					),
 					'acfe_save_meta' => 0,
 					'layout' => 'block',
-					'acfe_seamless_style' => 1,
+					'acfe_seamless_style' => 0,
 					'acfe_group_modal' => 0,
 					'sub_fields' => array(
 						array(
@@ -735,51 +708,7 @@ acf_add_local_field_group(array(
 						),
 					),
 				),
-				array(
-					'key' => 'field_6180ca2716989',
-					'label' => 'Blog Options',
-					'name' => 'blog',
-					'type' => 'group',
-					'instructions' => '',
-					'required' => 0,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '',
-						'class' => '',
-						'id' => '',
-					),
-					'acfe_save_meta' => 0,
-					'layout' => 'block',
-					'acfe_seamless_style' => 1,
-					'acfe_group_modal' => 0,
-					'sub_fields' => array(
-						array(
-							'key' => 'field_6180ca381698a',
-							'label' => 'Update Urls',
-							'name' => 'update_urls',
-							'type' => 'true_false',
-							'instructions' => 'If a custom page is set for the blog, then automatically append that page path to post urls',
-							'required' => 0,
-							'conditional_logic' => 0,
-							'wrapper' => array(
-								'width' => '',
-								'class' => 'label-inline w-100',
-								'id' => '',
-							),
-							'acfe_save_meta' => 0,
-							'message' => '',
-							'default_value' => 0,
-							'ui' => 1,
-							'ui_on_text' => '',
-							'ui_off_text' => '',
-							'show_column' => 0,
-							'show_column_sortable' => 0,
-							'show_column_weight' => 1000,
-							'allow_quickedit' => 0,
-							'allow_bulkedit' => 0,
-						),
-					),
-				),
+
 				array(
 					'key' => 'field_623511a69d0ef',
 					'label' => 'BugHerd',
@@ -1019,7 +948,6 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1647645274,
 ));
 
 endif;
