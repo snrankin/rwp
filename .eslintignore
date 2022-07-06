@@ -1,0 +1,9 @@
+assets/js/**/*.js
+
+src/blocks/**/*.js
+
+src/js/vendor/modernizr.js
+
+dependencies/
+
+node_modules/
