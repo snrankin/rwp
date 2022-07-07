@@ -3,7 +3,7 @@
  * Plugin Name: RIESTERWP Core
  * Plugin URI: @TODO
  * Description: @TODO
- * Version: 1.0.0
+ * Version: 0.9.0
  * Author: RIESTER Advertising Agency
  * Author URI: https://www.riester.com
  * Text Domain: rwp
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-define( 'RWP_PLUGIN_VERSION', '1.0.0' );
+define( 'RWP_PLUGIN_VERSION', '0.9.0' );
 define( 'RWP_PLUGIN_TEXTDOMAIN', 'rwp' );
 define( 'RWP_PLUGIN_NAME', 'RIESTERWP Core' );
 define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
@@ -154,13 +154,13 @@ require_once RWP_PLUGIN_ROOT . 'includes/functions/functions.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/components.php';
-
+$rwp = rwp();
 if ( ! wp_installing() ) {
 	add_action(
 		'plugins_loaded',
-		static function () use ( $rwp_libraries ) {
-			$rwp = \RWP\Engine\Plugin::instance();
-			$rwp_libraries = new \RWP\Engine\Initialize( $rwp_libraries );
+		static function () use ( $rwp ) {
+
+			$rwp::init( $rwp );
 		}
 	);
 }

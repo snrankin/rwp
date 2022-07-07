@@ -33,7 +33,7 @@ class JS_Footer extends Singleton {
 	/**
 	 * Moves all scripts to wp_footer action
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function js_to_footer() {

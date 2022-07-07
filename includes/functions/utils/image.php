@@ -4,7 +4,7 @@
  * image
  *
  * @package   RWP\/includes/functions/utils/image.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -775,7 +775,7 @@ function rwp_encode_img( $image ) {
 		 * @var SVG $image
 		 */
 		$image = $image->html();
-		$mime = 'svg';
+		$mime = 'image/svg';
 	} else if ( rwp_is_component( $image, 'Image' ) ) {
 		/**
 		 * @var Image $image
@@ -783,12 +783,11 @@ function rwp_encode_img( $image ) {
 		$image = $image->html();
 		$mime = rwp_extract_img_src( $image );
 		$mime = mime_content_type( $mime );
-	} else {
-		if ( is_string( $image ) ) {
+	} else if ( is_string( $image ) ) {
+
+		if ( rwp_file_exists( $image ) ) {
 			$mime = mime_content_type( $image );
-			if ( rwp_file_exists( $image ) ) {
-				$image = rwp_filesystem()->get_contents( $image );
-			}
+			$image = rwp_filesystem()->get_contents( $image );
 		}
 	}
 
@@ -796,6 +795,9 @@ function rwp_encode_img( $image ) {
 
 		// Read image path, convert to base64 encoding
 		$image_data = base64_encode( $image );
+		if ( 'image/svg' === $mime ) {
+			$mime .= '+xml';
+		}
 		$src = 'data:' . $mime . ';base64,' . $image_data;
 		return $src;
     }

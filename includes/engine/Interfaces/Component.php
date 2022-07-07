@@ -3,7 +3,7 @@
  * ComponentInterface
  *
  * @package   RWP\/includes/engine/Interfaces/ComponentInterface.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -69,7 +69,7 @@ interface Component {
 	/**
 	 * Fired for each blog when the plugin is activated.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return array {
      *     @type bool     $success   Was the deactivation successful
 	 *     @type string[] $messages  An array of messages
@@ -81,7 +81,7 @@ interface Component {
 	/**
 	 * Fired for each blog when the plugin is deactivated.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return array {
      *     @type bool     $success   Was the deactivation successful
 	 *     @type string[] $messages  An array of messages

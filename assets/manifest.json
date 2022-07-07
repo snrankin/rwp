@@ -225,5 +225,6 @@
   "section.min.php": "js/rwp-section.min.asset.php",
   "toggle.min.js": "js/rwp-toggle.min.js",
   "toggle.min.php": "js/rwp-toggle.min.asset.php",
-  "block.min.json": "blocks/card/card-body/block.json"
+  "block.min.json": "blocks/card/card-body/block.json",
+  "rwp-icon.svg": "imgs/rwp-icon.svg"
 }

@@ -114,25 +114,38 @@ class Lazysizes extends Singleton {
 	 * @return void
 	 */
 	public function update_image_sizes() {
-		update_option( 'thumbnail_size_w', 120 );
-		update_option( 'thumbnail_size_h', 120 );
-		update_option( 'thumbnail_crop', true );
+		$thumbnail_size = get_option( 'thumbnail_size_w' );
+		if ( 120 !== $thumbnail_size ) {
+			update_option( 'thumbnail_size_w', 120 );
+			update_option( 'thumbnail_size_h', 120 );
+			update_option( 'thumbnail_crop', true );
+		}
 
-		set_post_thumbnail_size( 360, 240, true );
+		if ( ! has_image_size( 'post-thumbnail' ) ) {
+			set_post_thumbnail_size( 720, 480, false );
+		}
 
-		add_image_size( 'small', 480, 360, false );
+		$medium_size = get_option( 'medium_size_w' );
+		if ( 480 !== $medium_size ) {
+			update_option( 'medium_size_w', 480 );
+			update_option( 'medium_size_h', 360 );
+			update_option( 'medium_crop', false );
+		}
 
-		update_option( 'medium_size_w', 768 );
-		update_option( 'medium_size_h', 576 );
-		update_option( 'medium_crop', false );
+		$medium_large_size = get_option( 'medium_large_size_w' );
+		if ( 1024 !== $medium_large_size ) {
+			update_option( 'medium_large_size_w', 1024 );
+			update_option( 'medium_large_size_h', 768 );
+			update_option( 'medium_large_crop', false );
+		}
 
-		update_option( 'medium_large_size_w', 1024 );
-		update_option( 'medium_large_size_h', 768 );
-		update_option( 'medium_large_crop', false );
+		$large_size = get_option( 'large_size_w' );
+		if ( 1280 !== $large_size ) {
+			update_option( 'large_size_w', 1280 );
+			update_option( 'large_size_h', 960 );
+			update_option( 'large_crop', false );
+		}
 
-		update_option( 'large_size_w', 1280 );
-		update_option( 'large_size_h', 960 );
-		update_option( 'large_crop', false );
 	}
 
 

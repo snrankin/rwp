@@ -3,7 +3,7 @@
  * ACF
  *
  * @package   RWP\Integrations
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -73,7 +73,7 @@ class ACF extends Singleton {
 				'menu_title' => __( 'RIESTERWP Core', 'rwp' ),
 				'menu_slug'  => rwp()->prefix( 'options', 'slug' ),
 				'capability' => rwp()->get_capability(),
-				'icon_url'   => rwp()->get_icon(),
+				'icon_url'   => rwp()->get_settings_icon( true ),
 				'autoload'   => true,
 			));
 
@@ -104,7 +104,7 @@ class ACF extends Singleton {
 	/**
 	 * Register and enqueue acf-specific styles and scripts.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 *
 	 * @return void
 	 */

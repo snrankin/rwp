@@ -3,7 +3,7 @@
  * Example class for REST
  *
  * @package   RWP\Rest
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -27,7 +27,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function add_custom_stuff() {
@@ -38,7 +38,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function add_custom_field() {
@@ -59,7 +59,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function add_custom_route() {
@@ -87,7 +87,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @param array $post_obj Post ID.
 	 * @return string
 	 */
@@ -100,7 +100,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @param string   $value Value.
 	 * @param \WP_Post $post  Post object.
 	 * @param string   $key   Key.
@@ -123,7 +123,7 @@ class Example extends Singleton {
 	/**
 	 * Examples
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @param array $data Values.
 	 * @return array
 	 */

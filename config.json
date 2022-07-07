@@ -69,10 +69,7 @@
 
 		"fonts": {
 			"copy": [
-				{
-					"from": "./fonts/**/*",
-					"to": "fonts"
-				},
+				"./imgs/**/*",
 				{
 					"from": "~@fortawesome/fontawesome-free/webfonts/*",
 					"to": "fonts/[name][ext]"
