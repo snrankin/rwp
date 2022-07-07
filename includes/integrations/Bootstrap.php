@@ -21,6 +21,18 @@ use RWP\Vendor\Exceptions\Collection\KeyNotFoundException;
 
 class Bootstrap extends Singleton {
 
+	public $column_sizes = array();
+
+	public $breakpoints = array(
+		'xs' => 0,
+		'sm' => 576,
+		'md' => 768,
+		'lg' => 996,
+		'xl' => 1200,
+		'xxl' => 1400,
+	);
+
+
 	/**
 	 * Initialize the class.
 	 *

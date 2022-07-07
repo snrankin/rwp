@@ -48,12 +48,12 @@
 html,
 body {
 	min-height: 100%;
-	padding: 0;
-	margin: 0;
+	min-width: 100%;
+	max-width: 100%;
 	width: 100%;
-	@media screen {
-		width: calc(100vw - (100vw - 100%)); // ignores scrollbar
-	}
+	overflow-x: hidden;
+	padding: 0 !important;
+	margin: 0;
 }
 
 @viewport {
@@ -77,8 +77,7 @@ html {
 
 // scss-docs-start reboot-body-rules
 body {
-	@include font-size(getcssvar(body-font-size));
-
+	font-size: getcssvar(body-font-size);
 	font-family: getcssvar(body-font-family);
 	font-weight: getcssvar(body-font-weight);
 	color: getcssvar(body-color);
@@ -122,14 +121,19 @@ body {
 // 3. Add the correct box sizing in Firefox.
 // 4. Show the overflow in Edge and IE.
 
+// Content grouping
+//
+// 1. Reset Firefox's gray color
+// 2. Set correct height and prevent the `size` attribute to make the `hr` look like an input field
+
 hr {
 	box-sizing: content-box; // 3
-	height: 0; // 3
-	overflow: visible; // 4
 	margin: getcssvar(paragraph-spacing) 0;
-	color: currentColor; // 1
+	color: $hr-color; // 1
 	background-color: currentColor;
 	border: 0;
+	opacity: $hr-opacity;
+	overflow: visible; // 4
 
 	&:not([size]) {
 		height: $hr-height; // 2
@@ -167,9 +171,14 @@ section {
 
 p {
 	margin-top: 0;
+	margin-bottom: getcssvar(paragraph-spacing);
 
-	&:not(:last-child) {
-		margin-bottom: getcssvar(paragraph-spacing);
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&:empty {
+		display: none;
 	}
 }
 
@@ -203,7 +212,19 @@ address {
 
 ol,
 ul {
-	padding-left: 2rem;
+	padding-left: 0;
+
+	&:not([class]) {
+		li {
+			line-height: line-height($line-height-base);
+			margin-inline-start: 1em;
+
+			&::marker {
+				font-weight: bold;
+				color: getcssvar(primary);
+			}
+		}
+	}
 }
 
 ol,
@@ -214,13 +235,6 @@ dl {
 	&:not(:last-child) {
 		margin-bottom: getcssvar(paragraph-spacing);
 	}
-}
-
-ol ol,
-ul ul,
-ol ul,
-ul ol {
-	margin-bottom: 0;
 }
 
 dt {
@@ -318,7 +332,7 @@ kbd,
 samp {
 	@include font-size(1em); // Correct the odd `em` font sizing in all browsers.
 
-	font-family: $font-family-code;
+	font-family: $font-family-monospace;
 	direction: ltr #{'/* rtl:ignore */'};
 	unicode-bidi: bidi-override;
 }
@@ -385,12 +399,12 @@ figure {
 // Apply a consistent margin strategy (matches our type styles).
 
 figure {
+	margin: 0 0 getcssvar(paragraph-spacing);
+	margin-block-start: 0;
+	margin-block-end: 0;
+
 	&:last-child {
 		margin: 0;
-	}
-
-	&:not(:last-child) {
-		margin: 0 0 getcssvar(paragraph-spacing);
 	}
 }
 
@@ -578,6 +592,7 @@ legend {
 	float: left; // 1
 	width: 100%;
 	padding: 0; // 5
+	margin-bottom: getcssvar(paragraph-spacing);
 	line-height: inherit;
 	box-sizing: border-box; // 3
 	color: inherit; //4
@@ -586,10 +601,6 @@ legend {
 	white-space: normal; // 3
 	+ * {
 		clear: left; // 2
-	}
-
-	&:not(:last-child) {
-		margin-bottom: getcssvar(paragraph-spacing);
 	}
 }
 
@@ -619,6 +630,11 @@ legend {
 [type='search'] {
 	outline-offset: -2px; // 1
 	appearance: textfield; // 2
+}
+
+input[type='password'] {
+	font-family: Verdana;
+	letter-spacing: 0.125em;
 }
 
 // 1. A few input types should stay LTR
@@ -719,4 +735,13 @@ input::-webkit-inner-spin-button {
 // Firefox
 input[type='number'] {
 	-moz-appearance: textfield; //stylelint-disable-line
+}
+
+//stylelint-disable-next-line
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	select,
+	textarea,
+	input {
+		font-size: 16px;
+	}
 }

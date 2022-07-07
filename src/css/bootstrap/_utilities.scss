@@ -1,0 +1,53 @@
+/// ======================================================================== ///
+/// @name   _utilities
+///
+/// @group  RWP
+/// @version   1.0.1
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+
+@import '~bootstrap/scss/utilities/api';
+
+$item-align: (
+	'center': 'center',
+	'start': 'flex-start',
+	'end': 'flex-end',
+);
+
+@each $class, $value in $item-align {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+		@include media-breakpoint-up($breakpoint) {
+			.text#{$infix}-#{$class} {
+				.vstack {
+					align-items: unquote($value);
+				}
+
+				.hstack {
+					justify-content: unquote($value);
+				}
+
+				.list-inline {
+					justify-content: unquote($value);
+				}
+
+				.card {
+					justify-items: unquote($value);
+				}
+
+				&.content-wrapper {
+					align-items: unquote($value);
+				}
+
+				@if $class == 'center' {
+					ol,
+					ul {
+						&:not([class]) {
+							list-style-position: inside;
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -63,40 +63,29 @@ $spacers: (
 	16: calc(var(--#{$variable-prefix}spacer) * 4)
 );
 
-$modularscale: (
-  base: rem(18px),
-  ratio: 1.125
-);
+$grid-gutter-width:           1.5rem !default;
 
-$font-size-base:              ms(0); // Assumes the browser default, typically `16px`
-$font-size-sm:                ms(-1);
-$font-size-lg:                ms(1);
-
-$h1-font-size:                ms(6);
-$h2-font-size:                ms(5);
-$h3-font-size:                ms(4);
-$h4-font-size:                ms(3);
-$h5-font-size:                ms(2);
-$h6-font-size:                ms(1);
-
-$display-font-sizes: (
-  1: ms(12),
-  2: ms(11),
-  3: ms(10),
-  4: ms(9),
-  5: ms(8),
-  6: ms(7)
-);
-
-$line-height-base:            1.5 !default;
-$line-height-sm:              1.25 !default;
-$line-height-lg:              2 !default;
+$section-spacing-y: $grid-gutter-width * 3;
+$row-spacing-y: $grid-gutter-width * 2;
+$col-spacing-y: $grid-gutter-width;
 
 $paragraph-margin-bottom: 1em;
 
 $blockquote-margin-y: $paragraph-margin-bottom;
 
 $headings-margin-bottom: $paragraph-margin-bottom * .5;
+
+$navbar-brand-padding-y:0;
+$navbar-brand-margin-end:0;
+
+$aspect-ratios: (
+  "1x1": 100%,
+  "2x1": calc(1 / 2 * 100%),
+  "3x2": calc(2 / 3 * 100%),
+  "4x3": calc(3 / 4 * 100%),
+  "16x9": calc(9 / 16 * 100%),
+  "21x9": calc(9 / 21 * 100%)
+);
 
 @import '~bootstrap/scss/variables';
 
@@ -118,9 +107,12 @@ $theme-colors: map-set($theme-colors, 'muted', $text-muted);
 $theme-colors: map-set($theme-colors, 'border-color', $border-color);
 
 $container-widths: (
-	sm: 100vw,
-	md: 90vw,
-	lg: 85vw,
+	xs: 90vw,
+	sm: 90vw,
+	md: 85vw,
+	lg: 80vw,
 	xl: 75vw,
 	xxl: 1050px
 );
+$nav-link-active-color: $nav-link-hover-color;
+$nav-link-focus-color: $nav-link-hover-color;

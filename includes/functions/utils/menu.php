@@ -244,6 +244,9 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     }
 
     $theme           = data_get( $custom_args, 'theme' );
+	/**
+	 * @var Collection $order
+	 */
     $order           = data_get( $custom_args, 'navbar.order', rwp_collection( array( 'navbar', 'toggle' ) ) );
     $in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
     $breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
@@ -277,9 +280,18 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     $nav->add_class( array( 'collapse', 'navbar-collapse' ) );
 	$nav->set_tag( 'div' );
 
+	$breakpoints = rwp_collection( array() );
+
+	$mobile_layout = 'grid-columns';
+
     if ( ! empty( $breakpoint ) ) {
         $navbar->add_class( 'navbar-expand-' . $breakpoint );
+		$mobile_layout .= "-$breakpoint";
     }
+
+	$column_count = $order->count();
+
+	$mobile_layout .= '-' . ( $column_count - 1 );
 
     if ( ! empty( $theme ) ) {
         $navbar->add_class( 'navbar-' . $theme );
@@ -292,6 +304,7 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		'atts' => array(
 			'class' => array(
 				'navbar-wrapper-inner',
+				$mobile_layout,
 			),
 		),
 	) );

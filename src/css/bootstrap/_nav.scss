@@ -17,13 +17,19 @@
 .menu-text {
 	display: inline-block;
 	font-family: inherit;
-	color: currentcolor;
+	color: currentColor;
 	line-height: inherit;
 	font-size: inherit;
 	text-decoration: inherit;
 }
 
+.menu {
+	@extend .nav;
+}
+
 .menu-item {
+	@extend .nav-item;
+
 	position: relative;
 	max-width: 100%;
 
@@ -34,6 +40,17 @@
 
 	&.menu-divider {
 		padding: 0 !important;
+
+		> .menu-link {
+			padding: 0 !important;
+
+			@include hover-focus-active(true) {
+				outline: none;
+				text-decoration: none;
+				background: none;
+				background-color: transparent;
+			}
+		}
 	}
 }
 
@@ -42,6 +59,9 @@
 }
 
 .menu-link {
+	@extend .nav-link;
+
+	color: getcssvar(nav-link-color);
 	flex: 1 1 auto;
 	display: flex;
 	align-items: center;
@@ -56,15 +76,15 @@
 		background-color: transparent;
 	}
 	@include hover(true) {
-		color: $nav-link-hover-color;
+		color: getcssvar(nav-link-hover-color);
 	}
 	@include active(true) {
-		color: $nav-link-hover-color;
+		color: getcssvar(nav-link-active-color);
 	}
 
 	@include focus(true) {
-		color: $nav-link-hover-color;
-		@include box-shadow($btn-focus-box-shadow);
+		color: getcssvar(nav-link-focus-color);
+		@include box-shadow(getcssvar(btn-focus-box-shadow));
 	}
 }
 

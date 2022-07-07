@@ -180,7 +180,7 @@
     -webkit-transform:translateY(-50%);
             transform:translateY(-50%);
     z-index:10;
-    color:currentcolor;
+    color:currentColor;
 }
 .tns-controls .btn.next{
     right:0;
@@ -194,6 +194,11 @@
     grid-row-gap:var(--bs-gutter-y);
     grid-column-gap:var(--bs-gutter-x);
     grid-auto-flow:column;
+    place-content:center;
+    place-items:center;
+}
+.tns-nav .btn{
+    padding:0;
 }
 .tns-nav.tns-thumbnails .btn-icon{
     min-width:var(--tns-thumbnail-width, 60px);

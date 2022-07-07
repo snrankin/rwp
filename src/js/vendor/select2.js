@@ -47,6 +47,10 @@ jQuery(document).ready(function ($) {
 			}
 			$(input).select2(select2Options);
 		});
+		// Prevent auto focus
+		$('.select2').prop('focus', false).blur();
+		$('.select2-selection').prop('focus', false).blur();
+		$('.select2-search input, :focus,input').prop('focus', false).blur();
 	}
 
 	/**

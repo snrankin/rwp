@@ -12,7 +12,6 @@
     ],
     "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
     "require-dev": {
-        "php": "^7.4",
         "codeception/codeception": "^4.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
         "ergebnis/composer-normalize": "^2.6",

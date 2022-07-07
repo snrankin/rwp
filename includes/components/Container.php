@@ -15,8 +15,8 @@ class Container extends Group {
 	public $tag = 'div';
 
 	/**
-	 *
-	 * @var bool|string[] Boolean for fluid container or an array of breakpoints
+	 * Boolean for fluid container or an array of breakpoints
+	 * @var bool|string[]
 	 */
 
 	public $fluid = false;

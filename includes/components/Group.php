@@ -52,10 +52,6 @@ class Group extends Element {
 			$this->elements = new Collection( $this->elements );
 		}
 
-		$this->elements->transform(function( $item ) {
-			$item = $this->format_item( $item );
-			return $item;
-		});
 	}
 
 	/**

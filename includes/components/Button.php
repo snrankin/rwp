@@ -47,6 +47,11 @@ class Button extends Element {
 	public $disabled = false;
 
 	/**
+	 * @var bool $open Whether or not the item is currently open
+	 */
+	public $open = false;
+
+	/**
 	 * @var array $order Array that sets the order of the child nodes
 	 */
 
@@ -204,20 +209,30 @@ class Button extends Element {
 				$this->set_toggle_icons();
 				break;
 			case 'tab':
-			case 'pill':
-				$this->set_attr( 'href', $link );
+				$this->set_attr( 'data-bs-toggle', $toggle );
+				$this->set_attr( 'data-bs-target', $link );
 				$this->set_attr( 'aria-controls', $target );
 				$this->set_attr( 'role', 'tab' );
-				$this->set_attr( 'aria-selected', 'false' );
+				if ( $this->open ) {
+					$this->set_attr( 'aria-selected', 'true' );
+				} else {
+					$this->set_attr( 'aria-selected', 'false' );
+				}
+
 				$this->set_toggle_icons();
 				break;
 			case 'collapse':
 				$this->set_attr( 'data-bs-toggle', $toggle );
 				$this->set_attr( 'data-bs-target', $link );
 				$this->set_attr( 'aria-controls', $target );
-				$this->set_attr( 'aria-expanded', 'false' );
+				if ( $this->open ) {
+					$this->set_attr( 'aria-expanded', 'true' );
+				} else {
+					$this->set_attr( 'aria-expanded', 'false' );
+				}
 				$this->set_toggle_icons();
 				break;
+			case 'offcanvas':
 			case 'modal':
 				$this->set_attr( 'data-bs-toggle', $toggle );
 				$this->set_attr( 'data-bs-target', $link );

@@ -180,6 +180,8 @@ class Card extends Element {
 
 	public function __construct( $args = [] ) {
 
+		$this->image['size'] = apply_filters( 'rwp_card_image_size', 'medium' ); // Adjust size for post card images globally
+
 		parent::__construct( $args );
 
 		if ( $this->content->isNotEmpty() ) {
@@ -446,7 +448,7 @@ class Card extends Element {
 	public function setup_image() {
 		if ( in_array( 'image', $this->order, true ) ) {
 
-			if ( ! $this->image->has( 'src' ) && ! $this->image->has( 'id' ) ) {
+			if ( false == $this->image || ( is_object( $this->image ) && empty( $this->image->src ) && empty( $this->image->id ) ) ) {
 				$this->remove_order_item( 'image' );
 			}
 		}

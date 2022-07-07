@@ -149,6 +149,10 @@ class Element {
 		return $args;
 	}
 
+	public function get_args() {
+		return get_object_vars( $this );
+	}
+
 	/**
 	 * Merge arguments into the current object
 	 *
@@ -221,32 +225,54 @@ class Element {
 	 * Add a content item key to the elements order
 	 *
 	 * @param mixed $key
-	 * @param mixed|null $position
+	 * @param mixed|null $index
 	 *
 	 * @return void
 	 */
-	public function set_order( $key, $position = null ) {
+	public function set_order( $key, $index = null, $position = null ) {
 		$order = $this->order;
 
-		if ( blank( $position ) || 'last' === $position ) {
-			$order[] = $key;
-		} else if ( 'first' === $position ) {
-			array_unshift( $order, $key );
-		} else {
+		if ( ! blank( $index ) && ! blank( $position ) ) {
 
-			$current_order = array_search( $key, $order );
+			$current_index = array_search( $key, $order );
 
-			if ( false !== $current_order ) {
-				if ( $current_order !== $position ) {
+			$index = array_search( $index, $order );
+
+			if ( false !== $current_index && false !== $index ) {
+				if ( $current_index !== $index ) {
 					$order = rwp_array_remove( $order, $key );
+
+					if ( 'before' == $position ) {
+						$index--;
+					}
 					$order = array_merge(
-						array_slice( $order, 0, $position ),
-						$key,
-						array_slice( $order, $position )
+					array_slice( $order, 0, $index ),
+					$key,
+					array_slice( $order, $index )
 					);
 				}
 			} else {
-				rwp_array_insert( $order, $position, $key );
+				rwp_array_insert( $order, $index, $key );
+			}
+		} else {
+			if ( blank( $index ) || 'last' === $index ) {
+				$order[] = $key;
+			} else if ( 'first' === $index ) {
+				array_unshift( $order, $key );
+			} else {
+				$current_order = array_search( $key, $order );
+				if ( false !== $current_order ) {
+					if ( $current_order !== $index ) {
+						$order = rwp_array_remove( $order, $key );
+						$order = array_merge(
+						array_slice( $order, 0, $index ),
+						$key,
+						array_slice( $order, $index )
+						);
+					}
+				} else {
+					rwp_array_insert( $order, $index, $key );
+				}
 			}
 		}
 

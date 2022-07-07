@@ -37,7 +37,7 @@
 		position: absolute;
 		transform: translateY(-50%);
 		z-index: 10;
-		color: currentcolor;
+		color: currentColor;
 
 		&.next {
 			right: 0;
@@ -54,6 +54,12 @@
 	grid-row-gap: getcssvar(gutter-y); //stylelint-disable-line
 	grid-column-gap: getcssvar(gutter-x); //stylelint-disable-line
 	grid-auto-flow: column;
+	place-content: center;
+	place-items: center;
+
+	.btn {
+		padding: 0;
+	}
 
 	&.tns-thumbnails {
 		.btn-icon {

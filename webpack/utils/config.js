@@ -19,7 +19,6 @@ const CleanupMiniCssExtractPlugin = require('cleanup-mini-css-extract-plugin');
 const magicImporter = require('node-sass-magic-importer');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const WebpackBar = require('webpackbar');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const WebpackMessages = require('webpack-messages');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -38,11 +37,15 @@ const folders = _.get(configFile, 'folders', {}),
 	configName = !isEmpty(argv['config-name']) ? argv['config-name'] : '',
 	isProduction = env() === 'production' ? true : false,
 	jsDist = _.replace(filePaths.js.dist, filePaths.dist + '/', ''),
+	imagesDist = _.replace(filePaths.images.dist, filePaths.dist + '/', ''),
+	fontsDist = _.replace(filePaths.fonts.dist, filePaths.dist + '/', ''),
+	cssDist = _.replace(filePaths.css.dist, filePaths.dist + '/', ''),
 	buildGroup = !isEmpty(groupName) ? groupName : 'Build',
 	buildType = !isEmpty(configName) ? `: ${configName}` : '',
-	envType = env() === 'production' ? ' - production' : ' - development',
-	buildName = `${buildGroup}${buildType}${envType}`,
+	buildName = `${buildGroup}${buildType} - ${env()}`,
 	shouldAnalyze = !isEmpty(argv.profile) ? true : false,
+	serverUp = !isEmpty(argv.serve) ? true : false,
+	isHot = !isEmpty(argv.hot) ? true : false,
 	buildStats = {
 		preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
 		colors: true,
@@ -60,7 +63,6 @@ const folders = _.get(configFile, 'folders', {}),
 		source: false,
 		publicPath: false,
 	};
-
 function createConfig() {
 	const entryFiles = fileNames(groupName, configName, configFile.entry);
 
@@ -200,6 +202,8 @@ function createConfig() {
 
 	if (!isProduction) {
 		newConfig.webpack.devtool = 'source-map';
+	} else if (serverUp) {
+		newConfig.webpack.devtool = 'inline-source-map';
 	}
 
 	newConfig = _.defaultsDeep(newConfig, customConfig);
@@ -211,9 +215,24 @@ function createConfig() {
 	return newConfig;
 }
 
-const config = createConfig(groupName, configName);
+const config = createConfig();
 
+exports.folders = folders;
+exports.useCache = useCache;
+exports.groupName = groupName;
+exports.buildWatch = buildWatch;
+exports.configName = configName;
+exports.isProduction = isProduction;
+exports.jsDist = jsDist;
+exports.imagesDist = imagesDist;
+exports.fontsDist = fontsDist;
+exports.cssDist = cssDist;
+exports.buildGroup = buildGroup;
+exports.buildType = buildType;
+exports.buildName = buildName;
 exports.config = config;
+exports.serverUp = serverUp;
+exports.isHot = isHot;
 
 const cssLoaders = [
 	{
@@ -400,14 +419,14 @@ let webpackConfig = {
 				test: /\.(woff|woff2|eot|ttf|otf)$/i,
 				type: 'asset/resource',
 				generator: {
-					filename: `${folders.fonts}/${config.assetname}`,
+					filename: path.join(fontsDist, config.assetname),
 				},
 			},
 			{
 				test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
 				type: 'asset/resource',
 				generator: {
-					filename: `${folders.images}/${config.assetname}`,
+					filename: path.join(imagesDist, config.assetname),
 				},
 			},
 		],
@@ -440,8 +459,6 @@ if (isProduction) {
 exports.baseConfig = webpackConfig;
 
 const startingPlugins = [
-	new WebpackBar(),
-
 	new ESLintPlugin({
 		failOnWarning: false,
 		emitError: !isProduction,
@@ -503,12 +520,17 @@ const endingPlugins = [
 		seed: manifest,
 		removeKeyHash: true,
 	}),
-	new WebpackMessages({
-		name: buildName,
-		logger: (str) => console.log(` >> ${str}`), // eslint-disable-line
-	}),
-	new WebpackBuildNotifierPlugin(config.notify),
 ];
+
+if (argv.stats !== 'verbose') {
+	endingPlugins.push(
+		new WebpackMessages({
+			name: buildName,
+			logger: (str) => console.log('\n// -------------------------------------------------------------------------- //\n', ` >> ${str}`, '\n// -------------------------------------------------------------------------- //\n'), // eslint-disable-line
+		})
+	);
+}
+endingPlugins.push(new WebpackBuildNotifierPlugin(config.notify));
 
 if (!isEmpty(config.copy)) {
 	const CopyPlugin = require('copy-webpack-plugin');

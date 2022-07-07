@@ -56,3 +56,35 @@ $utilities: map-merge(
 			),
 	)
 );
+
+@mixin setcssvar($entry, $value, $prefix: $variable-prefix) {
+	--#{$prefix}#{$entry}: #{$value};
+}
+
+@mixin setlinkvars($entry, $color, $hover: null, $active: null, $focus: null, $disabled: null, $prefix: $variable-prefix) {
+	@include setcssvar(#{$entry}-color, $color, $prefix);
+	@if $hover != null {
+		@include setcssvar(#{$entry}-hover-color, $hover, $prefix);
+	}
+	@if $active != null {
+		@include setcssvar(#{$entry}-active-color, $active, $prefix);
+	}
+	@if $disabled != null {
+		@include setcssvar(#{$entry}-disabled-color, $disabled, $prefix);
+	}
+	@if $focus != null {
+		@include setcssvar(#{$entry}-focus-color, $focus, $prefix);
+	}
+}
+
+@mixin reduced-motion($print: true) {
+	@if $print == true {
+		@media print, (prefers-reduced-motion: reduce) {
+			@content;
+		}
+	} @else {
+		@media (prefers-reduced-motion: reduce) {
+			@content;
+		}
+	}
+}
