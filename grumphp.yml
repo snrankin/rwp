@@ -26,7 +26,6 @@ grumphp:
       config: .eslintrc.js
     git_blacklist:
       keywords:
-        - "die"
         - "var_dump"
         - "ray"
       whitelist_patterns:
