@@ -9,29 +9,19 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-<<<<<<< HEAD
- use RWP\Engine\Plugin;
-=======
 use RWP\Components\Collection;
 use RWP\Engine\Plugin;
 use RWP\Vendor\PUC\Factory;
 use RWP\Integrations\Bootstrap;
->>>>>>> release/v0.9.0
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
  *
-<<<<<<< HEAD
- * @since  1.0.0
-=======
  * @since  0.9.0
->>>>>>> release/v0.9.0
  * @return RWP\Engine\Plugin
  */
 function rwp() {
 	return Plugin::instance();
-<<<<<<< HEAD
-=======
 
 }
 
@@ -48,9 +38,7 @@ function rwp_check_for_updates() {
 	));
 
 }
->>>>>>> release/v0.9.0
 
-}
 
 /**
  * Get the settings of the plugin in a filterable way
@@ -62,6 +50,7 @@ function rwp_check_for_updates() {
 function rwp_get_options( $global = false ) {
 	return rwp()->get_options( $global );
 }
+
 
 /**
  * Get a plugin option

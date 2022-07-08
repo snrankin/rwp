@@ -3,11 +3,7 @@
  * Gutenberg
  *
  * @package   RWP\/includes/integrations/Gutenberg.php
-<<<<<<< HEAD
- * @since     1.0.1
-=======
  * @since     0.9.0
->>>>>>> release/v0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -23,11 +19,7 @@ class Gutenberg extends Singleton {
 	/**
 	 * The registered blocks
 	 *
-<<<<<<< HEAD
-	 * @since    1.0.0
-=======
 	 * @since    0.9.0
->>>>>>> release/v0.9.0
 	 * @access   protected
 	 * @var      Collection $blocks
 	 */

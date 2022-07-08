@@ -1098,7 +1098,6 @@ class Element implements \ArrayAccess {
 	}
 
 
-<<<<<<< HEAD
 
 	/**
 	 * Minify the html string
@@ -1123,63 +1122,10 @@ class Element implements \ArrayAccess {
 		return $html;
 	}
 
-
-	/**
-	 * Determine if the given key exists and is not empty.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
-	 */
-	public function has( $key ) {
-		return $this->exists( $key ) && filled( $this->get( $key ) );
-	}
-=======
->>>>>>> release/v0.9.0
-
-	/**
-	 * Minify the html string
-	 *
-	 * @param array $options Options passed to PrettyMin::__construct()
-	 * @return string
-	 * @throws Exception
-	 * @throws DOMException
-	 */
-<<<<<<< HEAD
-	public function exists( $key ) {
-		return \data_has( $this, $key );
-=======
-	public function minify( $options = array() ) {
-        $this->build();
-		$html = $this->html;
-
-		$html = rwp_html_page( $html );
-
-		$html->minify( $options );
-
-		$html = $html->getBody()->saveHTML();
-
-		$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
-
-		return $html;
->>>>>>> release/v0.9.0
-	}
-
 	/**
 	 * Set the methods
 	 * @return void
 	 */
-<<<<<<< HEAD
-	public function remove( $key ) {
-		\data_remove( $this, $key );
-	}
-
-	/**
-	 * Set the methods
-	 * @return void
-	 */
-=======
->>>>>>> release/v0.9.0
     final public static function mapApiMethods() {
 
         $class = \get_called_class();
@@ -1244,53 +1190,6 @@ class Element implements \ArrayAccess {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Dynamically retrieve the value of an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 * @return mixed
-	 */
-	public function __get( $key ) {
-		return $this->get( $key );
-	}
-
-	/**
-	 * Dynamically set the value of an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 * @param  mixed   $value
-	 *
-	 * @return void
-	 */
-	public function __set( $key, $value ) {
-		$this->set( $key, $value );
-	}
-
-	/**
-	 * Dynamically check if an attribute is set.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
-	 */
-	public function __isset( $key ) {
-		return $this->exists( $key );
-	}
-
-	/**
-	 * Dynamically unset an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return void
-	 */
-	public function __unset( $key ) {
-		$this->remove( $key );
-	}
-
-	/**
-=======
->>>>>>> release/v0.9.0
 	 * Output the html string
 	 *
 	 * @return string

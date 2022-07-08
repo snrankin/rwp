@@ -37,13 +37,9 @@ class GravityForms extends Singleton {
 
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
-<<<<<<< HEAD
-		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
-=======
 		if ( ! class_exists( 'Gravity_Forms\Gravity_Forms_RECAPTCHA\GF_RECAPTCHA' ) ) {
 			rwp_get_dependency_file( 'recaptcha.php', 'externals/gravityforms/recaptcha', true, true );
 		}
->>>>>>> release/v0.9.0
 
 		rwp_add_filters(array(
 			'gform_preview_styles',

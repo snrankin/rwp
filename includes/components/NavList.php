@@ -90,32 +90,6 @@ class NavList extends HtmlList {
 	public $open = false;
 
 	/**
-	 * @var bool $has_wrapper Whether or not this menu is wrapped with a <nav>
-	 */
-	public $has_wrapper = true;
-
-	/**
-	 * @var mixed $parent The subnav parent id
-	 */
-	public $parent;
-
-	/**
-	 * @var string $nested_type The type of dropdown. Can be one of `collapse|indented`
-	 */
-	public $nested_type = 'collapse';
-
-	/**
-	 * @var int $nested_type_depth What depth to start the nested type
-	 */
-	public $nested_type_depth = 1;
-
-	/**
-	 * @var mixed The Toggle Button Element
-	 */
-	public $toggle;
-
-
-	/**
 	 * Initialize the class
 	 *
 	 * @param mixed $args
@@ -137,38 +111,6 @@ class NavList extends HtmlList {
 			$this->item_atts['parent_type'] = $this->nested_type;
 		}
 
-<<<<<<< HEAD
-		$this->set_attr( 'aria-orientation', $direction, true );
-	}
-
-	public function setup_html() {
-
-		if ( ! $this->has_wrapper ) {
-			switch ( $this->toggle_type ) {
-				case 'dropdown':
-					if ( 0 < $this->depth ) {
-						$this->add_class( 'dropdown-menu' );
-						$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-					}
-				    break;
-				case 'tab':
-					if ( 0 == $this->depth ) {
-						$this->add_class( array( 'tab-pane', 'fade' ) );
-						$this->set_attr( 'role', 'tabpanel' );
-					}
-				    break;
-				case 'collapse':
-					if ( 0 < $this->depth ) {
-						$this->add_class( 'collapse' );
-						$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-					}
-				    break;
-			}
-
-			if ( 0 < $this->depth ) {
-				$this->add_class( array( 'sub-nav', 'level-' . ( $this->depth ) . '-menu' ) );
-			}
-=======
 	}
 
 
@@ -244,8 +186,6 @@ class NavList extends HtmlList {
 			$this->add_class( 'nav-justified' );
 		} else {
 			$this->remove_class( 'nav-justified' );
->>>>>>> release/v0.9.0
 		}
-
 	}
 }

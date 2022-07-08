@@ -108,11 +108,7 @@ class Nav extends Element {
 
 		$list = data_get( $args, 'list' );
 
-<<<<<<< HEAD
-		$list_args = rwp_collection( $args )->only( array( 'direction', 'toggle_type', 'depth', 'type', 'parent', 'toggle' ) );
-=======
 		$list_args = rwp_collection( $args )->only( array( 'direction', 'toggle_type', 'depth', 'type', 'parent', 'toggle', 'parent_type', 'fill', 'pill', 'justified' ) );
->>>>>>> release/v0.9.0
 
 		$args['list'] = $list_args->merge( $list )->all();
 
@@ -129,15 +125,6 @@ class Nav extends Element {
 				if ( 0 < $this->depth ) {
 					$this->add_class( 'dropdown-menu' );
 					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-<<<<<<< HEAD
-				}
-				break;
-			case 'tab':
-				if ( 0 == $this->depth ) {
-					$this->add_class( array( 'tab-pane', 'fade' ) );
-					$this->set_attr( 'role', 'tabpanel' );
-=======
->>>>>>> release/v0.9.0
 				}
 				break;
 
@@ -145,12 +132,9 @@ class Nav extends Element {
 				if ( 0 < $this->depth ) {
 					$this->add_class( 'collapse' );
 					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
-<<<<<<< HEAD
-=======
 					if ( $this->open ) {
 							$this->add_class( 'show' );
 					}
->>>>>>> release/v0.9.0
 				}
 				break;
 		}

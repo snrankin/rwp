@@ -26,11 +26,7 @@ use RWP\Vendor\Symfony\Component\VarDumper\Caster\{LinkStub, ClassStub, ImgStub,
  *
  * @return VarDumper
  */
-<<<<<<< HEAD
-function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
-=======
 function rwp_dump( $var, $theme = 'dark' ) {
->>>>>>> release/v0.9.0
 	$output = '';
 	$cloner = new VarCloner();
 	$dumper = new HtmlDumper( null, null, AbstractDumper::DUMP_LIGHT_ARRAY );
@@ -41,30 +37,6 @@ function rwp_dump( $var, $theme = 'dark' ) {
 
 	$dumper->setTheme( $theme );
 
-<<<<<<< HEAD
-	// if ( $add_trace ) {
-	// 	$prefix = $dumper->prefix;
-	// 	$suffix = $dumper->suffix;
-
-	// 	$backtrace = debug_backtrace( 1, 1 );
-
-	// 	$backtrace = head($backtrace);
-
-	// 	$file_link = QM::get_file_link_format();
-
-	// 	$dumper->setDumpBoundaries( $prefix, $suffix );
-	// }
-
-	// $backtrace = new TraceStub( debug_backtrace( 1, 1 ) );
-
-	// $backtrace_output = fopen( 'php://memory', 'r+b' );
-
-	// $backtrace_output = $dumper->dump( $cloner->cloneVar( $backtrace ), true, [
-	// 	'maxDepth' => -1,
-	// ] );
-
-=======
->>>>>>> release/v0.9.0
 	$output = $dumper->dump( $cloner->cloneVar( $var ), true, [
 		'maxDepth' => -1,
 	] );
@@ -117,11 +89,6 @@ function rwp_caster( $object, $array, $stub, $is_nested, $filter = 0 ) {
 
  * @return void
  */
-<<<<<<< HEAD
-function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
-	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
-		QM::instance()->log( $var, $die, $function );
-=======
 function rwp_log() {
 
 	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
@@ -133,7 +100,6 @@ function rwp_log() {
 			$qm = QM::instance();
 			$qm->log( $var, false, 'rwp_dump' );
 		}
->>>>>>> release/v0.9.0
 	}
 
 }

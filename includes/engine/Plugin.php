@@ -3,11 +3,7 @@
  * Base skeleton of the plugin
  *
  * @package   RWP\Engine
-<<<<<<< HEAD
- * @since     1.0.0
-=======
  * @since     0.9.0
->>>>>>> release/v0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -19,43 +15,6 @@ use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
-<<<<<<< HEAD
-use RWP\Engine\Traits\Assets;
-use RWP\Engine\Traits\Helpers;
-class Plugin extends Singleton implements Component {
-
-	use Assets;
-	use Helpers;
-
-    protected $name;
-
-	protected $dir;
-	protected $uri;
-	protected $namespace;
-	protected $title;
-	protected $capability;
-	protected $icon;
-	protected $plugin_uri;
-	protected $description;
-	protected $author;
-	protected $settings_uri;
-	protected $text_domain;
-	protected $domain_path;
-	protected $network;
-	protected $requires;
-
-    /**
-	 * @var string $file Absolute path to plugin main file
-	 * @access private
-	 */
-    private $file;
-
-    /**
-	 * @var string $version Current plugin version
-	 * @access private
-	 */
-    private $version = '';
-=======
 class Plugin extends Singleton implements Component {
 
 	use Traits\Assets;
@@ -114,18 +73,6 @@ class Plugin extends Singleton implements Component {
 	protected $domain_path;
 
     /**
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-	 * @var string $file Absolute path to plugin main file
-	 * @access private
-	 */
-    public $file;
-
-    /**
-	 * @var string $version Current plugin version
-	 * @access public
-	 */
-    public $version = '';
-========
 	 * @var string Absolute path to plugin main file
 	 * @access private
 	 */
@@ -136,82 +83,28 @@ class Plugin extends Singleton implements Component {
 	 * @access private
 	 */
     private $version = '';
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 
     /**
 	 * @var array $components Array of plugin components which might need upgrade
 	 * @access public
 	 */
-<<<<<<< HEAD
-    public $components = [];
-
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-    public static $components = [];
-
-	/**
-	 * @var ClassLoader
-	 * @access public
-	 */
-    public static $autoloader;
-
-	/**
-	 * @var array
-	 * @access public
-	 */
-    public static $classes;
-
-	/**
-	 * @var array $settings The settings of the plugin.
-	 */
-	public $settings = array();
-========
     protected $components = array();
 
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 
 	/**
 	 * @var array|Collection $options The option keys available in the database
 	 */
-<<<<<<< HEAD
-	public $options = array();
-=======
 	protected $options = array();
->>>>>>> release/v0.9.0
 
 	/**
 	 * @var array $paths An array of paths for various folders for easy access
 	 */
-<<<<<<< HEAD
-	public $paths = array();
-=======
 	protected $paths = array();
 
->>>>>>> release/v0.9.0
 
     /**
      *  @inheritdoc
      */
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-    public function __construct( $args = array() ) {
-
-        $this->set( $args );
-
-		// Activate plugin when new blog is added
-		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
-        \register_activation_hook( $this->get_plugin_file(), array( $this, 'activate' ) );
-        \register_deactivation_hook( $this->get_plugin_file(), array( $this, 'deactivate' ) );
-        \register_uninstall_hook( $this->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
-        \add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
-        \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-
-        parent::__construct();
-========
->>>>>>> release/v0.9.0
     protected function __construct() {
 
 		$this->file         = RWP_PLUGIN_FILE;
@@ -223,11 +116,7 @@ class Plugin extends Singleton implements Component {
 		$this->title        = __( 'RIESTER Core Plugin', 'rwp' );
 		$this->capability   = 'manage_options';
 		$this->settings_uri = add_query_arg( 'page', 'rwp-options', 'admin.php' );
-<<<<<<< HEAD
-		$this->icon         = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZmlsbD0iY3VycmVudENvbG9yIj4KCTxwYXRoIGQ9Ik00ODYuMSwzMDguOGgtMzQuNXYxNzQuMWgzNC41YzUyLjUsMCw3Mi4yLTE5LjYsNzIuMi04N1M1MzguNywzMDguOCw0ODYuMSwzMDguOHoiIC8+Cgk8cGF0aCBkPSJNMCwwdjEwMjRoMTAyNGwwLTEwMjRIMHogTTU3MC44LDc5NS4ybC02OS0yMzQuNWMtMTIuNSwxLjYtMzIuOSwyLjMtNTAuMiwyLjN2MjMyLjJoLTk3LjJWMjI4LjhoMTM2LjUgYzEwOSwwLDE2NC43LDQ2LjMsMTY0LjcsMTY3LjFjMCw5MS0zNS4zLDEyNy44LTY4LjIsMTQyLjdsODIuMywyNTYuNUg1NzAuOHoiIC8+Cjwvc3ZnPgo=';
-=======
 		$this->icon         = 'rwp-icon.svg';
->>>>>>> release/v0.9.0
 		$this->paths        = array(
 			'assets'       => array(
 				'dir' => RWP_PLUGIN_ROOT . 'assets/',
@@ -247,37 +136,11 @@ class Plugin extends Singleton implements Component {
 			),
 		);
 
-<<<<<<< HEAD
-		// Activate plugin when new blog is added
-		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
-        \register_activation_hook( $this->get_plugin_file(), array( $this, 'activate' ) );
-        \register_deactivation_hook( $this->get_plugin_file(), array( $this, 'deactivate' ) );
-        \register_uninstall_hook( $this->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
-        \add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
-        \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-
-		$this->initialize_autoloader();
-		$this->initialize_settings();
-		$this->initialize_configs();
-		$this->initialize_assets();
-    }
-
-=======
 		$this->context = Context::determine();
 		$this->request = $this->request();
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
 
-		$this->initialize_settings();
-		$this->initialize_configs();
     }
 
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-	public function initialize_configs() {
-
-		$root    = $this->get_plugin_dir( 'config' );
-        $configs = glob( $root . '*.php' );
-
-========
 	/**
 	 * Initialize the plugin
 	 * @param Plugin $plugin
@@ -301,16 +164,11 @@ class Plugin extends Singleton implements Component {
 
 	}
 
->>>>>>> release/v0.9.0
 	public function initialize_configs() {
 
 		$root    = $this->get_plugin_dir( 'config' );
         $configs = glob( $root . '*.php' );
 
-<<<<<<< HEAD
-=======
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 		if ( $configs ) {
 			foreach ( $configs as $config ) {
 				$configname = rwp_basename( $config );
@@ -326,11 +184,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
 
-<<<<<<< HEAD
-	public function initialize_settings() {
-=======
 	private function initialize_settings() {
->>>>>>> release/v0.9.0
 		$meta = \get_plugin_data( $this->get_plugin_file(), false );
 
 		$settings = new Collection( \wp_parse_args( $this->settings, $meta ) );
@@ -340,20 +194,6 @@ class Plugin extends Singleton implements Component {
 			$key = Str::replace( array( 'u_r_i', 'w_p', 'p_h_p' ), array( 'uri', 'wp', 'php' ), $key );
 			return [ $key => $value ];
 		})->each(function( $value, $key ) {
-<<<<<<< HEAD
-			$this->$key = $value;
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-			$this->set( $key, $value, true );
->>>>>>> release/v0.9.0
-		});
-	}
-
-	public function initialize_options() {
-		$this->options = $this->get_options();
-<<<<<<< HEAD
-=======
-========
 			$this->$key = $value;
 		});
 	}
@@ -411,8 +251,6 @@ class Plugin extends Singleton implements Component {
 				$temp->initialize();
 			}
 		}
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 	}
 
     /**
@@ -424,11 +262,6 @@ class Plugin extends Singleton implements Component {
     }
 
 	/**
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-========
->>>>>>> release/v0.9.0
 	 * Get plugin namespace
 	 *
 	 * @return string
@@ -456,35 +289,18 @@ class Plugin extends Singleton implements Component {
     }
 
 	/**
-<<<<<<< HEAD
-=======
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 	 * Get full plugin file path of a folder
 	 *
 	 * @param string $folder Get specific path folder
 	 * @return string
 	 */
     public function get_plugin_dir( $folder = '' ) {
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
->>>>>>> release/v0.9.0
-		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.dir", '' );
-		} else {
-			return $this->get( 'dir' );
-<<<<<<< HEAD
-=======
-========
 		$folders = $this->paths;
 
 		if ( ! empty( $folder ) ) {
 			return data_get( $folders, "$folder.dir", '' );
 		} else {
 			return $this->dir;
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 		}
 
     }
@@ -493,25 +309,12 @@ class Plugin extends Singleton implements Component {
      *  @return string full plugin url path
      */
     public function get_plugin_uri( $folder = '' ) {
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
->>>>>>> release/v0.9.0
-		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.uri", '' );
-		} else {
-			return $this->get( 'uri' );
-<<<<<<< HEAD
-=======
-========
 		$folders = $this->paths;
 
 		if ( ! empty( $folder ) ) {
 			return data_get( $folders, "$folder.uri", '' );
 		} else {
 			return $this->dir;
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 		}
     }
 
@@ -526,22 +329,14 @@ class Plugin extends Singleton implements Component {
      *  @return string plugin slug
      */
     public function get_name() {
-<<<<<<< HEAD
-        return $this->get( 'name' );
-=======
         return $this->name;
->>>>>>> release/v0.9.0
     }
 
     /**
      *  @return string plugin slug
      */
     public function get_slug() {
-<<<<<<< HEAD
-        return $this->get( 'slug' );
-=======
         return $this->slug;
->>>>>>> release/v0.9.0
     }
 
 	/**
@@ -553,15 +348,6 @@ class Plugin extends Singleton implements Component {
 
 	/**
 	 * Get the admin icon
-<<<<<<< HEAD
-	 * @param bool $decode
-	 * @return string|false
-	 */
-    public function get_settings_icon( $decode = false ) {
-		$icon = $this->icon;
-		if ( $decode ) {
-			$icon = base64_decode( $icon );
-=======
 	 * @param bool $encode
 	 * @return string|false
 	 */
@@ -571,7 +357,6 @@ class Plugin extends Singleton implements Component {
 
 		if ( $encode ) {
 			$icon = rwp_encode_img( $icon );
->>>>>>> release/v0.9.0
 		}
         return $icon;
     }
@@ -580,11 +365,7 @@ class Plugin extends Singleton implements Component {
      *  @return string Path to the main plugin file from plugins directory
      */
     public function get_wp_plugin() {
-<<<<<<< HEAD
-         return \plugin_basename( $this->get_plugin_file() );
-=======
         return \plugin_basename( $this->get_plugin_file() );
->>>>>>> release/v0.9.0
     }
 
     /**
@@ -592,18 +373,6 @@ class Plugin extends Singleton implements Component {
      */
     public function version() {
 
-<<<<<<< HEAD
-		if ( empty( $this->version ) ) {
-            $this->version = $this->get( 'version' );
-		}
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-		if ( empty( $this->version ) ) {
-            $this->version = $this->get( 'version' );
-		}
-========
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
         return $this->version;
     }
 
@@ -615,11 +384,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function maybe_upgrade() {
-<<<<<<< HEAD
-		if ( ! \is_admin() ) {
-=======
 		if ( ! $this->request() !== 'backend' ) {
->>>>>>> release/v0.9.0
 			return;
 		}
          // trigger upgrade
@@ -643,15 +408,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function load_textdomain() {
-<<<<<<< HEAD
-        \load_plugin_textdomain( $this->get( 'textdomain' ), false, $this->get( 'domainpath' ) );
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-        \load_plugin_textdomain( $this->get( 'textdomain' ), false, $this->get( 'domainpath' ) );
-========
         \load_plugin_textdomain( $this->textdomain, false, $this->get( 'domainpath' ) );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
     }
 
 	/**
@@ -665,30 +422,16 @@ class Plugin extends Singleton implements Component {
 	 */
     public function get_options( $global = false ) {
 		$option = $this->prefix( 'options' );
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-========
 
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 		if ( $global ) {
 			$options = get_network_option( get_current_network_id(), $option );
 		} else {
 			$options = get_option( $option );
 		}
 
-<<<<<<< HEAD
-		return new Collection( $options );
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-		return new Collection( $options );
-========
 		$options = new Collection( $options );
 
 		return apply_filters( 'rwp_get_options', $options );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
     }
 
 	/**
@@ -712,15 +455,7 @@ class Plugin extends Singleton implements Component {
 			$updated = update_option( $option, $options, true );
 		}
 
-<<<<<<< HEAD
-		$this->set( 'options', $options, true );
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-		$this->set( 'options', $options, true );
-========
 		$this->options = $this->get_options( $global );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 
 		return $updated;
     }
@@ -740,14 +475,8 @@ class Plugin extends Singleton implements Component {
 		} else {
 			$deleted = delete_option( $option );
 		}
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-========
 
 		$this->options = $this->get_options( $global );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 
 		return $deleted;
     }
@@ -850,11 +579,7 @@ class Plugin extends Singleton implements Component {
 	 * Fired when a new site is activated with a WPMU environment.
 	 *
 	 * @param int $blog_id ID of the new blog.
-<<<<<<< HEAD
-	 * @since 1.0.0
-=======
 	 * @since 0.9.0
->>>>>>> release/v0.9.0
 	 * @return void
 	 */
 	public function activate_new_site( int $blog_id ) {
@@ -1024,15 +749,7 @@ class Plugin extends Singleton implements Component {
 					if ( empty( $separator ) ) {
 						$separator = '_';
 					}
-<<<<<<< HEAD
-					$string = Str::snake( $string );
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-					$string = Str::snake( $string );
-========
 					$string = Str::snake( $string, $separator );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 			        break;
 				case 'kebab':
 					if ( empty( $separator ) ) {
@@ -1044,15 +761,7 @@ class Plugin extends Singleton implements Component {
 					if ( empty( $separator ) ) {
 						$separator = '-';
 					}
-<<<<<<< HEAD
-					$string = Str::slug( $string );
-=======
-<<<<<<<< HEAD:includes/engine/Abstracts/Plugin.php
-					$string = Str::slug( $string );
-========
 					$string = Str::slug( $string, $separator );
->>>>>>>> release/v0.9.0:includes/engine/Plugin.php
->>>>>>> release/v0.9.0
 			        break;
 				case 'camel':
 					$string = Str::camel( $string );
@@ -1108,11 +817,7 @@ class Plugin extends Singleton implements Component {
 	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
 	 *
 	 * @param string $component Class name to find.
-<<<<<<< HEAD
-	 * @since 1.0.0
-=======
 	 * @since 0.9.0
->>>>>>> release/v0.9.0
 	 * @return mixed Return the classes.
 	 */
 	public function get_component( string $component = '' ) {

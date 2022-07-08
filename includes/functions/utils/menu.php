@@ -109,13 +109,10 @@ function rwp_menu_args( $args = [] ) {
     // Merge the menu classes from the ACF fields with classes set in the $args variable
     $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
 
-<<<<<<< HEAD
-=======
 	if ( data_get( $custom_args, 'dropdown_hover', false ) ) {
 		$menu_class[] = 'dropdown-hover-all';
 	}
 
->>>>>>> release/v0.9.0
 	$direction = data_get( $custom_args, 'direction', 'vertical' );
 	$type = data_get( $custom_args, 'type', 'nav' );
 

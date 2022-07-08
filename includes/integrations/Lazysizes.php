@@ -114,27 +114,6 @@ class Lazysizes extends Singleton {
 	 * @return void
 	 */
 	public function update_image_sizes() {
-<<<<<<< HEAD
-		update_option( 'thumbnail_size_w', 120 );
-		update_option( 'thumbnail_size_h', 120 );
-		update_option( 'thumbnail_crop', true );
-
-		set_post_thumbnail_size( 360, 240, true );
-
-		add_image_size( 'small', 480, 360, false );
-
-		update_option( 'medium_size_w', 768 );
-		update_option( 'medium_size_h', 576 );
-		update_option( 'medium_crop', false );
-
-		update_option( 'medium_large_size_w', 1024 );
-		update_option( 'medium_large_size_h', 768 );
-		update_option( 'medium_large_crop', false );
-
-		update_option( 'large_size_w', 1280 );
-		update_option( 'large_size_h', 960 );
-		update_option( 'large_crop', false );
-=======
 		$thumbnail_size = get_option( 'thumbnail_size_w' );
 		if ( 120 !== $thumbnail_size ) {
 			update_option( 'thumbnail_size_w', 120 );
@@ -167,7 +146,6 @@ class Lazysizes extends Singleton {
 			update_option( 'large_crop', false );
 		}
 
->>>>>>> release/v0.9.0
 	}
 
 

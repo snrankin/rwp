@@ -14,11 +14,7 @@
 
 add_filter('rwp_classes_to_execute', function( $classes ) {
 
-<<<<<<< HEAD
-	$classes_to_filter = preg_grep( '/Walkers\\\\|Elementor\\\\|Yoast\\\\|QM\\\\|SVG\\\\|Abstracts\\\\|PostTypes\\\\|CustomBulkAction|ACF\\\\/i', $classes );
-=======
 	$classes_to_filter = preg_grep( '/RWP\\\\Engine\\\\Plugin|Walkers\\\\|Elementor\\\\|Yoast\\\\|QM\\\\|SVG\\\\|Abstracts\\\\|PostTypes\\\\|CustomBulkAction|ACF\\\\/i', $classes );
->>>>>>> release/v0.9.0
 
 	if ( ! empty( $classes_to_filter ) ) {
 		foreach ( array_keys( $classes_to_filter ) as $index ) {

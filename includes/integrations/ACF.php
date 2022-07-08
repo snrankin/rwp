@@ -73,11 +73,7 @@ class ACF extends Singleton {
 				'menu_title' => __( 'RIESTERWP Core', 'rwp' ),
 				'menu_slug'  => rwp()->prefix( 'options', 'slug' ),
 				'capability' => rwp()->get_capability(),
-<<<<<<< HEAD
-				'icon_url'   => rwp()->get_icon(),
-=======
 				'icon_url'   => rwp()->get_settings_icon( true ),
->>>>>>> release/v0.9.0
 				'autoload'   => true,
 			));
 

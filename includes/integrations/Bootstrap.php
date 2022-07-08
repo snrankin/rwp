@@ -46,16 +46,6 @@ class Bootstrap extends Singleton {
 	 */
 	public function initialize() {
 
-<<<<<<< HEAD
-		$column_sizes = array();
-
-		for ( $i = 1; $i <= 12; $i++ ) {
-			$column_sizes[ $i ] = floatval( ( $i / 12 ) * 100 );
-
-		}
-
-		$this->set( 'column_sizes', $column_sizes );
-=======
 		$columns = array();
 
 		for ( $i = 1; $i <= 12; $i++ ) {
@@ -64,7 +54,6 @@ class Bootstrap extends Singleton {
 		}
 
 		$this->set( 'columns', $columns );
->>>>>>> release/v0.9.0
 
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
@@ -313,15 +302,6 @@ class Bootstrap extends Singleton {
 		}
 	}
 
-<<<<<<< HEAD
-	public function bs_column_size( $percentage ) {
-		$percentage = floatval( $percentage );
-
-		$column_sizes = $this->get( 'column_sizes', array() );
-
-		$closest = null;
-		foreach ( $column_sizes as $i => $size ) {
-=======
 	public static function column_size( $percentage ) {
 		$percentage = floatval( $percentage );
 
@@ -329,7 +309,6 @@ class Bootstrap extends Singleton {
 
 		$closest = null;
 		foreach ( $columns as $i => $size ) {
->>>>>>> release/v0.9.0
 
 			if ( null === $closest || abs( $i - $closest ) > abs( $size - $percentage ) ) {
 				$closest = $i;

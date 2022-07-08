@@ -46,10 +46,6 @@ class PostCard extends Card {
 		$image_size = apply_filters( 'rwp_card_image_size', 'medium' ); // Adjust size for post card images globally
 		$image_size = apply_filters( "rwp_{$post_type}_image_size", $image_size, $post ); // Adjust size of post card images per post type
 
-<<<<<<< HEAD
-		$image = rwp_get_featured_image($post, $image_size, array(
-			'link' => $url,
-=======
 		$image_id = rwp_featured_image_id( $post );
 
 		if ( $image_id ) {
@@ -76,7 +72,6 @@ class PostCard extends Card {
 			'location' => 'body',
 			'key' => null,
 			'tag' => 'h3',
->>>>>>> release/v0.9.0
 			'atts' => array(
 				'class' => array(
 					'card-title',
@@ -119,11 +114,6 @@ class PostCard extends Card {
 
 		$this->post_type = $post_type;
 
-<<<<<<< HEAD
-		$post_type = rwp_remove_prefix( $post_type, 'rwp_' ); // Remove rwp_ to prevent double rwp_rwp_ below
-
-=======
->>>>>>> release/v0.9.0
 		$defaults = apply_filters( "rwp_{$post_type}_card_defaults", $defaults, $post );
 
 		$args = rwp_merge_args( $defaults, $args );

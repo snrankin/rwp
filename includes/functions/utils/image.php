@@ -491,24 +491,12 @@ function rwp_is_wp_image( $image ) {
  * @throws InvalidArgumentException
  */
 function rwp_image_id( $image ) {
-<<<<<<< HEAD
-    $id = 0;
-    if ( rwp_is_wp_image( $image ) ) {
-        $image = rwp_extract_img_src( $image );
-        if ( rwp_is_url( $image ) ) {
-			$image = preg_replace( '/-\d{1,4}x\d{1,4}/', '', $image );
-			$image = rwp_add_prefix( $image, get_home_url() );
-            $id = attachment_url_to_postid( $image );
-        }
-    }
-=======
 	$id = 0;
 	if ( rwp_is_url( $image ) ) {
 		$image = preg_replace( '/-\d{1,4}x\d{1,4}/', '', $image );
 		$image = rwp_add_prefix( $image, get_home_url() );
 		$id = attachment_url_to_postid( $image );
 	}
->>>>>>> release/v0.9.0
 
 	return $id;
 }
@@ -787,11 +775,7 @@ function rwp_encode_img( $image ) {
 		 * @var SVG $image
 		 */
 		$image = $image->html();
-<<<<<<< HEAD
-		$mime = 'svg';
-=======
 		$mime = 'image/svg';
->>>>>>> release/v0.9.0
 	} else if ( rwp_is_component( $image, 'Image' ) ) {
 		/**
 		 * @var Image $image
@@ -799,20 +783,11 @@ function rwp_encode_img( $image ) {
 		$image = $image->html();
 		$mime = rwp_extract_img_src( $image );
 		$mime = mime_content_type( $mime );
-<<<<<<< HEAD
-	} else {
-		if ( is_string( $image ) ) {
-			$mime = mime_content_type( $image );
-			if ( rwp_file_exists( $image ) ) {
-				$image = rwp_filesystem()->get_contents( $image );
-			}
-=======
 	} else if ( is_string( $image ) ) {
 
 		if ( rwp_file_exists( $image ) ) {
 			$mime = mime_content_type( $image );
 			$image = rwp_filesystem()->get_contents( $image );
->>>>>>> release/v0.9.0
 		}
 	}
 
@@ -820,12 +795,9 @@ function rwp_encode_img( $image ) {
 
 		// Read image path, convert to base64 encoding
 		$image_data = base64_encode( $image );
-<<<<<<< HEAD
-=======
 		if ( 'image/svg' === $mime ) {
 			$mime .= '+xml';
 		}
->>>>>>> release/v0.9.0
 		$src = 'data:' . $mime . ';base64,' . $image_data;
 		return $src;
     }
