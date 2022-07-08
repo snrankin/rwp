@@ -3,7 +3,7 @@
  * Base skeleton of the plugin
  *
  * @package   RWP\Engine
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -15,38 +15,71 @@ use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
-use RWP\Engine\Traits\Assets;
-use RWP\Engine\Traits\Helpers;
 class Plugin extends Singleton implements Component {
 
-	use Assets;
-	use Helpers;
+	use Traits\Assets;
+	use Traits\Helpers;
+	use Traits\Autoloader;
+	use Traits\Request;
 
+	/**
+	 * @var string The Plugin Name
+	 */
     protected $name;
 
+	/**
+	 * @var string The absolute path to the plugin directory
+	 */
 	protected $dir;
+
+	/**
+	 * @var string The relative path to the plugin directory
+	 */
 	protected $uri;
+
+	/**
+	 * @var string The plugin namespace
+	 */
 	protected $namespace;
+
+	/**
+	 * @var string The plugin admin title
+	 */
 	protected $title;
+
+	/**
+	 * @var string The plugin admin capabilities
+	 */
 	protected $capability;
+
+	/**
+	 * @var string The plugin admin icon
+	 */
 	protected $icon;
-	protected $plugin_uri;
-	protected $description;
-	protected $author;
+
+	/**
+	 * @var string The plugin options url
+	 */
 	protected $settings_uri;
+
+	/**
+	 * @var string The plugin text domain
+	 */
 	protected $text_domain;
+
+	/**
+	 * @var string The plugin path for langages
+	 */
 	protected $domain_path;
-	protected $network;
-	protected $requires;
 
     /**
-	 * @var string $file Absolute path to plugin main file
+	 * @var string Absolute path to plugin main file
 	 * @access private
 	 */
     private $file;
 
     /**
-	 * @var string $version Current plugin version
+	 * @var string Current plugin version
 	 * @access private
 	 */
     private $version = '';
@@ -55,18 +88,19 @@ class Plugin extends Singleton implements Component {
 	 * @var array $components Array of plugin components which might need upgrade
 	 * @access public
 	 */
-    public $components = [];
+    protected $components = array();
 
 
 	/**
 	 * @var array|Collection $options The option keys available in the database
 	 */
-	public $options = array();
+	protected $options = array();
 
 	/**
 	 * @var array $paths An array of paths for various folders for easy access
 	 */
-	public $paths = array();
+	protected $paths = array();
+
 
     /**
      *  @inheritdoc
@@ -82,7 +116,7 @@ class Plugin extends Singleton implements Component {
 		$this->title        = __( 'RIESTER Core Plugin', 'rwp' );
 		$this->capability   = 'manage_options';
 		$this->settings_uri = add_query_arg( 'page', 'rwp-options', 'admin.php' );
-		$this->icon         = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgcm9sZT0iaW1nIiBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZmlsbD0iY3VycmVudENvbG9yIj4KCTxwYXRoIGQ9Ik00ODYuMSwzMDguOGgtMzQuNXYxNzQuMWgzNC41YzUyLjUsMCw3Mi4yLTE5LjYsNzIuMi04N1M1MzguNywzMDguOCw0ODYuMSwzMDguOHoiIC8+Cgk8cGF0aCBkPSJNMCwwdjEwMjRoMTAyNGwwLTEwMjRIMHogTTU3MC44LDc5NS4ybC02OS0yMzQuNWMtMTIuNSwxLjYtMzIuOSwyLjMtNTAuMiwyLjN2MjMyLjJoLTk3LjJWMjI4LjhoMTM2LjUgYzEwOSwwLDE2NC43LDQ2LjMsMTY0LjcsMTY3LjFjMCw5MS0zNS4zLDEyNy44LTY4LjIsMTQyLjdsODIuMywyNTYuNUg1NzAuOHoiIC8+Cjwvc3ZnPgo=';
+		$this->icon         = 'rwp-icon.svg';
 		$this->paths        = array(
 			'assets'       => array(
 				'dir' => RWP_PLUGIN_ROOT . 'assets/',
@@ -102,19 +136,33 @@ class Plugin extends Singleton implements Component {
 			),
 		);
 
-		// Activate plugin when new blog is added
-		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
-        \register_activation_hook( $this->get_plugin_file(), array( $this, 'activate' ) );
-        \register_deactivation_hook( $this->get_plugin_file(), array( $this, 'deactivate' ) );
-        \register_uninstall_hook( $this->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
-        \add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
-        \add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+		$this->context = Context::determine();
+		$this->request = $this->request();
 
-		$this->initialize_autoloader();
-		$this->initialize_settings();
-		$this->initialize_configs();
-		$this->initialize_assets();
     }
+
+	/**
+	 * Initialize the plugin
+	 * @param Plugin $plugin
+	 * @return void
+	 */
+	public static function init( $plugin ) {
+        // Activate plugin when new blog is added
+		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );
+        \register_activation_hook( $plugin->get_plugin_file(), array( $plugin, 'activate' ) );
+        \register_deactivation_hook( $plugin->get_plugin_file(), array( $plugin, 'deactivate' ) );
+        \register_uninstall_hook( $plugin->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
+        \add_action( 'admin_init', array( $plugin, 'maybe_upgrade' ) );
+        \add_action( 'plugins_loaded', array( $plugin, 'load_textdomain' ) );
+
+		$plugin->initialize_autoloader();
+		$plugin->initialize_classes();
+		$plugin->initialize_settings();
+		$plugin->initialize_configs();
+		$plugin->initialize_assets();
+		$plugin->initialize_options();
+
+	}
 
 	public function initialize_configs() {
 
@@ -136,7 +184,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
 
-	public function initialize_settings() {
+	private function initialize_settings() {
 		$meta = \get_plugin_data( $this->get_plugin_file(), false );
 
 		$settings = new Collection( \wp_parse_args( $this->settings, $meta ) );
@@ -150,8 +198,59 @@ class Plugin extends Singleton implements Component {
 		});
 	}
 
-	public function initialize_options() {
+	private function initialize_options() {
 		$this->options = $this->get_options();
+	}
+
+	private function initialize_classes() {
+        $classes_to_init = new Collection();
+
+		$internals = $this->get_classes( 'Internals' );
+		$integrations = $this->get_classes( 'Integrations' );
+
+		$classes_to_init = $classes_to_init->merge( $internals );
+		$classes_to_init = $classes_to_init->merge( $integrations );
+
+		if ( $this->request_is( 'rest' ) ) {
+			$rest = $this->get_classes( 'Rest' );
+			$classes_to_init = $classes_to_init->merge( $rest );
+		}
+
+		if ( $this->request_is( 'ajax' ) ) {
+			$ajax = $this->get_classes( 'Ajax' );
+			$classes_to_init = $classes_to_init->merge( $ajax );
+		}
+
+		if ( $this->request_is( 'backend' ) ) {
+			$backend = $this->get_classes( 'Backend' );
+			$classes_to_init = $classes_to_init->merge( $backend );
+		}
+
+		if ( $this->request_is( 'frontend' ) ) {
+			$frontend = $this->get_classes( 'Frontend' );
+			$classes_to_init = $classes_to_init->merge( $frontend );
+		}
+
+		$classes_to_init = $classes_to_init->flatten()->unique()->all();
+
+		$this->load_classes( $classes_to_init );
+	}
+
+	/**
+	 * Initialize all the classes.
+	 *
+	 * @since 0.9.0
+	 */
+	private function load_classes( $classes = array() ) {
+		$classes = \apply_filters( 'rwp_classes_to_execute', $classes );
+
+		foreach ( $classes as $class ) {
+			if ( $this->is_component( $class ) && ! isset( $this::$active_classes[ $class ] ) ) {
+				$temp = $class::instance();
+				$this::$active_classes[ $class ] = $temp;
+				$temp->initialize();
+			}
+		}
 	}
 
     /**
@@ -196,10 +295,12 @@ class Plugin extends Singleton implements Component {
 	 * @return string
 	 */
     public function get_plugin_dir( $folder = '' ) {
+		$folders = $this->paths;
+
 		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.dir", '' );
+			return data_get( $folders, "$folder.dir", '' );
 		} else {
-			return $this->get( 'dir' );
+			return $this->dir;
 		}
 
     }
@@ -208,10 +309,12 @@ class Plugin extends Singleton implements Component {
      *  @return string full plugin url path
      */
     public function get_plugin_uri( $folder = '' ) {
+		$folders = $this->paths;
+
 		if ( ! empty( $folder ) ) {
-			return $this->get( "paths.$folder.uri", '' );
+			return data_get( $folders, "$folder.uri", '' );
 		} else {
-			return $this->get( 'uri' );
+			return $this->dir;
 		}
     }
 
@@ -226,14 +329,14 @@ class Plugin extends Singleton implements Component {
      *  @return string plugin slug
      */
     public function get_name() {
-        return $this->get( 'name' );
+        return $this->name;
     }
 
     /**
      *  @return string plugin slug
      */
     public function get_slug() {
-        return $this->get( 'slug' );
+        return $this->slug;
     }
 
 	/**
@@ -245,13 +348,15 @@ class Plugin extends Singleton implements Component {
 
 	/**
 	 * Get the admin icon
-	 * @param bool $decode
+	 * @param bool $encode
 	 * @return string|false
 	 */
-    public function get_settings_icon( $decode = false ) {
+    public function get_settings_icon( $encode = false ) {
 		$icon = $this->icon;
-		if ( $decode ) {
-			$icon = base64_decode( $icon );
+		$icon = $this->asset_path( $icon );
+
+		if ( $encode ) {
+			$icon = rwp_encode_img( $icon );
 		}
         return $icon;
     }
@@ -260,7 +365,7 @@ class Plugin extends Singleton implements Component {
      *  @return string Path to the main plugin file from plugins directory
      */
     public function get_wp_plugin() {
-         return \plugin_basename( $this->get_plugin_file() );
+        return \plugin_basename( $this->get_plugin_file() );
     }
 
     /**
@@ -268,9 +373,6 @@ class Plugin extends Singleton implements Component {
      */
     public function version() {
 
-		if ( empty( $this->version ) ) {
-            $this->version = $this->get( 'version' );
-		}
         return $this->version;
     }
 
@@ -282,7 +384,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function maybe_upgrade() {
-		if ( ! \is_admin() ) {
+		if ( ! $this->request() !== 'backend' ) {
 			return;
 		}
          // trigger upgrade
@@ -306,7 +408,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function load_textdomain() {
-        \load_plugin_textdomain( $this->get( 'textdomain' ), false, $this->get( 'domainpath' ) );
+        \load_plugin_textdomain( $this->textdomain, false, $this->get( 'domainpath' ) );
     }
 
 	/**
@@ -320,13 +422,16 @@ class Plugin extends Singleton implements Component {
 	 */
     public function get_options( $global = false ) {
 		$option = $this->prefix( 'options' );
+
 		if ( $global ) {
 			$options = get_network_option( get_current_network_id(), $option );
 		} else {
 			$options = get_option( $option );
 		}
 
-		return new Collection( $options );
+		$options = new Collection( $options );
+
+		return apply_filters( 'rwp_get_options', $options );
     }
 
 	/**
@@ -350,7 +455,7 @@ class Plugin extends Singleton implements Component {
 			$updated = update_option( $option, $options, true );
 		}
 
-		$this->set( 'options', $options, true );
+		$this->options = $this->get_options( $global );
 
 		return $updated;
     }
@@ -370,6 +475,8 @@ class Plugin extends Singleton implements Component {
 		} else {
 			$deleted = delete_option( $option );
 		}
+
+		$this->options = $this->get_options( $global );
 
 		return $deleted;
     }
@@ -472,7 +579,7 @@ class Plugin extends Singleton implements Component {
 	 * Fired when a new site is activated with a WPMU environment.
 	 *
 	 * @param int $blog_id ID of the new blog.
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function activate_new_site( int $blog_id ) {
@@ -642,7 +749,7 @@ class Plugin extends Singleton implements Component {
 					if ( empty( $separator ) ) {
 						$separator = '_';
 					}
-					$string = Str::snake( $string );
+					$string = Str::snake( $string, $separator );
 			        break;
 				case 'kebab':
 					if ( empty( $separator ) ) {
@@ -654,7 +761,7 @@ class Plugin extends Singleton implements Component {
 					if ( empty( $separator ) ) {
 						$separator = '-';
 					}
-					$string = Str::slug( $string );
+					$string = Str::slug( $string, $separator );
 			        break;
 				case 'camel':
 					$string = Str::camel( $string );
@@ -710,7 +817,7 @@ class Plugin extends Singleton implements Component {
 	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
 	 *
 	 * @param string $component Class name to find.
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return mixed Return the classes.
 	 */
 	public function get_component( string $component = '' ) {

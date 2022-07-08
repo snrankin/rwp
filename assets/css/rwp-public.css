@@ -43,9 +43,11 @@ html{
     --bs-gutter-y:1.5rem;
     --bs-row-gutter-y:calc(var(--bs-gutter-y) * 2);
     --bs-section-gutter-y:calc(var(--bs-gutter-y) * 3);
-    --bs-container-sm-width:100vw;
-    --bs-container-md-width:90vw;
-    --bs-container-lg-width:85vw;
+    --bs-container-width:90vw;
+    --bs-container-width:90vw;
+    --bs-container-sm-width:90vw;
+    --bs-container-md-width:85vw;
+    --bs-container-lg-width:80vw;
     --bs-container-xl-width:75vw;
     --bs-container-xxl-width:1050px;
 }
@@ -97,17 +99,14 @@ body.rwp:not(.wp-admin) .quicklinks{
 .wp-block-image.is-style-rounded > div svg,
 .wp-block-image.is-style-rounded > picture img,
 .wp-block-image.is-style-rounded > picture svg{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    width:100% !important;
-    height:100% !important;
+    min-width:100%;
+    min-height:100%;
+    width:100%;
+    height:100%;
     display:block;
     -o-object-fit:cover;
        object-fit:cover;
-    font-family:"object-fit: cover";
+    font-family:"object-fit: cover; parent-fit: cover";
     max-width:none;
     border-radius:0;
 }
@@ -504,17 +503,17 @@ img.alignnone{
 
 @media (min-width: 576px){
     html{
-        --bs-container-width:100vw;
+        --bs-container-width:90vw;
     }}
 
 @media (min-width: 768px){
     html{
-        --bs-container-width:90vw;
+        --bs-container-width:85vw;
     }}
 
 @media (min-width: 992px){
     html{
-        --bs-container-width:85vw;
+        --bs-container-width:80vw;
     }}
 
 @media (min-width: 1200px){

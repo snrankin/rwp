@@ -5,7 +5,7 @@
  *
  * @package   RWP\Components
  *
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -89,23 +89,15 @@ class Image extends Element {
 	);
 
 	/**
-	 * @var string|array|Element $link Image Link options
+	 * @var string $link Image Link options
 	 */
-	public $link = array(
-		'tag' => 'a',
-		'order' => array( 'inner' ),
-		'atts' => array(
-			'class' => array(
-				'media-link',
-			),
-		),
-	);
+	public $link = '';
 
 	/**
 	 * @var string|array|Element $inner Inner wrapper options
 	 */
 	public $inner = array(
-		'tag' => 'picture',
+		'tag' => 'span',
 		'order' => array( 'sources', 'image' ),
 		'atts' => array(
 			'class' => array(
@@ -223,8 +215,12 @@ class Image extends Element {
 				$size = data_get( $args, 'size', $size );
 				$html = data_get( $args, 'html', $html );
 				$id   = data_get( $args, 'id', $id );
-				if ( empty( $id ) ) {
+				if ( ! empty( $src ) && empty( $id ) ) {
 					$id   = rwp_image_id( $src );
+				}
+
+				if ( ! empty( $id ) && empty( $src ) ) {
+					$src   = rwp_extract_img_src( $id, $size );
 				}
 			}
 		} else {
@@ -254,10 +250,10 @@ class Image extends Element {
 		if ( rwp_array_has( 'link', $args ) ) {
 			$link = data_get( $args, 'link' );
 			if ( filled( $link ) ) {
-				$this->set_order( 'link', 'first' );
-				$this->remove_order_item( 'inner' );
+
 				if ( is_string( $link ) && rwp_is_url( $link ) ) {
-					$args = data_set( $args, 'link.atts.href', $link );
+					$args = data_set( $args, 'inner.tag', 'a' );
+					$args = data_set( $args, 'inner.atts.href', $link );
 				}
 			}
 		}
@@ -423,8 +419,8 @@ class Image extends Element {
 
 		$this->inner->set_content( $this->image, 'image' );
 
-		if ( $this->link->has_attr( 'href' ) ) {
-			$this->link->set_content( $this->inner, 'inner' );
+		if ( $this->inner->has_attr( 'href' ) ) {
+			$this->inner->set_tag( 'a' );
 		}
 	}
 }

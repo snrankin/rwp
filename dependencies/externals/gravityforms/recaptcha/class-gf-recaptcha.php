@@ -549,7 +549,7 @@ class GF_RECAPTCHA extends GFAddOn {
 	 * @return bool
 	 */
 	private function requires_recaptcha_script() {
-		$elementor_preview_active = Elementor_Instance::$instance->preview->is_preview_mode();
+		$elementor_preview_active = rwp_is_elementor_preview();
 		if ($elementor_preview_active) {
 			return false;
 		} else {

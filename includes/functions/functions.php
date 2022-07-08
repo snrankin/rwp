@@ -3,18 +3,21 @@
  * functions
  *
  * @package   RWP\functions
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
  * ========================================================================== */
 
- use RWP\Engine\Plugin;
+use RWP\Components\Collection;
+use RWP\Engine\Plugin;
+use RWP\Vendor\PUC\Factory;
+use RWP\Integrations\Bootstrap;
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
  *
- * @since  1.0.0
+ * @since  0.9.0
  * @return RWP\Engine\Plugin
  */
 function rwp() {
@@ -22,27 +25,43 @@ function rwp() {
 
 }
 
+function rwp_check_for_updates() {
+	$update_checker = Factory::buildUpdateChecker(
+	'https://bitbucket.org/riester/rwp',
+	RWP_PLUGIN_FILE,
+	'rwp'
+	);
+
+	$update_checker->setAuthentication(array(
+		'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+		'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+	));
+
+}
+
+
 /**
  * Get the settings of the plugin in a filterable way
  *
- * @since 1.0.0
- * @return array
+ * @since 0.9.0
+ * @param bool $global
+ * @return Collection
  */
-function rwp_get_options() {
-	return apply_filters( 'rwp_get_options', get_option( RWP_PLUGIN_TEXTDOMAIN . '_options' ) );
+function rwp_get_options( $global = false ) {
+	return rwp()->get_options( $global );
 }
 
+
 /**
+ * Get a plugin option
  *
- * @param mixed $option
+ * @param mixed $key
  * @param mixed $default
+ * @param bool $global
  * @return mixed
  */
-function rwp_get_option( $option, $default = null ) {
-	$options = rwp_get_options();
-
-	$value = data_get( $options, $option, $default );
-	return apply_filters( "rwp_get_option_{$option}", $value );
+function rwp_get_option( $key, $default = null, $global = false ) {
+	return rwp()->get_option( $key, $default, $global );
 }
 
 
@@ -124,6 +143,100 @@ function rwp_plugin_asset_uri( $asset, $folder = '', $prefix = true ) {
 }
 
 /**
+ * Get an array of column sizes/percentages
+ *
+ * @return array
+ */
+function rwp_bootstrap_columns() {
+	return Bootstrap::instance()->columns;
+}
+
+/**
+ * Get an array of column sizes/percentages
+ *
+ * @return array
+ */
+function rwp_bootstrap_colors( $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
+	return Bootstrap::bs_atts( 'colors', $class_prefix, $class_suffix, $label_prefix, $label_suffix );
+}
+
+/**
+ * Get an array of breakpoints
+ *
+ * @return array
+ */
+function rwp_bootstrap_breakpoints( $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
+	return Bootstrap::bs_atts( 'breakpoints', $class_prefix, $class_suffix, $label_prefix, $label_suffix );
+}
+
+/**
+ * Returns breakpoint value (in pixels)
+ * @param string $breakpoint
+ * @return int|false
+ */
+function rwp_bootstrap_breakpoint( $breakpoint ) {
+	return Bootstrap::breakpoint( $breakpoint );
+}
+
+/**
+ * Get the prev breakpoint
+ * @param string $breakpoint
+ * @param string|null $type The return type. Can be one of `value`, `key` or null for both
+ * @return mixed
+ */
+function rwp_bootstrap_breakpoint_prev( $breakpoint, $type = null ) {
+	$breakpoints = rwp_collection( Bootstrap::instance()->breakpoints );
+	$value = $breakpoints->previous( $breakpoint, $type );
+	if ( 'value' === $type ) {
+		$value = $value['value'];
+	} else if ( empty( $type ) ) {
+		$value['value'] = $value['value']['value'];
+	}
+	return $value;
+}
+
+
+/**
+ * Get the next breakpoint
+ * @param string $breakpoint
+ * @param string|null $type The return type. Can be one of `value`, `key` or null for both
+ * @return mixed
+ */
+function rwp_bootstrap_breakpoint_next( $breakpoint, $type = null ) {
+	$breakpoints = rwp_collection( Bootstrap::instance()->breakpoints );
+	$value = $breakpoints->next( $breakpoint, $type );
+	if ( 'value' === $type ) {
+		$value = $value['value'];
+	} else if ( empty( $type ) ) {
+		$value['value'] = $value['value']['value'];
+	}
+	return $value;
+}
+
+/**
+ * Checks if we are currently in elementor preview mode
+ *
+ * @return bool
+ */
+function rwp_is_elementor_preview() {
+	if ( is_plugin_active( 'elementor/elementor.php' ) && class_exists( '\\Elementor\\Plugin' ) ) {
+		$elementor_instance = \Elementor\Plugin::instance();
+		if ( ! empty( $elementor_instance ) ) {
+			$preview = $elementor_instance->preview;
+			if ( $preview instanceof \Elementor\Preview ) {
+				return $preview->is_preview_mode();
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	} else {
+			return false;
+	}
+}
+
+/**
  * Process a shortcode
  *
  * @param mixed $atts The shortcode atts
@@ -170,4 +283,18 @@ function rwp_process_shortcode( $atts, $defaults = array() ) {
 	}
 	$args['atts'] = rwp_prepare_args( $args['atts'] );
 	return $args;
+}
+
+
+function rwp_custom_bulk_action( $post_type, $actions = [] ) {
+	$bulk_actions = new \RWP\Internals\CustomBulkAction( array( 'post_type' => $post_type ) );
+
+	if ( wp_is_numeric_array( $actions ) ) {
+		foreach ( $actions as $action ) {
+			$bulk_actions->register_bulk_action( $action );
+		}
+	} else {
+		$bulk_actions->register_bulk_action( $actions );
+	}
+	$bulk_actions->init();
 }

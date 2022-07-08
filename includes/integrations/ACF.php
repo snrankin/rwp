@@ -3,7 +3,7 @@
  * ACF
  *
  * @package   RWP\Integrations
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -73,7 +73,7 @@ class ACF extends Singleton {
 				'menu_title' => __( 'RIESTERWP Core', 'rwp' ),
 				'menu_slug'  => rwp()->prefix( 'options', 'slug' ),
 				'capability' => rwp()->get_capability(),
-				'icon_url'   => rwp()->get_icon(),
+				'icon_url'   => rwp()->get_settings_icon( true ),
 				'autoload'   => true,
 			));
 
@@ -104,7 +104,7 @@ class ACF extends Singleton {
 	/**
 	 * Register and enqueue acf-specific styles and scripts.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 *
 	 * @return void
 	 */
@@ -328,27 +328,27 @@ class ACF extends Singleton {
 		if ( isset( $field['choices'] ) ) {
 
 			if ( rwp_str_has( $field['name'], 'bs_bg_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'bg-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'bg-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_border_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'border-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'border-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_text_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'text-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'text-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_btn_style' ) ) {
-				$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-' ) )->mapWithKeys( function( $item ) {
-					return array( $item['value'] => $item );
+				$btn_options_solid = rwp_collection( rwp_bootstrap_colors( 'btn-' ) )->mapWithKeys( function( $item ) {
+					return array( $item['class'] => $item );
 				});
-				$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
-					return array( $item['value'] => $item );
+				$btn_options_outline = rwp_collection( rwp_bootstrap_colors( 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
+					return array( $item['class'] => $item );
 				});
 
 				$colors = $btn_options_solid->merge( $btn_options_outline );
 
 			} else {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors() );
 			}
 
 			$colors = $colors->mapWithKeys( function( $item ) {
-				return [ $item['value'] => $item['label'] ];
+				return [ $item['class'] => $item['label'] ];
 			});
 
 			$choices = rwp_collection( $field['choices'] );

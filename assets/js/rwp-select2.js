@@ -4548,6 +4548,9 @@
                     }
                     $(input).select2(select2Options);
                 }));
+                $(".select2").prop("focus", false).blur();
+                $(".select2-selection").prop("focus", false).blur();
+                $(".select2-search input, :focus,input").prop("focus", false).blur();
             }
             const optgroupState = {};
             $("body").on("click", ".select2-container--open .select2-results__group", (function() {

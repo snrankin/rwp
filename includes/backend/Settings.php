@@ -33,7 +33,7 @@ class Settings extends Singleton {
 	 * Add class in the body on the backend
 	 *
 	 * @param array $classes The array with all the classes of the page.
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return array
 	 */
 	public static function add_plugin_class( $classes ) {
@@ -46,7 +46,7 @@ class Settings extends Singleton {
 	/**
 	 * Add settings action link to the plugins page.
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @param array $links Array of links.
 	 * @return array
 	 */
