@@ -4,11 +4,6 @@
 
 namespace Composer\Autoload;
 
-<<<<<<< HEAD
-class ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69
-{
-    public static $prefixLengthsPsr4 = array (
-=======
 class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
 {
     public static $files = array (
@@ -27,19 +22,19 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
     );
 
     public static $prefixLengthsPsr4 = array (
-        'p' => 
+        'p' =>
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
-        'W' => 
+        'W' =>
         array (
             'Webmozart\\Assert\\' => 17,
         ),
-        'V' => 
+        'V' =>
         array (
             'VariableAnalysis\\' => 17,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Php73\\' => 23,
@@ -56,8 +51,7 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
         ),
->>>>>>> release/v0.9.0
-        'R' => 
+        'R' =>
         array (
             'RWP\\Internals\\' => 14,
             'RWP\\Integrations\\' => 17,
@@ -67,12 +61,7 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
             'RWP\\Backend\\' => 12,
             'RWP\\Assets\\' => 11,
         ),
-<<<<<<< HEAD
-    );
-
-    public static $prefixDirsPsr4 = array (
-=======
-        'P' => 
+        'P' =>
         array (
             'Psr\\Http\\Message\\' => 17,
             'Psr\\EventDispatcher\\' => 20,
@@ -80,28 +69,28 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
         ),
-        'J' => 
+        'J' =>
         array (
             'JsonSchema\\' => 11,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Psr7\\' => 16,
         ),
-        'E' => 
+        'E' =>
         array (
             'Ergebnis\\Json\\SchemaValidator\\' => 30,
             'Ergebnis\\Json\\Printer\\' => 22,
             'Ergebnis\\Json\\Normalizer\\' => 25,
             'Ergebnis\\Composer\\Normalize\\' => 28,
         ),
-        'D' => 
+        'D' =>
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
             'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
         ),
-        'C' => 
+        'C' =>
         array (
             'Codeception\\PHPUnit\\' => 20,
             'Codeception\\Extension\\' => 22,
@@ -110,177 +99,170 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
     );
 
     public static $prefixDirsPsr4 = array (
-        'phpDocumentor\\Reflection\\' => 
+        'phpDocumentor\\Reflection\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
-        'Webmozart\\Assert\\' => 
+        'Webmozart\\Assert\\' =>
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'VariableAnalysis\\' => 
+        'VariableAnalysis\\' =>
         array (
             0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Php73\\' => 
+        'Symfony\\Polyfill\\Php73\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php73',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Grapheme\\' => 
+        'Symfony\\Polyfill\\Intl\\Grapheme\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Contracts\\Service\\' => 
+        'Symfony\\Contracts\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
+        'Symfony\\Contracts\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
-        'Symfony\\Component\\Yaml\\' => 
+        'Symfony\\Component\\Yaml\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'Symfony\\Component\\String\\' => 
+        'Symfony\\Component\\String\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
         ),
-        'Symfony\\Component\\Finder\\' => 
+        'Symfony\\Component\\Finder\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
         ),
-        'Symfony\\Component\\EventDispatcher\\' => 
+        'Symfony\\Component\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
+        'Symfony\\Component\\CssSelector\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'Symfony\\Component\\Console\\' => 
+        'Symfony\\Component\\Console\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
->>>>>>> release/v0.9.0
-        'RWP\\Internals\\' => 
+        'RWP\\Internals\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/internals',
         ),
-        'RWP\\Integrations\\' => 
+        'RWP\\Integrations\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/integrations',
         ),
-        'RWP\\Frontend\\' => 
+        'RWP\\Frontend\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/frontend',
         ),
-        'RWP\\Engine\\' => 
+        'RWP\\Engine\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/engine',
         ),
-        'RWP\\Components\\' => 
+        'RWP\\Components\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/components',
         ),
-        'RWP\\Backend\\' => 
+        'RWP\\Backend\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/backend',
         ),
-        'RWP\\Assets\\' => 
+        'RWP\\Assets\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/assets',
         ),
-<<<<<<< HEAD
-    );
-
-    public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-=======
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\EventDispatcher\\' => 
+        'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Prophecy\\' => 
+        'Prophecy\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
-        'PhpParser\\' => 
+        'PhpParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'JsonSchema\\' => 
+        'JsonSchema\\' =>
         array (
             0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'Ergebnis\\Json\\SchemaValidator\\' => 
+        'Ergebnis\\Json\\SchemaValidator\\' =>
         array (
             0 => __DIR__ . '/..' . '/ergebnis/json-schema-validator/src',
         ),
-        'Ergebnis\\Json\\Printer\\' => 
+        'Ergebnis\\Json\\Printer\\' =>
         array (
             0 => __DIR__ . '/..' . '/ergebnis/json-printer/src',
         ),
-        'Ergebnis\\Json\\Normalizer\\' => 
+        'Ergebnis\\Json\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/ergebnis/json-normalizer/src',
         ),
-        'Ergebnis\\Composer\\Normalize\\' => 
+        'Ergebnis\\Composer\\Normalize\\' =>
         array (
             0 => __DIR__ . '/..' . '/ergebnis/composer-normalize/src',
         ),
-        'Doctrine\\Instantiator\\' => 
+        'Doctrine\\Instantiator\\' =>
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
-        'DeepCopy\\' => 
+        'DeepCopy\\' =>
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' =>
         array (
             0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
-        'Codeception\\PHPUnit\\' => 
+        'Codeception\\PHPUnit\\' =>
         array (
             0 => __DIR__ . '/..' . '/codeception/phpunit-wrapper/src',
         ),
-        'Codeception\\Extension\\' => 
+        'Codeception\\Extension\\' =>
         array (
             0 => __DIR__ . '/..' . '/codeception/codeception/ext',
         ),
-        'Codeception\\' => 
+        'Codeception\\' =>
         array (
             0 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
             1 => __DIR__ . '/..' . '/codeception/stub/src',
@@ -288,9 +270,9 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
     );
 
     public static $prefixesPsr0 = array (
-        'B' => 
+        'B' =>
         array (
-            'Behat\\Gherkin' => 
+            'Behat\\Gherkin' =>
             array (
                 0 => __DIR__ . '/..' . '/behat/gherkin/src',
             ),
@@ -1539,7 +1521,6 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
->>>>>>> release/v0.9.0
         'RWP\\Backend\\Enqueue' => __DIR__ . '/../..' . '/includes/backend/Enqueue.php',
         'RWP\\Backend\\Notices' => __DIR__ . '/../..' . '/includes/backend/Notices.php',
         'RWP\\Backend\\Settings' => __DIR__ . '/../..' . '/includes/backend/Settings.php',
@@ -1578,15 +1559,6 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'RWP\\Engine\\Abstracts\\Singleton' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Singleton.php',
         'RWP\\Engine\\Abstracts\\Taxonomy' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Taxonomy.php',
         'RWP\\Engine\\Abstracts\\Widget' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Widget.php',
-<<<<<<< HEAD
-        'RWP\\Engine\\Initialize' => __DIR__ . '/../..' . '/includes/engine/Initialize.php',
-        'RWP\\Engine\\Interfaces\\Component' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Component.php',
-        'RWP\\Engine\\Interfaces\\Core' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Core.php',
-        'RWP\\Engine\\Is_Methods' => __DIR__ . '/../..' . '/includes/engine/Is_Methods.php',
-        'RWP\\Engine\\Plugin' => __DIR__ . '/../..' . '/includes/engine/Plugin.php',
-        'RWP\\Engine\\Traits\\Assets' => __DIR__ . '/../..' . '/includes/engine/Traits/Assets.php',
-        'RWP\\Engine\\Traits\\Helpers' => __DIR__ . '/../..' . '/includes/engine/Traits/Helpers.php',
-=======
         'RWP\\Engine\\Context' => __DIR__ . '/../..' . '/includes/engine/Context.php',
         'RWP\\Engine\\Interfaces\\Component' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Component.php',
         'RWP\\Engine\\Interfaces\\Core' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Core.php',
@@ -1595,7 +1567,6 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'RWP\\Engine\\Traits\\Autoloader' => __DIR__ . '/../..' . '/includes/engine/Traits/Autoloader.php',
         'RWP\\Engine\\Traits\\Helpers' => __DIR__ . '/../..' . '/includes/engine/Traits/Helpers.php',
         'RWP\\Engine\\Traits\\Request' => __DIR__ . '/../..' . '/includes/engine/Traits/Request.php',
->>>>>>> release/v0.9.0
         'RWP\\Frontend\\Enqueue' => __DIR__ . '/../..' . '/includes/frontend/Enqueue.php',
         'RWP\\Frontend\\Extras\\Body_Class' => __DIR__ . '/../..' . '/includes/frontend/Extras/Body_Class.php',
         'RWP\\Frontend\\Extras\\Clean_Up' => __DIR__ . '/../..' . '/includes/frontend/Extras/Clean_Up.php',
@@ -1653,8 +1624,6 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'RWP\\Internals\\Taxonomies' => __DIR__ . '/../..' . '/includes/internals/Taxonomies.php',
         'RWP\\Internals\\Taxonomies\\TeamCategory' => __DIR__ . '/../..' . '/includes/internals/Taxonomies/TeamCategory.php',
         'RWP\\Internals\\Transient' => __DIR__ . '/../..' . '/includes/internals/Transient.php',
-<<<<<<< HEAD
-=======
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
         'SebastianBergmann\\CliParser\\OptionDoesNotAllowArgumentException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/OptionDoesNotAllowArgumentException.php',
@@ -2199,23 +2168,18 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
         'phpDocumentor\\Reflection\\Utils' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/Utils.php',
->>>>>>> release/v0.9.0
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
-        return \Closure::bind(function () use ($loader) {
-<<<<<<< HEAD
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9447bd3be82ac6ba9b952bbc04749a69::$classMap;
-=======
-            $loader->prefixLengthsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$classMap;
->>>>>>> release/v0.9.0
+        return \Closure::bind(
+            function () use ($loader) {
+                $loader->prefixLengthsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixLengthsPsr4;
+                $loader->prefixDirsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixDirsPsr4;
+                $loader->prefixesPsr0 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixesPsr0;
+                $loader->classMap = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$classMap;
 
-        }, null, ClassLoader::class);
+            }, null, ClassLoader::class
+        );
     }
 }
