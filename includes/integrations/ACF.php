@@ -328,27 +328,27 @@ class ACF extends Singleton {
 		if ( isset( $field['choices'] ) ) {
 
 			if ( rwp_str_has( $field['name'], 'bs_bg_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'bg-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'bg-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_border_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'border-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'border-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_text_' ) ) {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors', 'text-' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors( 'text-' ) );
 			} else if ( rwp_str_has( $field['name'], 'bs_btn_style' ) ) {
-				$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-' ) )->mapWithKeys( function( $item ) {
-					return array( $item['value'] => $item );
+				$btn_options_solid = rwp_collection( rwp_bootstrap_colors( 'btn-' ) )->mapWithKeys( function( $item ) {
+					return array( $item['class'] => $item );
 				});
-				$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
-					return array( $item['value'] => $item );
+				$btn_options_outline = rwp_collection( rwp_bootstrap_colors( 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
+					return array( $item['class'] => $item );
 				});
 
 				$colors = $btn_options_solid->merge( $btn_options_outline );
 
 			} else {
-				$colors = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
+				$colors = rwp_collection( rwp_bootstrap_colors() );
 			}
 
 			$colors = $colors->mapWithKeys( function( $item ) {
-				return [ $item['value'] => $item['label'] ];
+				return [ $item['class'] => $item['label'] ];
 			});
 
 			$choices = rwp_collection( $field['choices'] );

@@ -250,16 +250,27 @@ function rwp_output_styles( $styles ) {
  */
 
 function rwp_prepare_args( $args = array() ) {
-	if ( rwp_is_collection( $args ) ) {
-        $args = $args->all();
+	if ( is_object( $args ) ) {
+        $args = rwp_object_to_array( $args );
 	}
 
 	if ( is_array( $args ) && ! wp_is_numeric_array( $args ) ) {
-		$args = rwp_parse_href( $args );
 
 		foreach ( $args as $key => $value ) {
 			if ( ! is_int( $key ) ) {
 				switch ( $key ) {
+					case 'href':
+						$value = rwp_output_href( $value );
+						if ( rwp_is_outbound_link( $args['href'] ) ) {
+							if ( ! rwp_array_has( 'target', $args ) ) {
+								$args['target'] = '_blank';
+							}
+						}
+
+						if ( rwp_array_has( 'target', $args ) && '_blank' === $args['target'] ) {
+							$args['rel'] = 'noopener noreferrer';
+						}
+                        break;
 					case 'style':
 						$value = rwp_parse_styles( $value );
                         break;
@@ -268,12 +279,7 @@ function rwp_prepare_args( $args = array() ) {
                         break;
 
 					default:
-						if ( rwp_is_collection( $value ) ) {
-							$value = $value->all();
-						}
-						if ( is_array( $value ) ) {
-							$value = rwp_prepare_args( $value );
-						}
+						$value = rwp_prepare_args( $value );
                         break;
 				}
 				$args[ $key ] = $value;
@@ -283,6 +289,7 @@ function rwp_prepare_args( $args = array() ) {
 
     return $args;
 }
+
 
 /**
  * Merge Arguments

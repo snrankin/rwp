@@ -86,18 +86,20 @@ function rwp_caster( $object, $array, $stub, $is_nested, $filter = 0 ) {
  *
  * Only visible to admins if WP_DEBUG is on
  *
- * @param  mixed  $var
- * @param  bool   $die
- * @param  string $function
+
  * @return void
  */
-function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
+function rwp_log() {
+
 	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
-		/**
-		 * @var RWP\Integrations\QM $qm
-		 */
-		$qm = QM::instance();
-		$qm->log( $var, $die, $function );
+		$vars = func_get_args();
+		foreach ( $vars as $var ) {
+			/**
+			 * @var RWP\Integrations\QM $qm
+			 */
+			$qm = QM::instance();
+			$qm->log( $var, false, 'rwp_dump' );
+		}
 	}
 
 }

@@ -13,37 +13,82 @@
 	// always setting `width: 100%;`. This works because we set the width
 	// later on to override this initial width.
 	width: 100%;
-	margin-top: var(--#{$variable-prefix}gutter-y);
-	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5); // stylelint-disable-line function-disallowed-list
-	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5); // stylelint-disable-line function-disallowed-list
+	//margin-top: getcssvar(gutter-y);
+	// padding-right: calc(#{getcssvar(gutter-x)} * 0.5); // stylelint-disable-line function-disallowed-list
+	// padding-left: calc(#{getcssvar(gutter-x)} * 0.5); // stylelint-disable-line function-disallowed-list
 	> .elementor-column-wrap.elementor-element-populated {
 		padding-top: unset;
 		padding-bottom: unset;
+
+		> .elementor-widget-wrap {
+			--flex-direction: column;
+
+			display: flex;
+			justify-content: var(--justify-content);
+			flex-direction: var(--flex-direction);
+			align-items: var(--align-items);
+			align-content: var(--align-content);
+			flex-wrap: var(--flex-wrap); // stylelint-disable-line
+			gap: var(--gap-y) var(--gap-x);
+		}
 	}
 }
 
-@mixin make-elementor-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
-	@each $breakpoint in map-keys($breakpoints) {
-		$infix: breakpoint-infix($breakpoint, $breakpoints);
+@mixin make-elementor-columns($columns: $grid-columns, $gutter: $grid-gutter-width) {
+	@each $breakpoint, $device in $elementor-breakpoints {
+		$infix: breakpoint-infix($breakpoint);
+		$class: '';
 
-		@include media-breakpoint-up($breakpoint, $breakpoints) {
-			&.col#{$infix}-auto {
-				@include make-col-auto();
+		@if $device != desktop {
+			$class: '-#{$device}';
+		}
+
+		@include media-breakpoint-up($breakpoint) {
+			// Provide basic `.col-{bp}` classes for equal-width flexbox columns
+			// .col#{$infix} {
+			// 	flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+			// }
+
+			.row-cols#{$class}-auto > * {
+				@include make-col-auto;
+			}
+
+			@if $grid-row-columns > 0 {
+				@for $i from 1 through $grid-row-columns {
+					.row-cols#{$class}-#{$i} {
+						@include row-cols($i);
+					}
+				}
+			}
+
+			&.e-col#{$class}-auto {
+				@include make-col-auto;
 			}
 
 			@if $columns > 0 {
 				@for $i from 1 through $columns {
-					&.col#{$infix}-#{$i} {
-						@include make-col($i, $columns);
+					&.e-col#{$class}-#{$i} {
+						flex: 0 1 auto;
+						width: calc(percentage(divide($i, $columns)) - var(--gap-x));
 					}
 				}
 
 				// `$columns - 1` because offsetting by the width of an entire row isn't possible
 				@for $i from 0 through ($columns - 1) {
-					@if not($infix == '' and $i == 0) {
+					@if not($i == 0) {
 						// Avoid emitting useless .offset-0
-						&.offset#{$infix}-#{$i} {
-							@include make-col-offset($i, $columns);
+						&.offset#{$class}-#{$i},
+						&.offset-l#{$class}-#{$i} {
+							@include make-col-offset($i, left, false, $columns);
+						}
+						&.offset-r#{$class}-#{$i} {
+							@include make-col-offset($i, right, false, $columns);
+						}
+						&.offset-nl#{$class}-#{$i} {
+							@include make-col-offset($i, left, true, $columns);
+						}
+						&.offset-nr#{$class}-#{$i} {
+							@include make-col-offset($i, right, true, $columns);
 						}
 					}
 				}
@@ -52,15 +97,13 @@
 	}
 }
 
-:root {
-	@include setcssvar(gutter-x, var(--e-gx-default));
-	@include setcssvar(gutter-x, var(--e-gy-default));
-}
+// :root {
+// 	@include setcssvar(gutter-x, getcssvar(gx-default, getcssvar(gutter-x), 'e-'));
+// 	@include setcssvar(gutter-y, getcssvar(gy-default, getcssvar(gutter-y), 'e-'));
+// }
 
 .elementor-container {
 	width: 100%;
-	padding-right: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
-	padding-left: calc(var(--#{$variable-prefix}gutter-x) * 0.5);
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -71,7 +114,33 @@
 			$infix: breakpoint-infix($breakpoint);
 
 			@include media-breakpoint-up($breakpoint) {
-				max-width: var(--#{$variable-prefix}container#{$infix}-width);
+				max-width: getcssvar(container#{$infix}-width);
+			}
+		}
+	}
+
+	.e-container {
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			$infix: breakpoint-infix($breakpoint);
+
+			@include media-breakpoint-up($breakpoint) {
+				--container-max-width: #{getcssvar(container#{$infix}-width)};
+			}
+		}
+	}
+
+	.elementor-widget:not(:last-child) {
+		margin-bottom: 0;
+	}
+
+	.e-container--column {
+		&.stretched-col {
+			&.left {
+				@include stretch-col-content(left, false);
+			}
+
+			&.right {
+				@include stretch-col-content(right, false);
 			}
 		}
 	}
@@ -93,6 +162,7 @@
 				> :nth-child(1) {
 					order: initial;
 				}
+
 				> :nth-child(2) {
 					order: -1;
 					@include media-breakpoint-up(md) {
@@ -111,43 +181,11 @@
 					> .elementor-container {
 						width: 100%;
 						flex: 0 1 auto;
+
 						> .elementor-row {
 							@include row-cols($i);
 						}
 					}
-				}
-			}
-		}
-	}
-
-	@each $breakpoint in map-keys($grid-breakpoints) {
-		@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-			@each $name, $property in $justify-content {
-				&.elementor-row-h-align#{$infix}-#{$name} > .elementor-container > .elementor-row {
-					justify-content: #{$property};
-				}
-			}
-			@each $name, $property in $align-items {
-				&.elementor-row-v-align#{$infix}-#{$name} > .elementor-container > .elementor-row {
-					align-items: #{$property};
-				}
-			}
-		}
-	}
-	@each $gap, $class in $gap-size {
-		@each $breakpoint in map-keys($grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-			@include media-breakpoint-up($breakpoint) {
-				&.elementor-row-gap#{$infix}-#{$class} {
-					--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-					--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
-				}
-				&.elementor-row-gap-x#{$infix}-#{$class} {
-					--#{$variable-prefix}gutter-x: var(--e-gx#{$infix}-#{$class});
-				}
-				&.elementor-row-gap-y#{$infix}-#{$class} {
-					--#{$variable-prefix}gutter-y: var(--e-gy#{$infix}-#{$class});
 				}
 			}
 		}
@@ -206,39 +244,22 @@ $elementor-col-widths: (
 }
 
 .elementor-row {
-	@include make-row();
+	width: 100%;
+	display: flex;
+	justify-content: var(--justify-content);
+	flex-direction: var(--flex-direction);
+	align-items: var(--align-items);
+	align-content: var(--align-content);
+	flex-wrap: var(--flex-wrap); // stylelint-disable-line
+	gap: var(--gap-y) var(--gap-x);
 }
 
 .elementor-column {
-	@include make-elementor-col-ready();
-	@include make-elementor-columns();
+	@include make-elementor-col-ready;
+	@include make-elementor-columns;
+
 	flex-direction: column;
-	@each $breakpoint in map-keys($grid-breakpoints) {
-		@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-			@each $name, $property in $justify-content {
-				&.elementor-column-h-align#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
-					justify-content: #{$property};
-				}
-			}
-			@each $name, $property in $align-items {
-				&.elementor-column-v-align#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
-					align-items: #{$property};
-				}
-			}
-			@each $name, $property in $align-content {
-				&.elementor-column-v-wrap#{$infix}-#{$name} > .elementor-column-wrap > .elementor-widget-wrap {
-					align-content: #{$property};
-				}
-			}
-			&.elementor-column-align#{$infix}-column > .elementor-column-wrap > .elementor-widget-wrap {
-				flex-direction: column;
-			}
-			&.elementor-column-align#{$infix}-row > .elementor-column-wrap > .elementor-widget-wrap {
-				flex-direction: row;
-			}
-		}
-	}
+
 	.elementor-column-wrap {
 		display: flex;
 		flex-direction: column;
@@ -246,14 +267,17 @@ $elementor-col-widths: (
 		height: 100%;
 		min-height: 1px;
 	}
+
 	.elementor-widget-wrap {
 		flex: 1 1 auto;
 		height: 100%;
 		min-height: 1px;
 	}
+
 	.elementor-widget-container {
 		min-height: 1px;
 	}
+
 	&.full-height-content {
 		> .elementor-column-wrap {
 			> .elementor-widget-wrap {
@@ -261,6 +285,7 @@ $elementor-col-widths: (
 			}
 		}
 	}
+
 	&.stretched-col {
 		&.left {
 			&:not(.in-grid-content) {
@@ -294,6 +319,7 @@ $elementor-col-widths: (
 			}
 		}
 	}
+
 	&.stretched-col-mobile {
 		&:not(.left-mobile):not(.right-mobile) {
 			&:not(.in-grid-content) {
@@ -310,6 +336,7 @@ $elementor-col-widths: (
 				}
 			}
 		}
+
 		&.left-mobile {
 			&:not(.in-grid-content) {
 				> .elementor-column-wrap {

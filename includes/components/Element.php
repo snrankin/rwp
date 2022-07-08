@@ -23,7 +23,9 @@ use RWP\Vendor\Exceptions\Data\TypeException;
 use RWP\Components\Collection;
 use RWP\Components\Str;
 
-class Element {
+class Element implements \ArrayAccess {
+
+	use \RWP\Engine\Traits\Helpers;
 
 	/**
 	 * @var string $tag The html element tag
@@ -162,34 +164,39 @@ class Element {
 	 * @return void
 	 */
 	public function merge_args( $args, $overwrite = true ) {
-		$properties = get_object_vars( $this );
 
 		if ( is_string( $args ) ) {
 			$args = $this->create_from_string( $args );
 		}
 
-		if ( is_object( $args ) ) {
-			if ( $args instanceof Html ) {
-				$args = $args->__toString();
-				$args = $this->create_from_string( $args );
+		rwp_merge_data( $this, $args, $overwrite );
+	}
 
-			} elseif ( $args instanceof Element || $args instanceof Collection ) {
-				$args = rwp_object_to_array( $args );
+	/**
+	 * Check if a sub element exists and if it has content
+	 * @param mixed $key
+	 * @return true
+	 */
+	public function filled_element( $key = '' ) {
+		if ( ! empty( $key ) ) {
+			if ( $this->filled( $key ) ) {
+				if ( rwp_is_component( $this->$key ) ) {
+					$this->$key->build();
+					if ( $this->$key->has_content() ) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return true;
+				}
+			} else {
+				return true;
 			}
+		} else {
+			return $this->has_content();
 		}
 
-		if ( is_array( $args ) ) {
-
-			$properties = rwp_merge_args( $properties, $args );
-
-			if ( rwp_array_has( 'order', $args ) ) {
-				$properties['order'] = $args['order'];
-			}
-
-			foreach ( $properties as $key => $value ) {
-				$this->set( $key, $value, $overwrite );
-			}
-		}
 	}
 
 	/**
@@ -375,22 +382,23 @@ class Element {
 		}
 
 		if ( is_object( $atts ) ) {
-			$args = rwp_object_to_array( $atts );
-
-			if ( rwp_array_has( 'atts', $args ) ) {
-				$atts = $args['atts'];
+			if ( $atts instanceof Html ) {
+				$atts = $atts->extractAll();
+				$this->set( $atts );
 			}
-		}
-
-		if ( $atts instanceof self ) {
-			$atts = $atts->get_atts();
+			if ( $atts instanceof Element ) {
+				$atts = $atts->get_atts();
+				$this->set( $atts );
+			}
 		}
 
 		$atts = rwp_merge_args( $defaults, $atts );
 
 		foreach ( $atts as $key => $value ) {
 			if ( 'class' === $key || 'style' === $key ) {
-				$this->set_attr( $key, $value, true ); // Always update the merged classes/styles
+				$this->add_class( $value ); // Always update the merged classes/styles
+			} elseif ( 'style' === $key ) {
+				$this->set_style( $value, null, true ); // Always update the merged classes/styles
 			} else {
 				$this->set_attr( $key, $value, $overwrite );
 			}
@@ -477,7 +485,7 @@ class Element {
 	 * @return void
 	 */
 
-	public function add_class( $value, $filter = true ) {
+	public function add_class( $value, $filter = false ) {
 		if ( empty( $value ) ) {
 			return;
 		}
@@ -573,8 +581,15 @@ class Element {
 	 * @return void
 	 */
 
-	public function set_style( $key, $value, $overwrite = false ) {
-		$this->set( "atts.style.$key", $value, $overwrite );
+	public function set_style( $key, $value = null, $overwrite = false ) {
+		if ( is_array( $key ) ) {
+			foreach ( $key as $property => $value ) {
+				$this->set( "atts.style.$property", $value, $overwrite );
+			}
+		} else {
+			$this->set( "atts.style.$key", $value, $overwrite );
+		}
+
 	}
 
 	/**
@@ -916,6 +931,8 @@ class Element {
 		}
 	}
 
+
+
 	/**
 	 * Make sure all sub elements specified in the order property are added to
 	 * the content property
@@ -940,7 +957,7 @@ class Element {
 				if ( is_object( $value ) && method_exists( $value, '__toString' ) ) {
 					$value = $value->__toString();
 				}
-				if ( is_string( $value ) ) {
+				if ( is_string( $value ) && ! empty( $value ) ) {
 					$target->set_content( $value, $key, true );
 				}
 			} else if ( is_array( $elements ) ) {
@@ -1105,66 +1122,6 @@ class Element {
 		return $html;
 	}
 
-
-	/**
-	 * Determine if the given key exists and is not empty.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
-	 */
-	public function has( $key ) {
-		return $this->exists( $key ) && filled( $this->get( $key ) );
-	}
-
-	/**
-	 * Determine if the given key exists.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
-	 */
-	public function exists( $key ) {
-		return \data_has( $this, $key );
-	}
-
-	/**
-	 * Get an attribute from the html instance.
-	 *
-	 * @param  string|string[]  $key
-	 * @param  mixed            $default
-	 *
-	 * @return mixed
-	 */
-	public function get( $key, $default = null ) {
-		return \data_get( $this, $key, $default );
-	}
-
-	/**
-	 * Set a property
-	 *
-	 * @param  string|string[]  $key        The key(s) to set
-	 * @param  mixed            $value      The value(s) to set
-	 * @param  bool             $overwrite  Should the existing value be
-	 *                                      overwritten?
-	 *
-	 * @return mixed
-	 */
-	public function set( $key, $value, $overwrite = true ) {
-		return \data_set( $this, $key, $value, $overwrite );
-	}
-
-	/**
-	 * Unset the value at the given key.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return void
-	 */
-	public function remove( $key ) {
-		\data_remove( $this, $key );
-	}
-
 	/**
 	 * Set the methods
 	 * @return void
@@ -1230,50 +1187,6 @@ class Element {
 		} catch ( \Throwable $th ) {
 			rwp_error( $th );
 		}
-	}
-
-	/**
-	 * Dynamically retrieve the value of an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 * @return mixed
-	 */
-	public function __get( $key ) {
-		return $this->get( $key );
-	}
-
-	/**
-	 * Dynamically set the value of an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 * @param  mixed   $value
-	 *
-	 * @return void
-	 */
-	public function __set( $key, $value ) {
-		$this->set( $key, $value );
-	}
-
-	/**
-	 * Dynamically check if an attribute is set.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
-	 */
-	public function __isset( $key ) {
-		return $this->exists( $key );
-	}
-
-	/**
-	 * Dynamically unset an attribute.
-	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return void
-	 */
-	public function __unset( $key ) {
-		$this->remove( $key );
 	}
 
 	/**

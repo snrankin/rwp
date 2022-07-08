@@ -109,6 +109,10 @@ function rwp_menu_args( $args = [] ) {
     // Merge the menu classes from the ACF fields with classes set in the $args variable
     $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
 
+	if ( data_get( $custom_args, 'dropdown_hover', false ) ) {
+		$menu_class[] = 'dropdown-hover-all';
+	}
+
 	$direction = data_get( $custom_args, 'direction', 'vertical' );
 	$type = data_get( $custom_args, 'type', 'nav' );
 
@@ -238,7 +242,7 @@ function rwp_menu_args( $args = [] ) {
  * @return Html
  */
 function rwp_navbar( $nav, $custom_args, $menu ) {
-
+	rwp_log( $nav, $custom_args, $menu );
     if ( is_string( $menu ) ) {
         $menu = rwp_get_menu( $menu );
     }
@@ -247,10 +251,11 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 	/**
 	 * @var Collection $order
 	 */
-    $order           = data_get( $custom_args, 'navbar.order', rwp_collection( array( 'navbar', 'toggle' ) ) );
+    $order           = rwp_collection( data_get( $custom_args, 'navbar.order', array( 'navbar', 'toggle' ) ) );
     $in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
     $breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
     $in_grid         = data_get( $custom_args, 'navbar.in_grid', false );
+
 	$item_styles          = array();
 	$item_acf_styles     = data_get( $custom_args, 'item_options.styles', rwp_collection() );
 
@@ -280,18 +285,16 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     $nav->add_class( array( 'collapse', 'navbar-collapse' ) );
 	$nav->set_tag( 'div' );
 
-	$breakpoints = rwp_collection( array() );
+	$column_count = $order->count();
 
-	$mobile_layout = 'grid-columns';
+	$mobile_layout = 'grid-columns-' . ( $column_count - 1 );
+	$desktop_layout = '';
 
     if ( ! empty( $breakpoint ) ) {
         $navbar->add_class( 'navbar-expand-' . $breakpoint );
-		$mobile_layout .= "-$breakpoint";
+
+		$desktop_layout = "grid-columns-$breakpoint-$column_count";
     }
-
-	$column_count = $order->count();
-
-	$mobile_layout .= '-' . ( $column_count - 1 );
 
     if ( ! empty( $theme ) ) {
         $navbar->add_class( 'navbar-' . $theme );
@@ -305,6 +308,7 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 			'class' => array(
 				'navbar-wrapper-inner',
 				$mobile_layout,
+				$desktop_layout,
 			),
 		),
 	) );

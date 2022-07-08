@@ -3,7 +3,7 @@
  * Helpers
  *
  * @package   RWP\/includes/engine/Traits/Helpers.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2022 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -80,6 +80,47 @@ trait Helpers {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Check if key exists in collection and if it is not empty
+	 *
+	 * @param mixed $key
+	 *
+	 * @return bool
+	 */
+	public function filled( $key ) {
+        if ( $this->has( $key ) ) {
+			return filled( $this->get( $key ) );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Check if key exists in collection and if it is empty
+	 *
+	 * @param mixed $key
+	 *
+	 * @return bool
+	 */
+	public function blank( $key ) {
+        if ( $this->has( $key ) ) {
+			return blank( $this->get( $key ) );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Alias for has()
+	 *
+	 * @param  string|string[]  $key
+	 *
+	 * @return bool
+	 */
+	public function exists( $key ) {
+		return $this->has( $key );
 	}
 
 	/**
@@ -208,5 +249,21 @@ trait Helpers {
 	public function __unset( $key ) {
 		$this->remove( $key );
 	}
+
+	public function offsetSet( $offset, $value ) {
+        $this->set( $offset, $value );
+    }
+
+    public function offsetExists( $offset ) {
+        return $this->exists( $offset );
+    }
+
+    public function offsetUnset( $offset ) {
+        $this->remove( $offset );
+    }
+
+    public function offsetGet( $offset ) {
+        return $this->get( $offset );
+    }
 
 }

@@ -6,7 +6,7 @@
  * Taken from Inpsyde\WpContext with a few modifications
  *
  * @package   RWP\/includes/engine/Context.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2022 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -86,12 +86,7 @@ class Context implements \JsonSerializable {
 		// When nothing else matches, we assume it is a front-office request.
 		$is_front = $undetermined && ! $is_rest && ! $is_login;
 
-		$is_elementor = false;
-
-		if ( is_plugin_active( 'elementor/elementor.php' ) && class_exists( '\\Elementor\\Plugin' ) ) {
-			$is_elementor = \Elementor\Plugin::$instance->preview->is_preview_mode();
-
-		}
+		$is_elementor = rwp_is_elementor_preview();
 
         /*
 		* Note that when core is installing **only** `INSTALLING` will be true, not even `CORE`.

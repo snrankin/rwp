@@ -152,6 +152,9 @@ class Button extends Element {
 						if ( rwp_str_is_element( $item, 'i|svg|img' ) ) {
 							$this->set_icon( $item );
 							return true;
+						} else {
+							$this->set_text( $item );
+							return true;
 						}
 					} else {
 						$this->set_text( $item );
@@ -246,11 +249,11 @@ class Button extends Element {
 	}
 
 	public function set_toggle_icons() {
-        if ( $this->icon_opened instanceof Icon ) {
+        if ( $this->filled( 'icon_opened' ) ) {
 			$this->icon->set_content( $this->icon_opened, 'opened', true );
 		}
 
-		if ( $this->icon_closed instanceof Icon ) {
+		if ( $this->filled( 'icon_closed' ) ) {
 			$this->icon->set_content( $this->icon_closed, 'closed', true );
 		}
 	}
@@ -310,23 +313,21 @@ class Button extends Element {
 		}
 
 		if ( in_array( 'icon', $this->order ) ) {
-			if ( ! $this->icon->has_content() ) {
+			if ( ! $this->filled_element( 'icon' ) ) {
+				$this->remove_order_item( 'icon' );
 				$this->remove_content( 'icon' );
 			}
-		} else {
-			if ( $this->icon->has_content() ) {
-				$this->set_order( 'icon', 'last' );
-			}
+		} else if ( $this->filled_element( 'icon' ) ) {
+			$this->set_order( 'icon', 'last' );
 		}
 
 		if ( in_array( 'text', $this->order ) ) {
-			if ( ! $this->text->has_content() ) {
+			if ( ! $this->filled_element( 'text' ) ) {
+				$this->remove_order_item( 'text' );
 				$this->remove_content( 'text' );
 			}
-		} else {
-			if ( $this->text->has_content() ) {
-				$this->set_order( 'text', 'first' );
-			}
+		} else if ( $this->filled_element( 'text' ) ) {
+			$this->set_order( 'text', 'last' );
 		}
 
 		if ( in_array( 'text', $this->order, true ) && in_array( 'icon', $this->order, true ) ) {

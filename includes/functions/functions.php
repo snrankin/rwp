@@ -12,6 +12,7 @@
 use RWP\Components\Collection;
 use RWP\Engine\Plugin;
 use RWP\Vendor\PUC\Factory;
+use RWP\Integrations\Bootstrap;
 /**
  * Grab the RWP object and return it.
  * Wrapper for RWP::get_instance().
@@ -139,6 +140,100 @@ function rwp_plugin_asset_path( $asset, $folder = '', $prefix = true ) {
 
 function rwp_plugin_asset_uri( $asset, $folder = '', $prefix = true ) {
 	return rwp()->asset_uri( $asset, $folder, $prefix );
+}
+
+/**
+ * Get an array of column sizes/percentages
+ *
+ * @return array
+ */
+function rwp_bootstrap_columns() {
+	return Bootstrap::instance()->columns;
+}
+
+/**
+ * Get an array of column sizes/percentages
+ *
+ * @return array
+ */
+function rwp_bootstrap_colors( $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
+	return Bootstrap::bs_atts( 'colors', $class_prefix, $class_suffix, $label_prefix, $label_suffix );
+}
+
+/**
+ * Get an array of breakpoints
+ *
+ * @return array
+ */
+function rwp_bootstrap_breakpoints( $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
+	return Bootstrap::bs_atts( 'breakpoints', $class_prefix, $class_suffix, $label_prefix, $label_suffix );
+}
+
+/**
+ * Returns breakpoint value (in pixels)
+ * @param string $breakpoint
+ * @return int|false
+ */
+function rwp_bootstrap_breakpoint( $breakpoint ) {
+	return Bootstrap::breakpoint( $breakpoint );
+}
+
+/**
+ * Get the prev breakpoint
+ * @param string $breakpoint
+ * @param string|null $type The return type. Can be one of `value`, `key` or null for both
+ * @return mixed
+ */
+function rwp_bootstrap_breakpoint_prev( $breakpoint, $type = null ) {
+	$breakpoints = rwp_collection( Bootstrap::instance()->breakpoints );
+	$value = $breakpoints->previous( $breakpoint, $type );
+	if ( 'value' === $type ) {
+		$value = $value['value'];
+	} else if ( empty( $type ) ) {
+		$value['value'] = $value['value']['value'];
+	}
+	return $value;
+}
+
+
+/**
+ * Get the next breakpoint
+ * @param string $breakpoint
+ * @param string|null $type The return type. Can be one of `value`, `key` or null for both
+ * @return mixed
+ */
+function rwp_bootstrap_breakpoint_next( $breakpoint, $type = null ) {
+	$breakpoints = rwp_collection( Bootstrap::instance()->breakpoints );
+	$value = $breakpoints->next( $breakpoint, $type );
+	if ( 'value' === $type ) {
+		$value = $value['value'];
+	} else if ( empty( $type ) ) {
+		$value['value'] = $value['value']['value'];
+	}
+	return $value;
+}
+
+/**
+ * Checks if we are currently in elementor preview mode
+ *
+ * @return bool
+ */
+function rwp_is_elementor_preview() {
+	if ( is_plugin_active( 'elementor/elementor.php' ) && class_exists( '\\Elementor\\Plugin' ) ) {
+		$elementor_instance = \Elementor\Plugin::instance();
+		if ( ! empty( $elementor_instance ) ) {
+			$preview = $elementor_instance->preview;
+			if ( $preview instanceof \Elementor\Preview ) {
+				return $preview->is_preview_mode();
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	} else {
+			return false;
+	}
 }
 
 /**

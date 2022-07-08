@@ -39,11 +39,11 @@ function rwp_search_form( $form = '', $args = array() ) {
 
 	$floating = data_get( $args, 'floating', true );
 
-	$label = $form->filter( 'label > span' )->text( '' );
+	$label = $form->filter( 'label' )->text( '' );
 
-	if ( empty( $label ) ) {
-		return $content;
-	}
+	// if ( empty( $label ) ) {
+	// 	return $content;
+	// }
 
 	$label = rwp_element( '<label class="form-label" for="s">' . $label . '</label>' );
 
@@ -61,7 +61,7 @@ function rwp_search_form( $form = '', $args = array() ) {
 
 	$btn_args = data_get( $args, 'button' );
 
-	$btn_icon = data_get( $args, 'button.icon', rwp_collection() );
+	$btn_icon = rwp_collection( data_get( $args, 'button.icon' ) );
 
 	if ( $btn_icon->isNotEmpty() ) {
 		$btn_icon = rwp_get_icon_from_acf( $btn_icon );
@@ -70,7 +70,15 @@ function rwp_search_form( $form = '', $args = array() ) {
 
 	$btn_args = apply_filters( 'rwp_search_form_btn_args', $btn_args );
 
-	$btn = rwp_input_to_button( $content, 'input.search-submit', $btn_args );
+	$btn = $form->filter( '[type="submit"]' )->saveHTML();
+
+	if ( rwp_str_is_element( $btn, 'input' ) ) {
+		$btn = rwp_input_to_button( $btn, 'input.search-submit', $btn_args );
+	} else {
+		$btn = rwp_button( $btn );
+		$btn->merge_args( $btn_args );
+		$btn = $btn->html();
+	}
 
 	$input_wrapper_defaults = array(
 		'tag' => 'div',

@@ -164,6 +164,10 @@
 	@return calc(0.025em + #{$size});
 }
 
+@function cssvar($entry, $prefix: $variable-prefix) {
+	@return unquote('--#{$prefix}#{$entry}');
+}
+
 @function getcssvar($entry, $default: null, $prefix: $variable-prefix) {
 	@if $default != null {
 		@return unquote('var(--#{$prefix}#{$entry}, #{$default})');

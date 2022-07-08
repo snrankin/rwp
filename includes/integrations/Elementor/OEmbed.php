@@ -3,7 +3,7 @@
  * OEmbed
  *
  * @package   RWP\Integrations\Elementor\OEmbed
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -34,11 +34,11 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 * @param array|null $args Optional. Widget default arguments. Default is null.
 	 */
 
-	public function __construct( $data = [], $args = null ) {
-		parent::__construct( $data, $args );
+	// public function __construct( $data = [], $args = null ) {
+	// 	parent::__construct( $data, $args );
 
-		//rwp()->register_assets( 'elementor-o-embed' );
-	}
+	// 	//rwp()->register_assets( 'elementor-o-embed' );
+	// }
 
 	/**
 	 * Get widget name.
@@ -121,7 +121,7 @@ class OEmbed extends Widget_Base { // phpcs:ignore
 	 * @since 0.9.0
 	 * @access protected
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_oembed',
 			[

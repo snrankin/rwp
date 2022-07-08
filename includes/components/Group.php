@@ -54,6 +54,14 @@ class Group extends Element {
 
 	}
 
+	public function has_items() {
+		if ( ! rwp_is_collection( $this->elements ) ) {
+			$this->elements = new Collection( $this->elements );
+		}
+		return $this->elements->isNotEmpty();
+
+	}
+
 	/**
 	 * Format an item before adding it to the group
 	 *

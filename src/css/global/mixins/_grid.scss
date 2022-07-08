@@ -296,6 +296,8 @@
 		@include media-breakpoint-up($breakpoint) {
 			$infix: breakpoint-infix($breakpoint);
 
+			--width: #{stretched-col-content($breakpoint)};
+
 			width: stretched-col-content($breakpoint);
 
 			$gutter: page-gutter($breakpoint, true);

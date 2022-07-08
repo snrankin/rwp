@@ -2,7 +2,7 @@
 /// @name   _dropdown
 ///
 /// @group  RWP
-/// @version   1.0.1
+/// @version   0.9.0
 /// @copyright 2022 RIESTER
 /// ======================================================================== ///
 
@@ -25,10 +25,6 @@ ul:not(.navbar-nav) {
 				opacity: 1;
 				visibility: visible;
 				max-height: 9999px;
-
-				> .dropdown-arrow {
-					display: block;
-				}
 			}
 
 			.menu-divider {
@@ -55,32 +51,5 @@ ul:not(.navbar-nav) {
 
 	&:focus-within {
 		overflow: visible;
-	}
-
-	.level-0-item.has-children {
-		@include media-breakpoint-up(lg) {
-			display: block;
-		}
-
-		> .btn {
-			.btn-icon {
-				@include media-breakpoint-up(lg) {
-					display: none;
-				}
-			}
-		}
-
-		> .menu-link {
-			@include media-breakpoint-up(lg) {
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
-		}
-
-		.has-children {
-			display: flex;
-			flex: nowrap;
-		}
 	}
 }

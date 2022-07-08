@@ -15,6 +15,7 @@ body.elementor {
 		@each $breakpoint in map-keys($grid-breakpoints) {
 			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 			$value: map-get($gutters, $gap);
+
 			--e-gx#{$infix}-#{$class}: #{$value};
 			--e-gy#{$infix}-#{$class}: #{$value};
 		}

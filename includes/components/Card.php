@@ -4,7 +4,7 @@
  * Card
  *
  * @package   RWP\/includes/components/Card.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -428,7 +428,7 @@ class Card extends Element {
 	 */
 	public function setup_header() {
 		if ( in_array( 'header', $this->order, true ) ) {
-			if ( ! $this->header->has_content() ) {
+			if ( ! $this->filled_element( 'header' ) ) {
 				$this->remove_order_item( 'header' );
 			} else {
 				if ( empty( $this->header->order ) ) {
@@ -448,7 +448,7 @@ class Card extends Element {
 	public function setup_image() {
 		if ( in_array( 'image', $this->order, true ) ) {
 
-			if ( false == $this->image || ( is_object( $this->image ) && empty( $this->image->src ) && empty( $this->image->id ) ) ) {
+			if ( ! $this->filled_element( 'image' ) ) {
 				$this->remove_order_item( 'image' );
 			}
 		}
@@ -461,7 +461,7 @@ class Card extends Element {
 	 */
 	public function setup_body() {
 		if ( in_array( 'body', $this->order, true ) ) {
-			if ( ! $this->body->has_content() ) {
+			if ( ! $this->filled_element( 'body' ) ) {
 				$this->remove_order_item( 'body' );
 			} else {
 				if ( empty( $this->body->order ) ) {
@@ -480,7 +480,7 @@ class Card extends Element {
 	 */
 	public function setup_list() {
 		if ( in_array( 'list', $this->order, true ) ) {
-			if ( ! $this->list->elements->isEmpty() ) {
+			if ( ! $this->filled_element( 'list' ) ) {
 				$this->remove_order_item( 'list' );
 			}
 		}
@@ -493,7 +493,7 @@ class Card extends Element {
 	 */
 	public function setup_footer() {
 		if ( in_array( 'footer', $this->order, true ) ) {
-			if ( ! $this->footer->has_content() ) {
+			if ( ! $this->filled_element( 'footer' ) ) {
 				$this->remove_order_item( 'footer' );
 			} else {
 				if ( empty( $this->footer->order ) ) {

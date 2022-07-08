@@ -11,11 +11,10 @@
 $elementor-breakpoints: (
 	sm: mobile,
 	md: tablet,
-	lg: tablet_extra,
-	xl: laptop,
-	xxl: desktop,
+	lg: laptop,
+	xl: desktop,
+	xxl: widescreen,
 );
-
 $justify-content: map-deep-get($utilities, 'justify-content', 'values');
 $align-items: map-deep-get($utilities, 'align-items', 'values');
 $align-content: map-deep-get($utilities, 'align-content', 'values');

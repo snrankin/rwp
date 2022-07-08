@@ -2,7 +2,7 @@
 /// @name   _narbar
 ///
 /// @group  RWP
-/// @version   1.0.1
+/// @version   0.9.0
 /// @copyright 2022 RIESTER
 /// ======================================================================== ///
 @import '~bootstrap/scss/navbar';
@@ -20,23 +20,31 @@
 	> .navbar-wrapper-inner {
 		display: grid;
 		gap: getcssvar(navbar-gap-y) getcssvar(navbar-gap-x);
-
+		grid-template-rows: auto auto;
 		@for $column from 1 through 6 {
 			@each $breakpoint in map-keys($grid-breakpoints) {
 				$infix: breakpoint-infix($breakpoint);
 
-				@include media-breakpoint-down($breakpoint) {
+				@include media-breakpoint-up($breakpoint) {
 					&.grid-columns#{$infix}-#{$column} {
 						grid-template-columns: repeat($column, max-content);
-						grid-template-rows: auto auto;
 
-						.navbar-collapse {
-							grid-row-end: -1;
-							grid-column: 1 / -1;
+						@if $infix != '' {
+							grid-template-rows: auto;
+
+							.navbar-collapse {
+								grid-row-end: unset;
+								grid-column: unset;
+							}
 						}
 					}
 				}
 			}
+		}
+
+		.navbar-collapse {
+			grid-row-end: -1;
+			grid-column: 1 / -1;
 		}
 	}
 
