@@ -3,7 +3,7 @@
  * Bootstrap Container
  *
  * @package   RWP\Components
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -15,8 +15,8 @@ class Container extends Group {
 	public $tag = 'div';
 
 	/**
-	 *
-	 * @var bool|string[] Boolean for fluid container or an array of breakpoints
+	 * Boolean for fluid container or an array of breakpoints
+	 * @var bool|string[]
 	 */
 
 	public $fluid = false;

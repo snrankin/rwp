@@ -4,7 +4,7 @@
  * Singleton Abstract
  *
  * @package   RWP\Engine
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -76,16 +76,8 @@ abstract class Singleton {
      */
     public function initialize() {}
 
-	/**
-	 * Get an attribute from the plugin instance.
-	 *
-	 * @param  string  $key
-	 * @param  mixed   $default The default to use if the key is not found
-	 * @return mixed   The value of the key if found else the default set
-	 */
-	public function get( $key, $default = null ) {
-		return data_get( $this, $key, $default );
 
+<<<<<<< HEAD
 	}
 
 	/**
@@ -209,4 +201,6 @@ abstract class Singleton {
 	public function __unset( $key ) {
 		$this->remove( $key );
 	}
+=======
+>>>>>>> release/v0.9.0
 }

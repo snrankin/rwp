@@ -10,6 +10,7 @@
  */
 
 use RWP\Components\Collection;
+use RWP\Components\Element;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Support\Enumerable;
@@ -26,7 +27,7 @@ use RWP\Vendor\Illuminate\Support\Enumerable;
  */
 function rwp_object_to_array( $obj ) {
     if ( $obj instanceof Collection ) {
-		return json_decode( $obj->toJson(), true );
+		return rwp_flatten_collections( $obj );
 	} elseif ( $obj instanceof Enumerable ) {
         return $obj->all();
     } elseif ( $obj instanceof Arrayable ) {
@@ -37,6 +38,8 @@ function rwp_object_to_array( $obj ) {
         return (array) $obj->jsonSerialize();
     } elseif ( $obj instanceof \Traversable ) {
         return iterator_to_array( $obj );
+    } elseif ( $obj instanceof Element ) {
+        return $obj->get_args();
     } else {
         $obj = wp_json_encode( $obj );
         if ( $obj ) {
@@ -45,6 +48,78 @@ function rwp_object_to_array( $obj ) {
     }
     return (array) $obj;
 
+}
+
+/**
+ * Flattens collections within collections into arrays
+ * @param mixed $collection
+ * @return mixed
+ */
+function rwp_flatten_collections( $collection ) {
+	if ( rwp_is_collection( $collection ) ) {
+		$collection->transform(function( $value ) {
+			return rwp_flatten_collections( $value );
+		});
+
+		$collection = $collection->all();
+	}
+	return $collection;
+}
+
+function rwp_merge_data( &$data_set_1, $data_set_2, $overwrite = true ) {
+	$data_set_2 = rwp_object_to_array( $data_set_2 );
+	$data_set_2 = new RecursiveArrayIterator( $data_set_2 );
+	rwp_apply_args( $data_set_2, $data_set_1, $overwrite );
+
+}
+
+function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
+
+	while ( $iterator->valid() ) {
+
+		$key = $iterator->key();
+		$value = $iterator->current();
+
+		$parent_val = null;
+		if ( is_object( $base_obj ) ) {
+			if ( isset( $base_obj->$key ) ) {
+				$parent_val = $base_obj->__get( $key );
+			}
+		} else if ( is_array( $base_obj ) ) {
+			if ( isset( $base_obj[ $key ] ) ) {
+				$parent_val = $base_obj[ $key ];
+			}
+		}
+
+		if ( $iterator->hasChildren() && 'atts' !== $key && 'order' !== $key ) {
+			$children = $iterator->getChildren();
+
+			if ( ! empty( $parent_val ) ) {
+				rwp_apply_args( $children, $parent_val, $overwrite );
+				$value = $parent_val;
+			}
+		} else {
+
+			if ( 'atts' === $key && ! empty( $parent_val ) ) {
+
+				$value = rwp_merge_args( $parent_val, $value );
+			} else if ( 'order' === $key && ! empty( $parent_val ) ) {
+				$value = rwp_merge_args( $parent_val, $value );
+			}
+		}
+		if ( is_object( $base_obj ) ) {
+			if ( ! isset( $base_obj->$key ) || $overwrite ) {
+				$base_obj->__set( $key, $value );
+			}
+		} else if ( is_array( $base_obj ) ) {
+			if ( ! isset( $base_obj[ $key ] ) || $overwrite ) {
+				$base_obj[ $key ] = $value;
+			}
+		}
+		$iterator->next();
+	}
+
+	//return $base_obj;
 }
 
 /**

@@ -3,7 +3,7 @@
  * NavList
  *
  * @package   RWP\/includes/components/NavList.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -26,7 +26,7 @@ class Nav extends Element {
 	);
 
 	/**
-	 * @var array $elements_map An array that maps order items into new Element classes
+	 * @var array An array that maps order items into new Element classes
 	 */
 	public $elements_map = array(
 		'list'   => 'NavList',
@@ -34,58 +34,67 @@ class Nav extends Element {
 	);
 
 	/**
-	 * @var int $depth If the depth is greater than 0 then it is a subnav
+	 * @var int If the depth is greater than 0 then it is a subnav
 	 */
-
 	public $depth = 0;
 
 	/**
-	 * @var string $type The type of navigation. One of `nav|navbar|tabs|pills`
+	 * @var string The type of navigation. One of `nav|navbar|tabs|pills|indented|flush`
 	 * @link https://getbootstrap.com/docs/5.0/components/navs-tabs/#base-nav
 	 */
-	public $type;
+	public $type = 'indented';
 
 	/**
-	 * @var string $direction The direction of the navigation (either horizontal or vertical)
+	 * @var string The direction of the navigation (either horizontal or vertical)
 	 */
 	public $direction = 'vertical';
 
 	/**
-	 * @var string $toggle_type  The type of dropdown. Can be one of `
-	 *                          collapse|dropdown|tabs|indented`
+	 * @var string|false The type of dropdown. Can be one of `collapse|dropdown|tabs`
 	 */
-	public $toggle_type = 'collapse';
+	public $toggle_type = false;
 
 	/**
-	 * @var mixed $list
+	 * @var array|NavList
 	 */
-
 	public $list = array(
-        'class'     => array(
-            'nav',
-		),
-		'role' => 'menu',
+		'has-wrapper' => true,
 	);
 
 	/**
-	 * @var mixed $parent The subnav parent id
+	 * @var string The subnav parent id or the menu id if `$depth == 0`
 	 */
 	public $parent;
 
 	/**
-	 * @var string $nested_type The type of dropdown. Can be one of `collapse|indented`
+	 * @var string|false The parent type of dropdown. Can be one of `collapse|dropdown|tabs`
 	 */
-	public $nested_type = 'collapse';
+	public $parent_type = false;
 
 	/**
-	 * @var int $nested_type_depth What depth to start the nested type
+	 * @var bool Make nav items fill available space (unequal widths)
 	 */
-	public $nested_type_depth = 1;
+	public $fill = false;
 
 	/**
-	 * @var mixed The Toggle Button Element
+	 * @var bool Make nav items fill available space (equal widths)
 	 */
-	public $toggle;
+	public $justified = false;
+
+	/**
+	 * @var bool Make nav items pill style
+	 */
+	public $pills = false;
+
+	/**
+	 * @var false|Button The Toggle Button Element
+	 */
+	public $toggle = false;
+
+	/**
+	 * @var bool $open Whether or not the item is currently open
+	 */
+	public $open = false;
 
 	/**
 	 * Initialize the class
@@ -99,7 +108,11 @@ class Nav extends Element {
 
 		$list = data_get( $args, 'list' );
 
+<<<<<<< HEAD
 		$list_args = rwp_collection( $args )->only( array( 'direction', 'toggle_type', 'depth', 'type', 'parent', 'toggle' ) );
+=======
+		$list_args = rwp_collection( $args )->only( array( 'direction', 'toggle_type', 'depth', 'type', 'parent', 'toggle', 'parent_type', 'fill', 'pill', 'justified' ) );
+>>>>>>> release/v0.9.0
 
 		$args['list'] = $list_args->merge( $list )->all();
 
@@ -108,24 +121,36 @@ class Nav extends Element {
 	}
 
 	public function setup_html() {
+		$type = $this->type;
+		$this->add_class( "nav-$type-wrapper" );
 
 		switch ( $this->toggle_type ) {
 			case 'dropdown':
 				if ( 0 < $this->depth ) {
 					$this->add_class( 'dropdown-menu' );
 					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
+<<<<<<< HEAD
 				}
 				break;
 			case 'tab':
 				if ( 0 == $this->depth ) {
 					$this->add_class( array( 'tab-pane', 'fade' ) );
 					$this->set_attr( 'role', 'tabpanel' );
+=======
+>>>>>>> release/v0.9.0
 				}
 				break;
+
 			case 'collapse':
 				if ( 0 < $this->depth ) {
 					$this->add_class( 'collapse' );
 					$this->set_attr( 'aria-labelledby', $this->get_attr( 'id' ) . '-btn' );
+<<<<<<< HEAD
+=======
+					if ( $this->open ) {
+							$this->add_class( 'show' );
+					}
+>>>>>>> release/v0.9.0
 				}
 				break;
 		}

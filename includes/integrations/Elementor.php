@@ -4,7 +4,7 @@
  * Elementor
  *
  * @package   RWP\/includes/integrations/Elementor.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -20,6 +20,8 @@ use Elementor\Core\Files\CSS\Post as CSS_File;
 use Elementor\Core\Files as File_Base;
 use Elementor\Core\Breakpoints\Manager as Breakpoints_Manager;
 use Elementor\Core\Experiments\Manager as Experiments_Manager;
+use Elementor\Group_Control_Flex_Item;
+use Elementor\Group_Control_Flex_Container;
 use Elementor\Controls_Manager as Controls_Manager;
 use RWP\Components\Image;
 
@@ -39,12 +41,20 @@ class Elementor extends Singleton {
 		}
 
 		if ( rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
+<<<<<<< HEAD
 			add_action( 'elementor/element/after_section_start', array( $this, 'remove_column_options' ), 10, 3 );
 			add_action( 'elementor/element/after_section_start', array( $this, 'remove_section_options' ), 10, 3 );
 
 			add_action( 'elementor/element/after_section_start', array( $this, 'add_column_options' ), 10, 3 );
 			add_action( 'elementor/element/after_section_start', array( $this, 'add_section_options' ), 10, 3 );
 			add_action( 'elementor/element/before_section_end', array( $this, 'add_button_options' ), 10, 3 );
+=======
+
+			add_action( 'elementor/element/column/layout/before_section_end', array( $this, 'add_column_options' ), 10, 2 );
+			add_action( 'elementor/element/section/section_layout/before_section_end', array( $this, 'add_section_options' ), 10, 2 );
+
+			add_action( 'elementor/element/button/section_button/before_section_end', array( $this, 'add_button_options' ), 10, 2 );
+>>>>>>> release/v0.9.0
 
 			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
@@ -88,7 +98,11 @@ class Elementor extends Singleton {
 	 *
 	 * Make the placeholder image source relative
 	 *
+<<<<<<< HEAD
 	 * @since 1.0.0
+=======
+	 * @since 0.9.0
+>>>>>>> release/v0.9.0
 	 * @access public
 	 *
 	 * @param string $placeholder_image The source of the default placeholder image.
@@ -120,7 +134,11 @@ class Elementor extends Singleton {
 	/**
 	 * Make all urls in css relative
 	 *
+<<<<<<< HEAD
 	 * @since 1.0.0
+=======
+	 * @since 0.9.0
+>>>>>>> release/v0.9.0
 	 * @param CSS_File     $post_css_file The post CSS file instance.
 	 * @param Element_Base $element       The element instance.
 	 */
@@ -177,7 +195,11 @@ class Elementor extends Singleton {
 	 * @return void
 	 */
 	public function enqueue_elementor_assets() {
+<<<<<<< HEAD
         rwp()->add_assets( 'elementor' );
+=======
+		rwp()->add_assets( 'elementor' );
+>>>>>>> release/v0.9.0
 	}
 
 	/**
@@ -186,7 +208,7 @@ class Elementor extends Singleton {
 	 * @return void
 	 */
 	public function init_widgets() {
-        $class = get_called_class();
+		$class = get_called_class();
 		$widgets = rwp()->get_component( $class );
 
 		if ( ! empty( $widgets ) ) {
@@ -263,6 +285,7 @@ class Elementor extends Singleton {
 		update_post_meta( $kit_active_id, '_elementor_page_settings', $kit_settings, $raw_kit_settings );
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Add responsive options to elementor elements based on bootstrap breakpoints
 	 *
@@ -419,17 +442,18 @@ class Elementor extends Singleton {
 			$section->remove_responsive_control( 'content_position' );
 		}
 	}
+=======
+>>>>>>> release/v0.9.0
 
 	/**
 	 * Filter to add certain options from Elementor columns
 	 *
 	 * @param Element_Base $section
-	 * @param string $section_id
 	 * @param array $args
 	 *
 	 * @return void
 	 */
-	public function add_column_options( $section, $section_id, $args ) {
+	public function add_column_options( $section, $args ) {
 		if ( 'column' === $section->get_name() ) {
 			$col_class = $section->get_render_attributes( '_wrapper', 'class' );
 
@@ -437,20 +461,14 @@ class Elementor extends Singleton {
 				$section->add_render_attribute( '_wrapper', 'class', 'col' );
 			}
 
-			self::add_responsive_control_to_elementor(
-				$section,
-				'_col_size',
+			$section->add_responsive_control('_inline_size',
 				array(
-					'label'        => 'Column Width',
-					'type'         => Controls_Manager::TEXT,
-					'prefix_class' => 'col%s-',
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
 				),
-			);
-
-			self::add_responsive_control_to_elementor(
-				$section,
-				'content_direction',
 				array(
+<<<<<<< HEAD
 					'label'        => esc_html__( 'Flex: Direction', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
@@ -461,12 +479,15 @@ class Elementor extends Singleton {
 					),
 					'prefix_class' => 'elementor-column-align%s-',
 				),
+=======
+					'overwrite' => true,
+				)
+>>>>>>> release/v0.9.0
 			);
 
-			self::add_responsive_control_to_elementor(
-				$section,
-				'content_horizontal_alignment',
+			$section->add_responsive_control('align',
 				array(
+<<<<<<< HEAD
 					'label'        => esc_html__( 'Flex: Justify Content', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
@@ -498,12 +519,20 @@ class Elementor extends Singleton {
 					),
 					'prefix_class' => 'elementor-column-v-align%s-',
 				),
+=======
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+>>>>>>> release/v0.9.0
 			);
 
-			self::add_responsive_control_to_elementor(
-				$section,
-				'content_vertical_wrap',
+			$section->add_responsive_control('content_position',
 				array(
+<<<<<<< HEAD
 					'label'        => esc_html__( 'Flex: Align Content', 'rwp' ),
 					'type'         => Controls_Manager::SELECT,
 					'default'      => '',
@@ -518,10 +547,18 @@ class Elementor extends Singleton {
 					),
 					'prefix_class' => 'elementor-column-v-wrap%s-',
 				),
+=======
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+>>>>>>> release/v0.9.0
 			);
-		}
-	}
 
+<<<<<<< HEAD
 	/**
 	 * Filter to remove certain options from Elementor sections
 	 *
@@ -535,6 +572,63 @@ class Elementor extends Singleton {
 		if ( 'section' === $section->get_name() ) {
 			$section->remove_control( 'column_position' );
 			$section->remove_control( 'content_position' );
+=======
+			$section->add_responsive_control('space_between_widgets',
+				array(
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			$section->add_responsive_control('_col_size', array(
+				'label'        => 'Column Width',
+				'type'         => Controls_Manager::TEXT,
+				'prefix_class' => 'e-col%s-',
+			));
+
+			$section->add_group_control(
+			Group_Control_Flex_Container::get_type(),
+			[
+				'name' => 'flex',
+				'selector' => '{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap',
+				'exclude' => array( 'gap' ),
+			]
+			);
+
+			$section->add_responsive_control('gap_x', [
+				'label' => esc_html_x( 'Items Horizontal Gap', 'Flex Item Control', 'rwp' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+				],
+			]);
+
+			$section->add_responsive_control('gap_y', [
+				'label' => esc_html_x( 'Items Vertical Gap', 'Flex Item Control', 'rwp' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+				],
+			]);
+>>>>>>> release/v0.9.0
 		}
 	}
 
@@ -542,13 +636,13 @@ class Elementor extends Singleton {
 	 * Filter to add certain options from Elementor sections
 	 *
 	 * @param Element_Base $section
-	 * @param string $section_id
 	 * @param array $args
 	 *
 	 * @return void
 	 */
-	public function add_section_options( $section, $section_id, $args ) {
+	public function add_section_options( $section, $args ) {
 		if ( 'section' === $section->get_name() ) {
+<<<<<<< HEAD
 			self::add_responsive_control_to_elementor(
 				$section,
 				'column_horizontal_alignment',
@@ -590,10 +684,15 @@ class Elementor extends Singleton {
 			self::add_responsive_control_to_elementor(
 				$section,
 				'row-gap',
+=======
+
+			$section->add_responsive_control('column_position',
+>>>>>>> release/v0.9.0
 				array(
-					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
-					'type' => Controls_Manager::SELECT,
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
 					'default' => '',
+<<<<<<< HEAD
 					'options' => [
 						'default' => esc_html__( 'Default', 'rwp' ),
 						'no' => esc_html__( 'No Gap', 'rwp' ),
@@ -604,15 +703,61 @@ class Elementor extends Singleton {
 						'custom' => esc_html__( 'Custom', 'rwp' ),
 					],
 					'prefix_class' => 'elementor-row-gap-%s-',
+=======
+>>>>>>> release/v0.9.0
 				),
 				array(
 					'overwrite' => true,
 				)
 			);
 
-			self::add_responsive_control_to_elementor(
-				$section,
-				'gap',
+			$section->add_responsive_control('content_position',
+				array(
+					'label' => esc_html__( 'Column Width', 'rwp' ),
+					'type' => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			$section->add_control(
+			'container_type',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'default' => 'flex',
+				'selectors' => [
+					'{{WRAPPER}}' => '--display: {{VALUE}}',
+				],
+			]
+			);
+
+			$section->add_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'rwp' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'boxed',
+				'options' => [
+					'boxed' => esc_html__( 'Boxed', 'rwp' ),
+					'full' => esc_html__( 'Full Width', 'rwp' ),
+				],
+				'render_type' => 'ui',
+				'selectors' => [
+					'{{WRAPPER}} > .elementor-container' => '{{VALUE}}',
+				],
+				'selectors_dictionary' => [
+					'boxed' => '--width: 100%;',
+					'full' => '--content-width: 100%;',
+				],
+			],
+			array(
+				'overwrite' => true,
+			)
+			);
+
+			$section->add_responsive_control('gap',
 				array(
 					'label' => esc_html__( 'Columns Horizontal Gap', 'rwp' ),
 					'type' => Controls_Manager::HIDDEN,
@@ -623,6 +768,7 @@ class Elementor extends Singleton {
 				)
 			);
 
+<<<<<<< HEAD
 			self::add_responsive_control_to_elementor(
 				$section,
 				'row-gap-x',
@@ -662,34 +808,77 @@ class Elementor extends Singleton {
 					'prefix_class' => 'elementor-row-gap-y%s-',
 				),
 			);
+=======
+			$section->add_group_control(
+			Group_Control_Flex_Container::get_type(),
+			[
+				'name' => 'flex',
+				'selector' => '{{WRAPPER}} > .elementor-container > .elementor-row',
+				'exclude' => array( 'gap' ),
+			]
+			);
+
+			$section->add_responsive_control('gap_x', [
+				'label' => esc_html_x( 'Columns Horizontal Gap', 'Flex Item Control', 'rwp' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+				],
+			]);
+
+			$section->add_responsive_control('gap_y', [
+				'label' => esc_html_x( 'Columns Vertical Gap', 'Flex Item Control', 'rwp' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-y: var(--bs-spacer-{{SIZE}});',
+				],
+			]);
+
+>>>>>>> release/v0.9.0
 		}
 	}
+
 
 	/**
 	 * Filter to add certain options from Elementor buttons
 	 *
 	 * @param Element_Base $section
-	 * @param string $section_id
 	 * @param array $args
 	 *
 	 * @return void
 	 */
-	public function add_button_options( $section, $section_id, $args ) {
-		if ( 'button' === $section->get_name() && 'section_button' === $section_id ) {
+	public function add_button_options( $section, $args ) {
+		if ( 'button' === $section->get_name() ) {
 			// Adding Bootstrap button types to elementor buttons
 
-			$btn_options_solid = rwp_collection( Bootstrap::bs_atts( 'colors' ) );
-			$btn_options_outline = rwp_collection( Bootstrap::bs_atts( 'colors', 'outline-', '', '', ' Outline' ) );
-
-			$btn_options_solid = $btn_options_solid->mapWithKeys(function ( $item ) {
-				return [ $item['value'] => $item['label'] ];
+			$btn_options_solid = rwp_collection( rwp_bootstrap_colors( 'btn-' ) )->mapWithKeys( function( $item ) {
+				return array( $item['class'] => $item );
+			});
+			$btn_options_outline = rwp_collection( rwp_bootstrap_colors( 'btn-outline-', '', '', ' Outline' ) )->mapWithKeys( function( $item ) {
+				return array( $item['class'] => $item );
 			});
 
-			$btn_options_outline = $btn_options_outline->mapWithKeys(function ( $item ) {
-				return [ $item['value'] => $item['label'] ];
+			$colors = $btn_options_solid->merge( $btn_options_outline );
+
+			$colors = $colors->mapWithKeys( function( $item ) {
+				return [ $item['class'] => $item['label'] ];
 			});
 
-			$btn_options = $btn_options_solid->merge( $btn_options_outline )->prepend( 'Default', 'default' )->all();
+			$btn_options = $colors->prepend( 'Default', 'default' )->all();
 
 			$section->add_control(
 				'button_type',

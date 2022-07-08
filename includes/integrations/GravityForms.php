@@ -4,7 +4,7 @@
  * Gravity Forms Integration
  *
  * @package   RWP\/includes/integrations/GravityForms.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -37,7 +37,13 @@ class GravityForms extends Singleton {
 
 		add_filter( 'gform_disable_form_theme_css', '__return_true' );
 		add_action( 'gform_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
+<<<<<<< HEAD
 		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_gravity_styles' ) );
+=======
+		if ( ! class_exists( 'Gravity_Forms\Gravity_Forms_RECAPTCHA\GF_RECAPTCHA' ) ) {
+			rwp_get_dependency_file( 'recaptcha.php', 'externals/gravityforms/recaptcha', true, true );
+		}
+>>>>>>> release/v0.9.0
 
 		rwp_add_filters(array(
 			'gform_preview_styles',
@@ -167,7 +173,7 @@ class GravityForms extends Singleton {
 			 * Provides a filter for all gravity form buttons. Should return an
 			 * updated Button object.
 			 *
-			 * @since 1.0.0
+			 * @since 0.9.0
 			 *
 			 * @param Button  $button  The button object
 			 * @param array   $form    Contains all the properties of the current

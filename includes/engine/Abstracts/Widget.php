@@ -4,7 +4,7 @@
  *
  * @link      https://github.com/WPBP/Widgets-Helper
  * @since     0.2.0
- * @version   1.0.12
+ * @version   0.9.02
  * @author    Matt Varone & riesurya & Mte90
  * ========================================================================== */
 

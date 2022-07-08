@@ -3,7 +3,7 @@
  * Helpers for the WordPress object cache and transients.
  *
  * @link      https://github.com/stevegrunwell/wp-cache-remember
- * @since     1.0.1
+ * @since     0.9.0
  * @author    Steve Grunwell <https://stevegrunwell.com>
  * @copyright Steve Grunwell
  * @license   GPL-2.0+

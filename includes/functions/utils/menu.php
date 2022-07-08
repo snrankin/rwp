@@ -4,7 +4,7 @@
  * menu
  *
  * @package   RWP\/includes/functions/utils/menu.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -109,6 +109,13 @@ function rwp_menu_args( $args = [] ) {
     // Merge the menu classes from the ACF fields with classes set in the $args variable
     $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
 
+<<<<<<< HEAD
+=======
+	if ( data_get( $custom_args, 'dropdown_hover', false ) ) {
+		$menu_class[] = 'dropdown-hover-all';
+	}
+
+>>>>>>> release/v0.9.0
 	$direction = data_get( $custom_args, 'direction', 'vertical' );
 	$type = data_get( $custom_args, 'type', 'nav' );
 
@@ -238,16 +245,20 @@ function rwp_menu_args( $args = [] ) {
  * @return Html
  */
 function rwp_navbar( $nav, $custom_args, $menu ) {
-
+	rwp_log( $nav, $custom_args, $menu );
     if ( is_string( $menu ) ) {
         $menu = rwp_get_menu( $menu );
     }
 
     $theme           = data_get( $custom_args, 'theme' );
-    $order           = data_get( $custom_args, 'navbar.order', rwp_collection( array( 'navbar', 'toggle' ) ) );
+	/**
+	 * @var Collection $order
+	 */
+    $order           = rwp_collection( data_get( $custom_args, 'navbar.order', array( 'navbar', 'toggle' ) ) );
     $in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
     $breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
     $in_grid         = data_get( $custom_args, 'navbar.in_grid', false );
+
 	$item_styles          = array();
 	$item_acf_styles     = data_get( $custom_args, 'item_options.styles', rwp_collection() );
 
@@ -277,8 +288,15 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     $nav->add_class( array( 'collapse', 'navbar-collapse' ) );
 	$nav->set_tag( 'div' );
 
+	$column_count = $order->count();
+
+	$mobile_layout = 'grid-columns-' . ( $column_count - 1 );
+	$desktop_layout = '';
+
     if ( ! empty( $breakpoint ) ) {
         $navbar->add_class( 'navbar-expand-' . $breakpoint );
+
+		$desktop_layout = "grid-columns-$breakpoint-$column_count";
     }
 
     if ( ! empty( $theme ) ) {
@@ -292,6 +310,8 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		'atts' => array(
 			'class' => array(
 				'navbar-wrapper-inner',
+				$mobile_layout,
+				$desktop_layout,
 			),
 		),
 	) );

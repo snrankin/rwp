@@ -5,8 +5,8 @@
  *
  * @package    WordPress
  * @subpackage RIESTERRX
- * @since      RIESTERRX 1.0.0
- * ========================================================================== 
+ * @since      RIESTERRX 0.9.0
+ * ==========================================================================
  */
 
 
@@ -21,7 +21,7 @@
  * @return bool|mixed \WP_REST_Response data or false
  */
 
-function rwp_get_rest_data( $args = array(), $post_type = 'post', $single = false, $data = true ) { 
+function rwp_get_rest_data( $args = array(), $post_type = 'post', $single = false, $data = true ) {
     $request = '';
     $endpoint = rwp_get_rest_endpoint( $post_type );
     if ( is_array( $args ) ) {
@@ -60,7 +60,7 @@ function rwp_get_rest_data( $args = array(), $post_type = 'post', $single = fals
  * @return mixed
  */
 
-function rwp_get_rest_endpoint( $post_type = 'post' ) { 
+function rwp_get_rest_endpoint( $post_type = 'post' ) {
     $endpoint = false;
 
     global $wp_post_types;

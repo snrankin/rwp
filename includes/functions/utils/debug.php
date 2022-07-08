@@ -3,7 +3,7 @@
  * debug
  *
  * @package   RWP\functions\debug
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -26,7 +26,11 @@ use RWP\Vendor\Symfony\Component\VarDumper\Caster\{LinkStub, ClassStub, ImgStub,
  *
  * @return VarDumper
  */
+<<<<<<< HEAD
 function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
+=======
+function rwp_dump( $var, $theme = 'dark' ) {
+>>>>>>> release/v0.9.0
 	$output = '';
 	$cloner = new VarCloner();
 	$dumper = new HtmlDumper( null, null, AbstractDumper::DUMP_LIGHT_ARRAY );
@@ -37,6 +41,7 @@ function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
 
 	$dumper->setTheme( $theme );
 
+<<<<<<< HEAD
 	// if ( $add_trace ) {
 	// 	$prefix = $dumper->prefix;
 	// 	$suffix = $dumper->suffix;
@@ -58,6 +63,8 @@ function rwp_dump( $var, $theme = 'dark', $add_trace = true ) {
 	// 	'maxDepth' => -1,
 	// ] );
 
+=======
+>>>>>>> release/v0.9.0
 	$output = $dumper->dump( $cloner->cloneVar( $var ), true, [
 		'maxDepth' => -1,
 	] );
@@ -107,14 +114,26 @@ function rwp_caster( $object, $array, $stub, $is_nested, $filter = 0 ) {
  *
  * Only visible to admins if WP_DEBUG is on
  *
- * @param  mixed  $var
- * @param  bool   $die
- * @param  string $function
+
  * @return void
  */
+<<<<<<< HEAD
 function rwp_log( $var, $die = false, $function = 'rwp_dump' ) {
 	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
 		QM::instance()->log( $var, $die, $function );
+=======
+function rwp_log() {
+
+	if ( class_exists( 'QM' ) && is_plugin_active( 'query-monitor/query-monitor.php' ) ) {
+		$vars = func_get_args();
+		foreach ( $vars as $var ) {
+			/**
+			 * @var RWP\Integrations\QM $qm
+			 */
+			$qm = QM::instance();
+			$qm->log( $var, false, 'rwp_dump' );
+		}
+>>>>>>> release/v0.9.0
 	}
 
 }

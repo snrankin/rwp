@@ -5,7 +5,7 @@
  * Moves all scripts to wp_footer action
  *
  * @package   RWP\/includes/frontend/Extras/JS_Footer.php
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -33,7 +33,7 @@ class JS_Footer extends Singleton {
 	/**
 	 * Moves all scripts to wp_footer action
 	 *
-	 * @since 1.0.0
+	 * @since 0.9.0
 	 * @return void
 	 */
 	public function js_to_footer() {

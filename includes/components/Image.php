@@ -5,7 +5,7 @@
  *
  * @package   RWP\Components
  *
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -89,6 +89,7 @@ class Image extends Element {
 	);
 
 	/**
+<<<<<<< HEAD
 	 * @var string|array|Element $link Image Link options
 	 */
 	public $link = array(
@@ -100,12 +101,21 @@ class Image extends Element {
 			),
 		),
 	);
+=======
+	 * @var string $link Image Link options
+	 */
+	public $link = '';
+>>>>>>> release/v0.9.0
 
 	/**
 	 * @var string|array|Element $inner Inner wrapper options
 	 */
 	public $inner = array(
+<<<<<<< HEAD
 		'tag' => 'picture',
+=======
+		'tag' => 'span',
+>>>>>>> release/v0.9.0
 		'order' => array( 'sources', 'image' ),
 		'atts' => array(
 			'class' => array(
@@ -182,7 +192,7 @@ class Image extends Element {
 			'noscript'  => rwp_get_option( 'modules.lazysizes.noscript', false ),
 			'blurup'    => rwp_get_option( 'modules.lazysizes.blurup', false ),
 			'fadein'    => rwp_get_option( 'modules.lazysizes.fadein', false ),
-			'parentfit' => rwp_get_option( 'modules.lazysizes.parentfit', false ),
+			'custommedia' => rwp_get_option( 'modules.lazysizes.custommedia', false ),
 			'artdirect' => rwp_get_option( 'modules.lazysizes.artdirect', false ),
 		);
 
@@ -223,6 +233,16 @@ class Image extends Element {
 				$size = data_get( $args, 'size', $size );
 				$html = data_get( $args, 'html', $html );
 				$id   = data_get( $args, 'id', $id );
+<<<<<<< HEAD
+=======
+				if ( ! empty( $src ) && empty( $id ) ) {
+					$id   = rwp_image_id( $src );
+				}
+
+				if ( ! empty( $id ) && empty( $src ) ) {
+					$src   = rwp_extract_img_src( $id, $size );
+				}
+>>>>>>> release/v0.9.0
 			}
 		} else {
 			if ( ! is_array( $args ) ) {
@@ -251,10 +271,17 @@ class Image extends Element {
 		if ( rwp_array_has( 'link', $args ) ) {
 			$link = data_get( $args, 'link' );
 			if ( filled( $link ) ) {
+<<<<<<< HEAD
 				$this->set_order( 'link', 'first' );
 				$this->remove_order_item( 'inner' );
 				if ( is_string( $link ) && rwp_is_url( $link ) ) {
 					$args = data_set( $args, 'link.atts.href', $link );
+=======
+
+				if ( is_string( $link ) && rwp_is_url( $link ) ) {
+					$args = data_set( $args, 'inner.tag', 'a' );
+					$args = data_set( $args, 'inner.atts.href', $link );
+>>>>>>> release/v0.9.0
 				}
 			}
 		}
@@ -277,7 +304,7 @@ class Image extends Element {
 			'noscript'  => rwp_get_option( 'modules.lazysizes.noscript', false ),
 			'blurup'    => rwp_get_option( 'modules.lazysizes.blurup', false ),
 			'fadein'    => rwp_get_option( 'modules.lazysizes.fadein', false ),
-			'parentfit' => rwp_get_option( 'modules.lazysizes.parentfit', false ),
+			'custommedia' => rwp_get_option( 'modules.lazysizes.custommedia', false ),
 			'artdirect' => rwp_get_option( 'modules.lazysizes.artdirect', false ),
 		);
 
@@ -308,15 +335,28 @@ class Image extends Element {
 		if ( rwp_is_class( $image, __NAMESPACE__ . '\\Image' ) ) {
 			$image = $image->image;
 
+<<<<<<< HEAD
 			// $sources = rwp_image_sources( $element->id, $element->size );
 
 			// $element->inner->set_content( $sources, 'sources' );
+=======
+			if ( data_get( $lazysizes, 'custommedia', false ) ) {
+				$sources = rwp_image_sources( $element->id, $element->size );
+
+				$element->inner->set_content( $sources, 'sources' );
+				$image->remove_attr( 'data-srcset' );
+
+			}
+>>>>>>> release/v0.9.0
 
 			$image->set_attr( 'data-src', $placeholder );
 
 			$image->set_attr( 'data-parent', '.media-content' );
 			$image->set_attr( 'data-parent-fit', 'cover' );
+<<<<<<< HEAD
 			//$image->remove_attr( 'data-srcset' );
+=======
+>>>>>>> release/v0.9.0
 
 		}
 
@@ -417,8 +457,13 @@ class Image extends Element {
 
 		$this->inner->set_content( $this->image, 'image' );
 
+<<<<<<< HEAD
 		if ( $this->link->has_attr( 'href' ) ) {
 			$this->link->set_content( $this->inner, 'inner' );
+=======
+		if ( $this->inner->has_attr( 'href' ) ) {
+			$this->inner->set_tag( 'a' );
+>>>>>>> release/v0.9.0
 		}
 	}
 }

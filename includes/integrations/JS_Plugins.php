@@ -6,7 +6,7 @@
  * Registers/enqueues various javascript plugins included with the plugin
  *
  * @package   RWP\Internals\JS_Plugins
- * @since     1.0.1
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+

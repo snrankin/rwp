@@ -3,7 +3,7 @@
  * NavItem
  *
  * @package   RWP\/includes/components/NavItem.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -16,7 +16,7 @@ class NavItem extends Element {
 	 */
 	public $tag = 'li';
 
-	public $order = array( 'link', 'toggle', 'dropdown' );
+	public $order = array( 'link' );
 
 	/**
 	 * @var array $atts
@@ -26,7 +26,7 @@ class NavItem extends Element {
         'itemtype'  => 'https://www.schema.org/SiteNavigationElement',
         'role'      => 'none',
         'class'     => array(
-            'nav-item',
+            'menu-item',
 		),
 	);
 
@@ -46,15 +46,14 @@ class NavItem extends Element {
 		'tag' => 'a',
 		'atts' => array(
 			'class'     => array(
-				'nav-link',
+				'menu-link',
 			),
 		),
 	);
 
 	/**
-	 * @var mixed $toggle
+	 * @var (string|(string|string[][])[]|string[][])[]|false|Button
 	 */
-
 	public $toggle = array(
 		'tag' => 'button',
 		'text' => array(
@@ -67,10 +66,16 @@ class NavItem extends Element {
 		),
 		'atts' => array(
 			'class'     => array(
-				'nav-toggle',
+				'menu-toggle',
 			),
 		),
 	);
+
+	/**
+	 * @var string The type of navigation. One of `nav|navbar|tabs|pills|indented|flush`
+	 * @link https://getbootstrap.com/docs/5.0/components/navs-tabs/#base-nav
+	 */
+	public $type = 'indented';
 
 	/**
      * @var int $depth The depth or level of the menu-item
@@ -78,9 +83,19 @@ class NavItem extends Element {
     public $depth = 0;
 
 	/**
-     * @var false|string $toggle_type The toggle type or false
-     */
-    public $toggle_type = 'collapse';
+	 * @var string|false The type of dropdown. Can be one of `collapse|dropdown|tabs`
+	 */
+	public $toggle_type = false;
+
+	/**
+	 * @var string $parent The subnav parent id or the menu id if `$depth == 0`
+	 */
+	public $parent;
+
+	/**
+	 * @var string $parent_type The parent type toggle
+	 */
+	public $parent_type = false;
 
 	/**
      * @var bool $has_link Does this item have link
@@ -98,6 +113,7 @@ class NavItem extends Element {
     public $active = false;
 
 	/**
+<<<<<<< HEAD
 	 * @var string $parent The subnav parent id or the menu id if `$depth == 0`
 	 */
 	public $parent;
@@ -108,6 +124,8 @@ class NavItem extends Element {
 	public $parent_type = 'collapse';
 
 	/**
+=======
+>>>>>>> release/v0.9.0
      * @var bool $is_parent Is item a parent item?
      */
     public $is_parent = false;
@@ -149,9 +167,9 @@ class NavItem extends Element {
 			}
 		}
 
-		if ( false === $this->is_parent ) {
-			$this->remove_order_item( 'toggle' );
-			$this->remove_order_item( 'dropdown' );
+		if ( $this->is_parent ) {
+			$this->add_order_item( 'toggle' );
+			$this->add_order_item( 'dropdown' );
 		}
 	}
 
@@ -162,32 +180,52 @@ class NavItem extends Element {
 	 */
 
 	public function setup_html() {
+<<<<<<< HEAD
 		if ( 'dropdown' === $this->parent_type && $this->depth > 0 ) {
 			$this->remove_class( 'nav-item' );
 			$this->link->add_class( 'dropdown-item' );
 		}
+=======
+
+>>>>>>> release/v0.9.0
 		$this->setup_link();
 		$this->setup_toggle();
 	}
 
 	public function setup_toggle() {
+<<<<<<< HEAD
 		if ( $this->is_parent && false !== $this->toggle_type && filled( $this->toggle ) ) {
+=======
+
+		if ( $this->is_parent && false !== $this->toggle_type && filled( $this->toggle ) ) {
+			$this->set( 'toggle.toggle', $this->toggle_type );
+>>>>>>> release/v0.9.0
 			switch ( $this->toggle_type ) {
 				case 'dropdown':
 					$this->add_class( 'dropdown' );
 					if ( $this->depth >= 1 ) {
 						$this->add_class( 'dropend' );
 					}
+<<<<<<< HEAD
 				    break;
+=======
+					break;
+>>>>>>> release/v0.9.0
 				case 'tab':
-				case 'pill':
-				    break;
-				case 'collapse':
-				    break;
-			}
-			$this->set( 'toggle.toggle', $this->toggle_type );
+					$this->add_class( 'nav-item' );
+					$link = $this->link;
+					$link = $link->mergeArgs( $this->toggle )->all();
 
-			$this->toggle = new Button( $this->toggle );
+						$this->link = new Button( $link );
+					break;
+				case 'pill':
+					$this->add_class( 'nav-item' );
+					break;
+				case 'collapse':
+					$this->add_class( 'nav-item' );
+					break;
+			}
+
 			if ( ! array_search( 'toggle', $this->order ) ) {
 				$this->set_order( 'toggle', 2 );
 			}
@@ -214,10 +252,6 @@ class NavItem extends Element {
 					if ( '#' === $url ) { // if it is not the pound sign on it's own
 						$this->remove_nav_atts();
 
-					} else { // else make it a button
-						$link = $this->link->toArray();
-
-						$this->link = new Button( $link );
 					}
 				}
 			} else {
@@ -228,23 +262,23 @@ class NavItem extends Element {
 		}
 	}
 
-	/**
-	 * Remove attributes specifically for navigation menu items
-	 * @return void
-	 */
+		/**
+		 * Remove attributes specifically for navigation menu items
+		 * @return void
+		 */
 
 	public function remove_nav_atts() {
-        $this->remove_attr( 'itemtype' );
-        $this->remove_attr( 'itemscope' );
-        $this->remove_attr( 'role' );
-        $this->link->remove_attr( 'href' );
-        $this->link->remove_attr( 'target' );
-        $this->link->remove_attr( 'rel' );
-        $this->link->remove_attr( 'title' );
-        $this->link->remove_attr( 'role' );
+		$this->remove_attr( 'itemtype' );
+		$this->remove_attr( 'itemscope' );
+		$this->remove_attr( 'role' );
+		$this->link->remove_attr( 'href' );
+		$this->link->remove_attr( 'target' );
+		$this->link->remove_attr( 'rel' );
+		$this->link->remove_attr( 'title' );
+		$this->link->remove_attr( 'role' );
 		if ( 'a' === $this->link->tag ) {
 			$this->link->set( 'tag', 'span' );
 		}
 
-    }
+	}
 }

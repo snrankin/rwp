@@ -3,7 +3,7 @@
  * Element
  *
  * @package   RWP\/includes/components/Element.php
- * @since     1.0.0
+ * @since     0.9.0
  * @author    RIESTER <wordpress@riester.com>
  * @copyright 2020 - 2021 RIESTER Advertising Agency
  * @license   GPL-2.0+
@@ -23,7 +23,9 @@ use RWP\Vendor\Exceptions\Data\TypeException;
 use RWP\Components\Collection;
 use RWP\Components\Str;
 
-class Element {
+class Element implements \ArrayAccess {
+
+	use \RWP\Engine\Traits\Helpers;
 
 	/**
 	 * @var string $tag The html element tag
@@ -149,6 +151,10 @@ class Element {
 		return $args;
 	}
 
+	public function get_args() {
+		return get_object_vars( $this );
+	}
+
 	/**
 	 * Merge arguments into the current object
 	 *
@@ -158,34 +164,39 @@ class Element {
 	 * @return void
 	 */
 	public function merge_args( $args, $overwrite = true ) {
-		$properties = get_object_vars( $this );
 
 		if ( is_string( $args ) ) {
 			$args = $this->create_from_string( $args );
 		}
 
-		if ( is_object( $args ) ) {
-			if ( $args instanceof Html ) {
-				$args = $args->__toString();
-				$args = $this->create_from_string( $args );
+		rwp_merge_data( $this, $args, $overwrite );
+	}
 
-			} elseif ( $args instanceof Element || $args instanceof Collection ) {
-				$args = rwp_object_to_array( $args );
+	/**
+	 * Check if a sub element exists and if it has content
+	 * @param mixed $key
+	 * @return true
+	 */
+	public function filled_element( $key = '' ) {
+		if ( ! empty( $key ) ) {
+			if ( $this->filled( $key ) ) {
+				if ( rwp_is_component( $this->$key ) ) {
+					$this->$key->build();
+					if ( $this->$key->has_content() ) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return true;
+				}
+			} else {
+				return true;
 			}
+		} else {
+			return $this->has_content();
 		}
 
-		if ( is_array( $args ) ) {
-
-			$properties = rwp_merge_args( $properties, $args );
-
-			if ( rwp_array_has( 'order', $args ) ) {
-				$properties['order'] = $args['order'];
-			}
-
-			foreach ( $properties as $key => $value ) {
-				$this->set( $key, $value, $overwrite );
-			}
-		}
 	}
 
 	/**
@@ -221,32 +232,54 @@ class Element {
 	 * Add a content item key to the elements order
 	 *
 	 * @param mixed $key
-	 * @param mixed|null $position
+	 * @param mixed|null $index
 	 *
 	 * @return void
 	 */
-	public function set_order( $key, $position = null ) {
+	public function set_order( $key, $index = null, $position = null ) {
 		$order = $this->order;
 
-		if ( blank( $position ) || 'last' === $position ) {
-			$order[] = $key;
-		} else if ( 'first' === $position ) {
-			array_unshift( $order, $key );
-		} else {
+		if ( ! blank( $index ) && ! blank( $position ) ) {
 
-			$current_order = array_search( $key, $order );
+			$current_index = array_search( $key, $order );
 
-			if ( false !== $current_order ) {
-				if ( $current_order !== $position ) {
+			$index = array_search( $index, $order );
+
+			if ( false !== $current_index && false !== $index ) {
+				if ( $current_index !== $index ) {
 					$order = rwp_array_remove( $order, $key );
+
+					if ( 'before' == $position ) {
+						$index--;
+					}
 					$order = array_merge(
-						array_slice( $order, 0, $position ),
-						$key,
-						array_slice( $order, $position )
+					array_slice( $order, 0, $index ),
+					$key,
+					array_slice( $order, $index )
 					);
 				}
 			} else {
-				rwp_array_insert( $order, $position, $key );
+				rwp_array_insert( $order, $index, $key );
+			}
+		} else {
+			if ( blank( $index ) || 'last' === $index ) {
+				$order[] = $key;
+			} else if ( 'first' === $index ) {
+				array_unshift( $order, $key );
+			} else {
+				$current_order = array_search( $key, $order );
+				if ( false !== $current_order ) {
+					if ( $current_order !== $index ) {
+						$order = rwp_array_remove( $order, $key );
+						$order = array_merge(
+						array_slice( $order, 0, $index ),
+						$key,
+						array_slice( $order, $index )
+						);
+					}
+				} else {
+					rwp_array_insert( $order, $index, $key );
+				}
 			}
 		}
 
@@ -349,22 +382,23 @@ class Element {
 		}
 
 		if ( is_object( $atts ) ) {
-			$args = rwp_object_to_array( $atts );
-
-			if ( rwp_array_has( 'atts', $args ) ) {
-				$atts = $args['atts'];
+			if ( $atts instanceof Html ) {
+				$atts = $atts->extractAll();
+				$this->set( $atts );
 			}
-		}
-
-		if ( $atts instanceof self ) {
-			$atts = $atts->get_atts();
+			if ( $atts instanceof Element ) {
+				$atts = $atts->get_atts();
+				$this->set( $atts );
+			}
 		}
 
 		$atts = rwp_merge_args( $defaults, $atts );
 
 		foreach ( $atts as $key => $value ) {
 			if ( 'class' === $key || 'style' === $key ) {
-				$this->set_attr( $key, $value, true ); // Always update the merged classes/styles
+				$this->add_class( $value ); // Always update the merged classes/styles
+			} elseif ( 'style' === $key ) {
+				$this->set_style( $value, null, true ); // Always update the merged classes/styles
 			} else {
 				$this->set_attr( $key, $value, $overwrite );
 			}
@@ -451,7 +485,7 @@ class Element {
 	 * @return void
 	 */
 
-	public function add_class( $value, $filter = true ) {
+	public function add_class( $value, $filter = false ) {
 		if ( empty( $value ) ) {
 			return;
 		}
@@ -547,8 +581,15 @@ class Element {
 	 * @return void
 	 */
 
-	public function set_style( $key, $value, $overwrite = false ) {
-		$this->set( "atts.style.$key", $value, $overwrite );
+	public function set_style( $key, $value = null, $overwrite = false ) {
+		if ( is_array( $key ) ) {
+			foreach ( $key as $property => $value ) {
+				$this->set( "atts.style.$property", $value, $overwrite );
+			}
+		} else {
+			$this->set( "atts.style.$key", $value, $overwrite );
+		}
+
 	}
 
 	/**
@@ -890,6 +931,8 @@ class Element {
 		}
 	}
 
+
+
 	/**
 	 * Make sure all sub elements specified in the order property are added to
 	 * the content property
@@ -914,7 +957,7 @@ class Element {
 				if ( is_object( $value ) && method_exists( $value, '__toString' ) ) {
 					$value = $value->__toString();
 				}
-				if ( is_string( $value ) ) {
+				if ( is_string( $value ) && ! empty( $value ) ) {
 					$target->set_content( $value, $key, true );
 				}
 			} else if ( is_array( $elements ) ) {
@@ -1055,6 +1098,7 @@ class Element {
 	}
 
 
+<<<<<<< HEAD
 
 	/**
 	 * Minify the html string
@@ -1090,51 +1134,42 @@ class Element {
 	public function has( $key ) {
 		return $this->exists( $key ) && filled( $this->get( $key ) );
 	}
+=======
+>>>>>>> release/v0.9.0
 
 	/**
-	 * Determine if the given key exists.
+	 * Minify the html string
 	 *
-	 * @param  string|string[]  $key
-	 *
-	 * @return bool
+	 * @param array $options Options passed to PrettyMin::__construct()
+	 * @return string
+	 * @throws Exception
+	 * @throws DOMException
 	 */
+<<<<<<< HEAD
 	public function exists( $key ) {
 		return \data_has( $this, $key );
+=======
+	public function minify( $options = array() ) {
+        $this->build();
+		$html = $this->html;
+
+		$html = rwp_html_page( $html );
+
+		$html->minify( $options );
+
+		$html = $html->getBody()->saveHTML();
+
+		$html = (string) preg_replace( array( "/\<body\>\n*/", "/\n*\<\/body\>/" ), '', $html );
+
+		return $html;
+>>>>>>> release/v0.9.0
 	}
 
 	/**
-	 * Get an attribute from the html instance.
-	 *
-	 * @param  string|string[]  $key
-	 * @param  mixed            $default
-	 *
-	 * @return mixed
-	 */
-	public function get( $key, $default = null ) {
-		return \data_get( $this, $key, $default );
-	}
-
-	/**
-	 * Set a property
-	 *
-	 * @param  string|string[]  $key        The key(s) to set
-	 * @param  mixed            $value      The value(s) to set
-	 * @param  bool             $overwrite  Should the existing value be
-	 *                                      overwritten?
-	 *
-	 * @return mixed
-	 */
-	public function set( $key, $value, $overwrite = true ) {
-		return \data_set( $this, $key, $value, $overwrite );
-	}
-
-	/**
-	 * Unset the value at the given key.
-	 *
-	 * @param  string|string[]  $key
-	 *
+	 * Set the methods
 	 * @return void
 	 */
+<<<<<<< HEAD
 	public function remove( $key ) {
 		\data_remove( $this, $key );
 	}
@@ -1143,6 +1178,8 @@ class Element {
 	 * Set the methods
 	 * @return void
 	 */
+=======
+>>>>>>> release/v0.9.0
     final public static function mapApiMethods() {
 
         $class = \get_called_class();
@@ -1207,6 +1244,7 @@ class Element {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Dynamically retrieve the value of an attribute.
 	 *
 	 * @param  string|string[]  $key
@@ -1251,6 +1289,8 @@ class Element {
 	}
 
 	/**
+=======
+>>>>>>> release/v0.9.0
 	 * Output the html string
 	 *
 	 * @return string

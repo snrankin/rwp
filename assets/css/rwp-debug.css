@@ -67,7 +67,6 @@
 }
 #query-monitor-main.qm-theme-rwp[data-theme=light] pre.sf-dump .sf-dump-ns{
     -webkit-user-select:none;
-        -ms-user-select:none;
             user-select:none;
 }
 #query-monitor-main.qm-theme-rwp[data-theme=dark] pre.sf-dump{
@@ -136,7 +135,6 @@
 }
 #query-monitor-main.qm-theme-rwp[data-theme=dark] pre.sf-dump .sf-dump-ns{
     -webkit-user-select:none;
-        -ms-user-select:none;
             user-select:none;
 }
 #query-monitor-main.qm-theme-rwp .qm-boxed{
@@ -247,7 +245,6 @@ pre.sf-dump[data-theme=light] .sf-dump-ellipsis-note{
 }
 pre.sf-dump[data-theme=light] .sf-dump-ns{
     -webkit-user-select:none;
-        -ms-user-select:none;
             user-select:none;
 }
 pre.sf-dump[data-theme=dark]{
@@ -316,7 +313,6 @@ pre.sf-dump[data-theme=dark] .sf-dump-ellipsis-note{
 }
 pre.sf-dump[data-theme=dark] .sf-dump-ns{
     -webkit-user-select:none;
-        -ms-user-select:none;
             user-select:none;
 }
 pre.sf-dump:after{
