@@ -15,6 +15,7 @@ use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
+use RWP\Vendor\PUC\Factory;
 class Plugin extends Singleton implements Component {
 
 	use Traits\Assets;
@@ -101,6 +102,12 @@ class Plugin extends Singleton implements Component {
 	 */
 	protected $paths = array();
 
+	/**
+	 * @var Factory Instance of the plugin update checker
+	 */
+
+	private $update_checker;
+
 
     /**
      *  @inheritdoc
@@ -147,6 +154,20 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
 	public static function init( $plugin ) {
+
+		$update_checker = Factory::buildUpdateChecker(
+		'https://bitbucket.org/riester/rwp',
+		RWP_PLUGIN_FILE,
+		'rwp',
+		);
+
+		$update_checker->setAuthentication(array(
+			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+		));
+
+		$plugin->set( 'update_checker', $update_checker );
+
         // Activate plugin when new blog is added
 		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );
         \register_activation_hook( $plugin->get_plugin_file(), array( $plugin, 'activate' ) );
@@ -375,6 +396,19 @@ class Plugin extends Singleton implements Component {
 
         return $this->version;
     }
+
+	public static function update_checker() {
+		$update_checker = Factory::buildUpdateChecker(
+		'https://bitbucket.org/riester/rwp',
+		RWP_PLUGIN_FILE,
+		'rwp',
+		);
+
+		$update_checker->setAuthentication(array(
+			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+		));
+	}
 
 	/**
 	 * Upgrade if necessary
