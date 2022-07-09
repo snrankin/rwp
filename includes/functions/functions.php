@@ -25,21 +25,6 @@ function rwp() {
 
 }
 
-function rwp_check_for_updates() {
-	$update_checker = Factory::buildUpdateChecker(
-	'https://bitbucket.org/riester/rwp',
-	RWP_PLUGIN_FILE,
-	'rwp'
-	);
-
-	$update_checker->setAuthentication(array(
-		'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
-		'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-	));
-
-}
-
-
 /**
  * Get the settings of the plugin in a filterable way
  *

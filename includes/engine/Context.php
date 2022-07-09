@@ -19,11 +19,11 @@ namespace RWP\Engine;
 class Context implements \JsonSerializable {
 
 	public const AJAX = 'ajax';
-	public const BACKOFFICE = 'backoffice';
+	public const BACKEND = 'backend';
 	public const CLI = 'wpcli';
 	public const CORE = 'core';
 	public const CRON = 'cron';
-	public const FRONTOFFICE = 'frontoffice';
+	public const FRONTEND = 'frontend';
 	public const ELEMENTOR = 'elementor';
 	public const INSTALLING = 'installing';
 	public const LOGIN = 'login';
@@ -33,12 +33,12 @@ class Context implements \JsonSerializable {
 
 	private const ALL = [
 		self::AJAX,
-		self::BACKOFFICE,
+		self::BACKEND,
 		self::CLI,
 		self::CORE,
 		self::CRON,
 		self::ELEMENTOR,
-		self::FRONTOFFICE,
+		self::FRONTEND,
 		self::INSTALLING,
 		self::LOGIN,
 		self::REST,
@@ -97,12 +97,12 @@ class Context implements \JsonSerializable {
         $instance = new self(
 		[
 			self::AJAX => $is_ajax,
-			self::BACKOFFICE => $is_admin,
+			self::BACKEND => $is_admin,
 			self::CLI => $is_cli,
 			self::CORE => ( $is_core || $xml_rpc ) && ( ! $installing || $is_wp_activate ),
 			self::CRON => $is_cron,
 			self::ELEMENTOR => $is_elementor,
-			self::FRONTOFFICE => $is_front,
+			self::FRONTEND => $is_front,
 			self::INSTALLING => $installing && ! $is_wp_activate,
 			self::LOGIN => $is_login,
 			self::REST => $is_rest,
@@ -247,14 +247,14 @@ class Context implements \JsonSerializable {
      * @return bool
      */
     public function is_frontend(): bool {
-        return $this->is( self::FRONTOFFICE );
+        return $this->is( self::FRONTEND );
     }
 
     /**
      * @return bool
      */
     public function is_backend(): bool {
-        return $this->is( self::BACKOFFICE );
+        return $this->is( self::BACKEND );
     }
 
 	/**
@@ -347,10 +347,10 @@ class Context implements \JsonSerializable {
                 $this->reset_and_force( self::WP_ACTIVATE );
             },
             'template_redirect' => function (): void {
-                $this->reset_and_force( self::FRONTOFFICE );
+                $this->reset_and_force( self::FRONTEND );
             },
             'current_screen' => function ( \WP_Screen $screen ): void {
-                $screen->in_admin() && $this->reset_and_force( self::BACKOFFICE );
+                $screen->in_admin() && $this->reset_and_force( self::BACKEND );
             },
         ];
 
