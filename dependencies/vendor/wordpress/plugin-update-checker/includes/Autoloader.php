@@ -18,7 +18,7 @@ class Autoloader
                 $this->libraryDir = \realpath($this->libraryDir);
             }
             $this->libraryDir = $this->libraryDir . '/';
-            $this->staticMap = array('PucReadmeParser' => 'PucReadmeParser.php', 'Parsedown' => 'Parsedown.php', 'Puc_v4_Factory' => 'Puc/v4/Factory.php');
+            $this->staticMap = array('PucReadmeParser' => 'PucReadmeParser.php', 'Parsedown' => 'Parsedown.php', 'Factory.php');
             \spl_autoload_register(array($this, 'autoload'));
         }
         /**

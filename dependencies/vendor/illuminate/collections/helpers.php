@@ -27,7 +27,7 @@ if (!\function_exists('RWP\\Vendor\\data_fill')) {
      */
     function data_fill(&$target, $key, $value)
     {
-        data_set($target, $key, $value, \false);
+        return data_set($target, $key, $value, \false);
     }
 }
 if (!\function_exists('RWP\\Vendor\\data_get')) {

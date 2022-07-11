@@ -156,15 +156,10 @@ class Plugin extends Singleton implements Component {
 	public static function init( $plugin ) {
 
 		// $update_checker = Factory::buildUpdateChecker(
-		// 'https://bitbucket.org/riester/rwp',
+		// 'http://digital.riester.com/plugin/plugin.json',
 		// RWP_PLUGIN_FILE,
 		// 'rwp',
 		// );
-
-		// $update_checker->setAuthentication(array(
-		// 	'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
-		// 	'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-		// ));
 
 		// $plugin->set( 'update_checker', $update_checker );
 
@@ -396,19 +391,6 @@ class Plugin extends Singleton implements Component {
 
         return $this->version;
     }
-
-	public static function update_checker() {
-		$update_checker = Factory::buildUpdateChecker(
-		'https://bitbucket.org/riester/rwp',
-		RWP_PLUGIN_FILE,
-		'rwp',
-		);
-
-		$update_checker->setAuthentication(array(
-			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
-			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-		));
-	}
 
 	/**
 	 * Upgrade if necessary

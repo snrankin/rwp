@@ -40,17 +40,17 @@
         "node": ">=14"
     },
     "files": [
-        "assets/",
-        "config/",
-        "languages/",
-        "includes/",
+        "assets",
+        "config",
+        "languages",
+        "dependencies",
+        "includes",
         "vendor/autoload.php",
-        "vendor/composer/",
+        "vendor/composer",
         "config.json",
         "readme.txt",
         "rwp.php",
-        "uninstall.php",
-        "package.json"
+        "uninstall.php"
     ],
     "browserslist": "> 0.25%, not dead",
     "devDependencies": {

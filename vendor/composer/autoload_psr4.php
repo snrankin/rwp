@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'VariableAnalysis\\' => array($vendorDir . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis'),
     'RWP\\Internals\\' => array($baseDir . '/includes/internals'),
     'RWP\\Integrations\\' => array($baseDir . '/includes/integrations'),
     'RWP\\Frontend\\' => array($baseDir . '/includes/frontend'),
@@ -13,4 +14,10 @@ return array(
     'RWP\\Components\\' => array($baseDir . '/includes/components'),
     'RWP\\Backend\\' => array($baseDir . '/includes/backend'),
     'RWP\\Assets\\' => array($baseDir . '/includes/assets'),
+    'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
+    'Ergebnis\\Json\\SchemaValidator\\' => array($vendorDir . '/ergebnis/json-schema-validator/src'),
+    'Ergebnis\\Json\\Printer\\' => array($vendorDir . '/ergebnis/json-printer/src'),
+    'Ergebnis\\Json\\Normalizer\\' => array($vendorDir . '/ergebnis/json-normalizer/src'),
+    'Ergebnis\\Composer\\Normalize\\' => array($vendorDir . '/ergebnis/composer-normalize/src'),
+    'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => array($vendorDir . '/dealerdirect/phpcodesniffer-composer-installer/src'),
 );
