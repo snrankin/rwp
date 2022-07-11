@@ -15,7 +15,7 @@ use RWP\Engine\Interfaces\Component;
 use RWP\Engine\Abstracts\Singleton;
 use RWP\Components\Collection;
 use RWP\Components\Str;
-use RWP\Vendor\PUC\Factory;
+use RWP\Vendor\PUC\v4\Factory;
 class Plugin extends Singleton implements Component {
 
 	use Traits\Assets;
@@ -155,13 +155,17 @@ class Plugin extends Singleton implements Component {
 	 */
 	public static function init( $plugin ) {
 
-		// $update_checker = Factory::buildUpdateChecker(
-		// 'http://digital.riester.com/plugin/plugin.json',
-		// RWP_PLUGIN_FILE,
-		// 'rwp',
-		// );
+		$bitbucket = new \RWP\Vendor\PUC\v4p11\Vcs\BitBucket('https://bitbucket.org/riester/rwp', array(
+			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+		));
 
-		// $plugin->set( 'update_checker', $update_checker );
+		$update_checker = new \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker($bitbucket,
+		RWP_PLUGIN_FILE,
+		'rwp',
+		);
+
+		$plugin->set( 'update_checker', $update_checker );
 
         // Activate plugin when new blog is added
 		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );

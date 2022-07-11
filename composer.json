@@ -72,7 +72,7 @@
             "@composer dump-autoload -o -a --no-dev"
         ],
         "dump-vendor": [
-            "@composer dump-autoload --working-dir includes/dependencies -o --no-dev"
+            "@composer dump-autoload --working-dir dependencies -o --no-dev"
         ],
         "grum": [
             "grum git:pre-commit"

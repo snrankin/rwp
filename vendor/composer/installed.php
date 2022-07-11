@@ -3,7 +3,7 @@
         'name' => 'rwp/plugin',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => '40972a01566ddb0914bfbd40db9e00ad3fe09e39',
+        'reference' => '0719d9f0868e9083218a1c90016f0fccc50fab5c',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -121,7 +121,7 @@
         'rwp/plugin' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => '40972a01566ddb0914bfbd40db9e00ad3fe09e39',
+            'reference' => '0719d9f0868e9083218a1c90016f0fccc50fab5c',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
