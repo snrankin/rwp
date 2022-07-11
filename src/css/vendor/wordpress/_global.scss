@@ -8,10 +8,29 @@
 
 body.rwp {
 	&:not(.wp-admin) {
-		.quicklinks {
+		#wpadminbar {
+			max-width: 100vw;
+			overflow-x: hidden;
 			display: flex;
-			justify-content: space-between;
+
+			.quicklinks {
+				display: flex;
+				justify-content: space-between;
+
+				> ul {
+					display: flex;
+				}
+
+				#wp-admin-bar-top-secondary {
+					margin-left: auto;
+				}
+			}
+
+			#wp-admin-bar-edit > .ab-item {
+				@include visually-hidden;
+			}
 		}
+
 		#wp-admin-bar-my-account {
 			@media screen and (max-width: 600px) {
 				height: 46px;
@@ -21,7 +40,7 @@ body.rwp {
 }
 
 .screen-reader-text {
-	@include visually-hidden();
+	@include visually-hidden;
 }
 
 .entry-content img {

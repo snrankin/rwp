@@ -41,14 +41,15 @@ $col-spacing-y: $grid-gutter-width;
 		@include rfs($value, cssvar(gutter-y-#{$number}));
 	}
 
+	@include rfs($value, cssvar(gutter-y-#{$number}));
+
 	@each $color, $value in $theme-colors {
 		--#{$variable-prefix}#{$color}: #{$value};
 		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
 	}
 
-	@each $color, $value in $theme-colors-rgb {
-		--#{$variable-prefix}#{$color}-rgb: #{$value};
-	}
+	--#{$variable-prefix}form-gutter-x: #{getcssvar(gutter-x-2)};
+	--#{$variable-prefix}form-gutter-y: #{getcssvar(gutter-y-2)};
 
 	@each $size, $value in $font-sizes {
 		@include rfs($value, #{cssvar(#{$size}-font-size)});

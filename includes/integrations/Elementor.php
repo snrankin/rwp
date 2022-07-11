@@ -62,9 +62,9 @@ class Elementor extends Singleton {
 			add_filter( 'elementor/image_size/get_attachment_image_html', array( $this, 'add_lazysizes' ), 10, 4 );
 		}
 
-		add_action('elementor/preview/enqueue_styles', function() {
-			wp_enqueue_style( 'gform_basic' );
-		});
+		// add_action('elementor/preview/enqueue_styles', function() {
+		// 	wp_enqueue_style( 'gform_basic' );
+		// });
 
 		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
@@ -358,12 +358,9 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
-				'default' => array(
-					'unit' => 'px',
-					'size' => 1,
-				),
+
 				'selectors' => [
-					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-gutter-{{SIZE}});',
 				],
 			]);
 
@@ -377,12 +374,8 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
-				'default' => array(
-					'unit' => 'px',
-					'size' => 1,
-				),
 				'selectors' => [
-					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-gutter-{{SIZE}});',
 				],
 			]);
 
@@ -590,8 +583,12 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
+				'default' => array(
+					'unit' => 'px',
+					'size' => 4,
+				),
 				'selectors' => [
-					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-x: var(--bs-spacer-{{SIZE}});',
+					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-x: var(--bs-gutter-{{SIZE}});',
 				],
 			]);
 
@@ -605,8 +602,12 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
+				'default' => array(
+					'unit' => 'px',
+					'size' => 4,
+				),
 				'selectors' => [
-					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-y: var(--bs-spacer-{{SIZE}});',
+					'{{WRAPPER}} > .elementor-container > .elementor-row' => '--gap-y: var(--bs-gutter-{{SIZE}});',
 				],
 			]);
 
