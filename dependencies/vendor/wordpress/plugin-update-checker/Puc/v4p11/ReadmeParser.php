@@ -222,10 +222,12 @@ namespace RWP\Vendor\PUC\v4p11;
             // A better parser than Markdown's for: backticks -> CODE
             if ($markdown) {
                 // Parse markdown.
-                if (!\class_exists('RWP\\Vendor\\PUC\\Parsedown\\Parsedown', \false)) {
-                    /** @noinspection PhpIncludeInspection */
-                    require_once \dirname(__FILE__) . '/Parsedown/Parsedown.php';
-                }
+                // if (!\class_exists('RWP\\Vendor\\PUC\\Parsedown\\Parsedown', \false)) {
+                //     /** @noinspection PhpIncludeInspection */
+                //     require_once \dirname(__FILE__) . '/Parsedown/Parsedown.php';
+                // }
+				$path = \dirname(__FILE__, 2) . '/Parsedown/Parsedown.php';
+				require_once $path;
                 $instance = \puc_parsedown();
                 $text = $instance->text($text);
             }

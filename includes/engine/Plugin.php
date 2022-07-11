@@ -155,15 +155,18 @@ class Plugin extends Singleton implements Component {
 	 */
 	public static function init( $plugin ) {
 
-		$bitbucket = new \RWP\Vendor\PUC\v4p11\Vcs\BitBucket('https://bitbucket.org/riester/rwp', array(
-			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
-			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-		));
-
-		$update_checker = new \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker($bitbucket,
+		/**
+		 * @var \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker $update_checker
+		 */
+		$update_checker = \RWP\Vendor\PUC\v4p11\Factory::buildUpdateChecker('https://bitbucket.org/riester/rwp',
 		RWP_PLUGIN_FILE,
 		'rwp',
 		);
+
+		$update_checker->setAuthentication(array(
+			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+		));
 
 		$plugin->set( 'update_checker', $update_checker );
 
