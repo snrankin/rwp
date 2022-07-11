@@ -1701,6 +1701,16 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@soda/friendly-errors-webpack-plugin@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.8.1.tgz#4d4fbb1108993aaa362116247c3d18188a2c6c85"
+  integrity sha512-h2ooWqP8XuFqTXT+NyAFbrArzfQA7R6HTezADrvD9Re8fxMLTPPniLdqVTdDaO0eIoLaAwKT+d6w+5GeTk7Vbg==
+  dependencies:
+    chalk "^3.0.0"
+    error-stack-parser "^2.0.6"
+    string-width "^4.2.3"
+    strip-ansi "^6.0.1"
+
 "@squoosh/lib@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@squoosh/lib/-/lib-0.4.0.tgz#31d18cb082c69e404589e2e281414d10f91e1668"

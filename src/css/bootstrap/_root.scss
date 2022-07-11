@@ -37,11 +37,12 @@ $col-spacing-y: $grid-gutter-width;
 		@include rfs($value, cssvar(gutter-x-#{$number}));
 	}
 
+	@include rfs($grid-gutter-width, cssvar(gutter-y));
+	@include rfs($grid-gutter-width, cssvar(gutter-x));
+
 	@each $number, $value in $vertical-gutters {
 		@include rfs($value, cssvar(gutter-y-#{$number}));
 	}
-
-	@include rfs($value, cssvar(gutter-y-#{$number}));
 
 	@each $color, $value in $theme-colors {
 		--#{$variable-prefix}#{$color}: #{$value};

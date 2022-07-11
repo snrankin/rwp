@@ -288,6 +288,8 @@ html{
     --bs-gutter-x-14:calc(var(--bs-gutter-x) * 3.5);
     --bs-gutter-x-15:calc(var(--bs-gutter-x) * 3.75);
     --bs-gutter-x-16:calc(var(--bs-gutter-x) * 4);
+    --bs-gutter-y:calc(1.275rem + 0.3vw);
+    --bs-gutter-x:calc(1.275rem + 0.3vw);
     --bs-gutter-y-0:0px;
     --bs-gutter-y-0:0rem;
     --bs-gutter-y-1:calc(var(--bs-gutter-y) * 0.25);
@@ -354,14 +356,8 @@ html{
     --bs-muted-contrast:#fff;
     --bs-border-color:#dee2e6;
     --bs-border-color-contrast:#000;
-    --bs-primary-rgb:13, 110, 253;
-    --bs-secondary-rgb:108, 117, 125;
-    --bs-success-rgb:25, 135, 84;
-    --bs-info-rgb:13, 202, 240;
-    --bs-warning-rgb:255, 193, 7;
-    --bs-danger-rgb:220, 53, 69;
-    --bs-light-rgb:248, 249, 250;
-    --bs-dark-rgb:33, 37, 41;
+    --bs-form-gutter-x:var(--bs-gutter-x-2);
+    --bs-form-gutter-y:var(--bs-gutter-y-2);
     --bs-1-font-size:calc(1.375rem + 1.5vw);
     --bs-2-font-size:calc(1.325rem + 0.9vw);
     --bs-3-font-size:calc(1.3rem + 0.6vw);
@@ -15727,6 +15723,12 @@ input{
         border-bottom:var(--bs-border-width) solid var(--bs-border-color);
     }}
 @media (min-width: 1200px){
+    html{
+        --bs-gutter-y:1.5rem;
+    }
+    html{
+        --bs-gutter-x:1.5rem;
+    }
     html{
         --bs-1-font-size:2.5rem;
     }

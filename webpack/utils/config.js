@@ -20,7 +20,7 @@ const magicImporter = require('node-sass-magic-importer');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
-const WebpackMessages = require('webpack-messages');
+const FriendlyErrorsPlugin = require('@soda/friendly-errors-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // ======================== Import Local Dependencies ======================= //
@@ -47,20 +47,22 @@ const folders = _.get(configFile, 'folders', {}),
 	serverUp = !isEmpty(argv.serve) ? true : false,
 	isHot = !isEmpty(argv.hot) ? true : false,
 	buildStats = {
-		preset: !isEmpty(argv.stats) ? argv.stats : 'normal',
+		preset: !isEmpty(argv.stats) ? argv.stats : 'errors-only',
 		colors: true,
 		excludeAssets: ['**/*.map'],
 		hash: false,
 		version: false,
 		timings: false,
 		children: false,
-		errors: true,
-		errorDetails: true,
+		errors: false,
+		errorDetails: false,
+		errorStack: false,
 		warnings: false,
 		chunks: false,
 		modules: false,
 		reasons: false,
 		source: false,
+		moduleTrace: false,
 		publicPath: false,
 	};
 function createConfig() {
@@ -394,13 +396,6 @@ let webpackConfig = {
 				test: /\.(sc|sa)ss$/,
 				use: [
 					...cssLoaders,
-					// {
-					// 	loader: 'resolve-url-loader',
-					// 	options: {
-					// 		root: filePaths.root,
-					// 		sourceMap: !isProduction,
-					// 	},
-					// },
 					{
 						loader: 'sass-loader',
 						options: {
@@ -521,16 +516,9 @@ const endingPlugins = [
 		seed: manifest,
 		removeKeyHash: true,
 	}),
+	new FriendlyErrorsPlugin(),
 ];
 
-if (argv.stats !== 'verbose') {
-	endingPlugins.push(
-		new WebpackMessages({
-			name: buildName,
-			logger: (str) => console.log('\n// -------------------------------------------------------------------------- //\n', ` >> ${str}`, '\n// -------------------------------------------------------------------------- //\n'), // eslint-disable-line
-		})
-	);
-}
 endingPlugins.push(new WebpackBuildNotifierPlugin(config.notify));
 
 if (!isEmpty(config.copy)) {
