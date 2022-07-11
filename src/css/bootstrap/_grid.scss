@@ -18,43 +18,11 @@
 }
 
 .section-wrapper {
-	width: 100%;
-
-	&.has-background {
-		position: relative;
-
-		+ .section-wrapper:not(.has-background) {
-			margin-top: getcssvar(gutter-y);
-		}
-	}
-
-	&:not(.has-background) {
-		+ .section-wrapper {
-			margin-top: getcssvar(gutter-y);
-		}
-	}
-
-	&:not(.has-background):not(:first-child) {
-		margin-top: getcssvar(gutter-y);
-	}
+	@include make-section;
 }
 
 .section-inner {
-	position: relative;
-	z-index: 5;
-	width: 100%;
-
-	.has-background & {
-		padding-top: getcssvar(gutter-y);
-		padding-bottom: getcssvar(gutter-y);
-	}
-	@supports (padding: unquote('max(0px)')) {
-		// stylelint-disable-next-line
-		@media only screen and (min-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-			padding-left: unquote('max(#{cssvar(gutter-x)}, env(safe-area-inset-left))');
-			padding-right: unquote('max(--#{cssvar(gutter-x)}, env(safe-area-inset-right))');
-		}
-	}
+	@include make-section-inner;
 }
 
 .screen-full {
@@ -85,7 +53,7 @@
 
 		@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
 			%responsive-container-#{$breakpoint} {
-				max-width: $container-max-width;
+				max-width: getcssvar(container-#{$breakpoint}-width);
 			}
 
 			// Extend each breakpoint which is smaller or equal to the current breakpoint
@@ -105,6 +73,10 @@
 			}
 		}
 	}
+
+	.container {
+		max-width: getcssvar(container-width);
+	}
 }
 
 // Row
@@ -118,15 +90,19 @@
 		> * {
 			@include make-col-ready;
 		}
+
+		&:not(:last-child) {
+			margin-bottom: getcssvar(row-spacing);
+		}
 	}
 }
 
 @if $enable-cssgrid {
 	.grid {
 		display: grid;
-		grid-template-rows: repeat(cssvar(rows, 1), 1fr);
-		grid-template-columns: repeat(cssvar(columns, #{$grid-columns}), 1fr);
-		gap: getcssvar(gap, #{$grid-gutter-width});
+		grid-template-rows: repeat(var(--#{$variable-prefix}rows, 1), 1fr);
+		grid-template-columns: repeat(var(--#{$variable-prefix}columns, #{$grid-columns}), 1fr);
+		gap: var(--#{$variable-prefix}gap, #{$grid-gutter-width});
 
 		@include make-cssgrid;
 	}
@@ -137,8 +113,6 @@
 // Common styles for small and large grid columns
 
 @if $enable-grid-classes {
-	@include make-grid-columns;
-
 	.content-wrapper {
 		flex: 1 1 auto;
 	}
@@ -146,6 +120,8 @@
 	.col {
 		@include make-col-ready;
 	}
+
+	@include make-grid-columns;
 
 	.stretched-col {
 		&.left {
@@ -202,19 +178,17 @@
 	}
 
 	.stretched-col-mobile {
-		&:not(.left-mobile):not(.right-mobile) {
-			&:not(.in-grid-content) {
-				> .content-wrapper {
-					position: relative;
-					@include stretch-col-content-mobile(both, false);
-				}
+		&:not(.in-grid-content) {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, false);
 			}
+		}
 
-			&.in-grid-content {
-				> .content-wrapper {
-					position: relative;
-					@include stretch-col-content-mobile(both, true);
-				}
+		&.in-grid-content {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, true);
 			}
 		}
 
@@ -246,26 +220,6 @@
 				> .content-wrapper {
 					position: relative;
 					@include stretch-col-content-mobile(right, true);
-				}
-			}
-		}
-
-		> .content-wrapper:not(.ratio) {
-			> .is-bg:only-child {
-				@include media-breakpoint-down(md) {
-					position: relative;
-				}
-
-				> .media-content {
-					@include media-breakpoint-down(md) {
-						position: relative;
-					}
-
-					> .media-src {
-						@include media-breakpoint-down(md) {
-							position: relative;
-						}
-					}
 				}
 			}
 		}

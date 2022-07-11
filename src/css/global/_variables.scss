@@ -45,25 +45,67 @@ $spacer: 1rem;
 
 $spacers: (
   	0: 0px,
-	1: calc(var(--#{$variable-prefix}spacer) * .25),
-	2: calc(var(--#{$variable-prefix}spacer) * .5),
-	3: calc(var(--#{$variable-prefix}spacer) * .75),
-	4: var(--#{$variable-prefix}spacer),
-	5: calc(var(--#{$variable-prefix}spacer) * 1.25),
-	6: calc(var(--#{$variable-prefix}spacer) * 1.5),
-	7: calc(var(--#{$variable-prefix}spacer) * 1.75),
-	8: calc(var(--#{$variable-prefix}spacer) * 2),
-	9: calc(var(--#{$variable-prefix}spacer) * 2.25),
-	10: calc(var(--#{$variable-prefix}spacer) * 2.5),
-	11: calc(var(--#{$variable-prefix}spacer) * 2.75),
-	12: calc(var(--#{$variable-prefix}spacer) * 3),
-	13: calc(var(--#{$variable-prefix}spacer) * 3.25),
-	14: calc(var(--#{$variable-prefix}spacer) * 3.5),
-	15: calc(var(--#{$variable-prefix}spacer) * 3.75),
-	16: calc(var(--#{$variable-prefix}spacer) * 4)
+	1: calc(#{getcssvar(spacer)} * .25),
+	2: calc(#{getcssvar(spacer)} * .5),
+	3: calc(#{getcssvar(spacer)} * .75),
+	4: #{getcssvar(spacer)},
+	5: calc(#{getcssvar(spacer)} * 1.25),
+	6: calc(#{getcssvar(spacer)} * 1.5),
+	7: calc(#{getcssvar(spacer)} * 1.75),
+	8: calc(#{getcssvar(spacer)} * 2),
+	9: calc(#{getcssvar(spacer)} * 2.25),
+	10: calc(#{getcssvar(spacer)} * 2.5),
+	11: calc(#{getcssvar(spacer)} * 2.75),
+	12: calc(#{getcssvar(spacer)} * 3),
+	13: calc(#{getcssvar(spacer)} * 3.25),
+	14: calc(#{getcssvar(spacer)} * 3.5),
+	15: calc(#{getcssvar(spacer)} * 3.75),
+	16: calc(#{getcssvar(spacer)} * 4)
 );
 
 $grid-gutter-width:           1.5rem !default;
+
+$horizontal-gutters: (
+  	0: 0px,
+	1: calc(#{getcssvar(gutter-x)} * .25),
+	2: calc(#{getcssvar(gutter-x)} * .5),
+	3: calc(#{getcssvar(gutter-x)} * .75),
+	4: #{getcssvar(gutter-x)},
+	5: calc(#{getcssvar(gutter-x)} * 1.25),
+	6: calc(#{getcssvar(gutter-x)} * 1.5),
+	7: calc(#{getcssvar(gutter-x)} * 1.75),
+	8: calc(#{getcssvar(gutter-x)} * 2),
+	9: calc(#{getcssvar(gutter-x)} * 2.25),
+	10: calc(#{getcssvar(gutter-x)} * 2.5),
+	11: calc(#{getcssvar(gutter-x)} * 2.75),
+	12: calc(#{getcssvar(gutter-x)} * 3),
+	13: calc(#{getcssvar(gutter-x)} * 3.25),
+	14: calc(#{getcssvar(gutter-x)} * 3.5),
+	15: calc(#{getcssvar(gutter-x)} * 3.75),
+	16: calc(#{getcssvar(gutter-x)} * 4)
+);
+
+$gutters: $horizontal-gutters;
+
+$vertical-gutters: (
+  	0: 0px,
+	1: calc(#{getcssvar(gutter-y)} * .25),
+	2: calc(#{getcssvar(gutter-y)} * .5),
+	3: calc(#{getcssvar(gutter-y)} * .75),
+	4: #{getcssvar(gutter-y)},
+	5: calc(#{getcssvar(gutter-y)} * 1.25),
+	6: calc(#{getcssvar(gutter-y)} * 1.5),
+	7: calc(#{getcssvar(gutter-y)} * 1.75),
+	8: calc(#{getcssvar(gutter-y)} * 2),
+	9: calc(#{getcssvar(gutter-y)} * 2.25),
+	10: calc(#{getcssvar(gutter-y)} * 2.5),
+	11: calc(#{getcssvar(gutter-y)} * 2.75),
+	12: calc(#{getcssvar(gutter-y)} * 3),
+	13: calc(#{getcssvar(gutter-y)} * 3.25),
+	14: calc(#{getcssvar(gutter-y)} * 3.5),
+	15: calc(#{getcssvar(gutter-y)} * 3.75),
+	16: calc(#{getcssvar(gutter-y)} * 4)
+);
 
 $section-spacing-y: $grid-gutter-width * 3;
 $row-spacing-y: $grid-gutter-width * 2;
@@ -89,6 +131,7 @@ $aspect-ratios: (
 
 @import '~bootstrap/scss/variables';
 
+
 $gray-colors: ();
 
 
@@ -99,12 +142,13 @@ $gray-colors: ();
 	$gray-colors: map-set($gray-colors, 'gray-#{$level}', $value);
 }
 
-$colors: map-merge($gray-colors, $colors);
+$theme-colors: map-merge($gray-colors, $colors);
 
-$theme-colors: map-merge($colors, $theme-colors);
+$theme-colors: map-merge($theme-colors, $theme-colors);
 
 $theme-colors: map-set($theme-colors, 'muted', $text-muted);
 $theme-colors: map-set($theme-colors, 'border-color', $border-color);
+
 
 $container-widths: (
 	xs: 90vw,

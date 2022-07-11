@@ -106,55 +106,22 @@
 	width: 100%;
 	margin-right: auto;
 	margin-left: auto;
+
+	@include make-section-inner('[data-settings*="background"]');
 }
 
 .rwp-elementor {
 	.elementor-section.elementor-section-boxed > .elementor-container {
-		@each $breakpoint in map-keys($grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint);
-
-			@include media-breakpoint-up($breakpoint) {
-				max-width: getcssvar(container#{$infix}-width);
-			}
-		}
-	}
-
-	.e-container {
-		@each $breakpoint in map-keys($grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint);
-
-			@include media-breakpoint-up($breakpoint) {
-				--container-max-width: #{getcssvar(container#{$infix}-width)};
-			}
-		}
+		max-width: getcssvar(container-width);
 	}
 
 	.elementor-widget:not(:last-child) {
 		margin-bottom: 0;
 	}
-
-	.e-container--column {
-		&.stretched-col {
-			&.left {
-				@include stretch-col-content(left, false);
-			}
-
-			&.right {
-				@include stretch-col-content(right, false);
-			}
-		}
-	}
 }
 
-.elementor-section:not(.elementor-sticky__spacer) {
-	position: relative;
-
-	@media only screen {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
+.elementor-section {
+	@include make-section('.elementor-section', '[data-settings*="background"]');
 
 	&.elementor-reverse-mobile {
 		> .elementor-container {
@@ -244,6 +211,8 @@ $elementor-col-widths: (
 }
 
 .elementor-row {
+	--flex-wrap: wrap;
+
 	width: 100%;
 	display: flex;
 	justify-content: var(--justify-content);
@@ -253,12 +222,26 @@ $elementor-col-widths: (
 	flex-wrap: var(--flex-wrap); // stylelint-disable-line
 	gap: var(--gap-y) var(--gap-x);
 }
+@include make-grid-columns('.e-col', '.elementor-column', false, $elementor-breakpoints);
 
 .elementor-column {
-	@include make-elementor-col-ready;
-	@include make-elementor-columns;
-
+	width: 100%;
 	flex-direction: column;
+
+	> .elementor-column-wrap.elementor-element-populated {
+		padding-top: unset;
+		padding-bottom: unset;
+
+		> .elementor-widget-wrap {
+			display: flex;
+			justify-content: var(--justify-content);
+			flex-direction: var(--flex-direction);
+			align-items: var(--align-items);
+			align-content: var(--align-content);
+			flex-wrap: var(--flex-wrap); // stylelint-disable-line
+			gap: var(--gap-y) var(--gap-x);
+		}
+	}
 
 	.elementor-column-wrap {
 		display: flex;
@@ -278,97 +261,147 @@ $elementor-col-widths: (
 		min-height: 1px;
 	}
 
-	&.full-height-content {
-		> .elementor-column-wrap {
-			> .elementor-widget-wrap {
-				flex-direction: column;
+	// &.full-height-content {
+	// 	> .elementor-column-wrap {
+	// 		> .elementor-widget-wrap {
+	// 			flex-direction: column;
+	// 		}
+	// 	}
+	// }
+
+	@each $breakpoint, $device in $elementor-breakpoints {
+		$infix: breakpoint-infix($breakpoint);
+		$class: '';
+
+		@if $device != desktop {
+			$class: '-#{$device}';
+		}
+
+		@include media-breakpoint-only($breakpoint) {
+			$gutter: page-gutter($breakpoint);
+			$margin-gutter: calc(#{remove-calc($gutter)} * -1) !important;
+			$padding-gutter: #{$gutter} !important;
+			&.e-pg#{$class}-left {
+				> .elementor-column-wrap {
+					padding-left: $padding-gutter;
+				}
+			}
+			&.e-pg#{$class}-right {
+				> .elementor-column-wrap {
+					padding-right: $padding-gutter;
+				}
+			}
+			&.e-pg#{$class}-both {
+				> .elementor-column-wrap {
+					padding-left: $padding-gutter;
+					padding-right: $padding-gutter;
+				}
+			}
+			&.e-col-stretched#{$class}-left {
+				> .elementor-column-wrap {
+					width: stretched-col-content($breakpoint);
+					margin-left: $margin-gutter;
+				}
+			}
+			&.e-col-stretched#{$class}-right {
+				> .elementor-column-wrap {
+					width: stretched-col-content($breakpoint);
+					margin-right: $margin-gutter;
+				}
+			}
+			&.e-col-stretched#{$class}-both {
+				> .elementor-column-wrap {
+					width: calc((#{$gutter}* 2) + 100%);
+					margin-right: $margin-gutter;
+					margin-left: $margin-gutter;
+				}
 			}
 		}
 	}
 
-	&.stretched-col {
-		&.left {
-			&:not(.in-grid-content) {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content(left, false);
-				}
-			}
+	// &.stretched-col {
+	// 	&.left {
+	// 		&:not(.in-grid-content) {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content(left, false);
+	// 			}
+	// 		}
 
-			&.in-grid-content {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content(left, true);
-				}
-			}
-		}
+	// 		&.in-grid-content {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content(left, true);
+	// 			}
+	// 		}
+	// 	}
 
-		&.right {
-			&:not(.in-grid-content) {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content(right, false);
-				}
-			}
+	// 	&.right {
+	// 		&:not(.in-grid-content) {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content(right, false);
+	// 			}
+	// 		}
 
-			&.in-grid-content {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content(right, true);
-				}
-			}
-		}
-	}
+	// 		&.in-grid-content {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content(right, true);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	&.stretched-col-mobile {
-		&:not(.left-mobile):not(.right-mobile) {
-			&:not(.in-grid-content) {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(both, false);
-				}
-			}
+	// &.stretched-col-mobile {
+	// 	&:not(.left-mobile):not(.right-mobile) {
+	// 		&:not(.in-grid-content) {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(both, false);
+	// 			}
+	// 		}
 
-			&.in-grid-content {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(both, true);
-				}
-			}
-		}
+	// 		&.in-grid-content {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(both, true);
+	// 			}
+	// 		}
+	// 	}
 
-		&.left-mobile {
-			&:not(.in-grid-content) {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(left, false);
-				}
-			}
+	// 	&.left-mobile {
+	// 		&:not(.in-grid-content) {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(left, false);
+	// 			}
+	// 		}
 
-			&.in-grid-content {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(left, true);
-				}
-			}
-		}
+	// 		&.in-grid-content {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(left, true);
+	// 			}
+	// 		}
+	// 	}
 
-		&.right-mobile {
-			&:not(.in-grid-content) {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(right, false);
-				}
-			}
+	// 	&.right-mobile {
+	// 		&:not(.in-grid-content) {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(right, false);
+	// 			}
+	// 		}
 
-			&.in-grid-content {
-				> .elementor-column-wrap {
-					position: relative;
-					@include stretch-col-content-mobile(right, true);
-				}
-			}
-		}
-	}
+	// 		&.in-grid-content {
+	// 			> .elementor-column-wrap {
+	// 				position: relative;
+	// 				@include stretch-col-content-mobile(right, true);
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 [class*='elementor-column-gap'] > .elementor-row > .elementor-column > .elementor-element-populated > .elementor-widget-wrap {

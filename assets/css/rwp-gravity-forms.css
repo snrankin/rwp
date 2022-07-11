@@ -9,39 +9,28 @@
     margin-top:var(--bs-gutter-y);
 }
 .gform_wrapper.gravity-theme form.form-inline{
-    margin-top:calc(var(--bs-gutter-y) * -1);
-    margin-right:calc(var(--bs-gutter-x) * -0.5);
-    margin-left:calc(var(--bs-gutter-x) * -0.5);
-    width:calc(100% + var(--bs-gutter-x));
     display:flex;
     flex-wrap:wrap;
     float:none;
     min-width:100%;
+    gap:var(--bs-gutter-y) var(--bs-gutter-x);
 }
 .gform_wrapper.gravity-theme form.form-inline:before, .gform_wrapper.gravity-theme form.form-inline:after{
     display:none;
 }
 .gform_wrapper.gravity-theme form.form-inline .gform_body{
-    padding-right:calc(var(--bs-gutter-x) * 0.5);
-    padding-left:calc(var(--bs-gutter-x) * 0.5);
-    margin-top:var(--bs-gutter-y);
-    width:100%;
     max-width:100%;
     display:flex;
-    flex-direction:column;
     flex:0 1 auto;
+    flex-direction:column;
     width:auto;
     flex-grow:1;
 }
 .gform_wrapper.gravity-theme form.form-inline .gform_footer{
-    padding-right:calc(var(--bs-gutter-x) * 0.5);
-    padding-left:calc(var(--bs-gutter-x) * 0.5);
-    margin-top:var(--bs-gutter-y);
-    width:100%;
     max-width:100%;
     display:flex;
-    flex-direction:column;
     flex:0 1 auto;
+    flex-direction:column;
     width:auto;
 }
 .gform_wrapper.gravity-theme form.has-inline-submit .gform_footer{

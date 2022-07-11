@@ -6,20 +6,13 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
-body.elementor {
+body.rwp-elementor {
 	--#{$variable-prefix}primary: var(--e-global-color-primary);
 	--#{$variable-prefix}secondary: var(--e-global-color-secondary);
 	--#{$variable-prefix}body-color: var(--e-global-color-text);
 	--#{$variable-prefix}body-font-family: var(--e-global-typography-text-font-family);
-	@each $gap, $class in $gap-size {
-		@each $breakpoint in map-keys($grid-breakpoints) {
-			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-			$value: map-get($gutters, $gap);
-
-			--e-gx#{$infix}-#{$class}: #{$value};
-			--e-gy#{$infix}-#{$class}: #{$value};
-		}
-	}
+	--gap-x: #{getcssvar(gutter-x)};
+	--gap-y: #{getcssvar(gutter-x)};
 }
 
 @each $breakpoint, $device in $elementor-breakpoints {

@@ -5117,15 +5117,13 @@
         __webpack_require__.r(__webpack_exports__);
         var _fancyapps_ui_src_Fancybox_Fancybox_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/@fancyapps/ui/src/Fancybox/Fancybox.js");
         rwp = typeof rwp === "undefined" ? {} : rwp;
-        function modal() {
-            var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[data-fancybox]";
-            var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-            var defaults = {
+        function modal(selector = "[data-fancybox]", args = {}) {
+            const defaults = {
                 template: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
                 on: {
-                    load: function load(instance, slide) {
-                        console.log("#".concat(slide.index, " slide is loaded!"));
-                        console.log("This slide is selected: ".concat(instance.getSlide().index === slide.index));
+                    load: (instance, slide) => {
+                        console.log(`#${slide.index} slide is loaded!`);
+                        console.log(`This slide is selected: ${instance.getSlide().index === slide.index}`);
                     }
                 }
             };
@@ -5135,8 +5133,8 @@
                 args = defaults;
             }
             if (!rwp.isEmpty(selector)) {
-                var _modal = new _fancyapps_ui_src_Fancybox_Fancybox_js__WEBPACK_IMPORTED_MODULE_0__.Fancybox(selector, args);
-                return _modal;
+                let modal = new _fancyapps_ui_src_Fancybox_Fancybox_js__WEBPACK_IMPORTED_MODULE_0__.Fancybox(selector, args);
+                return modal;
             }
         }
         rwp.modal = modal;

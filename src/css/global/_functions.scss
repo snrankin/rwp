@@ -181,5 +181,6 @@
 }
 
 @function remove-calc($value) {
-	@return unquote(str-replace(#{quote($value)}, 'calc', ''));
+	$value: '#{$value}';
+	@return unquote(str-replace($value, 'calc', ''));
 }

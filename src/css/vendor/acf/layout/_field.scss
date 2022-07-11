@@ -6,6 +6,8 @@
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
 
+@include make-grid-columns('.col', '.acf-field');
+
 body:not(.post-type-acf-field-group) {
 	.acf-fields {
 		&.-border {
@@ -48,8 +50,6 @@ body:not(.post-type-acf-field-group) {
 	}
 
 	.acf-field {
-		@include make-grid-columns-2;
-
 		&.flex-fill {
 			flex: 1 1 auto !important;
 		}

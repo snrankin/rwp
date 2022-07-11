@@ -30,17 +30,15 @@ $col-spacing-y: $grid-gutter-width;
 	}
 
 	@each $number, $value in $spacers {
-		--#{$variable-prefix}spacer-#{$number}: #{$value};
+		@include rfs($value, cssvar(spacer-#{$number}));
 	}
 
-	@each $color, $value in $colors {
-		--#{$variable-prefix}#{$color}: #{$value};
-		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
+	@each $number, $value in $horizontal-gutters {
+		@include rfs($value, cssvar(gutter-x-#{$number}));
 	}
 
-	@each $color, $value in $grays {
-		--#{$variable-prefix}gray-#{$color}: #{$value};
-		--#{$variable-prefix}gray-#{$color}-contrast: #{color-contrast($value)};
+	@each $number, $value in $vertical-gutters {
+		@include rfs($value, cssvar(gutter-y-#{$number}));
 	}
 
 	@each $color, $value in $theme-colors {
@@ -102,6 +100,21 @@ $col-spacing-y: $grid-gutter-width;
 	@include rfs($row-spacing-y, #{cssvar(container-spacing)});
 	@include rfs($row-spacing-y, #{cssvar(row-spacing)});
 	@include rfs($section-spacing-y, #{cssvar(section-spacing)});
+	@include rfs($section-spacing-y * -1, #{cssvar(section-n-spacing)});
+
+	@each $breakpoint, $value in map-keys($grid-breakpoints) {
+		@if $value != $rfs-breakpoint {
+			@include media-breakpoint-up($breakpoint) {
+				--#{$variable-prefix}section-spacing-#{$breakpoint}: #{rfs-fluid-value($section-spacing-y)};
+				--#{$variable-prefix}section-n-spacing-#{$breakpoint}: #{rfs-fluid-value($section-spacing-y * -1)};
+			}
+		} @else {
+			@media (min-width: #{$rfs-breakpoint}) {
+				--#{$variable-prefix}section-spacing-#{$breakpoint}: #{rfs-value($value)};
+				--#{$variable-prefix}section-n-spacing-#{$breakpoint}: #{rfs-value($section-spacing-y * -1)};
+			}
+		}
+	}
 
 	@each $breakpoint, $value in $container-widths {
 		--#{$variable-prefix}container-#{$breakpoint}-width: #{$value};
@@ -110,8 +123,8 @@ $col-spacing-y: $grid-gutter-width;
 		}
 	}
 
-	--#{$variable-prefix}dropdown-item-padding-y: #{$dropdown-item-padding-y};
-	--#{$variable-prefix}dropdown-item-padding-x: #{$dropdown-item-padding-x};
+	@include rfs($dropdown-item-padding-x, #{cssvar(dropdown-item-padding-x)});
+	@include rfs($dropdown-item-padding-y, #{cssvar(dropdown-item-padding-y)});
 
 	--#{$variable-prefix}nav-icon-size: max-content;
 

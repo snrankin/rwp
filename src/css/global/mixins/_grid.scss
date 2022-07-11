@@ -8,8 +8,6 @@
 	}
 
 	width: 100%;
-	padding-right: calc(#{getcssvar(gutter-x)} * 0.5);
-	padding-left: calc(#{getcssvar(gutter-x)} * 0.5);
 	margin-right: auto;
 	margin-left: auto;
 
@@ -18,8 +16,6 @@
 	}
 	@if $important {
 		width: 100% !important;
-		padding-right: calc(#{getcssvar(gutter-x)} * 0.5) !important;
-		padding-left: calc(#{getcssvar(gutter-x)} * 0.5) !important;
 		margin-right: auto !important;
 		margin-left: auto !important;
 	}
@@ -50,9 +46,6 @@
 		--#{$variable-prefix}gutter-y: #{$y-spacing};
 	}
 
-	margin-top: calc(#{getcssvar(gutter-y)} * -1);
-	margin-right: calc(#{getcssvar(gutter-x)} * -0.5);
-	margin-left: calc(#{getcssvar(gutter-x)} * -0.5);
 	width: calc(100% + #{getcssvar(gutter-x)});
 
 	@if $important {
@@ -64,12 +57,19 @@
 }
 
 @mixin make-row($x-spacing: null, $y-spacing: null, $important: false) {
-	@include row-gutters($x-spacing, $y-spacing, $important);
+	@if $x-spacing != null {
+		--#{$variable-prefix}gutter-x: #{$x-spacing};
+	}
+
+	@if $y-spacing != null {
+		--#{$variable-prefix}gutter-y: #{$y-spacing};
+	}
 
 	display: flex;
 	flex-wrap: wrap;
 	float: none;
 	min-width: 100%;
+	gap: var(--#{$variable-prefix}gutter-y) var(--#{$variable-prefix}gutter-x);
 
 	&::before,
 	&::after {
@@ -89,29 +89,25 @@
 }
 
 @mixin make-col-ready($important: false) {
-	@include col-gutters($important);
-
 	// Prevent columns from becoming too narrow when at smaller grid tiers by
 	// always setting `width: 100%;`. This works because we set the width
 	// later on to override this initial width.
-	width: 100%;
+
 	max-width: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
 	display: flex;
+	flex: 0 1 auto;
 	flex-direction: column;
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
 	@if $size {
-		flex: 0 1 auto;
-		width: percentage(divide($size, $columns));
+		width: calc(#{percentage(divide($size, $columns))} - (#{getcssvar(gutter-x)} * 0.5));
 	} @else {
-		flex: 0 1 auto;
-		max-width: 100%;
+		width: 100%;
 	}
 }
 
 @mixin make-col-auto() {
-	flex: 0 1 auto;
 	width: auto;
 }
 
@@ -134,7 +130,7 @@
 // style grid.
 @mixin row-cols($count) {
 	> * {
-		flex: 0 0 auto;
+		flex: 0 1 auto;
 		width: divide(100%, $count);
 	}
 }
@@ -143,55 +139,87 @@
 // Used only by Bootstrap to generate the correct number of grid classes given
 // any value of `$grid-columns`.
 
-@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
-	@each $breakpoint in map-keys($breakpoints) {
-		$infix: breakpoint-infix($breakpoint, $breakpoints);
+@mixin make-grid-columns($selector: '.col', $selector-prefix: false, $selector-suffix: false, $breakpoints: $grid-breakpoints, $columns: $grid-columns) {
+	@if $selector-prefix != false {
+		$selector: #{$selector-prefix}#{$selector};
+	}
 
-		@include media-breakpoint-up($breakpoint, $breakpoints) {
+	@if $selector-suffix != false {
+		$selector: #{$selector}#{$selector-suffix};
+	}
+	@each $breakpoint, $value in $breakpoints {
+		$infix: breakpoint-infix($breakpoint);
+		$class: '';
+
+		@if type-of($value) == string and $value != desktop {
+			$class: '-#{$value}';
+		} @else if $breakpoint != xs {
+			$class: '-#{$breakpoint}';
+		}
+
+		@include media-breakpoint-up($breakpoint) {
 			// Provide basic `.col-{bp}` classes for equal-width flexbox columns
 			// .col#{$infix} {
 			// 	flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
 			// }
 
-			.row-cols#{$infix}-auto > * {
-				@include make-col-auto;
-			}
-
-			@if $grid-row-columns > 0 {
-				@for $i from 1 through $grid-row-columns {
-					.row-cols#{$infix}-#{$i} {
-						@include row-cols($i);
+			@if $selector-prefix == false and $selector-suffix == false {
+				.row-cols#{$class}-auto > * {
+					@include make-col-auto;
+				}
+				@if $grid-row-columns > 0 {
+					@for $i from 1 through $grid-row-columns {
+						.row-cols#{$class}-#{$i} {
+							@include row-cols($i);
+						}
 					}
 				}
 			}
 
-			.col#{$infix}-auto {
+			#{$selector}#{$class}-auto {
 				@include make-col-auto;
 			}
 
 			@if $columns > 0 {
 				@for $i from 1 through $columns {
-					.col#{$infix}-#{$i} {
+					#{$selector}#{$class}-#{$i} {
 						@include make-col($i, $columns);
 					}
 				}
 
 				// `$columns - 1` because offsetting by the width of an entire row isn't possible
 				@for $i from 0 through ($columns - 1) {
-					@if not($infix == '' and $i == 0) {
+					@if not($i == 0) {
 						// Avoid emitting useless .offset-0
-						.offset#{$infix}-#{$i},
-						.offset-l#{$infix}-#{$i} {
-							@include make-col-offset($i, left, false, $columns);
-						}
-						.offset-r#{$infix}-#{$i} {
-							@include make-col-offset($i, right, false, $columns);
-						}
-						.offset-nl#{$infix}-#{$i} {
-							@include make-col-offset($i, left, true, $columns);
-						}
-						.offset-nr#{$infix}-#{$i} {
-							@include make-col-offset($i, right, true, $columns);
+
+						@if $selector-prefix == false and $selector-suffix == false {
+							.offset#{$class}-#{$i},
+							.offset-l#{$class}-#{$i} {
+								@include make-col-offset($i, left, false, $columns);
+							}
+							.offset-r#{$class}-#{$i} {
+								@include make-col-offset($i, right, false, $columns);
+							}
+							.offset-nl#{$class}-#{$i} {
+								@include make-col-offset($i, left, true, $columns);
+							}
+							.offset-nr#{$class}-#{$i} {
+								@include make-col-offset($i, right, true, $columns);
+							}
+						} @else {
+							#{$selector}.offset#{$class}-#{$i},
+							#{$selector}.offset-l#{$class}-#{$i} {
+								@include make-col-offset($i, left, false, $columns);
+							}
+							#{$selector}.offset-r#{$class}-#{$i} {
+								@include make-col-offset($i, right, false, $columns);
+							}
+							#{$selector}.offset-nl#{$class}-#{$i} {
+								@include make-col-offset($i, left, true, $columns);
+							}
+							#{$selector}.offset-nr#{$class}-#{$i} {
+								@include make-col-offset($i, right, true, $columns);
+							}
 						}
 					}
 				}
@@ -200,14 +228,26 @@
 			// Gutters
 			// Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
 			@each $key, $value in $gutters {
-				.g#{$infix}-#{$key},
-				.gx#{$infix}-#{$key} {
-					--#{$variable-prefix}gutter-x: #{$value};
-				}
+				@if $selector-prefix == false and $selector-suffix == false {
+					.g#{$class}-#{$key},
+					.gx#{$class}-#{$key} {
+						--#{$variable-prefix}gutter-x: #{$value};
+					}
 
-				.g#{$infix}-#{$key},
-				.gy#{$infix}-#{$key} {
-					--#{$variable-prefix}gutter-y: #{$value};
+					.g#{$class}-#{$key},
+					.gy#{$class}-#{$key} {
+						--#{$variable-prefix}gutter-y: #{$value};
+					}
+				} @else {
+					#{$selector}.g#{$class}-#{$key},
+					#{$selector}.gx#{$class}-#{$key} {
+						--#{$variable-prefix}gutter-x: #{$value};
+					}
+
+					#{$selector}.g#{$class}-#{$key},
+					#{$selector}.gy#{$class}-#{$key} {
+						--#{$variable-prefix}gutter-y: #{$value};
+					}
 				}
 			}
 		}
@@ -256,32 +296,32 @@
 }
 
 @function page-gutter($breakpoint: '', $container: false) {
-	$container-width: getcssvar(container-#{$breakpoint}-width);
+	$container-width: getcssvar(container-width);
+	@if $breakpoint != '' {
+		$container-width: getcssvar(container-#{$breakpoint}-width);
+	}
+
 	$container-gutter: getcssvar(gutter-x);
 	$page-gutter: '';
 	@if $container == true {
-		$page-gutter: 'calc(((100vw - #{$container-width}) * 0.5) + (#{$container-gutter} * 0.5))';
+		$page-gutter: calc(((100vw - #{$container-width}) * 0.5) + (#{$container-gutter} * 0.5));
 	} @else {
-		$page-gutter: 'calc((100vw - #{$container-width}) * 0.5)';
+		$page-gutter: calc((100vw - #{$container-width}) * 0.5);
 	}
 
-	@return unquote($page-gutter);
+	@return $page-gutter;
 }
 
-@function stretched-col-content($breakpoint) {
-	$gutter: quote(page-gutter($breakpoint, true));
-	@if $gutter != 0 {
-		$gutter: str-replace('#{$gutter}', 'calc', '');
-	}
+@function stretched-col-content($breakpoint, $container: false) {
+	$gutter: remove-calc(page-gutter($breakpoint, $container));
 
-	$stretch: 'calc(#{$gutter} + 100%)';
-
-	@return unquote($stretch);
+	@return calc(#{$gutter} + 100%);
 }
 
 @mixin stretch-col-content(
 	$side: left,
 	$content-in-grid: true,
+	$container: false,
 	$breakpoints: (
 		md,
 		lg,
@@ -296,23 +336,22 @@
 		@include media-breakpoint-up($breakpoint) {
 			$infix: breakpoint-infix($breakpoint);
 
-			--width: #{stretched-col-content($breakpoint)};
+			--width: #{stretched-col-content($breakpoint, $container)};
 
-			width: stretched-col-content($breakpoint);
+			width: stretched-col-content($breakpoint, $container);
 
-			$gutter: page-gutter($breakpoint, true);
-			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
-			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
-			$padding-gutter: '#{$gutter} !important';
+			$gutter: page-gutter($breakpoint, $container);
+			$margin-gutter: calc(#{remove-calc($gutter)} * -1) !important;
+			$padding-gutter: #{$gutter} !important;
 			@if $side == left {
-				margin-left: unquote($margin-gutter);
+				margin-left: $margin-gutter;
 				@if $content-in-grid == true {
-					padding-left: unquote($padding-gutter);
+					padding-left: $padding-gutter;
 				}
-			} @else {
-				margin-right: unquote($margin-gutter);
+			} @else if $side == right {
+				margin-right: $margin-gutter;
 				@if $content-in-grid == true {
-					padding-right: unquote($padding-gutter);
+					padding-right: $padding-gutter;
 				}
 			}
 		}
@@ -322,84 +361,93 @@
 @mixin stretch-col-content-mobile(
 	$side: left,
 	$content-in-grid: true,
+	$container: false,
 	$breakpoints: (
 		sm,
 	)
 ) {
 	@each $breakpoint in $breakpoints {
 		@include media-breakpoint-down($breakpoint) {
-			$gutter: page-gutter($breakpoint, true);
-			$margin-gutter: str-replace(#{quote($gutter)}, 'calc', '');
-			$margin-gutter: 'calc(#{$margin-gutter} * -1) !important';
-			$padding-gutter: '#{$gutter} !important';
+			$gutter: page-gutter($breakpoint, $container);
+			$margin-gutter: calc(#{remove-calc($gutter)} * -1) !important;
+			$padding-gutter: #{$gutter} !important;
 			@if $side == left {
 				width: stretched-col-content($breakpoint);
-				margin-left: unquote($margin-gutter);
+				margin-left: $margin-gutter;
 				@if $content-in-grid == true {
-					padding-left: unquote($padding-gutter);
+					padding-left: $padding-gutter;
 				}
 			} @else if $side == right {
 				width: stretched-col-content($breakpoint);
-				margin-right: unquote($margin-gutter);
+				margin-right: $margin-gutter;
 				@if $content-in-grid == true {
-					padding-right: unquote($padding-gutter);
+					padding-right: $padding-gutter;
 				}
 			} @else {
-				$gutter: quote(page-gutter($breakpoint, true));
-				@if $gutter != 0 {
-					$gutter: str-replace('#{$gutter}', 'calc', '');
-				}
-
-				$stretch: 'calc((#{$gutter}*2) + 100%)';
-
-				width: unquote($stretch);
-				margin-right: unquote($margin-gutter);
-				margin-left: unquote($margin-gutter);
+				width: calc((#{$gutter}* 2) + 100%);
+				margin-right: $margin-gutter;
+				margin-left: $margin-gutter;
 				@if $content-in-grid == true {
-					padding-right: unquote($padding-gutter);
-					padding-left: unquote($padding-gutter);
+					padding-right: $padding-gutter;
+					padding-left: $padding-gutter;
 				}
 			}
 		}
 	}
 }
 
-@mixin make-grid-columns-2($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
-	@each $breakpoint in map-keys($breakpoints) {
-		$infix: breakpoint-infix($breakpoint, $breakpoints);
+@mixin make-section($section-selector: '.section-wrapper', $bg-selector: false) {
+	width: 100%;
 
-		@include media-breakpoint-up($breakpoint, $breakpoints) {
-			&.col#{$infix}-auto {
-				@include make-col-auto;
+	@if $bg-selector != false {
+		&#{$bg-selector} {
+			position: relative;
+
+			+ #{$section-selector}:not(#{$bg-selector}) {
+				margin-top: getcssvar(section-spacing);
 			}
+		}
 
-			@if $columns > 0 {
-				@for $i from 1 through $columns {
-					&.col#{$infix}-#{$i} {
-						@include make-col($i, $columns);
-					}
-				}
-
-				// `$columns - 1` because offsetting by the width of an entire row isn't possible
-				@for $i from 0 through ($columns - 1) {
-					@if not($infix == '' and $i == 0) {
-						// Avoid emitting useless .offset-0
-						&.offset#{$infix}-#{$i},
-						&.offset-l#{$infix}-#{$i} {
-							@include make-col-offset($i, left, false, $columns);
-						}
-						&.offset-r#{$infix}-#{$i} {
-							@include make-col-offset($i, right, false, $columns);
-						}
-						&.offset-nl#{$infix}-#{$i} {
-							@include make-col-offset($i, left, true, $columns);
-						}
-						&.offset-nr#{$infix}-#{$i} {
-							@include make-col-offset($i, right, true, $columns);
-						}
-					}
-				}
+		&:not(#{$bg-selector}) {
+			+ #{$section-selector} {
+				margin-top: getcssvar(section-spacing);
 			}
+		}
+
+		&:not(#{$bg-selector}):not(:first-child) {
+			margin-top: getcssvar(section-spacing);
+		}
+	} @else {
+		&:not(:first-child) {
+			margin-top: getcssvar(section-spacing);
+		}
+	}
+
+	@media only screen {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@mixin make-section-inner($bg-selector: false) {
+	width: 100%;
+
+	@if $bg-selector != false {
+		#{$bg-selector} & {
+			position: relative;
+			z-index: 5;
+			padding-top: getcssvar(section-spacing);
+			padding-bottom: getcssvar(section-spacing);
+		}
+	}
+
+	@supports (padding: unquote('max(0px)')) {
+		// stylelint-disable-next-line
+		@media only screen and (min-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+			padding-left: unquote('max(#{getcssvar(gutter-x)}, env(safe-area-inset-left))');
+			padding-right: unquote('max(#{getcssvar(gutter-x)}, env(safe-area-inset-right))');
 		}
 	}
 }

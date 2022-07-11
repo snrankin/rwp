@@ -3072,11 +3072,11 @@
         __webpack_require__.r(__webpack_exports__);
         var tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/tiny-slider/src/tiny-slider.js");
         rwp = typeof rwp === "undefined" ? {} : rwp;
-        var leftArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>';
-        var rightArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>';
-        var bullet = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/></svg>';
-        var bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>';
-        var defaults = {
+        const leftArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>';
+        const rightArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>';
+        const bullet = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/></svg>';
+        const bulletActive = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>';
+        const defaults = {
             container: ".tns",
             navPosition: "bottom",
             navAsThumbnails: false,
@@ -3085,12 +3085,12 @@
             autoplayHoverPause: true,
             lazyloadSelector: ".lazyload",
             lazyload: true,
-            updateSliderHeight: function updateSliderHeight(elem) {
+            updateSliderHeight: elem => {
                 updateBtnPosition(elem);
             }
         };
         function changeActiveClass(navItem) {
-            var button = navItem.querySelector(".btn");
+            let button = navItem.querySelector(".btn");
             if (!rwp.isEmpty(button)) {
                 if (navItem.classList.contains("tns-nav-active")) {
                     button.classList.add("active");
@@ -3101,10 +3101,10 @@
         }
         function changeActiveClasses(elem) {
             if (rwp.has(elem, "navItems") && !rwp.isEmpty(elem.navItems)) {
-                var navItems = elem.navItems;
+                let navItems = elem.navItems;
                 navItems = Array.from(navItems);
                 navItems.map((function(navItem) {
-                    var button = navItem.querySelector(".btn");
+                    let button = navItem.querySelector(".btn");
                     if (!rwp.isEmpty(button)) {
                         if (navItem.classList.contains("tns-nav-active")) {
                             button.classList.add("active");
@@ -3116,54 +3116,54 @@
             }
         }
         function updateBtnPosition(elem) {
-            var sliderID = elem.container.getAttribute("id");
-            var wrapperID = sliderID + "-ow";
-            var wrapper = document.getElementById(wrapperID);
-            var container = document.getElementById(sliderID);
+            const sliderID = elem.container.getAttribute("id");
+            const wrapperID = sliderID + "-ow";
+            const wrapper = document.getElementById(wrapperID);
+            const container = document.getElementById(sliderID);
             if (elem.hasControls) {
                 elem.prevButton.classList.add("btn", "prev");
                 elem.nextButton.classList.add("btn", "next");
                 elem.prevButton.setAttribute("tabindex", "0");
                 elem.nextButton.setAttribute("tabindex", "0");
-                var sliderheight = container.offsetHeight;
-                var navBtns = wrapper.querySelectorAll(".tns-controls .btn");
+                let sliderheight = container.offsetHeight;
+                let navBtns = wrapper.querySelectorAll(".tns-controls .btn");
                 if (navBtns.length) {
                     navBtns.forEach((function(btn) {
-                        var topStyle = sliderheight * .5;
-                        btn.style.top = "".concat(topStyle, "px");
+                        let topStyle = sliderheight * .5;
+                        btn.style.top = `${topStyle}px`;
                     }));
                 }
             }
         }
         function createNav(elem, hasThumbnails) {
             if (rwp.has(elem, "navItems") && !rwp.isEmpty(elem.navItems)) {
-                var slides = elem.slideItems;
+                let slides = elem.slideItems;
                 slides = Array.from(slides);
                 slides = slides.filter((function(slide) {
                     return !slide.classList.contains("tns-slide-cloned");
                 }));
-                var navContainer = elem.navContainer;
-                var standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains("tns-nav");
+                let navContainer = elem.navContainer;
+                let standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains("tns-nav");
                 if (standardNavContainer) {
-                    var navItems = elem.navItems;
+                    let navItems = elem.navItems;
                     navItems = Array.from(navItems);
                     navItems.forEach((function(el, i) {
-                        var navItem = el.cloneNode();
+                        let navItem = el.cloneNode();
                         navItem.setAttribute("tabindex", "0");
                         navItem.classList.add("btn");
                         navItem.classList.add("btn-link");
-                        var navItemContent = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"><span aria-hidden="true" role="presentation" class="icon-opened">'.concat(bulletActive, '</span><span aria-hidden="true" role="presentation" class="icon-closed">').concat(bullet, "</span></span>"));
+                        let navItemContent = rwp.stringToHtml(`<span aria-hidden="true" role="presentation" class="btn-icon"><span aria-hidden="true" role="presentation" class="icon-opened">${bulletActive}</span><span aria-hidden="true" role="presentation" class="icon-closed">${bullet}</span></span>`);
                         if (hasThumbnails) {
-                            var slide = slides[i];
-                            var thumb = slide.querySelector("img").cloneNode();
-                            var thumbWrapper = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"></span>');
+                            let slide = slides[i];
+                            let thumb = slide.querySelector("img").cloneNode();
+                            let thumbWrapper = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"></span>');
                             thumbWrapper.append(thumb);
                             navItemContent = thumbWrapper;
                         } else {
                             navItem.classList.add("btn-toggle");
                         }
                         navItem.append(navItemContent);
-                        var navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
+                        let navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
                         navItemWrapper.append(navItem);
                         navItem = navItemWrapper;
                         changeActiveClass(navItem);
@@ -3175,8 +3175,7 @@
                 }
             }
         }
-        function slider(element) {
-            var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        function slider(element, args = {}) {
             if (rwp.isEmpty(element)) {
                 return;
             }
@@ -3188,16 +3187,16 @@
             if (typeof element === "string" || element instanceof String) {
                 element = document.querySelector(element);
             }
-            var inlineArgs = element.getAttribute("data-tns");
+            let inlineArgs = element.getAttribute("data-tns");
             if (!rwp.isEmpty(inlineArgs)) {
                 inlineArgs = JSON.parse(inlineArgs);
                 args = rwp.extend(args, inlineArgs);
             }
-            var hasThumbnails = rwp.get(args, "navAsThumbnails", false);
+            const hasThumbnails = rwp.get(args, "navAsThumbnails", false);
             if (hasThumbnails) {
                 args.slideBy = 1;
             }
-            var init = function init(elem) {
+            let init = elem => {
                 updateBtnPosition(elem);
                 createNav(elem, hasThumbnails);
             };
@@ -3205,15 +3204,15 @@
                 args.onInit = init;
             }
             args.container = element;
-            var sliderInstance = (0, tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(args);
+            let sliderInstance = (0, tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(args);
             sliderInstance.events.on("indexChanged", changeActiveClasses);
             return sliderInstance;
         }
         rwp.slider = slider;
         window.addEventListener("load", (function() {
-            var sliders = document.querySelectorAll(".tns");
+            let sliders = document.querySelectorAll(".tns");
             if (sliders.length > 0) {
-                sliders.forEach((function(element) {
+                sliders.forEach((element => {
                     var slide = slider(element);
                     return slide;
                 }));

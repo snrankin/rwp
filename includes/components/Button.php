@@ -266,7 +266,9 @@ class Button extends Element {
 	 * @return void
 	 */
 	public function set_icon( $args, $overwrite = true ) {
-
+		if ( ! ( $this->icon instanceof Element ) ) {
+			$this->icon = new Element( $this->icon );
+		}
 		$this->icon->merge_args( $args, $overwrite );
 	}
 
@@ -277,6 +279,9 @@ class Button extends Element {
 	 * @return void
 	 */
 	public function set_text( $args, $overwrite = true ) {
+		if ( ! ( $this->text instanceof Element ) ) {
+			$this->text = new Element( $this->text );
+		}
 		$this->text->merge_args( $args, $overwrite );
 	}
 

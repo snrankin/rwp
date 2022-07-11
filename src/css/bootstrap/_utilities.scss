@@ -8,6 +8,14 @@
 
 @import '~bootstrap/scss/utilities/api';
 
+@each $color, $value in $theme-colors {
+	$color-rgb: to-rgb($value);
+	.bg-#{$color} {
+		color: color-contrast($value) !important;
+		background-color: rgba($color-rgb, #{getcssvar(bg-opacity, 1)}) !important;
+	}
+}
+
 $item-align: (
 	'center': 'center',
 	'start': 'flex-start',
@@ -46,6 +54,453 @@ $item-align: (
 							list-style-position: inside;
 						}
 					}
+				}
+			}
+		}
+	}
+}
+
+$sides: (
+	s: 'left',
+	e: 'right',
+	t: 'top',
+	b: 'bottom',
+);
+@each $class, $side in $sides {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		// Generate media query if needed
+		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+		.divi#{$infix}-#{$class} {
+			> * {
+				@if $side == 'top' or $side == 'left' {
+					&:not(:first-child) {
+						border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+					}
+				}
+				@if $side == 'bottom' or $side == 'right' {
+					&:not(:last-child) {
+						border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+					}
+				}
+			}
+		}
+		@include media-breakpoint-up($breakpoint) {
+			.divi#{$infix}-up-#{$class} {
+				> * {
+					@if $side == 'top' or $side == 'left' {
+						&:not(:first-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+					@if $side == 'bottom' or $side == 'right' {
+						&:not(:last-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+				}
+			}
+		}
+		@include media-breakpoint-down($breakpoint) {
+			.divi#{$infix}-down-#{$class} {
+				> * {
+					@if $side == 'top' or $side == 'left' {
+						&:not(:first-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+					@if $side == 'bottom' or $side == 'right' {
+						&:not(:last-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+				}
+			}
+		}
+		@include media-breakpoint-only($breakpoint) {
+			.divi#{$infix}-only-#{$class} {
+				> * {
+					@if $side == 'top' or $side == 'left' {
+						&:not(:first-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+					@if $side == 'bottom' or $side == 'right' {
+						&:not(:last-child) {
+							border-#{$side}: getcssvar(border-width) solid getcssvar(border-color);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.pgp {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+			padding: #{page-gutter($breakpoint)} !important;
+
+			&-t {
+				padding-top: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-b {
+				padding-bottom: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-l {
+				padding-left: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-r {
+				padding-right: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-x {
+				padding-left: #{page-gutter($breakpoint)} !important;
+				padding-right: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-y {
+				padding-top: #{page-gutter($breakpoint)} !important;
+				padding-bottom: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-#{$breakpoint} {
+				padding: #{page-gutter($breakpoint)} !important;
+
+				&-t {
+					padding-top: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-b {
+					padding-bottom: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-l {
+					padding-left: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-r {
+					padding-right: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-x {
+					padding-left: #{page-gutter($breakpoint)} !important;
+					padding-right: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-y {
+					padding-top: #{page-gutter($breakpoint)} !important;
+					padding-bottom: #{page-gutter($breakpoint)} !important;
+				}
+			}
+		}
+	}
+}
+
+.pgm {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$gutter: page-gutter($breakpoint);
+		$negative-gutter: calc(#{remove-calc($gutter)} * -1);
+		@include media-breakpoint-up($breakpoint) {
+			margin: page-gutter($breakpoint) !important;
+
+			&-t {
+				margin-top: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-b {
+				margin-bottom: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-l {
+				margin-left: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-r {
+				margin-right: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-x {
+				margin-left: #{page-gutter($breakpoint)} !important;
+				margin-right: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-y {
+				margin-top: #{page-gutter($breakpoint)} !important;
+				margin-bottom: #{page-gutter($breakpoint)} !important;
+			}
+
+			&-n {
+				margin: #{$negative-gutter} !important;
+			}
+
+			&-nt {
+				margin-top: #{$negative-gutter} !important;
+			}
+
+			&-nb {
+				margin-bottom: #{$negative-gutter} !important;
+			}
+
+			&-nl {
+				margin-left: #{$negative-gutter} !important;
+			}
+
+			&-nr {
+				margin-right: #{$negative-gutter} !important;
+			}
+
+			&-nx {
+				margin-left: #{$negative-gutter} !important;
+				margin-right: #{$negative-gutter} !important;
+			}
+
+			&-ny {
+				margin-top: #{$negative-gutter} !important;
+				margin-bottom: #{$negative-gutter} !important;
+			}
+
+			&-#{$breakpoint} {
+				margin: #{page-gutter($breakpoint)} !important;
+
+				&-t {
+					margin-top: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-b {
+					margin-bottom: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-l {
+					margin-left: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-r {
+					margin-right: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-x {
+					margin-left: #{page-gutter($breakpoint)} !important;
+					margin-right: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-y {
+					margin-top: #{page-gutter($breakpoint)} !important;
+					margin-bottom: #{page-gutter($breakpoint)} !important;
+				}
+
+				&-n {
+					margin: #{$negative-gutter} !important;
+				}
+
+				&-nt {
+					margin-top: #{$negative-gutter} !important;
+				}
+
+				&-nb {
+					margin-bottom: #{$negative-gutter} !important;
+				}
+
+				&-nl {
+					margin-left: #{$negative-gutter} !important;
+				}
+
+				&-nr {
+					margin-right: #{$negative-gutter} !important;
+				}
+
+				&-nx {
+					margin-left: #{$negative-gutter} !important;
+					margin-right: #{$negative-gutter} !important;
+				}
+
+				&-ny {
+					margin-top: #{$negative-gutter} !important;
+					margin-bottom: #{$negative-gutter} !important;
+				}
+			}
+		}
+	}
+}
+
+.sp {
+	padding: getcssvar(section-spacing) !important;
+
+	&-t {
+		padding-top: getcssvar(section-spacing) !important;
+	}
+
+	&-b {
+		padding-bottom: getcssvar(section-spacing) !important;
+	}
+
+	&-l {
+		padding-left: getcssvar(section-spacing) !important;
+	}
+
+	&-r {
+		padding-right: getcssvar(section-spacing) !important;
+	}
+
+	&-x {
+		padding-left: getcssvar(section-spacing) !important;
+		padding-right: getcssvar(section-spacing) !important;
+	}
+
+	&-y {
+		padding-top: getcssvar(section-spacing) !important;
+		padding-bottom: getcssvar(section-spacing) !important;
+	}
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		&-#{$breakpoint} {
+			@include media-breakpoint-up($breakpoint) {
+				padding: getcssvar(section-spacing-#{$breakpoint}) !important;
+
+				&-t {
+					padding-top: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-b {
+					padding-bottom: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-l {
+					padding-left: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-r {
+					padding-right: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-x {
+					padding-left: getcssvar(section-spacing-#{$breakpoint}) !important;
+					padding-right: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-y {
+					padding-top: getcssvar(section-spacing-#{$breakpoint}) !important;
+					padding-bottom: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+			}
+		}
+	}
+}
+
+.sm {
+	margin: getcssvar(section-spacing) !important;
+
+	&-t {
+		margin-top: getcssvar(section-spacing) !important;
+	}
+
+	&-b {
+		margin-bottom: getcssvar(section-spacing) !important;
+	}
+
+	&-l {
+		margin-left: getcssvar(section-spacing) !important;
+	}
+
+	&-r {
+		margin-right: getcssvar(section-spacing) !important;
+	}
+
+	&-x {
+		margin-left: getcssvar(section-spacing) !important;
+		margin-right: getcssvar(section-spacing) !important;
+	}
+
+	&-y {
+		margin-top: getcssvar(section-spacing) !important;
+		margin-bottom: getcssvar(section-spacing) !important;
+	}
+
+	&-n {
+		margin: getcssvar(section-n-spacing) !important;
+	}
+
+	&-nt {
+		margin-top: getcssvar(section-n-spacing) !important;
+	}
+
+	&-nb {
+		margin-bottom: getcssvar(section-n-spacing) !important;
+	}
+
+	&-nl {
+		margin-left: getcssvar(section-n-spacing) !important;
+	}
+
+	&-nr {
+		margin-right: getcssvar(section-n-spacing) !important;
+	}
+
+	&-nx {
+		margin-x: getcssvar(section-n-spacing) !important;
+	}
+
+	&-ny {
+		margin-y: getcssvar(section-n-spacing) !important;
+	}
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+			&-#{$breakpoint} {
+				margin: getcssvar(section-spacing-#{$breakpoint}) !important;
+
+				&-t {
+					margin-top: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-b {
+					margin-bottom: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-l {
+					margin-left: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-r {
+					margin-right: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-x {
+					margin-left: getcssvar(section-spacing-#{$breakpoint}) !important;
+					margin-right: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-y {
+					margin-top: getcssvar(section-spacing-#{$breakpoint}) !important;
+					margin-bottom: getcssvar(section-spacing-#{$breakpoint}) !important;
+				}
+
+				&-n {
+					margin: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-nt {
+					margin-top: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-nb {
+					margin-bottom: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-nl {
+					margin-left: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-nr {
+					margin-right: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-nx {
+					margin-x: getcssvar(section-n-spacing-#{$breakpoint}) !important;
+				}
+
+				&-ny {
+					margin-y: getcssvar(section-n-spacing-#{$breakpoint}) !important;
 				}
 			}
 		}

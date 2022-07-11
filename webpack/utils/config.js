@@ -329,6 +329,7 @@ const cssLoaders = [
 										'lite',
 										{
 											normalizeWhitespace: false,
+											mergeRules: true,
 										},
 									],
 								},
@@ -348,8 +349,8 @@ const jsLoaders = [
 		loader: 'import-glob-loader',
 	},
 	{
-		test: /\.(j|t)sx?$/,
-		exclude: [/node_modules/, /vendors?/, /modernizr\.js$/],
+		test: /\.(j|t)sx$/,
+		exclude: [/node_modules/, /vendors/, /modernizr\.js$/],
 		use: [
 			{
 				loader: 'babel-loader',

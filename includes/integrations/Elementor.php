@@ -47,6 +47,8 @@ class Elementor extends Singleton {
 
 			add_action( 'elementor/element/button/section_button/before_section_end', array( $this, 'add_button_options' ), 10, 2 );
 
+			add_action( 'elementor/element/parse_css', array( $this, 'add_color_contrast' ), 10, 2 );
+
 			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
@@ -59,6 +61,10 @@ class Elementor extends Singleton {
 		if ( rwp_get_option( 'modules.lazysizes.lazyload', false ) ) {
 			add_filter( 'elementor/image_size/get_attachment_image_html', array( $this, 'add_lazysizes' ), 10, 4 );
 		}
+
+		add_action('elementor/preview/enqueue_styles', function() {
+			wp_enqueue_style( 'gform_basic' );
+		});
 
 		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
@@ -277,8 +283,8 @@ class Elementor extends Singleton {
 		if ( 'column' === $section->get_name() ) {
 			$col_class = $section->get_render_attributes( '_wrapper', 'class' );
 
-			if ( empty( $col_class ) || ! in_array( 'col', $col_class, true ) ) {
-				$section->add_render_attribute( '_wrapper', 'class', 'col' );
+			if ( empty( $col_class ) || ! in_array( 'e-col', $col_class, true ) ) {
+				$section->add_render_attribute( '_wrapper', 'class', 'e-col' );
 			}
 
 			$section->add_responsive_control('_inline_size',
@@ -329,6 +335,8 @@ class Elementor extends Singleton {
 				'label'        => 'Column Width',
 				'type'         => Controls_Manager::TEXT,
 				'prefix_class' => 'e-col%s-',
+				'mobile_default' => '12',
+
 			));
 
 			$section->add_group_control(
@@ -350,6 +358,10 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
+				'default' => array(
+					'unit' => 'px',
+					'size' => 1,
+				),
 				'selectors' => [
 					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
 				],
@@ -365,11 +377,119 @@ class Elementor extends Singleton {
 						'step' => 1,
 					],
 				],
+				'default' => array(
+					'unit' => 'px',
+					'size' => 1,
+				),
 				'selectors' => [
 					'{{WRAPPER}} > .elementor-column-wrap > .elementor-widget-wrap' => '--gap-x: var(--bs-spacer-{{SIZE}});',
 				],
 			]);
+
+			$section->add_responsive_control('page_gutter_padding', [
+				'label' => 'Page Gutter Padding',
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'description' => 'Add padding to the column equal to the width of the main grid gutter',
+				'separator' => 'before',
+				'prefix_class' => 'e-pg%s-',
+				'options' => [
+					'left' => [
+						'title' => esc_html( 'Left', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-start-h',
+					],
+					'right' => [
+						'title' => esc_html( 'Right', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-end-h',
+					],
+					'both' => [
+						'title' => esc_html( 'Both', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-stretch-h',
+					],
+				],
+				'default' => '',
+				'toggle' => true,
+			]);
+
+			$section->add_responsive_control('stretch_col', [
+				'label' => 'Stretched Column',
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'description' => 'Stretch the column to the edge of the page.',
+				'options' => [
+					'left' => [
+						'title' => esc_html( 'Left', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-start-h',
+					],
+					'right' => [
+						'title' => esc_html( 'Right', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-end-h',
+					],
+					'both' => [
+						'title' => esc_html( 'Both', 'rwp' ),
+						'icon' => 'eicon-flex eicon-align-stretch-h',
+					],
+				],
+				'prefix_class' => 'e-col-stretched%s-',
+				'separator' => 'after',
+				'default' => '',
+				'toggle' => true,
+			]);
+
 		}
+	}
+
+	/**
+	 * Add custom CSS rule.
+	 *
+	 * @since 1.0.0
+	 * @param \Elementor\Core\Files\CSS\Post $post_css_file The post CSS file instance.
+	 * @param \Elementor\Element_Base        $element       The element instance.
+	 */
+	public function add_color_contrast( $post_css_file, $element ) {
+		if ( 'column' === $element->get_name() || 'section' === $element->get_name() ) {
+
+			$background = $element->get_parsed_dynamic_settings( 'background_color' );
+
+			$text = $element->get_parsed_dynamic_settings( 'color_text' );
+
+			if ( empty( $background ) ) {
+				$background = $element->get_parsed_dynamic_settings( 'background_color_b' );
+			}
+
+			if ( ! empty( $background ) && empty( $text ) ) {
+				$text = rwp_color_contrast( $background );
+				$post_css_file->get_stylesheet()->add_rules(
+				$element->get_unique_selector(),
+				[
+					'color' => $text,
+				]
+				);
+			}
+		}
+
+	}
+
+	public static function add_device_condition( $conditions, $args = array() ) {
+		$devices = \Elementor\Plugin::$instance->breakpoints->get_active_devices_list( [
+			'reverse' => true,
+		] );
+
+		$conditions = rwp_collection( $conditions );
+
+		foreach ( $devices as $device ) {
+			if ( 'desktop' !== $device ) {
+				$device = '_' . $device;
+			} else {
+				$device = '';
+			}
+			$new_conditions = $conditions->mapWithKeys(function( $value, $key ) use ( $device ) {
+				$key = wp_sprintf( $key, $device );
+				return [ $key => $value ];
+			})->all();
+
+			$args[ $device ]['condition'] = $new_conditions;
+		}
+
+		return $args;
 	}
 
 	/**

@@ -155,18 +155,18 @@ class Plugin extends Singleton implements Component {
 	 */
 	public static function init( $plugin ) {
 
-		$update_checker = Factory::buildUpdateChecker(
-		'https://bitbucket.org/riester/rwp',
-		RWP_PLUGIN_FILE,
-		'rwp',
-		);
+		// $update_checker = Factory::buildUpdateChecker(
+		// 'https://bitbucket.org/riester/rwp',
+		// RWP_PLUGIN_FILE,
+		// 'rwp',
+		// );
 
-		$update_checker->setAuthentication(array(
-			'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
-			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-		));
+		// $update_checker->setAuthentication(array(
+		// 	'consumer_key' => 'J86s6ey7kAEK2uc2HJ',
+		// 	'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
+		// ));
 
-		$plugin->set( 'update_checker', $update_checker );
+		// $plugin->set( 'update_checker', $update_checker );
 
         // Activate plugin when new blog is added
 		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );
