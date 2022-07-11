@@ -53,7 +53,7 @@ namespace RWP\Vendor\PUC\v4p11;
          * @param int $checkPeriod How often to check for updates (in hours).
          * @param string $optionName Where to store book-keeping info about update checks.
          * @param string $muPluginFile The plugin filename relative to the mu-plugins directory.
-         * @return UpdateChecker|UpdateChecker|Vcs_BaseChecker
+         * @return Vcs/PluginUpdateChecker|Vcs/ThemeUpdateChecker|Vcs/BaseChecker
          */
         public static function buildUpdateChecker($metadataUrl, $fullPath, $slug = '', $checkPeriod = 12, $optionName = '', $muPluginFile = '')
         {
@@ -81,7 +81,7 @@ namespace RWP\Vendor\PUC\v4p11;
             } else {
                 //You can also use a VCS repository like GitHub.
                 $checkerClass = 'Vcs_' . $type . 'UpdateChecker';
-                $apiClass = $service . 'Api';
+                $apiClass = $service;
             }
             $checkerClass = self::getCompatibleClassVersion($checkerClass);
             if ($checkerClass === null) {
@@ -89,9 +89,9 @@ namespace RWP\Vendor\PUC\v4p11;
                 return null;
             }
             //Add the current namespace to the class name(s).
-            if (\version_compare(\PHP_VERSION, '5.3', '>=')) {
-                $checkerClass = __NAMESPACE__ . '\\' . $checkerClass;
-            }
+            // if (\version_compare(\PHP_VERSION, '5.3', '>=')) {
+            //     $checkerClass = __NAMESPACE__ . '\\' . $checkerClass;
+            // }
             if (!isset($apiClass)) {
                 //Plain old update checker.
                 return new $checkerClass($metadataUrl, $id, $slug, $checkPeriod, $optionName, $muPluginFile);
