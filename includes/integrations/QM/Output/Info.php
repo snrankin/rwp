@@ -25,7 +25,7 @@ class Info extends DebugOutput {
 
 		$this->before_non_tabular_output();
 
-		echo '</div>';
+		//echo '</div>';
 
 		$plugin_col = '<section class="mw-lg-33"><h3>RWP Plugin Info</h3>' . rwp_dump( $plugin ) . '</section>';
 		$plugin_col .= '<section class="mw-lg-33"><h3>Plugin Options</h3>' . rwp_dump( rwp_get_options() ) . '</section>';
