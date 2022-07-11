@@ -7,7 +7,8 @@
 .tns-outer [hidden]{
     display:none !important;
 }
-.tns-outer [aria-controls], .tns-outer [data-action]{
+.tns-outer [aria-controls],
+.tns-outer [data-action]{
     cursor:pointer;
 }
 
@@ -104,7 +105,8 @@
     z-index:0;
 }
 
-.tns-normal, .tns-fadeOut{
+.tns-normal,
+.tns-fadeOut{
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity:0;
     filter:alpha(opacity=0);
@@ -114,7 +116,8 @@
 .tns-vpfix{
     white-space:nowrap;
 }
-.tns-vpfix > div, .tns-vpfix > li{
+.tns-vpfix > div,
+.tns-vpfix > li{
     display:inline-block;
 }
 
@@ -127,9 +130,6 @@
     -webkit-overflow-scrolling:touch;
 }
 .tns-t-ct{
-    width:2333.3333333333%;
-    width:2333.33333%;
-    width:2333.33333%;
     width:2333.33333%;
     position:absolute;
     right:0;
@@ -140,9 +140,6 @@
     clear:both;
 }
 .tns-t-ct > div{
-    width:1.4285714286%;
-    width:1.42857%;
-    width:1.42857%;
     width:1.42857%;
     height:10px;
     float:left;

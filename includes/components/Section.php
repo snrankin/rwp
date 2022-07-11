@@ -25,7 +25,7 @@ class Section extends Element {
 	 */
 	public $atts = array(
 		'class' => array(
-            'page-section',
+            'section-wrapper',
 		),
 	);
 
@@ -35,17 +35,38 @@ class Section extends Element {
 
     public $order = array( 'inner' );
 
+	public $elements_map = array(
+		'inner' => 'Element',
+		'container' => 'Container',
+	);
+
+	/**
+	 * @var array|Element $inner The inner content wrapper
+	 */
+    public $inner = array(
+		'order' => array( 'container' ),
+		'tag' => 'div',
+        'atts' => array(
+            'class' => array(
+                'section-inner',
+			),
+		),
+	);
+
 	/**
 	 * @var array|Container $inner The inner content wrapper
 	 */
-    public $inner;
+    public $container;
 
 
     public function __construct( $args = [] ) {
 
         parent::__construct( $args );
 
-        $this->inner = new Container( $this->inner );
+		if ( $this->content->isNotEmpty() ) {
+            $this->inner->content = $this->content;
+            $this->content = new Collection();
+        }
     }
 
 
@@ -62,7 +83,7 @@ class Section extends Element {
 	 * @return mixed      The updated key
 	 */
 	public function add_row( $row = '', $key = '', $overwrite = false, $format = true ) {
-		return $this->inner->add_row( $row, $key, $overwrite, $format );
+		return $this->container->add_row( $row, $key, $overwrite, $format );
 	}
 
 	/**
@@ -90,7 +111,7 @@ class Section extends Element {
 	 * @return bool
 	 */
 	public function has_row( $key ) {
-		return $this->inner->has_row( $key );
+		return $this->container->has_row( $key );
 	}
 
 	/**
@@ -103,7 +124,7 @@ class Section extends Element {
 	 * @return Row
 	 */
 	public function get_row( $key ) {
-		return $this->inner->get_row( $key );
+		return $this->container->get_row( $key );
 	}
 
 	/**
@@ -118,7 +139,7 @@ class Section extends Element {
 	 * @return mixed      The updated key
 	 */
 	public function update_row( $key, $method, ...$args ) {
-		return $this->inner->update_row( $key, $method, ...$args );
+		return $this->container->update_row( $key, $method, ...$args );
 	}
 
 	/**
@@ -132,7 +153,7 @@ class Section extends Element {
 	 */
 
 	public function remove_row( $key ) {
-		$this->inner->remove_row( $key );
+		$this->container->remove_row( $key );
 	}
 
 	/**
@@ -148,7 +169,7 @@ class Section extends Element {
 	 * @return mixed      The updated key
 	 */
 	public function add_col( $col = '', $key = '', $row = 0, $overwrite = false, $format = true ) {
-		return $this->inner->add_col( $col, $key, $row, $overwrite, $format );
+		return $this->container->add_col( $col, $key, $row, $overwrite, $format );
 	}
 
 	/**
@@ -163,7 +184,7 @@ class Section extends Element {
 	 * @return void
 	 */
 	public function set_col( $col = '', $key = '', $row = 0, $format = true ) {
-		$this->inner->set_col( $col, $key, $row, $format );
+		$this->container->set_col( $col, $key, $row, $format );
 	}
 
 	/**
@@ -176,7 +197,7 @@ class Section extends Element {
 	 * @return bool
 	 */
 	public function has_col( $key, $row = 0 ) {
-		return $this->inner->has_col( $key, $row );
+		return $this->container->has_col( $key, $row );
 	}
 
 	/**
@@ -189,7 +210,7 @@ class Section extends Element {
 	 * @return Column|false
 	 */
 	public function get_col( $key, $row = 0 ) {
-		return $this->inner->get_col( $key, $row );
+		return $this->container->get_col( $key, $row );
 	}
 
 	/**
@@ -204,7 +225,7 @@ class Section extends Element {
 	 * @return void
 	 */
 	public function update_col( $key, $row = 0, $method, ...$args ) {
-		$this->inner->update_col( $key, $row, $method, ...$args );
+		$this->container->update_col( $key, $row, $method, ...$args );
 	}
 
 	/**
@@ -218,6 +239,12 @@ class Section extends Element {
 	 */
 
 	public function remove_col( $key, $row = 0 ) {
-		$this->inner->remove_col( $key, $row );
+		$this->container->remove_col( $key, $row );
+	}
+
+	public function setup_html()
+	{
+		$container = $this->container->html();
+		$this->inner->set_content( $container );
 	}
 }

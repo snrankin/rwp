@@ -1,0 +1,119 @@
+{
+    "name": "rwp/dependencies",
+    "type": "library",
+    "description": "Theme agnostic helpers for RWP Theme",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "RIESTER",
+            "email": "wordpress@riester.com",
+            "homepage": "https://www.riester.com"
+        },
+        {
+            "name": "Sam Rankin",
+            "email": "srankin@riester.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "brain/hierarchy": "^2.5",
+        "crazycodr/standard-exceptions": "^2.4",
+        "doctrine/inflector": "^2.0",
+        "illuminate/collections": "^8.68",
+        "illuminate/config": "^8.68",
+        "illuminate/container": "^8.68",
+        "masterminds/html5": "^2.7",
+        "symfony/http-kernel": "^5.3",
+        "symfony/var-dumper": "^5.2",
+        "wa72/html-pretty-min": "^0.2.0",
+        "wa72/htmlpagedom": "^2.0"
+    },
+    "extra": {
+        "installer-types": [
+            "wordpress-muplugin",
+            "wordpress-plugin",
+            "wordpress-dropin",
+            "library"
+        ],
+        "installer-paths": {
+            "vendor/wordpress/{$vendor}/{$name}/": [
+                "vendor:yoast",
+                "vendor:wpdesk",
+                "vendor:micropackage"
+            ],
+            "dependencies/externals/acf/{$name}": [
+                "mcguffin/acf-quick-edit-fields",
+                "airesvsg/acf-to-rest-api"
+            ],
+            "vendor/wordpress/{$name}": [
+                "type:wordpress-plugin",
+                "type:wordpress-muplugin",
+                "type:wordpress-dropin",
+                "johnbillion/extended-cpts",
+                "afragen/wp-dependency-installer",
+                "brain/hierarchy",
+                "collizo4sky/persist-admin-notices-dismissal",
+                "yahnis-elsts/plugin-update-checker",
+                "wptt/webfont-loader",
+                "wp-bootstrap/wp-bootstrap-navwalker",
+                "press-bits/media-library-svg-display"
+            ],
+            "vendor/{$vendor}/{$name}/": [
+                "type:library"
+            ]
+        },
+        "merge-plugin": {
+            "include": [
+                "vendor/*/composer.json"
+            ],
+            "merge-dev": false,
+            "merge-extra": false,
+            "merge-extra-deep": false,
+            "merge-scripts": false,
+            "recurse": true,
+            "replace": true
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true,
+            "wikimedia/composer-merge-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "dump-root": [
+            "composer dump-autoload --working-dir . -o --classmap-authoritative"
+        ],
+        "dump-root-prod": [
+            "composer dump-autoload --working-dir . -o -a --no-dev"
+        ],
+        "dump-vendor": [
+            "composer dump-autoload --working-dir dependencies -o -a --no-dev"
+        ],
+        "prefix-deps": [
+            "php-scoper add-prefix --config=./scoper.inc.php"
+        ]
+    },
+    "require-dev": {
+        "oomphinc/composer-installers-extender": "^2.0",
+        "wikimedia/composer-merge-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RWP\\Vendor\\Brain\\Hierarchy\\": "vendor/wordpress/hierarchy/src/",
+            "RWP\\Vendor\\WPBP\\": "externals/wpbp/",
+            "RWP\\Vendor\\PUC\\": "vendor/wordpress/plugin-update-checker/Puc/"
+        },
+        "files": [
+            "externals/data.php",
+            "vendor/wordpress/extended-cpts/functions.php",
+            "vendor/wordpress/extended-cpts/extended-cpts.php",
+            "vendor/wordpress/plugin-update-checker/plugin-update-checker.php"
+        ]
+    }
+}

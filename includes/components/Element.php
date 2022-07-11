@@ -53,6 +53,11 @@ class Element implements \ArrayAccess {
 	public $elements_map = array();
 
 	/**
+	 * @var mixed  $background  A background class, a css color, or an Image element
+	 */
+    public $background;
+
+	/**
 	 * @var Html $html The html object class
 	 */
 	public $html;
@@ -217,6 +222,9 @@ class Element implements \ArrayAccess {
 								$value = new $element_class( $this->$item );
 								$this->set( $item, $value, true );
 							}
+						} else {
+							$value = new $element_class();
+							$this->set( $item, $value, true );
 						}
 					} else {
 						throw new \LogicException( "Unable to load class: $element_class" );
@@ -996,8 +1004,8 @@ class Element implements \ArrayAccess {
 		if ( ! empty( $this->tag ) ) {
 			$this->set_tag( $this->tag );
 			$this->setup_html();
-			$this->add_sub_elements();
 			$this->set_background();
+			$this->add_sub_elements();
 			$this->setup_content();
 
 			if ( ! blank( $this->atts ) ) {
