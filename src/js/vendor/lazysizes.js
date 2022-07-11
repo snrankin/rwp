@@ -11,5 +11,6 @@ import(/* webpackMode: "eager" */ 'lazysizes/plugins/respimg/ls.respimg');
 import(/* webpackMode: "eager" */ 'lazysizes/plugins/parent-fit/ls.parent-fit');
 import(/* webpackMode: "eager" */ 'lazysizes/plugins/object-fit/ls.object-fit');
 import(/* webpackMode: "eager" */ 'lazysizes/plugins/aspectratio/ls.aspectratio');
+import(/* webpackMode: "eager" */ 'lazysizes/plugins/bgset/ls.bgset');
 import(/* webpackMode: "eager" */ 'lazysizes/plugins/print/ls.print');
 import(/* webpackMode: "eager" */ 'lazysizes/plugins/video-embed/ls.video-embed');

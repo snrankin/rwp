@@ -242,7 +242,7 @@ function rwp_menu_args( $args = [] ) {
  * @return Html
  */
 function rwp_navbar( $nav, $custom_args, $menu ) {
-	rwp_log( $nav, $custom_args, $menu );
+
     if ( is_string( $menu ) ) {
         $menu = rwp_get_menu( $menu );
     }
@@ -292,6 +292,10 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 
     if ( ! empty( $breakpoint ) ) {
         $navbar->add_class( 'navbar-expand-' . $breakpoint );
+
+		if ( false !== $order->search( 'toggle' ) ) {
+			$column_count = $column_count - 1;
+		}
 
 		$desktop_layout = "grid-columns-$breakpoint-$column_count";
     }

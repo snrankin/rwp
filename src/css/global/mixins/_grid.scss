@@ -100,7 +100,7 @@
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
-	@if $size {
+	@if $size and $size < $columns {
 		width: calc(#{percentage(divide($size, $columns))} - (#{getcssvar(gutter-x)} * 0.5));
 	} @else {
 		width: 100%;

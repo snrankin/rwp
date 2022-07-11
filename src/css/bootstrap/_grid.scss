@@ -18,11 +18,11 @@
 }
 
 .section-wrapper {
-	@include make-section;
+	@include make-section('.section-wrapper', '.has-bg');
 }
 
 .section-inner {
-	@include make-section-inner;
+	@include make-section-inner('.has-bg');
 }
 
 .screen-full {
