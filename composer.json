@@ -15,7 +15,8 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
         "ergebnis/composer-normalize": "^2.6",
         "lipemat/wp-phpcs": "^2.3",
-        "phpcompatibility/phpcompatibility-wp": "*"
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "wpreadme2markdown/wpreadme2markdown": "^4.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -64,6 +65,9 @@
         ],
         "codecept:wpunit": [
             "@codecept run wpunit"
+        ],
+        "convert-readme": [
+            "wp2md -i readme.txt -o README.md"
         ],
         "dump-root": [
             "@composer dump-autoload -o -a"
