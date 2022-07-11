@@ -7,7 +7,7 @@ vendor/*
 
 !dependencies/vendor
 dependencies/**/*.json
-dependencies/**/*.json
+!dependencies/**/composer.json
 dependencies/**/*.xml
 dependencies/**/*.yml
 dependencies/**/*.lock
