@@ -1,32 +1,32 @@
 includes:
-  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+  - /Users/samrankin/.composer/vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 0
   editorUrl: 'vscode://file/%%file%%:%%line%%'
   parallel:
     processTimeout: 600.0
   paths:
-    - includes
+    - %currentWorkingDirectory%/includes
   excludePaths:
     analyseAndScan:
-      - includes/internals/SVG/**/*
+      - %currentWorkingDirectory%/includes/internals/SVG/**/*
   bootstrapFiles:
-    - tests/phpstan/bootstrap.php
-    - dependencies/vendor/autoload.php
-    - dependencies/vendor/scoper-autoload.php
+    - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
+    - %currentWorkingDirectory%/dependencies/vendor/autoload.php
+    - %currentWorkingDirectory%/dependencies/vendor/scoper-autoload.php
   scanDirectories:
-    - dependencies
-    - vendor/szepeviktor
-    - ../advanced-custom-fields-pro
-    - ../acf-extended
-    - ../elementor
-    - ../elementor-pro
-    - ../gravityforms
-    - ../query-monitor
-    - ../wordpress-seo
+    - %currentWorkingDirectory%/dependencies
+    - %currentWorkingDirectory%/vendor/szepeviktor
+    - ../%currentWorkingDirectory%/advanced-custom-fields-pro
+    - ../%currentWorkingDirectory%/acf-extended
+    - ../%currentWorkingDirectory%/elementor
+    - ../%currentWorkingDirectory%/elementor-pro
+    - ../%currentWorkingDirectory%/gravityforms
+    - ../%currentWorkingDirectory%/query-monitor
+    - ../%currentWorkingDirectory%/wordpress-seo
   scanFiles:
-    - rwp.php
-    - uninstall.php
+    - %currentWorkingDirectory%/rwp.php
+    - %currentWorkingDirectory%/uninstall.php
   # ignoreErrors:
     # - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
     # - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
