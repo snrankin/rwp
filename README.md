@@ -11,6 +11,8 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 ## Description
 
+<img src="https://img.shields.io/badge/version-0.9.3-blue" alt="Current Version" />
+
 Add your new plugin at [WordPress Plugin Boilerplate Powered Wiki](https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered/wiki/Plugin-made-with-this-Boilerplate)!
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and Markdown parsed.
