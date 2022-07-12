@@ -164,15 +164,16 @@ if (rwp_get_option('modules.lazysizes.lazyload', false) ) {
 		'handle'   => 'lazysizes',
 	);
 
-	$rwp_plugin_assets['scripts']['lazysizes_addons'] = array(
-		'src'      => $rwp_lazysizes_url,
-		'version'  => $rwp_lazysizes_version,
-		'location' => 'lazysizes',
-		'footer'   => true,
-		'handle'   => 'lazysizes-addons',
-		'deps'     => ['rwp-lazysizes'],
-	);
-
+	if(!empty($rwp_lazysizes_deps)){
+		$rwp_plugin_assets['scripts']['lazysizes_addons'] = array(
+			'src'      => $rwp_lazysizes_url,
+			'version'  => $rwp_lazysizes_version,
+			'location' => 'lazysizes',
+			'footer'   => true,
+			'handle'   => 'lazysizes-addons',
+			'deps'     => ['rwp-lazysizes'],
+		);
+	}
 }
 
 $rwp_webpack_config = rwp_get_file_data(RWP_PLUGIN_ROOT . 'config.json', true);
