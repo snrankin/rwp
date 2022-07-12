@@ -67,6 +67,10 @@ Answer to foo bar dilemma.
 
 ## Changelog
 
+### 0.9.3
+
+Fixing messed up store state in plugin update checker
+
 ### 0.9.2
 
 Removing ending div tag that was breaking Query monitor layout
