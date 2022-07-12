@@ -155,12 +155,14 @@ require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
 require_once RWP_PLUGIN_ROOT . 'includes/functions/components.php';
 $rwp = rwp();
-if ( ! wp_installing() ) {
-	add_action(
-		'plugins_loaded',
-		static function () use ( $rwp ) {
 
-			$rwp::init( $rwp );
-		}
-	);
+// Activate plugin when new blog is added
+\add_action( 'wpmu_new_blog', array( $rwp, 'activate_new_site' ) );
+\register_activation_hook(RWP_PLUGIN_FILE, array( $rwp, 'activate' ) );
+\register_deactivation_hook(RWP_PLUGIN_FILE, array( $rwp, 'deactivate' ) );
+
+if ( ! wp_installing() ) {
+	add_action('plugins_loaded', static function () use ( $rwp ) {
+		$rwp::init();
+	});
 }

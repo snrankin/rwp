@@ -146,20 +146,6 @@ class Plugin extends Singleton implements Component {
 		$this->context = Context::determine();
 		$this->request = $this->request();
 
-		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
-        \register_activation_hook( RWP_PLUGIN_FILE, array( $this, 'activate' ) );
-        \register_deactivation_hook( RWP_PLUGIN_FILE, array( $this, 'deactivate' ) );
-        \register_uninstall_hook( RWP_PLUGIN_FILE, array( $this, 'uninstall' ) );
-
-    }
-
-	/**
-	 * Initialize the plugin
-	 * @param Plugin $plugin
-	 * @return void
-	 */
-	public static function init( $plugin ) {
-
 		/**
 		 * @var \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker $update_checker
 		 */
@@ -173,7 +159,21 @@ class Plugin extends Singleton implements Component {
 			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
 		));
 
-		$plugin->set( 'update_checker', $update_checker );
+		$this->update_checker = $update_checker;
+
+    }
+
+	/**
+	 * Initialize the plugin
+	 *
+	 * @return void
+	 */
+	public static function init() {
+
+		/**
+		 * @var Plugin $plugin
+		 */
+		$plugin = self::instance();
 
 		$plugin->load_textdomain();
 		$plugin->initialize_autoloader();
@@ -406,7 +406,8 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function maybe_upgrade() {
-		if ( 'backend' !== $this->request ) {
+
+		if ( ! $this->request() !== 'backend' ) {
 			return;
 		}
          // trigger upgrade
