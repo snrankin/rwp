@@ -146,6 +146,11 @@ class Plugin extends Singleton implements Component {
 		$this->context = Context::determine();
 		$this->request = $this->request();
 
+		\add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
+        \register_activation_hook( RWP_PLUGIN_FILE, array( $this, 'activate' ) );
+        \register_deactivation_hook( RWP_PLUGIN_FILE, array( $this, 'deactivate' ) );
+        \register_uninstall_hook( RWP_PLUGIN_FILE, array( $this, 'uninstall' ) );
+
     }
 
 	/**
@@ -170,20 +175,14 @@ class Plugin extends Singleton implements Component {
 
 		$plugin->set( 'update_checker', $update_checker );
 
-        // Activate plugin when new blog is added
-		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );
-        \register_activation_hook( $plugin->get_plugin_file(), array( $plugin, 'activate' ) );
-        \register_deactivation_hook( $plugin->get_plugin_file(), array( $plugin, 'deactivate' ) );
-        \register_uninstall_hook( $plugin->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
-        \add_action( 'admin_init', array( $plugin, 'maybe_upgrade' ) );
-        \add_action( 'plugins_loaded', array( $plugin, 'load_textdomain' ) );
-
+		$plugin->load_textdomain();
 		$plugin->initialize_autoloader();
 		$plugin->initialize_classes();
 		$plugin->initialize_settings();
 		$plugin->initialize_configs();
 		$plugin->initialize_assets();
 		$plugin->initialize_options();
+		$plugin->maybe_upgrade();
 
 	}
 
@@ -407,7 +406,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function maybe_upgrade() {
-		if ( ! $this->request() !== 'backend' ) {
+		if ( 'backend' !== $this->request ) {
 			return;
 		}
          // trigger upgrade
