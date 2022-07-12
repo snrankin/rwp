@@ -167,6 +167,7 @@ namespace RWP\Vendor\PUC\v4p11;
                 //of the library, not the version that saved the update.
                 $updateClass = null;
                 if (isset($state->updateBaseClass)) {
+					$state->updateBaseClass = rwp_remove_prefix($state->updateBaseClass, '\\');
                     $updateClass = $this->getLibPrefix() . $state->updateBaseClass;
                 } else {
                     if (isset($state->updateClass) && \class_exists($state->updateClass)) {
@@ -187,7 +188,7 @@ namespace RWP\Vendor\PUC\v4p11;
         }
         private function getLibPrefix()
         {
-            $parts = \explode('_', __CLASS__, 3);
-            return $parts[0] . '_' . $parts[1] . '_';
+
+            return __NAMESPACE__ . '\\';
         }
     }
