@@ -3,7 +3,7 @@
  * Plugin Name: RIESTERWP Core
  * Plugin URI: @TODO
  * Description: @TODO
- * Version: 0.9.1
+ * Version: 0.9.2
  * Author: RIESTER Advertising Agency
  * Author URI: https://www.riester.com
  * Text Domain: rwp
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-define( 'RWP_PLUGIN_VERSION', '0.9.1' );
+define( 'RWP_PLUGIN_VERSION', '0.9.2' );
 define( 'RWP_PLUGIN_TEXTDOMAIN', 'rwp' );
 define( 'RWP_PLUGIN_NAME', 'RIESTERWP Core' );
 define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
