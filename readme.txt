@@ -62,6 +62,10 @@ An answer to that question.
 Answer to foo bar dilemma.
 
 == Changelog ==
+
+= 0.9.2 =
+Removing ending div tag that was breaking Query monitor layout
+
 = 0.9.1 =
 Setting up update process
 
