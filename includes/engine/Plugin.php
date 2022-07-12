@@ -146,15 +146,6 @@ class Plugin extends Singleton implements Component {
 		$this->context = Context::determine();
 		$this->request = $this->request();
 
-    }
-
-	/**
-	 * Initialize the plugin
-	 * @param Plugin $plugin
-	 * @return void
-	 */
-	public static function init( $plugin ) {
-
 		/**
 		 * @var \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker $update_checker
 		 */
@@ -168,22 +159,30 @@ class Plugin extends Singleton implements Component {
 			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
 		));
 
-		$plugin->set( 'update_checker', $update_checker );
+		$this->update_checker = $update_checker;
 
-        // Activate plugin when new blog is added
-		\add_action( 'wpmu_new_blog', array( $plugin, 'activate_new_site' ) );
-        \register_activation_hook( $plugin->get_plugin_file(), array( $plugin, 'activate' ) );
-        \register_deactivation_hook( $plugin->get_plugin_file(), array( $plugin, 'deactivate' ) );
-        \register_uninstall_hook( $plugin->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
-        \add_action( 'admin_init', array( $plugin, 'maybe_upgrade' ) );
-        \add_action( 'plugins_loaded', array( $plugin, 'load_textdomain' ) );
+    }
 
+	/**
+	 * Initialize the plugin
+	 *
+	 * @return void
+	 */
+	public static function init() {
+
+		/**
+		 * @var Plugin $plugin
+		 */
+		$plugin = self::instance();
+
+		$plugin->load_textdomain();
 		$plugin->initialize_autoloader();
 		$plugin->initialize_classes();
 		$plugin->initialize_settings();
 		$plugin->initialize_configs();
 		$plugin->initialize_assets();
 		$plugin->initialize_options();
+		$plugin->maybe_upgrade();
 
 	}
 
@@ -407,6 +406,7 @@ class Plugin extends Singleton implements Component {
 	 * @return void
 	 */
     public function maybe_upgrade() {
+
 		if ( ! $this->request() !== 'backend' ) {
 			return;
 		}
