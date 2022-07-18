@@ -196,7 +196,7 @@ class Element implements \ArrayAccess {
 					return true;
 				}
 			} else {
-				return true;
+				return false;
 			}
 		} else {
 			return $this->has_content();
