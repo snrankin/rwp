@@ -101,7 +101,6 @@ class Button extends Element {
 	 */
 
 	public $icon_opened = array(
-		'content' => '−',
 		'tag'     => 'span',
 		'atts'    => array(
 			'class' => array(
@@ -116,7 +115,6 @@ class Button extends Element {
 	 */
 
 	public $icon_closed = array(
-		'content' => '+',
 		'tag'     => 'span',
 		'atts'    => array(
 			'class' => array(
@@ -170,9 +168,9 @@ class Button extends Element {
 			});
 		}
 
-		if ( filled( $this->toggle ) ) {
+		if ( $this->filled( 'toggle' ) ) {
 
-			if ( ! empty( $this->icon_opened ) ) {
+			if ( $this->filled( 'icon_opened' ) ) {
 				if ( ! ( $this->icon_opened instanceof Icon ) ) {
 					$this->icon_opened = new Icon( $this->icon_opened );
 
@@ -180,7 +178,7 @@ class Button extends Element {
 				$this->icon_opened->add_class( 'icon-opened' );
 			}
 
-			if ( ! empty( $this->icon_closed ) ) {
+			if ( $this->filled( 'icon_closed' ) ) {
 				if ( ! ( $this->icon_closed instanceof Icon ) ) {
 					$this->icon_closed = new Icon( $this->icon_closed );
 
@@ -239,6 +237,8 @@ class Button extends Element {
 			case 'modal':
 				$this->set_attr( 'data-bs-toggle', $toggle );
 				$this->set_attr( 'data-bs-target', $link );
+				$this->set_attr( 'aria-controls', $target );
+				$this->set_toggle_icons();
 				break;
 			case 'close':
 				$this->set_attr( 'data-bs-dismiss', 'modal' );
@@ -249,12 +249,17 @@ class Button extends Element {
 	}
 
 	public function set_toggle_icons() {
-        if ( $this->filled( 'icon_opened' ) ) {
+        if ( $this->filled_element( 'icon_opened' ) ) {
 			$this->icon->set_content( $this->icon_opened, 'opened', true );
 		}
 
-		if ( $this->filled( 'icon_closed' ) ) {
-			$this->icon->set_content( $this->icon_closed, 'closed', true );
+		if ( $this->filled_element( 'icon_closed' ) ) {
+			if ( ! $this->filled_element( 'icon_opened' ) ) {
+				$this->icon_closed->remove_class( 'icon-closed' );
+				$this->icon->merge_args( $this->icon_closed );
+			} else {
+				$this->icon->set_content( $this->icon_closed, 'closed', true );
+			}
 		}
 	}
 
