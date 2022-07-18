@@ -125,6 +125,10 @@ $col-spacing-y: $grid-gutter-width;
 		}
 	}
 
+	@for $i from 1 through $grid-columns {
+		--#{$variable-prefix}column-#{$i}-width: calc(#{getcssvar(container-width)} * #{divide($i, $grid-columns)} + (#{getcssvar(gutter-x)} * #{$i - 1}));
+	}
+
 	@include rfs($dropdown-item-padding-x, #{cssvar(dropdown-item-padding-x)});
 	@include rfs($dropdown-item-padding-y, #{cssvar(dropdown-item-padding-y)});
 

@@ -410,6 +410,7 @@ html{
     --bs-container-lg-width:80vw;
     --bs-container-xl-width:75vw;
     --bs-container-xxl-width:1050px;
+    --bs-container-md-width:90vw;
     --bs-dropdown-item-padding-x:16px;
     --bs-dropdown-item-padding-x:1rem;
     --bs-dropdown-item-padding-y:4px;
