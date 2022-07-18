@@ -469,6 +469,28 @@ acf_add_local_field_group(array(
 							'allow_bulkedit' => 0,
 						),
 						array(
+							'key' => 'field_62cf37f830c38',
+							'label' => 'Mobile Menu Type',
+							'name' => 'mobile_menu_type',
+							'type' => 'button_group',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'choices' => array(
+								'collapse' => 'Drop Down',
+								'offcanvas' => 'Offcanvas',
+							),
+							'allow_null' => 0,
+							'default_value' => 'collapse : Drop Down',
+							'layout' => 'horizontal',
+							'return_format' => 'value',
+						),
+						array(
 							'key' => 'field_6102fa15f2869',
 							'label' => 'Sticky Nav',
 							'name' => 'sticky_nav',
@@ -1780,7 +1802,7 @@ acf_add_local_field_group(array(
 	'acfe_categories' => array(
 		'plugin' => 'Plugin',
 	),
-	'modified' => 1653502450,
+	'modified' => 1657748221,
 ));
 
 endif;

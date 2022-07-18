@@ -253,6 +253,9 @@ function rwp_get_icon_from_acf( $fields, $post = null ) {
 			$icon = array(
 				'tag' => 'span',
 				'content' => data_get( $fields, 'content', '' ),
+				'atts' => array(
+					'class' => 'custom-html',
+				),
 			);
 			break;
 	}

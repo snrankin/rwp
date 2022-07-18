@@ -91,23 +91,11 @@
 					position: absolute;
 					top: 100%;
 					left: 0;
-					z-index: $zindex-dropdown;
-					padding: $dropdown-padding-y $dropdown-padding-x;
-					text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
-					background-clip: padding-box;
-					border: $dropdown-border-width solid $dropdown-border-color;
-					@include border-radius($dropdown-border-radius);
-					@include box-shadow($dropdown-box-shadow);
-
-					ul {
-						@include font-size($dropdown-font-size);
-					}
 				}
 
 				.dropdown {
 					> .dropdown-menu {
 						max-height: none;
-						border: $dropdown-border-width solid $dropdown-border-color;
 					}
 				}
 
@@ -146,27 +134,152 @@
 			}
 		}
 	}
+}
 
-	.nav-item {
-		&:not(.level-0-item),
-		&:not(.top-level-menu-item) {
-			padding: $dropdown-item-padding-y $dropdown-item-padding-x;
-
-			// Prevent dropdown overflow if there's no padding
-			// See https://github.com/twbs/bootstrap/pull/27703
-			@if $dropdown-padding-y == 0 {
-				&:first-child {
-					@include border-top-radius($dropdown-inner-border-radius);
-				}
-
-				&:last-child {
-					@include border-bottom-radius($dropdown-inner-border-radius);
-				}
+.btn {
+	&[aria-expanded='true'],
+	&[aria-selected='true'],
+	&.active {
+		.btn-icon.custom-html {
+			> .toggle-bar::before {
+				animation: burg2top 0.4s linear forwards;
 			}
 
-			.nav-link {
-				padding: 0;
+			> .toggle-bar {
+				background: transparent;
 			}
+
+			> .toggle-bar::after {
+				animation: burg2bottom 0.4s linear forwards;
+			}
+		}
+	}
+}
+
+.navbar-toggler .btn-icon.custom-html {
+	font-size: 5px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: getcssvar(navbar-toggler-icon-width, 24px);
+	height: getcssvar(navbar-toggler-icon-height, 24px);
+
+	> .toggle-bar {
+		transition: background 0.4s, font-size 0s;
+		background: currentColor;
+		display: block;
+		width: getcssvar(navbar-toggler-bar-width, 24px);
+		height: getcssvar(navbar-toggler-bar-height, 2px);
+		border-radius: getcssvar(navbar-toggler-bar-border-radius, $border-radius-pill);
+
+		&::before,
+		&::after {
+			transition: font-size 0s;
+			transform-origin: center center;
+			content: '';
+			display: block;
+			position: absolute;
+			width: getcssvar(navbar-toggler-bar-width, 24px);
+			height: getcssvar(navbar-toggler-bar-height, 2px);
+			border-radius: getcssvar(navbar-toggler-bar-border-radius, $border-radius-pill);
+			background: currentColor;
+		}
+
+		&::before {
+			margin-top: -1.5em;
+			animation: burg2topReset 0.4s linear forwards;
+		}
+
+		&::after {
+			margin-top: 1.5em;
+			animation: burg2bottomReset 0.4s linear forwards;
+		}
+	}
+
+	//stylelint-disable-next-line
+	@keyframes burg2top {
+		//stylelint-disable-next-line
+		0% {
+		}
+
+		20% {
+			margin-top: 0;
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 0;
+			transform: rotate(55deg);
+		}
+
+		100% {
+			margin-top: 0;
+			transform: rotate(45deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2bottom {
+		//stylelint-disable-next-line
+		0% {
+		}
+
+		20% {
+			margin-top: 0;
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 0;
+			transform: rotate(-55deg);
+		}
+
+		100% {
+			margin-top: 0;
+			transform: rotate(-45deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2topReset {
+		//stylelint-disable-next-line
+		0% {
+			margin-top: 0;
+			transform: rotate(45deg);
+		}
+
+		20% {
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 1.7em;
+			transform: rotate(0deg);
+		}
+
+		100% {
+			margin-top: 1.5em;
+			transform: rotate(0deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2bottomReset {
+		0% {
+			margin-top: 0;
+			transform: rotate(-45deg);
+		}
+
+		20% {
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: -1.7em;
+			transform: rotate(0deg);
+		}
+
+		100% {
+			margin-top: -1.5em;
+			transform: rotate(0deg);
 		}
 	}
 }

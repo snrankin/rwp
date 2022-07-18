@@ -8,7 +8,7 @@
 
 import { /* webpackMode: "eager" */ actual } from 'actual';
 
-import { /* webpackMode: "eager" */ mq } from 'verge';
+import { /* webpackMode: "eager" */ mq, rectangle } from 'verge';
 
 export * from 'verge';
 
@@ -19,6 +19,22 @@ export function has(obj, path) {
 	const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g);
 
 	return !!pathArray.reduce((prevObj, key) => prevObj && prevObj[key], obj);
+}
+
+export function getOffsetTop(elem) {
+	// Set our distance placeholder
+	var distance = 0;
+
+	// Loop up the DOM
+	if (elem.offsetParent) {
+		do {
+			distance += elem.offsetTop;
+			elem = elem.offsetParent;
+		} while (elem);
+	}
+
+	// Return our distance
+	return distance < 0 ? 0 : distance;
 }
 
 export function eventFire(el, etype) {
@@ -367,7 +383,6 @@ export function matchHeights(elem = '', breakpoint = null) {
 			var minHeight = getTallest(elem);
 
 			if (false !== minHeight) {
-				minHeight += 'px';
 				matches.forEach(function (el) {
 					el.style.minHeight = minHeight;
 				});
@@ -382,6 +397,50 @@ export function matchHeights(elem = '', breakpoint = null) {
 			matchHeights(elem);
 		});
 	}
+}
+
+export function addHeaderOffset(targetEl, header, includeAdminBar = false, prop = 'marginTop', breakpoint = null, breakpointType = 'min-width') {
+	const elements = document.querySelectorAll(targetEl);
+
+	var matches = Array.from(elements);
+
+	if (matches.length > 0) {
+		if ((!isEmpty(breakpoint) && isBootstrapBP(breakpoint, breakpointType)) || isEmpty(breakpoint)) {
+			let adminBarHeight = 0;
+
+			if (!isElement(header)) {
+				header = document.querySelector(header);
+			}
+			if (!isEmpty(header)) {
+				if (includeAdminBar) {
+					if (document.body.classList.contains('admin-bar')) {
+						let adminBar = document.getElementById('wpadminbar');
+						if (!isEmpty(adminBar)) {
+							adminBarHeight = rectangle(adminBar).height;
+						}
+					}
+				}
+
+				let headerHeight = rectangle(header).height;
+
+				let offsetTop = headerHeight + adminBarHeight;
+
+				offsetTop = offsetTop + 'px';
+
+				matches.forEach(function (el) {
+					el.style[prop] = offsetTop;
+				});
+			}
+		} else {
+			matches.forEach(function (el) {
+				el.style.removeProperty(prop);
+			});
+		}
+	}
+
+	window.addEventListener('resize', function () {
+		addHeaderOffset(targetEl, header, includeAdminBar, prop, breakpoint);
+	});
 }
 
 /**

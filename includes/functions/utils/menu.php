@@ -115,7 +115,7 @@ function rwp_menu_args( $args = [] ) {
 
 	$direction = data_get( $custom_args, 'direction', 'vertical' );
 	$type = data_get( $custom_args, 'type', 'nav' );
-
+	$label = data_get( $args, 'container_aria_label', data_get( $menu, 'name' ) );
 	$container = data_get( $args, 'container', 'nav' );
 
 	if ( ! empty( $container ) ) {
@@ -129,9 +129,6 @@ function rwp_menu_args( $args = [] ) {
 
 		// Set the container ID to the incoming arguments or set placeholder string
 		$container_id = data_get( $args, 'container_id', '%1$s-wrapper' );
-
-		// Set the container label to the incoming arguments or set it as the menu name
-		$container_label = data_get( $args, 'container_aria_label', data_get( $menu, 'name' ) );
 
 	}
 
@@ -152,7 +149,7 @@ function rwp_menu_args( $args = [] ) {
 		'atts'    => array(
 			'id'         => $container_id,
 			'class'      => $container_class,
-			'aria-label' => $container_label,
+			'aria-label' => $label,
 		),
     );
 
@@ -248,13 +245,20 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     }
 
     $theme           = data_get( $custom_args, 'theme' );
+	$label = $nav->get_attr( 'aria-label' );
+	$nav->remove_attr( 'aria-label' );
 	/**
 	 * @var Collection $order
 	 */
     $order           = rwp_collection( data_get( $custom_args, 'navbar.order', array( 'navbar', 'toggle' ) ) );
     $in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
     $breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
+	$breakpoint_class = '';
+	if ( filled( $breakpoint ) ) {
+		$breakpoint_class = "-$breakpoint";
+	}
     $in_grid         = data_get( $custom_args, 'navbar.in_grid', false );
+	$mobile_menu_type         = data_get( $custom_args, 'navbar.mobile_menu_type', 'collapse' );
 
 	$item_styles          = array();
 	$item_acf_styles     = data_get( $custom_args, 'item_options.styles', rwp_collection() );
@@ -277,12 +281,18 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 			'class' => array(
 				'navbar',
 			),
+			'aria-label' => $label,
 		),
 	) );
 
 	$navbar->add_class( 'navbar-' . $menu_slug );
 
-    $nav->add_class( array( 'collapse', 'navbar-collapse' ) );
+	if ( 'collapse' === $mobile_menu_type ) {
+		$nav->add_class( array( 'collapse', 'navbar-collapse' ) );
+	} else {
+		$nav->add_class( 'offcanvas-body' );
+	}
+
 	$nav->set_tag( 'div' );
 
 	$column_count = $order->count();
@@ -291,10 +301,10 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 	$desktop_layout = '';
 
     if ( ! empty( $breakpoint ) ) {
-        $navbar->add_class( 'navbar-expand-' . $breakpoint );
+        $navbar->add_class( 'navbar-expand' . $breakpoint_class );
 
 		if ( false !== $order->search( 'toggle' ) ) {
-			$column_count = $column_count - 1;
+			$column_count--;
 		}
 
 		$desktop_layout = "grid-columns-$breakpoint-$column_count";
@@ -327,9 +337,17 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
     $nav_toggle = rwp_button(
         array(
 			'link'   => '#%1$s-wrapper',
-			'toggle' => 'collapse',
+			'toggle' => $mobile_menu_type,
 			'icon_closed' => $toggle_icon_closed,
 			'icon_opened' => $toggle_icon_opened,
+			'text' => array(
+				'content' => "Toggle $label",
+				'atts' => array(
+					'class'     => array(
+						'visually-hidden',
+					),
+				),
+			),
 			'atts'   => array(
 				'class' => array(
 					'navbar-toggler',
@@ -337,6 +355,7 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 			),
         )
     );
+	$nav_toggle = $nav_toggle->html();
 
     $navbar_content->set_content( $nav_toggle, 'toggle' );
 
@@ -380,6 +399,26 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 
 		$nav->set_content( '<style> .navbar-' . $menu_slug . ' .nav-item::before {' . $styles . ' }</style>', 'styles' );
 
+	}
+
+	if ( 'offcanvas' === $mobile_menu_type ) { // TODO: Add offcanvas option with real component
+
+		$offcanvas_id = $nav->get_attr( 'id' );
+		$nav->remove_attr( 'id' );
+		$offcanvas = rwp_element(array(
+			'content' => $nav->html(),
+			'tag' => 'div',
+			'atts' => array(
+				'id' => $offcanvas_id,
+				'tabindex' => '-1',
+				'class' => 'offcanvas offcanvas-start', // TODO: allow for specifying which side it should be one
+				'data-bs-backdrop' => 'false',
+
+			),
+		));
+
+		$offcanvas->add_class( 'mt' . $breakpoint_class . '-0' );
+		$nav = $offcanvas;
 	}
 
     $navbar_content->set_content( $nav, 'navbar' );
