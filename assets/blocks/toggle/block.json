@@ -1,0 +1,22 @@
+{
+  "apiVersion": 2,
+  "name": "rwp/toggle",
+  "title": "Toggle",
+  "category": "design",
+  "attributes": {
+    "isOpen": {
+      "type": "boolean",
+      "default": false
+    },
+    "toggleId": {
+      "type": "string"
+    }
+  },
+  "providesContext": {
+    "rwp-toggle/isOpen": "isOpen",
+    "rwp-toggle/toggleId": "toggleId"
+  },
+  "supports": {
+    "anchor": true
+  }
+}

@@ -164,6 +164,9 @@
         "use strict";
         __webpack_require__.r(__webpack_exports__);
         __webpack_require__.d(__webpack_exports__, {
+            addHeaderOffset: function() {
+                return addHeaderOffset;
+            },
             bsAtts: function() {
                 return bsAtts;
             },
@@ -193,6 +196,9 @@
             },
             getHash: function() {
                 return getHash;
+            },
+            getOffsetTop: function() {
+                return getOffsetTop;
             },
             getTag: function() {
                 return getTag;
@@ -257,7 +263,7 @@
         var verge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../node_modules/verge/verge.js");
         var verge__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(verge__WEBPACK_IMPORTED_MODULE_1__);
         var __WEBPACK_REEXPORT_OBJECT__ = {};
-        for (var __WEBPACK_IMPORT_KEY__ in verge__WEBPACK_IMPORTED_MODULE_1__) if ([ "default", "isReduced", "has", "eventFire", "listen", "noDefault", "noBubbles", "extend", "get", "isEmpty", "omit", "getTag", "camelCase", "changeTag", "stringToHtml", "wrapElement", "unwrapElement", "screenSize", "filterPath", "getHash", "getTallest", "matchHeights", "getWidest", "matchWidths", "bsAtts", "getBootstrapVar", "getBootstrapBP", "isBootstrapBP", "sortObjectByKeys", "logCustomProperties" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) {
+        for (var __WEBPACK_IMPORT_KEY__ in verge__WEBPACK_IMPORTED_MODULE_1__) if ([ "default", "isReduced", "has", "getOffsetTop", "eventFire", "listen", "noDefault", "noBubbles", "extend", "get", "isEmpty", "omit", "getTag", "camelCase", "changeTag", "stringToHtml", "wrapElement", "unwrapElement", "screenSize", "filterPath", "getHash", "getTallest", "matchHeights", "addHeaderOffset", "getWidest", "matchWidths", "bsAtts", "getBootstrapVar", "getBootstrapBP", "isBootstrapBP", "sortObjectByKeys", "logCustomProperties" ].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) {
             return verge__WEBPACK_IMPORTED_MODULE_1__[key];
         }.bind(0, __WEBPACK_IMPORT_KEY__);
         __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
@@ -265,6 +271,16 @@
         function has(obj, path) {
             const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g);
             return !!pathArray.reduce(((prevObj, key) => prevObj && prevObj[key]), obj);
+        }
+        function getOffsetTop(elem) {
+            var distance = 0;
+            if (elem.offsetParent) {
+                do {
+                    distance += elem.offsetTop;
+                    elem = elem.offsetParent;
+                } while (elem);
+            }
+            return distance < 0 ? 0 : distance;
         }
         function eventFire(el, etype) {
             if (el.fireEvent) {
@@ -475,7 +491,6 @@
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint) || isEmpty(breakpoint)) {
                     var minHeight = getTallest(elem);
                     if (false !== minHeight) {
-                        minHeight += "px";
                         matches.forEach((function(el) {
                             el.style.minHeight = minHeight;
                         }));
@@ -489,6 +504,41 @@
                     matchHeights(elem);
                 }));
             }
+        }
+        function addHeaderOffset(targetEl, header, includeAdminBar = false, prop = "marginTop", breakpoint = null, breakpointType = "min-width") {
+            const elements = document.querySelectorAll(targetEl);
+            var matches = Array.from(elements);
+            if (matches.length > 0) {
+                if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint, breakpointType) || isEmpty(breakpoint)) {
+                    let adminBarHeight = 0;
+                    if (!isElement(header)) {
+                        header = document.querySelector(header);
+                    }
+                    if (!isEmpty(header)) {
+                        if (includeAdminBar) {
+                            if (document.body.classList.contains("admin-bar")) {
+                                let adminBar = document.getElementById("wpadminbar");
+                                if (!isEmpty(adminBar)) {
+                                    adminBarHeight = (0, verge__WEBPACK_IMPORTED_MODULE_1__.rectangle)(adminBar).height;
+                                }
+                            }
+                        }
+                        let headerHeight = (0, verge__WEBPACK_IMPORTED_MODULE_1__.rectangle)(header).height;
+                        let offsetTop = headerHeight + adminBarHeight;
+                        offsetTop = offsetTop + "px";
+                        matches.forEach((function(el) {
+                            el.style[prop] = offsetTop;
+                        }));
+                    }
+                } else {
+                    matches.forEach((function(el) {
+                        el.style.removeProperty(prop);
+                    }));
+                }
+            }
+            window.addEventListener("resize", (function() {
+                addHeaderOffset(targetEl, header, includeAdminBar, prop, breakpoint);
+            }));
         }
         function getWidest(el) {
             const elements = document.querySelectorAll(el);

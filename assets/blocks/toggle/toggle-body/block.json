@@ -1,0 +1,28 @@
+{
+  "apiVersion": 2,
+  "name": "rwp/toggle-body",
+  "title": "Toggle Body",
+  "category": "design",
+  "icon": "feedback",
+  "attributes": {
+    "toggleBodyIsOpen": {
+      "type": "boolean",
+      "default": false
+    },
+    "toggleBodyId": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "rwp-toggle/isOpen",
+    "rwp-toggle/toggleId"
+  ],
+  "parent": [
+    "rwp/toggle"
+  ],
+  "supports": {
+    "inserter": false,
+    "multiple": false
+  }
+}

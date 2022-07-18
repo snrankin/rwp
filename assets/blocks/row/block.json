@@ -1,0 +1,47 @@
+{
+  "apiVersion": 2,
+  "name": "rwp/row",
+  "title": "Row",
+  "category": "design",
+  "attributes": {
+    "hAlign": {
+      "type": "string",
+      "default": ""
+    },
+    "vAlign": {
+      "type": "string",
+      "default": ""
+    },
+    "rowColsSm": {
+      "type": "number",
+      "default": 0
+    },
+    "rowColsMs": {
+      "type": "number",
+      "default": 0
+    },
+    "rowColsMd": {
+      "type": "number",
+      "default": 0
+    },
+    "rowColsMl": {
+      "type": "number",
+      "default": 0
+    },
+    "rowColsLg": {
+      "type": "number",
+      "default": 0
+    },
+    "rowColsXl": {
+      "type": "number",
+      "default": 0
+    },
+    "noGutters": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "anchor": true
+  }
+}

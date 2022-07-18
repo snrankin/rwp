@@ -50,39 +50,10 @@ html{
     --bs-container-width:90vw;
     --bs-container-width:90vw;
     --bs-container-sm-width:90vw;
-    --bs-container-md-width:85vw;
-    --bs-container-lg-width:80vw;
-    --bs-container-xl-width:75vw;
-    --bs-container-xxl-width:1050px;
-}
-
-body.rwp:not(.wp-admin) #wpadminbar{
-    max-width:100vw;
-    overflow-x:hidden;
-    display:flex;
-    -webkit-overflow-scrolling:touch;
-}
-body.rwp:not(.wp-admin) #wpadminbar .quicklinks{
-    display:flex;
-    justify-content:space-between;
-}
-body.rwp:not(.wp-admin) #wpadminbar .quicklinks > ul{
-    display:flex;
-}
-body.rwp:not(.wp-admin) #wpadminbar .quicklinks #wp-admin-bar-top-secondary{
-    margin-left:auto;
-}
-body.rwp:not(.wp-admin) #wpadminbar #wp-admin-bar-edit > .ab-item{
-    position:absolute !important;
-    width:1px !important;
-    height:1px !important;
-    padding:0 !important;
-    margin:-1px !important;
-    overflow:hidden !important;
-    clip:rect(0, 0, 0, 0) !important;
-    white-space:nowrap !important;
-    border:0 !important;
-    -webkit-overflow-scrolling:touch;
+    --bs-container-md-width:90vw;
+    --bs-container-lg-width:90vw;
+    --bs-container-xl-width:85vw;
+    --bs-container-xxl-width:1170px;
 }
 
 .screen-reader-text{
@@ -468,27 +439,22 @@ img.alignnone{
 
 @media (min-width: 768px){
     html{
-        --bs-container-width:85vw;
+        --bs-container-width:90vw;
     }}
 
-@media (min-width: 992px){
+@media (min-width: 996px){
     html{
-        --bs-container-width:80vw;
+        --bs-container-width:90vw;
     }}
 
 @media (min-width: 1200px){
     html{
-        --bs-container-width:75vw;
+        --bs-container-width:85vw;
     }}
 
-@media (min-width: 1400px){
+@media (min-width: 1376px){
     html{
-        --bs-container-width:1050px;
-    }}
-
-@media screen and (max-width: 600px){
-    body.rwp:not(.wp-admin) #wp-admin-bar-my-account{
-        height:46px;
+        --bs-container-width:1170px;
     }}
 
 /*# sourceMappingURL=rwp-public.css.map*/

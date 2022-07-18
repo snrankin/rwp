@@ -1,0 +1,42 @@
+{
+  "apiVersion": 2,
+  "attributes": {
+    "backgroundColor": {
+      "default": "",
+      "type": "string"
+    },
+    "borderColor": {
+      "default": "",
+      "type": "string"
+    },
+    "layout": {
+      "default": "vertical",
+      "type": "string"
+    },
+    "linkColor": {
+      "default": "",
+      "type": "string"
+    },
+    "textAlignment": {
+      "default": "",
+      "type": "string"
+    },
+    "textColor": {
+      "default": "",
+      "type": "string"
+    }
+  },
+  "category": "design",
+  "name": "rwp/card",
+  "supports": {
+    "anchor": true,
+    "color": {
+      "background": true,
+      "border": true,
+      "gradient": true,
+      "link": true,
+      "text": true
+    }
+  },
+  "title": "Card"
+}
