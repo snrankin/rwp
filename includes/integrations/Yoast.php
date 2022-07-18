@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Yoast SEO Customization
  *
@@ -53,6 +54,13 @@ class Yoast extends Singleton {
 			add_filter( 'wpseo_breadcrumb_single_link', array( $this, 'bootstrap_breadcrumbs' ), 20, 2 );
 		}
 
+		if ( rwp_get_option(
+			'modules.yoast.bootstrap_faqs',
+			false
+		) ) {
+			add_filter( 'render_block', array( $this, 'faq_accordion' ), 20, 2 );
+		}
+
 		/**
 		 * Adds Schema pieces to our output.
 		 *
@@ -62,7 +70,7 @@ class Yoast extends Singleton {
 		 * @return array Graph pieces to output.
 		 */
 
-		add_filter( 'wpseo_schema_graph_pieces', function( $pieces, $context ) {
+		add_filter('wpseo_schema_graph_pieces', function ( $pieces, $context ) {
 			$organization = new Yoast\Locations( $context );
 			foreach ( $pieces as $key => $value ) {
 				if ( $value instanceof \Yoast\WP\SEO\Generators\Schema\Organization ) {
@@ -71,21 +79,19 @@ class Yoast extends Singleton {
 			}
 
 			return $pieces;
-		}, 11, 2 );
+		}, 11, 2);
 
-		add_action( 'admin_init', function() {
+		add_action('admin_init', function () {
 			if ( post_type_exists( 'rwp_team_member' ) ) {
 				\WPSEO_Options::set( 'schema-page-type-rwp_team_member', 'ProfilePage' );
 			}
-		}, 20 );
-
+		}, 20);
 	}
 
 	public function init_seo() {
 		if ( true === WP_DEBUG ) {
 			\add_filter( 'yoast_seo_development_mode', '__return_true' );
 		}
-
 	}
 
 	/**
@@ -179,5 +185,81 @@ class Yoast extends Singleton {
 		}
 		$data = [ $schema_type ];
 		return $data;
+	}
+
+	public function faq_accordion( $block_content = '', $block = [] ) {
+		if ( 'yoast/faq-block' !== $block['blockName'] ) {
+			return $block_content;
+		}
+		if ( ! empty( $block_content ) ) {
+
+			$questions_markup = rwp_extract_html_elements( $block_content, '.schema-faq-section' );
+
+			$questions = $block['attrs']['questions'];
+
+			if ( ! empty( $questions ) ) {
+				$panels = rwp_element( rwp_extract_html_attributes( $block_content, '.schema-faq', true ) );
+				$panels->add_class( array( 'accordion', 'accordion-flush' ) );
+				foreach ( $questions as $i => $question ) {
+					$markup = $questions_markup[ $i ];
+					$panel_atts = rwp_extract_html_attributes( $markup, '.schema-faq-section', true );
+
+					$title =
+						rwp_extract_html_elements( $markup, '.schema-faq-question' );
+
+					$title = rwp_html( $title[0] )->text();
+
+					$title = rwp_button(array(
+
+						'text' => $title,
+						'atts' => array(
+							'data-bs-toggle' => 'collapse',
+							'data-bs-target' => '#' . $question['id'] . '-answer',
+							'class' => 'accordion-button collapsed',
+							'aria-expanded' => false,
+							'aria-controls' => $question['id'] . '-answer',
+						),
+					));
+
+					$title->remove_class( 'btn' );
+
+					$title = rwp_element(array(
+						'tag' => 'h3',
+						'content' => $title->html(),
+						'atts' => array(
+							'id' => $question['id'] . '-question',
+							'class' => 'accordion-header schema-faq-question',
+						),
+					))->html();
+
+					$panel_atts['content'] = [ $title ];
+
+					$answer =
+						rwp_extract_html_elements( $markup, '.schema-faq-answer' );
+
+					$answer = rwp_element(array(
+						'tag' => 'div',
+						'content' => '<div class="accordion-body">' . $answer[0] . '</div>',
+						'atts' => array(
+							'id' => $question['id'] . '-answer',
+							'class' => 'accordion-collapse collapse',
+							'aria-labelledby' => $question['id'] . '-question',
+						),
+					))->html();
+
+					$panel_atts['content'][] = $answer;
+
+					$panel = rwp_element( $panel_atts );
+
+					$panel->add_class( 'accordion-item' );
+
+					$panel = $panel->html();
+
+					$panels->set_content( $panel );
+				}
+				$block_content = $panels->html();
+			}
+		}
+		return $block_content;
 	}
 }
