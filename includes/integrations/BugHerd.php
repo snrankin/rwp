@@ -40,15 +40,17 @@ class BugHerd extends Singleton {
 		}
 
 		if ( $api_key ) {
+			$url = add_query_arg( 'apikey', $api_key, 'https://www.bugherd.com/sidebarv2.js' );
+
 			if ( rwp_get_option( 'modules.bugherd.frontend', true ) ) {
-				\add_action('wp_head', function() use ( $api_key ) {
-					echo wp_sprintf( '<script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?%s" async="true"></script>', $api_key ); // phpcs:ignore
+				\add_action('wp_head', function () use ( $url ) {
+					echo wp_sprintf('<script type="text/javascript" src="%s" async="true"></script>', $url); // phpcs:ignore
 				});
 			}
 
 			if ( rwp_get_option( 'modules.bugherd.backend', true ) ) {
-				\add_action('admin_head', function() use ( $api_key ) {
-					echo wp_sprintf( '<script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?%s" async="true"></script>', $api_key );  // phpcs:ignore
+				\add_action('admin_head', function () use ( $url ) {
+					echo wp_sprintf('<script type="text/javascript" src="%s" async="true"></script>', $url);  // phpcs:ignore
 				});
 			}
 		}
