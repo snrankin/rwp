@@ -95,6 +95,17 @@ class Collection extends IlluminateCollection {
 	}
 
 	/**
+     * Recursively replace the collection items with the given items.
+     *
+     * @param  mixed  $items
+     * @return static
+     */
+    public function replaceRecursive( $items ) {
+		$items = rwp_object_to_array( $items );
+        return new static( \array_replace_recursive( $this->items, $items ) );
+    }
+
+	/**
 	 * Remove an item on an array or object using dot notation.
 	 *
 	 * @param mixed $key

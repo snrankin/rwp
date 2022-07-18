@@ -91,7 +91,7 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
 			}
 		}
 
-		if ( $iterator->hasChildren() && 'atts' !== $key && 'order' !== $key ) {
+		if ( $iterator->hasChildren() && ! rwp_is_collection( $value ) && 'atts' !== $key && 'order' !== $key ) {
 			$children = $iterator->getChildren();
 
 			if ( ! empty( $parent_val ) ) {
@@ -103,8 +103,10 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
 			if ( 'atts' === $key && ! empty( $parent_val ) ) {
 
 				$value = rwp_merge_args( $parent_val, $value );
-			} else if ( 'order' === $key && ! empty( $parent_val ) ) {
-				$value = rwp_merge_args( $parent_val, $value );
+			} else if ( rwp_is_collection( $parent_val ) ) {
+
+				$value = $parent_val->replaceRecursive( $value );
+
 			}
 		}
 		if ( is_object( $base_obj ) ) {
