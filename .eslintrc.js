@@ -12,7 +12,7 @@ module.exports = {
     bs: true,
     bootstrap: true
   },
-  ignorePatterns: ['assets/js/**/*.js', 'src/blocks/**/*.js', 'src/js/vendor/modernizr.js', 'node_modules/**/*.js'],
+  ignorePatterns: ['./assets/js/**/*.js', './src/blocks/**/*.js', './src/js/vendor/modernizr.js', './node_modules/**/*.js'],
   env: {
     browser: true,
     amd: true,

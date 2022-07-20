@@ -9,5 +9,5 @@
 @import '../global/admin-index';
 @import '../global/mixins/acf';
 
-@import 'acf/layout/*.scss';
-@import 'acf/fields/*.scss';
+@import 'acf/layout/*.scss'; //stylelint-disable-line
+@import 'acf/fields/*.scss'; //stylelint-disable-line

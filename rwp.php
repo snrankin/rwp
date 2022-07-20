@@ -1,4 +1,5 @@
 <?php
+
 /** ============================================================================
  * Plugin Name: RIESTERWP Core
  * Plugin URI: @TODO
@@ -15,9 +16,8 @@
  * WordPress-Plugin-Boilerplate-Powered: v3.2.0
  * ========================================================================== */
 
-// If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	die( 'We\'re sorry, but you can not directly access this file.' );
+	exit;
 }
 
 define( 'RWP_PLUGIN_VERSION', '0.9.3' );
@@ -25,19 +25,18 @@ define( 'RWP_PLUGIN_TEXTDOMAIN', 'rwp' );
 define( 'RWP_PLUGIN_NAME', 'RIESTERWP Core' );
 define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
 define( 'RWP_PLUGIN_PHP_VERSION', '7.0.0' );
-define( 'RWP_PLUGIN_ROOT',  trailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'RWP_PLUGIN_URI',  trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'RWP_PLUGIN_ROOT', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'RWP_PLUGIN_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_FILE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'dependencies/' );
 
-if (!function_exists('get_plugin_data')) {
-    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+if ( ! function_exists( 'get_plugin_data' ) ) {
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
-
 function rwp_meets_requirements() {
-	$meta = get_plugin_data(__FILE__);
+	$meta = get_plugin_data( __FILE__ );
 
-	$name = ($meta['Name'] && !empty($meta['Name'])) ? $meta['Name'] : 'RWP';
+	$name = ( $meta['Name'] && ! empty( $meta['Name'] ) ) ? $meta['Name'] : 'RWP';
 
 	$meets_requirements = true;
 
@@ -45,48 +44,107 @@ function rwp_meets_requirements() {
 	 * Ensure compatible version of PHP is used
 	 */
 
-	if(isset($meta['RequiresPHP']) && !empty($meta['RequiresPHP'])){
+	if ( isset( $meta['RequiresPHP'] ) && ! empty( $meta['RequiresPHP'] ) ) {
 
 		$php_min = $meta['RequiresPHP'];
 		$php_ver = phpversion();
 
-		if (version_compare($php_min, $php_ver, '>')) {
-            add_action('admin_notices', static function() use ($php_min, $php_ver, $name){
+		if ( version_compare( $php_min, $php_ver, '>' ) ) {
+			add_action('admin_notices', static function () use ( $php_min, $php_ver, $name ) {
 				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires php to be a minimum of version %s.</strong><br/>The current installed version is %s. Please contact your hosting provider if you need to upgrade your version of php.</p></div>', $name, $php_min, $php_ver );
 			});
 			$meets_requirements = false;
-        }
-
+		}
 	}
 
 	/**
 	 * Ensure compatible version of WordPress is used
 	 */
 
-	if(isset($meta['RequiresWP']) && !empty($meta['RequiresWP'])){
+	if ( isset( $meta['RequiresWP'] ) && ! empty( $meta['RequiresWP'] ) ) {
 
 		$wp_min = $meta['RequiresWP'];
-		$wp_ver = get_bloginfo('version');
+		$wp_ver = get_bloginfo( 'version' );
 
-		if (version_compare($wp_min, $wp_ver, '>')) {
-            add_action('admin_notices', static function() use ($wp_min, $wp_ver, $name){
+		if ( version_compare( $wp_min, $wp_ver, '>' ) ) {
+			add_action('admin_notices', static function () use ( $wp_min, $wp_ver, $name ) {
 				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires WordPress to be a minimum of version %s.</strong><br/>The current installed version is %s. Please upgrade WordPress and try activating %s again.</p></div>', $name, $wp_min, $wp_ver );
 			});
 			$meets_requirements = false;
-        }
-
+		}
 	}
-
 
 	return $meets_requirements;
 }
 
 
-if ( !rwp_meets_requirements() ) {
 
-	// Return early to prevent loading the plugin.
-	return;
+
+
+
+
+/**
+ * Load rwp textdomain.
+ *
+ * Load gettext translate for rwp text domain.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function rwp_load_plugin_textdomain() {
+	load_plugin_textdomain( 'rwp' );
 }
+add_action( 'plugins_loaded', 'rwp_load_plugin_textdomain' );
+
+/**
+ * rwp admin notice for minimum PHP version.
+ *
+ * Warning when the site doesn't have the minimum required PHP version.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function rwp_fail_php_version() {
+	/* translators: %s: PHP version. */
+	$message = sprintf( esc_html__( 'rwp requires PHP version %s+, plugin is currently NOT RUNNING.', 'rwp' ), '5.6' );
+	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
+	echo wp_kses_post( $html_message );
+}
+
+/**
+ * rwp admin notice for minimum WordPress version.
+ *
+ * Warning when the site doesn't have the minimum required WordPress version.
+ *
+ * @since 1.5.0
+ *
+ * @return void
+ */
+function rwp_fail_wp_version() {
+	/* translators: %s: WordPress version. */
+	$message = sprintf( esc_html__( 'rwp requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT RUNNING.', 'rwp' ), '5.2' );
+	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
+	echo wp_kses_post( $html_message );
+}
+require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
+
+if ( ! version_compare( PHP_VERSION, '5.6', '>=' ) ) {
+	add_action( 'admin_notices', 'rwp_fail_php_version' );
+} elseif ( ! version_compare( get_bloginfo( 'version' ), '5.2', '>=' ) ) {
+	add_action( 'admin_notices', 'rwp_fail_wp_version' );
+} else {
+	require RWP_PLUGIN_ROOT . '/includes/autoloader.php';
+	\RWP\Autoloader::run( RWP_PLUGIN_ROOT . '/includes/core' );
+
+
+	require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
+	require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
+	require RWP_PLUGIN_ROOT . 'includes/plugin.php';
+	require_once RWP_PLUGIN_ROOT . 'includes/functions/helpers.php';
+}
+
 
 /**
  * Register the required plugins for this plugin
@@ -98,28 +156,22 @@ function rwp_register_required_plugins() {
 	 */
 	$plugins = array(
 		array(
-			'name'               => 'Advanced Custom Fields Pro',
-			'slug'               => 'advanced-custom-fields-pro',
-			'source'             => 'http://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9ODYzMzN8dHlwZT1kZXZlbG9wZXJ8ZGF0ZT0yMDE2LTA3LTI1IDIyOjE4OjI3',
-			'required'           => true,
+			'name'     => 'Advanced Custom Fields Pro',
+			'slug'     => 'advanced-custom-fields-pro',
+			'source'   => 'http://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9ODYzMzN8dHlwZT1kZXZlbG9wZXJ8ZGF0ZT0yMDE2LTA3LTI1IDIyOjE4OjI3',
+			'required' => true,
 		),
 		array(
-			'name'      => 'Advanced Custom Fields: Extended',
-			'slug'      => 'acf-extended',
-			'required'  => true,
+			'name'     => 'Advanced Custom Fields: Extended',
+			'slug'     => 'acf-extended',
+			'required' => true,
 		),
 		array(
-			'name'               => 'Gravity Forms',
-			'slug'               => 'gravityforms',
-			'source'             => 'https://s3.amazonaws.com/gravityforms/releases/gravityforms_2.5.14.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=9UeHBET48Uc8nEE2opQoi%2FtSvXc%3D',
-			'required'           => false,
+			'name'     => 'Gravity Forms',
+			'slug'     => 'gravityforms',
+			'source'   => 'https://s3.amazonaws.com/gravityforms/releases/gravityforms_2.5.14.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=9UeHBET48Uc8nEE2opQoi%2FtSvXc%3D',
+			'required' => false,
 		),
-		array(
-			'name'               => 'Gravity Forms reCAPTCHA',
-			'slug'               => 'gravityformsrecaptcha',
-			'source'             => 'https://s3.amazonaws.com/gravityforms/addons/recaptcha/gravityformsrecaptcha_1.1.zip?AWSAccessKeyId=AKIA5U3GBHC5WDRZA6NK&Expires=1635541160&Signature=G9YrzAAQFhL1wbJlKrWeX5jM41I%3D',
-			'required'           => false,
-		)
 	);
 
 	/*
@@ -146,23 +198,3 @@ function rwp_register_required_plugins() {
 	tgmpa( $plugins, $config );
 }
 add_action( 'tgmpa_register', 'rwp_register_required_plugins' );
-
-require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
-$rwp_libraries =  require RWP_PLUGIN_ROOT . '/vendor/autoload.php';
-
-require_once RWP_PLUGIN_ROOT . 'includes/functions/functions.php';
-require_once RWP_PLUGIN_ROOT . 'includes/functions/utils.php';
-require_once RWP_PLUGIN_ROOT . 'includes/functions/filters.php';
-require_once RWP_PLUGIN_ROOT . 'includes/functions/components.php';
-$rwp = rwp();
-
-// Activate plugin when new blog is added
-\add_action( 'wpmu_new_blog', array( $rwp, 'activate_new_site' ) );
-\register_activation_hook(RWP_PLUGIN_FILE, array( $rwp, 'activate' ) );
-\register_deactivation_hook(RWP_PLUGIN_FILE, array( $rwp, 'deactivate' ) );
-
-if ( ! wp_installing() ) {
-	add_action('plugins_loaded', static function () use ( $rwp ) {
-		$rwp::init();
-	});
-}

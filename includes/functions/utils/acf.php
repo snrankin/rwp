@@ -7,8 +7,8 @@
  * @since   0.1.0
  * ========================================================================== */
 
-use RWP\Components\{Element, Html, Icon};
-use RWP\Components\Collection;
+use RWP\Helpers\{Element, Html, Icon};
+use RWP\Helpers\Collection;
 
 /**
  *
@@ -16,15 +16,14 @@ use RWP\Components\Collection;
  * @return false|array
  */
 function rwp_get_acf_fields( $post = null ) {
-     $post = rwp_post_id( $post, 'acf' );
-    if ( function_exists( 'acfe_get_fields' ) ) {
-        return acfe_get_fields( $post );
+	$post = rwp_post_id( $post, 'acf' );
+	if ( function_exists( 'acfe_get_fields' ) ) {
+		return acfe_get_fields( $post );
+	} elseif ( function_exists( 'get_fields' ) ) {
+		return get_fields( rwp_post_id( $post, 'acf' ) );
+	}
 
-    } else if ( function_exists( 'get_fields' ) ) {
-        return get_fields( rwp_post_id( $post, 'acf' ) );
-    }
-
-    return array();
+	return array();
 }
 
 /**
@@ -35,34 +34,33 @@ function rwp_get_acf_fields( $post = null ) {
  */
 
 function rwp_get_fields( $post = null ) {
-    $post_type = rwp_post( $post );
-    $post_id = rwp_post_id( $post );
+	$post_type = rwp_post( $post );
+	$post_id = rwp_post_id( $post );
 
-    $fields = array();
+	$fields = array();
 
-    if ( 0 !== $post_id ) {
-        if ( 'post' === $post_type['type'] ) {
-            $fields = get_post_meta( $post_id, '_rwp_acf', true );
-            if ( empty( $fields ) ) {
-                $fields = get_post_meta( $post_id, 'acf', true );
-            }
-        } elseif ( 'term' === $post_type['type'] ) {
-            $fields = get_term_meta( $post_id, '_rwp_acf', true );
-            if ( empty( $fields ) ) {
-                $fields = get_term_meta( $post_id, 'acf', true );
-            }
-        }
-        if ( empty( $fields ) && function_exists( 'get_fields' ) ) {
-            $fields = get_fields( rwp_post_id( $post, 'acf' ) );
+	if ( 0 !== $post_id ) {
+		if ( 'post' === $post_type['type'] ) {
+			$fields = get_post_meta( $post_id, '_rwp_acf', true );
+			if ( empty( $fields ) ) {
+				$fields = get_post_meta( $post_id, 'acf', true );
+			}
+		} elseif ( 'term' === $post_type['type'] ) {
+			$fields = get_term_meta( $post_id, '_rwp_acf', true );
+			if ( empty( $fields ) ) {
+				$fields = get_term_meta( $post_id, 'acf', true );
+			}
+		}
+		if ( empty( $fields ) && function_exists( 'get_fields' ) ) {
+			$fields = get_fields( rwp_post_id( $post, 'acf' ) );
+		}
+	}
 
-        }
-    }
+	if ( is_array( $fields ) ) {
+		$fields = rwp_collection( $fields );
+	}
 
-    if ( is_array( $fields ) ) {
-        $fields = rwp_collection( $fields );
-    }
-
-    return $fields;
+	return $fields;
 }
 
 /**
@@ -73,7 +71,7 @@ function rwp_get_fields( $post = null ) {
  * @return mixed
  */
 function rwp_get_field( $field, $post = null, $default = null ) {
-    $fields = rwp_get_fields( $post );
+	$fields = rwp_get_fields( $post );
 
 	return data_get( $fields, $field, $default );
 }
@@ -137,7 +135,7 @@ function rwp_add_acf_color( $args, $type = 'background', $fields = array(), $pos
 		$args = rwp_merge_args( $args, $atts );
 
 		return $args;
-	} else if ( rwp_is_element( $args ) ) {
+	} elseif ( rwp_is_element( $args ) ) {
 		if ( ! empty( $color_class ) ) {
 			if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
 				$args->set_style( $css_style, $custom_color );
@@ -145,7 +143,7 @@ function rwp_add_acf_color( $args, $type = 'background', $fields = array(), $pos
 				$args->add_class( rwp_add_prefix( $color_class, $type . '-' ) );
 			}
 		}
-	} else if ( $args instanceof Html ) {
+	} elseif ( $args instanceof Html ) {
 		if ( ! empty( $color_class ) ) {
 			if ( 'custom' === $color_class && ! empty( $custom_color ) ) {
 				$args->setStyle( $css_style, $custom_color );
@@ -251,9 +249,9 @@ function rwp_get_icon_from_acf( $fields, $post = null ) {
 			break;
 		case 'html':
 			$icon = array(
-				'tag' => 'span',
+				'tag'     => 'span',
 				'content' => data_get( $fields, 'content', '' ),
-				'atts' => array(
+				'atts'    => array(
 					'class' => 'custom-html',
 				),
 			);
@@ -265,5 +263,4 @@ function rwp_get_icon_from_acf( $fields, $post = null ) {
 	}
 
 	return rwp_icon( $icon );
-
 }

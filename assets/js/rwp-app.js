@@ -273,7 +273,7 @@
             return !!pathArray.reduce(((prevObj, key) => prevObj && prevObj[key]), obj);
         }
         function getOffsetTop(elem) {
-            var distance = 0;
+            let distance = 0;
             if (elem.offsetParent) {
                 do {
                     distance += elem.offsetTop;
@@ -286,7 +286,7 @@
             if (el.fireEvent) {
                 el.fireEvent("on" + etype);
             } else {
-                var evObj = document.createEvent("Events");
+                const evObj = document.createEvent("Events");
                 evObj.initEvent(etype, true, false);
                 el.dispatchEvent(evObj);
             }
@@ -294,7 +294,7 @@
         function listen(el, etype, fn, nobubble, stopdefault) {
             nobubble = nobubble || false;
             stopdefault = stopdefault || false;
-            var fnwrap = function(e) {
+            const fnwrap = function(e) {
                 e = e || event;
                 if (nobubble) {
                     noBubbles(e);
@@ -325,7 +325,12 @@
             }
         }
         function extend() {
-            var obj, name, copy, target = arguments[0] || {}, i = 1, length = arguments.length;
+            let obj;
+            let name;
+            let copy;
+            const target = arguments[0] || {};
+            let i = 1;
+            const length = arguments.length;
             for (;i < length; i++) {
                 if ((obj = arguments[i]) !== null) {
                     for (name in obj) {
@@ -394,7 +399,7 @@
         }
         const domParserSupport = function() {
             if (!window.DOMParser) return false;
-            var parser = new DOMParser;
+            const parser = new DOMParser;
             try {
                 parser.parseFromString("x", "text/html");
             } catch (err) {
@@ -404,17 +409,17 @@
         }();
         function stringToHtml(str) {
             if (domParserSupport) {
-                var parser = new DOMParser;
-                var doc = parser.parseFromString(str, "text/html");
+                const parser = new DOMParser;
+                const doc = parser.parseFromString(str, "text/html");
                 return doc.body.firstElementChild;
             }
-            var dom = document.createElement("div");
+            const dom = document.createElement("div");
             dom.innerHTML = str;
             return dom;
         }
         function isElement($obj) {
             try {
-                return $obj.constructor.__proto__.prototype.constructor.name ? true : false;
+                return !!$obj.constructor.__proto__.prototype.constructor.name;
             } catch (e) {
                 return false;
             }
@@ -431,7 +436,7 @@
         }
         function wrapElement(toWrap, wrapper) {
             wrapper = stringToHtml(wrapper);
-            var parent;
+            let parent;
             if (isNodeList(toWrap) && toWrap.length > 0) {
                 parent = toWrap[0].parentNode;
                 parent.insertBefore(wrapper, toWrap[0]);
@@ -445,7 +450,7 @@
             }
         }
         function unwrapElement(el) {
-            var parent = el.parentNode;
+            const parent = el.parentNode;
             while (el.firstChild) parent.insertBefore(el.firstChild, el);
             parent.removeChild(el);
         }
@@ -467,7 +472,7 @@
             return string.replace(/^\//, "").replace(/(index|default).[a-zA-Z]{3,4}$/, "").replace(/\/$/, "");
         }
         function getHash(string) {
-            var index = string.indexOf("#");
+            const index = string.indexOf("#");
             if (index !== -1) {
                 return string.substring(index + 1);
             }
@@ -486,10 +491,10 @@
         }
         function matchHeights(elem = "", breakpoint = null) {
             const elements = document.querySelectorAll(elem);
-            var matches = Array.from(elements);
+            const matches = Array.from(elements);
             if (matches.length > 1) {
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint) || isEmpty(breakpoint)) {
-                    var minHeight = getTallest(elem);
+                    const minHeight = getTallest(elem);
                     if (false !== minHeight) {
                         matches.forEach((function(el) {
                             el.style.minHeight = minHeight;
@@ -507,7 +512,7 @@
         }
         function addHeaderOffset(targetEl, header, includeAdminBar = false, prop = "marginTop", breakpoint = null, breakpointType = "min-width") {
             const elements = document.querySelectorAll(targetEl);
-            var matches = Array.from(elements);
+            const matches = Array.from(elements);
             if (matches.length > 0) {
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint, breakpointType) || isEmpty(breakpoint)) {
                     let adminBarHeight = 0;
@@ -517,13 +522,13 @@
                     if (!isEmpty(header)) {
                         if (includeAdminBar) {
                             if (document.body.classList.contains("admin-bar")) {
-                                let adminBar = document.getElementById("wpadminbar");
+                                const adminBar = document.getElementById("wpadminbar");
                                 if (!isEmpty(adminBar)) {
                                     adminBarHeight = (0, verge__WEBPACK_IMPORTED_MODULE_1__.rectangle)(adminBar).height;
                                 }
                             }
                         }
-                        let headerHeight = (0, verge__WEBPACK_IMPORTED_MODULE_1__.rectangle)(header).height;
+                        const headerHeight = (0, verge__WEBPACK_IMPORTED_MODULE_1__.rectangle)(header).height;
                         let offsetTop = headerHeight + adminBarHeight;
                         offsetTop = offsetTop + "px";
                         matches.forEach((function(el) {
@@ -553,10 +558,10 @@
         }
         function matchWidths(elem = "", breakpoint = null) {
             const elements = document.querySelectorAll(elem);
-            var matches = Array.from(elements);
+            const matches = Array.from(elements);
             if (matches.length > 1) {
                 if (!isEmpty(breakpoint) && isBootstrapBP(breakpoint) || isEmpty(breakpoint)) {
-                    var minWidth = getWidest(elem);
+                    let minWidth = getWidest(elem);
                     if (false !== minWidth) {
                         minWidth += "px";
                         matches.forEach((function(el) {
@@ -591,7 +596,7 @@
             return props;
         }
         function getBootstrapVar(v = "") {
-            let props = bsAtts();
+            const props = bsAtts();
             return get(props, v, false);
         }
         function getBootstrapBP(breakpoint) {

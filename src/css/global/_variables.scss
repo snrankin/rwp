@@ -8,6 +8,14 @@
 
 @import '~modularscale-sass/stylesheets/modularscale';
 
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 996px,
+	xl: 1200px,
+	xxl: 1376px
+);
 
 
 $type-spaces: (
@@ -153,10 +161,11 @@ $theme-colors: map-set($theme-colors, 'border-color', $border-color);
 $container-widths: (
 	xs: 90vw,
 	sm: 90vw,
-	md: 85vw,
-	lg: 80vw,
-	xl: 75vw,
-	xxl: 1050px
+	md: 90vw,
+	lg: 90vw,
+	xl: 85vw,
+	xxl: 1170px
 );
+
 $nav-link-active-color: $nav-link-hover-color;
 $nav-link-focus-color: $nav-link-hover-color;

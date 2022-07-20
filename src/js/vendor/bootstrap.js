@@ -16,7 +16,7 @@ import(/* webpackMode: "eager" */ /* webpackExports: ["Button, Collapse, Offcanv
 domready(initDropDown);
 // Init Tooltips
 domready(function () {
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 	tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl);
 	});

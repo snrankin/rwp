@@ -23,7 +23,7 @@
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
@@ -37,7 +37,7 @@ function rwp_uninstall_multisite() {
 		/** @var array<\WP_Site> $blogs */
 		$blogs = get_sites();
 
-		if ( !empty( $blogs ) ) {
+		if ( ! empty( $blogs ) ) {
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( (int) $blog->blog_id );
 				rwp_uninstall();
@@ -90,7 +90,7 @@ function rwp_uninstall() {
 	 */
 
 	// Remove the capabilities of the plugin
-	if ( !isset( $wp_roles ) ) {
+	if ( ! isset( $wp_roles ) ) {
 		$wp_roles = new WP_Roles; // phpcs:ignore
 	}
 

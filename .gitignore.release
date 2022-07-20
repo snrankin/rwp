@@ -13,14 +13,9 @@
 **/.*
 
 vendor/*
-!vendor/composer/
-vendor/composer/*
-vendor/composer/!*.php
 
-!dependencies/vendor
-dependencies/**/*.json
+!dependencies/**/*
 
-dependencies/**/.*
 node_modules
 ./src/
 webpack/

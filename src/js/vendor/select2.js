@@ -18,10 +18,10 @@ jQuery(document).ready(function ($) {
 	$.fn.select2.defaults.set('width', '100%');
 	if (select2Inputs.length > 0) {
 		select2Inputs.forEach(function (input) {
-			let isSmall = input.classList.contains('form-select-sm');
-			let isLarge = input.classList.contains('form-select-lg');
+			const isSmall = input.classList.contains('form-select-sm');
+			const isLarge = input.classList.contains('form-select-lg');
 
-			let select2Options = {
+			const select2Options = {
 				dropdownParent: input.parentElement,
 				minimumResultsForSearch: 'Infinity',
 				theme: 'bootstrap-5',

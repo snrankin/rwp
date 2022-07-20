@@ -1,0 +1,209 @@
+/// ======================================================================== ///
+///
+/// @copyright 2022 RIESTER
+/// @group  RWP
+/// @name   _grid-v2
+/// @version   0.9.3
+/// ======================================================================== ///
+
+
+.rwp-elementor.rwp-elementor-grid-v2 {
+	@for $i from 1 through $grid-columns {
+		--#{$variable-prefix}column-#{$i}-width: calc(#{getcssvar(container-width)} * #{divide($i, $grid-columns)} + (var(--gap-x) * #{$i - 1}));
+	}
+
+	.elementor-section.elementor-section-boxed > .elementor-container {
+		max-width: getcssvar(container-width);
+	}
+
+	.elementor-widget:not(:last-child) {
+		margin-bottom: 0;
+	}
+
+	.elementor-container {
+		width: 100%;
+		margin-right: auto;
+		margin-left: auto;
+
+		@include make-section-inner('[data-settings*="background"]');
+	}
+
+	.elementor-section {
+		&:not(.elementor-inner-section) {
+			@include make-section('.elementor-section', '[data-settings*="background"]');
+		}
+
+		&.elementor-reverse-mobile {
+			> .elementor-container {
+				> .elementor-row {
+					> :nth-child(1) {
+						order: initial;
+					}
+
+					> :nth-child(2) {
+						order: -1;
+						@include media-breakpoint-up(md) {
+							order: initial;
+						}
+					}
+				}
+			}
+		}
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			$infix: breakpoint-infix($breakpoint);
+
+			@for $i from 1 through $grid-row-columns {
+				@include media-breakpoint-up($breakpoint) {
+					&.row-cols#{$infix}-#{$i} {
+						> .elementor-container {
+							width: 100%;
+							flex: 0 1 auto;
+
+							> .elementor-row {
+								@include row-cols($i);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@each $size, $name-map in $elementor-col-widths {
+		.elementor-column.elementor-col-#{$size},
+		.elementor-column[data-col='#{$size}'] {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+
+	.elementor-row {
+		--flex-wrap: wrap;
+		--flex-direction: row;
+
+		row-gap: var(--gap-y);
+		margin-right: calc(var(--gap-x) * -0.5);
+		margin-left: calc(var(--gap-x) * -0.5);
+		width: calc(100% + var(--gap-x));
+		min-width: 100%;
+		display: flex;
+		justify-content: var(--justify-content);
+		flex-direction: var(--flex-direction);
+		align-items: var(--align-items);
+		align-content: var(--align-content);
+		flex-wrap: var(--flex-wrap); // stylelint-disable-line
+	}
+
+	@include make-grid-columns('.e-col', '.elementor-column', false, $elementor-breakpoint-vars);
+
+	.elementor-column {
+		--flex-direction: column;
+
+		width: 100%;
+		flex-direction: column;
+		padding-right: calc(var(--gap-x) * 0.5);
+		padding-left: calc(var(--gap-x) * 0.5);
+
+		> .elementor-column-wrap.elementor-element-populated {
+			padding-top: unset;
+			padding-bottom: unset;
+
+			> .elementor-widget-wrap {
+				display: flex;
+				justify-content: var(--justify-content);
+				flex-direction: var(--flex-direction);
+				align-items: var(--align-items);
+				align-content: var(--align-content);
+				flex-wrap: var(--flex-wrap); // stylelint-disable-line
+				gap: var(--gap-y) var(--gap-x);
+			}
+		}
+
+		.elementor-column-wrap {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			height: 100%;
+			min-height: 1px;
+		}
+
+		.elementor-widget-wrap {
+			flex: 1 1 auto;
+			height: 100%;
+			min-height: 1px;
+		}
+
+		.elementor-widget-container {
+			min-height: 1px;
+		}
+
+		@each $breakpoint, $device in $elementor-breakpoint-vars {
+			$infix: breakpoint-infix($breakpoint);
+			$class: '';
+			@if type-of($device) == string and $device != '' {
+				$class: '-#{$device}';
+			}
+
+			@include media-breakpoint-only($breakpoint) {
+				$gutter: page-gutter($breakpoint);
+				$margin-gutter: calc(#{remove-calc($gutter)} * -1) !important;
+				$padding-gutter: #{$gutter} !important;
+				&.e-pg#{$class}-left {
+					> .elementor-column-wrap {
+						padding-left: $padding-gutter;
+					}
+				}
+				&.e-pg#{$class}-right {
+					> .elementor-column-wrap {
+						padding-right: $padding-gutter;
+					}
+				}
+				&.e-pg#{$class}-both {
+					> .elementor-column-wrap {
+						padding-left: $padding-gutter;
+						padding-right: $padding-gutter;
+					}
+				}
+				&.e-col-stretched#{$class}-left {
+					> .elementor-column-wrap {
+						width: stretched-col-content($breakpoint);
+						margin-left: $margin-gutter;
+					}
+				}
+				&.e-col-stretched#{$class}-right {
+					> .elementor-column-wrap {
+						width: stretched-col-content($breakpoint);
+						margin-right: $margin-gutter;
+					}
+				}
+				&.e-col-stretched#{$class}-both {
+					> .elementor-column-wrap {
+						width: calc((#{$gutter}* 2) + 100%);
+						margin-right: $margin-gutter;
+						margin-left: $margin-gutter;
+					}
+				}
+			}
+		}
+		@each $breakpoint, $value in $elementor-breakpoint-vars {
+			$class: '';
+			$infix: breakpoint-infix($breakpoint);
+
+			@if type-of($value) == string {
+				@if $value != '' {
+					$class: '-#{$value}';
+				}
+			} @else {
+				$class: $infix;
+			}
+
+			@include media-breakpoint-up($breakpoint) {
+				@for $i from 1 through $grid-columns {
+					&.e-col#{$class}-#{$i} {
+						width: percentage(divide($i, $grid-columns));
+					}
+				}
+			}
+		}
+	}
+}

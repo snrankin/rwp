@@ -1,13 +1,9 @@
 .vscode
 
 vendor/*
-!vendor/composer/
-!vendor/composer/*
-!vendor/autoload.php
+
 
 !dependencies/vendor
-dependencies/**/*.json
-!dependencies/**/composer.json
 dependencies/**/*.xml
 dependencies/**/*.yml
 dependencies/**/*.lock

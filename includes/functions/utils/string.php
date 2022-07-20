@@ -9,7 +9,7 @@
  * ==========================================================================
  */
 
-use RWP\Components\Str;
+use RWP\Helpers\Str;
 use RWP\Vendor\Exceptions\Http\Server\NotImplementedException;
 
 if ( ! defined( 'RWP_TITLE_CASE' ) ) {
@@ -278,11 +278,11 @@ function rwp_is_phone_number( $str = '' ) {
 }
 
 /**
-  * Check if a string is an email
-  *
-  * @param string $str
-  * @return bool
-  */
+ * Check if a string is an email
+ *
+ * @param string $str
+ * @return bool
+ */
 function rwp_is_email( $str = '' ) {
 	if ( ! is_string( $str ) ) {
 		return $str;
@@ -294,7 +294,6 @@ function rwp_is_email( $str = '' ) {
 	} else {
 		return false;
 	}
-
 }
 
 /**
@@ -343,10 +342,10 @@ function rwp_trim_text( $text = '', $length = 0, $variable = true, $excerpt_end 
 	$allowed_tags = rwp_collection( $allowed_tags );
 	$allowed_tags = $allowed_tags->merge( $allowedtags_keys )->unique()->all();
 
-	$out    = '';
+	$out = '';
 
 	if ( ! empty( $text ) ) {
-		$text   = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
+		$text = (string) preg_replace( "/\r|\n|\h{2,}|\t/", '', $text );
 
 		$text = strip_tags( $text, $allowed_tags );
 

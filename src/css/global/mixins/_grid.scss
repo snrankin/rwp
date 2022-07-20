@@ -46,10 +46,13 @@
 		--#{$variable-prefix}gutter-y: #{$y-spacing};
 	}
 
+	row-gap: getcssvar(gutter-y);
+	margin-right: calc(#{getcssvar(gutter-x)} * -0.5);
+	margin-left: calc(#{getcssvar(gutter-x)} * -0.5);
 	width: calc(100% + #{getcssvar(gutter-x)});
 
 	@if $important {
-		margin-top: calc(#{getcssvar(gutter-y)} * -1) !important;
+		row-gap: getcssvar(gutter-y) !important;
 		margin-right: calc(#{getcssvar(gutter-x)} * -0.5) !important;
 		margin-left: calc(#{getcssvar(gutter-x)} * -0.5) !important;
 		width: calc(100% + #{getcssvar(gutter-x)}) !important;
@@ -57,19 +60,12 @@
 }
 
 @mixin make-row($x-spacing: null, $y-spacing: null, $important: false) {
-	@if $x-spacing != null {
-		--#{$variable-prefix}gutter-x: #{$x-spacing};
-	}
-
-	@if $y-spacing != null {
-		--#{$variable-prefix}gutter-y: #{$y-spacing};
-	}
+	@include row-gutters($x-spacing, $y-spacing, $important);
 
 	display: flex;
 	flex-wrap: wrap;
 	float: none;
 	min-width: 100%;
-	gap: var(--#{$variable-prefix}gutter-y) var(--#{$variable-prefix}gutter-x);
 
 	&::before,
 	&::after {
@@ -89,6 +85,7 @@
 }
 
 @mixin make-col-ready($important: false) {
+	@include col-gutters($important);
 	// Prevent columns from becoming too narrow when at smaller grid tiers by
 	// always setting `width: 100%;`. This works because we set the width
 	// later on to override this initial width.
@@ -100,10 +97,10 @@
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
-	@if $size and $size < $columns {
-		width: calc(#{percentage(divide($size, $columns))} - (#{getcssvar(gutter-x)} * 0.5));
+	@if $size {
+		width: percentage(divide($size, $columns));
 	} @else {
-		width: 100%;
+		max-width: 100%;
 	}
 }
 
@@ -113,14 +110,19 @@
 
 @mixin make-col-offset($size, $side: left, $negative: false, $columns: $grid-columns) {
 	$num: divide($size, $columns);
-	@if $negative == true {
-		$num: $num * -1;
+
+	@if $num > 0 {
+		@if $negative == true {
+			$num: #{calc(#{getcssvar(column-#{$size}-width)} * -1)};
+		} @else {
+			$num: getcssvar(column-#{$size}-width);
+		}
 	}
 
 	@if $side == right {
-		margin-right: if($num == 0, 0, percentage($num));
+		margin-right: if($num == 0, 0, $num);
 	} @else {
-		margin-left: if($num == 0, 0, percentage($num));
+		margin-left: if($num == 0, 0, $num);
 	}
 }
 
@@ -147,14 +149,17 @@
 	@if $selector-suffix != false {
 		$selector: #{$selector}#{$selector-suffix};
 	}
-	@each $breakpoint, $value in $breakpoints {
-		$infix: breakpoint-infix($breakpoint);
-		$class: '';
 
-		@if type-of($value) == string and $value != desktop {
-			$class: '-#{$value}';
-		} @else if $breakpoint != xs {
-			$class: '-#{$breakpoint}';
+	@each $breakpoint, $value in $breakpoints {
+		$class: '';
+		$infix: breakpoint-infix($breakpoint);
+
+		@if type-of($value) == string {
+			@if $value != '' {
+				$class: '-#{$value}';
+			}
+		} @else {
+			$class: $infix;
 		}
 
 		@include media-breakpoint-up($breakpoint) {

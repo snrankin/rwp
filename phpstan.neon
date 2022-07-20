@@ -1,5 +1,5 @@
 includes:
-  - /Users/samrankin/.composer/vendor/szepeviktor/phpstan-wordpress/extension.neon
+  - %currentWorkingDirectory%/vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 0
   editorUrl: 'vscode://file/%%file%%:%%line%%'
@@ -9,21 +9,20 @@ parameters:
     - %currentWorkingDirectory%/includes
   excludePaths:
     analyseAndScan:
-      - %currentWorkingDirectory%/includes/internals/SVG/**/*
+      - %currentWorkingDirectory%/includes/core/internals/SVG/**/*
   bootstrapFiles:
     - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
     - %currentWorkingDirectory%/dependencies/vendor/autoload.php
     - %currentWorkingDirectory%/dependencies/vendor/scoper-autoload.php
   scanDirectories:
     - %currentWorkingDirectory%/dependencies
-    - %currentWorkingDirectory%/vendor/szepeviktor
-    - ../%currentWorkingDirectory%/advanced-custom-fields-pro
-    - ../%currentWorkingDirectory%/acf-extended
-    - ../%currentWorkingDirectory%/elementor
-    - ../%currentWorkingDirectory%/elementor-pro
-    - ../%currentWorkingDirectory%/gravityforms
-    - ../%currentWorkingDirectory%/query-monitor
-    - ../%currentWorkingDirectory%/wordpress-seo
+    - ../advanced-custom-fields-pro
+    - ../acf-extended
+    - ../elementor
+    - ../elementor-pro
+    - ../gravityforms
+    - ../query-monitor
+    - ../wordpress-seo
   scanFiles:
     - %currentWorkingDirectory%/rwp.php
     - %currentWorkingDirectory%/uninstall.php

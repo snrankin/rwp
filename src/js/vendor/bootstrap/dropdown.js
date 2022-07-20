@@ -44,10 +44,10 @@ function focusOut(event) {
 }
 
 function openSubMenu(event) {
-	let elem = event.target;
-	let parent = 'li' !== elem.tagName.toLowerCase() ? elem.closest('.dropdown') : elem;
-	let toggle = 'button' !== elem.tagName.toLowerCase() ? parent.querySelector(':scope>[data-bs-toggle="dropdown"]') : elem;
-	let target = parent.querySelector(':scope>.dropdown-menu');
+	const elem = event.target;
+	const parent = 'li' !== elem.tagName.toLowerCase() ? elem.closest('.dropdown') : elem;
+	const toggle = 'button' !== elem.tagName.toLowerCase() ? parent.querySelector(':scope>[data-bs-toggle="dropdown"]') : elem;
+	const target = parent.querySelector(':scope>.dropdown-menu');
 
 	if (!target.classList.contains('show')) {
 		Dropdown.getOrCreateInstance(toggle).toggle();
@@ -56,10 +56,10 @@ function openSubMenu(event) {
 	}
 }
 function closeSubMenu(event) {
-	let elem = event.target;
-	let parent = 'li' !== elem.tagName.toLowerCase() ? elem.closest('.dropdown') : elem;
-	let toggle = 'button' !== elem.tagName.toLowerCase() ? parent.querySelector(':scope>[data-bs-toggle="dropdown"]') : elem;
-	let target = parent.querySelector(':scope>.dropdown-menu');
+	const elem = event.target;
+	const parent = 'li' !== elem.tagName.toLowerCase() ? elem.closest('.dropdown') : elem;
+	const toggle = 'button' !== elem.tagName.toLowerCase() ? parent.querySelector(':scope>[data-bs-toggle="dropdown"]') : elem;
+	const target = parent.querySelector(':scope>.dropdown-menu');
 
 	if (target.classList.contains('show')) {
 		Dropdown.getOrCreateInstance(toggle).toggle();
@@ -107,7 +107,7 @@ function initDropDown() {
 
 	// for hover
 	document.querySelectorAll('.dropdown-hover, .dropdown-hover-all .dropdown').forEach(function (dd) {
-		let parent = dd;
+		const parent = dd;
 		hoverintent(
 			dd,
 			function (e) {

@@ -12,25 +12,17 @@
     ],
     "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-        "ergebnis/composer-normalize": "^2.6",
-        "lipemat/wp-phpcs": "^2.3",
-        "phpcompatibility/phpcompatibility-wp": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+        "ergebnis/composer-normalize": "^2.28",
+        "lipemat/wp-phpcs": "^2.6",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "phpcsstandards/phpcsutils": "^1.0@alpha",
+        "phpstan/phpstan": "^1.8",
+        "szepeviktor/phpstan-wordpress": "^1.1",
         "wpreadme2markdown/wpreadme2markdown": "^4.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "RWP\\Assets\\": "includes/assets/",
-            "RWP\\Backend\\": "includes/backend/",
-            "RWP\\Components\\": "includes/components/",
-            "RWP\\Engine\\": "includes/engine/",
-            "RWP\\Frontend\\": "includes/frontend/",
-            "RWP\\Integrations\\": "includes/integrations/",
-            "RWP\\Internals\\": "includes/internals/"
-        }
-    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
@@ -43,6 +35,7 @@
     "scripts": {
         "post-install-cmd": [
             "@composer normalize",
+            "@install-codestandards",
             "@dump-root"
         ],
         "codecept": [
@@ -72,9 +65,6 @@
         "dump-root": [
             "@composer dump-autoload -o -a"
         ],
-        "dump-root-prod": [
-            "@composer dump-autoload -o -a --no-dev"
-        ],
         "dump-vendor": [
             "@composer dump-autoload --working-dir dependencies -o --no-dev"
         ],
@@ -84,16 +74,19 @@
         "install-codestandards": [
             "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
-        "phpcs": [
-            "vendor/bin/phpcs"
+        "php-fix": [
+            "vendor/bin/phpcbf -p -v --config-show"
+        ],
+        "php-lint": [
+            "vendor/bin/phpcs pwd -p -v -l --config-show "
         ],
         "phpstan": [
             "Composer\\Config::disableProcessTimeout",
-            "vendor/bin/phpstan analyse --ansi --memory-limit=-1 --debug"
+            "phpstan analyse -c phpstan.neon --ansi --memory-limit=-1 --debug"
         ],
         "phpstan-baseline": [
             "Composer\\Config::disableProcessTimeout",
-            "vendor/bin/phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
+            "phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
         ],
         "test": [
             "@grum"

@@ -27,7 +27,7 @@ function modal(selector = '[data-fancybox]', args = {}) {
 	}
 
 	if (!rwp.isEmpty(selector)) {
-		let modal = new Fancybox(selector, args);
+		const modal = new Fancybox(selector, args);
 
 		return modal;
 	}

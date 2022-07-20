@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ============================================================================
  * image
@@ -11,10 +12,10 @@
  * ==========================================================================
  */
 
-use RWP\Components\Element;
-use RWP\Components\Html;
-use RWP\Components\Image;
-use RWP\Components\SVG;
+use RWP\Helpers\Element;
+use RWP\Helpers\Html;
+use RWP\Helpers\Image;
+use RWP\Helpers\SVG;
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
 
 /**
@@ -27,37 +28,37 @@ use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
  * @return array $image_sizes The image sizes
  */
 function rwp_registered_image_sizes() {
-    $wp_additional_image_sizes = wp_get_additional_image_sizes();
+	$wp_additional_image_sizes = wp_get_additional_image_sizes();
 
-    $sizes = array();
-    $registered_sizes = get_intermediate_image_sizes();
-    // Create the full array with sizes and crop info
-    foreach ( $registered_sizes as $_size ) {
-        if ( ! rwp_array_has( $_size, $wp_additional_image_sizes ) ) {
-            $sizes[ $_size ]['width'] = intval( get_option( $_size . '_size_w' ) );
-            $sizes[ $_size ]['height'] = intval( get_option( $_size . '_size_h' ) );
-            $sizes[ $_size ]['crop'] = (bool) get_option( $_size . '_crop' );
-        } elseif ( isset( $wp_additional_image_sizes[ $_size ] ) ) {
-            $sizes[ $_size ] = array(
+	$sizes = array();
+	$registered_sizes = get_intermediate_image_sizes();
+	// Create the full array with sizes and crop info
+	foreach ( $registered_sizes as $_size ) {
+		if ( ! rwp_array_has( $_size, $wp_additional_image_sizes ) ) {
+			$sizes[ $_size ]['width'] = intval( get_option( $_size . '_size_w' ) );
+			$sizes[ $_size ]['height'] = intval( get_option( $_size . '_size_h' ) );
+			$sizes[ $_size ]['crop'] = (bool) get_option( $_size . '_crop' );
+		} elseif ( isset( $wp_additional_image_sizes[ $_size ] ) ) {
+			$sizes[ $_size ] = array(
 				'width'  => intval( $wp_additional_image_sizes[ $_size ]['width'] ),
 				'height' => intval( $wp_additional_image_sizes[ $_size ]['height'] ),
 				'crop'   => boolval( $wp_additional_image_sizes[ $_size ]['crop'] ),
-            );
-        }
-    }
+			);
+		}
+	}
 
-    $sizes = rwp_collection( $sizes );
-    $sizes = $sizes->sortBy( 'width' );
-    $sizes = $sizes->all();
-    $sizes['full'] = [ 'crop' => false ];
-    return $sizes;
+	$sizes = rwp_collection( $sizes );
+	$sizes = $sizes->sortBy( 'width' );
+	$sizes = $sizes->all();
+	$sizes['full'] = [ 'crop' => false ];
+	return $sizes;
 }
 
 function rwp_media_path( $image = null ) {
 
 	if ( empty( $image ) ) {
 		return false;
-    }
+	}
 
 	if ( is_string( $image ) ) {
 		if ( rwp_is_url( $image ) && ! rwp_is_outbound_link( $image ) ) {
@@ -305,7 +306,7 @@ function rwp_image_sources( $image, $size ) {
 function rwp_image_has_dimensions( $width = null, $height = null ) {
 	if ( ( ! empty( $width ) && intval( $width ) != 0 ) && ( ! empty( $height ) && intval( $height ) != 0 ) ) {
 		return true;
-    } else {
+	} else {
 		return false;
 	}
 }
@@ -319,10 +320,10 @@ function rwp_image_has_dimensions( $width = null, $height = null ) {
 
 function rwp_is_image( $image ) {
 	if ( empty( $image ) ) {
-        return false;
+		return false;
 	}
 
-    $image_types = array(
+	$image_types = array(
 		// Jpeg
 		'jpg',
 		'jpeg',
@@ -357,27 +358,26 @@ function rwp_is_image( $image ) {
 		// Windows
 		'bmp',
 		'dib',
-    );
+	);
 
-    if ( is_string( $image ) ) {
-        if ( ! rwp_str_is_html( $image ) ) {
-            $ext = pathinfo( $image, PATHINFO_EXTENSION );
-            return in_array( $ext, $image_types );
-        } else {
-            return rwp_str_is_element( $image, 'img' );
-        }
-    } elseif ( $image instanceof \WP_Post ) {
-        return wp_attachment_is_image( $image );
-    } elseif ( is_int( $image ) ) {
-        return wp_attachment_is_image( $image );
-    } elseif ( $image instanceof Element ) {
-        return 'img' === $image->tag ? true : false;
-    } elseif ( $image instanceof Html ) {
-        return 'img' === $image->getTag() ? true : false;
-    }
+	if ( is_string( $image ) ) {
+		if ( ! rwp_str_is_html( $image ) ) {
+			$ext = pathinfo( $image, PATHINFO_EXTENSION );
+			return in_array( $ext, $image_types );
+		} else {
+			return rwp_str_is_element( $image, 'img' );
+		}
+	} elseif ( $image instanceof \WP_Post ) {
+		return wp_attachment_is_image( $image );
+	} elseif ( is_int( $image ) ) {
+		return wp_attachment_is_image( $image );
+	} elseif ( $image instanceof Element ) {
+		return 'img' === $image->tag ? true : false;
+	} elseif ( $image instanceof Html ) {
+		return 'img' === $image->getTag() ? true : false;
+	}
 
-    return false;
-
+	return false;
 }
 
 /**
@@ -389,7 +389,7 @@ function rwp_is_image( $image ) {
  */
 
 function rwp_extract_img_src( $image, $size = 'full' ) {
-    $src = false;
+	$src = false;
 
 	$image_types = array(
 		// Jpeg
@@ -471,16 +471,15 @@ function rwp_extract_img_src( $image, $size = 'full' ) {
  */
 
 function rwp_is_wp_image( $image ) {
-    $image = rwp_extract_img_src( $image );
+	$image = rwp_extract_img_src( $image );
 
-    if ( rwp_is_url( $image ) ) {
+	if ( rwp_is_url( $image ) ) {
 		$image = preg_replace( '/-\d{1,4}x\d{1,4}/', '', $image );
 		$image = rwp_add_prefix( $image, get_home_url() );
-        return 0 !== attachment_url_to_postid( $image );
-    }
+		return 0 !== attachment_url_to_postid( $image );
+	}
 
-    return false;
-
+	return false;
 }
 
 /**
@@ -508,38 +507,38 @@ function rwp_image_id( $image ) {
  * @return string
  */
 function rwp_get_logo( $args = array() ) {
-    $content = get_bloginfo( 'name', 'display' );
+	$content = get_bloginfo( 'name', 'display' );
 
-    $unlink_homepage_logo = (bool) get_theme_support( 'custom-logo', 'unlink-homepage-logo' );
+	$unlink_homepage_logo = (bool) get_theme_support( 'custom-logo', 'unlink-homepage-logo' );
 
-    if ( $unlink_homepage_logo && is_front_page() && ! is_paged() ) {
-        // If on the home page, don't link the logo to home.
-        $content = sprintf(
-            '<span class="custom-logo-link">%1$s</span>',
-            $content
-        );
-    } else {
-        $aria_current = is_front_page() && ! is_paged() ? ' aria-current="page"' : '';
+	if ( $unlink_homepage_logo && is_front_page() && ! is_paged() ) {
+		// If on the home page, don't link the logo to home.
+		$content = sprintf(
+			'<span class="custom-logo-link">%1$s</span>',
+			$content
+		);
+	} else {
+		$aria_current = is_front_page() && ! is_paged() ? ' aria-current="page"' : '';
 
-        $content = sprintf(
-            '<a href="%1$s" class="custom-logo-link" rel="home"%2$s>%3$s</a>',
-            home_url( '/' ),
-            $aria_current,
-            $content
-        );
-    }
+		$content = sprintf(
+			'<a href="%1$s" class="custom-logo-link" rel="home"%2$s>%3$s</a>',
+			home_url( '/' ),
+			$aria_current,
+			$content
+		);
+	}
 
-    if ( has_custom_logo() ) {
-        $content = get_custom_logo();
-    }
+	if ( has_custom_logo() ) {
+		$content = get_custom_logo();
+	}
 
-    $html = rwp_html( $content );
+	$html = rwp_html( $content );
 
-    if ( ! empty( $args ) ) {
-        $html->setAllAttributes( $args );
-    }
+	if ( ! empty( $args ) ) {
+		$html->setAllAttributes( $args );
+	}
 
-    return $html->saveHTML();
+	return $html->saveHTML();
 }
 
 
@@ -643,7 +642,7 @@ function rwp_get_svg_dimensions( $file ) {
 			$height = floatval( $view_box[3] );
 		}
 		return array(
-			'width' => $width,
+			'width'  => $width,
 			'height' => $height,
 		);
 	} else {
@@ -776,14 +775,14 @@ function rwp_encode_img( $image ) {
 		 */
 		$image = $image->html();
 		$mime = 'image/svg';
-	} else if ( rwp_is_component( $image, 'Image' ) ) {
+	} elseif ( rwp_is_component( $image, 'Image' ) ) {
 		/**
 		 * @var Image $image
 		 */
 		$image = $image->html();
 		$mime = rwp_extract_img_src( $image );
 		$mime = mime_content_type( $mime );
-	} else if ( is_string( $image ) ) {
+	} elseif ( is_string( $image ) ) {
 
 		if ( rwp_file_exists( $image ) ) {
 			$mime = mime_content_type( $image );
@@ -800,8 +799,7 @@ function rwp_encode_img( $image ) {
 		}
 		$src = 'data:' . $mime . ';base64,' . $image_data;
 		return $src;
-    }
+	}
 
 	return '';
-
 }

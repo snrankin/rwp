@@ -234,7 +234,7 @@
                 },
                 setupOffcanvasNav() {
                     const elements = document.querySelectorAll(".offcanvas-toggle");
-                    var matches = Array.from(elements);
+                    const matches = Array.from(elements);
                     if (matches.length > 0) {
                         matches.forEach((function(el) {
                             el.addEventListener("click", (function() {
@@ -242,10 +242,10 @@
                             }));
                         }));
                     }
-                    let navbar = document.querySelector(".navbar");
-                    let header = navbar.closest("header");
+                    const navbar = document.querySelector(".navbar");
+                    const header = navbar.closest("header");
                     if (!rwp.isEmpty(navbar)) {
-                        let navbarClasses = navbar.getAttribute("class");
+                        const navbarClasses = navbar.getAttribute("class");
                         const regex = new RegExp("navbar-expand-(\\w+)", "gm");
                         let breakpointClass = false;
                         if (regex.test(navbarClasses)) {
@@ -284,7 +284,7 @@
                 }
                 promisedEvent(route = {}, eventType = "", timeout = 0, ...args) {
                     const event = route[eventType];
-                    var listener = () => {
+                    const listener = () => {
                         setTimeout((() => {
                             event.apply(route, args);
                         }), timeout);
@@ -292,9 +292,9 @@
                     return new Promise((resolve => {
                         if ("resize" === eventType) {
                             window.addEventListener("resize", listener);
-                        } else if ("init" == eventType) {
+                        } else if ("init" === eventType) {
                             domready__WEBPACK_IMPORTED_MODULE_0___default()(listener);
-                        } else if ("finalize" == eventType) {
+                        } else if ("finalize" === eventType) {
                             window.addEventListener("load", listener, false);
                         }
                         resolve();
@@ -302,7 +302,7 @@
                 }
                 async asyncEvent(route, eventType, ...args) {
                     let timeout = 1;
-                    if ("finalize" == eventType) {
+                    if ("finalize" === eventType) {
                         timeout = 2e3;
                     }
                     await this.promisedEvent(route, eventType, timeout, ...args);
@@ -315,7 +315,8 @@
                             fn: eventType
                         }
                     }));
-                    const route = this.routes[routeName], event = route[eventType];
+                    const route = this.routes[routeName];
+                    const event = route[eventType];
                     const fire = routeName !== "" && route && typeof event === "function";
                     try {
                         if (fire) {

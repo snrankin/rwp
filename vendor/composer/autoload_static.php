@@ -4,13 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
+class ComposerStaticInitceb141d8fc86c07e638831911d009dd4
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
+        '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -22,15 +24,10 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         array (
             'VariableAnalysis\\' => 17,
         ),
-        'R' => 
+        'S' => 
         array (
-            'RWP\\Internals\\' => 14,
-            'RWP\\Integrations\\' => 17,
-            'RWP\\Frontend\\' => 13,
-            'RWP\\Engine\\' => 11,
-            'RWP\\Components\\' => 15,
-            'RWP\\Backend\\' => 12,
-            'RWP\\Assets\\' => 11,
+            'SzepeViktor\\PHPStan\\WordPress\\' => 30,
+            'Symfony\\Polyfill\\Php73\\' => 23,
         ),
         'P' => 
         array (
@@ -69,33 +66,13 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         array (
             0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
         ),
-        'RWP\\Internals\\' => 
+        'SzepeViktor\\PHPStan\\WordPress\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/includes/internals',
+            0 => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src',
         ),
-        'RWP\\Integrations\\' => 
+        'Symfony\\Polyfill\\Php73\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/includes/integrations',
-        ),
-        'RWP\\Frontend\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/includes/frontend',
-        ),
-        'RWP\\Engine\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/includes/engine',
-        ),
-        'RWP\\Components\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/includes/components',
-        ),
-        'RWP\\Backend\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/includes/backend',
-        ),
-        'RWP\\Assets\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/includes/assets',
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php73',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -287,6 +264,7 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'GuzzleHttp\\RetryMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RetryMiddleware.php',
         'GuzzleHttp\\TransferStats' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/TransferStats.php',
         'GuzzleHttp\\Utils' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Utils.php',
+        'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'JsonSchema\\Constraints\\BaseConstraint' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Constraints/BaseConstraint.php',
         'JsonSchema\\Constraints\\CollectionConstraint' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Constraints/CollectionConstraint.php',
         'JsonSchema\\Constraints\\Constraint' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Constraints/Constraint.php',
@@ -346,6 +324,31 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'Localheinz\\Diff\\Output\\UnifiedDiffOutputBuilder' => __DIR__ . '/..' . '/localheinz/diff/src/Output/UnifiedDiffOutputBuilder.php',
         'Localheinz\\Diff\\Parser' => __DIR__ . '/..' . '/localheinz/diff/src/Parser.php',
         'Localheinz\\Diff\\TimeEfficientLongestCommonSubsequenceCalculator' => __DIR__ . '/..' . '/localheinz/diff/src/TimeEfficientLongestCommonSubsequenceCalculator.php',
+        'PHPCSUtils\\AbstractSniffs\\AbstractArrayDeclarationSniff' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/AbstractSniffs/AbstractArrayDeclarationSniff.php',
+        'PHPCSUtils\\BackCompat\\BCFile' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/BackCompat/BCFile.php',
+        'PHPCSUtils\\BackCompat\\BCTokens' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/BackCompat/BCTokens.php',
+        'PHPCSUtils\\BackCompat\\Helper' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/BackCompat/Helper.php',
+        'PHPCSUtils\\Fixers\\SpacesFixer' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Fixers/SpacesFixer.php',
+        'PHPCSUtils\\TestUtils\\UtilityMethodTestCase' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/TestUtils/UtilityMethodTestCase.php',
+        'PHPCSUtils\\Tokens\\Collections' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Tokens/Collections.php',
+        'PHPCSUtils\\Utils\\Arrays' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Arrays.php',
+        'PHPCSUtils\\Utils\\Conditions' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Conditions.php',
+        'PHPCSUtils\\Utils\\ControlStructures' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/ControlStructures.php',
+        'PHPCSUtils\\Utils\\FunctionDeclarations' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/FunctionDeclarations.php',
+        'PHPCSUtils\\Utils\\GetTokensAsString' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/GetTokensAsString.php',
+        'PHPCSUtils\\Utils\\Lists' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Lists.php',
+        'PHPCSUtils\\Utils\\Namespaces' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Namespaces.php',
+        'PHPCSUtils\\Utils\\NamingConventions' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/NamingConventions.php',
+        'PHPCSUtils\\Utils\\Numbers' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Numbers.php',
+        'PHPCSUtils\\Utils\\ObjectDeclarations' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/ObjectDeclarations.php',
+        'PHPCSUtils\\Utils\\Operators' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Operators.php',
+        'PHPCSUtils\\Utils\\Orthography' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Orthography.php',
+        'PHPCSUtils\\Utils\\Parentheses' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Parentheses.php',
+        'PHPCSUtils\\Utils\\PassedParameters' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/PassedParameters.php',
+        'PHPCSUtils\\Utils\\Scopes' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Scopes.php',
+        'PHPCSUtils\\Utils\\TextStrings' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/TextStrings.php',
+        'PHPCSUtils\\Utils\\UseStatements' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/UseStatements.php',
+        'PHPCSUtils\\Utils\\Variables' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Variables.php',
         'Psr\\Http\\Client\\ClientExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientExceptionInterface.php',
         'Psr\\Http\\Client\\ClientInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientInterface.php',
         'Psr\\Http\\Client\\NetworkExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/NetworkExceptionInterface.php',
@@ -363,109 +366,32 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
-        'RWP\\Backend\\Enqueue' => __DIR__ . '/../..' . '/includes/backend/Enqueue.php',
-        'RWP\\Backend\\Notices' => __DIR__ . '/../..' . '/includes/backend/Notices.php',
-        'RWP\\Backend\\Settings' => __DIR__ . '/../..' . '/includes/backend/Settings.php',
-        'RWP\\Components\\Button' => __DIR__ . '/../..' . '/includes/components/Button.php',
-        'RWP\\Components\\Card' => __DIR__ . '/../..' . '/includes/components/Card.php',
-        'RWP\\Components\\Collection' => __DIR__ . '/../..' . '/includes/components/Collection.php',
-        'RWP\\Components\\Column' => __DIR__ . '/../..' . '/includes/components/Column.php',
-        'RWP\\Components\\Container' => __DIR__ . '/../..' . '/includes/components/Container.php',
-        'RWP\\Components\\Element' => __DIR__ . '/../..' . '/includes/components/Element.php',
-        'RWP\\Components\\Embed' => __DIR__ . '/../..' . '/includes/components/Embed.php',
-        'RWP\\Components\\Grid' => __DIR__ . '/../..' . '/includes/components/Grid.php',
-        'RWP\\Components\\Group' => __DIR__ . '/../..' . '/includes/components/Group.php',
-        'RWP\\Components\\Html' => __DIR__ . '/../..' . '/includes/components/Html.php',
-        'RWP\\Components\\HtmlList' => __DIR__ . '/../..' . '/includes/components/HtmlList.php',
-        'RWP\\Components\\Icon' => __DIR__ . '/../..' . '/includes/components/Icon.php',
-        'RWP\\Components\\Image' => __DIR__ . '/../..' . '/includes/components/Image.php',
-        'RWP\\Components\\Location' => __DIR__ . '/../..' . '/includes/components/Location.php',
-        'RWP\\Components\\Modal' => __DIR__ . '/../..' . '/includes/components/Modal.php',
-        'RWP\\Components\\Nav' => __DIR__ . '/../..' . '/includes/components/Nav.php',
-        'RWP\\Components\\NavItem' => __DIR__ . '/../..' . '/includes/components/NavItem.php',
-        'RWP\\Components\\NavList' => __DIR__ . '/../..' . '/includes/components/NavList.php',
-        'RWP\\Components\\Pluralizer' => __DIR__ . '/../..' . '/includes/components/Pluralizer.php',
-        'RWP\\Components\\PostCard' => __DIR__ . '/../..' . '/includes/components/PostCard.php',
-        'RWP\\Components\\Row' => __DIR__ . '/../..' . '/includes/components/Row.php',
-        'RWP\\Components\\SVG' => __DIR__ . '/../..' . '/includes/components/SVG.php',
-        'RWP\\Components\\Section' => __DIR__ . '/../..' . '/includes/components/Section.php',
-        'RWP\\Components\\Str' => __DIR__ . '/../..' . '/includes/components/Str.php',
-        'RWP\\Components\\Table' => __DIR__ . '/../..' . '/includes/components/Table.php',
-        'RWP\\Components\\TableCell' => __DIR__ . '/../..' . '/includes/components/TableCell.php',
-        'RWP\\Components\\TableRow' => __DIR__ . '/../..' . '/includes/components/TableRow.php',
-        'RWP\\Components\\TableSection' => __DIR__ . '/../..' . '/includes/components/TableSection.php',
-        'RWP\\Engine\\Abstracts\\Collector' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Collector.php',
-        'RWP\\Engine\\Abstracts\\DebugOutput' => __DIR__ . '/../..' . '/includes/engine/Abstracts/DebugOutput.php',
-        'RWP\\Engine\\Abstracts\\PostType' => __DIR__ . '/../..' . '/includes/engine/Abstracts/PostType.php',
-        'RWP\\Engine\\Abstracts\\Shortcode' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Shortcode.php',
-        'RWP\\Engine\\Abstracts\\Singleton' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Singleton.php',
-        'RWP\\Engine\\Abstracts\\Taxonomy' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Taxonomy.php',
-        'RWP\\Engine\\Abstracts\\Widget' => __DIR__ . '/../..' . '/includes/engine/Abstracts/Widget.php',
-        'RWP\\Engine\\Context' => __DIR__ . '/../..' . '/includes/engine/Context.php',
-        'RWP\\Engine\\Interfaces\\Component' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Component.php',
-        'RWP\\Engine\\Interfaces\\Core' => __DIR__ . '/../..' . '/includes/engine/Interfaces/Core.php',
-        'RWP\\Engine\\Plugin' => __DIR__ . '/../..' . '/includes/engine/Plugin.php',
-        'RWP\\Engine\\Traits\\Assets' => __DIR__ . '/../..' . '/includes/engine/Traits/Assets.php',
-        'RWP\\Engine\\Traits\\Autoloader' => __DIR__ . '/../..' . '/includes/engine/Traits/Autoloader.php',
-        'RWP\\Engine\\Traits\\Helpers' => __DIR__ . '/../..' . '/includes/engine/Traits/Helpers.php',
-        'RWP\\Engine\\Traits\\Request' => __DIR__ . '/../..' . '/includes/engine/Traits/Request.php',
-        'RWP\\Frontend\\Enqueue' => __DIR__ . '/../..' . '/includes/frontend/Enqueue.php',
-        'RWP\\Frontend\\Extras\\Body_Class' => __DIR__ . '/../..' . '/includes/frontend/Extras/Body_Class.php',
-        'RWP\\Frontend\\Extras\\Clean_Up' => __DIR__ . '/../..' . '/includes/frontend/Extras/Clean_Up.php',
-        'RWP\\Frontend\\Extras\\JS_Footer' => __DIR__ . '/../..' . '/includes/frontend/Extras/JS_Footer.php',
-        'RWP\\Frontend\\Extras\\Nice_Search' => __DIR__ . '/../..' . '/includes/frontend/Extras/Nice_Search.php',
-        'RWP\\Frontend\\Favicons' => __DIR__ . '/../..' . '/includes/frontend/Favicons.php',
-        'RWP\\Integrations\\ACF' => __DIR__ . '/../..' . '/includes/integrations/ACF.php',
-        'RWP\\Integrations\\Bootstrap' => __DIR__ . '/../..' . '/includes/integrations/Bootstrap.php',
-        'RWP\\Integrations\\BugHerd' => __DIR__ . '/../..' . '/includes/integrations/BugHerd.php',
-        'RWP\\Integrations\\Elementor' => __DIR__ . '/../..' . '/includes/integrations/Elementor.php',
-        'RWP\\Integrations\\Elementor\\OEmbed' => __DIR__ . '/../..' . '/includes/integrations/Elementor/OEmbed.php',
-        'RWP\\Integrations\\GravityForms' => __DIR__ . '/../..' . '/includes/integrations/GravityForms.php',
-        'RWP\\Integrations\\Gutenberg' => __DIR__ . '/../..' . '/includes/integrations/Gutenberg.php',
-        'RWP\\Integrations\\JS_Plugins' => __DIR__ . '/../..' . '/includes/integrations/JS_Plugins.php',
-        'RWP\\Integrations\\Lazysizes' => __DIR__ . '/../..' . '/includes/integrations/Lazysizes.php',
-        'RWP\\Integrations\\Nav_Menus' => __DIR__ . '/../..' . '/includes/integrations/Nav_Menus.php',
-        'RWP\\Integrations\\QM' => __DIR__ . '/../..' . '/includes/integrations/QM.php',
-        'RWP\\Integrations\\QM\\Collectors\\Debug' => __DIR__ . '/../..' . '/includes/integrations/QM/Collectors/Debug.php',
-        'RWP\\Integrations\\QM\\Collectors\\Info' => __DIR__ . '/../..' . '/includes/integrations/QM/Collectors/Info.php',
-        'RWP\\Integrations\\QM\\Output\\Debug' => __DIR__ . '/../..' . '/includes/integrations/QM/Output/Debug.php',
-        'RWP\\Integrations\\QM\\Output\\Info' => __DIR__ . '/../..' . '/includes/integrations/QM/Output/Info.php',
-        'RWP\\Integrations\\Walkers\\Nav' => __DIR__ . '/../..' . '/includes/integrations/Walkers/Nav.php',
-        'RWP\\Integrations\\Wistia' => __DIR__ . '/../..' . '/includes/integrations/Wistia.php',
-        'RWP\\Integrations\\Yoast' => __DIR__ . '/../..' . '/includes/integrations/Yoast.php',
-        'RWP\\Integrations\\Yoast\\Locations' => __DIR__ . '/../..' . '/includes/integrations/Yoast/Locations.php',
-        'RWP\\Internals\\CustomBulkAction' => __DIR__ . '/../..' . '/includes/internals/CustomBulkAction.php',
-        'RWP\\Internals\\PageForPostType' => __DIR__ . '/../..' . '/includes/internals/PageForPostType.php',
-        'RWP\\Internals\\PostTypes' => __DIR__ . '/../..' . '/includes/internals/PostTypes.php',
-        'RWP\\Internals\\PostTypes\\GlobalBlock' => __DIR__ . '/../..' . '/includes/internals/PostTypes/GlobalBlock.php',
-        'RWP\\Internals\\PostTypes\\LandingPage' => __DIR__ . '/../..' . '/includes/internals/PostTypes/LandingPage.php',
-        'RWP\\Internals\\PostTypes\\PageHeader' => __DIR__ . '/../..' . '/includes/internals/PostTypes/PageHeader.php',
-        'RWP\\Internals\\PostTypes\\TeamMember' => __DIR__ . '/../..' . '/includes/internals/PostTypes/TeamMember.php',
-        'RWP\\Internals\\PostTypes\\Testimonial' => __DIR__ . '/../..' . '/includes/internals/PostTypes/Testimonial.php',
-        'RWP\\Internals\\Relative_Urls' => __DIR__ . '/../..' . '/includes/internals/Relative_Urls.php',
-        'RWP\\Internals\\SVG\\Attributes' => __DIR__ . '/../..' . '/includes/internals/SVG/Attributes.php',
-        'RWP\\Internals\\SVG\\Data\\AllowedAttributes' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AllowedAttributes.php',
-        'RWP\\Internals\\SVG\\Data\\AllowedTags' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AllowedTags.php',
-        'RWP\\Internals\\SVG\\Data\\AttributeInterface' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/AttributeInterface.php',
-        'RWP\\Internals\\SVG\\Data\\TagInterface' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/TagInterface.php',
-        'RWP\\Internals\\SVG\\Data\\XPath' => __DIR__ . '/../..' . '/includes/internals/SVG/Data/XPath.php',
-        'RWP\\Internals\\SVG\\ElementReference\\Resolver' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Resolver.php',
-        'RWP\\Internals\\SVG\\ElementReference\\Subject' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Subject.php',
-        'RWP\\Internals\\SVG\\ElementReference\\Usage' => __DIR__ . '/../..' . '/includes/internals/SVG/ElementReference/Usage.php',
-        'RWP\\Internals\\SVG\\Exceptions\\NestingException' => __DIR__ . '/../..' . '/includes/internals/SVG/Exceptions/NestingException.php',
-        'RWP\\Internals\\SVG\\Helper' => __DIR__ . '/../..' . '/includes/internals/SVG/Helper.php',
-        'RWP\\Internals\\SVG\\Sanitizer' => __DIR__ . '/../..' . '/includes/internals/SVG/Sanitizer.php',
-        'RWP\\Internals\\SVG\\Tags' => __DIR__ . '/../..' . '/includes/internals/SVG/Tags.php',
-        'RWP\\Internals\\SVGs' => __DIR__ . '/../..' . '/includes/internals/SVGs.php',
-        'RWP\\Internals\\Shortcodes\\Button' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Button.php',
-        'RWP\\Internals\\Shortcodes\\Copyright' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Copyright.php',
-        'RWP\\Internals\\Shortcodes\\Location' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/Location.php',
-        'RWP\\Internals\\Shortcodes\\SiblingGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SiblingGrid.php',
-        'RWP\\Internals\\Shortcodes\\SubpageGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/SubpageGrid.php',
-        'RWP\\Internals\\Shortcodes\\TeamGrid' => __DIR__ . '/../..' . '/includes/internals/Shortcodes/TeamGrid.php',
-        'RWP\\Internals\\Taxonomies' => __DIR__ . '/../..' . '/includes/internals/Taxonomies.php',
-        'RWP\\Internals\\Taxonomies\\TeamCategory' => __DIR__ . '/../..' . '/includes/internals/Taxonomies/TeamCategory.php',
-        'RWP\\Internals\\Transient' => __DIR__ . '/../..' . '/includes/internals/Transient.php',
+        'Symfony\\Polyfill\\Php73\\Php73' => __DIR__ . '/..' . '/symfony/polyfill-php73/Php73.php',
+        'SzepeViktor\\PHPStan\\WordPress\\ApplyFiltersDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/ApplyFiltersDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\CurrentTimeDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/CurrentTimeDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\EchoParameterDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/EchoParameterDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetCommentDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetCommentDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetListTableDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetListTableDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetObjectTaxonomiesDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetObjectTaxonomiesDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetPostDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetPostDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetPostsDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetPostsDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetTaxonomiesDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetTaxonomiesDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\GetTermsDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/GetTermsDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\HasFilterDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/HasFilterDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\HookDocBlock' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/HookDocBlock.php',
+        'SzepeViktor\\PHPStan\\WordPress\\HookDocsParamException' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/HookDocsParamException.php',
+        'SzepeViktor\\PHPStan\\WordPress\\HookDocsRule' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/HookDocsRule.php',
+        'SzepeViktor\\PHPStan\\WordPress\\HookDocsVisitor' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/HookDocsVisitor.php',
+        'SzepeViktor\\PHPStan\\WordPress\\IsWpErrorFunctionTypeSpecifyingExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/IsWpErrorFunctionTypeSpecifyingExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\IsWpErrorRule' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/IsWpErrorRule.php',
+        'SzepeViktor\\PHPStan\\WordPress\\MySQL2DateDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/MySQL2DateDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\RedirectCanonicalDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/RedirectCanonicalDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\ShortcodeAttsDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/ShortcodeAttsDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\StringOrArrayDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/StringOrArrayDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\TermExistsDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/TermExistsDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\WPErrorParameterDynamicFunctionReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/WPErrorParameterDynamicFunctionReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\WpParseUrlFunctionDynamicReturnTypeExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/WpParseUrlFunctionDynamicReturnTypeExtension.php',
+        'SzepeViktor\\PHPStan\\WordPress\\WpThemeMagicPropertiesClassReflectionExtension' => __DIR__ . '/..' . '/szepeviktor/phpstan-wordpress/src/WpThemeMagicPropertiesClassReflectionExtension.php',
         'VariableAnalysis\\Lib\\Constants' => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis/Lib/Constants.php',
         'VariableAnalysis\\Lib\\Helpers' => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis/Lib/Helpers.php',
         'VariableAnalysis\\Lib\\ScopeInfo' => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis/Lib/ScopeInfo.php',
@@ -478,9 +404,9 @@ class ComposerStaticInit97b0fb09415bc6b831967605b21244bd
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit97b0fb09415bc6b831967605b21244bd::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitceb141d8fc86c07e638831911d009dd4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitceb141d8fc86c07e638831911d009dd4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitceb141d8fc86c07e638831911d009dd4::$classMap;
 
         }, null, ClassLoader::class);
     }

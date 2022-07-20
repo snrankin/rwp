@@ -10,9 +10,10 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-use RWP\Components\Element;
-use RWP\Components\Collection;
-use RWP\Components\Html;
+use RWP\Helpers\Element;
+use RWP\Helpers\Collection;
+use RWP\Helpers\Html;
+
 /**
  * Get menu by theme location or name of menu
  *
@@ -22,7 +23,7 @@ use RWP\Components\Html;
  */
 
 function rwp_get_menu( $menu = '' ) {
-    if ( ! ( $menu instanceof \WP_Term ) ) {
+	if ( ! ( $menu instanceof \WP_Term ) ) {
 		$locations = get_nav_menu_locations();
 
 		if ( ! empty( $locations ) ) {
@@ -46,21 +47,21 @@ function rwp_get_menu( $menu = '' ) {
 
 function rwp_menu_args( $args = [] ) {
 
-    $args = rwp_collection( $args );
+	$args = rwp_collection( $args );
 
-    // Get the nav menu based on the requested menu.
+	// Get the nav menu based on the requested menu.
 
-    $menu = data_get( $args, 'menu' );
-    if ( empty( $menu ) ) {
-        $menu = data_get( $args, 'theme_location' );
-    }
-    // Get the requested menu, either a menu ID or a theme location
-    $menu = rwp_get_menu( $menu );
+	$menu = data_get( $args, 'menu' );
+	if ( empty( $menu ) ) {
+		$menu = data_get( $args, 'theme_location' );
+	}
+	// Get the requested menu, either a menu ID or a theme location
+	$menu = rwp_get_menu( $menu );
 
 	$menu_id = data_get( $menu, 'term_id' );
 
-    // Set up the default WordPress nav arguments
-    $wp_defaults = rwp_collection(array(
+	// Set up the default WordPress nav arguments
+	$wp_defaults = rwp_collection(array(
 		'menu'                 => '',
 		'container'            => 'nav',
 		'container_class'      => '',
@@ -84,30 +85,30 @@ function rwp_menu_args( $args = [] ) {
 
 	$item_options = data_get( $args, 'item_options', rwp_collection() );
 
-    // Get the custom ACF fields for the menu term
-    $menu_fields = rwp_get_field( 'nav_options', $menu, array() );
+	// Get the custom ACF fields for the menu term
+	$menu_fields = rwp_get_field( 'nav_options', $menu, array() );
 
-    if ( ! empty( $menu_fields ) ) {
-        $args = $args->merge( $menu_fields );
-    }
+	if ( ! empty( $menu_fields ) ) {
+		$args = $args->merge( $menu_fields );
+	}
 
-    // Extract custom arguments from the incoming args array
-    $custom_args = $args->diffKeys( $wp_defaults );
+	// Extract custom arguments from the incoming args array
+	$custom_args = $args->diffKeys( $wp_defaults );
 
-    if ( $custom_args->isNotEmpty() ) {
-        // Remove the custom arguments from the incoming arguments
-        $args->forget( $custom_args->keys()->all() );
-    }
+	if ( $custom_args->isNotEmpty() ) {
+		// Remove the custom arguments from the incoming arguments
+		$args->forget( $custom_args->keys()->all() );
+	}
 
-    // Merge the incoming arguments with the WordPress defaults (this is needed
-    // at the end of the function)
-    $defaults = $wp_defaults->replace( $args );
+	// Merge the incoming arguments with the WordPress defaults (this is needed
+	// at the end of the function)
+	$defaults = $wp_defaults->replace( $args );
 
-    // Remove empty arguments
-    $args = rwp_collection_remove_empty_items( $defaults );
+	// Remove empty arguments
+	$args = rwp_collection_remove_empty_items( $defaults );
 
-    // Merge the menu classes from the ACF fields with classes set in the $args variable
-    $menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
+	// Merge the menu classes from the ACF fields with classes set in the $args variable
+	$menu_class = rwp_parse_classes( data_get( $args, 'menu_class', '' ), '%2$s' );
 
 	if ( data_get( $custom_args, 'dropdown_hover', false ) ) {
 		$menu_class[] = 'dropdown-hover-all';
@@ -119,7 +120,7 @@ function rwp_menu_args( $args = [] ) {
 	$container = data_get( $args, 'container', 'nav' );
 
 	if ( ! empty( $container ) ) {
-		 // Merge the container classes from the ACF fields with classes set in the
+		// Merge the container classes from the ACF fields with classes set in the
 		// $args variable
 		$container_class = rwp_parse_classes( data_get( $args, 'container_class', '' ) );
 
@@ -129,94 +130,93 @@ function rwp_menu_args( $args = [] ) {
 
 		// Set the container ID to the incoming arguments or set placeholder string
 		$container_id = data_get( $args, 'container_id', '%1$s-wrapper' );
-
 	}
 
-    // Build the arguments array for the Nav class
-    $new_args = array(
-		'direction'  => $direction,
-		'type'       => $type,
+	// Build the arguments array for the Nav class
+	$new_args = array(
+		'direction'   => $direction,
+		'type'        => $type,
 		'toggle_type' => data_get( $custom_args, 'toggle_type' ),
-		'list'       => array(
+		'list'        => array(
 			'content' => array(
 				'%3$s',
 			),
-			'atts' => array(
+			'atts'    => array(
 				'id'    => '%1$s',
 				'class' => $menu_class,
 			),
 		),
-		'atts'    => array(
+		'atts'        => array(
 			'id'         => $container_id,
 			'class'      => $container_class,
 			'aria-label' => $label,
 		),
-    );
+	);
 
-    if ( $custom_args->isNotEmpty() ) {
-        // Merge Nav args with extracted custom args
-        $new_args = rwp_merge_args( $new_args, $custom_args->all() );
-    }
+	if ( $custom_args->isNotEmpty() ) {
+		// Merge Nav args with extracted custom args
+		$new_args = rwp_merge_args( $new_args, $custom_args->all() );
+	}
 
-    $nav_type = data_get( $custom_args, 'type', 'nav' );
+	$nav_type = data_get( $custom_args, 'type', 'nav' );
 
-    // Apply filters per nav ID to new arguments
-    $new_args = apply_filters( "rwp_nav_args/nav/{$menu_id}", $new_args );
+	// Apply filters per nav ID to new arguments
+	$new_args = apply_filters( "rwp_nav_args/nav/{$menu_id}", $new_args );
 
-    // Initialize the Nav class
-    $nav = rwp_nav( $new_args );
+	// Initialize the Nav class
+	$nav = rwp_nav( $new_args );
 
-    if ( 'navbar' !== $nav_type ) {
-        $theme = data_get( $custom_args, 'theme' );
-        if ( ! empty( $theme ) ) {
-            $nav->add_class( 'nav-' . $theme );
-        }
+	if ( 'navbar' !== $nav_type ) {
+		$theme = data_get( $custom_args, 'theme' );
+		if ( ! empty( $theme ) ) {
+			$nav->add_class( 'nav-' . $theme );
+		}
 
 		rwp_add_acf_color( $nav, 'background', $custom_args, $menu );
-    }
+	}
 
-    // Add the placeholder text as a class to the menu (filter option must be false)
-    $nav->list->add_class( '%2$s', false );
+	// Add the placeholder text as a class to the menu (filter option must be false)
+	$nav->list->add_class( '%2$s', false );
 
-    // Run all the build functionality before outputting it
-    $nav->build();
+	// Run all the build functionality before outputting it
+	$nav->build();
 
-    // Initialize $items_wrap variable as empty string
-    $items_wrap = '';
+	// Initialize $items_wrap variable as empty string
+	$items_wrap = '';
 
-    // Store the Html class in a variable
-    $html = $nav->html;
+	// Store the Html class in a variable
+	$html = $nav->html;
 
-    if ( 'navbar' === $nav_type ) {
-        // Create a navbar if specified
-        $html = rwp_navbar( $nav, $custom_args, $menu );
-    }
+	if ( 'navbar' === $nav_type ) {
+		// Create a navbar if specified
+		$html = rwp_navbar( $nav, $custom_args, $menu );
+	}
 
-    // Apply html filters per nav ID to the Html class
-    $html = apply_filters( "rwp_nav_args/html/{$menu_id}", $html, $menu, $custom_args );
+	// Apply html filters per nav ID to the Html class
+	$html = apply_filters( "rwp_nav_args/html/{$menu_id}", $html, $menu, $custom_args );
 
-    if ( false !== $args->get( 'items_wrap' ) ) {
-        // If the container argument exists, then output everything
-        if ( false !== $args->get( 'container' ) ) {
-            $items_wrap = $html->__toString();
-        } else { // else only output the unordered list
-            $items_wrap = $html->unwrap()->__toString();
-        }
-    }
+	if ( false !== $args->get( 'items_wrap' ) ) {
+		// If the container argument exists, then output everything
+		if ( false !== $args->get( 'container' ) ) {
+			$items_wrap = $html->__toString();
+		} else { // else only output the unordered list
+			$items_wrap = $html->unwrap()->__toString();
+		}
+	}
 
 	$item_options->put( 'toggle_type', data_get( $custom_args, 'toggle_type' ) );
 
-    /**
-     * Setup arguments in the defaults collection
-     *
-     * This is needed because wp_nav_menu needs all of the arguments to exist in
-     * the array, and we removed empty arguments from the $args variable
-     */
-    $defaults->put( 'container_class', '' );
-    $defaults->put( 'menu_class', '' );
-    $defaults->put( 'container_id', '' );
-    $defaults->put( 'container', '' );
-    $defaults->put( 'items_wrap', $items_wrap );
+	/**
+	 * Setup arguments in the defaults collection
+	 *
+	 * This is needed because wp_nav_menu needs all of the arguments to exist in
+	 * the array, and we removed empty arguments from the $args variable
+	 */
+	$defaults->put( 'container_class', '' );
+	$defaults->put( 'menu_class', '' );
+	$defaults->put( 'container_id', '' );
+	$defaults->put( 'container', '' );
+	$defaults->put( 'items_wrap', $items_wrap );
 
 	$defaults->put( 'item_options', $item_options );
 
@@ -224,10 +224,9 @@ function rwp_menu_args( $args = [] ) {
 		$walker = new \RWP\Integrations\Walkers\Nav( $defaults->all() );
 		$defaults->put( 'walker', $walker );
 		$defaults->put( 'fallback_cb', '\RWP\Integrations\Walkers\Nav::fallback' );
-
 	}
 
-    return $defaults->all();
+	return $defaults->all();
 }
 
 /**
@@ -240,24 +239,24 @@ function rwp_menu_args( $args = [] ) {
  */
 function rwp_navbar( $nav, $custom_args, $menu ) {
 
-    if ( is_string( $menu ) ) {
-        $menu = rwp_get_menu( $menu );
-    }
+	if ( is_string( $menu ) ) {
+		$menu = rwp_get_menu( $menu );
+	}
 
-    $theme           = data_get( $custom_args, 'theme' );
+	$theme           = data_get( $custom_args, 'theme' );
 	$label = $nav->get_attr( 'aria-label' );
 	$nav->remove_attr( 'aria-label' );
 	/**
 	 * @var Collection $order
 	 */
-    $order           = rwp_collection( data_get( $custom_args, 'navbar.order', array( 'navbar', 'toggle' ) ) );
-    $in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
-    $breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
+	$order           = rwp_collection( data_get( $custom_args, 'navbar.order', array( 'navbar', 'toggle' ) ) );
+	$in_grid_content = data_get( $custom_args, 'navbar.in_grid_content', false );
+	$breakpoint      = data_get( $custom_args, 'navbar.breakpoint' );
 	$breakpoint_class = '';
 	if ( filled( $breakpoint ) ) {
 		$breakpoint_class = "-$breakpoint";
 	}
-    $in_grid         = data_get( $custom_args, 'navbar.in_grid', false );
+	$in_grid         = data_get( $custom_args, 'navbar.in_grid', false );
 	$mobile_menu_type         = data_get( $custom_args, 'navbar.mobile_menu_type', 'collapse' );
 
 	$item_styles          = array();
@@ -274,16 +273,16 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		rwp_get_acf_color_style( $item_styles, $type, $item_acf_styles );
 	}
 
-    $navbar = rwp_element( array(
-		'tag' => 'nav',
+	$navbar = rwp_element(array(
+		'tag'  => 'nav',
 		'atts' => array(
-			'id' => '%1$s-navbar',
-			'class' => array(
+			'id'         => '%1$s-navbar',
+			'class'      => array(
 				'navbar',
 			),
 			'aria-label' => $label,
 		),
-	) );
+	));
 
 	$navbar->add_class( 'navbar-' . $menu_slug );
 
@@ -300,24 +299,24 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 	$mobile_layout = 'grid-columns-' . ( $column_count - 1 );
 	$desktop_layout = '';
 
-    if ( ! empty( $breakpoint ) ) {
-        $navbar->add_class( 'navbar-expand' . $breakpoint_class );
+	if ( ! empty( $breakpoint ) ) {
+		$navbar->add_class( 'navbar-expand' . $breakpoint_class );
 
 		if ( false !== $order->search( 'toggle' ) ) {
 			$column_count--;
 		}
 
 		$desktop_layout = "grid-columns-$breakpoint-$column_count";
-    }
+	}
 
-    if ( ! empty( $theme ) ) {
-        $navbar->add_class( 'navbar-' . $theme );
-    }
+	if ( ! empty( $theme ) ) {
+		$navbar->add_class( 'navbar-' . $theme );
+	}
 
 	rwp_add_acf_color( $navbar, 'background', $custom_args, $menu );
 
-    $navbar_content = rwp_element( array(
-		'tag' => 'div',
+	$navbar_content = rwp_element(array(
+		'tag'  => 'div',
 		'atts' => array(
 			'class' => array(
 				'navbar-wrapper-inner',
@@ -325,41 +324,41 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 				$desktop_layout,
 			),
 		),
-	) );
+	));
 
-    $navbar_content->order = $order->all();
+	$navbar_content->order = $order->all();
 
 	$toggle_icon_opened = data_get( $custom_args, 'navbar.toggle_icon.icon_opened.icon' );
 	$toggle_icon_opened = rwp_get_icon_from_acf( $toggle_icon_opened );
 	$toggle_icon_closed = data_get( $custom_args, 'navbar.toggle_icon.icon_closed.icon' );
 	$toggle_icon_closed = rwp_get_icon_from_acf( $toggle_icon_closed );
 
-    $nav_toggle = rwp_button(
-        array(
-			'link'   => '#%1$s-wrapper',
-			'toggle' => $mobile_menu_type,
+	$nav_toggle = rwp_button(
+		array(
+			'link'        => '#%1$s-wrapper',
+			'toggle'      => $mobile_menu_type,
 			'icon_closed' => $toggle_icon_closed,
 			'icon_opened' => $toggle_icon_opened,
-			'text' => array(
+			'text'        => array(
 				'content' => "Toggle $label",
-				'atts' => array(
-					'class'     => array(
+				'atts'    => array(
+					'class' => array(
 						'visually-hidden',
 					),
 				),
 			),
-			'atts'   => array(
+			'atts'        => array(
 				'class' => array(
 					'navbar-toggler',
 				),
 			),
-        )
-    );
+		)
+	);
 	$nav_toggle = $nav_toggle->html();
 
-    $navbar_content->set_content( $nav_toggle, 'toggle' );
+	$navbar_content->set_content( $nav_toggle, 'toggle' );
 
-    if ( false !== $order->search( 'brand' ) ) {
+	if ( false !== $order->search( 'brand' ) ) {
 		$logo_defaults = array(
 			'class' => array(
 				'navbar-brand',
@@ -368,37 +367,36 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 
 		$logo_args = data_get( $custom_args, 'navbar.brand.atts', array() );
 		$logo_args = rwp_merge_args( $logo_defaults, $logo_args );
-        $logo = rwp_get_logo( $logo_args );
-        $navbar_content->set_content( $logo, 'brand' );
-    }
+		$logo = rwp_get_logo( $logo_args );
+		$navbar_content->set_content( $logo, 'brand' );
+	}
 
-    if ( false !== $order->search( 'search' ) ) {
+	if ( false !== $order->search( 'search' ) ) {
 		$search_args = data_get( $custom_args, 'navbar.search' );
-        $search = rwp_search_form( '', $search_args );
-        $navbar_content->set_content( $search, 'search' );
-    }
+		$search = rwp_search_form( '', $search_args );
+		$navbar_content->set_content( $search, 'search' );
+	}
 
 	if ( false !== $order->search( 'text' ) ) {
 		$text_args = data_get( $custom_args, 'navbar.text' );
 		$text_content = data_get( $text_args, 'content' );
 
-        $navbar_content->set_content( $text_content, 'text' );
-    }
+		$navbar_content->set_content( $text_content, 'text' );
+	}
 
 	$nav->list->remove_class( 'nav' );
 	$nav->list->add_class( 'navbar-nav', false );
 
-    if ( $in_grid_content ) {
-        $navbar_content->add_class( 'container' );
-    } else {
-        $navbar_content->add_class( 'container-fluid' );
-    }
+	if ( $in_grid_content ) {
+		$navbar_content->add_class( 'container' );
+	} else {
+		$navbar_content->add_class( 'container-fluid' );
+	}
 
 	if ( ! empty( $item_styles ) ) {
 		$styles = rwp_output_styles( $item_styles );
 
 		$nav->set_content( '<style> .navbar-' . $menu_slug . ' .nav-item::before {' . $styles . ' }</style>', 'styles' );
-
 	}
 
 	if ( 'offcanvas' === $mobile_menu_type ) { // TODO: Add offcanvas option with real component
@@ -407,11 +405,11 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		$nav->remove_attr( 'id' );
 		$offcanvas = rwp_element(array(
 			'content' => $nav->html(),
-			'tag' => 'div',
-			'atts' => array(
-				'id' => $offcanvas_id,
-				'tabindex' => '-1',
-				'class' => 'offcanvas offcanvas-start', // TODO: allow for specifying which side it should be one
+			'tag'     => 'div',
+			'atts'    => array(
+				'id'               => $offcanvas_id,
+				'tabindex'         => '-1',
+				'class'            => 'offcanvas offcanvas-start', // TODO: allow for specifying which side it should be one
 				'data-bs-backdrop' => 'false',
 
 			),
@@ -421,24 +419,24 @@ function rwp_navbar( $nav, $custom_args, $menu ) {
 		$nav = $offcanvas;
 	}
 
-    $navbar_content->set_content( $nav, 'navbar' );
+	$navbar_content->set_content( $nav, 'navbar' );
 
-    $navbar->set_content( $navbar_content );
+	$navbar->set_content( $navbar_content );
 
-    if ( $in_grid ) {
-		$navbar_wrapper = rwp_element( array(
-			'tag' => 'div',
+	if ( $in_grid ) {
+		$navbar_wrapper = rwp_element(array(
+			'tag'  => 'div',
 			'atts' => array(
 				'class' => array(
 					'navbar-wrapper container',
 				),
 			),
-		) );
+		));
 
 		$navbar_wrapper->set_content( $navbar );
 
 		$navbar = $navbar_wrapper;
 	}
 
-    return $navbar;
+	return $navbar;
 }
