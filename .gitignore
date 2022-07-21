@@ -450,4 +450,4 @@ $RECYCLE.BIN/
 !/src/**/*
 !/assets/**/*
 !/tests/**/*
-!/dependencies/**/*
+!/dependencies/**/*.*
