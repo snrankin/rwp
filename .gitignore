@@ -1,13 +1,8 @@
 .vscode
 
-vendor/*
-!vendor/composer/
-!vendor/composer/*
-!vendor/autoload.php
+/vendor/
 
 !dependencies/vendor
-dependencies/**/*.json
-!dependencies/**/composer.json
 dependencies/**/*.xml
 dependencies/**/*.yml
 dependencies/**/*.lock
@@ -28,9 +23,4 @@ gt-cache
 log.txt
 *.log
 LICENSE*
-
-# Temporary and OS files
-*~
-.DS_Store
-*.swp
-Thumbs.db
+*.bak

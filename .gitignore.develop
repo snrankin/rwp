@@ -1,6 +1,6 @@
 .vscode
 
-vendor/*
+/vendor/
 
 
 !dependencies/vendor
@@ -24,6 +24,7 @@ gt-cache
 log.txt
 *.log
 LICENSE*
+*.bak
 
 # Temporary and OS files
 *~
