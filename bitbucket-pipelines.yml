@@ -1,0 +1,22 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:latest
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          # Generates a .npmrc file configured for installing private modules:
+          #
+          # NPM_REGISTRY_URL: the full URL of your private registry
+          #                   defaults to registry.npmjs.org.
+          # NPM_TOKEN: secret token for installing private modules. This
+          #            this token can be found in your .npmrc, after logging in.
+          - printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" >> ~/.npmrc
+          - npm install
+          - npm test
+          - npx semantic-release
