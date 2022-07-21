@@ -443,3 +443,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/ssh,git,test,macos,osx,backup,dotenv,phpunit,windows,composer,archives,dotfilessh,dotsettings,testcomplete,php-cs-fixer,certificates,phpcodesniffer,visualstudiocode,node
+
+
+# Custom
+
+!/src/**/*
+!/assets/**/*
+!/tests/**/*
+!/dependencies/**/*
