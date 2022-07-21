@@ -3090,7 +3090,7 @@
             }
         };
         function changeActiveClass(navItem) {
-            let button = navItem.querySelector(".btn");
+            const button = navItem.querySelector(".btn");
             if (!rwp.isEmpty(button)) {
                 if (navItem.classList.contains("tns-nav-active")) {
                     button.classList.add("active");
@@ -3103,8 +3103,8 @@
             if (rwp.has(elem, "navItems") && !rwp.isEmpty(elem.navItems)) {
                 let navItems = elem.navItems;
                 navItems = Array.from(navItems);
-                navItems.map((function(navItem) {
-                    let button = navItem.querySelector(".btn");
+                navItems.forEach((function(navItem) {
+                    const button = navItem.querySelector(".btn");
                     if (!rwp.isEmpty(button)) {
                         if (navItem.classList.contains("tns-nav-active")) {
                             button.classList.add("active");
@@ -3125,11 +3125,11 @@
                 elem.nextButton.classList.add("btn", "next");
                 elem.prevButton.setAttribute("tabindex", "0");
                 elem.nextButton.setAttribute("tabindex", "0");
-                let sliderheight = container.offsetHeight;
-                let navBtns = wrapper.querySelectorAll(".tns-controls .btn");
+                const sliderheight = container.offsetHeight;
+                const navBtns = wrapper.querySelectorAll(".tns-controls .btn");
                 if (navBtns.length) {
                     navBtns.forEach((function(btn) {
-                        let topStyle = sliderheight * .5;
+                        const topStyle = sliderheight * .5;
                         btn.style.top = `${topStyle}px`;
                     }));
                 }
@@ -3142,8 +3142,8 @@
                 slides = slides.filter((function(slide) {
                     return !slide.classList.contains("tns-slide-cloned");
                 }));
-                let navContainer = elem.navContainer;
-                let standardNavContainer = navContainer.classList.length == 1 && navContainer.classList.contains("tns-nav");
+                const navContainer = elem.navContainer;
+                const standardNavContainer = navContainer.classList.length === 1 && navContainer.classList.contains("tns-nav");
                 if (standardNavContainer) {
                     let navItems = elem.navItems;
                     navItems = Array.from(navItems);
@@ -3154,16 +3154,16 @@
                         navItem.classList.add("btn-link");
                         let navItemContent = rwp.stringToHtml(`<span aria-hidden="true" role="presentation" class="btn-icon"><span aria-hidden="true" role="presentation" class="icon-opened">${bulletActive}</span><span aria-hidden="true" role="presentation" class="icon-closed">${bullet}</span></span>`);
                         if (hasThumbnails) {
-                            let slide = slides[i];
-                            let thumb = slide.querySelector("img").cloneNode();
-                            let thumbWrapper = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"></span>');
+                            const slide = slides[i];
+                            const thumb = slide.querySelector("img").cloneNode();
+                            const thumbWrapper = rwp.stringToHtml('<span aria-hidden="true" role="presentation" class="btn-icon"></span>');
                             thumbWrapper.append(thumb);
                             navItemContent = thumbWrapper;
                         } else {
                             navItem.classList.add("btn-toggle");
                         }
                         navItem.append(navItemContent);
-                        let navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
+                        const navItemWrapper = rwp.stringToHtml('<span class="tns-nav-item"></span>');
                         navItemWrapper.append(navItem);
                         navItem = navItemWrapper;
                         changeActiveClass(navItem);
@@ -3196,7 +3196,7 @@
             if (hasThumbnails) {
                 args.slideBy = 1;
             }
-            let init = elem => {
+            const init = elem => {
                 updateBtnPosition(elem);
                 createNav(elem, hasThumbnails);
             };
@@ -3204,16 +3204,16 @@
                 args.onInit = init;
             }
             args.container = element;
-            let sliderInstance = (0, tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(args);
+            const sliderInstance = (0, tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_0__.tns)(args);
             sliderInstance.events.on("indexChanged", changeActiveClasses);
             return sliderInstance;
         }
         rwp.slider = slider;
         window.addEventListener("load", (function() {
-            let sliders = document.querySelectorAll(".tns");
+            const sliders = document.querySelectorAll(".tns");
             if (sliders.length > 0) {
                 sliders.forEach((element => {
-                    var slide = slider(element);
+                    const slide = slider(element);
                     return slide;
                 }));
             }

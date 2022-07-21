@@ -546,7 +546,7 @@ ICONCSS;
         // https://core.trac.wordpress.org/ticket/33714
         // https://github.com/WordPress/dashicons/blob/master/codepoints.json
         if (\is_string($pto->menu_icon) && 0 === \strpos($pto->menu_icon, 'dashicons-')) {
-            $codepoints = \json_decode(\file_get_contents(__DIR__ . '/dashicons-codepoints.json'), \true);
+            $codepoints = \json_decode(\file_get_contents(__DIR__ . '/codepoints.json'), \true);
             $unprefixed = \str_replace('dashicons-', '', $pto->menu_icon);
             if (isset($codepoints[$unprefixed])) {
                 $text .= \sprintf($css, esc_html($class), esc_html(\dechex($codepoints[$unprefixed])));

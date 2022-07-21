@@ -137,7 +137,7 @@ function rwp_get_page_for_post_type( $post_type = false ) {
 	if ( $post_type ) {
 		if ( 'post' === $post_type ) {
 				return rwp_get_blog_page();
-		} else if ( in_array( $post_type, get_post_types() ) ) {
+		} elseif ( in_array( $post_type, get_post_types() ) ) {
 			return get_option( "page_for_{$post_type}", false );
 		}
 	}
@@ -251,13 +251,13 @@ function rwp_post( $obj = null, $type = 'post' ) {
 				$parent   = $obj->post_parent;
 				$slug     = $obj->post_name;
 				$url      = get_permalink( $id );
-			} else if ( $obj instanceof \WP_Post_Type ) {
+			} elseif ( $obj instanceof \WP_Post_Type ) {
 				$type     = 'archive';
 				$sub_type = $obj->name; // What type of archive is it?
 				$title    = $obj->label;
 				$slug     = 'archive-' . $obj->name;
 
-				$url      = get_post_type_archive_link( $sub_type );
+				$url = get_post_type_archive_link( $sub_type );
 
 				$custom_archive_page = false;
 
@@ -269,7 +269,7 @@ function rwp_post( $obj = null, $type = 'post' ) {
 					return rwp_post( $custom_archive_page );
 				}
 				$info['description'] = $obj->description;
-			} else if ( $obj instanceof \WP_Term ) {
+			} elseif ( $obj instanceof \WP_Term ) {
 				$type     = 'term';
 				$sub_type = $obj->taxonomy; // What type of term is it?
 				$id       = $obj->term_id;
@@ -278,20 +278,20 @@ function rwp_post( $obj = null, $type = 'post' ) {
 				$parent   = $obj->parent;
 				$slug     = $obj->slug;
 				$url      = get_term_link( $id, $sub_type );
-			} else if ( $obj instanceof \WP_User ) {
+			} elseif ( $obj instanceof \WP_User ) {
 				$type     = 'user';
 				$sub_type = $obj->cap_key; // What type of user is it?
 				$id       = $obj->ID;
 				$acf_id   = "{$type}_{$id}";
 				$title    = $obj->display_name;
 				$slug     = $title;
-			} else if ( $obj instanceof \WP_Widget ) {
+			} elseif ( $obj instanceof \WP_Widget ) {
 				$type     = 'widget';
 				$sub_type = $obj->name; // What type of widget is it?
 				$id       = $obj->id;
 				$acf_id   = "{$type}_{$id}";
 				$slug     = rwp_change_case( $id, 'slug' );
-			} else if ( $obj instanceof \WP_Comment ) {
+			} elseif ( $obj instanceof \WP_Comment ) {
 				$type     = 'comment';
 				$sub_type = $obj->comment_type;
 				$id       = $obj->comment_ID;
@@ -300,7 +300,7 @@ function rwp_post( $obj = null, $type = 'post' ) {
 				$slug     = $id;
 				$url      = get_comment_link( $obj );
 				$info['post_parent'] = $obj->comment_post_ID; // ID of the post the comment is associated with.
-			} else if ( $obj instanceof \WP_Taxonomy ) {
+			} elseif ( $obj instanceof \WP_Taxonomy ) {
 				$type     = 'taxonomy';
 				$sub_type = $obj->name; // What type of taxonomy is it?
 				$title    = $obj->label;
@@ -518,7 +518,7 @@ function rwp_post_excerpt( $post = null, $args = [] ) {
 
 	if ( 'post' === $type ) {
 		if ( has_excerpt( $post ) ) {
-			$excerpt      = get_the_excerpt( $post );
+			$excerpt = get_the_excerpt( $post );
 		}
 	} elseif ( 'term' === $type ) {
 		$excerpt = get_term_field( 'description', $post_object );
@@ -587,7 +587,7 @@ function rwp_post_title( $post = null, $use_alt = false, $before = '', $after = 
 	}
 
 	if ( $use_alt ) {
-		$alt_title    = get_field( 'alt_title', $acf_id );
+		$alt_title = get_field( 'alt_title', $acf_id );
 		if ( ! empty( $alt_title ) ) {
 			$title = $alt_title;
 		}
@@ -645,7 +645,7 @@ function rwp_post_ancestors( $post = null ) {
 						$ancestors->push( $parent );
 					}
 				}
-			} else if ( 'term' === $type ) {
+			} elseif ( 'term' === $type ) {
 				$taxonomy = get_taxonomy( $subtype );
 				$post_type = reset( $taxonomy->object_type );
 

@@ -5133,7 +5133,7 @@
                 args = defaults;
             }
             if (!rwp.isEmpty(selector)) {
-                let modal = new _fancyapps_ui_src_Fancybox_Fancybox_js__WEBPACK_IMPORTED_MODULE_0__.Fancybox(selector, args);
+                const modal = new _fancyapps_ui_src_Fancybox_Fancybox_js__WEBPACK_IMPORTED_MODULE_0__.Fancybox(selector, args);
                 return modal;
             }
         }

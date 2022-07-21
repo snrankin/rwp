@@ -1,0 +1,26 @@
+/// ======================================================================== ///
+/// @name   _utilities
+///
+/// @group  RWP
+/// @version   0.9.0
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+:root {
+	--bs-scrollbar: 0px; // stylelint-disable
+}
+.screen-width,
+.screen-full {
+	width: 100%;
+	@media screen {
+		width: 100vw; // Fallback for old browsers
+		width: calc(100vw - (100vw - 100%)); // ignores scrollbar
+	}
+}
+
+.screen-width,
+.screen-height {
+	height: 100%;
+	@media screen {
+		height: 100vh;
+	}
+}

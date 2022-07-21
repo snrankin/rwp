@@ -1,0 +1,60 @@
+grumphp:
+  ignore_unstaged_changes: false
+  stop_on_failure: true
+  fixer:
+    enabled: false
+    fix_by_default: false
+  parallel:
+    enabled: true
+    max_workers: 32
+  environment:
+    paths:
+      - ~/tools
+      - /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp
+      - /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/.bin
+  tasks:
+    # codeception: ~
+    composer: ~
+    composer_normalize: ~
+    eslint:
+      triggered_by: [js, jsx, ts, tsx, vue]
+      whitelist_patterns:
+        - /^tests\/(.*)/
+        - /^vendor\/(.*)/
+        - /^dependencies\/(.*)/
+        - /^node_modules\/(.*)/
+        - /^assets\/(.*)/
+      config: /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/.eslintrc.js
+
+      debug: true
+    git_blacklist:
+      keywords:
+        - "var_dump"
+        - "ray"
+      whitelist_patterns:
+        - /^includes\/dependencies\/(.*)/
+        - /^vendor\/(.*)/
+        - /^tests\/(.*)/
+        - /^includes\/functions\/utils\/debug.php/
+      match_word: true
+    phpcs:
+      report: full
+      whitelist_patterns:
+        - /^includes\/dependencies\/(.*)/
+        - /^vendor\/(.*)/
+        - /^tests\/(.*)/
+      triggered_by: ['php']
+    # phpstan:
+    #   autoload_file: ~
+    #   configuration: phpstan.neon
+    #   level: null
+    #   use_grumphp_paths: false
+    #   force_patterns: []
+    #   ignore_patterns:
+    #     - /^includes\/dependencies\/(.*)/
+    #     - /^vendor\/(.*)/
+    #     - /^tests\/(.*)/
+    #   triggered_by: ['php']
+    #   memory_limit: '-1'
+    stylelint:
+      triggered_by: [scss]

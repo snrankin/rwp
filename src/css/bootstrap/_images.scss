@@ -1,0 +1,189 @@
+/// ======================================================================== ///
+/// @name   _images
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@import '~bootstrap/scss/images';
+
+figure {
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.figure-img {
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.media-wrapper {
+	display: block;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+
+	&:not(:last-child) {
+		margin-bottom: $paragraph-margin-bottom;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&.gallery-wrapper {
+		width: 100%;
+		display: block;
+	}
+
+	&.is-bg {
+		@include cover-absolute;
+
+		margin-bottom: 0 !important;
+
+		.media-link,
+		.media-content {
+			@include cover-absolute;
+		}
+
+		.wistia_embed.no-video-foam {
+			position: absolute;
+			height: 100% !important;
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	&.has-caption {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+		grid-template-columns: 1fr;
+		place-items: center;
+		place-content: space-evenly;
+		grid-auto-columns: auto;
+
+		&.caption-top {
+			.media-content {
+				grid-row-start: 1;
+			}
+		}
+
+		&.caption-left {
+			@include media-breakpoint-up(md) {
+				grid-template-columns: unset !important;
+				grid-auto-flow: column;
+			}
+
+			.media-content {
+				@include media-breakpoint-up(md) {
+					grid-column-start: 1;
+				}
+			}
+
+			.media-caption {
+				@include media-breakpoint-up(md) {
+					text-align: right;
+				}
+			}
+		}
+
+		&.caption-right {
+			@include media-breakpoint-up(md) {
+				grid-template-columns: unset !important;
+				grid-auto-flow: column;
+			}
+
+			.media-caption {
+				@include media-breakpoint-up(md) {
+					text-align: left;
+				}
+			}
+		}
+
+		.media-caption {
+			text-align: center;
+		}
+	}
+
+	&.media-video {
+		.ls-blur-up-img {
+			display: none;
+		}
+	}
+}
+
+.media-video {
+	width: 100%;
+	height: auto;
+}
+
+.media-caption {
+	@include font-size($figure-caption-font-size);
+}
+
+.media-content {
+	display: block;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+
+	&.ratio {
+		.media-src {
+			@include center-absolute;
+			@include img-cover;
+		}
+	}
+}
+
+ul.gallery-slider,
+ul.tns-slider {
+	margin-bottom: 0;
+}
+
+svg,
+img {
+	@include img-fluid;
+}
+
+.play-btn {
+	@include cover-absolute;
+
+	background-color: rgba(#000, 0.1);
+	border: none;
+	border-radius: 0;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+}
+
+.media-link {
+	display: block;
+}
+
+.media-src {
+	display: block;
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+	transform: translateZ(0);
+	will-change: transform;
+
+	.parent-fit-cover &,
+	&[data-parent-fit='cover'],
+	.ratio & {
+		@include img-cover;
+	}
+
+	.parent-fit-contain &,
+	&[data-parent-fit='contain'] {
+		@include img-contain;
+	}
+}

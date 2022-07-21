@@ -9,8 +9,8 @@
  * ==========================================================================
  */
 
-use RWP\Components\Collection;
-use RWP\Components\Element;
+use RWP\Helpers\Collection;
+use RWP\Helpers\Element;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Support\Enumerable;
@@ -26,28 +26,27 @@ use RWP\Vendor\Illuminate\Support\Enumerable;
  * @return array The converted object
  */
 function rwp_object_to_array( $obj ) {
-    if ( $obj instanceof Collection ) {
+	if ( $obj instanceof Collection ) {
 		return rwp_flatten_collections( $obj );
 	} elseif ( $obj instanceof Enumerable ) {
-        return $obj->all();
-    } elseif ( $obj instanceof Arrayable ) {
-        return $obj->toArray();
-    } elseif ( $obj instanceof Jsonable ) {
-        return json_decode( $obj->toJson(), true );
-    } elseif ( $obj instanceof \JsonSerializable ) {
-        return (array) $obj->jsonSerialize();
-    } elseif ( $obj instanceof \Traversable ) {
-        return iterator_to_array( $obj );
-    } elseif ( $obj instanceof Element ) {
-        return $obj->get_args();
-    } else {
-        $obj = wp_json_encode( $obj );
-        if ( $obj ) {
-            $obj = json_decode( $obj, true );
-        }
-    }
-    return (array) $obj;
-
+		return $obj->all();
+	} elseif ( $obj instanceof Arrayable ) {
+		return $obj->toArray();
+	} elseif ( $obj instanceof Jsonable ) {
+		return json_decode( $obj->toJson(), true );
+	} elseif ( $obj instanceof \JsonSerializable ) {
+		return (array) $obj->jsonSerialize();
+	} elseif ( $obj instanceof \Traversable ) {
+		return iterator_to_array( $obj );
+	} elseif ( $obj instanceof Element ) {
+		return $obj->get_args();
+	} else {
+		$obj = wp_json_encode( $obj );
+		if ( $obj ) {
+			$obj = json_decode( $obj, true );
+		}
+	}
+	return (array) $obj;
 }
 
 /**
@@ -57,7 +56,7 @@ function rwp_object_to_array( $obj ) {
  */
 function rwp_flatten_collections( $collection ) {
 	if ( rwp_is_collection( $collection ) ) {
-		$collection->transform(function( $value ) {
+		$collection->transform(function ( $value ) {
 			return rwp_flatten_collections( $value );
 		});
 
@@ -70,7 +69,6 @@ function rwp_merge_data( &$data_set_1, $data_set_2, $overwrite = true ) {
 	$data_set_2 = rwp_object_to_array( $data_set_2 );
 	$data_set_2 = new RecursiveArrayIterator( $data_set_2 );
 	rwp_apply_args( $data_set_2, $data_set_1, $overwrite );
-
 }
 
 function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
@@ -85,13 +83,13 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
 			if ( isset( $base_obj->$key ) ) {
 				$parent_val = $base_obj->__get( $key );
 			}
-		} else if ( is_array( $base_obj ) ) {
+		} elseif ( is_array( $base_obj ) ) {
 			if ( isset( $base_obj[ $key ] ) ) {
 				$parent_val = $base_obj[ $key ];
 			}
 		}
 
-		if ( $iterator->hasChildren() && 'atts' !== $key && 'order' !== $key ) {
+		if ( $iterator->hasChildren() && ! rwp_is_collection( $value ) && 'atts' !== $key && 'order' !== $key ) {
 			$children = $iterator->getChildren();
 
 			if ( ! empty( $parent_val ) ) {
@@ -103,15 +101,16 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
 			if ( 'atts' === $key && ! empty( $parent_val ) ) {
 
 				$value = rwp_merge_args( $parent_val, $value );
-			} else if ( 'order' === $key && ! empty( $parent_val ) ) {
-				$value = rwp_merge_args( $parent_val, $value );
+			} elseif ( rwp_is_collection( $parent_val ) ) {
+
+				$value = $parent_val->replaceRecursive( $value );
 			}
 		}
 		if ( is_object( $base_obj ) ) {
 			if ( ! isset( $base_obj->$key ) || $overwrite ) {
 				$base_obj->__set( $key, $value );
 			}
-		} else if ( is_array( $base_obj ) ) {
+		} elseif ( is_array( $base_obj ) ) {
 			if ( ! isset( $base_obj[ $key ] ) || $overwrite ) {
 				$base_obj[ $key ] = $value;
 			}
@@ -132,11 +131,11 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
  */
 function rwp_object_has( $key, $obj ) {
 	if ( is_object( $obj ) ) {
-        if ( property_exists( $obj, $key ) && rwp_has_value( $obj->$key ) ) {
-            return true;
-        } else {
-            return false;
-        }
+		if ( property_exists( $obj, $key ) && filled( $obj->$key ) ) {
+			return true;
+		} else {
+			return false;
+		}
 	} else {
 		return false;
 	}
@@ -153,7 +152,7 @@ function rwp_object_has( $key, $obj ) {
  */
 function rwp_object_get( $obj, $key, $default = null ) {
 	if ( rwp_object_has( $key, $obj ) ) {
-        return $obj->$key;
+		return $obj->$key;
 	} else {
 		return $default;
 	}
@@ -168,7 +167,7 @@ function rwp_object_get( $obj, $key, $default = null ) {
  * @return bool
  */
 function rwp_is_class( $var, $class ) {
-    return ( $var instanceof $class );
+	return ( $var instanceof $class );
 }
 
 /**
@@ -181,7 +180,7 @@ function rwp_is_class( $var, $class ) {
  */
 function rwp_is_component( $var, $component = 'Element' ) {
 	$class = '\\RWP\\Components\\' . $component;
-    return rwp_is_class( $var, $class );
+	return rwp_is_class( $var, $class );
 }
 
 
@@ -197,7 +196,7 @@ function rwp_is_component( $var, $component = 'Element' ) {
  * @return bool
  */
 function rwp_is_collection( $var ) {
-    return rwp_is_class( $var, '\\RWP\\Vendor\\Illuminate\\Support\\Collection' );
+	return rwp_is_class( $var, '\\RWP\\Vendor\\Illuminate\\Support\\Collection' );
 }
 
 /**
@@ -210,15 +209,15 @@ function rwp_is_collection( $var ) {
  */
 function rwp_collection_has( $key, $obj ) {
 	if ( rwp_is_collection( $obj ) ) {
-        if ( $obj->isNotEmpty() ) {
-            if ( $obj->has( $key ) && rwp_has_value( $obj->get( $key ) ) ) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+		if ( $obj->isNotEmpty() ) {
+			if ( $obj->has( $key ) && filled( $obj->get( $key ) ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	} else {
 		return false;
 	}
@@ -234,9 +233,9 @@ function rwp_collection_has( $key, $obj ) {
 
 function rwp_collection_remove_empty_items( $collection ) {
 	if ( rwp_is_collection( $collection ) ) {
-        return $collection->reject(
+		return $collection->reject(
 			function ( $item ) {
-                return empty( $item );
+				return empty( $item );
 			}
 		);
 	} else {
@@ -255,9 +254,9 @@ function rwp_collection_remove_empty_items( $collection ) {
 
 function rwp_collection_sort_by_keys( $collection, $order ) {
 	if ( rwp_is_collection( $collection ) ) {
-        $collection = $collection->all();
-        $collection = rwp_sort_array_by_keys( $collection, $order );
+		$collection = $collection->all();
+		$collection = rwp_sort_array_by_keys( $collection, $order );
 	}
 
-    return new Collection( $collection );
+	return new Collection( $collection );
 }

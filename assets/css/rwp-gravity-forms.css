@@ -1,5 +1,5 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./css/vendor/gravity-forms.scss ***!
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./css/vendor/gravity-forms.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************/
 .gform_wrapper.gravity-theme form .gform_fields{
     grid-gap:var(--bs-form-gutter-y) var(--bs-form-gutter-x);
@@ -8,16 +8,22 @@
     margin-top:var(--bs-form-gutter-y);
 }
 .gform_wrapper.gravity-theme form.form-inline{
+    row-gap:var(--bs-gutter-y);
+    margin-right:calc(var(--bs-gutter-x) * -0.5);
+    margin-left:calc(var(--bs-gutter-x) * -0.5);
+    width:calc(100% + var(--bs-gutter-x));
     display:flex;
     flex-wrap:wrap;
     float:none;
     min-width:100%;
-    gap:var(--bs-gutter-y) var(--bs-gutter-x);
 }
 .gform_wrapper.gravity-theme form.form-inline:before, .gform_wrapper.gravity-theme form.form-inline:after{
     display:none;
 }
 .gform_wrapper.gravity-theme form.form-inline .gform_body{
+    padding-right:calc(var(--bs-gutter-x) * 0.5);
+    padding-left:calc(var(--bs-gutter-x) * 0.5);
+    margin-top:var(--bs-gutter-y);
     max-width:100%;
     display:flex;
     flex:0 1 auto;
@@ -26,6 +32,9 @@
     flex-grow:1;
 }
 .gform_wrapper.gravity-theme form.form-inline .gform_footer{
+    padding-right:calc(var(--bs-gutter-x) * 0.5);
+    padding-left:calc(var(--bs-gutter-x) * 0.5);
+    margin-top:var(--bs-gutter-y);
     max-width:100%;
     display:flex;
     flex:0 1 auto;

@@ -1,0 +1,227 @@
+/// ======================================================================== ///
+/// @name   _grid
+///
+/// @group  RWP
+/// @since  0.9.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.has-bg {
+	position: relative;
+	overflow: hidden;
+
+	> .bg-wrapper {
+		@include cover-absolute;
+
+		z-index: -1;
+	}
+}
+
+.section-wrapper {
+	@include make-section('.section-wrapper', '.has-bg');
+}
+
+.section-inner {
+	@include make-section-inner('.has-bg');
+}
+
+.screen-full {
+	width: 100%;
+	height: 100vh;
+	@media only print {
+		height: 100%;
+	}
+}
+
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+@if $enable-grid-classes {
+	// Single container class with breakpoint max-widths
+	.container,
+  	// 100% wide container at all breakpoints
+  	.container-fluid {
+		@include make-container;
+	}
+
+	// Responsive containers that are 100% wide until a breakpoint
+	@each $breakpoint, $container-max-width in $container-widths {
+		.container-#{$breakpoint} {
+			@extend .container-fluid;
+		}
+
+		@include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+			%responsive-container-#{$breakpoint} {
+				max-width: getcssvar(container-#{$breakpoint}-width);
+			}
+
+			// Extend each breakpoint which is smaller or equal to the current breakpoint
+			$extend-breakpoint: true;
+
+			@each $name, $width in $grid-breakpoints {
+				@if $extend-breakpoint {
+					.container#{breakpoint-infix($name, $grid-breakpoints)} {
+						@extend %responsive-container-#{$breakpoint};
+					}
+
+					// Once the current breakpoint is reached, stop extending
+					@if $breakpoint == $name {
+						$extend-breakpoint: false;
+					}
+				}
+			}
+		}
+	}
+
+	.container {
+		max-width: getcssvar(container-width);
+	}
+}
+
+// Row
+//
+// Rows contain your columns.
+
+@if $enable-grid-classes {
+	.row {
+		@include make-row;
+
+		> * {
+			@include make-col-ready;
+		}
+
+		&:not(:last-child) {
+			margin-bottom: getcssvar(row-spacing);
+		}
+	}
+}
+
+@if $enable-cssgrid {
+	.grid {
+		display: grid;
+		grid-template-rows: repeat(var(--#{$variable-prefix}rows, 1), 1fr);
+		grid-template-columns: repeat(var(--#{$variable-prefix}columns, #{$grid-columns}), 1fr);
+		gap: var(--#{$variable-prefix}gap, #{$grid-gutter-width});
+
+		@include make-cssgrid;
+	}
+}
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@if $enable-grid-classes {
+	.content-wrapper {
+		flex: 1 1 auto;
+	}
+
+	.col {
+		@include make-col-ready;
+	}
+
+	@include make-grid-columns;
+
+	.stretched-col {
+		&.left {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content(left, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content(left, true);
+				}
+			}
+		}
+
+		&.right {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content(right, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content(right, true);
+				}
+			}
+		}
+
+		> .content-wrapper:not(.ratio) {
+			> .is-bg:only-child {
+				@include media-breakpoint-down(md) {
+					position: relative;
+				}
+
+				> .media-content {
+					@include media-breakpoint-down(md) {
+						position: relative;
+					}
+
+					> .media-src {
+						@include media-breakpoint-down(md) {
+							position: relative;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.stretched-col-mobile {
+		&:not(.in-grid-content) {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, false);
+			}
+		}
+
+		&.in-grid-content {
+			> .content-wrapper {
+				position: relative;
+				@include stretch-col-content-mobile(both, true);
+			}
+		}
+
+		&.left-mobile {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(left, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(left, true);
+				}
+			}
+		}
+
+		&.right-mobile {
+			&:not(.in-grid-content) {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(right, false);
+				}
+			}
+
+			&.in-grid-content {
+				> .content-wrapper {
+					position: relative;
+					@include stretch-col-content-mobile(right, true);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,145 @@
+/// ======================================================================== ///
+/// @name   _root
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+@import '~bootstrap/scss/root';
+@import '../global/index';
+
+$section-spacing-y: $grid-gutter-width * 3;
+$row-spacing-y: $grid-gutter-width * 2;
+$col-spacing-y: $grid-gutter-width;
+
+:root {
+	// Note: Custom variable values only support SassScript inside `#{}`.
+
+	@include setcssvar(sub-nav-bg, $white);
+	@include setcssvar(border-width, $border-width);
+	@include setcssvar(border-radius, $border-radius);
+
+	@include setcssvar(navbar-gap-y, $navbar-brand-margin-end);
+	@include setcssvar(navbar-gap-x, $navbar-brand-margin-end);
+	@include setcssvar(dropdown-divider-bg, $dropdown-divider-bg);
+
+	@include setlinkvars(nav-link, $nav-link-color, $nav-link-hover-color, $nav-link-active-color, $nav-link-focus-color, $nav-link-disabled-color);
+
+	@each $breakpoint, $value in $grid-breakpoints {
+		--#{$variable-prefix}bp-#{$breakpoint}: #{$value};
+	}
+
+	@each $number, $value in $spacers {
+		@include rfs($value, cssvar(spacer-#{$number}));
+	}
+
+	@each $number, $value in $horizontal-gutters {
+		@include rfs($value, cssvar(gutter-x-#{$number}));
+	}
+
+	@include rfs($grid-gutter-width, cssvar(gutter-y));
+	@include rfs($grid-gutter-width, cssvar(gutter-x));
+
+	@each $number, $value in $vertical-gutters {
+		@include rfs($value, cssvar(gutter-y-#{$number}));
+	}
+
+	@each $color, $value in $theme-colors {
+		--#{$variable-prefix}#{$color}: #{$value};
+		--#{$variable-prefix}#{$color}-contrast: #{color-contrast($value)};
+	}
+
+	--#{$variable-prefix}form-gutter-x: #{getcssvar(gutter-x-2)};
+	--#{$variable-prefix}form-gutter-y: #{getcssvar(gutter-y-2)};
+
+	@each $size, $value in $font-sizes {
+		@include rfs($value, #{cssvar(#{$size}-font-size)});
+	}
+
+	@each $type, $value in $type-spaces {
+		--#{$variable-prefix}spacer-#{$type}: #{$value};
+	}
+
+	--#{$variable-prefix}white-rgb: #{to-rgb($white)};
+	--#{$variable-prefix}black-rgb: #{to-rgb($black)};
+	--#{$variable-prefix}body-color-rgb: #{to-rgb($body-color)};
+	--#{$variable-prefix}body-bg-rgb: #{to-rgb($body-bg)};
+
+	// Fonts
+
+	// Note: Use `inspect` for lists so that quoted items keep the quotes.
+	// See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+	--#{$variable-prefix}font-sans-serif: #{inspect($font-family-base)};
+	--#{$variable-prefix}font-monospace: #{inspect($font-family-code)};
+	--#{$variable-prefix}gradient: #{$gradient};
+
+	// Root and body
+	// stylelint-disable custom-property-empty-line-before
+	// scss-docs-start root-body-variables
+	@if $font-size-root != null {
+		--#{$variable-prefix}root-font-size: #{$font-size-root};
+	}
+	@include rfs($font-size-base, --#{$variable-prefix}body-font-size);
+
+	--#{$variable-prefix}body-font-family: #{$font-family-base};
+	--#{$variable-prefix}body-font-weight: #{$font-weight-base};
+	--#{$variable-prefix}body-line-height: #{$line-height-base};
+	--#{$variable-prefix}body-color: #{$body-color};
+	@if $body-text-align != null {
+		--#{$variable-prefix}body-text-align: #{$body-text-align};
+	}
+	--#{$variable-prefix}body-bg: #{$body-bg};
+
+	--#{$variable-prefix}link-color: #{$link-color};
+	--#{$variable-prefix}link-decoration: #{$link-decoration};
+	--#{$variable-prefix}link-hover-color: #{$link-hover-color};
+	--#{$variable-prefix}link-hover-decoration: #{$link-hover-decoration};
+
+	--#{$variable-prefix}paragraph-spacing: #{$paragraph-margin-bottom};
+
+	@include rfs($grid-gutter-width, #{cssvar(gutter-x)});
+	@include rfs($grid-gutter-width, #{cssvar(gutter-y)});
+	@include rfs($row-spacing-y, #{cssvar(container-spacing)});
+	@include rfs($row-spacing-y, #{cssvar(row-spacing)});
+	@include rfs($section-spacing-y, #{cssvar(section-spacing)});
+	@include rfs($section-spacing-y * -1, #{cssvar(section-n-spacing)});
+
+	@each $breakpoint, $value in map-keys($grid-breakpoints) {
+		@if $value != $rfs-breakpoint {
+			@include media-breakpoint-up($breakpoint) {
+				--#{$variable-prefix}section-spacing-#{$breakpoint}: #{rfs-fluid-value($section-spacing-y)};
+				--#{$variable-prefix}section-n-spacing-#{$breakpoint}: #{rfs-fluid-value($section-spacing-y * -1)};
+			}
+		} @else {
+			@media (min-width: #{$rfs-breakpoint}) {
+				--#{$variable-prefix}section-spacing-#{$breakpoint}: #{rfs-value($value)};
+				--#{$variable-prefix}section-n-spacing-#{$breakpoint}: #{rfs-value($section-spacing-y * -1)};
+			}
+		}
+	}
+
+	@each $breakpoint, $value in $container-widths {
+		--#{$variable-prefix}container-#{$breakpoint}-width: #{$value};
+		@include media-breakpoint-up($breakpoint) {
+			--#{$variable-prefix}container-width: #{getcssvar(container-#{$breakpoint}-width)};
+		}
+	}
+
+	@for $i from 1 through $grid-columns {
+		--#{$variable-prefix}column-#{$i}-width: calc(#{getcssvar(container-width)} * #{divide($i, $grid-columns)} + (#{getcssvar(gutter-x)} * #{$i - 1}));
+	}
+
+	@include rfs($dropdown-item-padding-x, #{cssvar(dropdown-item-padding-x)});
+	@include rfs($dropdown-item-padding-y, #{cssvar(dropdown-item-padding-y)});
+
+	--#{$variable-prefix}nav-icon-size: max-content;
+
+	@include rfs($card-cap-padding-x, #{cssvar(card-header-padding-x)});
+	@include rfs($card-cap-padding-y, #{cssvar(card-header-padding-y)});
+	@include rfs($card-cap-padding-x, #{cssvar(card-footer-padding-x)});
+	@include rfs($card-cap-padding-y, #{cssvar(card-footer-padding-y)});
+	@include rfs($card-spacer-x, #{cssvar(card-gap-x)});
+	@include rfs($card-spacer-y, #{cssvar(card-gap-y)});
+	@include rfs($card-spacer-x, #{cssvar(card-padding-x)});
+	@include rfs($card-spacer-y, #{cssvar(card-padding-y)});
+}

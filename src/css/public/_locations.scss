@@ -1,0 +1,22 @@
+/// ======================================================================== ///
+/// @name   _locations
+///
+/// @group  RWP
+/// @since  0.9.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.address-line {
+	.address-item {
+		display: inline-block;
+		margin-right: getcssvar(spacer-default);
+
+		&.address-item-separator {
+			margin-left: calc(-1 * #{getcssvar(spacer-default)});
+		}
+	}
+}
+
+abbr[title].address-line {
+	text-decoration: none;
+}

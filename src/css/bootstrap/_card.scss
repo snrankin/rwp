@@ -1,0 +1,74 @@
+/// ======================================================================== ///
+/// @name   _card
+///
+/// @group  RWP
+/// @version   0.9.0
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+@import '~bootstrap/scss/card';
+
+.card {
+	display: grid;
+	grid-template-columns: 1fr;
+	padding: getcssvar(card-padding-y) getcssvar(card-padding-x);
+	gap: getcssvar(card-gap-y) getcssvar(card-gap-x);
+
+	&.border-0:not(.flex-row) {
+		.card-body {
+			padding-left: 0;
+			padding-right: 0;
+			@include media-breakpoint-up(md) {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	&.flex-row {
+		place-items: center;
+		@include media-breakpoint-up(md) {
+			grid-template-columns: max-content 1fr;
+
+			.card-body {
+				place-self: center;
+			}
+
+			&.img-right {
+				grid-template-columns: 1fr max-content;
+			}
+
+			ul.mt-auto {
+				margin-top: 0 !important;
+			}
+		}
+	}
+}
+
+.card-img {
+	//grid-area: img;
+
+	&.media-wrapper {
+		margin-bottom: 0;
+	}
+
+	&.is-circle {
+		display: block !important;
+	}
+}
+
+.card-header {
+	//grid-area: head;
+	padding: getcssvar(card-header-padding-y) getcssvar(card-header-padding-x);
+}
+
+.card-body {
+	//grid-area: body;
+	padding: getcssvar(card-body-padding-y) getcssvar(card-body-padding-x);
+	display: flex;
+	flex-direction: column;
+	place-self: stretch;
+}
+
+.card-footer {
+	//grid-area: foot;
+	padding: getcssvar(card-footer-padding-y) getcssvar(card-footer-padding-x);
+}

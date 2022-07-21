@@ -1,0 +1,98 @@
+{
+    "name": "rwp/plugin",
+    "description": "Wordpress Plugin Boilerplate with steroids!",
+    "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "RIESTER Advertising Agency",
+            "email": "wordpress@riester.com",
+            "homepage": "https://www.riester.com"
+        }
+    ],
+    "homepage": "https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered",
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+        "ergebnis/composer-normalize": "^2.28",
+        "lipemat/wp-phpcs": "^2.6",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "phpcsstandards/phpcsutils": "^1.0@alpha",
+        "phpstan/phpstan": "^1.8",
+        "szepeviktor/phpstan-wordpress": "^1.1",
+        "wpreadme2markdown/wpreadme2markdown": "^4.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@composer normalize",
+            "@install-codestandards",
+            "@dump-root"
+        ],
+        "codecept": [
+            "vendor/bin/codecept"
+        ],
+        "codecept:acceptance": [
+            "@codecept run acceptance"
+        ],
+        "codecept:all": [
+            "@codecept:acceptance",
+            "@codecept:functional",
+            "@codecept:unit",
+            "@codecept:wpunit"
+        ],
+        "codecept:functional": [
+            "@codecept run functional"
+        ],
+        "codecept:unit": [
+            "@codecept run unit"
+        ],
+        "codecept:wpunit": [
+            "@codecept run wpunit"
+        ],
+        "convert-readme": [
+            "wp2md -i readme.txt -o README.md"
+        ],
+        "dump-root": [
+            "@composer dump-autoload -o -a"
+        ],
+        "dump-vendor": [
+            "@composer dump-autoload --working-dir dependencies -o --no-dev"
+        ],
+        "grum": [
+            "grum git:pre-commit"
+        ],
+        "install-codestandards": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+        ],
+        "php-fix": [
+            "vendor/bin/phpcbf -p -v --config-show"
+        ],
+        "php-lint": [
+            "vendor/bin/phpcs pwd -p -v -l --config-show "
+        ],
+        "phpstan": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpstan analyse -c phpstan.neon --ansi --memory-limit=-1 --debug"
+        ],
+        "phpstan-baseline": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
+        ],
+        "test": [
+            "@grum"
+        ]
+    }
+}

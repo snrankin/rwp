@@ -1,0 +1,285 @@
+/// ======================================================================== ///
+/// @name   _narbar
+///
+/// @group  RWP
+/// @version   0.9.0
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+@import '~bootstrap/scss/navbar';
+
+.navbar {
+	@each $color, $value in $theme-colors {
+		&.bg-#{$color} {
+			.sub-nav {
+				// stylelint-disable-next-line
+				--#{$variable-prefix}-sub-nav-bg: #{$value};
+			}
+		}
+	}
+
+	> .navbar-wrapper-inner {
+		display: grid;
+		gap: getcssvar(navbar-gap-y) getcssvar(navbar-gap-x);
+		grid-template-rows: auto auto;
+		@for $column from 1 through 6 {
+			@each $breakpoint in map-keys($grid-breakpoints) {
+				$infix: breakpoint-infix($breakpoint);
+
+				@include media-breakpoint-up($breakpoint) {
+					&.grid-columns#{$infix}-#{$column} {
+						grid-template-columns: repeat($column, max-content);
+
+						@if $infix != '' {
+							grid-template-rows: auto;
+
+							.navbar-collapse {
+								grid-row-end: unset;
+								grid-column: unset;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.navbar-collapse {
+			grid-row-end: -1;
+			grid-column: 1 / -1;
+		}
+	}
+
+	.dropdown {
+		> .dropdown-menu {
+			max-height: 0;
+			transform-origin: top left;
+			display: block;
+			opacity: 0;
+			visibility: hidden;
+			backface-visibility: hidden;
+			border: none;
+			@include transition(all 0.4s easeInQuart);
+
+			&.show {
+				@include transition(all 0.4s easeOutQuart);
+
+				opacity: 1;
+				visibility: visible;
+				max-height: 9999px;
+			}
+		}
+	}
+
+	.menu-divider {
+		border-bottom: getcssvar(dropdown-divider-width) solid getcssvar(dropdown-divider-bg);
+
+		.vr {
+			display: none;
+		}
+	}
+}
+
+// Generate series of `.navbar-expand-*` responsive classes for configuring
+// where your navbar collapses.
+.navbar-expand {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		$next: breakpoint-next($breakpoint, $grid-breakpoints);
+		$infix: breakpoint-infix($next, $grid-breakpoints);
+
+		&#{$infix} {
+			@include media-breakpoint-up($next) {
+				.subnav.level-1-menu {
+					position: absolute;
+					top: 100%;
+					left: 0;
+				}
+
+				.dropdown {
+					> .dropdown-menu {
+						max-height: none;
+					}
+				}
+
+				.dropdown:not(.dropend) {
+					> .dropdown-menu {
+						top: 80%;
+						transform: rotateX(-75deg);
+
+						&.show {
+							top: 100%;
+							transform: rotateX(0deg);
+						}
+					}
+				}
+
+				.dropdown.dropend {
+					> .dropdown-menu {
+						top: 0;
+						left: 80%;
+						transform: rotateY(-75deg);
+
+						&.show {
+							left: 100%;
+							transform: rotateY(0deg);
+						}
+					}
+				}
+
+				.menu-divider {
+					border-bottom: none;
+
+					.vr {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+.btn {
+	&[aria-expanded='true'],
+	&[aria-selected='true'],
+	&.active {
+		.btn-icon.custom-html {
+			> .toggle-bar::before {
+				animation: burg2top 0.4s linear forwards;
+			}
+
+			> .toggle-bar {
+				background: transparent;
+			}
+
+			> .toggle-bar::after {
+				animation: burg2bottom 0.4s linear forwards;
+			}
+		}
+	}
+}
+
+.navbar-toggler .btn-icon.custom-html {
+	font-size: 5px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: getcssvar(navbar-toggler-icon-width, 24px);
+	height: getcssvar(navbar-toggler-icon-height, 24px);
+
+	> .toggle-bar {
+		transition: background 0.4s, font-size 0s;
+		background: currentColor;
+		display: block;
+		width: getcssvar(navbar-toggler-bar-width, 24px);
+		height: getcssvar(navbar-toggler-bar-height, 2px);
+		border-radius: getcssvar(navbar-toggler-bar-border-radius, $border-radius-pill);
+
+		&::before,
+		&::after {
+			transition: font-size 0s;
+			transform-origin: center center;
+			content: '';
+			display: block;
+			position: absolute;
+			width: getcssvar(navbar-toggler-bar-width, 24px);
+			height: getcssvar(navbar-toggler-bar-height, 2px);
+			border-radius: getcssvar(navbar-toggler-bar-border-radius, $border-radius-pill);
+			background: currentColor;
+		}
+
+		&::before {
+			margin-top: -1.5em;
+			animation: burg2topReset 0.4s linear forwards;
+		}
+
+		&::after {
+			margin-top: 1.5em;
+			animation: burg2bottomReset 0.4s linear forwards;
+		}
+	}
+
+	//stylelint-disable-next-line
+	@keyframes burg2top {
+		//stylelint-disable-next-line
+		0% {
+		}
+
+		20% {
+			margin-top: 0;
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 0;
+			transform: rotate(55deg);
+		}
+
+		100% {
+			margin-top: 0;
+			transform: rotate(45deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2bottom {
+		//stylelint-disable-next-line
+		0% {
+		}
+
+		20% {
+			margin-top: 0;
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 0;
+			transform: rotate(-55deg);
+		}
+
+		100% {
+			margin-top: 0;
+			transform: rotate(-45deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2topReset {
+		//stylelint-disable-next-line
+		0% {
+			margin-top: 0;
+			transform: rotate(45deg);
+		}
+
+		20% {
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: 1.7em;
+			transform: rotate(0deg);
+		}
+
+		100% {
+			margin-top: 1.5em;
+			transform: rotate(0deg);
+		}
+	}
+	//stylelint-disable-next-line
+	@keyframes burg2bottomReset {
+		0% {
+			margin-top: 0;
+			transform: rotate(-45deg);
+		}
+
+		20% {
+			transform: rotate(0deg);
+		}
+
+		60% {
+			margin-top: -1.7em;
+			transform: rotate(0deg);
+		}
+
+		100% {
+			margin-top: -1.5em;
+			transform: rotate(0deg);
+		}
+	}
+}

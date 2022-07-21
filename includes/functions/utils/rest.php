@@ -33,7 +33,7 @@ function rwp_get_rest_data( $args = array(), $post_type = 'post', $single = fals
         $url = rest_url( $path );
         $url = add_query_arg( $args, $url );
         $request = WP_REST_Request::from_url( $url );
-    } else if ( rwp_is_url( $args ) ) {
+    } elseif ( rwp_is_url( $args ) ) {
         $request = WP_REST_Request::from_url( $args );
     }
 

@@ -1,0 +1,29 @@
+/// ======================================================================== ///
+/// @name   _global
+///
+/// @group  RIESTER
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body.rwp-elementor {
+	--#{$variable-prefix}primary: var(--e-global-color-primary);
+	--#{$variable-prefix}secondary: var(--e-global-color-secondary);
+	--#{$variable-prefix}body-color: var(--e-global-color-text);
+	--#{$variable-prefix}body-font-family: var(--e-global-typography-text-font-family);
+	--gap-x: #{getcssvar(gutter-x)};
+	--gap-y: #{getcssvar(gutter-y)};
+}
+
+@each $breakpoint, $device in $elementor-breakpoint-vars {
+	$class: '';
+	@if type-of($device) == string and $device != '' {
+		$class: '-#{$device}';
+	}
+
+	@include media-breakpoint-only($breakpoint) {
+		.elementor-hidden#{$class} {
+			display: none !important;
+		}
+	}
+}

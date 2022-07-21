@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ============================================================================
  * theme
@@ -10,7 +11,8 @@
  * @license   GPL-2.0+
  * ==========================================================================
  */
-use RWP\Components\Html;
+
+use RWP\Helpers\Html;
 
 
 /**
@@ -81,7 +83,7 @@ function rwp_search_form( $form = '', $args = array() ) {
 	}
 
 	$input_wrapper_defaults = array(
-		'tag' => 'div',
+		'tag'  => 'div',
 		'atts' => array(
 			'class' => array(
 				'form-input-wrap',
@@ -118,18 +120,17 @@ function rwp_search_form( $form = '', $args = array() ) {
 	$form->set_content( $btn );
 
 	/**
-	* Filters the search form output
-	*
-	* Should return an Html class
-	*
-	* @var Element $form
-	*/
+	 * Filters the search form output
+	 *
+	 * Should return an Html class
+	 *
+	 * @var Element $form
+	 */
 	$form = apply_filters( 'rwp_search_form_html', $form );
 
 	/**
-	* @var Element $form
-	*/
+	 * @var Element $form
+	 */
 
 	return $form->html();
-
 }

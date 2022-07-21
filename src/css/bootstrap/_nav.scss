@@ -1,0 +1,102 @@
+/// ======================================================================== ///
+/// @name   _nav
+///
+/// @group  RWP
+/// @since  1.0.0
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+@import '~bootstrap/scss/nav';
+
+.nav {
+	&[aria-orientation='vertical'] {
+		flex-direction: column;
+	}
+}
+
+.menu-text {
+	display: inline-block;
+	font-family: inherit;
+	color: currentColor;
+	line-height: inherit;
+	font-size: inherit;
+	text-decoration: inherit;
+}
+
+.menu {
+	@extend .nav;
+}
+
+.menu-item {
+	@extend .nav-item;
+
+	position: relative;
+	max-width: 100%;
+
+	&.has-children {
+		display: grid;
+		grid-template-columns: 1fr getcssvar(nav-icon-size, max-content);
+	}
+
+	&.menu-divider {
+		padding: 0 !important;
+
+		> .menu-link {
+			padding: 0 !important;
+
+			@include hover-focus-active(true) {
+				outline: none;
+				text-decoration: none;
+				background: none;
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+.sub-nav {
+	min-width: 100%;
+}
+
+.menu-link {
+	@extend .nav-link;
+
+	color: getcssvar(nav-link-color);
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	grid-row: 1/2;
+	white-space: nowrap;
+	position: relative;
+	z-index: 2;
+	@include hover-focus-active(true) {
+		outline: none;
+		text-decoration: none;
+		background: none;
+		background-color: transparent;
+	}
+	@include hover(true) {
+		color: getcssvar(nav-link-hover-color);
+	}
+	@include active(true) {
+		color: getcssvar(nav-link-active-color);
+	}
+
+	@include focus(true) {
+		color: getcssvar(nav-link-focus-color);
+		@include box-shadow(getcssvar(btn-focus-box-shadow));
+	}
+}
+
+.menu-toggle {
+	grid-row: 1/2;
+	position: relative;
+	z-index: 2;
+}
+
+.subnav {
+	grid-column: 1/ -1;
+	grid-row: 2/ 3;
+	z-index: 2;
+	background-color: getcssvar(sub-nav-bg);
+}
