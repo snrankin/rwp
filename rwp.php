@@ -33,55 +33,6 @@ define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'dependencies/' );
 if ( ! function_exists( 'get_plugin_data' ) ) {
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
-function rwp_meets_requirements() {
-	$meta = get_plugin_data( __FILE__ );
-
-	$name = ( $meta['Name'] && ! empty( $meta['Name'] ) ) ? $meta['Name'] : 'RWP';
-
-	$meets_requirements = true;
-
-	/**
-	 * Ensure compatible version of PHP is used
-	 */
-
-	if ( isset( $meta['RequiresPHP'] ) && ! empty( $meta['RequiresPHP'] ) ) {
-
-		$php_min = $meta['RequiresPHP'];
-		$php_ver = phpversion();
-
-		if ( version_compare( $php_min, $php_ver, '>' ) ) {
-			add_action('admin_notices', static function () use ( $php_min, $php_ver, $name ) {
-				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires php to be a minimum of version %s.</strong><br/>The current installed version is %s. Please contact your hosting provider if you need to upgrade your version of php.</p></div>', $name, $php_min, $php_ver );
-			});
-			$meets_requirements = false;
-		}
-	}
-
-	/**
-	 * Ensure compatible version of WordPress is used
-	 */
-
-	if ( isset( $meta['RequiresWP'] ) && ! empty( $meta['RequiresWP'] ) ) {
-
-		$wp_min = $meta['RequiresWP'];
-		$wp_ver = get_bloginfo( 'version' );
-
-		if ( version_compare( $wp_min, $wp_ver, '>' ) ) {
-			add_action('admin_notices', static function () use ( $wp_min, $wp_ver, $name ) {
-				echo wp_sprintf( '<div class="notice notice-error is-dismissible"><p><strong>%s requires WordPress to be a minimum of version %s.</strong><br/>The current installed version is %s. Please upgrade WordPress and try activating %s again.</p></div>', $name, $wp_min, $wp_ver );
-			});
-			$meets_requirements = false;
-		}
-	}
-
-	return $meets_requirements;
-}
-
-
-
-
-
-
 
 /**
  * Load rwp textdomain.
