@@ -10,6 +10,16 @@
         "email": "wordpress@riester.com",
         "url": "https://www.riester.com"
     },
+    "release": {
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            ["@semantic-release/npm",{"npmPublish":false}],
+            "@semantic-release/changelog",
+            "@semantic-release/git"
+        ],
+        "branch": "master"
+    },
     "scripts": {
         "build": "npm-run-all *:build",
         "build-dev": "npm-run-all *:dev",
