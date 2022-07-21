@@ -449,6 +449,7 @@ $RECYCLE.BIN/
 
 !/src/**/*
 !/assets/**/*
+/assets/blocks/
 !/tests/
 !/tests/**/*
 !/dependencies/**/*.*

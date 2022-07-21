@@ -11,7 +11,6 @@ module.exports = {
         'no-descending-specificity': null,
         'no-empty-source': null,
         'property-no-unknown': null,
-        'selector-not-notation': null,
         'scss/at-extend-no-missing-placeholder': null,
         'scss/at-if-no-null': null,
         'scss/comment-no-empty': null,
