@@ -209,5 +209,22 @@
   "toggle.php": "js/rwp-toggle.asset.php",
   "block.json": "blocks/card/card-body/block.json",
   "column.css": "css/rwp-column.css",
-  "section.css": "css/rwp-section.css"
+  "section.css": "css/rwp-section.css",
+  "card.min.css": "css/rwp-card.min.css",
+  "card.min.js": "js/rwp-card.min.js",
+  "card.min.php": "js/rwp-card.min.asset.php",
+  "column.min.css": "css/rwp-column.min.css",
+  "column.min.js": "js/rwp-column.min.js",
+  "column.min.php": "js/rwp-column.min.asset.php",
+  "container.min.js": "js/rwp-container.min.js",
+  "container.min.php": "js/rwp-container.min.asset.php",
+  "global.min.js": "js/rwp-global.min.js",
+  "global.min.php": "js/rwp-global.min.asset.php",
+  "row.min.js": "js/rwp-row.min.js",
+  "row.min.php": "js/rwp-row.min.asset.php",
+  "section.min.css": "css/rwp-section.min.css",
+  "section.min.js": "js/rwp-section.min.js",
+  "section.min.php": "js/rwp-section.min.asset.php",
+  "toggle.min.js": "js/rwp-toggle.min.js",
+  "toggle.min.php": "js/rwp-toggle.min.asset.php"
 }

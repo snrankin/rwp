@@ -579,7 +579,7 @@ class Plugin {
 	 * @return void
 	 */
 	public static function upgrade() {
-		// @TODO: Define upgrade procedure
+		// @TODO: [RWP-3] Define upgrade procedure
 
 	}
 
@@ -670,7 +670,7 @@ class Plugin {
 		if ( null === self::$instance ) {
 			$args = \func_get_args();
 
-			self::$instance = new self( ...$args ); // @phpstan-ignore-line
+			self::$instance = new self( ...$args );
 		}
 
 		return self::$instance;

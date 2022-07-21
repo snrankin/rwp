@@ -12,10 +12,10 @@
  * ==========================================================================
  */
 
-use RWP\Helpers\Element;
-use RWP\Helpers\Html;
-use RWP\Helpers\Image;
-use RWP\Helpers\SVG;
+use RWP\Html\Element;
+use RWP\Html\Html;
+use RWP\Html\Image;
+use RWP\Html\SVG;
 use RWP\Vendor\Exceptions\IO\Filesystem\FileNotFoundException;
 
 /**

@@ -60,11 +60,10 @@ class SVGs extends Singleton {
 	 * @since 0.1.0
 	 * @param array $response
 	 * @param WP_Post $attachment
-	 * @param array $meta
 	 * @return array
 	 */
-	public static function adjust_response_for_svg( $response, $attachment, $meta ) {
-		if ( 'image/svg+xml' != $response['mime'] || ! empty( $response['sizes'] ) ) {
+	public static function adjust_response_for_svg( $response, $attachment ) {
+		if ( 'image/svg+xml' !== $response['mime'] || ! empty( $response['sizes'] ) ) {
 			return $response;
 		}
 		$dimensions = static::get_dimensions( get_attached_file( $attachment->ID ) );

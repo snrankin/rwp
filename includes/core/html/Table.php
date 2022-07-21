@@ -122,7 +122,7 @@ class Table extends Element {
 	 *
 	 * @return mixed      The updated key
 	 */
-	public function update_row( $key, $location = 'body', $method, ...$args ) {
+	public function update_row( $key, $location = 'body', $method = '', ...$args ) {
 
 		return $this->$location->update_row( $key, $method, ...$args );
 	}
@@ -236,7 +236,7 @@ class Table extends Element {
 	 *
 	 * @return mixed|void The updated key
 	 */
-	public function update_cell( $key, $row = 0, $location = 'body', $method, ...$args ) {
+	public function update_cell( $key, $row = 0, $location = 'body', $method = '', ...$args ) {
 		if ( ! $this->has_row( $row, $location ) ) {
 			return;
 		}

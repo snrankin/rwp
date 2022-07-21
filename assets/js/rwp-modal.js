@@ -3688,7 +3688,7 @@
                     if (event.defaultPrevented) {
                         return;
                     }
-                    if (this.option("textSelection") && window.getSelection().toString().length) {
+                    if (this.option("textSelection") && window.getSelection().toString().length && !(event.target && event.target.hasAttribute("data-fancybox-close"))) {
                         event.stopPropagation();
                         return;
                     }

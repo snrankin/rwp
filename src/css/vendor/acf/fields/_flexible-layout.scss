@@ -1,0 +1,21 @@
+/// ======================================================================== ///
+/// @name   _flexible-layout
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-flexible-content {
+		> .values {
+			> .layout {
+				> .acf-fields {
+					@include acf-row('padding', true);
+
+					padding-bottom: $acf-gutter-y;
+				}
+			}
+		}
+	}
+}

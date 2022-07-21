@@ -9,7 +9,6 @@ grumphp:
     max_workers: 32
   environment:
     paths:
-      - ~/tools
       - /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp
       - /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/node_modules/.bin
   tasks:
@@ -44,17 +43,8 @@ grumphp:
         - /^vendor\/(.*)/
         - /^tests\/(.*)/
       triggered_by: ['php']
-    # phpstan:
-    #   autoload_file: ~
-    #   configuration: phpstan.neon
-    #   level: null
-    #   use_grumphp_paths: false
-    #   force_patterns: []
-    #   ignore_patterns:
-    #     - /^includes\/dependencies\/(.*)/
-    #     - /^vendor\/(.*)/
-    #     - /^tests\/(.*)/
-    #   triggered_by: ['php']
-    #   memory_limit: '-1'
+    phpstan:
+      configuration: phpstan.neon
+      memory_limit: '-1'
     stylelint:
       triggered_by: [scss]

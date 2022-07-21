@@ -20,19 +20,19 @@
 
 	<!-- What to scan -->
 	<file>rwp.php</file>
-	<file>./uninstall.php</file>
-	<file>rwp/includes</file>
+	<file>uninstall.php</file>
+	<file>includes</file>
 
 
 	<!-- Exclude patterns -->
 	<exclude-pattern>*/includes/core/internals/SVG/*/*\.php$</exclude-pattern>
 
 	<!-- Exclude the Composer Vendor directory. -->
-	<exclude-pattern>*/vendor/*/*</exclude-pattern>
-	<exclude-pattern>*/dependencies/*/*</exclude-pattern>
+	<exclude-pattern>vendor/*/*\.*</exclude-pattern>
+	<exclude-pattern>dependencies/*/*\.*</exclude-pattern>
 
 	<!-- Exclude the Node Modules directory. -->
-	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>node_modules/*/*\.*</exclude-pattern>
 
 	<!-- Check for PHP cross-version compatibility. -->
 	<!--

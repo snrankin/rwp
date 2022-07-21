@@ -20,6 +20,7 @@ module.exports = {
         'scss/no-global-function-names': null,
         'scss/operator-no-unspaced': null,
         'selector-class-pattern': null,
+		'selector-not-notation': null,
         'string-quotes': 'single',
         'value-keyword-case': [
             'lower',
@@ -30,7 +31,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['**/*.scss'],
+            files: ['/src/**/*.scss'],
             customSyntax: 'postcss-scss',
         },
     ],

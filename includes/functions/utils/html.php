@@ -10,9 +10,8 @@
  */
 
 use RWP\Helpers\Collection;
-use RWP\Helpers\Html;
+use RWP\Html\Html;
 use RWP\Helpers\Str;
-use RWP\Vendor\Wa72\HtmlPageDom\HtmlPageCrawler;
 
 /**
  * Check if a string is an html string
@@ -24,7 +23,7 @@ function rwp_str_is_html( $string ) {
 	if ( ! is_string( $string ) ) {
 		return false;
 	}
-	return strip_tags( $string ) !== $string ? true : false;
+	return wp_strip_all_tags( $string ) !== $string ? true : false;
 }
 
 /**

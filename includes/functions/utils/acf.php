@@ -7,7 +7,7 @@
  * @since   0.1.0
  * ========================================================================== */
 
-use RWP\Helpers\{Element, Html, Icon};
+use RWP\Html\{Element, Html, Icon};
 use RWP\Helpers\Collection;
 
 /**

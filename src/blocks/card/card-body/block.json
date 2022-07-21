@@ -1,0 +1,19 @@
+{
+	"apiVersion": 2,
+	"attributes": {},
+	"category": "design",
+	"name": "rwp/card-body",
+	"parent": ["rwp/card"],
+	"supports": {
+		"inserter": false,
+		"multiple": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"title": "Card Body"
+}

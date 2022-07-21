@@ -78,15 +78,15 @@
             "vendor/bin/phpcbf -p -v --config-show"
         ],
         "php-lint": [
-            "vendor/bin/phpcs pwd -p -v -l --config-show "
+            "vendor/bin/phpcs --colors --cache -p -v -l --standard=/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/phpcs.xml --basepath=/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp --ignore=vendor,dependencies,assets,node_modules,vscode --config-show --file=/Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/includes"
         ],
         "phpstan": [
             "Composer\\Config::disableProcessTimeout",
-            "phpstan analyse -c phpstan.neon --ansi --memory-limit=-1 --debug"
+            "vendor/bin/phpstan analyse -c phpstan.neon --ansi --memory-limit=-1 --debug"
         ],
         "phpstan-baseline": [
             "Composer\\Config::disableProcessTimeout",
-            "phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
+            "vendor/bin/phpstan analyse --ansi --memory-limit=-1 --generate-baseline --allow-empty-baseline"
         ],
         "test": [
             "@grum"

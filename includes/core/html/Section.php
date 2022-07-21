@@ -225,7 +225,7 @@ class Section extends Element {
 	 *
 	 * @return void
 	 */
-	public function update_col( $key, $row = 0, $method, ...$args ) {
+	public function update_col( $key, $row = 0, $method = '', ...$args ) {
 		$this->container->update_col( $key, $row, $method, ...$args );
 	}
 

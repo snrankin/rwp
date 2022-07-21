@@ -1,0 +1,71 @@
+/// ======================================================================== ///
+/// @name   _gutenberg
+///
+/// @group  RWP
+/// @version   1.0.1
+/// @copyright 2022 RIESTER
+/// ======================================================================== ///
+
+.wp-block-image {
+	&.is-style-rounded {
+		> div,
+		> picture {
+			--#{$variable-prefix}-aspect-ratio: 100%;
+
+			position: relative;
+			width: 100%;
+
+			&::before {
+				display: block;
+				padding-top: getcssvar(aspect-ratio);
+				content: '';
+			}
+
+			> * {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			img,
+			svg {
+				@include img-cover;
+
+				max-width: none;
+				border-radius: 0;
+			}
+		}
+	}
+}
+
+hr.wp-block-separator {
+	border: none !important;
+	margin-top: getcssvar(paragraph-margin-bottom);
+}
+
+@each $color in map-keys($theme-colors) {
+	@include bg-variant('.has-#{$color}-background-color', getcssvar(#{$color}));
+	@include text-emphasis-variant('.has-#{$color}-color', getcssvar(#{$color}));
+}
+
+//
+// Headings
+//
+@for $i from 1 through 6 {
+	.has-h-#{$i}-font-size {
+		font-size: getcssvar(h#{$i}-font-size);
+	}
+}
+
+// Type display classes
+@each $display in map-keys($display-font-sizes) {
+	.has-display-#{$display}-font-size {
+		font-size: getcssvar(display#{$display}-font-size);
+	}
+}
+
+.wp-block-file {
+	margin-bottom: getcssvar(paragraph-margin-bottom);
+}

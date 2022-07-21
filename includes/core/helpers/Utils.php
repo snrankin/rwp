@@ -187,14 +187,14 @@ trait Utils {
 	}
 
 	/**
-	 * Handle dynamic calls to the plugin instance to set attributes.
+	 * Handle dynamic calls to the plugin instance
 	 *
 	 * @param mixed $method
-	 * @param mixed $parameters
+	 * @param array $args
 	 *
 	 * @return mixed
 	 */
-	public function __call( $method, $parameters ) {
+	public function __call( $method, $args ) {
 		try {
 			if ( method_exists( $this, $method ) ) {
 				$args = \func_get_args();
@@ -252,18 +252,43 @@ trait Utils {
 		$this->remove( $key );
 	}
 
+	/**
+	 * Set an object property
+	 * @param mixed $offset
+	 * @param mixed $value
+	 * @return void
+	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet( $offset, $value ) {
 		$this->set( $offset, $value );
 	}
 
+	/**
+	 * Check if a property exists
+	 * @param mixed $offset
+	 * @return bool
+	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists( $offset ) {
 		return $this->exists( $offset );
 	}
 
+	/**
+	 * Remove a property
+	 * @param mixed $offset
+	 * @return void
+	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset( $offset ) {
 		$this->remove( $offset );
 	}
 
+	/**
+	 * Get a property value
+	 * @param mixed $offset
+	 * @return mixed
+	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->get( $offset );
 	}

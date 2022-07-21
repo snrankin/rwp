@@ -1,0 +1,28 @@
+/// ======================================================================== ///
+/// @name   _column
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-fields.acfe-column-wrapper {
+		@include acf-row;
+
+		> .acf-field.acf-field-acfe-column {
+			@include make-col-ready;
+			@for $col from 1 to 12 {
+				&[data-columns='#{$col}/12'] {
+					@include make-col($col);
+				}
+			}
+
+			> .acf-input {
+				> .acf-fields {
+					@include acf-row('margin');
+				}
+			}
+		}
+	}
+}

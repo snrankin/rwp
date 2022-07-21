@@ -12,7 +12,7 @@
  * ==========================================================================
  */
 
-use RWP\Helpers\Html;
+use RWP\Html\Html;
 
 
 /**
@@ -42,10 +42,6 @@ function rwp_search_form( $form = '', $args = array() ) {
 	$floating = data_get( $args, 'floating', true );
 
 	$label = $form->filter( 'label' )->text( '' );
-
-	// if ( empty( $label ) ) {
-	// 	return $content;
-	// }
 
 	$label = rwp_element( '<label class="form-label" for="s">' . $label . '</label>' );
 

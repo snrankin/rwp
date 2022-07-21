@@ -1,0 +1,16 @@
+/// ======================================================================== ///
+/// @name   edit
+///
+/// @group  RIESTERWP Plugin
+/// @since  0.1.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+@import '../../css/global/index';
+
+.rwp.section-wrapper {
+	position: relative;
+	margin-bottom: 0;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}

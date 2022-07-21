@@ -12,8 +12,8 @@
 
 
 use \RWP\Vendor\Illuminate\Support\Collection;
-use RWP\Internals\PostTypes;
-use RWP\Internals\Taxonomies;
+use RWP\Internals\PostTypes\PostTypes;
+use RWP\Internals\Taxonomies\Taxonomies;
 
 /**
  * Is item a blog post
@@ -80,7 +80,7 @@ function rwp_post_is_cpt( $post = null ) {
 		return false;
 	}
 
-	return in_array( $current_post_type, $custom_types );
+	return in_array( $current_post_type, $custom_types, true );
 }
 
 /**
@@ -137,7 +137,7 @@ function rwp_get_page_for_post_type( $post_type = false ) {
 	if ( $post_type ) {
 		if ( 'post' === $post_type ) {
 				return rwp_get_blog_page();
-		} elseif ( in_array( $post_type, get_post_types() ) ) {
+		} elseif ( in_array( $post_type, get_post_types(), true ) ) {
 			return get_option( "page_for_{$post_type}", false );
 		}
 	}
@@ -838,7 +838,7 @@ function rwp_post_has_children( $post = null ) {
 
 		$last_item = $ancestors->last();
 
-		if ( $post_id == $last_item ) {
+		if ( $post_id === $last_item ) {
 			return false;
 		} else {
 			return true;

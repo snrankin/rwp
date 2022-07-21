@@ -29,19 +29,6 @@ class Container extends Group {
 
 	public $item_type = 'Row';
 
-	/**
-	 * Initialize the class
-	 *
-	 * @param mixed $args
-	 *
-	 * @return void|self
-	 */
-
-	public function __construct( $args = array() ) {
-
-		parent::__construct( $args );
-	}
-
 	public function setup_html() {
 		parent::setup_html();
 		if ( is_array( $this->fluid ) ) {
@@ -221,7 +208,7 @@ class Container extends Group {
 	 *
 	 * @return mixed|void The updated key
 	 */
-	public function update_col( $key, $row = 0, $method, ...$args ) {
+	public function update_col( $key, $row = 0, $method = '', ...$args ) {
 		if ( ! $this->has_row( $row ) ) {
 			return;
 		}

@@ -1,0 +1,132 @@
+/// ======================================================================== ///
+/// @name   _select
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+body:not(.post-type-acf-field-group) {
+	.acf-field {
+		.select2-container.-acf {
+			display: block;
+
+			.selection {
+				display: block;
+			}
+
+			.select2-selection {
+				padding: 2px;
+				display: flex;
+
+				&--multiple {
+					width: 100%;
+
+					.select2-selection__rendered {
+						display: flex;
+						flex-wrap: wrap;
+						gap: 2px;
+						width: auto;
+						padding: 0 !important;
+
+						.select2-selection__clear {
+							position: absolute;
+							top: 0;
+							right: 0;
+							height: 28px !important;
+							width: 30px;
+						}
+
+						.select2-selection__choice {
+							display: inline-grid;
+							grid-template-columns: auto 1fr;
+							gap: 2px;
+							align-items: center;
+							margin: 0 !important;
+							padding: 2px 5px;
+							line-height: 18px;
+
+							.select2-selection__choice__display {
+								padding: 0;
+								grid-column: 2/3;
+								grid-row: 1/2;
+								line-height: 18px;
+							}
+
+							.select2-selection__choice__remove {
+								grid-column: 1/2;
+								grid-row: 1/2;
+								padding: 0;
+								border: none;
+								height: 18px;
+							}
+						}
+					}
+				}
+
+				&--single {
+					.select2-selection__rendered {
+						height: 100%;
+						line-height: 1 !important;
+						padding: 0 3px !important;
+						flex: 1 1 auto;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+					}
+				}
+
+				.select2-selection__arrow,
+				.select2-selection__choice__remove,
+				.select2-selection__clear {
+					float: none;
+					order: 99;
+					width: auto;
+					position: relative;
+					height: 100% !important;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					margin: 0 0 0 auto !important;
+					padding: 0 5px;
+					line-height: 1ex;
+					top: auto;
+					left: auto;
+					right: auto;
+					bottom: auto;
+				}
+
+				.select2-selection__arrow {
+					b {
+						margin: 0 !important;
+						position: relative;
+						top: auto;
+						left: auto;
+						right: auto;
+						bottom: auto;
+						display: block;
+						height: 13px !important;
+					}
+				}
+
+				.select2-search--inline {
+					float: none;
+					min-width: 30px;
+					display: block;
+
+					.select2-search__field {
+						margin: 0 !important;
+						padding: 0 3px !important;
+						height: 24px;
+						line-height: 24px;
+					}
+				}
+			}
+		}
+
+		select {
+			padding-right: 27px;
+		}
+	}
+}

@@ -1,0 +1,74 @@
+{
+    "apiVersion": 2,
+    "attributes": {
+        "backgroundColor": {
+            "type": "string"
+        },
+        "bgImage": {
+            "type": "object"
+        },
+        "bgImageHeight": {
+            "default": 0,
+            "type": "number"
+        },
+        "bgImageId": {
+            "default": 0,
+            "type": "number"
+        },
+        "bgImageSrcset": {
+            "default": "",
+            "type": "string"
+        },
+        "bgImageUrl": {
+            "default": "",
+            "type": "string"
+        },
+        "bgImageWidth": {
+            "default": 0,
+            "type": "number"
+        },
+        "innerClasses": {
+            "default": "",
+            "type": "string"
+        },
+        "mediaId": {
+            "default": 0,
+            "type": "number"
+        },
+        "mediaUrl": {
+            "default": "",
+            "type": "string"
+        },
+        "videoHost": {
+            "default": "",
+            "type": "string"
+        },
+        "videoId": {
+            "default": "",
+            "type": "string"
+        },
+        "videoUrl": {
+            "default": "",
+            "type": "string"
+        }
+    },
+    "category": "layout",
+    "description": "Separate your page into distinct sections",
+    "keywords": [
+        "section",
+        "page-section",
+        "group",
+        "rwp"
+    ],
+    "name": "rwp/section",
+    "supports": {
+        "anchor": true,
+        "color": {
+            "background": true,
+            "gradient": true
+        }
+    },
+    "textdomain": "rwp",
+    "title": "Page Section",
+    "version": "1.0.0"
+}

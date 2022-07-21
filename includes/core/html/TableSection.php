@@ -92,7 +92,7 @@ class TableSection extends Group {
 	 *
 	 * @return mixed      The updated key
 	 */
-	public function update_row( $key, $method, ...$args ) {
+	public function update_row( $key, $method = '', ...$args ) {
 		return $this->update_item( $key, $method, ...$args );
 	}
 
@@ -191,7 +191,7 @@ class TableSection extends Group {
 	 *
 	 * @return mixed|void The updated key
 	 */
-	public function update_cell( $key, $row = 0, $method, ...$args ) {
+	public function update_cell( $key, $row = 0, $method = '', ...$args ) {
 		if ( ! $this->has_row( $row ) ) {
 			return;
 		}

@@ -1,0 +1,87 @@
+@import '~bootstrap/scss/vendor/rfs';
+@mixin rfs-val($value, $property, $breakpoint: md, $important: false) {
+	@if $important == true {
+		@include media-breakpoint-up($breakpoint) {
+			#{$property}: rfs-fluid-value($value) !important;
+		}
+
+		@media (min-width: #{$rfs-breakpoint}) {
+			#{$property}: rfs-value($value) !important;
+		}
+	} @else {
+		@include media-breakpoint-up($breakpoint) {
+			#{$property}: rfs-fluid-value($value);
+		}
+
+		@media (min-width: #{$rfs-breakpoint}) {
+			#{$property}: rfs-value($value);
+		}
+	}
+}
+
+// Shorthand helper mixins
+@mixin font-size($value) {
+	@include rfs($value);
+
+	line-height: calc(4px + 2ex);
+}
+
+@mixin padding($value) {
+	@include rfs($value, padding);
+}
+
+@mixin padding-x($value) {
+	@include rfs($value, padding-right);
+	@include rfs($value, padding-left);
+}
+
+@mixin padding-y($value) {
+	@include rfs($value, padding-top);
+	@include rfs($value, padding-bottom);
+}
+
+@mixin padding-top($value) {
+	@include rfs($value, padding-top);
+}
+
+@mixin padding-right($value) {
+	@include rfs($value, padding-right);
+}
+
+@mixin padding-bottom($value) {
+	@include rfs($value, padding-bottom);
+}
+
+@mixin padding-left($value) {
+	@include rfs($value, padding-left);
+}
+
+@mixin margin($value) {
+	@include rfs($value, margin);
+}
+
+@mixin margin-x($value) {
+	@include rfs($value, margin-right);
+	@include rfs($value, margin-left);
+}
+
+@mixin margin-y($value) {
+	@include rfs($value, margin-top);
+	@include rfs($value, margin-bottom);
+}
+
+@mixin margin-top($value) {
+	@include rfs($value, margin-top);
+}
+
+@mixin margin-right($value) {
+	@include rfs($value, margin-right);
+}
+
+@mixin margin-bottom($value) {
+	@include rfs($value, margin-bottom);
+}
+
+@mixin margin-left($value) {
+	@include rfs($value, margin-left);
+}

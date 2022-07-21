@@ -286,6 +286,15 @@ hr.wp-block-separator{
     color:var(--bs-cyan) !important;
 }
 
+.has-black-background-color{
+    background-color:var(--bs-black) !important;
+    color:var(--bs-var(--bs-black)-contrast);
+}
+
+.has-black-color{
+    color:var(--bs-black) !important;
+}
+
 .has-white-background-color{
     background-color:var(--bs-white) !important;
     color:var(--bs-var(--bs-white)-contrast);

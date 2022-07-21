@@ -10,7 +10,7 @@
  */
 
 use RWP\Helpers\Collection;
-use RWP\Helpers\Element;
+use RWP\Html\Element;
 use RWP\Vendor\Illuminate\Contracts\Support\Arrayable;
 use RWP\Vendor\Illuminate\Contracts\Support\Jsonable;
 use RWP\Vendor\Illuminate\Support\Enumerable;

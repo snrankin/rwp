@@ -18,7 +18,7 @@ class CustomBulkAction {
 	public $bulk_action_post_type;
 	private $actions = array();
 
-	protected function __construct( $args = '' ) {
+	public function __construct( $args = '' ) {
 		//Define which post types these bulk actions affect.
 		$defaults = array( 'post_type' => 'post' );
 		$args = \wp_parse_args( $args, $defaults );

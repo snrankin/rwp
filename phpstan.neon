@@ -6,16 +6,19 @@ parameters:
   parallel:
     processTimeout: 600.0
   paths:
-    - %currentWorkingDirectory%/includes
+    - includes
   excludePaths:
+    analyse:
+      - includes/core/internals/SVGs.php
     analyseAndScan:
-      - %currentWorkingDirectory%/includes/core/internals/SVG/**/*
+      - includes/core/internals/SVG/*
   bootstrapFiles:
-    - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
-    - %currentWorkingDirectory%/dependencies/vendor/autoload.php
-    - %currentWorkingDirectory%/dependencies/vendor/scoper-autoload.php
+    - tests/phpstan/bootstrap.php
+    - dependencies/vendor/autoload.php
+    - dependencies/vendor/scoper-autoload.php
   scanDirectories:
-    - %currentWorkingDirectory%/dependencies
+    - dependencies
+    - includes
     - ../advanced-custom-fields-pro
     - ../acf-extended
     - ../elementor
@@ -24,11 +27,10 @@ parameters:
     - ../query-monitor
     - ../wordpress-seo
   scanFiles:
-    - %currentWorkingDirectory%/rwp.php
-    - %currentWorkingDirectory%/uninstall.php
-  # ignoreErrors:
-    # - '#^Function WPDeskWpNotice invoked with 4 parameters, 0 required\.$#'
-    # - '#^Function remember_transient invoked with 3 parameters, 0 required\.$#'
+    - rwp.php
+    - uninstall.php
+  ignoreErrors:
+    - '#^Method [a-zA-Z0-9\\_]+::__sleep\(\) should return array\<int, string\> but return statement is missing\.$#'
     # - '#^Parameter \#3 \$base of function rwp_find_file expects string, null given\.$#'
     # - '#^Function apply_filters invoked with \d* parameters, \d* required\.$#'
     # - '#^Parameter \#1 \$post_id of function acfe_get_fields expects false, int\|string given\.$#'

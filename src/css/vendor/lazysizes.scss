@@ -1,0 +1,72 @@
+/// ======================================================================== ///
+/// @name   lazysizes
+///
+/// @group  RWP
+/// @since  1.0.1
+/// @author RIESTER <wordpress@riester.com>
+/// ======================================================================== ///
+
+.no-js .lazyload {
+	display: none;
+}
+
+.lazyload,
+.lazyloading {
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 1000ms, filter 1500ms;
+
+	.parent-fit-cover &,
+	&[data-parent-fit='cover'] {
+		object-fit: cover;
+		font-family: 'object-fit: cover';
+	}
+
+	.parent-fit-contain &,
+	&[data-parent-fit='contain'] {
+		font-family: 'object-fit: contain';
+		object-fit: contain;
+	}
+
+	&:not([src]) {
+		visibility: hidden;
+		opacity: 0;
+	}
+}
+
+.lazyloaded {
+	visibility: visible;
+
+	&.fade-in {
+		opacity: 1;
+	}
+}
+
+.ls-blur-up-img {
+	filter: blur(10px);
+	opacity: 1;
+	transition: opacity 1000ms, filter 1500ms;
+	object-fit: cover;
+	font-family: 'blur-up: auto', 'object-fit: cover';
+
+	.parent-fit-cover &,
+	&[data-parent-fit='cover'] {
+		object-fit: cover;
+		font-family: 'blur-up: auto', 'object-fit: cover';
+	}
+
+	.parent-fit-contain &,
+	&[data-parent-fit='contain'] {
+		font-family: 'blur-up: auto', 'object-fit: contain';
+		object-fit: contain;
+	}
+
+	&.ls-inview.ls-original-loaded {
+		opacity: 0;
+		filter: blur(5px);
+	}
+}
+
+.ls-blur-up-is-loading {
+	visibility: hidden;
+}

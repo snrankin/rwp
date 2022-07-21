@@ -40,21 +40,16 @@ trait Components {
 	protected $namespace;
 
 	/**
-	 * Based on the folder loads the classes automatically using the Composer autoload to detect the classes of a Namespace.
+	 * Groups all classes together based on their namespace
 	 *
-	 * @param string $namespace Class name to find.
-	 * @since 0.9.0
-	 * @return void
+	 * @since 0.9.3
+	 *
+	 * @return array
 	 */
 	protected function extract_components() {
 		$autoloader = $this->autoloader;
 		$classmap  = $autoloader::get_classes_map();
-		$namespace = $this->namespace;
-
-		$class_loader = array();
-
-		$namespace .= '\\';
-
+		$namespace = $this->namespace . '\\';
 		$components = array();
 
 		foreach ( $classmap as $class => $file ) {
@@ -70,6 +65,15 @@ trait Components {
 		return $components;
 	}
 
+	/**
+	 * Check if the class is a component
+	 *
+	 * See if a class extends Singleton and has a method called initialize
+	 *
+	 * @param mixed $class
+	 *
+	 * @return bool
+	 */
 	protected function is_component( $class ) {
 		$rc = new \ReflectionClass( $class );
 
@@ -82,8 +86,10 @@ trait Components {
 
 	/**
 	 * Check if a class extends or implements a specific class/interface
+	 *
 	 * @param string $search The class or interface name to look for
 	 * @param string $class_name The class name of the object to compare to
+	 *
 	 * @return bool
 	 */
 	public static function IsExtendsOrImplements( $search, $class_name ) {
@@ -93,11 +99,11 @@ trait Components {
 		}
 		do {
 			$name = $class->getName();
-			if ( $search == $name ) {
+			if ( $search === $name ) {
 				return true;
 			}
 			$interfaces = $class->getInterfaceNames();
-			if ( is_array( $interfaces ) && in_array( $search, $interfaces ) ) {
+			if ( is_array( $interfaces ) && in_array( $search, $interfaces, true ) ) {
 				return true;
 			}
 			$class = $class->getParentClass();
@@ -105,6 +111,14 @@ trait Components {
 		return false;
 	}
 
+	/**
+	 * Get all components that need to be initialized based on the current
+	 * request
+	 *
+	 * @access private
+	 *
+	 * @return void
+	 */
 	private function initialize_components() {
 		if ( $this->blank( 'components' ) ) {
 			$this->components = $this->extract_components();
