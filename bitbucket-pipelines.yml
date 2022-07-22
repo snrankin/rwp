@@ -10,6 +10,7 @@ pipelines:
       - step:
           caches:
             - node
+            - apt
           script:
             # Get an oauth access token using the client credentials, parsing out the token with jq.
             - apt-get update && apt-get install -y curl jq
@@ -17,8 +18,8 @@ pipelines:
               export BB_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
                 https://bitbucket.org/site/oauth2/access_token \
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
-            - export BITBUCKET_USER="${BITBUCKET_USER}"
-            - export BITBUCKET_PASSWORD="${BITBUCKET_PASSWORD}"
+            - export BITBUCKET_USER=riester
+            - export BITBUCKET_PASSWORD=ZCUGczkdvUM8sLG957Qk
             # Configure git to use the oauth token. This well happen when setting env variable BB_TOKEN
             - npm install
             - npx semantic-release --debug
