@@ -1,7 +1,7 @@
 {
     "displayName": "RWP",
     "name": "rwp",
-    "version": "0.9.3",
+    "version": "0.10.0",
     "license": "UNLICENSED",
     "homepage": "https://auth@bitbucket.org/riester/rwp.git",
     "repository": "https://auth@bitbucket.org/riester/rwp.git",
@@ -24,8 +24,12 @@
             "@semantic-release/changelog",
             "@semantic-release/git"
         ],
-        "branches": ["master"],
-        "verifyConfig": ["@iteratec/semantic-release-bitbucket"],
+        "branches": [
+            "master"
+        ],
+        "verifyConfig": [
+            "@iteratec/semantic-release-bitbucket"
+        ],
         "publish": [
             {
                 "path": "@iteratec/semantic-release-bitbucket",
