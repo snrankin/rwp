@@ -24,7 +24,6 @@
             "@semantic-release/changelog",
             "@semantic-release/git"
         ],
-        "dryRun": true,
         "branches": ["master"],
         "verifyConfig": ["@iteratec/semantic-release-bitbucket"],
         "publish": [
