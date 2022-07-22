@@ -19,5 +19,3 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token. This well happen when setting env variable BB_TOKEN
             - npm install
-            - npm run test
-            - npx semantic-release --debug

@@ -3,8 +3,8 @@
     "name": "rwp",
     "version": "0.9.3",
     "license": "UNLICENSED",
-    "homepage": "https://bitbucket.org/riester/rwp",
-    "repository": "bitbucket:riester/rwp.git",
+    "homepage": "https://auth@bitbucket.org/riester/rwp.git",
+    "repository": "https://auth@bitbucket.org/riester/rwp.git",
     "author": {
         "name": "MIT",
         "email": "wordpress@riester.com",
@@ -15,11 +15,26 @@
         "plugins": [
             "@semantic-release/commit-analyzer",
             "@semantic-release/release-notes-generator",
-            ["@semantic-release/npm",{"npmPublish":false}],
+            [
+                "@semantic-release/npm",
+                {
+                    "npmPublish": false
+                }
+            ],
             "@semantic-release/changelog",
             "@semantic-release/git"
         ],
-        "branch": "master"
+        "dryRun": true,
+        "ci": false,
+        "branches": ["master"],
+        "verifyConfig": ["@iteratec/semantic-release-bitbucket"],
+        "publish": [
+            {
+                "path": "@iteratec/semantic-release-bitbucket",
+                "teamName": "riester",
+                "repositoryName": "rwp"
+            }
+        ]
     },
     "scripts": {
         "build": "npm-run-all *:build",
@@ -170,6 +185,7 @@
         "@babel/runtime": "^7.18.9",
         "@fancyapps/ui": "^4.0.28",
         "@fortawesome/fontawesome-free": "^6.1.1",
+        "@iteratec/semantic-release-bitbucket": "^1.1.1",
         "@popperjs/core": "^2.11.5",
         "actual": "^0.4.0",
         "bootstrap": "^5.2.0",
