@@ -10,7 +10,6 @@ pipelines:
       - step:
           caches:
             - node
-            - apt
           script:
             # Get an oauth access token using the client credentials, parsing out the token with jq.
             - apt-get update && apt-get install -y curl jq
