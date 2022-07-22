@@ -17,8 +17,10 @@ pipelines:
               export BB_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
                 https://bitbucket.org/site/oauth2/access_token \
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
-            - export BITBUCKET_USER=riester
-            - export BITBUCKET_PASSWORD=ZCUGczkdvUM8sLG957Qk
+            - export BITBUCKET_USER=${APP_USER} \
+              echo $BITBUCKET_USER
+            - export BITBUCKET_PASSWORD=${APP_PASSWORD} \
+              echo $BITBUCKET_PASSWORD
             # Configure git to use the oauth token. This well happen when setting env variable BB_TOKEN
             - npm install
             - npx semantic-release --debug
