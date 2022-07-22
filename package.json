@@ -26,16 +26,6 @@
         ],
         "branches": [
             "master"
-        ],
-        "verifyConfig": [
-            "@iteratec/semantic-release-bitbucket"
-        ],
-        "publish": [
-            {
-                "path": "@iteratec/semantic-release-bitbucket",
-                "teamName": "riester",
-                "repositoryName": "rwp"
-            }
         ]
     },
     "scripts": {
