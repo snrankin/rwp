@@ -1,6 +1,11 @@
 RIESTERWP Core Changelog
 ========================
 
+v0.10.2 - 2022-07-23
+-------------------
+
+* perf: change how the plugin checks for updates\n\nadding YahnisElsts/wp-update-server to digital.riester for plugin distributionInitial commit on laptop
+
 v0.10.1 - 2022-07-23
 -------------------
 
