@@ -11,12 +11,13 @@
  * @wordpress-plugin
  * Plugin Name: RIESTERWP Core
  * Plugin URI: https://bitbucket.org/riester/rwp/src/master/README.md
- * Description: And internal plugin for websites created by RIESTER to enhance functionality
- * Version: 0.10.0
+ * Description: An internal plugin for websites created by RIESTER to enhance functionality
+ * Version: 0.10.1
  * Author: RIESTER Advertising Agency
  * Author URI: https://www.riester.com
  * Text Domain: rwp
  * Domain Path: /languages
+ * Update URI: https://digital.riester.com/plugin/?action=get_metadata&slug=rwp
  * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Requires PHP: 7.0
@@ -81,15 +82,15 @@ function rwp_fail_php_version() {
  */
 function rwp_fail_wp_version() {
 	/* translators: %s: WordPress version. */
-	$message = sprintf( esc_html__( 'rwp requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT RUNNING.', 'rwp' ), '5.2' );
+	$message = sprintf( esc_html__( 'rwp requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT RUNNING.', 'rwp' ), '5.6' );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	echo wp_kses_post( $html_message );
 }
 require_once RWP_PLUGIN_VENDOR_PATH . 'vendor/scoper-autoload.php';
 
-if ( ! version_compare( PHP_VERSION, '5.6', '>=' ) ) {
+if ( ! version_compare( PHP_VERSION, '7.0', '>=' ) ) {
 	add_action( 'admin_notices', 'rwp_fail_php_version' );
-} elseif ( ! version_compare( get_bloginfo( 'version' ), '5.2', '>=' ) ) {
+} elseif ( ! version_compare( get_bloginfo( 'version' ), '5.6', '>=' ) ) {
 	add_action( 'admin_notices', 'rwp_fail_wp_version' );
 } else {
 	require RWP_PLUGIN_ROOT . '/includes/autoloader.php';
