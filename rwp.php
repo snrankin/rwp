@@ -17,7 +17,7 @@
  * Author URI: https://www.riester.com
  * Text Domain: rwp
  * Domain Path: /languages
- * Update URI: https://digital.riester.com/plugin/?action=get_metadata&slug=rwp
+ * Update URI: https://digital.riester.com/plugin/?action=download&slug=rwp
  * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Requires PHP: 7.0
