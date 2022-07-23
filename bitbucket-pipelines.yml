@@ -21,4 +21,3 @@ pipelines:
             - npm install
             - chmod +x ./docs/wordpress-md.js
             - npm link
-            - npx semantic-release
