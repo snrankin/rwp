@@ -12,7 +12,7 @@ pipelines:
             - node
           script:
             # Get an oauth access token using the client credentials, parsing out the token with jq.
-            - apt-get update && apt-get install -y curl jq
+            - apt-get update && apt-get install -y curl jq zip
             - >
               export BB_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
                 https://bitbucket.org/site/oauth2/access_token \
