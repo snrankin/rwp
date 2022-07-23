@@ -47,15 +47,16 @@
 			}
 		],
 		[
-			"@semantic-release/exec",
-			{
-				"prepareCmd": "generate-readme readme --main-file rwp.php --dir ${BITBUCKET_CLONE_DIR}/docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md && generate-md"
-			}
-		],
-		[
 			"semantic-release-version-bump",
 			{
 				"files": "rwp.php"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"generateNotes": "generate-readme readme --main-file rwp.php --dir ${PWD}/docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md",
+				"prepareCmd": "generate-md"
 			}
 		],
 		[
