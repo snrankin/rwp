@@ -1,3 +1,20 @@
+Deprecated: auto_detect_line_endings is deprecated in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Runner.php on line 294
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::current() should either be compatible with Iterator::current(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 184
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::next() should either be compatible with Iterator::next(): void, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 213
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::key() should either be compatible with Iterator::key(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 201
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::valid() should either be compatible with Iterator::valid(): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 225
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::rewind() should either be compatible with Iterator::rewind(): void, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 172
+
+Deprecated: Return type of PHP_CodeSniffer\Files\FileList::count() should either be compatible with Countable::count(): int, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Files/FileList.php on line 241
+
+Deprecated: Return type of PHP_CodeSniffer\Filters\Filter::getChildren() should either be compatible with RecursiveFilterIterator::getChildren(): ?RecursiveFilterIterator, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Filters/Filter.php on line 133
+
+Deprecated: Return type of PHP_CodeSniffer\Filters\Filter::accept() should either be compatible with FilterIterator::accept(): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/vendor/squizlabs/php_codesniffer/src/Filters/Filter.php on line 92
 <?php
 
 /** ============================================================================
@@ -164,15 +181,10 @@ class Plugin {
 		 * @var \RWP\Vendor\PUC\v4p11\Vcs\PluginUpdateChecker $update_checker
 		 */
 		$update_checker = \RWP\Vendor\PUC\v4p11\Factory::buildUpdateChecker(
-			'https://bitbucket.org/riester/rwp',
+			'https://digital.riester.com/plugin/?action=get_metadata&slug=rwp',
 			RWP_PLUGIN_FILE,
 			'rwp',
 		);
-
-		$update_checker->setAuthentication(array(
-			'consumer_key'    => 'J86s6ey7kAEK2uc2HJ',
-			'consumer_secret' => 'rdbzQH84rHJkKg7EZxt4Q7FtG7S9r3H4',
-		));
 
 		$this->update_checker = $update_checker;
 
