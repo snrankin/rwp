@@ -12,7 +12,7 @@ pipelines:
             - node
           script:
             - printenv
-            - ls -a ${PWD}
+            - ls -a ${PWD}/docs/partials
             # Get an oauth access token using the client credentials, parsing out the token with jq.
             #- apt-get update && apt-get install -y curl jq
             #- >
