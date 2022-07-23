@@ -1,7 +1,8 @@
 {
 	"repositoryUrl": "https://auth@bitbucket.org/riester/rwp.git",
 	"debug": true,
-	"dry-run":true,
+	"dry-run": true,
+	"ci": false,
 	"plugins": [
 		[
 			"@semantic-release/commit-analyzer",
@@ -44,13 +45,13 @@
 		[
 			"@semantic-release/changelog",
 			{
-				"changelogTitle": "RIESTERWP Core Changelog\n========================\n\n"
+				"changelogTitle": "RIESTERWP Core Changelog\n========================"
 			}
 		],
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "npm run readme && npm generate-md"
+				"prepareCmd": "npm run readme && generate-md"
 			}
 		],
 		[
