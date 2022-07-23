@@ -1,5 +1,5 @@
 {
-	"repositoryUrl": "https://auth@bitbucket.org/riester/rwp.git",
+	"repositoryUrl": "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}",
 	"debug": true,
 	"plugins": [
 		[
@@ -47,22 +47,26 @@
 			}
 		],
 		[
+			"@semantic-release/npm",
+			{
+				"npmPublish": false
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md && generate-md"
+			}
+		],
+		[
 			"semantic-release-version-bump",
 			{
 				"files": "rwp.php"
 			}
 		],
 		[
-			"@semantic-release/exec",
-			{
-				"generateNotes": "generate-readme readme --main-file rwp.php --dir ${PWD}/docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md",
-				"prepareCmd": "generate-md"
-			}
-		],
-		[
 			"@semantic-release/git",
 			{
-				"assets": ["assets", "dependencies", "includes", "languages", "config.json", "rwp.php", "readme.txt", "uninstall.php"],
 				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
 			}
 		]
