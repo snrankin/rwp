@@ -1,6 +1,11 @@
 RIESTERWP Core Changelog
 ========================
 
+v0.10.2 - 2022-07-23
+-------------------
+
+* revert: "chore(release): 0.10.1 [skip ci]"
+
 v0.10.0 - 2022-07-22
 -------------------
 
@@ -457,4 +462,3 @@ v0.9.0 - 2022-07-11
 * Updating Wista, body classes
 * Updatng Query Monitor integration
 * Variable order needed to be swapped
-
