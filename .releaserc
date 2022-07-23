@@ -1,4 +1,5 @@
 {
+	"repositoryUrl": "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}",
 	"debug": true,
 	"plugins": [
 		[
