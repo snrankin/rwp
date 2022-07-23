@@ -77,7 +77,7 @@ namespace RWP\Vendor\PUC\v4p11;
             $apiClass = null;
             if (empty($service)) {
                 //The default is to get update information from a remote JSON file.
-                $checkerClass = $type . '_UpdateChecker';
+                $checkerClass = $type . 'UpdateChecker';
             } else {
                 //You can also use a VCS repository like GitHub.
                 $checkerClass = 'Vcs_' . $type . 'UpdateChecker';
