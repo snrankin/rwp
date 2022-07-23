@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-<img src="https://img.shields.io/badge/version-0.10.2-blue" alt="Current Version" />
+<img src="https://img.shields.io/badge/version-0.10.3-blue" alt="Current Version" />
 
 @TODO - Write Description
 
@@ -32,6 +32,11 @@ An internal plugin for websites created by RIESTER to enhance functionality
 4. Activate the plugin in the Plugin dashboard
 
 == Changelog ==
+
+= v0.10.3 - 2022-07-23 =
+
+* fix: fix fatal errors
+
 
 = v0.10.2 - 2022-07-23 =
 
