@@ -11,16 +11,17 @@ pipelines:
           caches:
             - node
           script:
+            - printenv
             # Get an oauth access token using the client credentials, parsing out the token with jq.
-            - apt-get update && apt-get install -y curl jq
-            - >
-              export BB_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
-                https://bitbucket.org/site/oauth2/access_token \
-                -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
+            #- apt-get update && apt-get install -y curl jq
+            #- >
+              #export BB_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
+                #https://bitbucket.org/site/oauth2/access_token \
+                #-d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
-            - git remote set-url origin "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}"
+            #- git remote set-url origin "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}"
             # Configure git to use the oauth token. This well happen when setting env variable BB_TOKEN
-            - npm install
-            - chmod +x ./docs/wordpress-md.js
-            - npm link
-            - npx semantic-release
+            #- npm install
+            #- chmod +x ./docs/wordpress-md.js
+            #- npm link
+            #- npx semantic-release
