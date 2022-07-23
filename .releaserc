@@ -1,9 +1,6 @@
 {
 	"repositoryUrl": "https://auth@bitbucket.org/riester/rwp.git",
-	"preset": "angular",
-	"dry-run": true,
 	"debug": true,
-	"ci": false,
 	"plugins": [
 		[
 			"@semantic-release/commit-analyzer",
