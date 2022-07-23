@@ -586,7 +586,8 @@ abstract class UpdateChecker {
 		$metadata = null;
 		if (!is_wp_error($status)) {
 			if (\version_compare(\PHP_VERSION, '5.3', '>=') && \strpos($metaClass, '\\') === \false) {
-				$metaClass = __NAMESPACE__ . '\\' . $metaClass;
+				$class = new \ReflectionClass(get_called_class());
+				$metaClass = $class->getNamespaceName() . '\\' . $metaClass;
 			}
 			$metadata = \call_user_func(array($metaClass, 'fromJson'), $result['body']);
 		} else {
