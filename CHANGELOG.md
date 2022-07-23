@@ -1,6 +1,11 @@
 RIESTERWP Core Changelog
 ========================
 
+v0.10.4 - 2022-07-23
+-------------------
+
+* fix: fix issue with class loading in plugin update checker
+
 v0.10.3 - 2022-07-23
 -------------------
 
