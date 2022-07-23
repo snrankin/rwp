@@ -2,31 +2,16 @@
     "displayName": "RWP",
     "name": "rwp",
     "version": "0.10.0",
-    "license": "UNLICENSED",
-    "homepage": "https://auth@bitbucket.org/riester/rwp.git",
-    "repository": "https://auth@bitbucket.org/riester/rwp.git",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://bitbucket.org/riester/rwp/src/master/README.md",
+    "repository": "https://bitbucket.org/riester/rwp",
     "author": {
-        "name": "MIT",
+        "name": "RIESTER Advertising Agency",
         "email": "wordpress@riester.com",
         "url": "https://www.riester.com"
     },
-    "release": {
-        "repositoryUrl": "https://auth@bitbucket.org/riester/rwp.git",
-        "plugins": [
-            "@semantic-release/commit-analyzer",
-            "@semantic-release/release-notes-generator",
-            [
-                "@semantic-release/npm",
-                {
-                    "npmPublish": false
-                }
-            ],
-            "@semantic-release/changelog",
-            "@semantic-release/git"
-        ],
-        "branches": [
-            "master"
-        ]
+    "bin": {
+        "generate-md": "./docs/wordpress-md.js"
     },
     "scripts": {
         "build": "npm-run-all *:build",
@@ -52,7 +37,11 @@
         "fix": "npm run fix:scripts && npm run fix:styles",
         "fix:scripts": "eslint --write './src/**/*.js'",
         "fix:styles": "stylelint --fix --color './src/**/*.{sass,scss,sss,less}'",
-        "test": "webpack configtest ./webpack/webpack.config.js"
+        "test": "webpack configtest ./webpack/webpack.config.js",
+        "changelog": "npm run writeLog && bash ./scripts/generateNotes.sh && npm run readme",
+        "writeLog": "conventional-changelog -i CHANGELOG.md -s -r 0 -n docs/config.js",
+        "readme": "./node_modules/.bin/llms-dev readme --main-file rwp.php --dir /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md",
+        "test:release": "./scripts/semantic-release.sh"
     },
     "engines": {
         "node": ">=14"
@@ -75,9 +64,11 @@
         "@babel/plugin-transform-runtime": "^7.18.9",
         "@babel/preset-env": "^7.18.9",
         "@babel/preset-react": "^7.18.6",
+        "@lifterlms/dev": "^0.0.5",
         "@sect/modernizr-loader": "^1.0.2",
         "@semantic-release/changelog": "^6.0.1",
         "@semantic-release/commit-analyzer": "^9.0.2",
+        "@semantic-release/exec": "^6.0.3",
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/npm": "^9.0.1",
         "@semantic-release/release-notes-generator": "^10.0.3",
@@ -105,6 +96,8 @@
         "babel-loader": "^8.2.5",
         "babel-plugin-lodash": "^3.3.4",
         "cleanup-mini-css-extract-plugin": "^1.1.1",
+        "commander": "^8.2.0",
+        "conventional-changelog-writer": "^5.0.1",
         "copy-webpack-plugin": "11.0.0",
         "css-loader": "~6.7.1",
         "cssnano": "~5.1.12",
@@ -121,13 +114,16 @@
         "eslint-plugin-react": "^7.30.1",
         "eslint-webpack-plugin": "^3.2.0",
         "file-loader": "^6.2.0",
+        "helper-yaml": "^0.1.0",
         "image-minimizer-webpack-plugin": "^3.2.3",
         "import-glob-loader": "^1.1.0",
         "jsdoc-tsimport-plugin": "^1.0.5",
         "json-loader": "^0.5.7",
+        "json-to-pretty-yaml": "^1.2.2",
         "lodash": "^4.17.21",
         "lodash-webpack-plugin": "^0.11.6",
         "mini-css-extract-plugin": "^2.6.1",
+        "minimist": "^1.2.6",
         "modernizr": "^3.12.0",
         "node-sass": "^7.0.1",
         "node-sass-magic-importer": "^5.3.2",
@@ -148,6 +144,7 @@
         "sass-loader": "~13.0.2",
         "sassy": "^1.0.0",
         "semantic-release": "^19.0.3",
+        "semantic-release-version-bump": "^1.4.1",
         "source-map-loader": "^4.0.0",
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.3",
@@ -170,14 +167,15 @@
         "webpack-node-externals": "^3.0.0",
         "webpack-remove-empty-scripts": "^0.8.1",
         "webpackbar": "^5.0.2",
+        "wp-readme-to-markdown": "^1.0.1",
+        "yamljs": "^0.3.0",
         "yargs": "~17.5.1",
         "yarn-run-all": "^3.1.1"
     },
     "dependencies": {
         "@babel/runtime": "^7.18.9",
-        "@fancyapps/ui": "^4.0.28",
+        "@fancyapps/ui": "^4.0.29",
         "@fortawesome/fontawesome-free": "^6.1.1",
-        "@iteratec/semantic-release-bitbucket": "^1.1.1",
         "@popperjs/core": "^2.11.5",
         "actual": "^0.4.0",
         "bootstrap": "^5.2.0",

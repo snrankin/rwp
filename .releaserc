@@ -1,0 +1,73 @@
+{
+	"repositoryUrl": "https://auth@bitbucket.org/riester/rwp.git",
+	"preset": "angular",
+	"dry-run": true,
+	"debug": true,
+	"ci": false,
+	"plugins": [
+		[
+			"@semantic-release/commit-analyzer",
+			{
+				"releaseRules": [
+					{
+						"type": "docs",
+						"scope": "README",
+						"release": "patch"
+					},
+					{
+						"type": "refactor",
+						"scope": "core-*",
+						"release": "minor"
+					},
+					{
+						"type": "refactor",
+						"release": "patch"
+					},
+					{
+						"scope": "no-release",
+						"release": false
+					}
+				]
+			}
+		],
+
+		[
+			"@semantic-release/release-notes-generator",
+			{
+				"linkReferences": false,
+				"linkCompare": false,
+				"writerOpts": {
+					"groupBy": false,
+					"headerPartial": "v{{version}}{{~#if date}} - {{date}}{{~/if}}\n-------------------",
+					"commitPartial": "* {{header}}"
+				}
+			}
+		],
+		[
+			"@semantic-release/changelog",
+			{
+				"changelogTitle": "RIESTERWP Core Changelog\n========================\n\n"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "npm readme && npm generate-md"
+			}
+		],
+		[
+			"semantic-release-version-bump",
+			{
+				"files": "rwp.php"
+			}
+		],
+		[
+			"@semantic-release/git",
+			{
+				"assets": ["assets", "dependencies", "includes", "languages", "config.json", "rwp.php", "readme.txt", "uninstall.php"],
+				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+			}
+		]
+	],
+	"branches": ["master"]
+}

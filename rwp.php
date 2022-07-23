@@ -1,26 +1,36 @@
 <?php
 
 /** ============================================================================
+ * RIESTERWP Core
+ *
+ * @package     RWP
+ * @author      RIESTER Advertising Agency
+ * @copyright   2020 RIESTER Advertising Agency
+ * @license     GPL-2.0-or-later
+ *
+ * @wordpress-plugin
  * Plugin Name: RIESTERWP Core
- * Plugin URI: @TODO
- * Description: @TODO
+ * Plugin URI: https://bitbucket.org/riester/rwp/src/master/README.md
+ * Description: And internal plugin for websites created by RIESTER to enhance functionality
  * Version: 0.10.0
  * Author: RIESTER Advertising Agency
  * Author URI: https://www.riester.com
  * Text Domain: rwp
  * Domain Path: /languages
- * License: GPL 2.0+
+ * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Requires PHP: 7.0
  * Requires at least: 5.6
- * WordPress-Plugin-Boilerplate-Powered: v3.2.0
  * ========================================================================== */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RWP_PLUGIN_VERSION', '0.10.0' );
+if ( ! function_exists( 'get_plugin_data' ) ) {
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
 define( 'RWP_PLUGIN_TEXTDOMAIN', 'rwp' );
 define( 'RWP_PLUGIN_NAME', 'RIESTERWP Core' );
 define( 'RWP_PLUGIN_WP_VERSION', '5.6' );
@@ -29,10 +39,6 @@ define( 'RWP_PLUGIN_ROOT', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'RWP_PLUGIN_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'RWP_PLUGIN_FILE', __FILE__ );
 define( 'RWP_PLUGIN_VENDOR_PATH', RWP_PLUGIN_ROOT . 'dependencies/' );
-
-if ( ! function_exists( 'get_plugin_data' ) ) {
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
-}
 
 /**
  * Load rwp textdomain.
