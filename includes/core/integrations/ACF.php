@@ -59,7 +59,7 @@ class ACF extends Singleton {
 
 	public function setup_acf() {
 
-		$path = RWP_PLUGIN_ROOT . 'config/acf/';
+		$path = RWP_PLUGIN_ROOT . 'includes/config/acf/';
 
 		foreach ( glob( $path . '/*.php' ) as $file ) {
 			require_once $file;

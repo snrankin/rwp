@@ -55,7 +55,6 @@ class Bootstrap extends Singleton {
 
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
-			//add_action( 'admin_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
 			$this->bootstrap_in_tinymce();
 		}
 
@@ -112,7 +111,7 @@ class Bootstrap extends Singleton {
 			'white'  => array(),
 			'black'  => array(),
 			'gray'   => array(),
-		))->transform(function ( $info, $color ) {
+		))->transform(function ( $info, $color ) { // phpcs:ignore
 			$label = rwp_change_case( $color, 'title' );
 			$shades = array(
 				'default' => "var(--bs-$color)",
@@ -137,7 +136,7 @@ class Bootstrap extends Singleton {
 			'danger'    => array(),
 			'light'     => array(),
 			'dark'      => array(),
-		))->transform(function ( $info, $color ) {
+		))->transform(function ( $info, $color ) { // phpcs:ignore
 			$label = rwp_change_case( $color, 'title' );
 			$shades = array(
 				'default' => "var(--bs-$color)",
@@ -219,8 +218,6 @@ class Bootstrap extends Singleton {
 		// Callback function to insert 'styleselect' into the $buttons array
 
 		$tinymce_styles = rwp()->get( 'tinymce.editor' );
-
-		//ray( $tinymce_styles ); // !REMOVE
 
 		add_filter('tiny_mce_before_init', function ( $init_array ) use ( $tinymce_styles ) {
 
