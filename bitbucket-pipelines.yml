@@ -19,9 +19,8 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
             - git remote set-url origin "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}"
-            - git ls-remote --heads https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}
             # Configure git to use the oauth token. This well happen when setting env variable BB_TOKEN
             - npm install
             - chmod +x ./docs/wordpress-md.js
             - npm link
-            - printenv
+            - npx semantic-release
