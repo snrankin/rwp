@@ -6,7 +6,6 @@
 /// @version   0.9.3
 /// ======================================================================== ///
 
-
 .rwp-elementor.rwp-elementor-grid-v2 {
 	@for $i from 1 through $grid-columns {
 		--#{$variable-prefix}column-#{$i}-width: calc(#{getcssvar(container-width)} * #{divide($i, $grid-columns)} + (var(--gap-x) * #{$i - 1}));
@@ -24,7 +23,7 @@
 		width: 100%;
 		margin-right: auto;
 		margin-left: auto;
-
+		max-width: getcssvar(container-width);
 		@include make-section-inner('[data-settings*="background"]');
 	}
 

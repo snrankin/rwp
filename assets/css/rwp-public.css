@@ -51,9 +51,9 @@ html{
     --bs-container-width:90vw;
     --bs-container-sm-width:90vw;
     --bs-container-md-width:90vw;
-    --bs-container-lg-width:90vw;
-    --bs-container-xl-width:85vw;
-    --bs-container-xxl-width:1170px;
+    --bs-container-lg-width:85vw;
+    --bs-container-xl-width:80vw;
+    --bs-container-xxl-width:1100px;
 }
 
 .screen-reader-text{
@@ -392,6 +392,22 @@ hr.wp-block-separator{
     margin-bottom:var(--bs-paragraph-margin-bottom);
 }
 
+.rwp-bootstrap [class*=wp-container]{
+    width:100%;
+    margin-right:auto;
+    margin-left:auto;
+    max-width:var(--bs-container-xs-width);
+}
+.rwp-bootstrap [class*=wp-container]:not(:first-child){
+    margin-top:var(--bs-container-gutter-y);
+}
+.rwp-bootstrap [class*=wp-container] > *:where(:not(.alignleft):not(.alignright)){
+    max-width:100% !important;
+}
+.rwp-bootstrap [class*=wp-container] .alignwide{
+    max-width:100% !important;
+}
+
 .alignleft,
 img.alignleft{
     margin-bottom:var(--bs-paragraph-margin-bottom);
@@ -444,26 +460,41 @@ img.alignnone{
 @media (min-width: 576px){
     html{
         --bs-container-width:90vw;
+    }
+    .rwp-bootstrap [class*=wp-container]{
+        max-width:var(--bs-container-sm-width);
     }}
 
 @media (min-width: 768px){
     html{
         --bs-container-width:90vw;
+    }
+    .rwp-bootstrap [class*=wp-container]{
+        max-width:var(--bs-container-md-width);
     }}
 
-@media (min-width: 996px){
+@media (min-width: 992px){
     html{
-        --bs-container-width:90vw;
+        --bs-container-width:85vw;
+    }
+    .rwp-bootstrap [class*=wp-container]{
+        max-width:var(--bs-container-lg-width);
     }}
 
 @media (min-width: 1200px){
     html{
-        --bs-container-width:85vw;
+        --bs-container-width:80vw;
+    }
+    .rwp-bootstrap [class*=wp-container]{
+        max-width:var(--bs-container-xl-width);
     }}
 
-@media (min-width: 1376px){
+@media (min-width: 1375px){
     html{
-        --bs-container-width:1170px;
+        --bs-container-width:1100px;
+    }
+    .rwp-bootstrap [class*=wp-container]{
+        max-width:var(--bs-container-xxl-width);
     }}
 
 /*# sourceMappingURL=rwp-public.css.map*/
