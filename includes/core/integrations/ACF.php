@@ -127,7 +127,7 @@ class ACF extends Singleton {
 				\acfe_update_setting( 'dev', true );
 			}
 
-			$path = RWP_PLUGIN_ROOT . 'config/acf/';
+			$path = RWP_PLUGIN_ROOT . 'includes/config/acf/';
 			\acfe_update_setting( 'php_save', $path );
 
 			$load_paths = \acfe_get_setting( 'php_load' );
