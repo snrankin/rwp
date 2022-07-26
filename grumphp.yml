@@ -26,16 +26,30 @@ grumphp:
       config: /Users/Shared/www/sites/rwp/app/public/wp-content/plugins/rwp/.eslintrc.js
 
       debug: true
+
     git_blacklist:
       keywords:
-        - "var_dump"
-        - "ray"
+        - "[\\s|\"|']var_dump\\("
+        - "[\\s|\"|']ray\\("
+        - "[\\s|\"|']rwp_dump\\("
       whitelist_patterns:
         - /^includes\/dependencies\/(.*)/
         - /^vendor\/(.*)/
         - /^tests\/(.*)/
         - /^includes\/functions\/utils\/debug.php/
       match_word: true
+    git_commit_message:
+      allow_empty_message: false
+      enforce_capitalized_subject: false
+      enforce_no_subject_punctuations: true
+      enforce_no_subject_trailing_period: true
+      enforce_single_lined_subject: false
+      type_scope_conventions: []
+      max_body_width: 72
+      max_subject_width: 60
+      case_insensitive: true
+      multiline: true
+      additional_modifiers: ''
     phpcs:
       report: full
       whitelist_patterns:
