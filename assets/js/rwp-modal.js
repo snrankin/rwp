@@ -1211,8 +1211,14 @@
                         Fancybox.prev();
                         return;
                     }
-                    if (!eventTarget.matches(_shared_utils_setFocusOn_js__WEBPACK_IMPORTED_MODULE_2__.FOCUSABLE_ELEMENTS)) {
-                        document.activeElement.blur();
+                    const activeElement = document.activeElement;
+                    if (activeElement) {
+                        if (activeElement.closest("[contenteditable]")) {
+                            return;
+                        }
+                        if (!eventTarget.matches(_shared_utils_setFocusOn_js__WEBPACK_IMPORTED_MODULE_2__.FOCUSABLE_ELEMENTS)) {
+                            activeElement.blur();
+                        }
                     }
                     if (eventTarget.closest(".fancybox__content")) {
                         return;
@@ -3686,6 +3692,9 @@
                 }
                 onClick(event) {
                     if (event.defaultPrevented) {
+                        return;
+                    }
+                    if (document.activeElement && document.activeElement.closest("[contenteditable]")) {
                         return;
                     }
                     if (this.option("textSelection") && window.getSelection().toString().length && !(event.target && event.target.hasAttribute("data-fancybox-close"))) {

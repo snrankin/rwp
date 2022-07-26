@@ -12,9 +12,9 @@ $grid-breakpoints: (
 	xs: 0,
 	sm: 576px,
 	md: 768px,
-	lg: 996px,
+	lg: 992px,
 	xl: 1200px,
-	xxl: 1376px
+	xxl: 1375px
 );
 
 
@@ -162,9 +162,9 @@ $container-widths: (
 	xs: 90vw,
 	sm: 90vw,
 	md: 90vw,
-	lg: 90vw,
-	xl: 85vw,
-	xxl: 1170px
+	lg: 85vw,
+	xl: 80vw,
+	xxl: 1100px
 );
 
 $nav-link-active-color: $nav-link-hover-color;
