@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Description ##
 
-<img src="https://img.shields.io/badge/version-0.10.4-blue" alt="Current Version" />
+<img src="https://img.shields.io/badge/version-0.10.5-blue" alt="Current Version" />
 
 @TODO - Write Description
 
@@ -32,6 +32,11 @@ An internal plugin for websites created by RIESTER to enhance functionality
 4. Activate the plugin in the Plugin dashboard
 
 ## Changelog ##
+
+### v0.10.5 - 2022-07-26 ###
+
+* fix: fix Elementor v2 grid
+
 
 ### v0.10.4 - 2022-07-23 ###
 
@@ -508,8 +513,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 * Updating Wista, body classes
 * Updatng Query Monitor integration
 * Variable order needed to be swapped
-
-
-
 
 https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md
