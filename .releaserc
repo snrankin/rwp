@@ -1,19 +1,26 @@
 {
 	"debug": true,
+	"dry-run": true,
+	"ci": false,
 	"plugins": [
 		[
 			"@semantic-release/commit-analyzer",
 			{
+				"preset": "conventionalcommits",
+				"parserOpts": {
+					"issuePrefixes": ["RWP-"],
+					"issueUrlFormat": "https://riester.atlassian.net/browse/{{prefix}}{{id}}"
+				},
 				"releaseRules": [
 					{
 						"type": "docs",
-						"scope": "README",
+						"scope": "*README*",
 						"release": "patch"
 					},
 					{
-						"type": "refactor",
-						"scope": "core-*",
-						"release": "minor"
+						"type": "docs",
+						"scope": "*readme*",
+						"release": "patch"
 					},
 					{
 						"type": "refactor",
@@ -30,6 +37,7 @@
 		[
 			"@semantic-release/release-notes-generator",
 			{
+				"preset": "conventionalcommits",
 				"linkReferences": false,
 				"linkCompare": false,
 				"writerOpts": {
@@ -54,7 +62,8 @@
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md && generate-md"
+				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more CHANGELOG.md && generate-md",
+				"success": "export NEXT_VER=${nextRelease.version}"
 			}
 		],
 		[
