@@ -26,6 +26,7 @@ parameters:
     - ../gravityforms
     - ../query-monitor
     - ../wordpress-seo
+    - ../spatie-ray/wp-ray.php
   scanFiles:
     - rwp.php
     - uninstall.php

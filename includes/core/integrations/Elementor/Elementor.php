@@ -56,7 +56,6 @@ class Elementor extends Singleton {
 			add_action( 'elementor/element/parse_css', array( $this, 'add_color_contrast' ), 10, 2 );
 
 			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
-			add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 		}
 		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
@@ -271,22 +270,54 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function auto_add_bs_breakpoints() {
-		$kit_active_id = self::plugin()->kits_manager->get_active_id();
-		// Get the breakpoint settings saved in the kit directly from the DB to avoid initializing the kit too early.
-		$raw_kit_settings = (array) get_post_meta( $kit_active_id, '_elementor_page_settings', true );
+	public function update_breakpoints() {
 
-		$kit_settings = $raw_kit_settings;
+		if ( self::plugin()->experiments->is_feature_active( 'additional_custom_breakpoints' ) ) {
 
-		$kit_settings['active_breakpoints'] = array(
-			'viewport_mobile'       => Bootstrap::bs_atts( 'breakpoints.sm.value' ),
-			'viewport_tablet'       => Bootstrap::bs_atts( 'breakpoints.md.value' ),
-			'viewport_tablet_extra' => Bootstrap::bs_atts( 'breakpoints.lg.value' ),
-			'viewport_laptop'       => Bootstrap::bs_atts( 'breakpoints.xl.value' ),
-			'viewport_desktop'      => Bootstrap::bs_atts( 'breakpoints.xxl.value' ),
-		);
+			$breakpoints = array();
 
-		update_post_meta( $kit_active_id, '_elementor_page_settings', $kit_settings, $raw_kit_settings );
+			foreach ( self::BREAKPOINTS_MAP as $breakpoint => $e_breakpoint ) {
+				$max = 'xxl' !== $breakpoint ?: false;
+				$breakpoints[ "viewport_$e_breakpoint" ] = rwp_bootstrap_breakpoint( $breakpoint, true, $max );
+			}
+
+			/**
+			 * @var Collection $containers
+			 */
+			$containers = rwp_get_option( 'modules.bootstrap.containers', false );
+
+			/**
+			 * @var self $instance
+			 */
+			$instance = self::instance();
+
+			$containers = $containers->mapWithKeys(function ( $value, $breakpoint ) use ( $instance ) {
+				$e_breakpoint = data_get( $instance::BREAKPOINTS_MAP, $breakpoint );
+
+				if ( ! empty( $e_breakpoint ) ) {
+					$value['sizes'] = [];
+					return array(
+						"container_width_$e_breakpoint" => $value,
+					);
+				} else {
+					return '';
+				}
+			});
+
+			$options = $containers->merge( $breakpoints );
+
+			$options->put( 'active_breakpoints', array_keys( $breakpoints ) );
+			$options = rwp_object_to_array( $options );
+
+			foreach ( $options as $key => $value ) {
+				self::plugin()->kits_manager->update_kit_settings_based_on_option( $key, $value );
+
+			}
+
+			self::plugin()::$instance->breakpoints->refresh();
+
+		}
+
 	}
 
 	/**

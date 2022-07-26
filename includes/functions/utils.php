@@ -118,14 +118,18 @@ function rwp_bootstrap_breakpoints( $class_prefix = '', $class_suffix = '', $lab
 
 /**
  * Returns breakpoint value (in pixels)
- * @param string $breakpoint
- * @return int|false
+ *
+ * @param string  $name  Breakpoint name
+ * @param bool    $unit  Whether or not to include the `px` suffix
+ * @param bool    $max   Whether to return the max-width value `($breakpoint - 0.02)`
+ *
+ * @return int|string|false
  */
-function rwp_bootstrap_breakpoint( $breakpoint ) {
+function rwp_bootstrap_breakpoint( $breakpoint, $unit = false, $max = false ) {
 	if ( ! class_exists( '\\RWP\\Integrations\\Bootstrap' ) ) {
 		require RWP_PLUGIN_ROOT . 'includes/core/integrations/Bootstrap.php';
 	}
-	return \RWP\Integrations\Bootstrap::breakpoint( $breakpoint );
+	return \RWP\Integrations\Bootstrap::breakpoint( $breakpoint, $unit, $max );
 }
 
 /**

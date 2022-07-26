@@ -69,3 +69,20 @@ hr.wp-block-separator {
 .wp-block-file {
 	margin-bottom: getcssvar(paragraph-margin-bottom);
 }
+
+.rwp-bootstrap {
+	[class*='wp-container'] {
+		@include make-container;
+		@include make-container-widths;
+
+		> * {
+			&:where(:not(.alignleft):not(.alignright)) {
+				max-width: 100% !important;
+			}
+		}
+
+		.alignwide {
+			max-width: 100% !important;
+		}
+	}
+}
