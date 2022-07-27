@@ -811,6 +811,62 @@ body:not(.post-type-acf-field-group) .acf-field.acf-field-group.acfe-field-group
 body:not(.post-type-acf-field-group) .acf-field.acf-field-group.acfe-field-group-layout-row > .acf-input > .acf-fields.-left > .acf-field:not(:first-child){
     border-top:solid 1px #e1e1e1 !important;
 }
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top{
+    --rwp-gutter-x:0px;
+    --rwp-gutter-y:0px;
+    position:relative;
+    display:flex;
+    flex-wrap:nowrap !important;
+    align-items:flex-start;
+    width:100%;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top-border{
+    border-width:0 !important;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field{
+    position:relative;
+    flex:1 1 auto;
+    width:1%;
+    min-width:0;
+    height:30px;
+    border:none !important;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field.acf-field-number:focus-within{
+    z-index:3;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field.acf-field-number input[type=number]{
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+    height:30px;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field .acf-button-group{
+    display:flex;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field .acf-button-group label{
+    height:30px;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field .acf-button-group label:first-child{
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field .acf-button-group label.selected{
+    order:-1;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .acf-field .acf-label{
+    display:none;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .form-control:focus,
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .form-select:focus,
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top > .form-floating:focus-within{
+    z-index:3;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top .btn{
+    position:relative;
+    z-index:2;
+}
+body:not(.post-type-acf-field-group) .acf-field.acf-field-group#container-widths .acfe-field-group-layout-block .acf-fields.-top .btn:focus{
+    z-index:3;
+}
 
 body:not(.post-type-acf-field-group) .acf-repeater.-block > table > tbody > tr > .acf-fields{
     --rwp-gutter-x:12px;
@@ -852,7 +908,6 @@ body:not(.post-type-acf-field-group) .acf-field .select2-container.-acf .select2
     width:100%;
 }
 body:not(.post-type-acf-field-group) .acf-field .select2-container.-acf .select2-selection--multiple .select2-selection__rendered{
-    width:100%;
     display:flex;
     flex-wrap:wrap;
     gap:2px;
@@ -910,10 +965,7 @@ body:not(.post-type-acf-field-group) .acf-field .select2-container.-acf .select2
     align-items:center;
     justify-content:center;
     margin:0 0 0 auto !important;
-    padding-left:5px;
-    padding-right:5px;
-    padding-top:0;
-    padding-bottom:0;
+    padding:0 5px;
     line-height:1ex;
     top:auto;
     left:auto;
