@@ -241,10 +241,10 @@ class Elementor extends Singleton {
 		if ( ! empty( $widgets ) ) {
 
 			foreach ( $widgets as $widget ) {
-					Elementor_Instance::instance()->widgets_manager->register( new $widget() );
-				}
+				Elementor_Instance::instance()->widgets_manager->register( new $widget() );
 			}
 		}
+	}
 
 	/**
 	 * Get the elementor plugin instance
