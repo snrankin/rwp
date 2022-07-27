@@ -23,11 +23,21 @@ use Elementor\Core\Experiments\Manager as Experiments_Manager;
 use Elementor\Group_Control_Flex_Item;
 use Elementor\Group_Control_Flex_Container;
 use Elementor\Controls_Manager as Controls_Manager;
+use Elementor\Core\Kits\Manager as Kit_Manager;
 use RWP\Html\Image;
+use RWP\Helpers\Collection;
 
 class Elementor extends Singleton {
 
 	public $widgets = array();
+
+	const BREAKPOINTS_MAP = array(
+		'sm'  => 'mobile',
+		'md'  => 'tablet',
+		'lg'  => 'tablet_extra',
+		'xl'  => 'laptop',
+		'xxl' => 'desktop',
+	);
 
 	/**
 	 * Initialize the class.
@@ -61,6 +71,8 @@ class Elementor extends Singleton {
 			add_action( 'elementor/experiments/default-features-registered', function ( Experiments_Manager $manager ) {
 				$this->update_elementor_features( $manager );
 			} );
+
+			add_action( 'acfe/save_option', array( $this, 'update_breakpoints' ), 20 );
 		}
 		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
 			add_action( 'elementor/element/parse_css', array( $this, 'make_urls_relative' ), 10, 2 );
