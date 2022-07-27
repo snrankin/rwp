@@ -1,9 +1,7 @@
 {{> header}}
-
 {{#each commitGroups}}
-{{#each commits}}
+{{#each commits~}}
 {{> commit root=@root}}
+{{~/each}}
 {{/each}}
-{{/each}}
-
 {{> footer}}

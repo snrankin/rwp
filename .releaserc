@@ -1,14 +1,18 @@
 {
-	"debug": true,
-	"dry-run": true,
-	"ci": false,
 	"plugins": [
 		[
 			"@semantic-release/commit-analyzer",
 			{
 				"preset": "conventionalcommits",
 				"parserOpts": {
-					"issuePrefixes": ["RWP-"],
+					"mergePattern": "^Merge branch '([^']+)' of (.*)$",
+					"mergeCorrespondence": [
+						"branch",
+						"source"
+					],
+					"issuePrefixes": [
+						"RWP-"
+					],
 					"issueUrlFormat": "https://riester.atlassian.net/browse/{{prefix}}{{id}}"
 				},
 				"releaseRules": [
@@ -33,7 +37,6 @@
 				]
 			}
 		],
-
 		[
 			"@semantic-release/release-notes-generator",
 			{
@@ -50,7 +53,25 @@
 		[
 			"@semantic-release/changelog",
 			{
-				"changelogTitle": "RIESTERWP Core Changelog\n========================"
+				"changelogTitle": "RIESTERWP Core Changelog\n========================",
+				"changelogFile": "changelog.txt"
+			}
+		],
+		[
+			"@semantic-release/release-notes-generator",
+			{
+				"preset": "conventionalcommits",
+				"presetConfig": {
+					"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+					"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+					"issueUrlFormat ": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}"
+				}
+			}
+		],
+		[
+			"@semantic-release/changelog",
+			{
+				"changelogTitle": "# RIESTERWP Core Changelog\n---"
 			}
 		],
 		[
@@ -62,8 +83,13 @@
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more CHANGELOG.md && generate-md",
-				"success": "export NEXT_VER=${nextRelease.version}"
+				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more CHANGELOG.md --changelog-length 3"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "generate-md"
 			}
 		],
 		[
@@ -75,10 +101,19 @@
 		[
 			"@semantic-release/git",
 			{
-				"assets": ["CHANGELOG.md", "package.json", "package-lock.json", "rwp.php", "readme.txt", "README.md"],
+				"assets": [
+					"CHANGELOG.md",
+					"package.json",
+					"package-lock.json",
+					"rwp.php",
+					"readme.txt",
+					"README.md"
+				],
 				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
 			}
 		]
 	],
-	"branches": ["master"]
+	"branches": [
+		"master"
+	]
 }
