@@ -219,18 +219,16 @@ class Elementor extends Singleton {
 	 * @return void
 	 */
 	public function init_widgets() {
-		$class = get_called_class();
-		$widgets = rwp()->get_component( $class );
+
+		$widgets = rwp()->get_component( __NAMESPACE__ . '\\Widgets' );
 
 		if ( ! empty( $widgets ) ) {
 
 			foreach ( $widgets as $widget ) {
-				if ( $class !== $widget && ! empty( $widget ) ) {
 					Elementor_Instance::instance()->widgets_manager->register( new $widget() );
 				}
 			}
 		}
-	}
 
 	/**
 	 * Get the elementor plugin instance
