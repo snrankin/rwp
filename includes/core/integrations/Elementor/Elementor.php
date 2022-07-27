@@ -57,6 +57,10 @@ class Elementor extends Singleton {
 
 			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+
+			add_action( 'elementor/experiments/default-features-registered', function ( Experiments_Manager $manager ) {
+				$this->update_elementor_features( $manager );
+			} );
 		}
 		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
 			add_action( 'elementor/element/parse_css', array( $this, 'make_urls_relative' ), 10, 2 );
@@ -246,17 +250,17 @@ class Elementor extends Singleton {
 	 * * Turn on optimized assets loading
 	 * * Turn on additional custom breakpoints
 	 *
-	 * @param Experiments_Manager $elementor
-	 * @return Experiments_Manager
+	 * @param Experiments_Manager $manager
+	 * @return void
 	 */
 
-	public function update_elementor_features( $elementor ) {
-		$elementor->set_feature_default_state( 'e_dom_optimization', $elementor::STATE_INACTIVE );
-		$elementor->set_feature_default_state( 'e_optimized_css_loading', $elementor::STATE_ACTIVE );
-		$elementor->set_feature_default_state( 'e_optimized_assets_loading', $elementor::STATE_ACTIVE );
-		$elementor->set_feature_default_state( 'additional_custom_breakpoints', $elementor::STATE_ACTIVE );
+	public function update_elementor_features( $manager ) {
 
-		return $elementor;
+		$manager->set_feature_default_state( 'e_dom_optimization', $manager::STATE_INACTIVE );
+		$manager->set_feature_default_state( 'e_optimized_css_loading', $manager::STATE_ACTIVE );
+		$manager->set_feature_default_state( 'e_optimized_assets_loading', $manager::STATE_ACTIVE );
+		$manager->set_feature_default_state( 'e_hidden_wordpress_widgets', $manager::STATE_INACTIVE );
+		$manager->set_feature_default_state( 'container', $manager::STATE_INACTIVE );
 	}
 
 
