@@ -67,9 +67,17 @@ class Elementor extends Singleton {
 			add_filter( 'elementor/image_size/get_attachment_image_html', array( $this, 'add_lazysizes' ), 10, 4 );
 		}
 
-		// add_action('elementor/preview/enqueue_styles', function() {
-		// 	wp_enqueue_style( 'gform_basic' );
-		// });
+		if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+
+			add_action('elementor/preview/enqueue_styles', function() {
+				$base_url = \GFCommon::get_base_url();
+				$version  = \GFForms::$version;
+				$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min'; // phpcs:ignore
+
+				wp_enqueue_style( 'gform_basic', $base_url . "/assets/css/dist/basic{$min}.css", null, $version );
+			});
+
+		}
 
 		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
