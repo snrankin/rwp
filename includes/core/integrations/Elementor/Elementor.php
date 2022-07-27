@@ -107,7 +107,7 @@ class Elementor extends Singleton {
 	 * @param mixed $image_key
 	 * @return mixed
 	 */
-	public function add_lazysizes( $html, $settings, $image_size_key, $image_key ) {
+	public function add_lazysizes( $html ) {
 		if ( ! empty( $html ) ) {
 			$html = Image::add_lazysizes( $html );
 			$html->set_attr( 'data-parent', '.elementor-image', true );
@@ -157,7 +157,7 @@ class Elementor extends Singleton {
 	 * @param CSS_File     $post_css_file The post CSS file instance.
 	 * @param Element_Base $element       The element instance.
 	 */
-	public function make_urls_relative( $post_css_file, $element ) {
+	public function make_urls_relative( $post_css_file ) {
 		$stylesheet = $post_css_file->get_stylesheet();
 		$rules = $stylesheet->get_rules();
 
@@ -759,15 +759,15 @@ class Elementor extends Singleton {
 				'description'  => 'Stretch the column to the edge of the page.',
 				'options'      => [
 					'left'  => [
-						'title' => esc_html( 'Left', 'rwp' ),
+						'title' => esc_html__( 'Left', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-start-h',
 					],
 					'right' => [
-						'title' => esc_html( 'Right', 'rwp' ),
+						'title' => esc_html__( 'Right', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-end-h',
 					],
 					'both'  => [
-						'title' => esc_html( 'Both', 'rwp' ),
+						'title' => esc_html__( 'Both', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-stretch-h',
 					],
 				],
@@ -1062,7 +1062,7 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_button_options( $section, $args ) {
+	public function add_button_options( $section ) {
 		if ( 'button' === $section->get_name() ) {
 			// Adding Bootstrap button types to elementor buttons
 
