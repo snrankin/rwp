@@ -117,8 +117,6 @@ function rwp_apply_args( $iterator, &$base_obj, $overwrite ) {
 		}
 		$iterator->next();
 	}
-
-	//return $base_obj;
 }
 
 /**
