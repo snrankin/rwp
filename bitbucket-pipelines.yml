@@ -25,12 +25,8 @@ pipelines:
             - npm ci --install-links --audit-level=none
             - chmod +x ./docs/wordpress-md.js
             - npm link
-      - step:
-          name: Generate next release
-          caches:
-            - node
-          script:
             - npx semantic-release --debug
+            - zip -r $BITBUCKET_REPO_SLUG.zip assets languages dependencies includes config.json readme.txt rwp.php uninstall.php
       - step:
           name: Deploy to Bitbucket downloads
           deployment: production
