@@ -164,7 +164,7 @@ class Location extends Element {
 
 		if ( is_string( $location ) ) {
 			$order = $this->order;
-			if ( in_array( 'title', $order ) ) {
+			if ( in_array( 'title', $order, true ) ) {
 				$order = preg_replace( '/title/', 'label', $order );
 			}
 		}
@@ -311,7 +311,7 @@ class Location extends Element {
 		);
 
 		array_filter($items_map, function ( $key ) use ( $items ) {
-			return ( ! in_array( $key, $items ) );
+			return ( ! in_array( $key, $items, true ) );
 		});
 
 		$defaults = $defaults->toArray();
@@ -326,7 +326,7 @@ class Location extends Element {
 		}
 
 		$address = array_filter($address, function ( $key ) use ( $items_map ) {
-			return ( ! in_array( $key, $items_map ) );
+			return ( ! in_array( $key, $items_map, true ) );
 		});
 
 		if ( is_array( $args ) ) {
@@ -454,7 +454,7 @@ class Location extends Element {
 
 				if ( filled( $address ) ) {
 
-					$url = add_query_arg( 'q', urlencode( $address ), 'https://google.com/maps' );
+					$url = add_query_arg( 'q', rawurlencode( $address ), 'https://google.com/maps' );
 				}
 			}
 		}

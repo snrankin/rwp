@@ -1,4 +1,4 @@
-const { readFileSync } = require( 'fs' );
+const { readFileSync } = require('fs');
 
 /**
  * Retrieve an entry object stub with the given date and version.
@@ -9,7 +9,7 @@ const { readFileSync } = require( 'fs' );
  * @param {string} version A semver string.
  * @return {Object} Entry object.
  */
-function getEntryObject( date, version ) {
+function getEntryObject(date, version) {
 	return {
 		date,
 		version,
@@ -25,21 +25,41 @@ function getEntryObject( date, version ) {
  * @param {string[]} entry Array of lines.
  * @return {string} Joined entry string.
  */
-function finalizeEntry( entry ) {
+function finalizeEntry(entry) {
 	// Trim newlines from the beginning of the entry list.
-	if ( ! entry.logs[ 0 ] ) {
-		entry.logs.splice( 0, 1 );
+	if (!entry.logs[0]) {
+		entry.logs.splice(0, 1);
 	}
 
 	// Trim trailing nnewlines from the end of the entry list.
-	while ( ! entry.logs[ entry.logs.length - 1 ] ) {
-		entry.logs.splice( entry.logs.length - 1, 1 );
+	if (entry.logs.length > 0) {
+		while (!entry.logs[entry.logs.length - 1]) {
+			entry.logs.splice(entry.logs.length - 1, 1);
+		}
 	}
 
 	// Join them all together with a new line.
-	entry.logs = entry.logs.join( '\n' );
+	entry.logs = entry.logs.join('\n');
 
 	return entry;
+}
+
+function filterLogs(lines) {
+	// Remove everything up to first version
+	lines = lines.replace(/[^v\d]*/m, '');
+
+	// Remove all extra blank lines
+	lines = lines.replace(/^\n/gm, '');
+
+	// Replace new line characters that were accidentally made into plain text
+	lines = lines.replace(/\\n\\n/gm, '\n\t* ');
+
+	// Remove revert commits
+	lines = lines.replace(/^[*|+|-]\sRevert\s"[^"]+"\n/gim, '');
+
+	lines = lines.replace('Initial commit on laptop', '');
+
+	return lines;
 }
 
 /**
@@ -50,39 +70,44 @@ function finalizeEntry( entry ) {
  * @param {string} file Path to the changelog MD file.
  * @return {Object[]} Changelog as an array of JSON objects.
  */
-module.exports = ( file ) => {
-	const changelog = readFileSync( file, 'utf8' ),
-		lines = changelog.split( '\n' ),
-		logs = [],
-		regex = /v(?<version>[0-9]\d*\.[0-9]\d*\.[0-9]\d*(?:-(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(?:\+[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)?) - (?<date>\d{4}\-\d{2}\-\d{2})/;
-
-	// Remove title, title underline, and first blank line.
-	lines.splice( 0, 3 );
+module.exports = (file) => {
+	const changelog = readFileSync(file, 'utf8');
+	let lines = filterLogs(changelog);
+	lines = lines.split('\n');
+	const logs = [];
+	// eslint-disable-next-line
+	const regex = /v(?<version>[0-9]\d*\.[0-9]\d*\.[0-9]\d*(?:-(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(?:\+[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)?) - (?<date>\d{4}\-\d{2}\-\d{2})/;
 
 	let currEntry = {};
 
-	lines.forEach( ( line ) => {
-		if ( line.startsWith( '====' ) || line.startsWith( '----' ) ) {
+	lines.forEach((line) => {
+		if (line.startsWith('====') || line.startsWith('----')) {
 			return;
 		}
 
-		const parsed = regex.exec( line );
+		const parsed = regex.exec(line);
 
 		// This is a header line.
-		if ( parsed ) {
-			// Before we start processing the next log item, finalize what we've compiled from the previous.
-			if ( currEntry.logs && currEntry.logs.length ) {
-				logs.push( finalizeEntry( currEntry ) );
+		if (parsed) {
+			if (typeof currEntry.logs !== 'undefined' && currEntry.logs.length > 0) {
+				const filtered = currEntry.logs.filter(function (el) {
+					return el != null && el !== '' && el.length > 0;
+				});
+				currEntry.logs = filtered;
+				// Before we start processing the next log item, finalize what we've compiled from the previous.
+				if (currEntry.logs && currEntry.logs.length) {
+					logs.push(finalizeEntry(currEntry));
+				}
 			}
 
-			currEntry = getEntryObject( parsed.groups.date, parsed.groups.version );
+			currEntry = getEntryObject(parsed.groups.date, parsed.groups.version);
 		} else {
-			currEntry.logs.push( line );
+			currEntry.logs.push(line);
 		}
-	} );
+	});
 
 	// The final entry in the changelog won't get caught by the next parsed date so we'll finalize that entry here at the end.
-	logs.push( finalizeEntry( currEntry ) );
+	logs.push(finalizeEntry(currEntry));
 
 	return logs;
 };

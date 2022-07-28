@@ -1,6 +1,6 @@
 === RIESTERWP Core ===
 Requires at least: {{__MIN_WP_VERSION__}}
-Tested up to: 6.0
+Tested up to: {{__TESTED_WP_VERSION__}}
 Requires PHP: {{__MIN_PHP_VERSION__}}
 Stable tag: master
 License: {{__LICENSE__}}
@@ -10,7 +10,8 @@ License URI: {{__LICENSE_URI__}}
 
 == Description ==
 
-<img src="https://img.shields.io/badge/version-{{__VERSION__}}-blue" alt="Current Version" />
+[![Current Version](https://img.shields.io/badge/version-{{__VERSION__}}-blue)](https://bitbucket.org/riester/rwp/commits/tag/{{__VERSION__}}) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
 
 @TODO - Write Description
 
@@ -35,4 +36,4 @@ License URI: {{__LICENSE_URI__}}
 
 {{__CHANGELOG_ENTRIES__}}
 
-{{__READ_MORE_LINK__}}
+[See full list of changes here]({{__READ_MORE_LINK__}})

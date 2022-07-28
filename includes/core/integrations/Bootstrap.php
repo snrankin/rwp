@@ -32,7 +32,16 @@ class Bootstrap extends Singleton {
 		'md'  => 768,
 		'lg'  => 996,
 		'xl'  => 1200,
-		'xxl' => 1400,
+		'xxl' => 1375,
+	);
+
+	public $containers = array(
+		'xs'  => '90vw',
+		'sm'  => '90vw',
+		'md'  => '90vw',
+		'lg'  => '85vw',
+		'xl'  => '80vw',
+		'xxl' => '1100px',
 	);
 
 	public $desktop = 'xl';
@@ -56,6 +65,9 @@ class Bootstrap extends Singleton {
 		if ( rwp_get_option( 'modules.bootstrap.styles', false ) || rwp_get_option( 'modules.bootstrap.scripts', false ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bootstrap_assets' ) );
 			$this->bootstrap_in_tinymce();
+			if ( rwp_get_option( 'modules.bootstrap.styles', false ) ) {
+				add_filter( 'body_class', array( $this, 'add_body_class' ), 10 );
+			}
 		}
 
 		/**
@@ -94,6 +106,39 @@ class Bootstrap extends Singleton {
 					'class' => $breakpoint,
 				);
 				$this->set( "breakpoints.$breakpoint", $value );
+			});
+		}
+
+		/**
+		 * @var Collection $containers
+		 */
+		$containers = rwp_get_option( 'modules.bootstrap.containers', false );
+
+		if ( ! empty( $containers ) ) {
+
+			$current_containers = rwp_collection( $this->containers );
+
+			$containers->transform(function ( $value ) {
+				return $value->join( '' );
+			});
+
+			$containers = $current_containers->merge( $containers );
+
+			$containers->each(function ( $value, $container ) use ( $containers ) {
+
+				$next = $containers->next( $container, 'value' );
+
+				if ( $next ) {
+					$label = 'Container max width from ' . $value . 'px to ' . $next . 'px';
+				} else {
+					$label = 'Container max width from ' . $value . 'px';
+				}
+				$value = array(
+					'label' => $label,
+					'value' => $value,
+					'class' => "container-$container",
+				);
+				$this->set( "containers.$container", $value );
 			});
 		}
 
@@ -161,6 +206,18 @@ class Bootstrap extends Singleton {
 		}
 	}
 
+	/**
+	 *
+	 * @param array $classes
+	 * @return string[]
+	 */
+	public function add_body_class( array $classes = [] ) {
+
+		$classes = rwp_parse_classes( $classes, rwp()->prefix( 'bootstrap', 'slug' ) );
+
+		return $classes;
+	}
+
 
 	/**
 	 * Registers/enqueues Bootstrap assets if the settings are turned on
@@ -180,6 +237,9 @@ class Bootstrap extends Singleton {
 		$custom_css = 'html{';
 		foreach ( $this->breakpoints as $name => $info ) {
 			$custom_css .= "--bs-bp-$name: {$info['value']}px;";
+		}
+		foreach ( $this->containers as $name => $info ) {
+			$custom_css .= "--bs-$name-width: {$info['value']};";
 		}
 		$custom_css .= '}';
 		wp_add_inline_style( 'rwp-bootstrap', $custom_css );
@@ -231,16 +291,28 @@ class Bootstrap extends Singleton {
 
 	/**
 	 * Returns breakpoint value (in pixels)
-	 * @param string $name
-	 * @return int|false
+	 *
+	 * @param string  $name  Breakpoint name
+	 * @param bool    $unit  Whether or not to include the `px` suffix
+	 * @param bool    $max   Whether to return the max-width value `($breakpoint - 0.02)`
+	 *
+	 * @return int|string|false
 	 */
-	public static function breakpoint( $name ) {
+	public static function breakpoint( $name, $unit = false, $max = false ) {
 		$obj = self::instance();
 
 		$breakpoint = data_get( $obj, "breakpoints.$name", false );
 
 		if ( $breakpoint ) {
-			$breakpoint = $breakpoint['value'];
+			$breakpoint = intval( $breakpoint['value'] );
+		}
+
+		if ( $max ) {
+			$breakpoint = $breakpoint - 0.02;
+		}
+
+		if ( $unit ) {
+			$breakpoint = $breakpoint . 'px';
 		}
 
 		return $breakpoint;

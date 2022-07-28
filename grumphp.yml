@@ -45,8 +45,8 @@ grumphp:
       enforce_no_subject_trailing_period: true
       enforce_single_lined_subject: false
       type_scope_conventions: []
-      max_body_width: 72
-      max_subject_width: 60
+      max_body_width: 999
+      max_subject_width: 100
       case_insensitive: true
       multiline: true
       additional_modifiers: ''

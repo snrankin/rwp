@@ -1,19 +1,30 @@
 {
-	"debug": true,
 	"plugins": [
 		[
 			"@semantic-release/commit-analyzer",
 			{
+				"preset": "conventionalcommits",
+				"parserOpts": {
+					"mergePattern": "^Merge branch '([^']+)' of (.*)$",
+					"mergeCorrespondence": [
+						"branch",
+						"source"
+					],
+					"issuePrefixes": [
+						"RWP-"
+					],
+					"issueUrlFormat": "https://riester.atlassian.net/browse/{{prefix}}{{id}}"
+				},
 				"releaseRules": [
 					{
 						"type": "docs",
-						"scope": "README",
+						"scope": "*README*",
 						"release": "patch"
 					},
 					{
-						"type": "refactor",
-						"scope": "core-*",
-						"release": "minor"
+						"type": "docs",
+						"scope": "*readme*",
+						"release": "patch"
 					},
 					{
 						"type": "refactor",
@@ -26,10 +37,10 @@
 				]
 			}
 		],
-
 		[
 			"@semantic-release/release-notes-generator",
 			{
+				"preset": "conventionalcommits",
 				"linkReferences": false,
 				"linkCompare": false,
 				"writerOpts": {
@@ -42,7 +53,25 @@
 		[
 			"@semantic-release/changelog",
 			{
-				"changelogTitle": "RIESTERWP Core Changelog\n========================"
+				"changelogTitle": "RIESTERWP Core Changelog\n========================",
+				"changelogFile": "changelog.txt"
+			}
+		],
+		[
+			"@semantic-release/release-notes-generator",
+			{
+				"preset": "conventionalcommits",
+				"presetConfig": {
+					"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+					"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+					"issueUrlFormat ": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}"
+				}
+			}
+		],
+		[
+			"@semantic-release/changelog",
+			{
+				"changelogTitle": "# RIESTERWP Core Changelog\n---"
 			}
 		],
 		[
@@ -54,7 +83,13 @@
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more https://bitbucket.org/riester/rwp/src/master/CHANGELOG.md && generate-md"
+				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more CHANGELOG.md --changelog-length 3"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "generate-md"
 			}
 		],
 		[
@@ -66,10 +101,19 @@
 		[
 			"@semantic-release/git",
 			{
-				"assets": ["CHANGELOG.md", "package.json", "package-lock.json", "rwp.php", "readme.txt", "README.md"],
+				"assets": [
+					"CHANGELOG.md",
+					"package.json",
+					"package-lock.json",
+					"rwp.php",
+					"readme.txt",
+					"README.md"
+				],
 				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
 			}
 		]
 	],
-	"branches": ["master"]
+	"branches": [
+		"master"
+	]
 }

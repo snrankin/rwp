@@ -54,21 +54,21 @@ abstract class Singleton {
 	/**
 	 * Check if a class extends or implements a specific class/interface
 	 * @param string $search The class or interface name to look for
-	 * @param string $className The class name of the object to compare to
+	 * @param string $class_name The class name of the object to compare to
 	 * @return bool
 	 */
-	public static function IsExtendsOrImplements( $search, $className ) {
-		$class = new \ReflectionClass( $className );
+	public static function IsExtendsOrImplements( $search, $class_name ) {
+		$class = new \ReflectionClass( $class_name );
 		if ( false === $class ) {
 			return false;
 		}
 		do {
 			$name = $class->getName();
-			if ( $search == $name ) {
+			if ( $search === $name ) {
 				return true;
 			}
 			$interfaces = $class->getInterfaceNames();
-			if ( is_array( $interfaces ) && in_array( $search, $interfaces ) ) {
+			if ( is_array( $interfaces ) && in_array( $search, $interfaces, true ) ) {
 				return true;
 			}
 			$class = $class->getParentClass();

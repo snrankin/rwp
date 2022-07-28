@@ -23,11 +23,21 @@ use Elementor\Core\Experiments\Manager as Experiments_Manager;
 use Elementor\Group_Control_Flex_Item;
 use Elementor\Group_Control_Flex_Container;
 use Elementor\Controls_Manager as Controls_Manager;
+use Elementor\Core\Kits\Manager as Kit_Manager;
 use RWP\Html\Image;
+use RWP\Helpers\Collection;
 
 class Elementor extends Singleton {
 
 	public $widgets = array();
+
+	const BREAKPOINTS_MAP = array(
+		'sm'  => 'mobile',
+		'md'  => 'tablet',
+		'lg'  => 'tablet_extra',
+		'xl'  => 'laptop',
+		'xxl' => 'desktop',
+	);
 
 	/**
 	 * Initialize the class.
@@ -36,19 +46,19 @@ class Elementor extends Singleton {
 	 */
 	public function initialize() {
 
-		if ( ! function_exists( 'is_plugin_active' ) || ! is_plugin_active( 'elementor/elementor.php' ) ) {
+		if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
 			return;
 		}
 
 		if ( rwp_get_option( 'modules.bootstrap.elementor', false ) ) {
-			//\add_filter( 'body_class', array( $this, 'add_body_class' ), 10 );
+			add_filter( 'body_class', array( $this, 'add_body_class' ), 10 );
 
 			if ( rwp_get_option( 'modules.bootstrap.elementor_v2', false ) ) { // adding for backwards compatibility
-				add_action( 'elementor/element/column/layout/before_section_end', array( $this, 'add_column_options_v2' ), 10, 2 );
-				add_action( 'elementor/element/section/section_layout/before_section_end', array( $this, 'add_section_options_v2' ), 10, 2 );
-			} else {
 				add_action( 'elementor/element/column/layout/before_section_end', array( $this, 'add_column_options' ), 10, 2 );
 				add_action( 'elementor/element/section/section_layout/before_section_end', array( $this, 'add_section_options' ), 10, 2 );
+			} else {
+				add_action( 'elementor/element/column/layout/before_section_end', array( $this, 'add_column_options_legacy' ), 10, 2 );
+				add_action( 'elementor/element/section/section_layout/before_section_end', array( $this, 'add_section_options_legacy' ), 10, 2 );
 			}
 
 			add_action( 'elementor/element/button/section_button/before_section_end', array( $this, 'add_button_options' ), 10, 2 );
@@ -57,6 +67,12 @@ class Elementor extends Singleton {
 
 			add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_elementor_assets' ) );
+
+			add_action( 'elementor/experiments/default-features-registered', function ( Experiments_Manager $manager ) {
+				$this->update_elementor_features( $manager );
+			} );
+
+			add_action( 'acfe/save_option', array( $this, 'update_breakpoints' ), 20 );
 		}
 		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
 			add_action( 'elementor/element/parse_css', array( $this, 'make_urls_relative' ), 10, 2 );
@@ -67,9 +83,17 @@ class Elementor extends Singleton {
 			add_filter( 'elementor/image_size/get_attachment_image_html', array( $this, 'add_lazysizes' ), 10, 4 );
 		}
 
-		// add_action('elementor/preview/enqueue_styles', function() {
-		// 	wp_enqueue_style( 'gform_basic' );
-		// });
+		if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+
+			add_action('elementor/preview/enqueue_styles', function() {
+				$base_url = \GFCommon::get_base_url();
+				$version  = \GFForms::$version;
+				$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min'; // phpcs:ignore
+
+				wp_enqueue_style( 'gform_basic', $base_url . "/assets/css/dist/basic{$min}.css", null, $version );
+			});
+
+		}
 
 		add_filter( 'elementor/files/file_name', array( $this, 'update_file_name' ), 10, 2 );
 
@@ -99,7 +123,7 @@ class Elementor extends Singleton {
 	 * @param mixed $image_key
 	 * @return mixed
 	 */
-	public function add_lazysizes( $html, $settings, $image_size_key, $image_key ) {
+	public function add_lazysizes( $html ) {
 		if ( ! empty( $html ) ) {
 			$html = Image::add_lazysizes( $html );
 			$html->set_attr( 'data-parent', '.elementor-image', true );
@@ -149,7 +173,7 @@ class Elementor extends Singleton {
 	 * @param CSS_File     $post_css_file The post CSS file instance.
 	 * @param Element_Base $element       The element instance.
 	 */
-	public function make_urls_relative( $post_css_file, $element ) {
+	public function make_urls_relative( $post_css_file ) {
 		$stylesheet = $post_css_file->get_stylesheet();
 		$rules = $stylesheet->get_rules();
 
@@ -211,15 +235,13 @@ class Elementor extends Singleton {
 	 * @return void
 	 */
 	public function init_widgets() {
-		$class = get_called_class();
-		$widgets = rwp()->get_component( $class );
+
+		$widgets = rwp()->get_component( __NAMESPACE__ . '\\Widgets' );
 
 		if ( ! empty( $widgets ) ) {
 
 			foreach ( $widgets as $widget ) {
-				if ( $class !== $widget && ! empty( $widget ) ) {
-					Elementor_Instance::instance()->widgets_manager->register( new $widget() );
-				}
+				Elementor_Instance::instance()->widgets_manager->register( new $widget() );
 			}
 		}
 	}
@@ -240,17 +262,17 @@ class Elementor extends Singleton {
 	 * * Turn on optimized assets loading
 	 * * Turn on additional custom breakpoints
 	 *
-	 * @param Experiments_Manager $elementor
-	 * @return Experiments_Manager
+	 * @param Experiments_Manager $manager
+	 * @return void
 	 */
 
-	public function update_elementor_features( $elementor ) {
-		$elementor->set_feature_default_state( 'e_dom_optimization', $elementor::STATE_INACTIVE );
-		$elementor->set_feature_default_state( 'e_optimized_css_loading', $elementor::STATE_ACTIVE );
-		$elementor->set_feature_default_state( 'e_optimized_assets_loading', $elementor::STATE_ACTIVE );
-		$elementor->set_feature_default_state( 'additional_custom_breakpoints', $elementor::STATE_ACTIVE );
+	public function update_elementor_features( $manager ) {
 
-		return $elementor;
+		$manager->set_feature_default_state( 'e_dom_optimization', $manager::STATE_INACTIVE );
+		$manager->set_feature_default_state( 'e_optimized_css_loading', $manager::STATE_ACTIVE );
+		$manager->set_feature_default_state( 'e_optimized_assets_loading', $manager::STATE_ACTIVE );
+		$manager->set_feature_default_state( 'e_hidden_wordpress_widgets', $manager::STATE_INACTIVE );
+		$manager->set_feature_default_state( 'container', $manager::STATE_INACTIVE );
 	}
 
 
@@ -491,23 +513,6 @@ class Elementor extends Singleton {
 	}
 
 	/**
-	 * Filter to remove certain options from Elementor columns
-	 *
-	 * @param Element_Base $section
-	 * @param string $section_id
-	 * @param array $args
-	 *
-	 * @return void
-	 */
-	public function remove_column_options( $section, $args ) {
-		if ( 'column' === $section->get_name() ) {
-			$section->remove_responsive_control( '_inline_size' );
-			$section->remove_responsive_control( 'align' );
-			$section->remove_responsive_control( 'content_position' );
-		}
-	}
-
-	/**
 	 * Filter to add certain options from Elementor columns
 	 *
 	 * @param Element_Base $section
@@ -516,13 +521,49 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_column_options( $section, $args ) {
+	public function add_column_options_legacy( $section ) {
 		if ( 'column' === $section->get_name() ) {
 			$col_class = $section->get_render_attributes( '_wrapper', 'class' );
 
 			if ( empty( $col_class ) || ! in_array( 'col', $col_class, true ) ) {
 				$section->add_render_attribute( '_wrapper', 'class', 'col' );
 			}
+
+			$section->add_responsive_control(
+				'_inline_size',
+				array(
+					'label'   => esc_html__( 'Column Width', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			$section->add_responsive_control(
+				'align',
+				array(
+					'label'   => esc_html__( 'Content Align', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			$section->add_responsive_control(
+				'content_position',
+				array(
+					'label'   => esc_html__( 'Content Position', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
 
 			self::add_responsive_control_to_elementor(
 				$section,
@@ -617,7 +658,7 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_column_options_v2( $section, $args ) {
+	public function add_column_options( $section ) {
 		if ( 'column' === $section->get_name() ) {
 			$col_class = $section->get_render_attributes( '_wrapper', 'class' );
 
@@ -640,7 +681,7 @@ class Elementor extends Singleton {
 			$section->add_responsive_control(
 				'align',
 				array(
-					'label'   => esc_html__( 'Column Width', 'rwp' ),
+					'label'   => esc_html__( 'Content Align', 'rwp' ),
 					'type'    => Controls_Manager::HIDDEN,
 					'default' => '',
 				),
@@ -652,7 +693,7 @@ class Elementor extends Singleton {
 			$section->add_responsive_control(
 				'content_position',
 				array(
-					'label'   => esc_html__( 'Column Width', 'rwp' ),
+					'label'   => esc_html__( 'Content Position', 'rwp' ),
 					'type'    => Controls_Manager::HIDDEN,
 					'default' => '',
 				),
@@ -729,15 +770,15 @@ class Elementor extends Singleton {
 				'prefix_class' => 'e-pg%s-',
 				'options'      => [
 					'left'  => [
-						'title' => esc_html( 'Left', 'rwp' ),
+						'title' => esc_html__( 'Left', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-start-h',
 					],
 					'right' => [
-						'title' => esc_html( 'Right', 'rwp' ),
+						'title' => esc_html__( 'Right', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-end-h',
 					],
 					'both'  => [
-						'title' => esc_html( 'Both', 'rwp' ),
+						'title' => esc_html__( 'Both', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-stretch-h',
 					],
 				],
@@ -751,15 +792,15 @@ class Elementor extends Singleton {
 				'description'  => 'Stretch the column to the edge of the page.',
 				'options'      => [
 					'left'  => [
-						'title' => esc_html( 'Left', 'rwp' ),
+						'title' => esc_html__( 'Left', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-start-h',
 					],
 					'right' => [
-						'title' => esc_html( 'Right', 'rwp' ),
+						'title' => esc_html__( 'Right', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-end-h',
 					],
 					'both'  => [
-						'title' => esc_html( 'Both', 'rwp' ),
+						'title' => esc_html__( 'Both', 'rwp' ),
 						'icon'  => 'eicon-flex eicon-align-stretch-h',
 					],
 				],
@@ -772,22 +813,6 @@ class Elementor extends Singleton {
 	}
 
 	/**
-	 * Filter to remove certain options from Elementor sections
-	 *
-	 * @param Element_Base $section
-	 * @param string $section_id
-	 * @param array $args
-	 *
-	 * @return void
-	 */
-	public function remove_section_options( $section, $args ) {
-		if ( 'section' === $section->get_name() ) {
-			$section->remove_control( 'column_position' );
-			$section->remove_control( 'content_position' );
-		}
-	}
-
-	/**
 	 * Filter to add certain options from Elementor sections
 	 *
 	 * @param Element_Base $section
@@ -796,8 +821,31 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_section_options( $section, $args ) {
+	public function add_section_options_legacy( $section ) {
 		if ( 'section' === $section->get_name() ) {
+			$section->add_responsive_control(
+				'column_position',
+				array(
+					'label'   => esc_html__( 'Column Position', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
+
+			$section->add_responsive_control(
+				'content_position',
+				array(
+					'label'   => esc_html__( 'Vertical Align', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
 			self::add_responsive_control_to_elementor(
 				$section,
 				'column_horizontal_alignment',
@@ -922,13 +970,25 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_section_options_v2( $section, $args ) {
+	public function add_section_options( $section ) {
 		if ( 'section' === $section->get_name() ) {
+
+			$section->add_responsive_control(
+				'layout',
+				array(
+					'label'   => esc_html__( 'Content Width', 'rwp' ),
+					'type'    => Controls_Manager::HIDDEN,
+					'default' => '',
+				),
+				array(
+					'overwrite' => true,
+				)
+			);
 
 			$section->add_responsive_control(
 				'column_position',
 				array(
-					'label'   => esc_html__( 'Column Width', 'rwp' ),
+					'label'   => esc_html__( 'Column Position', 'rwp' ),
 					'type'    => Controls_Manager::HIDDEN,
 					'default' => '',
 				),
@@ -940,7 +1000,7 @@ class Elementor extends Singleton {
 			$section->add_responsive_control(
 				'content_position',
 				array(
-					'label'   => esc_html__( 'Column Width', 'rwp' ),
+					'label'   => esc_html__( 'Vertical Align', 'rwp' ),
 					'type'    => Controls_Manager::HIDDEN,
 					'default' => '',
 				),
@@ -1045,7 +1105,6 @@ class Elementor extends Singleton {
 		}
 	}
 
-
 	/**
 	 * Filter to add certain options from Elementor buttons
 	 *
@@ -1054,7 +1113,7 @@ class Elementor extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function add_button_options( $section, $args ) {
+	public function add_button_options( $section ) {
 		if ( 'button' === $section->get_name() ) {
 			// Adding Bootstrap button types to elementor buttons
 

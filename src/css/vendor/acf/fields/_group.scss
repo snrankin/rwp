@@ -31,5 +31,84 @@ body:not(.post-type-acf-field-group) {
 				}
 			}
 		}
+
+		&#container-widths {
+			.acfe-field-group-layout-block {
+				.acf-fields.-top {
+					--rwp-gutter-x: 0px; //styelint-disable-line
+					--rwp-gutter-y: 0px; //styelint-disable-line
+
+					position: relative;
+					display: flex;
+					flex-wrap: nowrap !important;
+					align-items: flex-start;
+					width: 100%;
+
+					&-border {
+						border-width: 0 !important;
+					}
+
+					> .acf-field {
+						position: relative; // For focus state's z-index
+						flex: 1 1 auto;
+						width: 1%;
+						min-width: 0;
+						height: 30px;
+						border: none !important;
+
+						&.acf-field-number {
+							&:focus-within {
+								z-index: 3;
+							}
+
+							input[type='number'] {
+								@include border-end-radius(0);
+
+								height: 30px;
+							}
+						}
+
+						.acf-button-group {
+							display: flex;
+
+							label {
+								height: 30px;
+
+								&:first-child {
+									@include border-start-radius(0);
+								}
+
+								&.selected {
+									order: -1;
+								}
+							}
+						}
+
+						.acf-label {
+							display: none;
+						}
+					}
+
+					// Bring the "active" form control to the top of surrounding elements
+					> .form-control:focus,
+					> .form-select:focus,
+					> .form-floating:focus-within {
+						z-index: 3;
+					}
+
+					// Ensure buttons are always above inputs for more visually pleasing borders.
+					// This isn't needed for `.input-group-text` since it shares the same border-color
+					// as our inputs.
+					.btn {
+						position: relative;
+						z-index: 2;
+
+						&:focus {
+							z-index: 3;
+						}
+					}
+				}
+			}
+		}
 	}
 }
