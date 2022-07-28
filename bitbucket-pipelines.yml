@@ -8,6 +8,14 @@ pipelines:
   branches:
     master:
       - step:
+          name: Delete caches
+          script:
+            - pipe: atlassian/bitbucket-clear-cache:3.1.1
+              variables:
+                  BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                  BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                  CACHES: []
+      - step:
           name: Setup Environment
           caches:
             - node
