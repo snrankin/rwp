@@ -19,8 +19,7 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
             - git remote set-url origin "https://x-token-auth:${BB_TOKEN}@bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}"
-            # Install only necessary packages
-            - npm install @semantic-release/changelog@6.0.1 @semantic-release/commit-analyzer@9.0.2 @semantic-release/exec@6.0.3 @semantic-release/git@10.0.1 @semantic-release/npm@9.0.1 @semantic-release/release-notes-generator@10.0.3 chalk@4.1.2 columnify@1.5.4 commander@8.2.0 commitizen@4.2.5 conventional-changelog-cli@2.2.2 conventional-changelog-conventionalcommits@5.0.0 conventional-changelog-writer@5.0.1 inquirer@8.2.0 minimist@1.2.6 replace-in-file@6.3.1 semantic-release-version-bump@1.4.1 semantic-release@19.0.3 semver@7.3.5 semver@7.3.5 yaml@1.10.2 -E -D
+            - npm install
             - chmod +x ./docs/wordpress-md.js
             - npm link
             - npx semantic-release --debug
