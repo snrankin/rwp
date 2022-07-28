@@ -47,7 +47,7 @@
         "test:release": "npx semantic-release --debug --dry-run --no-ci",
         "commit": "git-cz",
         "pack": "zip -r release/$BITBUCKET_REPO_SLUG.zip assets languages dependencies includes config.json readme.txt rwp.php uninstall.php",
-        "push": "curl -T release/${BITBUCKET_REPO_SLUG}.zip -u ${FTP_USERNAME}:${FTP_PASSWORD} ftp://${FTP_HOST}${FTP_PATH}"
+        "push": "curl -T release/$BITBUCKET_REPO_SLUG.zip -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_HOST$FTP_PATH"
     },
     "config": {
         "commitizen": {
