@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-0.11.0-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.0) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.1-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.1) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -33,6 +33,14 @@ An internal plugin for websites created by RIESTER to enhance functionality
 4. Activate the plugin in the Plugin dashboard
 
 == Changelog ==
+
+= v0.11.1 - 2022-07-28 =
+
+* fix(pipeline): merging-steps
+## [0.11.1](https://bitbucket.org/riester/rwp/compare/v0.11.1%0Dv0.11.0#diff) (2022-07-28)
+### Bug Fixes
+* **pipeline:** merging-steps ([7c68422](https://bitbucket.org/riester/rwp/commits/7c6842207b056afbdc422a22dbcd4918ee1a6268))
+
 
 = v0.11.0 - 2022-07-28 =
 
@@ -66,10 +74,5 @@ RIESTERWP Core Changelog
 = v0.10.5 - 2022-07-26 =
 
 * fix: fix Elementor v2 grid
-
-
-= v0.10.4 - 2022-07-23 =
-
-* fix: fix issue with class loading in plugin update checker
 
 [See full list of changes here](CHANGELOG.md)
