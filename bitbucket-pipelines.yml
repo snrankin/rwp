@@ -8,7 +8,7 @@ pipelines:
   branches:
     master:
       - step:
-          name: Setup Environment
+          name: Generate New Release
           caches:
             - node
           script:
@@ -27,10 +27,6 @@ pipelines:
             - npm link
             - npx semantic-release --debug
             - zip -r $BITBUCKET_REPO_SLUG.zip assets languages dependencies includes config.json readme.txt rwp.php uninstall.php
-      - step:
-          name: Deploy to Bitbucket downloads
-          deployment: production
-          script:
             - pipe: atlassian/bitbucket-upload-file:0.3.2
               variables:
                 BITBUCKET_USERNAME: '${APP_USER}'
