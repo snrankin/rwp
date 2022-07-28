@@ -33,5 +33,5 @@ pipelines:
           deployment: production
           script:
             - printenv
-            - echo "$BITBUCKET_CLONE_DIR/release/$BITBUCKET_REPO_SLUG.zip"
-            - curl -T release/${BITBUCKET_REPO_SLUG}.zip -u ${FTP_USERNAME}:${FTP_PASSWORD} ftp://${FTP_HOST}${FTP_PATH}
+            - echo "release/$BITBUCKET_REPO_SLUG.zip -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_HOST$FTP_PATH"
+            - curl -T release/$BITBUCKET_REPO_SLUG.zip -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_HOST$FTP_PATH
