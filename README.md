@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Description ##
 
-[![Current Version](https://img.shields.io/badge/version-0.11.1-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.1) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.2-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.2) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -33,6 +33,14 @@ An internal plugin for websites created by RIESTER to enhance functionality
 4. Activate the plugin in the Plugin dashboard
 
 ## Changelog ##
+
+### v0.11.2 - 2022-07-28 ###
+
+* fix(npm): fix npm push command
+## [0.11.2](https://bitbucket.org/riester/rwp/compare/v0.11.2%0Dv0.11.1#diff) (2022-07-28)
+### Bug Fixes
+* **npm:** fix npm push command ([d8310b5](https://bitbucket.org/riester/rwp/commits/d8310b5d82e1514eaa410523ee48af03210e2caa))
+
 
 ### v0.11.1 - 2022-07-28 ###
 
@@ -69,10 +77,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 * revert "chore(release): 0.10.2 [skip ci]" ([ef38bb8](https://bitbucket.org/riester/rwp/commits/ef38bb8b377a74809a2836182d68379409b24973))
 * "chore(release): 0.10.1 [skip ci]" ([b97212e](https://bitbucket.org/riester/rwp/commits/b97212ecd237594d50fe7604933a8e15473baea8))
 RIESTERWP Core Changelog
-
-
-### v0.10.5 - 2022-07-26 ###
-
-* fix: fix Elementor v2 grid
 
 [See full list of changes here](CHANGELOG.md)

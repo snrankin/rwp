@@ -1,6 +1,19 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.2 - 2022-07-28
+-------------------
+
+* fix(npm): fix npm push command
+
+
+## [0.11.2](https://bitbucket.org/riester/rwp/compare/v0.11.2%0Dv0.11.1#diff) (2022-07-28)
+
+
+### Bug Fixes
+
+* **npm:** fix npm push command ([d8310b5](https://bitbucket.org/riester/rwp/commits/d8310b5d82e1514eaa410523ee48af03210e2caa))
+
 v0.11.1 - 2022-07-28
 -------------------
 
