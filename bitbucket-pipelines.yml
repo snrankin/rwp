@@ -31,14 +31,14 @@ pipelines:
             - npm run push
             - pipe: atlassian/ftp-deploy:0.3.7
               variables:
-                USER: ${FTP_USERNAME}
-                PASSWORD: ${FTP_PASSWORD}
-                SERVER: ${FTP_HOST}
-                REMOTE_PATH: ${FTP_PATH}
-                LOCAL_PATH: release/${BITBUCKET_REPO_SLUG}.zip
+                USER: '${FTP_USERNAME}'
+                PASSWORD: '${FTP_PASSWORD}'
+                SERVER: '${FTP_HOST}'
+                REMOTE_PATH: '${FTP_PATH}'
+                LOCAL_PATH: 'release/${BITBUCKET_REPO_SLUG}.zip'
             - pipe: atlassian/bitbucket-upload-file:0.3.2
               variables:
-                BITBUCKET_USERNAME: ${BITBUCKET_USERNAME}
-                BITBUCKET_APP_PASSWORD: ${BITBUCKET_APP_PASSWORD}
-                FILENAME: release/${BITBUCKET_REPO_SLUG}.zip
+                BITBUCKET_USERNAME: '${BITBUCKET_USERNAME}'
+                BITBUCKET_APP_PASSWORD: '${BITBUCKET_APP_PASSWORD}'
+                FILENAME: 'release/${BITBUCKET_REPO_SLUG}.zip'
             
