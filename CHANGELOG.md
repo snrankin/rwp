@@ -1,6 +1,19 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.1 - 2022-07-28
+-------------------
+
+* fix(pipeline): merging-steps
+
+
+## [0.11.1](https://bitbucket.org/riester/rwp/compare/v0.11.1%0Dv0.11.0#diff) (2022-07-28)
+
+
+### Bug Fixes
+
+* **pipeline:** merging-steps ([7c68422](https://bitbucket.org/riester/rwp/commits/7c6842207b056afbdc422a22dbcd4918ee1a6268))
+
 v0.11.0 - 2022-07-28
 -------------------
 

@@ -38,18 +38,6 @@ grumphp:
         - /^tests\/(.*)/
         - /^includes\/functions\/utils\/debug.php/
       match_word: true
-    git_commit_message:
-      allow_empty_message: false
-      enforce_capitalized_subject: false
-      enforce_no_subject_punctuations: true
-      enforce_no_subject_trailing_period: true
-      enforce_single_lined_subject: false
-      type_scope_conventions: []
-      max_body_width: 999
-      max_subject_width: 100
-      case_insensitive: true
-      multiline: true
-      additional_modifiers: ''
     phpcs:
       report: full
       whitelist_patterns:
