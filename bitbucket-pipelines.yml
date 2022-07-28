@@ -22,28 +22,28 @@ pipelines:
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
             - printenv
             - git ls-remote https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git
-            # - npm ci --install-links --audit-level=none
-            # - chmod +x ./docs/wordpress-md.js
-            # - npm link
-      # - step:
-      #     name: Generate next release
-      #     caches:
-      #       - node
-      #     script:
-      #       - npx semantic-release --debug
-      # - step:
-      #     name: Deploy to Bitbucket downloads
-      #     deployment: production
-      #     script:
-      #       - pipe: atlassian/bitbucket-upload-file:0.3.2
-      #         variables:
-      #           BITBUCKET_USERNAME: '${APP_USER}'
-      #           BITBUCKET_APP_PASSWORD: '${APP_PASSWORD}'
-      #           FILENAME: ${BITBUCKET_REPO_SLUG}.zip
-      #       - pipe: atlassian/ftp-deploy:0.3.7
-      #         variables:
-      #           USER: ${FTP_USERNAME}
-      #           PASSWORD: ${FTP_PASSWORD}
-      #           SERVER: ${FTP_HOST}
-      #           REMOTE_PATH: ${FTP_PATH}
-      #           LOCAL_PATH: ${BITBUCKET_REPO_SLUG}.zip
+            - npm ci --install-links --audit-level=none
+            - chmod +x ./docs/wordpress-md.js
+            - npm link
+      - step:
+          name: Generate next release
+          caches:
+            - node
+          script:
+            - npx semantic-release --debug
+      - step:
+          name: Deploy to Bitbucket downloads
+          deployment: production
+          script:
+            - pipe: atlassian/bitbucket-upload-file:0.3.2
+              variables:
+                BITBUCKET_USERNAME: '${APP_USER}'
+                BITBUCKET_APP_PASSWORD: '${APP_PASSWORD}'
+                FILENAME: ${BITBUCKET_REPO_SLUG}.zip
+            - pipe: atlassian/ftp-deploy:0.3.7
+              variables:
+                USER: ${FTP_USERNAME}
+                PASSWORD: ${FTP_PASSWORD}
+                SERVER: ${FTP_HOST}
+                REMOTE_PATH: ${FTP_PATH}
+                LOCAL_PATH: ${BITBUCKET_REPO_SLUG}.zip
