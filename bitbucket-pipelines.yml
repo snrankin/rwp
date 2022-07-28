@@ -34,11 +34,6 @@ pipelines:
                   BITBUCKET_USERNAME: '${APP_USER}'
                   BITBUCKET_APP_PASSWORD: '${APP_PASSWORD}'
                   FILENAME: ${BITBUCKET_REPO_SLUG}.zip
-
-        - step:
-            name: Deploy to digital.riester
-            deployment: production
-            script:
               - pipe: atlassian/ftp-deploy:0.3.7
                 variables:
                   USER: ${FTP_USERNAME}
