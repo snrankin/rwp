@@ -27,19 +27,30 @@ function getEntryObject(date, version) {
  */
 function finalizeEntry(entry) {
 	// Trim newlines from the beginning of the entry list.
-	if (!entry.logs[0]) {
-		entry.logs.splice(0, 1);
-	}
+	// if (!entry.logs[0]) {
+	// 	entry.logs.splice(0, 1);
+	// }
 
-	// Trim trailing nnewlines from the end of the entry list.
-	if (entry.logs.length > 0) {
-		while (!entry.logs[entry.logs.length - 1]) {
-			entry.logs.splice(entry.logs.length - 1, 1);
-		}
-	}
+	// // Trim trailing nnewlines from the end of the entry list.
+	// if (entry.logs.length > 0) {
+	// 	while (!entry.logs[entry.logs.length - 1]) {
+	// 		entry.logs.splice(entry.logs.length - 1, 1);
+	// 	}
+	// }
 
 	// Join them all together with a new line.
+
+	entry.logs = entry.logs.map((element, index) => {
+		if (index > 0) {
+			return element.replace(/^\*\*/, '\n**');
+		} else {
+			return element;
+		}
+	});
+
 	entry.logs = entry.logs.join('\n');
+
+	entry.logs = entry.logs.replace(/\\n\*\*/gm, '\\n\\n**');
 
 	return entry;
 }
@@ -48,14 +59,16 @@ function filterLogs(lines) {
 	// Remove everything up to first version
 	lines = lines.replace(/[^v\d]*/m, '');
 
-	// Remove all extra blank lines
-	lines = lines.replace(/^\n/gm, '');
+	// // Remove all extra blank lines
+	// lines = lines.replace(/^\n/gm, '');
 
 	// Replace new line characters that were accidentally made into plain text
 	lines = lines.replace(/\\n\\n/gm, '\n\t* ');
 
-	// Remove revert commits
-	lines = lines.replace(/^[*|+|-]\sRevert\s"[^"]+"\n/gim, '');
+	lines = lines.replace(/###\s(.+\b)/gim, '\n\n**$1**');
+
+	// // Remove revert commits
+	// lines = lines.replace(/^[*|+|-]\sRevert\s"[^"]+"\n/gim, '');
 
 	lines = lines.replace('Initial commit on laptop', '');
 
@@ -91,7 +104,11 @@ module.exports = (file) => {
 		if (parsed) {
 			if (typeof currEntry.logs !== 'undefined' && currEntry.logs.length > 0) {
 				const filtered = currEntry.logs.filter(function (el) {
-					return el != null && el !== '' && el.length > 0;
+					if (el === '' && el.length <= 1) {
+						return false;
+					} else {
+						return true;
+					}
 				});
 				currEntry.logs = filtered;
 				// Before we start processing the next log item, finalize what we've compiled from the previous.

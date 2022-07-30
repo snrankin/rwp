@@ -7,20 +7,20 @@
  * ========================================================================== */
 
 const _ = require('lodash');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const util = require('util');
-const config = require('../../config.json');
+const config = require('../../../config.json');
 const rootPath = config.paths && config.paths.root ? config.paths.root : process.cwd();
 const { argv } = require('yargs');
 const sassType = RegExp('scss$');
 const isSassError = (e) => {
-	let file = _.get(e, 'file', '');
-	let isSassFile = sassType.test(file);
+	const file = _.get(e, 'file', '');
+	const isSassFile = sassType.test(file);
 
-	let errorMessage = _.get(e, 'webpackError.message', '');
-	let miniCSSModule = errorMessage.indexOf('mini-css-extract-plugin');
-	let isNotMiniCSS = miniCSSModule == -1;
+	const errorMessage = _.get(e, 'webpackError.message', '');
+	const miniCSSModule = errorMessage.indexOf('mini-css-extract-plugin');
+	const isNotMiniCSS = miniCSSModule === -1;
 	return isSassFile && isNotMiniCSS;
 };
 exports.isSassError = isSassError;
@@ -28,9 +28,65 @@ exports.isSassError = isSassError;
 const sortObjectByKeys = (o) => {
 	return Object.keys(o)
 		.sort()
-		.reduce((r, k) => ((r[k] = o[k]), r), {});
+		.reduce((r, k) => ((r[k] = o[k]), r), {}); // eslint-disable-line
 };
 exports.sortObjectByKeys = sortObjectByKeys;
+
+const fullPath = (filePath) => {
+	return path.join(process.cwd(), filePath);
+};
+
+exports.fullPath = fullPath;
+
+function getPackageInfo(packageFile) {
+	return fs
+		.readFile(packageFile, 'utf-8')
+		.then((content) => JSON.parse(content))
+		.catch((error) => {
+			console.error(`Failed to read ${packageFile}`);
+			return Promise.reject(error);
+		});
+}
+
+/**
+ * Get a field from package.json
+ *
+ * @param {string} field
+ * @param {*} [defaultVal=null]
+ * @returns {*}
+ */
+function getPackageField(field, defaultVal = null) {
+	const packageFile = path.join(process.cwd(), 'package.json');
+	return getPackageInfo(packageFile).then((packageInfo) => _.get(packageInfo, field, defaultVal));
+}
+
+exports.getPackageField = getPackageField;
+
+const pathExists = (filePath) => {
+	filePath = fullPath(filePath);
+	fs.pathExists(filePath, (err, exists) => {
+		if (!isEmpty(err)) {
+			console.error(err);
+			return false;
+		}
+		return true;
+	});
+};
+exports.pathExists = pathExists;
+function fileContents(filePath = '') {
+	filePath = fullPath(filePath);
+	if (fs.existsSync(filePath)) {
+		const file = fs.readFileSync(filePath);
+		if (file) {
+			return file.toString();
+		}
+	} else {
+		console.error(`${filePath} does not exist`);
+		return '';
+	}
+}
+
+exports.fileContents = fileContents;
 
 /**
  * Get the current enviornment
@@ -59,20 +115,20 @@ exports.folders = folders;
  * @return {Object}
  */
 
-let paths = config.paths;
+const paths = config.paths;
 paths.root = rootPath;
 paths.node = path.join(rootPath, 'node_modules');
 paths.src = path.join(rootPath, folders.src);
 paths.dist = path.join(rootPath, folders.dist);
 
-let fileFolders = _.transform(
+const fileFolders = _.transform(
 	folders,
 	function (result, value, key) {
 		if ('src' !== key && 'dist' !== key) {
-			let distFolder = folders.dist;
-			let srcFolder = folders.src;
-			let publicFolder = '';
-			let publicPath = paths.public;
+			const distFolder = folders.dist;
+			const srcFolder = folders.src;
+			const publicFolder = '';
+			const publicPath = paths.public;
 
 			result[key] = {
 				dist: path.join(rootPath, distFolder, value),
@@ -114,9 +170,9 @@ exports.filePaths = filePaths;
  */
 
 let manifestSeed = {};
-let manifestPath = _.get(filePaths, 'manifest', '');
+const manifestPath = _.get(filePaths, 'manifest', '');
 if (fs.existsSync(manifestPath)) {
-	let rawdata = fs.readFileSync(manifestPath);
+	const rawdata = fs.readFileSync(manifestPath);
 	manifestSeed = JSON.parse(rawdata);
 }
 
@@ -153,14 +209,43 @@ const sortArray = (arr1, arr2) => {
 };
 exports.sortArray = sortArray;
 
+const formatCopy = (from, to = '') => {
+	const pattern = {};
+	let dest;
+	if (_.startsWith(from, '~')) {
+		from = from.replace('~', '');
+		from = copyPath(from);
+		const name = path.basename(from);
+		dest = path.join(filePaths.dist, pathByType(name));
+
+		if (!isEmpty(to)) {
+			dest = path.join(filePaths.dist, to);
+		}
+
+		dest += '/[name][ext]';
+		to = path.relative(filePaths.node, dest);
+
+		pattern.context = filePaths.node;
+	}
+
+	pattern.from = from;
+
+	if (!isEmpty(to)) {
+		pattern.to = to;
+	}
+
+	return pattern;
+};
+exports.formatCopy = formatCopy;
+
 /**
  * Nicer looking console.log helper
  *
- * @param {*} debug_item
+ * @param {*} debugItem
  */
-const debug = (debug_item) => {
+const debug = (debugItem) => {
 	console.log(
-		util.inspect(debug_item, {
+		util.inspect(debugItem, {
 			depth: 8,
 			colors: true,
 		})
@@ -178,7 +263,7 @@ exports.debug = debug;
 const isEmpty = (el) => {
 	if (_.isNull(el) || _.isUndefined(el)) {
 		return true;
-	} else if (_.isString(el) && el.length == 0) {
+	} else if (_.isString(el) && el.length === 0) {
 		return true;
 	} else if (_.isObject(el) && _.isEmpty(el)) {
 		return true;
@@ -196,7 +281,7 @@ exports.isEmpty = isEmpty;
  */
 
 const slugCase = (str) => {
-	let pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
+	const pattern = new RegExp('((s+&s+)|(s+&amp;s+))');
 	str = _.replace(str, pattern, ' and ');
 	return _.chain(str).deburr().trim().kebabCase().value();
 };
@@ -209,14 +294,14 @@ exports.slugCase = slugCase;
  * @return {*}
  */
 const titleCase = (str) => {
-	let pattern = new RegExp(/(\/|-|_)/gm);
+	const pattern = new RegExp(/(\/|-|_)/gm);
 	str = _.replace(str, pattern, ' ');
 	str = _.chain(str)
 		.trim()
 		.startCase()
 		.tap(function (str) {
-			let andPattern = new RegExp(/and/gim);
-			var amp = _.escape('&');
+			const andPattern = new RegExp(/and/gim);
+			const amp = _.escape('&');
 			return _.replace(str, andPattern, amp);
 		})
 		.value();
@@ -225,10 +310,10 @@ const titleCase = (str) => {
 exports.titleCase = titleCase;
 
 const pathByType = (file = '') => {
-	let cssPattern = new RegExp(/\.(sc|sa|c)ss$/);
-	let jsPattern = new RegExp(/\.js$/);
-	let imagesPattern = new RegExp(/\.(png|svg|jpg|jpeg|gif|ico)$/);
-	let fontsPattern = new RegExp(/\.(woff|woff2|eot|ttf|otf)$/);
+	const cssPattern = new RegExp(/\.(sc|sa|c)ss$/);
+	const jsPattern = new RegExp(/\.js$/);
+	const imagesPattern = new RegExp(/\.(png|svg|jpg|jpeg|gif|ico)$/);
+	const fontsPattern = new RegExp(/\.(woff|woff2|eot|ttf|otf)$/);
 
 	let folderType = '';
 
@@ -275,8 +360,8 @@ const fileNames = (groupName = '', configName = '', entry = {}) => {
 
 		if (!isEmpty(configName) && groupName !== 'blocks' && _.has(entry, configName)) {
 			entry = _.get(entry, configName, {});
-		} else if (!isEmpty(configName) && groupName === 'blocks' && _.indexOf(configName) != '-1') {
-			let index = _.indexOf(configName);
+		} else if (!isEmpty(configName) && groupName === 'blocks' && _.indexOf(configName) !== -1) {
+			const index = _.indexOf(configName);
 			entry = [entry[index]];
 		} else if (groupName !== 'blocks') {
 			entry = _.reduce(
@@ -363,9 +448,9 @@ exports.fileNames = fileNames;
 
 const copyPath = (file, filePath = '') => {
 	if (!isEmpty(file)) {
-		let packagePath = path.dirname(file);
+		const packagePath = path.dirname(file);
 
-		let name = path.basename(file);
+		const name = path.basename(file);
 
 		return path.join(filePaths.node, filePath, packagePath, name);
 	} else {
@@ -376,7 +461,7 @@ const copyPath = (file, filePath = '') => {
 exports.copyPath = copyPath;
 
 const removeLoaders = (error) => {
-	let file = _.get(error, 'file', '');
+	const file = _.get(error, 'file', '');
 	if (!file) {
 		return '';
 	}

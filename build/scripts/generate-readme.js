@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 // eslint-disable-next-line
-const { argv } = process,
-	{ readFileSync, readdirSync, lstatSync } = require('fs'),
-	path = require('path'),
-	{ Command } = require('commander'),
-	program = new Command(),
-	pkg = JSON.parse(readFileSync(path.join(__dirname, './package.json'), 'utf8')),
-	{ getDefault } = require('./utils');
-
+const { argv } = process;
+const { readFileSync, readdirSync, lstatSync } = require('fs');
+const path = require('path');
+const { Command } = require('commander');
+const program = new Command();
+const pkgPath = path.resolve(__dirname, '../docs/readme-generator');
+const pkg = JSON.parse(readFileSync(path.join(pkgPath, 'package.json'), 'utf8'));
+const { getDefault } = require('../docs/readme-generator/utils');
 // Setup the CLI program.
 program.description(pkg.description).version(pkg.version).addHelpCommand('help [command]', 'Display help for command.');
 
@@ -71,7 +71,7 @@ function registerCommand(parent, filePath, optionsParent = []) {
 }
 
 // Register all commands.
-registerCommands(program, path.join(__dirname, 'cmds'));
+registerCommands(program, path.join(pkgPath, 'cmds'));
 
 // Parse incoming arguments.
 program.parse(argv);

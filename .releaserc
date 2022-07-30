@@ -4,6 +4,23 @@
 			"@semantic-release/commit-analyzer",
 			{
 				"preset": "conventionalcommits",
+				"presetConfig": {
+					"options": {
+						"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+						"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+						"issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}",
+						"issuePrefixes": [
+							"RWP-"
+						]
+					},
+					"gitRawCommitsOpts": {
+						"extended-regexp": true,
+						"grep": "^(reverts?)",
+						"regexp-ignore-case": true,
+						"invert-grep": true,
+						"no-merges": true
+					}
+				},
 				"parserOpts": {
 					"mergePattern": "^Merge branch '([^']+)' of (.*)$",
 					"mergeCorrespondence": [
@@ -12,8 +29,7 @@
 					],
 					"issuePrefixes": [
 						"RWP-"
-					],
-					"issueUrlFormat": "https://riester.atlassian.net/browse/{{prefix}}{{id}}"
+					]
 				},
 				"releaseRules": [
 					{
@@ -54,7 +70,7 @@
 			"@semantic-release/changelog",
 			{
 				"changelogTitle": "RIESTERWP Core Changelog\n========================",
-				"changelogFile": "changelog.txt"
+				"changelogFile": ".changelog"
 			}
 		],
 		[
@@ -62,9 +78,21 @@
 			{
 				"preset": "conventionalcommits",
 				"presetConfig": {
-					"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
-					"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
-					"issueUrlFormat ": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}"
+					"options": {
+						"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+						"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+						"issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}",
+						"issuePrefixes": [
+							"RWP-"
+						]
+					},
+					"gitRawCommitsOpts": {
+						"extended-regexp": true,
+						"grep": "^(reverts?)",
+						"regexp-ignore-case": true,
+						"invert-grep": true,
+						"no-merges": true
+					}
 				}
 			}
 		],
@@ -83,7 +111,7 @@
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "generate-readme readme --main-file rwp.php --dir docs/partials --read-more CHANGELOG.md --changelog-length 3"
+				"prepareCmd": "npm run readme"
 			}
 		],
 		[
@@ -109,7 +137,7 @@
 					"readme.txt",
 					"README.md"
 				],
-				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+				"message": "chore(release): ${nextRelease.version} [skip ci]"
 			}
 		]
 	],

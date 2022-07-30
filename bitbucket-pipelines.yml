@@ -23,10 +23,10 @@ pipelines:
             - printenv
             - git ls-remote https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git
             - npm ci --install-links --audit-level=none
-            - chmod +x ./docs/wordpress-md.js
+            - chmod +x ./build/scripts/*.js
             - npm link
             - npx semantic-release --debug
-            - npm run pack
+            - package
             - git add release/ -f
       - step:
           name: Deploy release

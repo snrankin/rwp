@@ -452,3 +452,4 @@ $RECYCLE.BIN/
 !/tests/**/*
 !/dependencies/**/*.*
 .changelog
+!/build/
