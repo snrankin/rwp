@@ -1,7 +1,7 @@
 /// ======================================================================== ///
 /// @name   _elementor
 ///
-/// @group  RIESTER RX
+/// @group  RWP
 /// @since  1.0.0
 /// @author RIESTER <wordpress@riester.com>
 /// ======================================================================== ///
@@ -78,7 +78,6 @@ $elementor-col-widths: (
 		lg: 12,
 	),
 );
-
 
 @import 'elementor/global';
 @import 'elementor/grid';

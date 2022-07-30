@@ -5,11 +5,10 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Docker Node.js Launch",
-			"type": "docker",
+			"type": "node",
 			"request": "launch",
-			"preLaunchTask": "docker-run: debug",
-			"platform": "node"
+			"name": "Debug package build",
+			"program": "${workspaceFolder}/build/scripts/package.js",
 		}
 	]
 }
