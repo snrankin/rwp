@@ -1,6 +1,19 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.3 - 2022-07-30
+-------------------
+
+* fix(semantic-release): testing CI build
+
+
+## [0.11.3](https://bitbucket.org/riester/rwp/compare/v0.11.2...v0.11.3) (2022-07-30)
+
+
+### Bug Fixes
+
+* **semantic-release:** testing CI build ([cf4a4f5](https://bitbucket.org/riester/rwp/commit/cf4a4f5bca05a49535c452168466ea83e685f26f))
+
 v0.11.2 - 2022-07-28
 -------------------
 
