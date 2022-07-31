@@ -4,8 +4,6 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: node:latest
-clone:
-  lfs: true
 pipelines:
   branches:
     master:
@@ -24,7 +22,6 @@ pipelines:
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
             - printenv
             - git ls-remote https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git
-            - git lfs install
             - npm ci --bin-links --audit-level=none --omit=dev
             - chmod +x ./build/scripts/*.js
             - npm link
