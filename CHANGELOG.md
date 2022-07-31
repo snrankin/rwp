@@ -1,6 +1,25 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.4 - 2022-07-31
+-------------------
+
+### Bug Fixes
+
+* fix(elementor): remove max-width rule from containers* fix(pipeline): enableing git lfs* fix(pipeline): fixing pipeline* fix(pipeline): fixing pipeline* fix(pipeline): removing lfs..
+
+
+## [0.11.4](https://bitbucket.org/riester/rwp/compare/v0.11.3...v0.11.4) (2022-07-31)
+
+
+### Bug Fixes
+
+* **elementor:** remove max-width rule from containers ([515e1c5](https://bitbucket.org/riester/rwp/commit/515e1c5b221492a7392a3b6ca4163371faa44bde))
+* **pipeline:** enableing git lfs ([66a6b1d](https://bitbucket.org/riester/rwp/commit/66a6b1d9cc726cc2dfdeae87249d1f0440a10f51))
+* **pipeline:** fixing pipeline ([b105e48](https://bitbucket.org/riester/rwp/commit/b105e481c6260ba717583d07cdcfb1a280a85a3f))
+* **pipeline:** fixing pipeline ([d0899f5](https://bitbucket.org/riester/rwp/commit/d0899f5b3a7e7110bad12e1f3a91a6dd160dd05c))
+* **pipeline:** removing lfs.. ([3a8927e](https://bitbucket.org/riester/rwp/commit/3a8927e4174050b164dbb29c84c3dbde5906359b))
+
 v0.11.3 - 2022-07-30
 -------------------
 
