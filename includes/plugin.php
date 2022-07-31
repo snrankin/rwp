@@ -203,6 +203,7 @@ class Plugin {
 	public function register_autoloader() {
 
 		$this->autoloader = Autoloader::instance( __DIR__ . '/core' );
+		class_alias( 'RWP\Helpers\Collection' , 'RWP\Components\Collection', true );
 	}
 
 	public function initialize_configs() {
