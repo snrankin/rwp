@@ -22,7 +22,7 @@ pipelines:
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
             - printenv
             - git ls-remote https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git
-            - npm ci --install-links --audit-level=none
+            - npm ci --bin-links --audit-level=none --omit=dev
             - chmod +x ./build/scripts/*.js
             - npm link
             - npx semantic-release --debug

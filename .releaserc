@@ -59,8 +59,36 @@
 				"preset": "conventionalcommits",
 				"linkReferences": false,
 				"linkCompare": false,
+				"presetConfig": {
+					"options": {
+						"commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+						"compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+						"issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issue/{{id}}",
+						"issuePrefixes": [
+							"RWP-"
+						]
+					},
+					"gitRawCommitsOpts": {
+						"extended-regexp": true,
+						"grep": "^(reverts?)",
+						"regexp-ignore-case": true,
+						"invert-grep": true,
+						"no-merges": true
+					}
+				},
+				"parserOpts": {
+					"mergePattern": "^Merge branch '([^']+)' of (.*)$",
+					"mergeCorrespondence": [
+						"branch",
+						"source"
+					],
+					"issuePrefixes": [
+						"RWP-"
+					]
+				},
 				"writerOpts": {
-					"groupBy": false,
+					"ignoreReverted": true,
+					"doFlush": true,
 					"headerPartial": "v{{version}}{{~#if date}} - {{date}}{{~/if}}\n-------------------",
 					"commitPartial": "* {{header}}"
 				}
@@ -93,6 +121,20 @@
 						"invert-grep": true,
 						"no-merges": true
 					}
+				},
+				"parserOpts": {
+					"mergePattern": "^Merge branch '([^']+)' of (.*)$",
+					"mergeCorrespondence": [
+						"branch",
+						"source"
+					],
+					"issuePrefixes": [
+						"RWP-"
+					]
+				},
+				"writerOpts": {
+					"ignoreReverted": true,
+					"doFlush": true
 				}
 			}
 		],
@@ -111,13 +153,19 @@
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "npm run readme"
+				"prepareCmd": "npm run wp-readme"
 			}
 		],
 		[
 			"@semantic-release/exec",
 			{
-				"prepareCmd": "generate-md"
+				"prepareCmd": "readme-txt-to-md"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "readme-txt-to-md"
 			}
 		],
 		[

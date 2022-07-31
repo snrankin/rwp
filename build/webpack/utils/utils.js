@@ -13,7 +13,14 @@ const util = require('util');
 const config = require('../../../config.json');
 const rootPath = config.paths && config.paths.root ? config.paths.root : process.cwd();
 const { argv } = require('yargs');
+const normalizeData = require('normalize-package-data');
+
 const sassType = RegExp('scss$');
+
+const pkg = path.join(process.cwd(), 'package.json');
+
+exports.pkg = pkg;
+
 const isSassError = (e) => {
 	const file = _.get(e, 'file', '');
 	const isSassFile = sassType.test(file);
@@ -39,14 +46,22 @@ const fullPath = (filePath) => {
 exports.fullPath = fullPath;
 
 function getPackageInfo(packageFile) {
-	return fs
-		.readFile(packageFile, 'utf-8')
-		.then((content) => JSON.parse(content))
-		.catch((error) => {
-			console.error(`Failed to read ${packageFile}`);
-			return Promise.reject(error);
-		});
+	if (isEmpty(packageFile)) {
+		packageFile = pkg;
+	}
+
+	try {
+		if (fs.pathExistsSync(packageFile)) {
+			packageFile = require(packageFile);
+			normalizeData(packageFile);
+			return packageFile;
+		}
+	} catch (error) {
+		console.error(error);
+	}
 }
+
+exports.getPackageInfo = getPackageInfo;
 
 /**
  * Get a field from package.json
@@ -56,8 +71,9 @@ function getPackageInfo(packageFile) {
  * @returns {*}
  */
 function getPackageField(field, defaultVal = null) {
-	const packageFile = path.join(process.cwd(), 'package.json');
-	return getPackageInfo(packageFile).then((packageInfo) => _.get(packageInfo, field, defaultVal));
+	const packageData = getPackageInfo();
+	const fieldVal = _.get(packageData, field, defaultVal);
+	return fieldVal;
 }
 
 exports.getPackageField = getPackageField;
