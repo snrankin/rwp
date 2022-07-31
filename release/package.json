@@ -67,14 +67,7 @@
         "node": ">=14"
     },
     "files": [
-        "assets",
-        "languages",
-        "dependencies",
-        "includes",
-        "config.json",
-        "readme.txt",
-        "rwp.php",
-        "uninstall.php"
+        "rwp"
     ],
     "browserslist": "> 0.25%, not dead",
     "devDependencies": {

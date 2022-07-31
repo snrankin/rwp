@@ -26,7 +26,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // ======================== Import Local Dependencies ======================= //
 const { isEmpty, env, manifest, filePaths, fileNames, pathByType, copyPath } = require('./utils');
 
-const configFile = require('../../config.json');
+const configFile = require('../../../config.json');
 
 // =========================== Setup File Globals =========================== //
 

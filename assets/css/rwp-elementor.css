@@ -457,7 +457,6 @@ body.rwp-elementor{
     width:100%;
     margin-right:auto;
     margin-left:auto;
-    max-width:var(--bs-container-width);
     width:100%;
 }
 [data-settings*=background] .rwp-elementor.rwp-elementor-grid-v2 .elementor-container{

@@ -1189,6 +1189,9 @@
                     }
                 }
                 onFocus(event) {
+                    if (!this.isTopmost()) {
+                        return;
+                    }
                     this.focus(event);
                 }
                 onClick(event) {
@@ -1272,7 +1275,7 @@
                     }
                 }
                 onKeydown(event) {
-                    if (Fancybox.getInstance().id !== this.id) {
+                    if (!this.isTopmost()) {
                         return;
                     }
                     document.body.classList.remove("is-using-mouse");
@@ -1565,9 +1568,15 @@
                 jumpTo(...args) {
                     if (this.Carousel) this.Carousel.slideTo(...args);
                 }
+                isClosing() {
+                    return [ "closing", "customClosing", "destroy" ].includes(this.state);
+                }
+                isTopmost() {
+                    return Fancybox.getInstance().id == this.id;
+                }
                 close(event) {
                     if (event) event.preventDefault();
-                    if ([ "closing", "customClosing", "destroy" ].includes(this.state)) {
+                    if (this.isClosing()) {
                         return;
                     }
                     if (this.trigger("shouldClose", event) === false) {
@@ -1601,7 +1610,7 @@
                     }
                     this.state = "destroy";
                     this.trigger("destroy");
-                    const $trigger = this.option("placeFocusBack") ? this.getSlide().$trigger : null;
+                    const $trigger = this.option("placeFocusBack") ? this.option("triggerTarget", this.getSlide().$trigger) : null;
                     this.Carousel.destroy();
                     this.detachPlugins();
                     this.Carousel = null;
@@ -1639,6 +1648,7 @@
                     let eventTarget = origTarget;
                     let triggerGroupName;
                     if (eventTarget.matches("[data-fancybox-trigger]") || (eventTarget = eventTarget.closest("[data-fancybox-trigger]"))) {
+                        options.triggerTarget = eventTarget;
                         triggerGroupName = eventTarget && eventTarget.dataset && eventTarget.dataset.fancyboxTrigger;
                     }
                     if (triggerGroupName) {
@@ -1646,13 +1656,10 @@
                         const triggerIndex = parseInt(eventTarget.dataset.fancyboxIndex, 10) || 0;
                         eventTarget = triggerItems.length ? triggerItems[triggerIndex] : eventTarget;
                     }
-                    if (!eventTarget) {
-                        eventTarget = origTarget;
-                    }
                     let matchingOpener;
                     let target;
                     Array.from(Fancybox.openers.keys()).reverse().some((opener => {
-                        target = eventTarget;
+                        target = eventTarget || origTarget;
                         let found = false;
                         try {
                             if (target instanceof Element && (typeof opener === "string" || opener instanceof String)) {
@@ -1777,7 +1784,7 @@
                         return instances.get(id);
                     }
                     const instance = Array.from(instances.values()).reverse().find((instance => {
-                        if (![ "closing", "customClosing", "destroy" ].includes(instance.state)) {
+                        if (!instance.isClosing()) {
                             return instance;
                         }
                         return false;
