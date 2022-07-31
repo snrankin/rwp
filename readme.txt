@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-0.11.4-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.4) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.5-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.5) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
-= v0.11.4 - 2022-07-31 =
+= v0.11.5 - 2022-07-31 =
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(elementor): remove max-width rule from containers* fix(pipeline): enableing git lfs* fix(pipeline): fixing pipeline* fix(pipeline): fixing pipeline* fix(pipeline): removing lfs..
+* fix(pipeline): add missing dependency
 
 
-## [0.11.4](https://bitbucket.org/riester/rwp/compare/v0.11.3...v0.11.4) (2022-07-31)
+## [0.11.5](https://bitbucket.org/riester/rwp/compare/v0.11.4...v0.11.5) (2022-07-31)
 
 
 
@@ -53,11 +53,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **elementor:** remove max-width rule from containers ([515e1c5](https://bitbucket.org/riester/rwp/commit/515e1c5b221492a7392a3b6ca4163371faa44bde))
-* **pipeline:** enableing git lfs ([66a6b1d](https://bitbucket.org/riester/rwp/commit/66a6b1d9cc726cc2dfdeae87249d1f0440a10f51))
-* **pipeline:** fixing pipeline ([b105e48](https://bitbucket.org/riester/rwp/commit/b105e481c6260ba717583d07cdcfb1a280a85a3f))
-* **pipeline:** fixing pipeline ([d0899f5](https://bitbucket.org/riester/rwp/commit/d0899f5b3a7e7110bad12e1f3a91a6dd160dd05c))
-* **pipeline:** removing lfs.. ([3a8927e](https://bitbucket.org/riester/rwp/commit/3a8927e4174050b164dbb29c84c3dbde5906359b))
+* **pipeline:** add missing dependency ([534a563](https://bitbucket.org/riester/rwp/commit/534a563c4060e3765c82eb137e0759ec31a1a89b))
 
 
 

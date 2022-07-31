@@ -1,6 +1,21 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.5 - 2022-07-31
+-------------------
+
+### Bug Fixes
+
+* fix(pipeline): add missing dependency
+
+
+## [0.11.5](https://bitbucket.org/riester/rwp/compare/v0.11.4...v0.11.5) (2022-07-31)
+
+
+### Bug Fixes
+
+* **pipeline:** add missing dependency ([534a563](https://bitbucket.org/riester/rwp/commit/534a563c4060e3765c82eb137e0759ec31a1a89b))
+
 v0.11.4 - 2022-07-31
 -------------------
 
