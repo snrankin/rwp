@@ -91,5 +91,8 @@
         "test": [
             "@grum"
         ]
+    },
+    "require": {
+        "wpackio/enqueue": "^3.4"
     }
 }

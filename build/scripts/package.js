@@ -11,31 +11,31 @@ function packFiles() {
 	const releaseDest = getPackageField('config.package.releasePath');
 	const packInput = getPackageField('config.package.inputPath');
 	const packOutput = getPackageField('config.package.outputPath');
-	const packOptions = { source: releaseDest, destination: releaseDest, info: true, verbose: true, addVersion: false, staticDateModified: false };
+	const packOptions = { source: process.cwd(), destination: releaseDest, info: true, verbose: true, addVersion: false, staticDateModified: false };
 
 	const fileList = getPackageField('files');
 
-	fileList.forEach(function (file) {
-		const pathToFile = fullPath(file);
+	// fileList.forEach(function (file) {
+	// 	const pathToFile = fullPath(file);
 
-		const copyFileDest = path.join(copyDest, file);
+	// 	const copyFileDest = path.join(copyDest, file);
 
-		if (!fs.existsSync(copyDest)) {
-			fs.mkdirSync(copyDest, { recursive: true });
-		}
+	// 	if (!fs.existsSync(copyDest)) {
+	// 		fs.mkdirSync(copyDest, { recursive: true });
+	// 	}
 
-		try {
-			fs.copySync(pathToFile, copyFileDest);
-			console.log(`Successfully copied ${file} to ${copyDest}`);
-		} catch (err) {
-			throw err;
-		}
-	});
+	// 	try {
+	// 		fs.copySync(pathToFile, copyFileDest);
+	// 		console.log(`Successfully copied ${file} to ${copyDest}`);
+	// 	} catch (err) {
+	// 		throw err;
+	// 	}
+	// });
 
 	const pkgData = getPackageInfo();
 	_.unset(pkgData, 'devDependencies');
 	_.unset(pkgData, '_id');
-	_.set(pkgData, 'files', ['rwp']);
+	// _.set(pkgData, 'files', ['rwp']);
 	debug(pkgData);
 
 	fs.writeJsonSync(path.join(releaseDest, 'package.json'), pkgData, {
@@ -78,13 +78,13 @@ function packFiles() {
 
 			zip.writeZip();
 
-			fs.rmdir(packInput, { recursive: true }, (err) => {
-				if (err) {
-					throw err;
-				}
+			// fs.rmdir(packInput, { recursive: true }, (err) => {
+			// 	if (err) {
+			// 		throw err;
+			// 	}
 
-				console.log(`${packInput} is deleted!`);
-			});
+			// 	console.log(`${packInput} is deleted!`);
+			// });
 		},
 		(err) => {
 			console.error(err);
