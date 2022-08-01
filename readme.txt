@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-0.11.6-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.6) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.7-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.7) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
-= v0.11.6 - 2022-08-01 =
+= v0.11.7 - 2022-08-01 =
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(core): add class alias for Collection
+* fix(core): fix offcanvas nav bug
 
 
-## [0.11.6](https://bitbucket.org/riester/rwp/compare/v0.11.5...v0.11.6) (2022-08-01)
+## [0.11.7](https://bitbucket.org/riester/rwp/compare/v0.11.6...v0.11.7) (2022-08-01)
 
 
 
@@ -53,7 +53,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **core:** add class alias for Collection ([86c98a9](https://bitbucket.org/riester/rwp/commit/86c98a97a6091a8e85b56dde7225ec7681f642c8))
+* **core:** fix offcanvas nav bug ([d9222c8](https://bitbucket.org/riester/rwp/commit/d9222c8eca84f02176d2e2f64e0128d8929405c3))
 
 
 

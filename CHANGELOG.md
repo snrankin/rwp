@@ -1,6 +1,21 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.7 - 2022-08-01
+-------------------
+
+### Bug Fixes
+
+* fix(core): fix offcanvas nav bug
+
+
+## [0.11.7](https://bitbucket.org/riester/rwp/compare/v0.11.6...v0.11.7) (2022-08-01)
+
+
+### Bug Fixes
+
+* **core:** fix offcanvas nav bug ([d9222c8](https://bitbucket.org/riester/rwp/commit/d9222c8eca84f02176d2e2f64e0128d8929405c3))
+
 v0.11.6 - 2022-08-01
 -------------------
 
