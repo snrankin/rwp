@@ -1,6 +1,21 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.6 - 2022-08-01
+-------------------
+
+### Bug Fixes
+
+* fix(core): add class alias for Collection
+
+
+## [0.11.6](https://bitbucket.org/riester/rwp/compare/v0.11.5...v0.11.6) (2022-08-01)
+
+
+### Bug Fixes
+
+* **core:** add class alias for Collection ([86c98a9](https://bitbucket.org/riester/rwp/commit/86c98a97a6091a8e85b56dde7225ec7681f642c8))
+
 v0.11.5 - 2022-07-31
 -------------------
 
