@@ -826,6 +826,21 @@ body:not(.is-using-mouse) .fancybox__container :focus{
             user-select:none;
 }
 
+.fancybox__container:-webkit-full-screen::-webkit-backdrop{
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity:0;
+}
+
+.fancybox__container:-webkit-full-screen::backdrop{
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity:0;
+}
+
+.fancybox__container:fullscreen::-webkit-backdrop{
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity:0;
+}
+
 .fancybox__container:-webkit-full-screen::backdrop{
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity:0;

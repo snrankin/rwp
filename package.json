@@ -85,7 +85,6 @@
         "rwp.php",
         "uninstall.php"
     ],
-    "browserslist": "> 0.25%, not dead",
     "devDependencies": {
         "@babel/core": "^7.18.9",
         "@babel/eslint-parser": "^7.18.9",

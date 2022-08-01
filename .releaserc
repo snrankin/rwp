@@ -163,21 +163,17 @@
 			}
 		],
 		[
-			"@semantic-release/exec",
-			{
-				"prepareCmd": "readme-txt-to-md"
-			}
-		],
-		[
 			"semantic-release-version-bump",
 			{
-				"files": "rwp.php"
+				"files": "rwp.php",
+				"callback": "npm run archive"
 			}
 		],
 		[
 			"@semantic-release/git",
 			{
 				"assets": [
+					"release/rwp.zip",
 					"CHANGELOG.md",
 					"package.json",
 					"package-lock.json",

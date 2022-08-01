@@ -20,20 +20,13 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
-            - printenv
-            - git ls-remote https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git
             - npm ci --bin-links --audit-level=none --omit=dev
             - chmod +x ./build/scripts/*.js
             - npm link
             - npm install -g @wpackio/scripts
             - npx semantic-release --debug
-            - npm run archive
-            - git add release/ -f
       - step:
           name: Deploy release
           deployment: production
           script:
-            - export FTP_PASSWORD="${FTP_PASSWORD}"
-            - printenv
-            - echo "release/$BITBUCKET_REPO_SLUG.zip -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_HOST$FTP_PATH"
             - curl -T release/$BITBUCKET_REPO_SLUG.zip -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_HOST$FTP_PATH

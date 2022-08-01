@@ -3039,7 +3039,8 @@
                 minScreenHeight: 500,
                 autoStart: true,
                 key: "t",
-                Carousel: {}
+                Carousel: {},
+                tpl: `<div class="fancybox__thumb" style="background-image:url('{{src}}')"></div>`
             };
             class Thumbs {
                 constructor(fancybox) {
@@ -3114,7 +3115,7 @@
                         const thumb = slide.thumb;
                         if (thumb) {
                             slides.push({
-                                html: `<div class="fancybox__thumb" style="background-image:url('${thumb}')"></div>`,
+                                html: this.fancybox.option("Thumbs.tpl").replace(/\{\{src\}\}/gi, thumb),
                                 customClass: `has-thumb has-${slide.type || "image"}`
                             });
                         }

@@ -243,8 +243,8 @@
                         }));
                     }
                     const navbar = document.querySelector(".navbar");
-                    const header = navbar.closest("header");
                     if (!rwp.isEmpty(navbar)) {
+                        const header = navbar.closest("header");
                         const navbarClasses = navbar.getAttribute("class");
                         const regex = new RegExp("navbar-expand-(\\w+)", "gm");
                         let breakpointClass = false;
