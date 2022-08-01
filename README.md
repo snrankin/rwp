@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Description ##
 
-[![Current Version](https://img.shields.io/badge/version-0.11.5-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.5) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.6-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.6) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Changelog ##
 
-### v0.11.5 - 2022-07-31 ###
+### v0.11.6 - 2022-08-01 ###
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(pipeline): add missing dependency
+* fix(core): add class alias for Collection
 
 
-## [0.11.5](https://bitbucket.org/riester/rwp/compare/v0.11.4...v0.11.5) (2022-07-31)
+## [0.11.6](https://bitbucket.org/riester/rwp/compare/v0.11.5...v0.11.6) (2022-08-01)
 
 
 
@@ -53,7 +53,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **pipeline:** add missing dependency ([534a563](https://bitbucket.org/riester/rwp/commit/534a563c4060e3765c82eb137e0759ec31a1a89b))
+* **core:** add class alias for Collection ([86c98a9](https://bitbucket.org/riester/rwp/commit/86c98a97a6091a8e85b56dde7225ec7681f642c8))
 
 
 
