@@ -74,16 +74,21 @@ class Helpers
     public static function getBodyNodeFromHtmlFragment($html, $charset = 'UTF-8')
     {
         $html = '<html><body>' . $html . '</body></html>';
-        $current = \libxml_use_internal_errors(\true);
-        $disableEntities = \libxml_disable_entity_loader(\true);
+        $internalErrors = \libxml_use_internal_errors(\true);
+		if (\LIBXML_VERSION < 20900) {
+			$disableEntities = \libxml_disable_entity_loader(\true);
+		}
+
         $d = new \DOMDocument('1.0', $charset);
         $d->validateOnParse = \true;
         if (\function_exists('mb_convert_encoding') && \in_array(\strtolower($charset), \array_map('strtolower', \mb_list_encodings()))) {
             $html = \mb_convert_encoding($html, 'HTML-ENTITIES', $charset);
         }
         @$d->loadHTML($html);
-        \libxml_use_internal_errors($current);
-        \libxml_disable_entity_loader($disableEntities);
+       \libxml_use_internal_errors($internalErrors);
+		if (\LIBXML_VERSION < 20900) {
+			\libxml_disable_entity_loader($disableEntities);
+		}
         return $d->getElementsByTagName('body')->item(0);
     }
 }

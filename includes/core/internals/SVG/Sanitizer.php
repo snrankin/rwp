@@ -196,10 +196,17 @@ class Sanitizer {
 	 * Set up libXML before we start
 	 */
 	protected function setUpBefore() {
-		// Turn off the entity loader
-		$this->xmlLoaderValue = \libxml_disable_entity_loader( \true );
+		$internalErrors = \libxml_use_internal_errors(\true);
+		if (\LIBXML_VERSION < 20900) {
+			$disableEntities = \libxml_disable_entity_loader(\true);
+		}
+
 		// Suppress the errors because we don't really have to worry about formation before cleansing
-		\libxml_use_internal_errors( \true );
+		\libxml_use_internal_errors($internalErrors);
+		// Turn off the entity loader
+		if (\LIBXML_VERSION < 20900) {
+			$this->xmlLoaderValue = \libxml_disable_entity_loader($disableEntities);
+		}
 		// Reset array of altered XML
 		$this->xmlIssues = array();
 	}

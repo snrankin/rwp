@@ -42,16 +42,21 @@ class HtmlPage
         if ($content == '') {
             $content = '<!DOCTYPE html><html><head><title></title></head><body></body></html>';
         }
-        $current = \libxml_use_internal_errors(\true);
-        $disableEntities = \libxml_disable_entity_loader(\true);
+		$internalErrors = \libxml_use_internal_errors(\true);
+        if (\LIBXML_VERSION < 20900) {
+            $disableEntities = \libxml_disable_entity_loader(\true);
+        }
+
         $this->dom = new \DOMDocument('1.0', $charset);
         $this->dom->validateOnParse = \true;
         if (\function_exists('mb_convert_encoding') && \in_array(\strtolower($charset), \array_map('strtolower', \mb_list_encodings()))) {
             $content = \mb_convert_encoding($content, 'HTML-ENTITIES', $charset);
         }
         @$this->dom->loadHTML($content);
-        \libxml_use_internal_errors($current);
-        \libxml_disable_entity_loader($disableEntities);
+        \libxml_use_internal_errors($internalErrors);
+        if (\LIBXML_VERSION < 20900) {
+            \libxml_disable_entity_loader($disableEntities);
+        }
         $this->crawler = new HtmlPageCrawler($this->dom);
     }
     /**

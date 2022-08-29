@@ -503,6 +503,9 @@ class Crawler implements \Countable, \IteratorAggregate
         if (!$this->nodes) {
             throw new \InvalidArgumentException('The current node list is empty.');
         }
+		/**
+		 * @var \DOMNode $node
+		 */
         $node = $this->getNode(0);
         return $node->hasAttribute($attribute) ? $node->getAttribute($attribute) : null;
     }
