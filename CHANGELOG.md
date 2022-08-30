@@ -1,6 +1,13 @@
 # RIESTERWP Core Changelog
 ---
 
+## [0.11.13](https://bitbucket.org/riester/rwp/compare/v0.11.12...v0.11.13) (2022-08-30)
+
+
+### Bug Fixes
+
+* **ci:** fixes release workflow ([e648e26](https://bitbucket.org/riester/rwp/commit/e648e26b3e9787784eb998069c265d4f984fa7bc))
+
 ## [0.11.12](https://bitbucket.org/riester/rwp/compare/v0.11.11...v0.11.12) (2022-08-30)
 
 

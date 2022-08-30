@@ -31,6 +31,12 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
+= v0.11.13 - 2022-08-30 =
+
+**Bug Fixes**
+* **ci:** fixes release workflow ([e648e26](https://bitbucket.org/riester/rwp/commit/e648e26b3e9787784eb998069c265d4f984fa7bc))
+
+
 = v0.11.12 - 2022-08-30 =
 
 **Bug Fixes**
@@ -42,11 +48,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 * **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
-
-
-= v0.11.11 - 2022-08-30 =
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([42acaf0](https://bitbucket.org/riester/rwp/commit/42acaf0b0bf42c3d805763f61bab0c540310b11d))
 
 [See full list of changes here](./CHANGELOG.md)
