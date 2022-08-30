@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Description ##
 
-[![Current Version](https://img.shields.io/badge/version-0.11.9-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.9) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.10-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.10) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 ## Changelog ##
 
-### v0.11.9 - 2022-08-30 ###
+### v0.11.10 - 2022-08-30 ###
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(ci): fix order of commands
+* fix(ci): fix type of command for publish* fix(ci): fixes broken packages in pipeline* fix(ci): fixes package-lock* fix(ci): fixes release notes
 
 
-## [0.11.9](https://bitbucket.org/riester/rwp/compare/v0.11.8...v0.11.9) (2022-08-30)
+## [0.11.10](https://bitbucket.org/riester/rwp/compare/v0.11.9...v0.11.10) (2022-08-30)
 
 
 
@@ -53,7 +53,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **ci:** fix order of commands ([2dc0613](https://bitbucket.org/riester/rwp/commit/2dc06135248f8e6f70315b23e5f4cceffdef176b))
+* **ci:** fix type of command for publish ([163b56e](https://bitbucket.org/riester/rwp/commit/163b56e4ddfe587a224a3f67ecb1fbad6f027505))
+* **ci:** fixes broken packages in pipeline ([7abb985](https://bitbucket.org/riester/rwp/commit/7abb98588c3bf68227992bd1dc0020ca2b4523a6))
+* **ci:** fixes package-lock ([565bed9](https://bitbucket.org/riester/rwp/commit/565bed9f05cde0ab50378dbda497d46173982df4))
+* **ci:** fixes release notes ([e93bf0f](https://bitbucket.org/riester/rwp/commit/e93bf0f8a6a6e847319b10fe00e057ae8eb990a3))
 
 
 

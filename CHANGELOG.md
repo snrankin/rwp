@@ -1,6 +1,24 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.10 - 2022-08-30
+-------------------
+
+### Bug Fixes
+
+* fix(ci): fix type of command for publish* fix(ci): fixes broken packages in pipeline* fix(ci): fixes package-lock* fix(ci): fixes release notes
+
+
+## [0.11.10](https://bitbucket.org/riester/rwp/compare/v0.11.9...v0.11.10) (2022-08-30)
+
+
+### Bug Fixes
+
+* **ci:** fix type of command for publish ([163b56e](https://bitbucket.org/riester/rwp/commit/163b56e4ddfe587a224a3f67ecb1fbad6f027505))
+* **ci:** fixes broken packages in pipeline ([7abb985](https://bitbucket.org/riester/rwp/commit/7abb98588c3bf68227992bd1dc0020ca2b4523a6))
+* **ci:** fixes package-lock ([565bed9](https://bitbucket.org/riester/rwp/commit/565bed9f05cde0ab50378dbda497d46173982df4))
+* **ci:** fixes release notes ([e93bf0f](https://bitbucket.org/riester/rwp/commit/e93bf0f8a6a6e847319b10fe00e057ae8eb990a3))
+
 v0.11.9 - 2022-08-30
 -------------------
 
