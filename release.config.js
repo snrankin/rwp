@@ -89,8 +89,8 @@ module.exports = {
 				replacements: [
 					{
 						files: ['rwp.php'],
-						from: ' * Version: .*',
-						to: ' * Version: ${nextRelease.version}', //eslint-disable-line
+						from: 'Version: .*',
+						to: 'Version: ${nextRelease.version}', //eslint-disable-line
 						results: [
 							{
 								file: 'rwp.php',

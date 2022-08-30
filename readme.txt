@@ -35,20 +35,18 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 * **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
+* **ci:** fixes wp-readme command ([0215c4b](https://bitbucket.org/riester/rwp/commit/0215c4b93aeb6192ab8be9808e16bc903de005f0))
+
+
+= v0.11.12 - 2022-08-30 =
+
+**Bug Fixes**
+* **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
 
 
 = v0.11.11 - 2022-08-30 =
 
 **Bug Fixes**
 * **ci:** fixes release workflow ([42acaf0](https://bitbucket.org/riester/rwp/commit/42acaf0b0bf42c3d805763f61bab0c540310b11d))
-
-
-= v0.11.10 - 2022-08-30 =
-
-**Bug Fixes**
-* **ci:** fix type of command for publish ([163b56e](https://bitbucket.org/riester/rwp/commit/163b56e4ddfe587a224a3f67ecb1fbad6f027505))
-* **ci:** fixes broken packages in pipeline ([7abb985](https://bitbucket.org/riester/rwp/commit/7abb98588c3bf68227992bd1dc0020ca2b4523a6))
-* **ci:** fixes package-lock ([565bed9](https://bitbucket.org/riester/rwp/commit/565bed9f05cde0ab50378dbda497d46173982df4))
-* **ci:** fixes release notes ([e93bf0f](https://bitbucket.org/riester/rwp/commit/e93bf0f8a6a6e847319b10fe00e057ae8eb990a3))
 
 [See full list of changes here](./CHANGELOG.md)

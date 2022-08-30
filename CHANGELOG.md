@@ -1,3 +1,14 @@
+# RIESTERWP Core Changelog
+---
+
+## [0.11.12](https://bitbucket.org/riester/rwp/compare/v0.11.11...v0.11.12) (2022-08-30)
+
+
+### Bug Fixes
+
+* **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
+* **ci:** fixes wp-readme command ([0215c4b](https://bitbucket.org/riester/rwp/commit/0215c4b93aeb6192ab8be9808e16bc903de005f0))
+
 ## [0.11.12](https://bitbucket.org/riester/rwp/branches/compare/v0.11.12%0Dv0.11.11) (2022-08-30)
 
 
@@ -191,4 +202,3 @@
 ### Reverts
 
 * Revert "Refactoring plugin engine" ([5bf8caa](https://bitbucket.org/riester/rwp/commit/5bf8caa2ca04c6e0ae1f1ea65b9db64ed8774000))
-
