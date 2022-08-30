@@ -165,8 +165,13 @@
 		[
 			"semantic-release-version-bump",
 			{
-				"files": "rwp.php",
-				"callback": "npm run archive"
+				"files": "rwp.php"
+			}
+		],
+		[
+			"@semantic-release/exec",
+			{
+				"publish": "npm run archive"
 			}
 		],
 		[
