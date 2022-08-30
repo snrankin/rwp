@@ -10,9 +10,6 @@ License URI: {{__LICENSE_URI__}}
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-{{__VERSION__}}-blue)](https://bitbucket.org/riester/rwp/commits/tag/{{__VERSION__}}) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-
-
 @TODO - Write Description
 
 == Installation ==

@@ -20,6 +20,13 @@ module.exports = {
 		issuePrefixes: ['RWP-'],
 		mergePattern: "^Merge branch '([^']+)' of (.*)$", // eslint-disable-line
 		mergeCorrespondence: ['branch', 'source'],
+		types: [
+			{
+				type: 'revert',
+				section: 'Reverts',
+				hidden: true,
+			},
+		],
 	},
 	writerOpts: {
 		// groupBy: false,

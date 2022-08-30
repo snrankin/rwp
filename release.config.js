@@ -1,3 +1,5 @@
+/* eslint-disable no-template-curly-in-string */
+
 const releaseMessage = 'chore(release): {{currentTag}} [skip ci]';
 const preset = 'conventionalcommits';
 const writerConfig = {
@@ -33,6 +35,9 @@ const presetConfig = {
 		'no-merges': true,
 	},
 };
+
+require('dotenv').config();
+console.log(process.env);
 
 module.exports = {
 	plugins: [
@@ -75,25 +80,24 @@ module.exports = {
 			},
 		],
 		[
-			'@semantic-release/release-notes-generator',
+			'@google/semantic-release-replace-plugin',
 			{
-				preset,
-				presetConfig,
-				parserOpts: parserConfig,
-				linkReferences: false,
-				linkCompare: false,
-				writerOpts: {
-					...writerConfig,
-					headerPartial: 'v{{version}}{{~#if date}} - {{date}}{{~/if}}\n-------------------',
-					commitPartial: '* {{header}}',
-				},
-			},
-		],
-		[
-			'@semantic-release/changelog',
-			{
-				changelogTitle: 'RIESTERWP Core Changelog\n========================',
-				changelogFile: '.changelog',
+				replacements: [
+					{
+						files: ['rwp.php'],
+						from: ' * Version: .*',
+						to: ' * Version: ${nextRelease.version}', //eslint-disable-line
+						results: [
+							{
+								file: 'rwp.php',
+								hasChanged: true,
+								numMatches: 1,
+								numReplacements: 1,
+							},
+						],
+						countMatches: true,
+					},
+				],
 			},
 		],
 		[
@@ -126,40 +130,26 @@ module.exports = {
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'readme-txt-to-md',
-			},
-		],
-		[
-			'semantic-release-version-bump',
-			{
-				files: 'rwp.php',
-			},
-		],
-		[
-			'@semantic-release/exec',
-			{
 				prepareCmd: 'npm run archive',
 			},
 		],
-		// [
-		// 	'@semantic-release/git',
-		// 	{
-		// 		assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
-		// 		message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
-		// 	},
-		// ],
-		// [
-		// 	'@semantic-release/exec',
-		// 	{
-		// 		publishCmd: 'git add --force --ignore-errors release/rwp.zip CHANGELOG.md package.json package-lock.json rwp.php readme.txt README.md',
-		// 	},
-		// ],
-		// [
-		// 	'@semantic-release/exec',
-		// 	{
-		// 		publishCmd: 'git commit -m "chore(release): ${nextRelease.version} [skip ci]"',
-		// 	},
-		// ],
+
+		[
+			'@semantic-release/git',
+			{
+				assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
+				message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
+			},
+		],
+		[
+			'semantic-release-jira-releases',
+			{
+				projectId: 'RWP',
+				releaseNameTemplate: 'RIESTER Plugin v${version}',
+				jiraHost: 'riester.atlassian.net',
+				ticketPrefixes: ['RWP-'],
+			},
+		],
 	],
 	branches: ['master'],
 };
