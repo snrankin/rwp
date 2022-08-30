@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-0.11.8-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.8) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.9-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.9) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
-= v0.11.8 - 2022-08-30 =
+= v0.11.9 - 2022-08-30 =
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(integrations): remove section content width overwrite
+* fix(ci): fix order of commands
 
 
-## [0.11.8](https://bitbucket.org/riester/rwp/compare/v0.11.7...v0.11.8) (2022-08-30)
+## [0.11.9](https://bitbucket.org/riester/rwp/compare/v0.11.8...v0.11.9) (2022-08-30)
 
 
 
@@ -53,7 +53,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **integrations:** remove section content width overwrite ([3ad41b7](https://bitbucket.org/riester/rwp/commit/3ad41b7c845156e7c39bc933a4f9d3c1fbe7d80b))
+* **ci:** fix order of commands ([2dc0613](https://bitbucket.org/riester/rwp/commit/2dc06135248f8e6f70315b23e5f4cceffdef176b))
 
 
 

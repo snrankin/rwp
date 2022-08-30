@@ -1,6 +1,21 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.9 - 2022-08-30
+-------------------
+
+### Bug Fixes
+
+* fix(ci): fix order of commands
+
+
+## [0.11.9](https://bitbucket.org/riester/rwp/compare/v0.11.8...v0.11.9) (2022-08-30)
+
+
+### Bug Fixes
+
+* **ci:** fix order of commands ([2dc0613](https://bitbucket.org/riester/rwp/commit/2dc06135248f8e6f70315b23e5f4cceffdef176b))
+
 v0.11.8 - 2022-08-30
 -------------------
 
