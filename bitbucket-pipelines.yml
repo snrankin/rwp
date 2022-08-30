@@ -20,6 +20,8 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
+            - export NODE_OPTIONS='--trace-uncaught --trace-exit --enable-source-maps --no-deprecation --no-warnings'
+            - export FORCE_COLOR=3
             - npm ci --bin-links --audit-level=none --omit=dev
             - chmod +x ./build/scripts/*.js
             - npm link
