@@ -203,7 +203,7 @@ class Plugin {
 	public function register_autoloader() {
 
 		$this->autoloader = Autoloader::instance( __DIR__ . '/core' );
-		class_alias( 'RWP\Helpers\Collection' , 'RWP\Components\Collection', true );
+		class_alias( 'RWP\Helpers\Collection', 'RWP\Components\Collection', true );
 	}
 
 	public function initialize_configs() {
@@ -832,18 +832,6 @@ class Plugin {
 	 * Avoid clone instance
 	 */
 	private function __clone() {
-	}
-
-	/**
-	 * Avoid serialize instance
-	 */
-	private function __sleep() { // phpcs:ignore
-	}
-
-	/**
-	 * Avoid unserialize instance
-	 */
-	private function __wakeup() {
 	}
 }
 
