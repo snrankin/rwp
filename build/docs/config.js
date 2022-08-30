@@ -1,22 +1,18 @@
-const config = require('conventional-changelog-conventionalcommits');
-const conventionalChangelogCore = require('conventional-changelog-core');
 const { fileContents } = require('../webpack/utils/utils');
-const _ = require('lodash');
-const conventionalCommitsFilter = require('conventional-commits-filter');
+const config = require('conventional-changelog-conventionalcommits');
+const headerTemplate = fileContents('build/docs/templates/header.hbs');
 
-module.exports = {
-	options: {
-		commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commits/{{hash}}',
-		compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff',
-		issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issue/{{id}}',
-		issuePrefixes: ['RWP-'],
-	},
-	gitRawCommitsOpts: {
-		'extended-regexp': true,
-		grep: '^(reverts?)',
-		'regexp-ignore-case': true,
-		'invert-grep': true,
-		'no-merges': true,
+console.log('🚀 ~ file: config.js ~ line 5 ~ headerTemplate', headerTemplate);
+
+const newConfig = config({
+	issueUrlFormat: 'https://riester.atlassian.net/jira/software/projects/RWP/issues/{{id}}',
+	issuePrefixes: ['RWP-'],
+	compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/branches/compare/{{currentTag}}%0D{{previousTag}}',
+
+	config: {
+		writerOpts: {
+			headerPartial: headerTemplate,
+		},
 	},
 	parserOpts: {
 		issuePrefixes: ['RWP-'],
@@ -24,7 +20,30 @@ module.exports = {
 		mergeCorrespondence: ['branch', 'source'],
 	},
 	writerOpts: {
+		title: 'Changelog',
+		issueUrlFormat: 'https://riester.atlassian.net/jira/software/projects/RWP/issues/{{id}}',
+		issuePrefixes: ['RWP-'],
+		compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/branches/compare/{{currentTag}}%0D{{previousTag}}',
+		types: [
+			{ type: 'feat', section: 'Features' },
+			{ type: 'feature', section: 'Features' },
+			{ type: 'fix', section: 'Bug Fixes' },
+			{ type: 'perf', section: 'Performance Improvements' },
+			{ type: 'revert', section: 'Reverts', hidden: true },
+			{ type: 'docs', section: 'Documentation', hidden: true },
+			{ type: 'style', section: 'Styles', hidden: true },
+			{ type: 'chore', section: 'Miscellaneous Chores', hidden: true },
+			{ type: 'refactor', section: 'Code Refactoring', hidden: true },
+			{ type: 'test', section: 'Tests', hidden: true },
+			{ type: 'build', section: 'Build System', hidden: true },
+			{ type: 'ci', section: 'Continuous Integration', hidden: true },
+		],
 		ignoreReverted: true,
 		doFlush: true,
+		headerPartial: headerTemplate,
 	},
-};
+});
+
+console.log('🚀 ~ file: config.js ~ line 41 ~ newConfig', `${newConfig}`);
+
+module.exports = newConfig;

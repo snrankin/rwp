@@ -1,7 +1,7 @@
 {
     "displayName": "RWP",
     "name": "rwp",
-    "version": "0.11.11",
+    "version": "0.11.12",
     "license": "GPL-2.0-or-later",
     "homepage": "https://bitbucket.org/riester/rwp/src/master/README.md",
     "repository": {
@@ -10,7 +10,7 @@
     },
     "description": "An internal plugin for websites created by RIESTER to enhance functionality",
     "bugs": {
-        "url": "https://bitbucket.org/riester/rwp/issues"
+        "url": "https://riester.atlassian.net/jira/software/projects/RWP/issues"
     },
     "private": true,
     "author": {
@@ -49,6 +49,7 @@
         "main:dev": "webpack --cache --color --progress --mode=development --name main --config ./build/webpack/webpack.config.js",
         "main:prod": "webpack --cache --color --progress --mode=production --name main --config ./build/webpack/webpack.config.js",
         "main:profile": "webpack --stats verbose --color --progress --mode=development --name main --profile --json > stats.json --config ./build/webpack/webpack.config.js",
+        "changelog": "conventional-changelog -i CHANGELOG.md -s  -r 0 -n build/docs/config.js ",
         "wp-readme": "wp-readme readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md",
         "postwp-readme": "readme-txt-to-md",
         "test": "webpack configtest ./build/webpack/webpack.config.js",

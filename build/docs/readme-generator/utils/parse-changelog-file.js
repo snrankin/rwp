@@ -57,7 +57,7 @@ function finalizeEntry(entry) {
 
 function filterLogs(lines) {
 	// Remove everything up to first version
-	lines = lines.replace(/[^v\d]*/m, '');
+	lines = lines.replace(/[^\[v?\d]*/m, '');
 
 	// // Remove all extra blank lines
 	// lines = lines.replace(/^\n/gm, '');
@@ -89,7 +89,7 @@ module.exports = (file) => {
 	lines = lines.split('\n');
 	const logs = [];
 	// eslint-disable-next-line
-	const regex = /v(?<version>[0-9]\d*\.[0-9]\d*\.[0-9]\d*(?:-(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(?:\+[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)?) - (?<date>\d{4}\-\d{2}\-\d{2})/;
+	const regex = /(?:\[|\s)(?<version>[0-9]\d*\.[0-9]\d*\.[0-9]\d*(?:-(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:[0-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(?:\+[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)?)(?:\])(?:\([^)]*\)\s?\()(?<date>\d{4}\-\d{2}\-\d{2})/;
 
 	let currEntry = {};
 

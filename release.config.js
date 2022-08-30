@@ -5,6 +5,8 @@ const preset = 'conventionalcommits';
 const writerConfig = {
 	ignoreReverted: true,
 	doFlush: true,
+	linkReferences: false,
+	linkCompare: false,
 };
 const parserConfig = {
 	issuePrefixes: ['RWP-'],
@@ -22,10 +24,12 @@ const parserConfig = {
 const presetConfig = {
 	options: {
 		commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commits/{{hash}}',
-		compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff',
-		issueUrlFormat: 'https://{{owner}}.atlassian.net/browse/{{id}}',
+		issueUrlFormat: 'https://riester.atlassian.net/jira/software/projects/RWP/issues/{{id}}',
 		issuePrefixes: ['RWP-'],
+		compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/branches/compare/{{currentTag}}%0D{{previousTag}}',
 		releaseCommitMessageFormat: releaseMessage,
+		linkReferences: false,
+		linkCompare: false,
 	},
 	gitRawCommitsOpts: {
 		'extended-regexp': true,
@@ -134,22 +138,24 @@ module.exports = {
 			},
 		],
 
-		[
-			'@semantic-release/git',
-			{
-				assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
-				message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
-			},
-		],
-		[
-			'semantic-release-jira-releases',
-			{
-				projectId: 'RWP',
-				releaseNameTemplate: 'RIESTER Plugin v${version}',
-				jiraHost: 'riester.atlassian.net',
-				ticketPrefixes: ['RWP-'],
-			},
-		],
+		// [
+		// 	'@semantic-release/git',
+		// 	{
+		// 		assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
+		// 		message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
+		// 	},
+		// ],
+		// [
+		// 	'semantic-release-jira-releases',
+		// 	{
+		// 		projectId: 'RWP',
+		// 		releaseNameTemplate: 'RIESTER Plugin v${version}',
+		// 		jiraHost: 'riester.atlassian.net',
+		// 		ticketPrefixes: ['RWP-'],
+		// 		released: true,
+		// 		setReleaseDate: true,
+		// 	},
+		// ],
 	],
 	branches: ['master'],
 };
