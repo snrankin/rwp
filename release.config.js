@@ -137,25 +137,13 @@ module.exports = {
 				prepareCmd: 'npm run archive',
 			},
 		],
-
-		// [
-		// 	'@semantic-release/git',
-		// 	{
-		// 		assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
-		// 		message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
-		// 	},
-		// ],
-		// [
-		// 	'semantic-release-jira-releases',
-		// 	{
-		// 		projectId: 'RWP',
-		// 		releaseNameTemplate: 'RIESTER Plugin v${version}',
-		// 		jiraHost: 'riester.atlassian.net',
-		// 		ticketPrefixes: ['RWP-'],
-		// 		released: true,
-		// 		setReleaseDate: true,
-		// 	},
-		// ],
+		[
+			'@semantic-release/git',
+			{
+				assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
+				message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
+			},
+		]
 	],
 	branches: ['master'],
 };
