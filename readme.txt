@@ -10,7 +10,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Description ==
 
-[![Current Version](https://img.shields.io/badge/version-0.11.7-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.7) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Current Version](https://img.shields.io/badge/version-0.11.8-blue)](https://bitbucket.org/riester/rwp/commits/tag/0.11.8) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 
 @TODO - Write Description
@@ -34,7 +34,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
-= v0.11.7 - 2022-08-01 =
+= v0.11.8 - 2022-08-30 =
 
 
 
@@ -42,10 +42,10 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* fix(core): fix offcanvas nav bug
+* fix(integrations): remove section content width overwrite
 
 
-## [0.11.7](https://bitbucket.org/riester/rwp/compare/v0.11.6...v0.11.7) (2022-08-01)
+## [0.11.8](https://bitbucket.org/riester/rwp/compare/v0.11.7...v0.11.8) (2022-08-30)
 
 
 
@@ -53,7 +53,7 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 
-* **core:** fix offcanvas nav bug ([d9222c8](https://bitbucket.org/riester/rwp/commit/d9222c8eca84f02176d2e2f64e0128d8929405c3))
+* **integrations:** remove section content width overwrite ([3ad41b7](https://bitbucket.org/riester/rwp/commit/3ad41b7c845156e7c39bc933a4f9d3c1fbe7d80b))
 
 
 

@@ -1,6 +1,21 @@
 # RIESTERWP Core Changelog
 ---
 
+v0.11.8 - 2022-08-30
+-------------------
+
+### Bug Fixes
+
+* fix(integrations): remove section content width overwrite
+
+
+## [0.11.8](https://bitbucket.org/riester/rwp/compare/v0.11.7...v0.11.8) (2022-08-30)
+
+
+### Bug Fixes
+
+* **integrations:** remove section content width overwrite ([3ad41b7](https://bitbucket.org/riester/rwp/commit/3ad41b7c845156e7c39bc933a4f9d3c1fbe7d80b))
+
 v0.11.7 - 2022-08-01
 -------------------
 
