@@ -78,10 +78,7 @@ module.exports = {
 			'@semantic-release/release-notes-generator',
 			{
 				preset,
-				presetConfig: {
-					...presetConfig,
-					header: 'RIESTERWP Core Changelog\n========================',
-				},
+				presetConfig,
 				parserOpts: parserConfig,
 				linkReferences: false,
 				linkCompare: false,
@@ -103,10 +100,7 @@ module.exports = {
 			'@semantic-release/release-notes-generator',
 			{
 				preset,
-				presetConfig: {
-					...presetConfig,
-					header: 'RIESTERWP Core Changelog\n---',
-				},
+				presetConfig,
 				parserOpts: parserConfig,
 				writerOpts: writerConfig,
 			},
@@ -147,13 +141,25 @@ module.exports = {
 				prepareCmd: 'npm run archive',
 			},
 		],
-		[
-			'@semantic-release/git',
-			{
-				assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
-				message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
-			},
-		],
+		// [
+		// 	'@semantic-release/git',
+		// 	{
+		// 		assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
+		// 		message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
+		// 	},
+		// ],
+		// [
+		// 	'@semantic-release/exec',
+		// 	{
+		// 		publishCmd: 'git add --force --ignore-errors release/rwp.zip CHANGELOG.md package.json package-lock.json rwp.php readme.txt README.md',
+		// 	},
+		// ],
+		// [
+		// 	'@semantic-release/exec',
+		// 	{
+		// 		publishCmd: 'git commit -m "chore(release): ${nextRelease.version} [skip ci]"',
+		// 	},
+		// ],
 	],
 	branches: ['master'],
 };
