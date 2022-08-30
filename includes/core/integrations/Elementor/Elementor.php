@@ -973,17 +973,17 @@ class Elementor extends Singleton {
 	public function add_section_options( $section ) {
 		if ( 'section' === $section->get_name() ) {
 
-			$section->add_responsive_control(
-				'layout',
-				array(
-					'label'   => esc_html__( 'Content Width', 'rwp' ),
-					'type'    => Controls_Manager::HIDDEN,
-					'default' => '',
-				),
-				array(
-					'overwrite' => true,
-				)
-			);
+			// $section->add_responsive_control(
+			// 	'layout',
+			// 	array(
+			// 		'label'   => esc_html__( 'Content Width', 'rwp' ),
+			// 		'type'    => Controls_Manager::HIDDEN,
+			// 		'default' => '',
+			// 	),
+			// 	array(
+			// 		'overwrite' => true,
+			// 	)
+			// );
 
 			$section->add_responsive_control(
 				'column_position',
@@ -1018,30 +1018,6 @@ class Elementor extends Singleton {
 						'{{WRAPPER}}' => '--display: {{VALUE}}',
 					],
 				]
-			);
-
-			$section->add_control(
-				'content_width',
-				[
-					'label'                => esc_html__( 'Content Width', 'rwp' ),
-					'type'                 => Controls_Manager::SELECT,
-					'default'              => 'boxed',
-					'options'              => [
-						'boxed' => esc_html__( 'Boxed', 'rwp' ),
-						'full'  => esc_html__( 'Full Width', 'rwp' ),
-					],
-					'render_type'          => 'ui',
-					'selectors'            => [
-						'{{WRAPPER}} > .elementor-container' => '{{VALUE}}',
-					],
-					'selectors_dictionary' => [
-						'boxed' => '--width: 100%;',
-						'full'  => '--content-width: 100%;',
-					],
-				],
-				array(
-					'overwrite' => true,
-				)
 			);
 
 			$section->add_responsive_control(
