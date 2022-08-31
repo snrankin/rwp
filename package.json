@@ -205,7 +205,6 @@
         "webpack-merge": "~5.8.0",
         "webpack-node-externals": "^3.0.0",
         "webpack-remove-empty-scripts": "^0.8.1",
-        "yaml": "^2.1.1",
         "yargs": "~17.5.1",
         "yarn-run-all": "^3.1.1"
     },

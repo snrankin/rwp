@@ -72,7 +72,7 @@ class Elementor extends Singleton {
 				$this->update_elementor_features( $manager );
 			} );
 
-			add_action( 'acfe/save_option', array( $this, 'update_breakpoints' ), 20 );
+			// add_action( 'acfe/save_option', array( $this, 'update_breakpoints' ), 20 );
 		}
 		if ( rwp_get_option( 'modules.relative_urls', false ) ) {
 			add_action( 'elementor/element/parse_css', array( $this, 'make_urls_relative' ), 10, 2 );
