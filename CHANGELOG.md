@@ -1,6 +1,13 @@
 # RIESTERWP Core Changelog
 ---
 
+## [0.11.14](https://bitbucket.org/riester/rwp/compare/v0.11.13...v0.11.14) (2022-08-31)
+
+
+### Bug Fixes
+
+* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://bitbucket.org/riester/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
+
 ## [0.11.13](https://bitbucket.org/riester/rwp/compare/v0.11.12...v0.11.13) (2022-08-30)
 
 

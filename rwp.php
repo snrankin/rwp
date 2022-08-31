@@ -12,7 +12,7 @@
  * Plugin Name: RIESTERWP Core
  * Plugin URI: https://bitbucket.org/riester/rwp/src/master/README.md
  * Description: An internal plugin for websites created by RIESTER to enhance functionality
- * Version: 0.11.13
+ * Version: 0.11.14
  * Tested up to: 6.0.1
  * Author: RIESTER Advertising Agency
  * Author URI: https://www.riester.com

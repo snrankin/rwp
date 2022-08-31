@@ -31,6 +31,12 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
+= v0.11.14 - 2022-08-31 =
+
+**Bug Fixes**
+* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://bitbucket.org/riester/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
+
+
 = v0.11.13 - 2022-08-30 =
 
 **Bug Fixes**
@@ -42,11 +48,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 **Bug Fixes**
 * **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
 * **ci:** fixes wp-readme command ([0215c4b](https://bitbucket.org/riester/rwp/commit/0215c4b93aeb6192ab8be9808e16bc903de005f0))
-
-
-= v0.11.12 - 2022-08-30 =
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
 
 [See full list of changes here](./CHANGELOG.md)
