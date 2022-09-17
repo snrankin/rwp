@@ -59,7 +59,7 @@ class Taxonomies extends Singleton {
 
 		$names = $labels['names'];
 
-		$args = apply_filters( "{$type}_tax_args", $args );
+		$args = apply_filters( "{$type}_tax_args", $args ); // phpcs:ignore
 
 		register_extended_taxonomy( $type, $post_type, $args, $names );
 		flush_rewrite_rules();

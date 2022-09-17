@@ -67,6 +67,7 @@
 
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Generic.Commenting" />
+		<exclude name="Generic.Files.EndFileNewline" />
 		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound" />
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />

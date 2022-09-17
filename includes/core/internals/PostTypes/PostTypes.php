@@ -60,12 +60,11 @@ class PostTypes extends Singleton {
 
 	/**
 	 *
-	 * @param string   $permalink  The site's permalink structure .
-	 * @param \WP_Post $post       The post in question .
-	 * @param bool     $leavename  Whether to keep the post name .
+	 * @param string   $permalink  The site's permalink structure
+	 * @param \WP_Post $post       The post in question
 	 * @return mixed
 	 */
-	public function post_link( $post_link, $post, $leavename ) {
+	public function post_link( $post_link, $post ) {
 		$blog_page = rwp_get_blog_page();
 		if ( ! $blog_page ) {
 			return $post_link;
@@ -188,12 +187,10 @@ class PostTypes extends Singleton {
 	 * Remove 'rwp_' from custom post types, add sole rwp class
 	 *
 	 * @param string[] $classes An array of post class names.
-	 * @param string[] $class   An array of additional class names added to the post.
-	 * @param int      $post_id The post ID.
 	 *
 	 * @return mixed
 	 */
-	public function clean_post_classes( $classes, $class = array(), $post_id = 0 ) {
+	public function clean_post_classes( $classes ) {
 		foreach ( $classes as $index => $post_class ) {
 			if ( rwp_str_has( $post_class, 'rwp_' ) ) {
 				$classes[ $index ] = Str::remove( 'rwp_', $post_class );
@@ -298,7 +295,7 @@ class PostTypes extends Singleton {
 
 		$names = $labels['names'];
 
-		$args = apply_filters( "{$type}_cpt_args", $args );
+		$args = apply_filters( "{$type}_cpt_args", $args ); // phpcs:ignore
 
 		register_extended_post_type( $type, $args, $names );
 		flush_rewrite_rules();
