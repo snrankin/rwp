@@ -17,7 +17,7 @@ use Exception;
 use RWP\Helpers\Str;
 use RWP\Html\NavItem;
 use RWP\Html\Nav as HtmlNav;
-use RWP\Html\NavList;
+use RWP\Integrations\Nav_Menus;
 use RWP\Helpers\Collection;
 use stdClass;
 
@@ -133,7 +133,7 @@ class Nav extends \Walker_Nav_Menu {
 		$this->menu_id = $menu_id;
 	}
 
-	private function nav_item_options( $item, $depth = 0, $args = null, $id = 0 ) {
+	private function nav_item_options( $item, $depth = 0, $args = null ) {
 		/**
 		 * Filters the arguments for a single nav menu item.
 		 *
@@ -173,7 +173,7 @@ class Nav extends \Walker_Nav_Menu {
 
 		$toggle_type = $parent_type;
 
-		if ( false != $item_type ) {
+		if ( false !== $item_type ) {
 			$toggle_type = $item_type;
 		}
 
@@ -242,7 +242,7 @@ class Nav extends \Walker_Nav_Menu {
 			'nav_item'    => $item,
 			'depth'       => $depth,
 			'menu'        => $menu,
-			'active'      => $this->checkCurrent( $classes ),
+			'active'      => Nav_Menus::is_active( $item ),
 			'is_parent'   => $is_parent,
 			'parent'      => $parent,
 			'toggle_type' => $toggle_type,
@@ -293,7 +293,7 @@ class Nav extends \Walker_Nav_Menu {
 		$this->item_args = $nav_item_args;
 	}
 
-	private function nav_link_args( $item, $depth = 0, $args = null, $id = 0 ) {
+	private function nav_link_args( $item, $depth = 0, $args = null ) {
 
 		$toggle_type = data_get( $this->item_options, 'toggle_type', false );
 
@@ -326,7 +326,7 @@ class Nav extends \Walker_Nav_Menu {
 
 		$classes = apply_filters('nav_menu_link_css_class', array('menu-link'), $item, $args, $depth); // phpcs:ignore
 
-		$link_attr_title = data_get( $item, 'attr_title', strip_tags( $title ) );
+		$link_attr_title = data_get( $item, 'attr_title', wp_strip_all_tags( $title ) );
 		$link_target     = data_get( $item, 'target', '' );
 		$link_xfn        = data_get( $item, 'xfn', '' );
 		$link_url        = data_get( $item, 'url', '' );
@@ -639,18 +639,18 @@ class Nav extends \Walker_Nav_Menu {
 			$this->nav_item->remove_nav_atts();
 			$this->nav_item->link->set_tag( 'span' );
 
-			if ( in_array( 'dropdown-header', $linkmod_type ) ) {
+			if ( in_array( 'dropdown-header', $linkmod_type, true ) ) {
 				$this->nav_item->link->add_class( 'h6' );
 			}
 
-			if ( in_array( 'dropdown-divider', $linkmod_type ) ) {
+			if ( in_array( 'dropdown-divider', $linkmod_type, true ) ) {
 				$this->nav_item->link->add_class( array( 'dropdown-divider', 'flex-fill' ) );
 				$this->nav_item->link->make_empty();
 				$this->nav_item->link->remove_class( 'nav-link' );
 				$this->nav_item->link->set_tag( 'hr' );
 			}
 
-			if ( in_array( 'vr', $linkmod_type ) ) {
+			if ( in_array( 'vr', $linkmod_type, true ) ) {
 				$this->nav_item->add_class( 'menu-divider' );
 				$this->nav_item->link->remove_class( 'nav-link' );
 				$this->nav_item->link->add_class( 'vr' );
@@ -658,7 +658,7 @@ class Nav extends \Walker_Nav_Menu {
 				$this->nav_item->link->set_tag( 'span' );
 			}
 
-			if ( in_array( 'disabled', $linkmod_type ) ) {
+			if ( in_array( 'disabled', $linkmod_type, true ) ) {
 				$this->nav_item->disabled = true;
 			}
 		}
@@ -744,7 +744,7 @@ class Nav extends \Walker_Nav_Menu {
 
 			// If $args has 'echo' key and it's true echo, otherwise return.
 			if ( array_key_exists( 'echo', $args ) && $args['echo'] ) {
-				echo $fallback_output; // WPCS: XSS OK.
+				echo $fallback_output; // phpcs:ignore
 			} else {
 				return $fallback_output->html();
 			}

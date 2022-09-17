@@ -62,10 +62,47 @@ class Nav_Menus extends Singleton {
 	 * @param int      $depth   Depth of menu item. Used for padding.
 	 */
 
-	public function nav_menu_submenu_css_class( $classes, $args, $depth ) {
+	public function nav_menu_submenu_css_class( $classes, $args, $depth ) { //phpcs:ignore
 		$classes[] = 'level-' . ( $depth + 1 ) . '-menu';
 
 		return $classes;
+	}
+
+	public static function is_active( $item ) {
+		global $post;
+		$current = data_get( $_SERVER, 'REQUEST_URI' );
+
+		$item_url = data_get( $item, 'url', '' );
+		$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
+		$post_id = data_get( $item, 'object_id', '' );
+		if ( ! empty( $post_id ) ) {
+			$post_id = intval( $post_id );
+		}
+		$is_current = data_get( $item, 'current', false );
+		$is_current_parent = data_get( $item, 'current_item_parent', false );
+		$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
+
+		$is_active = false;
+
+		$blog_page = rwp_get_blog_page();
+
+		if ( ! is_search() && ! is_404() ) {
+			if ( $is_current ) {
+				$is_active = true;
+			} elseif ( $is_current_parent ) {
+				$is_active = true;
+			} elseif ( $is_current_ancestor ) {
+				$is_active = true;
+			} elseif ( $post instanceof \WP_Post && 'post' === $post->post_type && $post_id === $blog_page ) {
+				$is_active = true;
+			} elseif ( rwp_get_home_page() === $post_id && is_front_page() ) {
+				$is_active = true;
+			} elseif ( '/' !== $item_url && rwp_str_has( $current, $item_url ) ) {
+				$is_active = true;
+			}
+		}
+
+		return $is_active;
 	}
 
 	/**
@@ -84,11 +121,9 @@ class Nav_Menus extends Singleton {
 	 *     @type string $aria-current The aria-current attribute.
 	 * }
 	 * @param \WP_Post  $item  The current menu item.
-	 * @param \stdClass $args  An object of wp_nav_menu() arguments.
-	 * @param int       $depth Depth of menu item. Used for padding.
 	 */
 
-	public function nav_menu_link_attributes( $atts, $item, $args, $depth ) {
+	public function nav_menu_link_attributes( $atts, $item ) {
 
 		global $post;
 
@@ -101,32 +136,8 @@ class Nav_Menus extends Singleton {
 		if ( ! empty( $post_id ) ) {
 			$post_id = intval( $post_id );
 		}
-		$is_current = data_get( $item, 'current', false );
-		$is_current_parent = data_get( $item, 'current_item_parent', false );
-		$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 
-		$is_active = rwp_str_has( $this->current, $item_url );
-
-		$blog_page = rwp_get_blog_page();
-
-		if ( $post instanceof \WP_Post && 'post' === $post->post_type && $post_id === $blog_page ) {
-			$is_active = true;
-		}
-
-		if ( $is_current ) {
-			$is_active = true;
-		}
-		if ( $is_current_parent ) {
-			$is_active = true;
-		}
-
-		if ( $is_current_ancestor ) {
-			$is_active = true;
-		}
-
-		if ( is_search() || is_404() ) {
-			$is_active = false;
-		}
+		$is_active = self::is_active( $item );
 
 		if ( $is_active ) {
 			$classes[] = 'active';
@@ -155,37 +166,19 @@ class Nav_Menus extends Singleton {
 	 * @param int      $depth   Depth of menu item. Used for padding.
 	 */
 
-	public function nav_menu_item_class( $classes, $item, $args, $depth ) {
+	public function nav_menu_item_class( $classes, $item, $args, $depth ) { // phpcs:ignore
 		if ( 'nav_menu_item' === $item->post_type ) {
 
 			$item_url = data_get( $item, 'url', '' );
 			$item_url = wp_parse_url( $item_url, PHP_URL_PATH );
 			$title = data_get( $item, 'title', $item->post_title );
 			$slug = sanitize_title( $title );
-			$is_current = data_get( $item, 'current', false );
-			$is_current_parent = data_get( $item, 'current_item_parent', false );
-			$is_current_ancestor = data_get( $item, 'current_item_ancestor', false );
 			$is_parent = false;
 			if ( ! empty( preg_grep( '/.*has-children.*/i', $classes ) ) ) {
 				$is_parent = true;
 			}
 
-			$is_active = rwp_str_has( $this->current, $item_url );
-
-			if ( $is_current ) {
-				$is_active = true;
-			}
-			if ( $is_current_parent ) {
-				$is_active = true;
-			}
-
-			if ( $is_current_ancestor ) {
-				$is_active = true;
-			}
-
-			if ( is_search() || is_404() ) {
-				$is_active = false;
-			}
+			$is_active = self::is_active( $item );
 
 			if ( $is_active ) {
 				$classes[] = 'active-item';
@@ -203,7 +196,6 @@ class Nav_Menus extends Singleton {
 				$classes[] = 'has-children';
 			}
 
-			// Add `menu-<slug>` class
 			$classes[] = 'menu-' . $slug;
 
 			$classes[] = 'nav-item';
