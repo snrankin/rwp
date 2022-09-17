@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:latest
+image: node:16
 pipelines:
   branches:
     master:
@@ -20,12 +20,12 @@ pipelines:
                 -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Configure git to use the oauth token.
             - git remote set-url origin "https://x-token-auth:$BB_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git"
-            - export NODE_OPTIONS='--trace-uncaught --trace-exit --enable-source-maps --no-deprecation --no-warnings'
+            - export NPM_CONFIG_LOGLEVEL=error
             - export FORCE_COLOR=3
-            - npm ci --bin-links --audit-level=none --omit=dev
+            - export NODE_ENV=production
+            - npm rm -rf node_modules && yarn install --frozen-lockfile
             - chmod +x ./build/scripts/*.js
             - npm link
-            - npm install -g @wpackio/scripts
             - npx semantic-release --debug
       - step:
           name: Deploy release
