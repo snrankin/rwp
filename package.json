@@ -60,7 +60,8 @@
         "build-backup": "npm-run-all *:build",
         "start": "wpackio-scripts start",
         "archive": "wpackio-scripts pack",
-        "postarchive": "rm -r release/rwp"
+        "postarchive": "rm -r release/rwp",
+        "release": "autoenv_init && npx semantic-release --debug --no-ci"
     },
     "config": {
         "package": {
