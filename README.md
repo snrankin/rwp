@@ -1,52 +1,200 @@
-# RIESTERWP Core #
-**Requires at least:** 5.6  
-**Tested up to:** 6.0.1  
-**Requires PHP:** 7.0  
-**Stable tag:** master  
-**License:** GPL v2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.txt  
+# RIESTERWP Core
 
 An internal plugin for websites created by RIESTER to enhance functionality
 
-## Description ##
+[![GPLv2 License][license-img]][license-url][![Issues][issues-img]][issues-url][![Semantic Release][semantic-release-img]][semantic-release-url]![Requires WordPress v5.6][requires-wp]![Tested up to WordPress v6.0.1][tested-wp]
 
-@TODO - Write Description
+[license-img]: https://img.shields.io/badge/License-GPLv2-green.svg
+[license-url]:http://www.gnu.org/licenses/gpl-2.0.txt
+[issues-img]: https://img.shields.io/bitbucket/issues/riester/rwp?logo=bitbucket
+[issues-url]: https://bitbucket.org/riester/rwp/issues
+[semantic-release-img]: https://img.shields.io/badge/semantic--release-conventionalcommits-e10079?logo=semantic-release
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
+[requires-wp]: https://img.shields.io/badge/wordpress-v5.6-blue?logo=wordpress
+[tested-wp]: https://img.shields.io/badge/wordpress-v6.0.1%20tested-blue?logo=wordpress
 
-## Installation ##
+## Project Structure
+.
+├── dependencies
+├── includes
+│   ├── config
+│   │   ├── acf
+│   │   │   ├── group_cpt_team_member_options.php
+│   │   │   ├── group_cpt_testimonial_options.php
+│   │   │   ├── group_nav_item_options.php
+│   │   │   ├── group_nav_options.php
+│   │   │   ├── group_reusable_fields.php
+│   │   │   ├── group_rwp_company_info.php
+│   │   │   ├── group_rwp_plugin_options.php
+│   │   │   └── group_rwp_reusable_fields.php
+│   │   ├── assets.php
+│   │   └── tinymce.php
+│   ├── core
+│   │   ├── ajax
+│   │   │   ├── Ajax_Admin.php
+│   │   │   └── Ajax.php
+│   │   ├── backend
+│   │   │   ├── Enqueue.php
+│   │   │   ├── Notices.php
+│   │   │   └── Settings.php
+│   │   ├── base
+│   │   │   ├── Component.php
+│   │   │   ├── Singleton.php
+│   │   │   └── Widget.php
+│   │   ├── frontend
+│   │   │   ├── Extras
+│   │   │   │   ├── Body_Class.php
+│   │   │   │   ├── Clean_Up.php
+│   │   │   │   ├── JS_Footer.php
+│   │   │   │   └── Nice_Search.php
+│   │   │   ├── Enqueue.php
+│   │   │   └── Favicons.php
+│   │   ├── helpers
+│   │   │   ├── Assets.php
+│   │   │   ├── Collection.php
+│   │   │   ├── Components.php
+│   │   │   ├── Context.php
+│   │   │   ├── index.php
+│   │   │   ├── Pluralizer.php
+│   │   │   ├── Request.php
+│   │   │   ├── Str.php
+│   │   │   └── Utils.php
+│   │   ├── html
+│   │   │   ├── Button.php
+│   │   │   ├── Card.php
+│   │   │   ├── Column.php
+│   │   │   ├── Container.php
+│   │   │   ├── Element.php
+│   │   │   ├── Embed.php
+│   │   │   ├── Grid.php
+│   │   │   ├── Group.php
+│   │   │   ├── Html.php
+│   │   │   ├── HtmlList.php
+│   │   │   ├── Icon.php
+│   │   │   ├── Image.php
+│   │   │   ├── Location.php
+│   │   │   ├── Modal.php
+│   │   │   ├── Nav.php
+│   │   │   ├── NavItem.php
+│   │   │   ├── NavList.php
+│   │   │   ├── PostCard.php
+│   │   │   ├── Row.php
+│   │   │   ├── Section.php
+│   │   │   ├── SVG.php
+│   │   │   ├── Table.php
+│   │   │   ├── TableCell.php
+│   │   │   ├── TableRow.php
+│   │   │   └── TableSection.php
+│   │   ├── integrations
+│   │   │   ├── Elementor
+│   │   │   │   ├── Widgets
+│   │   │   │   │   └── OEmbed.php
+│   │   │   │   └── Elementor.php
+│   │   │   ├── QM
+│   │   │   │   ├── Collectors
+│   │   │   │   │   ├── Collector.php
+│   │   │   │   │   ├── Debug.php
+│   │   │   │   │   └── Info.php
+│   │   │   │   ├── Output
+│   │   │   │   │   ├── Debug.php
+│   │   │   │   │   ├── Info.php
+│   │   │   │   │   └── Output.php
+│   │   │   │   └── QM.php
+│   │   │   ├── Walkers
+│   │   │   │   └── Nav.php
+│   │   │   ├── Yoast
+│   │   │   │   ├── Generators
+│   │   │   │   │   └── Locations.php
+│   │   │   │   └── Yoast.php
+│   │   │   ├── ACF.php
+│   │   │   ├── Bootstrap.php
+│   │   │   ├── BugHerd.php
+│   │   │   ├── GravityForms.php
+│   │   │   ├── Gutenberg.php
+│   │   │   ├── index.php
+│   │   │   ├── JS_Plugins.php
+│   │   │   ├── Lazysizes.php
+│   │   │   ├── Nav_Menus.php
+│   │   │   └── Wistia.php
+│   │   └── internals
+│   │       ├── PostTypes
+│   │       │   ├── Types
+│   │       │   │   ├── GlobalBlock.php
+│   │       │   │   ├── LandingPage.php
+│   │       │   │   ├── PageHeader.php
+│   │       │   │   ├── PostType.php
+│   │       │   │   ├── TeamMember.php
+│   │       │   │   └── Testimonial.php
+│   │       │   └── PostTypes.php
+│   │       ├── Shortcodes
+│   │       │   ├── Button.php
+│   │       │   ├── Copyright.php
+│   │       │   ├── Location.php
+│   │       │   ├── Shortcode.php
+│   │       │   ├── SiblingGrid.php
+│   │       │   ├── SubpageGrid.php
+│   │       │   └── TeamGrid.php
+│   │       ├── SVG
+│   │       │   ├── Data
+│   │       │   │   ├── AllowedAttributes.php
+│   │       │   │   ├── AllowedTags.php
+│   │       │   │   ├── AttributeInterface.php
+│   │       │   │   ├── TagInterface.php
+│   │       │   │   └── XPath.php
+│   │       │   ├── ElementReference
+│   │       │   │   ├── Resolver.php
+│   │       │   │   ├── Subject.php
+│   │       │   │   └── Usage.php
+│   │       │   ├── Exceptions
+│   │       │   │   └── NestingException.php
+│   │       │   ├── Attributes.php
+│   │       │   ├── Helper.php
+│   │       │   ├── Sanitizer.php
+│   │       │   ├── svg-scanner.php
+│   │       │   └── Tags.php
+│   │       ├── Taxonomies
+│   │       │   ├── Types
+│   │       │   │   ├── Taxonomy.php
+│   │       │   │   └── TeamCategory.php
+│   │       │   └── Taxonomies.php
+│   │       ├── CustomBulkAction.php
+│   │       ├── index.php
+│   │       ├── PageForPostType.php
+│   │       ├── Relative_Urls.php
+│   │       ├── SVGs.php
+│   │       └── Transient.php
+│   ├── functions
+│   │   ├── utils
+│   │   │   ├── acf.php
+│   │   │   ├── array.php
+│   │   │   ├── cache.php
+│   │   │   ├── company.php
+│   │   │   ├── debug.php
+│   │   │   ├── file.php
+│   │   │   ├── html.php
+│   │   │   ├── image.php
+│   │   │   ├── menu.php
+│   │   │   ├── object.php
+│   │   │   ├── post.php
+│   │   │   ├── rest.php
+│   │   │   ├── string.php
+│   │   │   ├── theme.php
+│   │   │   └── url.php
+│   │   ├── filters.php
+│   │   ├── helpers.php
+│   │   └── utils.php
+│   ├── autoloader.php
+│   ├── index.php
+│   └── plugin.php
+├── rwp.php
+└── uninstall.php
 
-### Uploading in WordPress Dashboard ###
+## Installation
 
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Navigate to the 'Upload' area
-3. Select `rwp.zip` from your computer
-4. Click 'Install Now'
-5. Activate the plugin in the Plugin dashboard
+## License
 
-### Using FTP ###
+[GPL v2][license-url]
 
-1. Download `rwp.zip`
-2. Extract the `rwp` directory to your computer
-3. Upload the `rwp` directory to the `/wp-content/plugins/` directory
-4. Activate the plugin in the Plugin dashboard
+## Changelog
 
-## Changelog ##
-
-### v0.11.14 - 2022-08-31 ###
-
-**Bug Fixes**
-* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://bitbucket.org/riester/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
-
-
-### v0.11.13 - 2022-08-30 ###
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([e648e26](https://bitbucket.org/riester/rwp/commit/e648e26b3e9787784eb998069c265d4f984fa7bc))
-
-
-### v0.11.12 - 2022-08-30 ###
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
-* **ci:** fixes wp-readme command ([0215c4b](https://bitbucket.org/riester/rwp/commit/0215c4b93aeb6192ab8be9808e16bc903de005f0))
-
-[See full list of changes here](./CHANGELOG.md)
+For latest updates, check out the [Changelog](CHANGELOG.md)
