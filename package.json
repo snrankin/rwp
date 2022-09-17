@@ -51,7 +51,6 @@
         "main:profile": "webpack --stats verbose --color --progress --mode=development --name main --profile --json > stats.json --config ./build/webpack/webpack.config.js",
         "changelog": "conventional-changelog -i CHANGELOG.md -s  -r 0 -n build/docs/config.js ",
         "wp-readme": "wp-readme readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md",
-        "postwp-readme": "readme-txt-to-md",
         "test": "webpack configtest ./build/webpack/webpack.config.js",
         "watch": "webpack --color --progress --mode=development --watch --config ./build/webpack/webpack.config.js",
         "pack": "package",
