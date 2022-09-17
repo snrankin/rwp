@@ -1,6 +1,14 @@
 # RIESTERWP Core Changelog
 ---
 
+## [0.11.15](https://bitbucket.org/riester/rwp/compare/v0.11.14...v0.11.15) (2022-09-17)
+
+
+### Bug Fixes
+
+* **integrations:** fix active menu item ([6891f89](https://bitbucket.org/riester/rwp/commit/6891f8983b6b65677996392204e45f455f99ebba))
+* **internals:** restoring taxonomies ([679f677](https://bitbucket.org/riester/rwp/commit/679f677789bfe75b66db858173197fc16e9fd7a1))
+
 ## [0.11.14](https://bitbucket.org/riester/rwp/compare/v0.11.13...v0.11.14) (2022-08-31)
 
 

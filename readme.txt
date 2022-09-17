@@ -31,6 +31,13 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
+= v0.11.15 - 2022-09-17 =
+
+**Bug Fixes**
+* **integrations:** fix active menu item ([6891f89](https://bitbucket.org/riester/rwp/commit/6891f8983b6b65677996392204e45f455f99ebba))
+* **internals:** restoring taxonomies ([679f677](https://bitbucket.org/riester/rwp/commit/679f677789bfe75b66db858173197fc16e9fd7a1))
+
+
 = v0.11.14 - 2022-08-31 =
 
 **Bug Fixes**
@@ -41,12 +48,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 * **ci:** fixes release workflow ([e648e26](https://bitbucket.org/riester/rwp/commit/e648e26b3e9787784eb998069c265d4f984fa7bc))
-
-
-= v0.11.12 - 2022-08-30 =
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([99b16ed](https://bitbucket.org/riester/rwp/commit/99b16ed27e7d3270514b1f695a9bb2cc2bbe3cf2))
-* **ci:** fixes wp-readme command ([0215c4b](https://bitbucket.org/riester/rwp/commit/0215c4b93aeb6192ab8be9808e16bc903de005f0))
 
 [See full list of changes here](./CHANGELOG.md)
