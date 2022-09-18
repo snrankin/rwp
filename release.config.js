@@ -134,7 +134,7 @@ module.exports = {
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'npm run archive',
+				prepareCmd: 'wpackio-scripts pack',
 			},
 		],
 		[
@@ -143,7 +143,15 @@ module.exports = {
 				assets: ['release/rwp.zip', 'CHANGELOG.md', 'package.json', 'package-lock.json', 'rwp.php', 'readme.txt', 'README.md'],
 				message: 'chore(release): ${nextRelease.version} [skip ci]', //eslint-disable-line
 			},
-		]
+		],
+		[
+			'@semantic-release/github',
+			{
+				githubUrl: 'git@github.com:snrankin/rwp.git',
+				addReleases: 'top',
+				assets: [{ path: 'release/rwp.zip', name: 'rwp-${nextRelease.gitTag}.zip', label: 'Plugin (v${nextRelease.gitTag}) distribution' }],
+			},
+		],
 	],
-	branches: ['master'],
+	branches: ['master', 'release'],
 };

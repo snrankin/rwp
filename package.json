@@ -4,13 +4,10 @@
     "version": "0.11.15",
     "license": "GPL-2.0-or-later",
     "homepage": "https://bitbucket.org/riester/rwp/src/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "git+https://bitbucket.org/riester/rwp.git"
-    },
+    "repository": "bitbucket:riester/rwp",
     "description": "An internal plugin for websites created by RIESTER to enhance functionality",
     "bugs": {
-        "url": "https://riester.atlassian.net/jira/software/projects/RWP/issues"
+        "url": "https://bitbucket.org/riester/rwp/issues"
     },
     "private": true,
     "author": {
@@ -95,6 +92,7 @@
         "@fortawesome/fontawesome-free": "^6.2.0",
         "@popperjs/core": "^2.11.6",
         "@sect/modernizr-loader": "^1.0.2",
+        "@semantic-release/github": "^8.0.6",
         "@soda/friendly-errors-webpack-plugin": "^1.8.1",
         "@squoosh/lib": "^0.4.0",
         "@wordpress/babel-preset-default": "^7.1.0",
