@@ -17,6 +17,8 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  FORCE_COLOR: 2
+  DEBUG_COLORS: 1
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -46,12 +48,6 @@ jobs:
       - run: chmod +x ./build/scripts/*.js
         shell: bash
       - run: yarn npm link
-      - run: export $GITHUB_PATH="{path}:$GITHUB_PATH"
-        shell: bash
-      - run: export $GITHUB_PATH="$HOME/.local/bin:$GITHUB_PATH"
-        shell: bash
-      - run: echo $GITHUB_PATH
-        shell: bash
       - name: Release
         id: semantic
         uses: ahmadnassri/action-semantic-release@v2
