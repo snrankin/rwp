@@ -63,12 +63,12 @@ jobs:
           debug: true
       - run: echo "$OUTPUTS"
         env:
-          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+          OUTPUTS: ${{ steps.semantic.outputs.published }}
       - name: FTP/SFTP file deployer
         # You may pin to the exact commit or the version.
         # uses: milanmk/actions-file-deployer@58030c10c50a8577d08cef33e47c23bcbbf78c33
         uses: milanmk/actions-file-deployer@1.11
-        if: steps.semantic.outputs.new-release-published == 'true'
+        if: steps.semantic.outputs.published == 'true'
         with:
           # Remote file transfer protocol (ftp, sftp)
           remote-protocol: ftp
