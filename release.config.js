@@ -46,8 +46,8 @@ module.exports = {
 			'@semantic-release/commit-analyzer',
 			{
 				preset,
-				presetConfig,
-				parserOpts: parserConfig,
+				// presetConfig,
+				// parserOpts: parserConfig,
 				releaseRules: [
 					{
 						type: 'docs',
@@ -105,9 +105,9 @@ module.exports = {
 			'@semantic-release/release-notes-generator',
 			{
 				preset,
-				presetConfig,
-				parserOpts: parserConfig,
-				writerOpts: writerConfig,
+				// presetConfig,
+				// parserOpts: parserConfig,
+				// writerOpts: writerConfig,
 			},
 		],
 		[
@@ -144,11 +144,10 @@ module.exports = {
 		[
 			'@semantic-release/github',
 			{
-				githubUrl: 'git@github.com:snrankin/rwp.git',
 				addReleases: 'top',
 				assets: [{ path: 'release/rwp.zip', name: 'rwp-${nextRelease.gitTag}.zip', label: 'Plugin (v${nextRelease.gitTag}) distribution' }],
 			},
 		],
 	],
-	branches: ['master', 'release'],
+	branches: ['main'],
 };

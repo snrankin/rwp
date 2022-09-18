@@ -37,8 +37,12 @@ jobs:
         uses: codfish/semantic-release-action@v1
         with:
           branches: 'main'
+          artifacts: true
         env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: echo "$OUTPUTS"
         env:
           OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
@@ -65,3 +69,7 @@ jobs:
           local-path: ./release/rwp.zip
         env:
           TAG: v$RELEASE_VERSION
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_ PATH: ${{ secrets.FTP_PATH }}
+          FTP USERNAME: ${{ secrets.FTP_USERNAME }}
