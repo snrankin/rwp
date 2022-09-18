@@ -32,15 +32,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a single command using the runners shell
-      - name: Display the environment
-        run: printenv
-        shell: bash
-      - name: Display github environment
-        run: echo "$OUTPUTS"
-        env:
-          OUTPUTS: ${{ toJson(github) }}
-        shell: bash
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
