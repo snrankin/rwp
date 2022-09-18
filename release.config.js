@@ -88,13 +88,13 @@ module.exports = {
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'build/scripts/wp-readme.js readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md',
+				prepareCmd: './build/scripts/wp-readme.js readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md',
 			},
 		],
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'wpackio-scripts pack',
+				prepareCmd: './node_modules/.bin/wpackio-scripts pack',
 			},
 		],
 		[
