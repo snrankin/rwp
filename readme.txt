@@ -46,13 +46,14 @@ An internal plugin for websites created by RIESTER to enhance functionality
 = v0.11.15 - 2022-09-17 =
 
 **Bug Fixes**
-* **integrations:** fix active menu item ([6891f89](https://bitbucket.org/riester/rwp/commit/6891f8983b6b65677996392204e45f455f99ebba))
-* **internals:** restoring taxonomies ([679f677](https://bitbucket.org/riester/rwp/commit/679f677789bfe75b66db858173197fc16e9fd7a1))
+* **integrations:** fix active menu item ([6891f89](https://github.com/snrankin/rwp/commit/6891f8983b6b65677996392204e45f455f99ebba))
+* **internals:** restoring taxonomies ([679f677](https://github.com/snrankin/rwp/commit/679f677789bfe75b66db858173197fc16e9fd7a1))
 
 
-= v0.11.14 - 2022-08-31 =
+= v0.11.14 - 2022-09-17 =
 
 **Bug Fixes**
-* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://bitbucket.org/riester/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
+* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://github.com/snrankin/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
+* **internals:** restoring taxonomies ([0bbbb41](https://github.com/snrankin/rwp/commit/0bbbb41c695535e4d96a940cfe390af89e94e30e))
 
 [See full list of changes here](./CHANGELOG.md)

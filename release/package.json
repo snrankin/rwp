@@ -1,0 +1,121 @@
+{
+	"displayName": "RWP",
+	"name": "rwp",
+	"version": "0.11.16",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/snrankin/rwp#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/snrankin/rwp.git"
+	},
+	"description": "An internal plugin for websites created by RIESTER to enhance functionality",
+	"private": true,
+	"bugs": {
+		"url": "https://github.com/snrankin/rwp/issues"
+	},
+	"author": {
+		"name": "RIESTER Advertising Agency",
+		"email": "wordpress@riester.com",
+		"url": "https://www.riester.com"
+	},
+	"readme": "README.md",
+	"bin": {
+		"package": "./build/scripts/package.js",
+		"normalize-package-json": "./build/scripts/normalize-package-json.js",
+		"wp-readme": "./build/scripts/wp-readme.js",
+		"readme-txt-to-md": "./build/scripts/readme-txt-to-md.js",
+		"test-release": "./build/scripts/semantic-release.sh"
+	},
+	"scripts": {
+		"blocks:build": "npm run blocks:dev && npm run blocks:prod",
+		"blocks:debug": "webpack --stats verbose --color --progress --mode=development --name blocks --config ./build/webpack/webpack.config.blocks.js",
+		"blocks:dev": "webpack --cache --color --progress --mode=development --name blocks --config ./build/webpack/webpack.config.blocks.js",
+		"blocks:prod": "webpack --cache --color --progress --mode=production --name blocks --config ./build/webpack/webpack.config.blocks.js",
+		"build-dev": "npm-run-all *:dev",
+		"build-prod": "npm-run-all *:prod",
+		"build": "wpackio-scripts build",
+		"fix:scripts": "eslint --write './src/**/*.js'",
+		"fix:styles": "stylelint --fix --color './src/**/*.{sass,scss,sss,less}'",
+		"fix": "npm run fix:scripts && npm run fix:styles",
+		"fonts:build": "npm run fonts:dev && npm run fonts:prod",
+		"fonts:debug": "webpack --stats verbose --color --progress --mode=development --name fonts --config ./build/webpack/webpack.config.js",
+		"fonts:dev": "webpack --cache --color --progress --mode=development --name fonts --config ./build/webpack/webpack.config.js",
+		"fonts:prod": "webpack --cache --color --progress --mode=production --name fonts --config ./build/webpack/webpack.config.js",
+		"lint:scripts": "eslint './src/**/*.js'",
+		"lint:styles": "stylelint --color './src/**/*.{sass,scss,sss,less}'",
+		"lint": "npm run lint:scripts && npm run lint:styles",
+		"main:build": "npm run main:dev && npm run main:prod",
+		"main:debug": "webpack --stats verbose --color --progress --mode=development --name main --config ./build/webpack/webpack.config.js",
+		"main:dev": "webpack --cache --color --progress --mode=development --name main --config ./build/webpack/webpack.config.js",
+		"main:prod": "webpack --cache --color --progress --mode=production --name main --config ./build/webpack/webpack.config.js",
+		"main:profile": "webpack --stats verbose --color --progress --mode=development --name main --profile --json > stats.json --config ./build/webpack/webpack.config.js",
+		"changelog": "conventional-changelog -i CHANGELOG.md -s  -r 0 -n build/docs/config.js ",
+		"wp-readme": "wp-readme readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md",
+		"test": "webpack configtest ./build/webpack/webpack.config.js",
+		"watch": "webpack --color --progress --mode=development --watch --config ./build/webpack/webpack.config.js",
+		"pack": "package",
+		"normalize": "normalize-package-json",
+		"bootstrap": "wpackio-scripts bootstrap",
+		"build-backup": "npm-run-all *:build",
+		"start": "wpackio-scripts start",
+		"archive": "wpackio-scripts pack",
+		"postarchive": "rm -r release/rwp",
+		"release": "autoenv_init && npx semantic-release --debug --no-ci",
+		"semantic-release": "semantic-release"
+	},
+	"config": {
+		"package": {
+			"copyPath": "release/rwp",
+			"inputPath": "release",
+			"releasePath": "release",
+			"outputPath": "release/rwp.zip"
+		}
+	},
+	"engines": {
+		"node": ">=14"
+	},
+	"files": [
+		"assets",
+		"languages",
+		"dependencies",
+		"includes",
+		"config.json",
+		"readme.txt",
+		"rwp.php",
+		"uninstall.php"
+	],
+	"dependencies": {
+		"@google/semantic-release-replace-plugin": "^1.1.0",
+		"@semantic-release/changelog": "^6.0.1",
+		"@semantic-release/commit-analyzer": "^9.0.2",
+		"@semantic-release/exec": "^6.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^8.0.6",
+		"@semantic-release/npm": "^9.0.1",
+		"@semantic-release/release-notes-generator": "^10.0.3",
+		"@wpackio/entrypoint": "^6.4.0",
+		"@wpackio/scripts": "^6.4.0",
+		"adm-zip": "^0.5.9",
+		"archiver-promise": "^1.0.0",
+		"chalk": "^4.1.2",
+		"columnify": "^1.5.4",
+		"commander": "^8.2.0",
+		"commitizen": "^4.2.5",
+		"conventional-changelog-cli": "^2.2.2",
+		"conventional-changelog-conventionalcommits": "^5.0.0",
+		"conventional-changelog-writer": "^5.0.1",
+		"dotenv": "^16.0.2",
+		"fs-extra": "^10.1.0",
+		"inquirer": "^8.2.0",
+		"normalize-package-data": "^4.0.1",
+		"npm-pack-zip": "^1.3.0",
+		"npm-packlist": "^5.1.3",
+		"replace-in-file": "^6.3.5",
+		"sanitize-filename": "^1.6.3",
+		"semantic-release": "^19.0.5",
+		"semantic-release-jira-releases": "^0.7.2",
+		"semantic-release-version-bump": "^1.4.1",
+		"semver": "^7.3.7",
+		"yaml": "^1.10.2"
+	}
+}
