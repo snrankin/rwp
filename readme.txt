@@ -31,6 +31,18 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
+= v0.11.16 - 2022-09-18 =
+
+**Bug Fixes**
+* **build:** fix readme command ([96fcce2](https://github.com/snrankin/rwp/commit/96fcce2a19be967eabc4a9f10695fafb519aea0a))
+* **giithub:** re-merging the jobs ([53125f4](https://github.com/snrankin/rwp/commit/53125f4ffc20e6c8b9fbe63ae7e3a4424c16429c))
+* **github:** adjusting workflow to yarn ([2d64a7a](https://github.com/snrankin/rwp/commit/2d64a7a765338656ea23ee591c21abd2f0127363))
+* **github:** re-adding checkout step to release step ([fdb7094](https://github.com/snrankin/rwp/commit/fdb70944d0f651f662197b374b99196ebbe228f6))
+* **github:** yet more workflow fixes.. ([eede001](https://github.com/snrankin/rwp/commit/eede001ea834612edcabde2c0cb39348971f1c03))
+* testing release workflow ([e1e5347](https://github.com/snrankin/rwp/commit/e1e53473634e5222d6123a2218265f17d49a2ec2))
+* **workflow:** breaking up the workflow ([4c4c7fd](https://github.com/snrankin/rwp/commit/4c4c7fde97b2f73d5de803d87e901b732da0242e))
+
+
 = v0.11.15 - 2022-09-17 =
 
 **Bug Fixes**
@@ -42,11 +54,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 **Bug Fixes**
 * **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://bitbucket.org/riester/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
-
-
-= v0.11.13 - 2022-08-30 =
-
-**Bug Fixes**
-* **ci:** fixes release workflow ([e648e26](https://bitbucket.org/riester/rwp/commit/e648e26b3e9787784eb998069c265d4f984fa7bc))
 
 [See full list of changes here](./CHANGELOG.md)
