@@ -88,7 +88,7 @@ module.exports = {
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'yarn wp-readme',
+				prepareCmd: 'wp-readme readme -m rwp.php -i CHANGELOG.md -l 3 -d build/docs/partials -r ./CHANGELOG.md',
 			},
 		],
 		[
