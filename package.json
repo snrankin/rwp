@@ -1,11 +1,12 @@
 {
     "displayName": "RWP",
     "name": "rwp",
-    "version": "0.0.0-development",
+    "version": "0.11.15",
     "license": "GPL-2.0-or-later",
     "homepage": "https://github.com/snrankin/rwp#readme",
     "repository": "git@github.com:snrankin/rwp.git",
     "description": "An internal plugin for websites created by RIESTER to enhance functionality",
+    "private": true,
     "bugs": {
         "url": "https://github.com/snrankin/rwp/issues"
     },
