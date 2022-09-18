@@ -1,15 +1,14 @@
 {
     "displayName": "RWP",
     "name": "rwp",
-    "version": "0.11.15",
+    "version": "0.0.0-development",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://bitbucket.org/riester/rwp/src/master/README.md",
-    "repository": "bitbucket:riester/rwp",
+    "homepage": "https://github.com/snrankin/rwp#readme",
+    "repository": "git@github.com:snrankin/rwp.git",
     "description": "An internal plugin for websites created by RIESTER to enhance functionality",
     "bugs": {
-        "url": "https://bitbucket.org/riester/rwp/issues"
+        "url": "https://github.com/snrankin/rwp/issues"
     },
-    "private": true,
     "author": {
         "name": "RIESTER Advertising Agency",
         "email": "wordpress@riester.com",
@@ -57,7 +56,8 @@
         "start": "wpackio-scripts start",
         "archive": "wpackio-scripts pack",
         "postarchive": "rm -r release/rwp",
-        "release": "autoenv_init && npx semantic-release --debug --no-ci"
+        "release": "autoenv_init && npx semantic-release --debug --no-ci",
+        "semantic-release": "semantic-release"
     },
     "config": {
         "package": {
@@ -202,7 +202,8 @@
         "webpack-node-externals": "^3.0.0",
         "webpack-remove-empty-scripts": "^1.0.0",
         "yargs": "~17.5.1",
-        "yarn-run-all": "^3.1.1"
+        "yarn-run-all": "^3.1.1",
+        "semantic-release": "^19.0.5"
     },
     "dependencies": {
         "@google/semantic-release-replace-plugin": "^1.1.0",

@@ -8,6 +8,16 @@ on:
   push:
     branches: ['main']
 
+env:
+  FTP_HOST: ${{ secrets.FTP_HOST }}
+  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+  FTP_ PATH: ${{ secrets.FTP_PATH }}
+  FTP USERNAME: ${{ secrets.FTP_USERNAME }}
+  CI: true
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -18,8 +28,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo  ${{ toJson(env) }}
+      - name: Display the environment
+        run: printenv
+        shell: bash
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,8 +48,7 @@ jobs:
         uses: codfish/semantic-release-action@v1
         with:
           branches: 'main'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - run: echo "$OUTPUTS"
         env:
           OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
@@ -63,5 +73,3 @@ jobs:
           # Upload logs to artifacts
           artifacts: true
           local-path: ./release/rwp.zip
-        env:
-          TAG: v$RELEASE_VERSION
