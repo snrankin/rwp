@@ -1,44 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
-const releaseMessage = 'chore(release): {{currentTag}} [skip ci]';
 const preset = 'conventionalcommits';
-const writerConfig = {
-	ignoreReverted: true,
-	doFlush: true,
-	linkReferences: false,
-	linkCompare: false,
-};
-const parserConfig = {
-	issuePrefixes: ['RWP-'],
-	mergePattern: "^Merge branch '([^']+)' of (.*)$", // eslint-disable-line
-	mergeCorrespondence: ['branch', 'source'],
-	types: [
-		{
-			type: 'revert',
-			section: 'Reverts',
-			hidden: true,
-		},
-	],
-};
 
-const presetConfig = {
-	options: {
-		commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commits/{{hash}}',
-		issueUrlFormat: 'https://riester.atlassian.net/jira/software/projects/RWP/issues/{{id}}',
-		issuePrefixes: ['RWP-'],
-		compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/branches/compare/{{currentTag}}%0D{{previousTag}}',
-		releaseCommitMessageFormat: releaseMessage,
-		linkReferences: false,
-		linkCompare: false,
-	},
-	gitRawCommitsOpts: {
-		'extended-regexp': true,
-		grep: '^(reverts?)',
-		'regexp-ignore-case': true,
-		'invert-grep': true,
-		'no-merges': true,
-	},
-};
 
 module.exports = {
 	plugins: [
@@ -145,7 +108,7 @@ module.exports = {
 			'@semantic-release/github',
 			{
 				addReleases: 'top',
-				assets: [{ path: 'release/rwp.zip', name: 'rwp-${nextRelease.gitTag}.zip', label: 'Plugin (v${nextRelease.gitTag}) distribution' }],
+				assets: ['release/rwp.zip'],
 			},
 		],
 	],
