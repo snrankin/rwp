@@ -156,7 +156,7 @@ class Bootstrap extends Singleton {
 			'white'  => array(),
 			'black'  => array(),
 			'gray'   => array(),
-		))->transform(function ( $info, $color ) { // phpcs:ignore
+		))->transform(function ($info, $color) { // phpcs:ignore
 			$label = rwp_change_case( $color, 'title' );
 			$shades = array(
 				'default' => "var(--bs-$color)",
@@ -181,7 +181,7 @@ class Bootstrap extends Singleton {
 			'danger'    => array(),
 			'light'     => array(),
 			'dark'      => array(),
-		))->transform(function ( $info, $color ) { // phpcs:ignore
+		))->transform(function ($info, $color) { // phpcs:ignore
 			$label = rwp_change_case( $color, 'title' );
 			$shades = array(
 				'default' => "var(--bs-$color)",
@@ -340,18 +340,22 @@ class Bootstrap extends Singleton {
 	public static function bs_atts( $group = '', $class_prefix = '', $class_suffix = '', $label_prefix = '', $label_suffix = '' ) {
 
 		$colors = rwp_collection( self::instance()->colors )->transform(function ( $info, $color ) use ( $class_prefix, $class_suffix, $label_prefix, $label_suffix ) {
-			$label = $info['label'];
+			if ( is_array( $info ) ) {
+				$label = $info['label'];
 
-			$info['label'] = rwp_add_prefix( rwp_add_suffix( $label, $label_suffix ), $label_prefix );
-			$info['class'] = rwp_add_prefix( rwp_add_suffix( $color, $class_suffix ), $class_prefix );
+				$info['label'] = rwp_add_prefix( rwp_add_suffix( $label, $label_suffix ), $label_prefix );
+				$info['class'] = rwp_add_prefix( rwp_add_suffix( $color, $class_suffix ), $class_prefix );
+			}
 			return $info;
 		});
 
 		$breakpoints = rwp_collection( self::instance()->breakpoints )->transform(function ( $info, $breakpoint ) use ( $class_prefix, $class_suffix, $label_prefix, $label_suffix ) {
-			$label = $info['label'];
+			if ( is_array( $info ) ) {
+				$label = $info['label'];
 
-			$info['label'] = rwp_add_prefix( rwp_add_suffix( $label, $label_suffix ), $label_prefix );
-			$info['class'] = rwp_add_prefix( rwp_add_suffix( $breakpoint, $class_suffix ), $class_prefix );
+				$info['label'] = rwp_add_prefix( rwp_add_suffix( $label, $label_suffix ), $label_prefix );
+				$info['class'] = rwp_add_prefix( rwp_add_suffix( $breakpoint, $class_suffix ), $class_prefix );
+			}
 			return $info;
 		});
 

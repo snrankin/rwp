@@ -55,7 +55,9 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          dry: true
           debug: true
+          config: release.config.js
       - name: FTP/SFTP file deployer
         # You may pin to the exact commit or the version.
         # uses: milanmk/actions-file-deployer@58030c10c50a8577d08cef33e47c23bcbbf78c33
