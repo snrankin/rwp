@@ -10,8 +10,7 @@
  * @license   GPL-2.0+
  * ========================================================================== */
 
-
-
+use RWP\Vendor\Brain\Hierarchy\Hierarchy;
 
 // ============================ Vendor Components =========================== //
 
@@ -36,6 +35,16 @@ function rwp_config( $args = [] ) {
 	return new RWP\Vendor\Illuminate\Config\Repository( $args );
 }
 
+
+/**
+ * @link https://github.com/Brain-WP/Hierarchy
+ *
+ * @return Hierarchy
+ */
+function rwp_hierarchy() {
+	return new Hierarchy( Hierarchy::NOT_FILTERABLE );
+}
+
 /**
  * Get hierarchy.
  *
@@ -44,8 +53,9 @@ function rwp_config( $args = [] ) {
  * @param WP_Query|null $query
  * @return array
  */
-function rwp_hierarchy( $query = null ) {
-	$hierarchy = new RWP\Vendor\Brain\Hierarchy\Hierarchy( RWP\Vendor\Brain\Hierarchy\Hierarchy::NOT_FILTERABLE );
+
+function rwp_get_hierarchy( $query = null ) {
+	$hierarchy = rwp_hierarchy();
 	return $hierarchy->getHierarchy( $query );
 }
 

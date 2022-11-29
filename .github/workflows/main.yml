@@ -55,7 +55,6 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          dry: true
           debug: true
           config: release.config.js
       - name: FTP/SFTP file deployer
@@ -78,4 +77,7 @@ jobs:
           remote-password: ${{ secrets.FTP_PASSWORD }}
           # Upload logs to artifacts
           artifacts: true
-          local-path: ./release/rwp.zip
+          proxy: false
+          remote-path: /httpdocs/plugin/packages
+          local-path: /release
+          debug: true
