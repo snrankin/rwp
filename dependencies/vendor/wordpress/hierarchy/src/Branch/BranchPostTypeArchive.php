@@ -14,7 +14,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Branch;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchPostTypeArchive implements  Branch\BranchInterface
+final class BranchPostTypeArchive implements BranchInterface
 {
     /**
      * {@inheritdoc}

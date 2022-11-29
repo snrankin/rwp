@@ -20,7 +20,7 @@ use RWP\Vendor\Brain\Hierarchy\FileExtensionPredicate;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class FoldersTemplateFinder implements  Finder\TemplateFinderInterface
+final class FoldersTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
     /**

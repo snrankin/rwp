@@ -14,7 +14,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Branch;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchAttachment implements  Branch\BranchInterface
+final class BranchAttachment implements BranchInterface
 {
     /**
      * {@inheritdoc}

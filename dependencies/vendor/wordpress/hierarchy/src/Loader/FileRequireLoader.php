@@ -14,7 +14,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Loader;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class FileRequireLoader implements  Loader\TemplateLoaderInterface
+final class FileRequireLoader implements TemplateLoaderInterface
 {
     /**
      * {@inheritdoc}

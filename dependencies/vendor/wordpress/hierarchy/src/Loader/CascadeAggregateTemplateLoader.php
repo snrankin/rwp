@@ -16,7 +16,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Loader;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class CascadeAggregateTemplateLoader implements  Loader\AggregateTemplateLoaderInterface
+final class CascadeAggregateTemplateLoader implements AggregateTemplateLoaderInterface
 {
     /**
      * @var array
@@ -25,7 +25,7 @@ final class CascadeAggregateTemplateLoader implements  Loader\AggregateTemplateL
     /**
      * {@inheritdoc}
      */
-    public function addLoader( Loader\TemplateLoaderInterface $loader, callable $predicate)
+    public function addLoader( TemplateLoaderInterface $loader, callable $predicate)
     {
         $this->loaders[] = [$loader, $predicate, \false];
         return $this;
@@ -50,11 +50,13 @@ final class CascadeAggregateTemplateLoader implements  Loader\AggregateTemplateL
                 continue;
             }
             if (!$isFactory) {
-                /* @var \Brain\Hierarchy\Loader\TemplateLoaderInterface $loader */
+                /**
+                 * @var TemplateLoaderInterface $loader
+                 */
                 return $loader->load($templatePath);
             }
             $loader = $loader();
-            if (!$loader instanceof  Loader\TemplateLoaderInterface) {
+            if (!$loader instanceof TemplateLoaderInterface) {
                 continue;
             }
             return $loader->load($templatePath);

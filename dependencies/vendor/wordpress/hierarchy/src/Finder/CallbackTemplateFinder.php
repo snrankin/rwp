@@ -16,7 +16,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class CallbackTemplateFinder implements  Finder\TemplateFinderInterface
+final class CallbackTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
     /**

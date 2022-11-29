@@ -15,7 +15,7 @@ use RWP\Vendor\Brain\Hierarchy\PostTemplates;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchSingle implements  Branch\BranchInterface
+final class BranchSingle implements BranchInterface
 {
     /**
      * @var \Brain\Hierarchy\PostTemplates

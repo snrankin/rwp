@@ -18,10 +18,10 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class SubfolderTemplateFinder implements  Finder\TemplateFinderInterface
+final class SubfolderTemplateFinder implements TemplateFinderInterface
 {
     /**
-     * @var \Brain\Hierarchy\Finder\FoldersTemplateFinder
+     * @var FoldersTemplateFinder
      */
     private $finder;
     /**
@@ -34,7 +34,7 @@ final class SubfolderTemplateFinder implements  Finder\TemplateFinderInterface
         $template = trailingslashit(get_template_directory()) . $subfolder;
         $folders = [$stylesheet];
         $stylesheet !== $template and $folders[] = $template;
-        $this->finder = new  Finder\FoldersTemplateFinder($folders, $extension);
+        $this->finder = new FoldersTemplateFinder($folders, $extension);
     }
     /**
      * {@inheritdoc}

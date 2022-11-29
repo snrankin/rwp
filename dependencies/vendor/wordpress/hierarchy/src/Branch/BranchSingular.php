@@ -14,7 +14,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Branch;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchSingular implements  Branch\BranchInterface
+final class BranchSingular implements BranchInterface
 {
     /**
      * {@inheritdoc}

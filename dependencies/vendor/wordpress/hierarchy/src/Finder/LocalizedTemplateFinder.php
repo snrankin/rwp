@@ -30,7 +30,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class LocalizedTemplateFinder implements  Finder\TemplateFinderInterface
+final class LocalizedTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
     /**
@@ -38,15 +38,15 @@ final class LocalizedTemplateFinder implements  Finder\TemplateFinderInterface
      */
     private $folders = [];
     /**
-     * @var \Brain\Hierarchy\Finder\FoldersTemplateFinder
+     * @var FoldersTemplateFinder
      */
     private $finder;
     /**
-     * @param \Brain\Hierarchy\Finder\TemplateFinderInterface $finder
+     * @param TemplateFinderInterface $finder
      */
-    public function __construct( Finder\TemplateFinderInterface $finder = null)
+    public function __construct( TemplateFinderInterface $finder = null)
     {
-        $this->finder = $finder ?: new  Finder\FoldersTemplateFinder();
+        $this->finder = $finder ?: new FoldersTemplateFinder();
         $locale = get_locale();
         if (!$locale || !\is_string($locale)) {
             return;

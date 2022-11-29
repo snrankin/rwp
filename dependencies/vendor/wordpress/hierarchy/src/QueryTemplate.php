@@ -21,31 +21,31 @@ use RWP\Vendor\Brain\Hierarchy\Loader\TemplateLoaderInterface;
 final class QueryTemplate implements  QueryTemplateInterface
 {
     /**
-     * @var \Brain\Hierarchy\Finder\TemplateFinderInterface
+     * @var TemplateFinderInterface
      */
     private $finder;
     /**
-     * @var \Brain\Hierarchy\Loader\TemplateLoaderInterface
+     * @var TemplateLoaderInterface
      */
     private $loader;
     /**
-     * @param \Brain\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @param TemplateLoaderInterface|null $loader
      *
-     * @return \Brain\Hierarchy\QueryTemplate
+     * @return QueryTemplate
      */
-    public static function instanceWithLoader( Loader\TemplateLoaderInterface $loader = null)
+    public static function instanceWithLoader( TemplateLoaderInterface $loader = null)
     {
-        return new static(new  Finder\FoldersTemplateFinder(), $loader);
+        return new static(new FoldersTemplateFinder(), $loader);
     }
     /**
-     * @param array                                                $folders
-     * @param \Brain\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @param array                        $folders
+     * @param TemplateLoaderInterface|null $loader
      *
-     * @return \Brain\Hierarchy\QueryTemplate
+     * @return QueryTemplate
      */
-    public static function instanceWithFolders(array $folders,  Loader\TemplateLoaderInterface $loader = null)
+    public static function instanceWithFolders(array $folders, TemplateLoaderInterface $loader = null)
     {
-        return new static(new  Finder\FoldersTemplateFinder($folders), $loader);
+        return new static(new FoldersTemplateFinder($folders), $loader);
     }
     /**
      * @return bool
@@ -55,14 +55,14 @@ final class QueryTemplate implements  QueryTemplateInterface
         return (\filter_input(\INPUT_SERVER, 'REQUEST_METHOD') !== 'HEAD' || !apply_filters('exit_on_http_head', \true)) && !is_robots() && !is_feed() && !is_trackback() && !is_embed();
     }
     /**
-     * @param \Brain\Hierarchy\Finder\TemplateFinderInterface|null $finder
-     * @param \Brain\Hierarchy\Loader\TemplateLoaderInterface      $loader
+     * @param TemplateFinderInterface|null $finder
+     * @param TemplateLoaderInterface      $loader
      */
-    public function __construct( Finder\TemplateFinderInterface $finder = null,  Loader\TemplateLoaderInterface $loader = null)
+    public function __construct( TemplateFinderInterface $finder = null, TemplateLoaderInterface $loader = null)
     {
         // if no finder provided, let's use the one that simulates core behaviour
-        $this->finder = $finder ?: new  Finder\FoldersTemplateFinder();
-        $this->loader = $loader ?: new  Loader\FileRequireLoader();
+        $this->finder = $finder ?: new FoldersTemplateFinder();
+        $this->loader = $loader ?: new FileRequireLoader();
     }
     /**
      * Find a template for the given WP_Query.

@@ -14,7 +14,7 @@ namespace RWP\Vendor\Brain\Hierarchy\Branch;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class BranchTag implements  Branch\BranchInterface
+final class BranchTag implements BranchInterface
 {
     /**
      * {@inheritdoc}

@@ -18,7 +18,7 @@ use RWP\Vendor\Symfony\Component\Finder\Finder;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class SymfonyFinderAdapter implements  Finder\TemplateFinderInterface
+final class SymfonyFinderAdapter implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
     /**

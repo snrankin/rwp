@@ -38,24 +38,24 @@ use RWP\Vendor\Brain\Hierarchy\FileExtensionPredicate;
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-final class ExtensionMapTemplateLoader implements  Loader\AggregateTemplateLoaderInterface
+final class ExtensionMapTemplateLoader implements AggregateTemplateLoaderInterface
 {
     /**
-     * @var \Brain\Hierarchy\Loader\AggregateTemplateLoaderInterface
+     * @var AggregateTemplateLoaderInterface
      */
     private $loader;
     /**
-     * @param array                                                    $map
-     * @param \Brain\Hierarchy\Loader\AggregateTemplateLoaderInterface $loader
+     * @param array                            $map
+     * @param AggregateTemplateLoaderInterface $loader
      */
-    public function __construct(array $map,  Loader\AggregateTemplateLoaderInterface $loader = null)
+    public function __construct(array $map, AggregateTemplateLoaderInterface $loader = null)
     {
-        $this->loader = $loader ?: new  Loader\CascadeAggregateTemplateLoader();
+        $this->loader = $loader ?: new CascadeAggregateTemplateLoader();
         \array_walk($map, function ($loader, $extension) {
             $loader = $this->buildLoader($loader);
             if (!\is_null($loader)) {
                 $predicate = new  FileExtensionPredicate($extension);
-                $loader instanceof  Loader\TemplateLoaderInterface ? $this->loader->addLoader($loader, $predicate) : $this->loader->addLoaderFactory($loader, $predicate);
+                $loader instanceof TemplateLoaderInterface ? $this->loader->addLoader($loader, $predicate) : $this->loader->addLoaderFactory($loader, $predicate);
             }
         });
     }
@@ -69,7 +69,7 @@ final class ExtensionMapTemplateLoader implements  Loader\AggregateTemplateLoade
     /**
      * {@inheritdoc}
      */
-    public function addLoader( Loader\TemplateLoaderInterface $loader, callable $predicate)
+    public function addLoader( TemplateLoaderInterface $loader, callable $predicate)
     {
         return $this->loader->addLoader($loader, $predicate);
     }
@@ -81,16 +81,16 @@ final class ExtensionMapTemplateLoader implements  Loader\AggregateTemplateLoade
         return $this->loader->addLoaderFactory($loaderFactory, $predicate);
     }
     /**
-     * @param \Brain\Hierarchy\Loader\TemplateLoaderInterface|callable|string $loader
+     * @param TemplateLoaderInterface|callable|string $loader
      *
-     * @return \Closure|\Brain\Hierarchy\Loader\TemplateLoaderInterface
+     * @return \Closure|TemplateLoaderInterface
      */
     private function buildLoader($loader)
     {
-        if ($loader instanceof  Loader\TemplateLoaderInterface || \is_callable($loader)) {
+        if ($loader instanceof TemplateLoaderInterface || \is_callable($loader)) {
             return $loader;
         }
-        if (\is_string($loader) && \is_subclass_of($loader,  Loader\TemplateLoaderInterface::class, \true)) {
+        if (\is_string($loader) && \is_subclass_of($loader, TemplateLoaderInterface::class, \true)) {
             return function () use($loader) {
                 return new $loader();
             };

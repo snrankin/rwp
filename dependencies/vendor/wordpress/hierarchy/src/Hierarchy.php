@@ -88,7 +88,7 @@ class Hierarchy
         // make the branches filterable, but assuring each item still implement branch interface
         if ($this->flags & self::FILTERABLE) {
             $branches = \array_filter((array) apply_filters('brain.hierarchy.branches', $branches), function ($branch) {
-                return \is_subclass_of($branch,  Branch\BranchInterface::class, \true);
+                return \is_subclass_of($branch, Branch\BranchInterface::class, \true);
             });
         }
         // removed indexes, we added them to make filtering easier
