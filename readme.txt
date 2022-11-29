@@ -31,6 +31,15 @@ An internal plugin for websites created by RIESTER to enhance functionality
 
 == Changelog ==
 
+= v0.12.0 - 2022-11-29 =
+
+**Features**
+* :sparkles: Adding contextual body classes to backend ([a700e94](https://github.com/snrankin/rwp/commit/a700e94cbba953177ac504fa2c00e01c5c71af38))
+
+**Bug Fixes**
+* **dependencies:** fixing namespace for Brain\Hierarchy ([2c2aacc](https://github.com/snrankin/rwp/commit/2c2aacc3d19daa840048cdb702fee162c3bc2530))
+
+
 = v0.11.16 - 2022-09-18 =
 
 **Bug Fixes**
@@ -48,12 +57,5 @@ An internal plugin for websites created by RIESTER to enhance functionality
 **Bug Fixes**
 * **integrations:** fix active menu item ([6891f89](https://github.com/snrankin/rwp/commit/6891f8983b6b65677996392204e45f455f99ebba))
 * **internals:** restoring taxonomies ([679f677](https://github.com/snrankin/rwp/commit/679f677789bfe75b66db858173197fc16e9fd7a1))
-
-
-= v0.11.14 - 2022-09-17 =
-
-**Bug Fixes**
-* **integrations:** fixes Elementor breakpoints from resetting ([d80063c](https://github.com/snrankin/rwp/commit/d80063c7449d0ab3d884b09797145aa0b476f55c))
-* **internals:** restoring taxonomies ([0bbbb41](https://github.com/snrankin/rwp/commit/0bbbb41c695535e4d96a940cfe390af89e94e30e))
 
 [See full list of changes here](./CHANGELOG.md)

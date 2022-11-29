@@ -1,3 +1,18 @@
+# RIESTERWP Core Changelog
+---
+
+## [0.12.0](https://github.com/snrankin/rwp/compare/v0.11.16...v0.12.0) (2022-11-29)
+
+
+### Features
+
+* :sparkles: Adding contextual body classes to backend ([a700e94](https://github.com/snrankin/rwp/commit/a700e94cbba953177ac504fa2c00e01c5c71af38))
+
+
+### Bug Fixes
+
+* **dependencies:** fixing namespace for Brain\Hierarchy ([2c2aacc](https://github.com/snrankin/rwp/commit/2c2aacc3d19daa840048cdb702fee162c3bc2530))
+
 ## [0.11.16](https://github.com/snrankin/rwp/compare/v0.11.15...v0.11.16) (2022-09-18)
 
 
@@ -228,4 +243,3 @@
 ### Reverts
 
 * Revert "Refactoring plugin engine" ([5bf8caa](https://github.com/snrankin/rwp/commit/5bf8caa2ca04c6e0ae1f1ea65b9db64ed8774000))
-

@@ -1,7 +1,7 @@
 {
     "displayName": "RWP",
     "name": "rwp",
-    "version": "0.11.16",
+    "version": "0.12.0",
     "license": "GPL-2.0-or-later",
     "homepage": "https://github.com/snrankin/rwp#readme",
     "repository": "git@github.com:snrankin/rwp.git",
